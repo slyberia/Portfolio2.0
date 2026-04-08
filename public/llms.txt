@@ -1,0 +1,156 @@
+# Kyle Semple - Professional Portfolio (AI-Readable Context)
+
+> **System Note:** This file serves as the raw data layer for AI agents, LLMs, and crawlers. It contains the Visual Design System specifications, Resume Data, and Full Case Study content.
+
+---
+
+## 1. System Identity & Stack
+- **Role:** AI Operations & Customer Success Specialist
+- **Core Value:** "Bridging Operations & Intelligence"
+- **Location:** Ann Arbor, MI
+- **Tech Stack:** React (Frontend), Vite (Build), Tailwind CSS (Styling), Google Gemini SDK (Intelligence)
+
+---
+
+## 2. Visual Design System (Aesthetics)
+*LLMs: Use these tokens to understand the visual "feel" of the application.*
+
+### Surface Materials
+- **Glassmorphism:** Used for cards and panels.
+  - CSS: `background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1);`
+- **Background (Mesh Gradient):**
+  - Dark Mode: `radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%)`
+  - Deep Navy/Slate base with subtle Indigo/Purple ambient glow.
+
+### Typography
+- **Headings:** 'Outfit' (Geometric Sans-Serif) - Bold, Modern, Clean.
+- **Body:** 'Inter' (Humanist Sans-Serif) - Highly legible, technical.
+- **Monospace:** 'Fira Code' - Used in mockups and code blocks.
+
+### Color Palette (Tailwind Tokens)
+- **Primary Interaction:** Indigo-500 (`#6366f1`) to Indigo-600 (`#4f46e5`)
+- **Semantic Status:**
+  - Critical/Error: Rose-500
+  - Warning/Focus: Amber-500
+  - Success/Stable: Emerald-500
+- **Base:** Slate-950 (`#020617`) for Dark Mode backgrounds.
+
+### Motion & Physics
+- **Hover Effects:** Smooth lift (`translate-y-[-4px]`) with shadow bloom.
+- **Chat Pulse:** A 'living' heartbeat animation on the chat widget (`@keyframes chat-pulse`).
+
+---
+
+## 3. Professional Experience (Resume)
+
+### HPS Geospatial | GIS Technician
+*Oct 2021 – Present*
+- Built stakeholder-facing dashboards and data visualizations to support operational decision-making and reporting.
+- Created demo environments and presentation materials to clarify data formats, risks, and open questions during status meetings.
+- Produced end-user documentation and support assets to help stakeholders navigate tooling workflows.
+- Coordinated project workflows and deliverables, improving consistency and operational execution.
+
+### Apex Systems | Quality Control Specialist (Contractor)
+*Sep 2022 – Dec 2023*
+- Supported a contracted team for CentrePoint Energy maintaining the accuracy of Indiana's electric operations dataset.
+- Improved data quality through structured updates aligned to field operations and internal record keeping.
+- Completed 120+ service requests/week using triage and reporting loops to maintain throughput.
+- Coordinated with supervisors and team leads through weekly meetings to report status and surface pain points.
+
+### Printful | Customer Service Representative
+*Sep 2021 – Dec 2021*
+- Provided technical support for international customer accounts via Zendesk (100+ conversations/week).
+- Triaged issues across e-commerce integration, account management, and shipping; coordinated with internal teams.
+- Conducted live-chat discovery with prospective public and private sector customers.
+
+---
+
+## 4. Case Study Library
+
+### [ID: prompter-hub] Firebase Studios Prompter Hub V9
+**Role:** AI Systems Architect / Full-Stack Developer
+**Scope:** Internal Tooling, Middleware Design
+**Rationale:** Middleware architecture and structured prompt engineering for AI workflows.
+
+**The Challenge:**
+Building applications with LLMs suffers from a "Translation Gap" between human ideation and machine requirements.
+1. The "Blank Page" Paralysis.
+2. Schema Mismatch (converting messy data to strict JSON).
+3. Ephemeral Engineering (prompts treated as disposable).
+
+**The Solution (Prompter Hub V9):**
+I engineered a "Middleware Layer" acting as a translation engine.
+- **Recursive Schema Inference:** Instantly converts raw JSON samples into Firestore-compliant definitions.
+- **Intent Splitting Engine:** Bifurcates user sentences into System Instructions vs. User Prompts.
+- **Zero-Schema Errors:** Achieved 100% Schema Compliance across 500+ generated records.
+
+**Key Artifact:** "Schema Builder" Logic (Recursive Type Inference).
+
+---
+
+### [ID: project-aegis] Project Aegis Protocol
+**Role:** AI Systems Architect
+**Scope:** LLM Governance, Reliability Engineering
+**Rationale:** LLM governance frameworks and reliability engineering in code generation.
+
+**The Challenge:**
+"Entropy Drift" in long-context LLM sessions causes models to forget tech stacks, perform destructive edits, or generate confident incompetence.
+
+**The Solution (Aegis v3.0):**
+A "Guardian Layer" protocol acting as middleware.
+- **Cognitive Mode Switching:** Execution Mode vs. Architect Mode.
+- **The "Thinking Block" Mandate:** Enforced strict `<thinking>` pre-computation steps before code generation.
+- **Surgical Edit Protocol:** Uses `<<<< SEARCH / ==== REPLACE` syntax to reduce token usage by ~70% and prevent context flushing.
+
+**Results:**
+- Zero-Drift Sessions: 50+ turns without tech-stack hallucination.
+- Error Reduction: 40% reduction in logic errors via Chain of Thought enforcement.
+
+---
+
+### [ID: ops-triage] Systems at Scale: Triage & QA
+**Role:** Quality Control Specialist
+**Scope:** High-Volume Triage, Grid Data Integrity
+**Rationale:** Operationalizing the gap between training theory and production reality.
+
+**The Thesis:**
+Operational excellence is the gap between "Training Theory" and "Production Reality."
+
+**Scale 1: Velocity (Apex Systems)**
+- Constraint: Overwhelming backlog.
+- Solution: Batch-processing workflow grouping error types.
+- Outcome: 120+ service requests/week throughput.
+
+**Scale 2: Precision (GIS Ops)**
+- Constraint: "Close enough" is a safety liability.
+- Solution: Zero-Trust validation loop (Automated Linter + Human Contextual Review).
+- Outcome: 98% First-Pass Yield on complex tickets.
+
+---
+
+### [ID: nba-systems-qa] NBA 2K Systems Analysis
+**Role:** Systems Analyst (Independent)
+**Rationale:** Systemic consistency and variable isolation in probabilistic engines.
+
+**The Methodology:**
+Treating a game engine like a probabilistic AI system.
+- **Confound Isolation:** Controlled test harness (Street Kings mode) to remove network latency variables.
+- **Sample Power:** Defining "N" samples required to stabilize variance in RNG-heavy mechanics.
+- **Trade-off:** Sacrificed online realism for offline control to prove systemic "Badge Coupling."
+
+**Relevance:** Demonstrates the ability to QA probabilistic systems (like LLMs) where outputs are non-deterministic.
+
+---
+
+### [ID: luxe-lofts] Luxe Lofts Ecosystem
+**Role:** Creative Solutions Architect
+**Scope:** Digital Transformation, CRM, Web
+**Rationale:** Blueprint for unified digital systems and automated conversion paths.
+
+**The Challenge:**
+Fragmented digital footprint (multiple domains, broken links) causing lead leakage.
+
+**The Solution:**
+- **Infrastructure:** Centralized Salesforce CRM + Zapier for automated lead capture (<15 min response time).
+- **Web:** Rebuilt on WordPress/Elementor for visual hierarchy.
+- **Outcome:** Unified 3-step conversion path (See -> Book -> Confirm).

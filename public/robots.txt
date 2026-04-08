@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Standard SEO
+Sitemap: https://kyle-semple-professional-portfolio-ai-ops-cx-succ-786228485832.us-west1.run.app/sitemap.xml
+
+# AI Context Discovery
+Sitemap: https://kyle-semple-professional-portfolio-ai-ops-cx-succ-786228485832.us-west1.run.app/llms.txt
