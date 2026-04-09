@@ -1,219 +1,121 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="scroll-smooth dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#020617">
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#020617" />
+
     <!-- Primary Meta Tags -->
     <title>Kyle Semple | AI Operations & Customer Success Portfolio</title>
-    <meta name="title" content="Kyle Semple | AI Operations & Customer Success Portfolio">
-    <meta name="description" content="Operationalizing AI for enterprise. Kyle Semple specializes in high-volume triage, customer success workflows, and technical implementation for AI-adjacent companies.">
-    <meta name="keywords" content="AI Operations, Customer Success, GIS, Technical Support, Triage, Kyle Semple, Portfolio">
-    <meta name="author" content="Kyle Semple">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://kyle-semple-professional-portfolio-ai-ops-cx-succ-786228485832.us-west1.run.app/">
-    
+    <meta name="title" content="Kyle Semple | AI Operations & Customer Success Portfolio" />
+    <meta
+      name="description"
+      content="Operationalizing AI for enterprise. Kyle Semple specializes in high-volume triage, customer success workflows, and technical implementation for AI-adjacent companies."
+    />
+    <meta
+      name="keywords"
+      content="AI Operations, Customer Success, GIS, Technical Support, Triage, Kyle Semple, Portfolio"
+    />
+    <meta name="author" content="Kyle Semple" />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="canonical"
+      href="https://kyle-semple-professional-portfolio-ai-ops-cx-succ-786228485832.us-west1.run.app/"
+    />
+
     <!-- AI Context Discovery -->
-    <link rel="alternate" type="text/markdown" href="/llms.txt" title="AI-Readable Portfolio Context" />
+    <link
+      rel="alternate"
+      type="text/markdown"
+      href="/llms.txt"
+      title="AI-Readable Portfolio Context"
+    />
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://kyle-semple-professional-portfolio-ai-ops-cx-succ-786228485832.us-west1.run.app/">
-    <meta property="og:title" content="Kyle Semple | AI Operations & Customer Success">
-    <meta property="og:description" content="Operationalizing AI for enterprise. Specialized in high-volume triage, customer success workflows, and technical implementation.">
-    <meta property="og:image" content="https://kyle-semple-professional-portfolio-ai-ops-cx-succ-786228485832.us-west1.run.app/og-image.svg">
-    <meta property="og:site_name" content="Kyle Semple Portfolio">
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://kyle-semple-professional-portfolio-ai-ops-cx-succ-786228485832.us-west1.run.app/"
+    />
+    <meta property="og:title" content="Kyle Semple | AI Operations & Customer Success" />
+    <meta
+      property="og:description"
+      content="Operationalizing AI for enterprise. Specialized in high-volume triage, customer success workflows, and technical implementation."
+    />
+    <meta
+      property="og:image"
+      content="https://kyle-semple-professional-portfolio-ai-ops-cx-succ-786228485832.us-west1.run.app/og-image.svg"
+    />
+    <meta property="og:site_name" content="Kyle Semple Portfolio" />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://kyle-semple-professional-portfolio-ai-ops-cx-succ-786228485832.us-west1.run.app/">
-    <meta property="twitter:title" content="Kyle Semple | AI Operations & Customer Success">
-    <meta property="twitter:description" content="Operationalizing AI for enterprise. Specialized in high-volume triage, customer success workflows, and technical implementation.">
-    <meta property="twitter:image" content="https://kyle-semple-professional-portfolio-ai-ops-cx-succ-786228485832.us-west1.run.app/og-image.svg">
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://kyle-semple-professional-portfolio-ai-ops-cx-succ-786228485832.us-west1.run.app/"
+    />
+    <meta property="twitter:title" content="Kyle Semple | AI Operations & Customer Success" />
+    <meta
+      property="twitter:description"
+      content="Operationalizing AI for enterprise. Specialized in high-volume triage, customer success workflows, and technical implementation."
+    />
+    <meta
+      property="twitter:image"
+      content="https://kyle-semple-professional-portfolio-ai-ops-cx-succ-786228485832.us-west1.run.app/og-image.svg"
+    />
 
     <!-- Favicon & App Icons -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="apple-touch-icon" href="/favicon.svg">
-    
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
     <!-- Performance: Preconnect to Font Origins -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;700;800&display=swap" rel="stylesheet">
-
-    <!-- Runtime Tailwind for Immediate Preview Fidelity -->
-    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        outfit: ['Outfit', 'sans-serif'],
-                    },
-                    colors: {
-                        indigo: { 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5' },
-                        slate: { 950: '#020617' },
-                        gold: {
-                            50: '#faf9f6', // Primary Background
-                            100: '#fffdf5', // Secondary Background
-                        },
-                        navy: {
-                            900: '#0f172a', // Heading Color
-                        }
-                    },
-                    typography: (theme) => ({
-                        DEFAULT: {
-                            css: {
-                                color: theme('colors.slate.600'),
-                                fontFamily: theme('fontFamily.sans'),
-                                'h1, h2, h3, h4': {
-                                    color: theme('colors.navy.900'),
-                                    fontFamily: theme('fontFamily.outfit'),
-                                    fontWeight: '700',
-                                },
-                                strong: { color: theme('colors.slate.800') },
-                                blockquote: {
-                                    borderLeftColor: theme('colors.indigo.500'),
-                                    color: theme('colors.slate.700'),
-                                },
-                            },
-                        },
-                        invert: {
-                            css: {
-                                color: theme('colors.slate.400'),
-                                'h1, h2, h3, h4': {
-                                    color: theme('colors.white'),
-                                },
-                                strong: { color: theme('colors.slate.200') },
-                                blockquote: {
-                                    color: theme('colors.slate.300'),
-                                },
-                            },
-                        },
-                    }),
-                },
-            },
-        }
-    </script>
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .glass-card {
-                background: rgba(255, 255, 255, 0.03);
-                backdrop-filter: blur(12px);
-                -webkit-backdrop-filter: blur(12px);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-            }
-            
-            .light .glass-card {
-                background: rgba(255, 255, 255, 0.8);
-                backdrop-filter: blur(8px);
-                -webkit-backdrop-filter: blur(8px);
-                border: 1px solid rgba(15, 23, 42, 0.08);
-                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
-            }
-
-            .gradient-text {
-                background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-            }
-
-            .bg-mesh {
-                background-color: #faf9f6;
-                background-image: 
-                    radial-gradient(at 0% 0%, #fffdf5 0, transparent 50%), 
-                    radial-gradient(at 50% 0%, rgba(245, 158, 11, 0.05) 0, transparent 50%), 
-                    radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.05) 0, transparent 50%);
-                transition: background-color 0.5s ease;
-            }
-
-            .dark .bg-mesh {
-                background-color: #020617;
-                background-image: 
-                    radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
-                    radial-gradient(at 50% 0%, hsla(225,39%,30%,0.1) 0, transparent 50%), 
-                    radial-gradient(at 100% 0%, hsla(339,49%,30%,0.1) 0, transparent 50%);
-            }
-            
-            .scrollbar-hide::-webkit-scrollbar {
-                display: none;
-            }
-            
-            .scrollbar-hide {
-                -ms-overflow-style: none;
-                scrollbar-width: none;
-            }
-            
-            /* Custom Scrollbar for Chat */
-            .chat-scroll::-webkit-scrollbar {
-                width: 4px;
-            }
-            
-            .chat-scroll::-webkit-scrollbar-track {
-                background: transparent;
-            }
-            
-            .chat-scroll::-webkit-scrollbar-thumb {
-                background: rgba(255,255,255,0.1);
-                border-radius: 4px;
-            }
-            
-            .light .chat-scroll::-webkit-scrollbar-thumb {
-                background: rgba(0,0,0,0.1);
-            }
-            
-            .chat-scroll::-webkit-scrollbar-thumb:hover {
-                background: rgba(255,255,255,0.2);
-            }
-        }
-
-        /* Global Selection */
-        ::selection {
-            background: #6366f1;
-            color: white;
-        }
-
-        /* Engagement Animation */
-        @keyframes chat-pulse {
-            0% { transform: scale(1); box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3); }
-            50% { transform: scale(1.05); box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.4); }
-            100% { transform: scale(1); box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3); }
-        }
-
-        .animate-chat-pulse {
-            animation: chat-pulse 2s infinite ease-in-out;
-        }
-    </style>
-    
-    <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.4",
-    "react/": "https://esm.sh/react@^19.2.4/",
-    "@google/genai": "https://esm.sh/@google/genai@^1.38.0",
-    "react-markdown": "https://esm.sh/react-markdown@^10.1.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "remark-gfm": "https://esm.sh/remark-gfm@^4.0.1",
-    "vite": "https://esm.sh/vite@^7.3.1",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
-    "@tailwindcss/typography": "https://esm.sh/@tailwindcss/typography@^0.5.19"
-  }
-}
-</script>
-</head>
-<body class="bg-mesh text-slate-600 dark:text-slate-200 antialiased overflow-x-hidden min-h-screen">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body
+    class="bg-mesh text-slate-600 dark:text-slate-200 antialiased overflow-x-hidden min-h-screen"
+  >
     <div id="root"></div>
     <noscript>
-        <div style="position: fixed; inset: 0; background-color: #020617; color: #94a3b8; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: monospace; z-index: 9999;">
-            <h1 style="color: white; font-size: 1.5rem; margin-bottom: 1rem;">// EXECUTION ENVIRONMENT: NO_SCRIPT</h1>
-            <p style="margin-bottom: 1.5rem;">JavaScript runtime is unavailable. Redirecting to raw data context.</p>
-            <a href="/llms.txt" style="color: #6366f1; text-decoration: underline; font-weight: bold; padding: 0.5rem 1rem; border: 1px solid #6366f1; border-radius: 0.5rem;">
-                [ACCESS_LLMS_TXT]
-            </a>
-        </div>
+      <div
+        style="
+          position: fixed;
+          inset: 0;
+          background-color: #020617;
+          color: #94a3b8;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          font-family: monospace;
+          z-index: 9999;
+        "
+      >
+        <h1 style="color: white; font-size: 1.5rem; margin-bottom: 1rem">
+          // EXECUTION ENVIRONMENT: NO_SCRIPT
+        </h1>
+        <p style="margin-bottom: 1.5rem">
+          JavaScript runtime is unavailable. Redirecting to raw data context.
+        </p>
+        <a
+          href="/llms.txt"
+          style="
+            color: #6366f1;
+            text-decoration: underline;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border: 1px solid #6366f1;
+            border-radius: 0.5rem;
+          "
+        >
+          [ACCESS_LLMS_TXT]
+        </a>
+      </div>
     </noscript>
-    <script type="module" src="/index.tsx"></script>
-</body>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
