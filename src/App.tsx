@@ -1,4 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+  Outlet,
+  useNavigate,
+  useLocation,
+  useOutletContext,
+} from 'react-router-dom';
 import HomeView from './views/HomeView';
 import CaseStudyView from './views/CaseStudyView';
 import ResumeView from './views/ResumeView';
@@ -9,7 +18,12 @@ import Toast from './components/Toast';
 import ErrorBoundary from './components/ErrorBoundary';
 import { CASE_STUDY_REGISTRY } from './constants';
 
-const App: React.FC = () => {
+type LayoutContext = {
+  onNavigateToCaseStudy: (id?: string) => void;
+  onOpenContact: () => void;
+};
+
+const AppLayout: React.FC = () => {
   // Theme Management
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     if (typeof window !== 'undefined') {
@@ -19,6 +33,16 @@ const App: React.FC = () => {
     }
     return 'dark';
   });
+
+  const [isContactOpen, setIsContactOpen] = useState(false);
+
+  const [toast, setToast] = useState<{ message: string; isVisible: boolean }>({
+    message: '',
+    isVisible: false,
+  });
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -32,31 +56,12 @@ const App: React.FC = () => {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
+  // Scroll to top on route change (except hash anchors)
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   const toggleTheme = () => setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
-
-  const getPageFromHash = (): 'home' | 'case-study' | 'resume' | '404' => {
-    try {
-      const hash = window.location.hash;
-      if (hash.startsWith('#case-study')) return 'case-study';
-      if (hash.startsWith('#resume')) return 'resume';
-      return 'home';
-    } catch (e) {
-      return 'home';
-    }
-  };
-
-  const [activePage, setActivePage] = useState<'home' | 'case-study' | 'resume' | '404'>(
-    getPageFromHash(),
-  );
-  const [currentHash, setCurrentHash] = useState<string>('');
-  const [isContactOpen, setIsContactOpen] = useState(false);
-  const [activeStudyId, setActiveStudyId] = useState<string>(CASE_STUDY_REGISTRY[0].id);
-
-  // Toast State
-  const [toast, setToast] = useState<{ message: string; isVisible: boolean }>({
-    message: '',
-    isVisible: false,
-  });
 
   const showToast = (message: string) => {
     setToast({ message, isVisible: true });
@@ -67,130 +72,56 @@ const App: React.FC = () => {
     showToast('Email copied to clipboard');
   };
 
-  useEffect(() => {
-    try {
-      setCurrentHash(window.location.hash);
-    } catch (e) {}
-
-    const handleHashChange = () => {
-      const newPage = getPageFromHash();
-      setActivePage(newPage);
-      try {
-        setCurrentHash(window.location.hash);
-      } catch (e) {}
-    };
-
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
-
-  // Smart Scroll Handling
-  useEffect(() => {
-    if (activePage === 'case-study' || activePage === '404' || activePage === 'resume') {
-      window.scrollTo(0, 0);
-    } else {
-      const targetHash = currentHash;
-
-      if (
-        targetHash &&
-        targetHash !== '#' &&
-        !targetHash.startsWith('#case-study') &&
-        !targetHash.startsWith('#resume')
-      ) {
-        setTimeout(() => {
-          const id = targetHash.replace('#', '');
-          const element = document.getElementById(id);
-          if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-          }
-        }, 100);
-      } else if (activePage === 'home' && !targetHash) {
-        window.scrollTo(0, 0);
-      }
-    }
-  }, [activePage, currentHash]);
-
-  const navigateToHome = () => {
-    setActivePage('home');
-    setCurrentHash('');
-    try {
-      window.location.hash = '';
-    } catch (e) {}
-  };
-
   const navigateToCaseStudy = (id?: string) => {
-    if (id) setActiveStudyId(id);
-    setActivePage('case-study');
-    setCurrentHash('#case-study');
-    try {
-      window.location.hash = 'case-study';
-    } catch (e) {}
+    navigate(`/case-studies/${id ?? CASE_STUDY_REGISTRY[0].id}`);
   };
 
-  const navigateToResume = () => {
-    setActivePage('resume');
-    setCurrentHash('#resume');
-    try {
-      window.location.hash = 'resume';
-    } catch (e) {}
-  };
+  const navigateToResume = () => navigate('/resume');
 
-  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, hash: string) => {
-    e.preventDefault();
-    if (activePage !== 'home') setActivePage('home');
-    setCurrentHash(hash);
-
-    const id = hash.replace('#', '');
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  const scrollToSection = (sectionId: string) => {
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const el = document.getElementById(sectionId);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      const el = document.getElementById(sectionId);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
     }
+  };
 
-    try {
-      window.location.hash = hash;
-    } catch (err) {}
+  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    e.preventDefault();
+    scrollToSection(sectionId);
   };
 
   const handleCommandNavigation = (path: string) => {
     if (path === 'home') {
-      navigateToHome();
+      navigate('/');
     } else if (path === 'case-study') {
       navigateToCaseStudy();
     } else if (path === 'resume') {
       navigateToResume();
     } else if (path.startsWith('case-study:')) {
-      const id = path.split(':')[1];
-      navigateToCaseStudy(id);
-    } else if (path.startsWith('#') || path === 'experience' || path === 'skills') {
-      const hash = path.startsWith('#') ? path : `#${path}`;
-      if (activePage !== 'home') setActivePage('home');
-      setCurrentHash(hash);
-      const id = hash.replace('#', '');
-      setTimeout(() => {
-        const element = document.getElementById(id);
-        if (element) element.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-      try {
-        window.location.hash = hash;
-      } catch (e) {}
+      navigateToCaseStudy(path.split(':')[1]);
+    } else if (path === 'experience' || path === 'skills' || path.startsWith('#')) {
+      const id = path.replace('#', '');
+      scrollToSection(id);
     }
   };
 
   const handleCommandAction = (action: string) => {
     if (action === 'contact') setIsContactOpen(true);
-    if (action === 'resume') {
-      navigateToResume();
-    }
+    if (action === 'resume') navigateToResume();
   };
 
-  // If on resume page, render it cleanly
-  if (activePage === 'resume') {
-    return (
-      <ErrorBoundary location="ResumeView">
-        <ResumeView />
-      </ErrorBoundary>
-    );
-  }
+  const isOnCaseStudy = location.pathname.startsWith('/case-studies');
+
+  const context: LayoutContext = {
+    onNavigateToCaseStudy: navigateToCaseStudy,
+    onOpenContact: () => setIsContactOpen(true),
+  };
 
   return (
     <div className="min-h-screen relative overflow-x-hidden selection:bg-indigo-500 selection:text-white transition-colors duration-500">
@@ -202,7 +133,7 @@ const App: React.FC = () => {
       >
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <button
-            onClick={navigateToHome}
+            onClick={() => navigate('/')}
             className="flex items-center gap-2 group focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-lg p-1"
             aria-label="Return to Homepage"
           >
@@ -216,26 +147,24 @@ const App: React.FC = () => {
 
           <div className="flex items-center gap-2 md:gap-6 text-sm font-medium text-slate-500 dark:text-slate-400">
             <button
-              onClick={navigateToHome}
+              onClick={() => navigate('/')}
               className={`hidden sm:block hover:text-navy-900 dark:hover:text-white transition-colors focus:outline-none focus:text-navy-900 dark:focus:text-white ${
-                activePage === 'home' && !currentHash ? 'text-navy-900 dark:text-white' : ''
+                location.pathname === '/' && !isOnCaseStudy ? 'text-navy-900 dark:text-white' : ''
               }`}
             >
               Home
             </button>
             <a
               href="#experience"
-              onClick={(e) => handleAnchorClick(e, '#experience')}
-              className={`hidden md:block hover:text-navy-900 dark:hover:text-white transition-colors focus:outline-none ${
-                currentHash === '#experience' ? 'text-navy-900 dark:text-white' : ''
-              }`}
+              onClick={(e) => handleAnchorClick(e, 'experience')}
+              className="hidden md:block hover:text-navy-900 dark:hover:text-white transition-colors focus:outline-none"
             >
               Experience
             </a>
             <button
               onClick={() => navigateToCaseStudy()}
               className={`hover:text-navy-900 dark:hover:text-white transition-colors focus:outline-none ${
-                activePage === 'case-study' ? 'text-navy-900 dark:text-white font-bold' : ''
+                isOnCaseStudy ? 'text-navy-900 dark:text-white font-bold' : ''
               }`}
             >
               Case Studies
@@ -343,42 +272,7 @@ const App: React.FC = () => {
       </nav>
 
       <main className="transition-opacity duration-300">
-        {activePage === 'home' ? (
-          <ErrorBoundary location="HomeView">
-            <HomeView
-              onNavigateToCaseStudy={navigateToCaseStudy}
-              onOpenContact={() => setIsContactOpen(true)}
-            />
-          </ErrorBoundary>
-        ) : activePage === 'case-study' ? (
-          <ErrorBoundary location="CaseStudyView">
-            <CaseStudyView
-              onNavigateToHome={navigateToHome}
-              activeStudyId={activeStudyId}
-              onActiveStudyChange={setActiveStudyId}
-            />
-          </ErrorBoundary>
-        ) : (
-          <div className="min-h-screen flex items-center justify-center px-6 pt-20">
-            <div className="text-center space-y-6 max-w-md animate-in fade-in zoom-in-95">
-              <div className="w-24 h-24 bg-indigo-500/10 text-indigo-500 rounded-full flex items-center justify-center mx-auto border border-indigo-500/20">
-                <span className="font-outfit font-bold text-3xl">404</span>
-              </div>
-              <h1 className="text-3xl font-outfit font-bold text-navy-900 dark:text-white">
-                Page Not Found
-              </h1>
-              <p className="text-slate-500 dark:text-slate-400">
-                The page you're looking for doesn't exist or has been moved.
-              </p>
-              <button
-                onClick={navigateToHome}
-                className="px-6 py-3 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10 text-navy-900 dark:text-white rounded-xl font-medium transition-all"
-              >
-                Return Home
-              </button>
-            </div>
-          </div>
-        )}
+        <Outlet context={context} />
       </main>
 
       {/* Footer / Contact */}
@@ -542,5 +436,44 @@ const App: React.FC = () => {
     </div>
   );
 };
+
+// Wrapper to pass layout context as HomeView props
+const HomeWrapper: React.FC = () => {
+  const { onNavigateToCaseStudy, onOpenContact } = useOutletContext<LayoutContext>();
+  return (
+    <ErrorBoundary location="HomeView">
+      <HomeView onNavigateToCaseStudy={onNavigateToCaseStudy} onOpenContact={onOpenContact} />
+    </ErrorBoundary>
+  );
+};
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <AppLayout />,
+    children: [
+      { index: true, element: <HomeWrapper /> },
+      {
+        path: 'case-studies/:studyId',
+        element: (
+          <ErrorBoundary location="CaseStudyView">
+            <CaseStudyView />
+          </ErrorBoundary>
+        ),
+      },
+    ],
+  },
+  {
+    path: '/resume',
+    element: (
+      <ErrorBoundary location="ResumeView">
+        <ResumeView />
+      </ErrorBoundary>
+    ),
+  },
+  { path: '*', element: <Navigate to="/" replace /> },
+]);
+
+const App: React.FC = () => <RouterProvider router={router} />;
 
 export default App;

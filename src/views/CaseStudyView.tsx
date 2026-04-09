@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import MarkdownSection from '../components/MarkdownSection';
 import ErrorBoundary from '../components/ErrorBoundary';
 import { CASE_STUDY_REGISTRY } from '../constants';
@@ -11,12 +12,7 @@ import {
 } from '../components/CaseStudyComponents';
 import { generateSpeech } from '../geminiService';
 import { decode, decodeAudioData } from '../utils/audioUtils';
-
-interface CaseStudyViewProps {
-  onNavigateToHome: () => void;
-  activeStudyId: string;
-  onActiveStudyChange: (id: string) => void;
-}
+import { useCaseStudyContent } from '../hooks/useCaseStudyContent';
 
 const CATEGORY_COLORS: Record<CaseStudyCategory, string> = {
   'ai-ops': 'bg-indigo-500',
@@ -172,20 +168,23 @@ const EvidenceMap: React.FC<{ activeId: string; onSelect: (id: string) => void }
   );
 };
 
-const CaseStudyView: React.FC<CaseStudyViewProps> = ({
-  onNavigateToHome,
-  activeStudyId,
-  onActiveStudyChange,
-}) => {
+const CaseStudyView: React.FC = () => {
+  const { studyId } = useParams<{ studyId: string }>();
+  const navigate = useNavigate();
+
+  const activeStudyId = studyId ?? CASE_STUDY_REGISTRY[0].id;
+
   const [activeFilter, setActiveFilter] = useState<CaseStudyCategory | 'all'>('all');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isGlowActive, setIsGlowActive] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [voiceError, setVoiceError] = useState(false);
 
+  const { content: fetchedContent, isLoading: contentLoading } = useCaseStudyContent(activeStudyId);
+
   useEffect(() => {
     setIsGlowActive(true);
-    setVoiceError(false); // Reset error on study change
+    setVoiceError(false);
     const timer = setTimeout(() => setIsGlowActive(false), 2000);
     return () => clearTimeout(timer);
   }, [activeStudyId]);
@@ -196,6 +195,13 @@ const CaseStudyView: React.FC<CaseStudyViewProps> = ({
   }, [activeFilter]);
 
   const activeStudy = CASE_STUDY_REGISTRY.find((s) => s.id === activeStudyId);
+
+  // Use fetched content when available, fall back to in-memory content
+  const displayContent = fetchedContent || activeStudy?.content || '';
+
+  const handleStudyChange = (id: string) => {
+    navigate(`/case-studies/${id}`);
+  };
 
   const handleVoiceBrief = async () => {
     if (!activeStudy || isSpeaking) return;
@@ -233,7 +239,7 @@ const CaseStudyView: React.FC<CaseStudyViewProps> = ({
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between mb-12">
           <button
-            onClick={onNavigateToHome}
+            onClick={() => navigate('/')}
             className="group flex items-center gap-2 text-slate-500 hover:text-navy-900 dark:hover:text-white transition-colors font-medium"
           >
             <svg
@@ -369,7 +375,7 @@ const CaseStudyView: React.FC<CaseStudyViewProps> = ({
                 {filteredStudies.map((study) => (
                   <button
                     key={study.id}
-                    onClick={() => onActiveStudyChange(study.id)}
+                    onClick={() => handleStudyChange(study.id)}
                     className={`text-left p-4 rounded-3xl transition-all duration-300 border relative overflow-hidden ${activeStudyId === study.id ? 'glass-card border-indigo-500/20 shadow-xl scale-[1.02]' : 'bg-transparent border-black/5 hover:border-indigo-500/10'}`}
                   >
                     <div
@@ -406,7 +412,7 @@ const CaseStudyView: React.FC<CaseStudyViewProps> = ({
                   className={`animate-in fade-in slide-in-from-right-4 duration-500 space-y-12 mx-auto w-full max-w-4xl`}
                 >
                   {/* Full Evidence Map (Lobby Experience) */}
-                  <EvidenceMap activeId={activeStudyId} onSelect={onActiveStudyChange} />
+                  <EvidenceMap activeId={activeStudyId} onSelect={handleStudyChange} />
 
                   {activeStudy.heroArtifact && (
                     <HtmlPreviewCard
@@ -419,7 +425,7 @@ const CaseStudyView: React.FC<CaseStudyViewProps> = ({
                   )}
 
                   {activeStudy.rigor && <RigorCard rigor={activeStudy.rigor} />}
-                  <MarkdownSection content={activeStudy.content} isLoading={false} />
+                  <MarkdownSection content={displayContent} isLoading={contentLoading} />
                   {activeStudy.artifacts && activeStudy.artifacts.length > 0 && (
                     <ArtifactGallery artifacts={activeStudy.artifacts} />
                   )}
