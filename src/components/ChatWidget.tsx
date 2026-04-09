@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { initChat, sendMessageStream } from '../geminiService';
+import { sendMessageStream, ChatHistory } from '../geminiService';
 import ReactMarkdown from 'react-markdown';
 
 interface Message {
@@ -42,7 +42,6 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    initChat();
     // Engage user with pulse for 5 seconds, then stop
     const timer = setTimeout(() => setShouldPulse(false), 5000);
     return () => clearTimeout(timer);
@@ -102,6 +101,12 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
     if (!isOpen) setIsOpen(true);
     setShouldPulse(false);
 
+    // Build history from current messages before adding the new user message
+    const history: ChatHistory = messages.map((m) => ({
+      role: m.role,
+      parts: [{ text: m.text }],
+    }));
+
     setInput('');
     setMessages((prev) => [...prev, { role: 'user', text: userMsg }]);
     setIsTyping(true);
@@ -110,7 +115,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
       let fullResponse = '';
       setMessages((prev) => [...prev, { role: 'model', text: '' }]);
 
-      const stream = sendMessageStream(userMsg);
+      const stream = sendMessageStream(userMsg, history);
       for await (const chunk of stream) {
         fullResponse += chunk;
         setMessages((prev) => {
