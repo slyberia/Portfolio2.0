@@ -29,18 +29,23 @@ describe('geminiProxy', () => {
   beforeEach(() => {
     process.env.GEMINI_API_KEY = VALID_KEY;
 
-    // Default: GoogleGenAI returns a chat that streams one chunk
-    MockGoogleGenAI.mockImplementation(() => ({
-      chats: {
-        create: vi.fn().mockReturnValue({
-          sendMessageStream: mockSendMessageStream,
-        }),
-      },
-    }));
-
-    mockSendMessageStream.mockImplementation(async function* () {
-      yield { text: 'Mock response from Gemini' };
+    // Default: GoogleGenAI returns a chat that streams one chunk.
+    // Must use regular function (not arrow) because it is called with `new`.
+    MockGoogleGenAI.mockImplementation(function () {
+      return {
+        chats: {
+          create: vi.fn().mockReturnValue({
+            sendMessageStream: mockSendMessageStream,
+          }),
+        },
+      };
     });
+
+    mockSendMessageStream.mockImplementation(() =>
+      (async function* () {
+        yield { text: 'Mock response from Gemini' };
+      })(),
+    );
   });
 
   afterEach(() => {
