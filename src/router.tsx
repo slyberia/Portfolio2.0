@@ -16,6 +16,7 @@ import ChatWidget from './components/ChatWidget';
 import Toast from './components/Toast';
 import ErrorBoundary from './components/ErrorBoundary';
 import { CASE_STUDY_REGISTRY } from './constants';
+import { useRecruiterMode } from './context/RecruiterModeContext';
 
 type LayoutContext = {
   onNavigateToCaseStudy: (id?: string) => void;
@@ -46,6 +47,8 @@ export const RouteErrorFallback: React.FC = () => (
 );
 
 export const AppLayout: React.FC = () => {
+  const { isRecruiterMode, toggleRecruiterMode } = useRecruiterMode();
+
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('theme');
@@ -80,6 +83,13 @@ export const AppLayout: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
+
+  // Allow child components (e.g. recruiter CTA) to open contact modal via custom event
+  useEffect(() => {
+    const handler = () => setIsContactOpen(true);
+    window.addEventListener('open-contact', handler);
+    return () => window.removeEventListener('open-contact', handler);
+  }, []);
 
   const toggleTheme = () => setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
 
@@ -280,6 +290,26 @@ export const AppLayout: React.FC = () => {
             {/* Nav Divider */}
             <div className="hidden md:block w-px h-6 bg-black/10 dark:bg-white/10"></div>
 
+            {/* Recruiter Mode Toggle */}
+            <button
+              onClick={toggleRecruiterMode}
+              className="hidden lg:inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-xs font-bold transition-all hover:border-emerald-500/50 focus:outline-none"
+              aria-label="Toggle recruiter mode"
+            >
+              <span
+                className={`w-2 h-2 rounded-full ${isRecruiterMode ? 'bg-emerald-500 animate-pulse shadow-[0_0_6px_rgba(16,185,129,0.6)]' : 'bg-slate-400 dark:bg-slate-600'}`}
+              />
+              <span
+                className={
+                  isRecruiterMode
+                    ? 'text-emerald-600 dark:text-emerald-400'
+                    : 'text-slate-500 dark:text-slate-400'
+                }
+              >
+                {isRecruiterMode ? 'Recruiter Mode: ON' : 'Recruiter Mode'}
+              </span>
+            </button>
+
             {/* Contact - Primary CTA */}
             <button
               onClick={() => setIsContactOpen(true)}
@@ -290,6 +320,25 @@ export const AppLayout: React.FC = () => {
           </div>
         </div>
       </nav>
+
+      {/* Recruiter Mode Banner */}
+      {isRecruiterMode && (
+        <div className="bg-emerald-500 text-white px-6 py-3 flex items-center justify-between gap-4 animate-in slide-in-from-top-2 duration-300">
+          <div className="flex items-center gap-3">
+            <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+            <span className="text-sm font-bold">
+              Recruiter Mode Active — Simplified view for hiring review
+            </span>
+          </div>
+          <button
+            onClick={toggleRecruiterMode}
+            className="text-xs font-bold px-3 py-1 rounded-full bg-white/20 hover:bg-white/30 transition-colors focus:outline-none"
+            aria-label="Exit recruiter mode"
+          >
+            Exit
+          </button>
+        </div>
+      )}
 
       <main className="transition-opacity duration-300">
         <Outlet context={context} />

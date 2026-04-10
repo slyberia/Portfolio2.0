@@ -3,6 +3,7 @@ import { describe, it, expect, vi, beforeAll } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { routeDefinitions } from '../router';
+import { RecruiterModeProvider } from '../context/RecruiterModeContext';
 
 // Mock matchMedia (not available in jsdom)
 beforeAll(() => {
@@ -39,7 +40,11 @@ vi.mock('../components/Toast', () => ({ default: () => null }));
 
 function renderRoute(path: string) {
   const router = createMemoryRouter(routeDefinitions, { initialEntries: [path] });
-  render(<RouterProvider router={router} />);
+  render(
+    <RecruiterModeProvider>
+      <RouterProvider router={router} />
+    </RecruiterModeProvider>,
+  );
 }
 
 describe('routing', () => {

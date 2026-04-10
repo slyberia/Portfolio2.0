@@ -1,3 +1,8 @@
+> **Role:** AI Systems Architect
+> **Outcome:** Eliminated "entropy drift" in multi-turn LLM sessions by engineering a Guardian Layer protocol that enforced architectural constraints, reducing destructive edits and stack violations across development workflows
+> **Stack/Tools:** Google AI Studio (Gemini 1.5 Pro), Markdown, System Prompting
+> **Relevance:** Shows how to impose engineering discipline on probabilistic AI systems — critical for any team shipping AI-assisted or AI-augmented products
+
 # 🛡️ Project Aegis — Engineering Reliability into LLM Workflows
 
 > **Project Overview**

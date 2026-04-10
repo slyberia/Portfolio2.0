@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { EXPERIENCE, SKILL_GROUPS, CERTIFICATIONS } from '../constants';
+import { Link } from 'react-router-dom';
+import { EXPERIENCE, SKILL_GROUPS, CERTIFICATIONS, CASE_STUDY_REGISTRY } from '../constants';
 import SkillDiscoveryModal from '../components/SkillDiscoveryModal';
 
 interface HomeViewProps {
@@ -12,9 +13,10 @@ interface TickerProps {
   label: string;
   tooltip: string;
   targetId: string;
+  caseStudyId: string;
 }
 
-const TickerCard: React.FC<TickerProps> = ({ metric, label, tooltip, targetId }) => {
+const TickerCard: React.FC<TickerProps> = ({ metric, label, tooltip, targetId, caseStudyId }) => {
   const scrollToTarget = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -38,15 +40,25 @@ const TickerCard: React.FC<TickerProps> = ({ metric, label, tooltip, targetId })
         </div>
       </button>
 
-      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 w-48 opacity-0 group-hover/ticker:opacity-100 pointer-events-none transition-all duration-300 translate-y-2 group-hover/ticker:translate-y-0 z-50">
-        <div className="relative bg-white dark:bg-slate-900/90 backdrop-blur-md border border-slate-200 dark:border-white/10 p-3 rounded-xl shadow-2xl text-xs text-slate-600 dark:text-slate-300 leading-relaxed text-center">
+      {/* Tooltip */}
+      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 w-52 opacity-0 group-hover/ticker:opacity-100 pointer-events-none group-hover/ticker:pointer-events-auto transition-all duration-300 translate-y-2 group-hover/ticker:translate-y-0 z-50">
+        <div className="relative bg-white dark:bg-slate-900/90 backdrop-blur-md border border-slate-200 dark:border-white/10 p-3 rounded-xl shadow-2xl text-xs text-slate-600 dark:text-slate-300 leading-relaxed text-center space-y-2">
           <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-white dark:bg-slate-900 border-r border-b border-slate-200 dark:border-white/10 rotate-45"></div>
-          {tooltip}
+          <p>{tooltip}</p>
+          <Link
+            to={`/case-studies/${caseStudyId}`}
+            className="inline-flex items-center gap-1 text-indigo-600 dark:text-indigo-400 font-bold hover:underline"
+          >
+            See evidence →
+          </Link>
         </div>
       </div>
     </div>
   );
 };
+
+// 3-card preview strip using the first 3 entries from CASE_STUDY_REGISTRY
+const PREVIEW_STUDIES = CASE_STUDY_REGISTRY.slice(0, 3);
 
 const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContact }) => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -83,9 +95,9 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
   return (
     <>
-      {/* Hero Section */}
+      {/* Hero Section — reduced padding so stats row is visible at 1080p */}
       <section
-        className="relative pt-40 pb-20 md:pt-52 md:pb-32 px-6 overflow-hidden group"
+        className="relative pt-24 pb-6 md:pt-28 md:pb-10 px-6 overflow-hidden group"
         onMouseMove={handleMouseMove}
       >
         <div
@@ -96,7 +108,14 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
           aria-hidden="true"
         />
 
-        <div className="max-w-5xl mx-auto flex flex-col items-center text-center space-y-8 relative z-10">
+        <div className="max-w-5xl mx-auto flex flex-col items-center text-center space-y-6 relative z-10">
+          {/* Open-to-work signal pill */}
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-400 text-xs font-bold animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_6px_rgba(16,185,129,0.6)]"></span>
+            Open to AI Ops &amp; CX Success roles
+          </div>
+
+          {/* Role identity pill */}
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-widest animate-in fade-in slide-in-from-bottom-4 duration-1000">
             <span>Customer Success</span>
             <span className="w-1 h-1 bg-indigo-500 rounded-full shadow-[0_0_5px_currentColor]"></span>
@@ -104,8 +123,9 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             <span className="w-1 h-1 bg-indigo-500 rounded-full shadow-[0_0_5px_currentColor]"></span>
             <span>AI Operations</span>
           </div>
+
           <h1 className="text-5xl md:text-7xl font-outfit font-extrabold text-navy-900 dark:text-white leading-tight animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-100 drop-shadow-sm dark:drop-shadow-2xl">
-            Bridging <span className="gradient-text">Operations</span> &{' '}
+            Bridging <span className="gradient-text">Operations</span> &amp;{' '}
             <span className="gradient-text">Intelligence</span>
           </h1>
           <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-3xl mx-auto animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-200">
@@ -114,12 +134,14 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             to bridge the gap between model potential and enterprise-grade customer outcomes at
             scale.
           </p>
+
+          {/* CTAs — "View Case Studies" is primary, "Get in Touch" is secondary */}
           <div className="flex flex-wrap gap-4 justify-center animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
             <button
-              onClick={onOpenContact}
-              className="px-10 py-4 bg-indigo-500/5 dark:bg-indigo-500/10 backdrop-blur-md text-indigo-700 dark:text-indigo-400 border border-indigo-500/20 hover:border-indigo-500/50 dark:hover:border-indigo-400/50 rounded-2xl font-bold shadow-sm hover:shadow-indigo-500/10 hover:-translate-y-0.5 active:scale-95 transition-all flex items-center gap-3 group/btn"
+              onClick={() => onNavigateToCaseStudy()}
+              className="px-10 py-4 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 hover:-translate-y-0.5 active:scale-95 transition-all shadow-lg shadow-indigo-500/20 flex items-center gap-3 group/btn"
             >
-              Contact
+              View Case Studies
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform"
@@ -135,10 +157,10 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               </svg>
             </button>
             <button
-              onClick={() => onNavigateToCaseStudy()}
-              className="px-10 py-4 bg-slate-100/50 dark:bg-white/5 backdrop-blur-md border border-black/5 dark:border-white/10 text-navy-900 dark:text-white rounded-2xl font-bold hover:bg-white dark:hover:bg-white/10 hover:border-slate-300 dark:hover:border-white/20 hover:-translate-y-0.5 active:scale-95 transition-all shadow-sm dark:shadow-none"
+              onClick={onOpenContact}
+              className="px-10 py-4 bg-indigo-500/5 dark:bg-indigo-500/10 backdrop-blur-md text-indigo-700 dark:text-indigo-400 border border-indigo-500/20 hover:border-indigo-500/50 dark:hover:border-indigo-400/50 rounded-2xl font-bold shadow-sm hover:shadow-indigo-500/10 hover:-translate-y-0.5 active:scale-95 transition-all"
             >
-              Read Case Studies
+              Get in Touch
             </button>
           </div>
         </div>
@@ -157,24 +179,28 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             label="Weekly Tickets"
             tooltip="Managed enterprise-grade pressure with ~100+ Zendesk conversations weekly at Printful."
             targetId="exp-printful"
+            caseStudyId="ops-triage"
           />
           <TickerCard
             metric="$100k+"
             label="Client Tiers"
             tooltip="Experience handling high-stakes accounts where operational accuracy is critical for revenue."
             targetId="exp-printful"
+            caseStudyId="ops-triage"
           />
           <TickerCard
             metric="120+"
             label="SLA Requests/wk"
             tooltip="Validated high-volume throughput in utility datasets via strict triage protocols at Apex Systems."
             targetId="exp-apex"
+            caseStudyId="ops-triage"
           />
           <TickerCard
             metric="4+ Years"
             label="GIS Expertise"
             tooltip="Core technical foundation in spatial data systems and architectural design."
             targetId="foundation"
+            caseStudyId="nba-systems-qa"
           />
         </div>
       </section>
@@ -257,7 +283,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               Toolbox
             </h2>
             <h3 className="text-4xl md:text-5xl font-outfit font-bold text-navy-900 dark:text-white">
-              Skills & Technologies
+              Skills &amp; Technologies
             </h3>
           </div>
 
@@ -342,6 +368,66 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
         />
       )}
 
+      {/* Case Study Preview Strip */}
+      <section className="py-24 px-6 bg-slate-50/50 dark:bg-slate-900/30 transition-colors duration-500">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12 space-y-4">
+            <h2 className="text-xs font-bold text-indigo-600 dark:text-indigo-500 uppercase tracking-[0.3em]">
+              Evidence
+            </h2>
+            <h3 className="text-4xl md:text-5xl font-outfit font-bold text-navy-900 dark:text-white">
+              Featured Work
+            </h3>
+            <p className="text-slate-500 dark:text-slate-400 max-w-xl mx-auto">
+              A curated selection of case studies demonstrating systems thinking, AI operations, and
+              customer success outcomes.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {PREVIEW_STUDIES.map((study) => (
+              <div
+                key={study.id}
+                className="glass-card p-6 rounded-3xl flex flex-col gap-4 hover:translate-y-[-4px] transition-all duration-300 group"
+              >
+                {/* Primary tag */}
+                <span className="inline-flex self-start items-center px-2.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-600 dark:text-indigo-400 text-[10px] font-bold uppercase tracking-widest">
+                  {study.tags[0]}
+                </span>
+
+                <h4 className="text-xl font-outfit font-bold text-navy-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                  {study.title}
+                </h4>
+
+                <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed flex-1">
+                  {study.rationale}
+                </p>
+
+                <Link
+                  to={`/case-studies/${study.id}`}
+                  className="inline-flex items-center gap-2 text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:gap-3 transition-all"
+                >
+                  View Case Study
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-4 h-4"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
+                  </svg>
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Education & Certs */}
       <section id="foundation" className="py-32 px-6 scroll-mt-24 transition-colors duration-500">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16">
@@ -358,7 +444,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                   B.A., Geography
                 </h4>
                 <p className="text-indigo-600 dark:text-indigo-400 font-medium font-outfit">
-                  Queen's University
+                  Queen&#39;s University
                 </p>
                 <p className="text-slate-500 dark:text-slate-400 mt-4 text-sm leading-relaxed">
                   Relevant Coursework: Data Analytics, Geographic Information Science, Project
