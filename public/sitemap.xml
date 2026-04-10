@@ -7,9 +7,45 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://kyle-semple-professional-portfolio-ai-ops-cx-succ-786228485832.us-west1.run.app/#case-study</loc>
+    <loc>https://kyle-semple-professional-portfolio-ai-ops-cx-succ-786228485832.us-west1.run.app/case-studies</loc>
     <lastmod>2024-05-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kyle-semple-professional-portfolio-ai-ops-cx-succ-786228485832.us-west1.run.app/case-studies/prompter-hub</loc>
+    <lastmod>2024-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kyle-semple-professional-portfolio-ai-ops-cx-succ-786228485832.us-west1.run.app/case-studies/project-aegis</loc>
+    <lastmod>2024-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kyle-semple-professional-portfolio-ai-ops-cx-succ-786228485832.us-west1.run.app/case-studies/nba-systems-qa</loc>
+    <lastmod>2024-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kyle-semple-professional-portfolio-ai-ops-cx-succ-786228485832.us-west1.run.app/case-studies/luxe-lofts</loc>
+    <lastmod>2024-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kyle-semple-professional-portfolio-ai-ops-cx-succ-786228485832.us-west1.run.app/case-studies/ops-triage</loc>
+    <lastmod>2024-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kyle-semple-professional-portfolio-ai-ops-cx-succ-786228485832.us-west1.run.app/resume</loc>
+    <lastmod>2024-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>
