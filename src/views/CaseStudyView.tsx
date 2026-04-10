@@ -13,13 +13,10 @@ import {
 import { generateSpeech } from '../geminiService';
 import { decode, decodeAudioData } from '../utils/audioUtils';
 import { useCaseStudyContent } from '../hooks/useCaseStudyContent';
-
-const CATEGORY_COLORS: Record<CaseStudyCategory, string> = {
-  'ai-ops': 'bg-indigo-500',
-  'qa-data': 'bg-amber-500',
-  'success-strategy': 'bg-emerald-500',
-  creative: 'bg-rose-500',
-};
+import { useRecruiterMode } from '../context/RecruiterModeContext';
+import { readingTime } from '../utils/readingTime';
+import { recruiterSummary } from '../utils/recruiterSummary';
+import { CATEGORY_COLORS } from '../constants/categories';
 
 const CATEGORY_LABELS: Record<CaseStudyCategory, string> = {
   'ai-ops': 'AI Ops',
@@ -171,6 +168,7 @@ const EvidenceMap: React.FC<{ activeId: string; onSelect: (id: string) => void }
 const CaseStudyView: React.FC = () => {
   const { studyId } = useParams<{ studyId: string }>();
   const navigate = useNavigate();
+  const { isRecruiterMode } = useRecruiterMode();
 
   const activeStudyId = studyId ?? CASE_STUDY_REGISTRY[0].id;
 
@@ -313,11 +311,16 @@ const CaseStudyView: React.FC = () => {
           <aside className="space-y-6 md:sticky md:top-32 h-fit transition-all duration-500 z-10">
             <div className="flex items-start justify-between">
               <div
-                className={`space-y-2 transition-all duration-300 ${isSidebarOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'}`}
+                className={`space-y-1 transition-all duration-300 ${isSidebarOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'}`}
               >
                 <h1 className="text-3xl font-outfit font-bold text-navy-900 dark:text-white whitespace-nowrap">
                   Evidence Hub
                 </h1>
+                {displayContent && (
+                  <p className="text-[11px] text-slate-400 font-medium">
+                    {readingTime(displayContent)}
+                  </p>
+                )}
               </div>
               <button
                 onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -407,10 +410,36 @@ const CaseStudyView: React.FC = () => {
                 <div className="glass-card p-12 rounded-3xl text-center">
                   <p className="text-slate-500">Selection required.</p>
                 </div>
+              ) : isRecruiterMode ? (
+                /* Recruiter Mode — simplified view */
+                <div className="animate-in fade-in slide-in-from-right-4 duration-500 space-y-8 mx-auto w-full max-w-3xl">
+                  {activeStudy.rigor && <RigorCard rigor={activeStudy.rigor} />}
+                  <MarkdownSection content={recruiterSummary(activeStudy)} isLoading={false} />
+                  <div className="pt-4">
+                    <button
+                      onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
+                      className="w-full flex items-center justify-center gap-3 px-8 py-4 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 hover:-translate-y-0.5 active:scale-95 transition-all shadow-lg shadow-indigo-500/20 group/cta"
+                    >
+                      Get in Touch
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5 group-hover/cta:translate-x-1 transition-transform"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M5 12h14" />
+                        <path d="m12 5 7 7-7 7" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
               ) : (
-                <div
-                  className={`animate-in fade-in slide-in-from-right-4 duration-500 space-y-12 mx-auto w-full max-w-4xl`}
-                >
+                /* Full engineering view */
+                <div className="animate-in fade-in slide-in-from-right-4 duration-500 space-y-12 mx-auto w-full max-w-4xl">
                   {/* Full Evidence Map (Lobby Experience) */}
                   <EvidenceMap activeId={activeStudyId} onSelect={handleStudyChange} />
 

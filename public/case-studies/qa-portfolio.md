@@ -1,3 +1,8 @@
+> **Role:** Quality Control Lead / Ops Specialist
+> **Outcome:** Designed a 3-tier "Zero-Trust" QA framework for high-stakes geospatial utility data — structural validation, peer review, and output verification — reducing defect rates without sacrificing throughput
+> **Stack/Tools:** ESRI ArcMap, Jira, Excel Macros, custom validation scripts
+> **Relevance:** Transferable QA discipline applicable to any data-intensive engineering team: the same methodology that catches grid data errors catches data pipeline bugs and model training issues
+
 # 🧪 QA Methodology – Testing Before Trusting
 
 > **Project Overview**

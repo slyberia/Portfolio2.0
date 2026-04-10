@@ -1,3 +1,8 @@
+> **Role:** Quality Control Specialist / GIS Technician
+> **Outcome:** Converted reactive backlogs into predictable pipelines by implementing batch-processing triage at 120+ requests/week, eliminating decision fatigue and establishing clear escalation criteria
+> **Stack/Tools:** ESRI ArcMap, Jira, Excel Macros, Custom Dashboards
+> **Relevance:** Proves operational systems thinking — building processes that scale throughput without scaling headcount
+
 # ⚖️ Systems at Scale: Triage & QA
 
 > **Project Overview**

@@ -1,3 +1,8 @@
+> **Role:** QA Systems Analyst
+> **Outcome:** Designed a controlled test harness that isolated badge and attribute interactions in a complex probabilistic engine, producing falsifiable test cases from community "folk theories"
+> **Stack/Tools:** Custom test harness, statistical sampling, systems documentation, spreadsheet modeling
+> **Relevance:** Demonstrates rigorous QA methodology applied to probabilistic systems — directly transferable to ML model validation, data pipelines, and game/simulation testing
+
 # 🎮 NBA 2K: Systems Analysis & QA Methodology
 
 > **Project Overview**

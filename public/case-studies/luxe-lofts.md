@@ -1,3 +1,8 @@
+> **Role:** Creative Solutions Architect
+> **Outcome:** Unified a fragmented digital footprint — CRM, website, content, and analytics — into a single operational system, eliminating lead leakage and aligning brand presence with property quality
+> **Stack/Tools:** Salesforce, WordPress (Elementor), Zapier, Google Analytics, Adobe Creative Cloud
+> **Relevance:** End-to-end ownership of a digital transformation: from audit through implementation — shows delivery capability, not just strategic thinking
+
 # 🏛️ Luxe Lofts — Building a Unified Digital Ecosystem
 
 > **"This system makes Luxe Lofts easy to find, easy to trust, and easy to book — everything your customers already expect, but no one has built for you yet."**

@@ -1,3 +1,8 @@
+> **Role:** Data Quality Analyst / GIS Technician
+> **Outcome:** Standardized legacy geospatial datasets for AI-readiness by auditing attribute tables and building a "Golden Record" validation rule-set, enabling automated processing where manual review had been required
+> **Stack/Tools:** ESRI ArcMap, Excel, manual validation scripting
+> **Relevance:** Directly applicable to any AI/ML team — clean, consistent data inputs are the prerequisite for model performance, and this shows hands-on experience achieving that at scale
+
 # Case Study: Data Readiness for AI Adoption
 
 Preparing for AI adoption often reveals that existing data structures aren't ready for inference. This case study explores how I approached unstructured data organization in a geospatial context.

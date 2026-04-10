@@ -1,3 +1,8 @@
+> **Role:** AI Systems Architect / Full-Stack Developer
+> **Outcome:** Eliminated the LLM "translation gap" by building a middleware layer that converts vague intent into structured prompt bundles and Firestore-ready schemas in a single workflow
+> **Stack/Tools:** Gemini Canvas, React, Tailwind UI, Firestore, Next.js
+> **Relevance:** Demonstrates infrastructure-level AI tooling design — systematizing how teams interface with LLMs rather than improvising it prompt by prompt
+
 # 🐦‍🔥 Firebase Studios Prompter Hub V9 – A Case Study
 
 > **Project Overview**

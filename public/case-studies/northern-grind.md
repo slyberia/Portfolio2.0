@@ -1,3 +1,8 @@
+> **Role:** Brand & Systems Strategist
+> **Outcome:** Reframed a cosmetic rebrand as a system redesign — delivering brand cohesion, high-speed menu UX, and break-even-modeled POS recommendations that reduced operational friction and margin leakage
+> **Stack/Tools:** Adobe Creative Suite, cost modeling, Mermaid diagrams
+> **Relevance:** Systems thinking applied to business operations — shows ability to connect brand, UX, and financial modeling into a single coherent loop rather than treating them as separate deliverables
+
 # ☕ Northern Grind — Digital Rebrand & Systems Strategy
 
 > **Project Overview**
