@@ -8,7 +8,8 @@
 - **Role:** AI Operations & Customer Success Specialist
 - **Core Value:** "Bridging Operations & Intelligence"
 - **Location:** Ann Arbor, MI
-- **Tech Stack:** React (Frontend), Vite (Build), Tailwind CSS (Styling), Google Gemini SDK (Intelligence)
+- **Tech Stack:** React (Frontend), Vite (Build), Tailwind CSS (Styling), Google Gemini 2.0 Flash (Intelligence, server-side proxy)
+- **Chat endpoint:** POST /api/chat (server-side proxy, key never in bundle)
 
 ---
 
@@ -154,3 +155,13 @@ Fragmented digital footprint (multiple domains, broken links) causing lead leaka
 - **Infrastructure:** Centralized Salesforce CRM + Zapier for automated lead capture (<15 min response time).
 - **Web:** Rebuilt on WordPress/Elementor for visual hierarchy.
 - **Outcome:** Unified 3-step conversion path (See -> Book -> Confirm).
+
+---
+
+## Build Context
+
+Built in Google AI Studio (Gemini), migrated to GitHub for structured refactoring.
+Build narrative: /HOW_IT_WAS_BUILT.md
+Architecture decisions: /DECISIONS.md
+Architecture overview: /ARCHITECTURE.md
+The AI chat widget is grounded portfolio retrieval, not a general chatbot.

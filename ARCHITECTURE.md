@@ -2,15 +2,17 @@
 
 ## Stack
 
-| Layer              | Technology                              |
-| ------------------ | --------------------------------------- |
-| Frontend framework | React 19 + TypeScript (strict)          |
-| Build tool         | Vite 5                                  |
-| Styling            | Tailwind CSS v3                         |
-| Routing            | React Router v6 (`createBrowserRouter`) |
-| AI chat            | Gemini 2.0 Flash (server-side proxy)    |
-| Server             | Express (Node.js, Cloud Run target)     |
-| Testing            | Vitest                                  |
+| Layer              | Technology                                                            |
+| ------------------ | --------------------------------------------------------------------- |
+| Frontend framework | React 19 + TypeScript (strict)                                        |
+| Build tool         | Vite 5                                                                |
+| Styling            | Tailwind CSS v3                                                       |
+| Routing            | React Router v6 (`createBrowserRouter`)                               |
+| AI chat            | Gemini 2.0 Flash (server-side proxy)                                  |
+| Server             | Express (Node.js, Cloud Run target)                                   |
+| Testing            | Vitest + Testing Library                                              |
+| CI                 | GitHub Actions (format → lint → typecheck → test → build → key audit) |
+| Security           | DOMPurify (client), prompt injection defense (server)                 |
 
 ## Repository Structure
 
@@ -82,7 +84,8 @@ npm run serve        # Serve dist/ via Express
 
 ## Security
 
-- **No client-side API keys**: Gemini key lives in `process.env.GEMINI_API_KEY` on the server only
-- **Rate limiting**: 50 requests per IP per day (in-memory, resets daily)
+- **API key**: server-side only, never in Vite bundle (verified by CI key audit step)
+- **HTML rendering**: `DOMPurify.sanitize()` on all `dangerouslySetInnerHTML` usage
+- **Prompt injection**: pattern-matched server-side before reaching Gemini API
+- **Rate limiting**: 50 req/IP/day in-memory, returns 429
 - **Security headers**: `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`
-- **Input validation**: Server validates `message` type before forwarding to Gemini
