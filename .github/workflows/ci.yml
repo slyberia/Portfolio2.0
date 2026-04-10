@@ -21,17 +21,24 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Type check
-        run: npm run typecheck
+      - name: Lint
+        run: npm run lint
 
       - name: Format check
         run: npm run format:check
 
-      - name: Lint
-        run: npm run lint
+      - name: Type check
+        run: npm run typecheck
 
       - name: Test
         run: npm test -- --run
 
       - name: Build
         run: npm run build
+
+      - name: Key Audit
+        run: |
+          if grep -r "GEMINI_API_KEY" dist/; then
+            echo "ERROR: GEMINI_API_KEY found in bundle"
+            exit 1
+          fi
