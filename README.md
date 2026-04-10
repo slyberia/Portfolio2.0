@@ -1,82 +1,100 @@
-# Kyle Semple — AI Operations & Customer Success Portfolio
+<div align="center">
+  <img src="public/og-image.svg" width="900" alt="Kyle Semple Portfolio" />
 
-A React + TypeScript portfolio built with Vite and Tailwind CSS. Features an AI-powered digital twin chat widget, interactive case studies, and a command palette.
+# Kyle Semple — Professional Portfolio
+
+**AI Operations & Customer Success · Ann Arbor, MI**
+
+[Live Site](https://YOUR_CLOUD_RUN_URL) · [How It Was Built](HOW_IT_WAS_BUILT.md) · [Architecture Decisions](DECISIONS.md) · [Architecture Overview](ARCHITECTURE.md)
+
+[![CI](https://github.com/slyberia/Portfolio2.0/actions/workflows/ci.yml/badge.svg)](https://github.com/slyberia/Portfolio2.0/actions/workflows/ci.yml)
+![React 19](https://img.shields.io/badge/React-19-61dafb?logo=react&logoColor=white)
+![TypeScript strict](https://img.shields.io/badge/TypeScript-strict-3178c6?logo=typescript&logoColor=white)
+![Vite 5](https://img.shields.io/badge/Vite-5-646cff?logo=vite&logoColor=white)
+
+</div>
+
+---
+
+## What This Is
+
+A production portfolio targeting AI-forward Customer Success and Solutions roles. Built initially in Google AI Studio, then refactored across 6 phases to production quality — with server-side API security, a full test suite, React Router v6, and deployment on Google Cloud Run.
 
 ## Stack
 
-- **React 18** + **TypeScript** (strict mode)
-- **Vite 5** — bundler and dev server
-- **Tailwind CSS v3** + `@tailwindcss/typography`
-- **Google Gemini** (`@google/genai`) — AI chat widget
-- **DOMPurify** — HTML sanitization
-- **Vitest** — unit testing
-- **ESLint** + **Prettier** — code quality
+| Layer    | Technology                                       |
+| -------- | ------------------------------------------------ |
+| Frontend | React 19, TypeScript strict, Vite 5, Tailwind v3 |
+| Routing  | React Router v6                                  |
+| AI       | Gemini 2.0 Flash via server-side Express proxy   |
+| Server   | Express on Cloud Run                             |
+| Testing  | Vitest + Testing Library                         |
+| CI       | GitHub Actions                                   |
 
 ## Getting Started
 
 ### Prerequisites
 
-Node.js 20 (see `.nvmrc`). Use [nvm](https://github.com/nvm-sh/nvm) to install:
+Node 20 — managed via [nvm](https://github.com/nvm-sh/nvm):
 
 ```bash
-nvm install && nvm use
+nvm use
 ```
 
 ### Setup
 
 ```bash
-# Install dependencies
-npm install
-
-# Copy env file and configure
+git clone https://github.com/slyberia/Portfolio2.0.git
+cd Portfolio2.0
 cp .env.example .env.local
-
-# Start dev server
+npm install
 npm run dev
 ```
 
-### Environment Variables
-
-| Variable              | Description                                                                    |
-| --------------------- | ------------------------------------------------------------------------------ |
-| `VITE_GEMINI_ENABLED` | Set to `"true"` to enable the AI chat widget                                   |
-| `VITE_GEMINI_API_KEY` | Google Gemini API key ([get one here](https://aistudio.google.com/app/apikey)) |
+> **Note:** `VITE_GEMINI_ENABLED=true` requires the Express server running alongside Vite.
+> Use `npm run dev:full` to start both.
 
 ## Scripts
 
 | Script                 | Description                         |
 | ---------------------- | ----------------------------------- |
-| `npm run dev`          | Start Vite dev server               |
+| `npm run dev`          | Vite dev server on :5173            |
 | `npm run build`        | Type-check and build for production |
-| `npm run preview`      | Preview production build locally    |
-| `npm run typecheck`    | Run TypeScript type checker         |
-| `npm run lint`         | Run ESLint (zero warnings)          |
-| `npm run format`       | Format all files with Prettier      |
-| `npm run format:check` | Check formatting without writing    |
 | `npm test`             | Run Vitest                          |
+| `npm run typecheck`    | TypeScript type checker (no emit)   |
+| `npm run lint`         | ESLint (zero warnings)              |
+| `npm run format:check` | Check formatting without writing    |
+| `npm run dev:full`     | Vite + Express concurrently         |
+| `npm run serve`        | Express server on :8080             |
 
 ## Project Structure
 
 ```
 src/
-├── components/       # Reusable UI components
-│   ├── ErrorBoundary.tsx
-│   ├── HTMLSection.tsx   # DOMPurify-sanitized HTML renderer
-│   └── ...
-├── data/
-│   └── caseStudyData.ts  # Case study markdown content
-├── utils/
-│   └── audioUtils.ts     # Audio encode/decode utilities
-├── views/            # Page-level components
-│   ├── HomeView.tsx
-│   ├── CaseStudyView.tsx
-│   └── ResumeView.tsx
-├── App.tsx           # Root component + hash-based routing
-├── main.tsx          # React entry point
-├── index.css         # Global styles + Tailwind @layer utilities
-├── constants.tsx     # App-wide data (experience, skills, case studies)
-├── types.ts          # TypeScript interfaces
-├── geminiService.ts  # Google Gemini AI integration
-├── mockups.ts        # HTML prototype mockups
-└── declarations.d.ts # Vite env type augmentation
+├── components/     # Reusable UI components (ErrorBoundary, HTMLSection, ...)
+├── context/        # React Context providers (RecruiterModeContext)
+├── constants/      # App-wide constants and category definitions
+├── data/           # Static data files
+├── hooks/          # Custom hooks (useCaseStudyContent)
+├── utils/          # Utility functions (readingTime, recruiterSummary, ...)
+├── views/          # Page-level components (HomeView, CaseStudyView, ResumeView)
+└── test/           # Vitest setup and shared test utilities
+server/
+├── geminiProxy.ts  # POST /api/chat handler with rate limiting
+└── index.ts        # Express entry point, static serving, SPA fallback
+public/
+└── case-studies/   # Markdown case study content (fetched at runtime)
 ```
+
+## Documentation
+
+| File                                       | Description                                         |
+| ------------------------------------------ | --------------------------------------------------- |
+| [HOW_IT_WAS_BUILT.md](HOW_IT_WAS_BUILT.md) | Build narrative and AI/human contribution breakdown |
+| [DECISIONS.md](DECISIONS.md)               | 6 Architecture Decision Records                     |
+| [ARCHITECTURE.md](ARCHITECTURE.md)         | Stack overview and security notes                   |
+| [public/llms.txt](public/llms.txt)         | Machine-readable project context                    |
+
+## License
+
+MIT
