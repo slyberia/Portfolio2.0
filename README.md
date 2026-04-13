@@ -5,7 +5,7 @@
 
 **AI Operations & Customer Success · Ann Arbor, MI**
 
-[Live Site](https://YOUR_CLOUD_RUN_URL) · [How It Was Built](HOW_IT_WAS_BUILT.md) · [Architecture Decisions](DECISIONS.md) · [Architecture Overview](ARCHITECTURE.md)
+[Live Site](https://portfoli02-786228485832.northamerica-northeast2.run.app) · [How It Was Built](HOW_IT_WAS_BUILT.md) · [Architecture Decisions](DECISIONS.md) · [Architecture Overview](ARCHITECTURE.md)
 
 [![CI](https://github.com/slyberia/Portfolio2.0/actions/workflows/ci.yml/badge.svg)](https://github.com/slyberia/Portfolio2.0/actions/workflows/ci.yml)
 ![React 19](https://img.shields.io/badge/React-19-61dafb?logo=react&logoColor=white)
