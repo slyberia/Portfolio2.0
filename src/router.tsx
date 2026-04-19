@@ -573,6 +573,11 @@ export const routeDefinitions = [
     ),
     errorElement: <RouteErrorFallback />,
   },
+  {
+    path: '/resume/implementation',
+    element: <Navigate to="/resume" replace />,
+    errorElement: <RouteErrorFallback />,
+  },
 ];
 
 // eslint-disable-next-line react-refresh/only-export-components
