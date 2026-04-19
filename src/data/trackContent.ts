@@ -99,7 +99,7 @@ export const implementationTrackContent: TrackPageContent = {
     {
       title: 'Structured proof for fast stakeholder interpretation',
       summary:
-        'Designed the portfolio\'s evidence architecture so recruiters and hiring managers could retrieve the right proof faster, with clearer pathways, role-lane framing, and supporting artifacts.',
+        "Designed the portfolio's evidence architecture so recruiters and hiring managers could retrieve the right proof faster, with clearer pathways, role-lane framing, and supporting artifacts.",
       whyItMatters:
         'Technical delivery often fails when evidence is hard to consume. This shows the ability to shape information for faster stakeholder understanding and action.',
       artifactChips: ['Stakeholder Design', 'Proof Architecture', 'Delivery Clarity'],
@@ -209,7 +209,10 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
   supportingArtifacts: [
     { label: 'CI workflow and testing notes', href: '/portfolio2/deep-dive#ci-and-tests' },
     { label: 'Validation trail excerpts', href: '/portfolio2/deep-dive#validation-trail' },
-    { label: 'Sandbox failure / mitigation block', href: '/portfolio2/deep-dive#sandbox-hardening' },
+    {
+      label: 'Sandbox failure / mitigation block',
+      href: '/portfolio2/deep-dive#sandbox-hardening',
+    },
     { label: 'Risk and revision archive', href: '/portfolio2/deep-dive#forensic-archive' },
     { label: 'Portfolio2.0 deep-dive', href: '/portfolio2/deep-dive' },
   ],
@@ -231,8 +234,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
 export const trackSelectorCards: TrackSelectorCard[] = [
   {
     title: 'Implementation / CSE-lite',
-    subcopy:
-      'Onboarding, technical guidance, rollout logic, triage design, governed AI delivery.',
+    subcopy: 'Onboarding, technical guidance, rollout logic, triage design, governed AI delivery.',
     href: '/tracks/implementation',
   },
   {

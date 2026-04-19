@@ -38,7 +38,9 @@ const SharedLLMGovernanceBlock: React.FC<SharedLLMGovernanceBlockProps> = ({
             <path d="M20 4h-4" />
           </svg>
         </div>
-        <h3 className="text-base font-bold text-navy-900 dark:text-white leading-snug">{headline}</h3>
+        <h3 className="text-base font-bold text-navy-900 dark:text-white leading-snug">
+          {headline}
+        </h3>
       </div>
       <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{copy}</p>
       {links && links.length > 0 && (
