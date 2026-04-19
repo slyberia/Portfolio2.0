@@ -10,6 +10,8 @@ import {
 import HomeView from './views/HomeView';
 import CaseStudyView from './views/CaseStudyView';
 import ResumeView from './views/ResumeView';
+import ImplementationTrackView from './views/ImplementationTrackView';
+import OpsAnalyticsTrackView from './views/OpsAnalyticsTrackView';
 import ContactModal from './components/ContactModal';
 import CommandPalette from './components/CommandPalette';
 import ChatWidget from './components/ChatWidget';
@@ -532,6 +534,22 @@ export const routeDefinitions = [
         element: (
           <ErrorBoundary location="CaseStudyView">
             <CaseStudyView />
+          </ErrorBoundary>
+        ),
+      },
+      {
+        path: 'tracks/implementation',
+        element: (
+          <ErrorBoundary location="ImplementationTrackView">
+            <ImplementationTrackView />
+          </ErrorBoundary>
+        ),
+      },
+      {
+        path: 'tracks/ops-analytics',
+        element: (
+          <ErrorBoundary location="OpsAnalyticsTrackView">
+            <OpsAnalyticsTrackView />
           </ErrorBoundary>
         ),
       },
