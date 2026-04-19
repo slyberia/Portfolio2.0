@@ -44,8 +44,7 @@ const DeepDiveView: React.FC = () => {
         <div className="relative max-w-4xl mx-auto space-y-6">
           <SectionEyebrow>Portfolio2.0 — Deep Dive</SectionEyebrow>
           <h1 className="text-4xl sm:text-5xl font-outfit font-extrabold text-navy-900 dark:text-white leading-tight">
-            Technical proof,{' '}
-            <span className="gradient-text">decision rationale,</span>
+            Technical proof, <span className="gradient-text">decision rationale,</span>
             <br />
             and governance trail.
           </h1>
@@ -278,9 +277,9 @@ const DeepDiveView: React.FC = () => {
             </span>
             <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
               Each LLM was assigned a defined scope and reviewed output before it moved to the next
-              stage. No LLM output was published without an operator checkpoint. Role boundaries were
-              maintained to prevent scope drift and maintain traceability of decisions back to a
-              specific tool and context.
+              stage. No LLM output was published without an operator checkpoint. Role boundaries
+              were maintained to prevent scope drift and maintain traceability of decisions back to
+              a specific tool and context.
             </p>
           </div>
 
@@ -304,7 +303,10 @@ const DeepDiveView: React.FC = () => {
                   </span>
                   <ul className="space-y-1">
                     {role.examples.map((ex) => (
-                      <li key={ex} className="flex items-start gap-2 text-sm text-slate-500 dark:text-slate-400">
+                      <li
+                        key={ex}
+                        className="flex items-start gap-2 text-sm text-slate-500 dark:text-slate-400"
+                      >
                         <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0" />
                         {ex}
                       </li>
@@ -318,9 +320,7 @@ const DeepDiveView: React.FC = () => {
       </section>
 
       {/* ── Forensic Archive ─────────────────────────────────── */}
-      <section
-        className="py-16 px-6 bg-slate-50/50 dark:bg-slate-900/20 border-y border-black/5 dark:border-white/5"
-      >
+      <section className="py-16 px-6 bg-slate-50/50 dark:bg-slate-900/20 border-y border-black/5 dark:border-white/5">
         <div className="max-w-4xl mx-auto space-y-10">
           <div className="space-y-3">
             <SectionEyebrow>Evidence bank</SectionEyebrow>
