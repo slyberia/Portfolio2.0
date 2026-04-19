@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { EXPERIENCE, SKILL_GROUPS, CERTIFICATIONS, CASE_STUDY_REGISTRY } from '../constants';
 import SkillDiscoveryModal from '../components/SkillDiscoveryModal';
+import TrackSelectorSection from '../components/tracks/TrackSelectorSection';
+import { trackSelectorCards } from '../data/trackContent';
 
 interface HomeViewProps {
   onNavigateToCaseStudy: (id?: string) => void;
@@ -170,6 +172,8 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
           aria-hidden="true"
         ></div>
       </section>
+
+      <TrackSelectorSection tracks={trackSelectorCards} />
 
       {/* Stats/Quick Glance */}
       <section className="py-12 border-y border-black/5 dark:border-white/5 bg-white/30 dark:bg-slate-900/10 backdrop-blur-sm">
