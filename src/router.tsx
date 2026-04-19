@@ -12,6 +12,7 @@ import CaseStudyView from './views/CaseStudyView';
 import ResumeView from './views/ResumeView';
 import ImplementationTrackView from './views/ImplementationTrackView';
 import OpsAnalyticsTrackView from './views/OpsAnalyticsTrackView';
+import DeepDiveView from './views/DeepDiveView';
 import ContactModal from './components/ContactModal';
 import CommandPalette from './components/CommandPalette';
 import ChatWidget from './components/ChatWidget';
@@ -550,6 +551,14 @@ export const routeDefinitions = [
         element: (
           <ErrorBoundary location="OpsAnalyticsTrackView">
             <OpsAnalyticsTrackView />
+          </ErrorBoundary>
+        ),
+      },
+      {
+        path: 'portfolio2/deep-dive',
+        element: (
+          <ErrorBoundary location="DeepDiveView">
+            <DeepDiveView />
           </ErrorBoundary>
         ),
       },
