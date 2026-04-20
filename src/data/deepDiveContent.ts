@@ -333,6 +333,20 @@ export const forensicEntries: ArchiveEntry[] = [
       'The Portfolio2.0 proof system was structured across three retrieval layers, each targeting a different reviewer time investment and trust threshold. Layer one — track-level proof blocks — is written for skim conditions: role-framed, recruiter-readable, one scroll. Layer two — deep-dive decision blocks — is written for reviewers who need rationale: each block documents the problem, risk, decision, tradeoff, validation, and business relevance. Layer three — this forensic archive — is written for reviewers who need evidence provenance: governance notes, validation checkpoints, and revision traces. The three-layer design ensures the portfolio does not require a time-committed reviewer to find its strongest proof, and does not fail a thorough reviewer who needs more.',
     chips: ['Evidence Architecture', 'Stakeholder Design', 'Proof Layers'],
   },
+  {
+    id: 'ai-protocol-log',
+    label: 'AI protocol log: role assignments and constraint history',
+    description:
+      'AI workflow protocols were established before any content generation began. ChatGPT was assigned to strategy, evidence architecture, and audit — explicitly excluded from synthesis or content generation to prevent tone inconsistency. Gemini was assigned to synthesis and technical proof translation — explicitly excluded from strategic framing decisions to prevent scope creep. Google AI Studio was assigned to iterative archive and forensics — acting as a capture layer for in-flight decisions, not a content generator. These role boundaries were set before use, maintained throughout the project, and reviewed at each phase transition. No LLM output was published without an operator review checkpoint. The constraint model was the point, not a side effect: if the portfolio claims disciplined AI governance, the process behind it had to demonstrate the same discipline.',
+    chips: ['AI Governance', 'Protocol Design', 'Role Constraints'],
+  },
+  {
+    id: 'scope-reduction-log',
+    label: 'Scope reduction log',
+    description:
+      'Two features were removed during Portfolio2.0 development rather than shipped. (1) Admin Mode: a client-side runtime content mutation path built during early scaffolding was removed when review showed it added coupling, trust risk for technical reviewers who might trigger it, and fragility without commensurate value. The code path was confirmed absent from the production bundle before release. (2) Direct Gemini client calls: the initial implementation called the Gemini API from the React client, embedding the API key in the bundle. This was replaced with the server-side Express proxy on Cloud Run before any public deployment. No version with client-side credentials was ever released to a public URL. Both removals were governance decisions: the question was not whether each feature worked, but whether keeping it made the system safer and more trustworthy to operate.',
+    chips: ['Governance', 'Risk Reduction', 'Scope Control'],
+  },
 ];
 
 // ── Appendix Links ─────────────────────────────────────────────────────────

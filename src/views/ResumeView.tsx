@@ -23,7 +23,7 @@ const ResumeView: React.FC = () => {
       </header>
 
       {/* Summary */}
-      <section className="mb-10">
+      <section id="resume-summary" className="mb-10 scroll-mt-24">
         <h2 className="text-lg font-bold uppercase tracking-widest border-b-2 border-slate-900 pb-1 mb-4">
           Professional Summary
         </h2>
@@ -37,7 +37,7 @@ const ResumeView: React.FC = () => {
       </section>
 
       {/* Experience */}
-      <section className="mb-10">
+      <section id="resume-experience" className="mb-10 scroll-mt-24">
         <h2 className="text-lg font-bold uppercase tracking-widest border-b-2 border-slate-900 pb-1 mb-6">
           Experience
         </h2>
@@ -68,7 +68,7 @@ const ResumeView: React.FC = () => {
       </section>
 
       {/* Skills */}
-      <section className="mb-10">
+      <section id="resume-skills" className="mb-10 scroll-mt-24">
         <h2 className="text-lg font-bold uppercase tracking-widest border-b-2 border-slate-900 pb-1 mb-4">
           Core Skills
         </h2>
@@ -90,7 +90,7 @@ const ResumeView: React.FC = () => {
       </section>
 
       {/* Education & Certs */}
-      <section className="mb-10">
+      <section id="resume-education" className="mb-10 scroll-mt-24">
         <h2 className="text-lg font-bold uppercase tracking-widest border-b-2 border-slate-900 pb-1 mb-4">
           Education & Certifications
         </h2>
@@ -110,7 +110,7 @@ const ResumeView: React.FC = () => {
       </section>
 
       {/* Tools */}
-      <section className="mb-10">
+      <section id="resume-tools" className="mb-10 scroll-mt-24">
         <h2 className="text-lg font-bold uppercase tracking-widest border-b-2 border-slate-900 pb-1 mb-4">
           Tools & Technologies
         </h2>
@@ -123,7 +123,7 @@ const ResumeView: React.FC = () => {
       </section>
 
       {/* Additional */}
-      <section className="mb-10">
+      <section id="resume-additional" className="mb-10 scroll-mt-24">
         <h2 className="text-lg font-bold uppercase tracking-widest border-b-2 border-slate-900 pb-1 mb-4">
           Additional Information
         </h2>

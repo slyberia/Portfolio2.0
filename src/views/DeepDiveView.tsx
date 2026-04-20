@@ -90,6 +90,7 @@ const DeepDiveView: React.FC = () => {
               { label: 'Architecture', href: '#architecture-boundary' },
               { label: 'LLM governance', href: '#multi-llm-governance' },
               { label: 'Forensic archive', href: '#forensic-archive' },
+              { label: 'Proof hierarchy', href: '#proof-hierarchy' },
             ].map((link) => (
               <a
                 key={link.href}
