@@ -164,10 +164,10 @@ export const AppLayout: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-x-hidden selection:bg-indigo-500 selection:text-white transition-colors duration-500">
+    <div className="min-h-screen relative overflow-x-hidden transition-colors duration-500">
       {/* Navigation */}
       <nav
-        className="fixed top-0 w-full z-50 border-b border-black/5 dark:border-white/5 bg-white/70 dark:bg-slate-950/70 backdrop-blur-xl supports-[backdrop-filter]:bg-white/20 dark:supports-[backdrop-filter]:bg-slate-950/20 transition-all duration-300"
+        className="fixed top-0 w-full z-50 border-b border-[#e4dfd7] dark:border-white/5 bg-[#f9f7f3] dark:bg-[#1a1712] transition-all duration-300"
         role="navigation"
         aria-label="Main Navigation"
       >
@@ -357,14 +357,14 @@ export const AppLayout: React.FC = () => {
       {/* Footer / Contact */}
       <footer
         id="contact"
-        className="py-20 px-6 border-t border-black/5 dark:border-white/5 relative bg-white dark:bg-slate-950 overflow-hidden scroll-mt-24 transition-colors duration-500"
+        className="py-20 px-6 border-t border-[#e4dfd7] dark:border-white/5 relative bg-[#f9f7f3] dark:bg-[#1a1712] overflow-hidden scroll-mt-24 transition-colors duration-500"
       >
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-indigo-500 to-transparent"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-[#e4dfd7] dark:bg-white/5"></div>
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
           <div className="space-y-8">
             <h2 className="text-4xl font-outfit font-extrabold text-navy-900 dark:text-white">
               Open to AI-forward{' '}
-              <span className="gradient-text">Customer Success and Solutions</span> roles
+              <span className="text-indigo-500">Customer Success and Solutions</span> roles
             </h2>
             <p className="text-slate-500 dark:text-slate-400 max-w-sm">
               I'm looking for my next challenge in an AI-forward company that values operational

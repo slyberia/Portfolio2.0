@@ -1,46 +1,45 @@
+/* Epilogue (display headings) + Chivo (body) — neither on the reflex reject list */
+@import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;700;800;900&family=Chivo:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer utilities {
+  /* Opaque editorial card — replaces glassmorphism */
   .glass-card {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .light .glass-card {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(15, 23, 42, 0.08);
+    background: #fefcf9;
+    border: 1px solid #e4dfd7;
     box-shadow:
-      0 10px 25px -5px rgba(0, 0, 0, 0.04),
-      0 8px 10px -6px rgba(0, 0, 0, 0.04);
+      0 1px 3px rgba(30, 20, 10, 0.04),
+      0 4px 12px rgba(30, 20, 10, 0.03);
   }
 
+  .dark .glass-card {
+    background: #221e17;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: none;
+  }
+
+  /* Solid accent text — replaces banned gradient-text */
   .gradient-text {
-    background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #c4592a;
+    -webkit-text-fill-color: #c4592a;
   }
 
+  .dark .gradient-text {
+    color: #df8c56;
+    -webkit-text-fill-color: #df8c56;
+  }
+
+  /* Warm parchment background — replaces radial gradient mesh */
   .bg-mesh {
-    background-color: #faf9f6;
-    background-image:
-      radial-gradient(at 0% 0%, #fffdf5 0, transparent 50%),
-      radial-gradient(at 50% 0%, rgba(245, 158, 11, 0.05) 0, transparent 50%),
-      radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.05) 0, transparent 50%);
+    background-color: #f9f7f3;
     transition: background-color 0.5s ease;
   }
 
   .dark .bg-mesh {
-    background-color: #020617;
-    background-image:
-      radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
-      radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 0.1) 0, transparent 50%),
-      radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 0.1) 0, transparent 50%);
+    background-color: #1a1712;
   }
 
   .scrollbar-hide::-webkit-scrollbar {
@@ -52,7 +51,7 @@
     scrollbar-width: none;
   }
 
-  /* Custom Scrollbar for Chat */
+  /* Chat scrollbar */
   .chat-scroll::-webkit-scrollbar {
     width: 4px;
   }
@@ -62,41 +61,53 @@
   }
 
   .chat-scroll::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(196, 89, 42, 0.15);
     border-radius: 4px;
   }
 
   .light .chat-scroll::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(196, 89, 42, 0.12);
   }
 
   .chat-scroll::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(196, 89, 42, 0.25);
   }
 }
 
-/* Global Selection */
+/* Global selection — sienna instead of indigo */
 ::selection {
-  background: #6366f1;
+  background: #c4592a;
   color: white;
 }
 
-/* Engagement Animation */
+/* Chat engagement pulse — sienna shadow instead of indigo */
 @keyframes chat-pulse {
   0% {
     transform: scale(1);
-    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+    box-shadow: 0 10px 15px -3px rgba(196, 89, 42, 0.25);
   }
   50% {
     transform: scale(1.05);
-    box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.4);
+    box-shadow: 0 20px 25px -5px rgba(196, 89, 42, 0.35);
   }
   100% {
     transform: scale(1);
-    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+    box-shadow: 0 10px 15px -3px rgba(196, 89, 42, 0.25);
   }
 }
 
 .animate-chat-pulse {
   animation: chat-pulse 2s infinite ease-in-out;
+}
+
+/* Accessibility: respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
