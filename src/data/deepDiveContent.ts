@@ -352,6 +352,7 @@ export const forensicEntries: ArchiveEntry[] = [
 // ── Appendix Links ─────────────────────────────────────────────────────────
 
 export const appendixLinks = [
+  { label: 'Release ladder', href: '/portfolio2/deep-dive#release-ladder' },
   { label: 'Decision-impact blocks', href: '/portfolio2/deep-dive#decision-blocks' },
   { label: 'LLM governance summary', href: '/portfolio2/deep-dive#multi-llm-governance' },
   { label: 'Architecture boundary', href: '/portfolio2/deep-dive#architecture-boundary' },
