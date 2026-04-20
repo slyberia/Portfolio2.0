@@ -51,7 +51,7 @@ export const releaseLadder: TimelineEntry[] = [
     phase: 'Phase 2',
     title: 'Baseline scaffold',
     description:
-      'Built the initial React application: component structure, content model, and a routing stub. The baseline proved the application could ship and established the technical surface that hardening work would later improve.',
+      'Built the initial React application with a typed component structure designed for composability, a content model that could accommodate multiple role lanes, and a routing stub that established the base URL surface. The baseline proved the application could deploy and created the architectural foundation that all subsequent hardening phases would build on.',
     tags: ['React', 'Scaffold', 'Content Model'],
   },
   {
