@@ -8,7 +8,7 @@ import TrackCTA from '../components/tracks/TrackCTA';
 import { implementationTrackContent } from '../data/trackContent';
 
 const llmGovernanceLinks = [
-  { label: 'Evidence bank overview', href: '/portfolio2/deep-dive#multi-llm-governance' },
+  { label: 'LLM governance summary', href: '/portfolio2/deep-dive#multi-llm-governance' },
   { label: 'Decision-impact blocks', href: '/portfolio2/deep-dive#decision-blocks' },
 ];
 

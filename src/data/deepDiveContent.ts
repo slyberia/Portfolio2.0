@@ -313,7 +313,7 @@ export const llmRoles: LLMRole[] = [
 
 export const forensicEntries: ArchiveEntry[] = [
   {
-    id: 'forensic-archive',
+    id: 'evidence-bank',
     label: 'Evidence bank overview',
     description:
       'The evidence architecture for Portfolio2.0 spans three layers: track-level proof blocks (role-framed, skim-readable), deep-dive technical blocks (architecture detail, decision rationale), and a forensic revision trail (raw decision capture, governance notes, in-flight risk documentation). Each layer was designed for a different reviewer time investment and trust threshold. The forensic layer exists so that later decisions are traceable back to real evidence — not memory or polished summaries.',
@@ -326,6 +326,13 @@ export const forensicEntries: ArchiveEntry[] = [
       'Key validation checkpoints preserved in the governance trail: (1) CI pipeline added and confirmed passing before release branch merges; (2) DOMPurify sanitization boundary validated with explicit test cases before enabling HTML rendering in case study view; (3) Sandbox navigation behavior validated across three deployment environments before marking stable; (4) Server-proxy credential isolation verified — no API keys appear in the client network tab under any request pattern; (5) Each track-page proof block reviewed against actual implementation artifacts before publishing; (6) /resume/implementation redirect added to prevent dead-route 404s from Implementation track supporting-artifact links.',
     chips: ['Validation', 'Traceability', 'Governance Checkpoints'],
   },
+  {
+    id: 'proof-hierarchy',
+    label: 'Proof hierarchy design',
+    description:
+      'The Portfolio2.0 proof system was structured across three retrieval layers, each targeting a different reviewer time investment and trust threshold. Layer one — track-level proof blocks — is written for skim conditions: role-framed, recruiter-readable, one scroll. Layer two — deep-dive decision blocks — is written for reviewers who need rationale: each block documents the problem, risk, decision, tradeoff, validation, and business relevance. Layer three — this forensic archive — is written for reviewers who need evidence provenance: governance notes, validation checkpoints, and revision traces. The three-layer design ensures the portfolio does not require a time-committed reviewer to find its strongest proof, and does not fail a thorough reviewer who needs more.',
+    chips: ['Evidence Architecture', 'Stakeholder Design', 'Proof Layers'],
+  },
 ];
 
 // ── Appendix Links ─────────────────────────────────────────────────────────
@@ -336,6 +343,7 @@ export const appendixLinks = [
   { label: 'Architecture boundary', href: '/portfolio2/deep-dive#architecture-boundary' },
   { label: 'Validation trail', href: '/portfolio2/deep-dive#validation-trail' },
   { label: 'Forensic archive', href: '/portfolio2/deep-dive#forensic-archive' },
+  { label: 'Proof hierarchy design', href: '/portfolio2/deep-dive#proof-hierarchy' },
   { label: 'Implementation track', href: '/tracks/implementation' },
   { label: 'Ops Analytics track', href: '/tracks/ops-analytics' },
   { label: 'Resume', href: '/resume' },

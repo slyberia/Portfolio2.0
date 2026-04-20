@@ -374,7 +374,10 @@ const DeepDiveView: React.FC = () => {
       </section>
 
       {/* ── Forensic Archive ─────────────────────────────────── */}
-      <section className="py-16 px-6 bg-slate-50/50 dark:bg-slate-900/20 border-y border-black/5 dark:border-white/5">
+      <section
+        id="forensic-archive"
+        className="py-16 px-6 bg-slate-50/50 dark:bg-slate-900/20 border-y border-black/5 dark:border-white/5 scroll-mt-24"
+      >
         <div className="max-w-4xl mx-auto space-y-10">
           <div className="space-y-3">
             <SectionEyebrow>Evidence bank</SectionEyebrow>

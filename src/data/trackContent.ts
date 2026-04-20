@@ -90,18 +90,18 @@ export const implementationTrackContent: TrackPageContent = {
     {
       title: 'Removed risky feature paths when they interfered with trust',
       summary:
-        'Cut or constrained weak client-side mutation flows and unstable behavior paths when they made the system harder to trust or operate cleanly.',
+        'Cut client-side Admin Mode — a runtime content mutation path that added coupling, fragility, and trust risk for any technical reviewer who triggered it while reviewing the live portfolio.',
       whyItMatters:
-        'Strong implementation work is not just adding features. It is knowing when to simplify and stabilize.',
+        'Demonstrates the product judgment that separates implementation maturity from feature accumulation: when a code path adds risk or trust friction without commensurate value, removing it is the right delivery call.',
       artifactChips: ['Governance', 'Product Judgment', 'Risk Reduction'],
       href: '/portfolio2/deep-dive#feature-governance',
     },
     {
       title: 'Structured proof for fast stakeholder interpretation',
       summary:
-        "Designed the portfolio's evidence architecture so recruiters and hiring managers could retrieve the right proof faster, with clearer pathways, role-lane framing, and supporting artifacts.",
+        'Designed evidence across three retrieval layers — skim-level proof blocks, decision-depth blocks, and a forensic archive — so the right artifact is findable at the right time investment, regardless of reviewer context.',
       whyItMatters:
-        'Technical delivery often fails when evidence is hard to consume. This shows the ability to shape information for faster stakeholder understanding and action.',
+        'Evidence architecture is a delivery problem. Proof buried in a repo or lost in dense prose fails the reviewer. This shows the ability to structure technical depth for retrieval, not just produce it.',
       artifactChips: ['Stakeholder Design', 'Proof Architecture', 'Delivery Clarity'],
       href: '/portfolio2/deep-dive#proof-hierarchy',
     },
@@ -193,9 +193,9 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
     {
       title: 'Built a layered proof system so technical depth could be understood quickly',
       summary:
-        'Created an evidence architecture that makes technical seriousness retrievable under skim-time conditions instead of leaving it buried in repos and notes.',
+        'Designed a three-layer proof system — role-framed track summaries, structured decision blocks, and a forensic archive — so technical depth is retrievable at any reviewer trust threshold, not just visible to those with time to dig.',
       whyItMatters:
-        'Ops and QA work often loses value when it is poorly presented. This proves the ability to convert technical depth into decision-ready reporting.',
+        'Ops and QA work routinely loses value when it is poorly surfaced. This proves the ability to convert technical depth into decision-ready reporting that holds up under real reviewer conditions.',
       artifactChips: ['Evidence Architecture', 'Reporting Design', 'Decision Support'],
       href: '/portfolio2/deep-dive#proof-hierarchy',
     },
