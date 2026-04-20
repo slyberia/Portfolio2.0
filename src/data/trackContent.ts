@@ -57,7 +57,7 @@ export const implementationTrackContent: TrackPageContent = {
   ],
   whatThisPageProves: {
     heading: 'What this page proves',
-    body: 'Five proof blocks cover how I restructured the reviewer path, moved risk-bearing logic server-side, governed AI as a controlled delivery tool, reduced the feature surface to what added trust, and designed retrieval-ready evidence. Each links directly to the supporting decision record.',
+    body: 'Five proof blocks cover how I restructured the reviewer path, moved risk-bearing logic server-side, governed AI as a controlled delivery tool, reduced the feature surface to what added trust, and designed retrieval-ready evidence. Each links to the supporting decision record or forensic archive.',
   },
   proofBlocks: [
     {
@@ -191,8 +191,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
       href: '/portfolio2/deep-dive#forensic-archive',
     },
     {
-      title:
-        'Converted ops depth into decision-ready reporting through a three-layer evidence system',
+      title: 'Structured ops evidence into a three-layer, retrieval-ready reporting system',
       summary:
         'Structured the evidence across three retrieval layers — role-framed track summaries, decision-depth blocks, and a forensic archive — so a reviewer at any time threshold can pull the relevant proof without reading everything. Ops work that cannot be surfaced fast does not land with evaluators.',
       whyItMatters:
