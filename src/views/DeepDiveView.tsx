@@ -63,10 +63,10 @@ const DeepDiveView: React.FC = () => {
             to <span className="gradient-text">governed, hardened proof.</span>
           </h1>
           <p className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed max-w-2xl">
-            This page documents how Portfolio2.0 evolved from an AI-assisted scaffold into a
-            governed, security-hardened, recruiter-legible portfolio application. It consolidates
-            the decision rationale, architecture evidence, LLM governance model, and forensic trail
-            behind the track-page claims — in one place, built for skim-first reading.
+            This page consolidates the decision record, architecture evidence, governance model, and
+            forensic trail behind Portfolio2.0 — built in six phases from an AI-assisted scaffold to
+            a hardened, recruiter-legible proof system. Built for skim-first reading; the depth is
+            there when you need it.
           </p>
           <div className="flex flex-wrap gap-2 pt-2">
             {[
@@ -387,7 +387,8 @@ const DeepDiveView: React.FC = () => {
               The forensic archive preserves the revision history, risk documentation, validation
               traces, and governance notes accumulated during Portfolio2.0 development. It exists so
               that later decisions are traceable back to real evidence — not memory or polished
-              summaries. It is the depth layer beneath the track pages and this proof page.
+              summaries. It is the third layer of the proof system — beneath the track summaries and
+              these decision blocks.
             </SectionIntro>
           </div>
           <div className="space-y-6">
@@ -423,7 +424,8 @@ const DeepDiveView: React.FC = () => {
             <SectionEyebrow>Appendix</SectionEyebrow>
             <SectionHeading>Supporting artifacts</SectionHeading>
             <SectionIntro>
-              Related pages and sections in the Portfolio2.0 proof system.
+              Cross-links to every named section and supporting page in the Portfolio2.0 proof
+              system.
             </SectionIntro>
           </div>
           <div className="grid sm:grid-cols-2 gap-4">

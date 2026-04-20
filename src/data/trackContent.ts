@@ -57,7 +57,7 @@ export const implementationTrackContent: TrackPageContent = {
   ],
   whatThisPageProves: {
     heading: 'What this page proves',
-    body: 'This track focuses on implementation-facing proof: how I structure systems, reduce ambiguity, improve delivery trust, and make technical experiences easier for users and stakeholders to navigate.',
+    body: 'Five proof blocks cover how I restructured the reviewer path, moved risk-bearing logic server-side, governed AI as a controlled delivery tool, reduced the feature surface to what added trust, and designed retrieval-ready evidence. Each links directly to the supporting decision record.',
   },
   proofBlocks: [
     {
@@ -127,7 +127,7 @@ export const implementationTrackContent: TrackPageContent = {
     'AI-forward support and rollout roles',
   ],
   ctaCopy:
-    'Explore the supporting decision-impact blocks, implementation artifacts, and governance notes behind this track.',
+    "The decision-impact blocks, architecture boundary, and governance notes behind this track are one click away. Start with the deep-dive, or pull the resume if you're ready to move forward.",
   ctaLinks: {
     resumeHref: '/resume',
     deepDiveHref: '/portfolio2/deep-dive',
@@ -151,7 +151,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
   ],
   whatThisPageProves: {
     heading: 'What this page proves',
-    body: 'This track focuses on QA and ops-analysis proof: how I prevent regressions, harden brittle paths, preserve traceability, and convert technical detail into structured evidence others can act on.',
+    body: 'Five proof blocks cover how I introduced CI gates before release, hardened a brittle navigation path against sandbox failures, applied sanitization as a rendering trust constraint, maintained a forensic revision trail, and structured technical depth as decision-ready reporting. Each links to the decision record or forensic archive.',
   },
   proofBlocks: [
     {
@@ -191,11 +191,12 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
       href: '/portfolio2/deep-dive#forensic-archive',
     },
     {
-      title: 'Built a layered proof system so technical depth could be understood quickly',
+      title:
+        'Converted ops depth into decision-ready reporting through a three-layer evidence system',
       summary:
-        'Designed a three-layer proof system — role-framed track summaries, structured decision blocks, and a forensic archive — so technical depth is retrievable at any reviewer trust threshold, not just visible to those with time to dig.',
+        'Structured the evidence across three retrieval layers — role-framed track summaries, decision-depth blocks, and a forensic archive — so a reviewer at any time threshold can pull the relevant proof without reading everything. Ops work that cannot be surfaced fast does not land with evaluators.',
       whyItMatters:
-        'Ops and QA work routinely loses value when it is poorly surfaced. This proves the ability to convert technical depth into decision-ready reporting that holds up under real reviewer conditions.',
+        'Ops and QA work routinely loses value when it is poorly surfaced. This proves the ability to convert raw technical depth into structured, retrievable reporting — the same skill that makes ops evidence usable in stakeholder reviews.',
       artifactChips: ['Evidence Architecture', 'Reporting Design', 'Decision Support'],
       href: '/portfolio2/deep-dive#proof-hierarchy',
     },
@@ -224,7 +225,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
     'AI / systems validation roles',
   ],
   ctaCopy:
-    'Explore the validation artifacts, audit trail, and decision-impact blocks that support this track.',
+    "The validation trail, forensic archive, and CI/testing decision block behind this track are one click away. Start with the deep-dive, or pull the resume if you're ready to move forward.",
   ctaLinks: {
     resumeHref: '/resume',
     deepDiveHref: '/portfolio2/deep-dive',
