@@ -10,67 +10,12 @@ interface HomeViewProps {
   onOpenContact: () => void;
 }
 
-interface TickerProps {
-  metric: string;
-  label: string;
-  tooltip: string;
-  targetId: string;
-  caseStudyId: string;
-}
-
-const TickerCard: React.FC<TickerProps> = ({ metric, label, tooltip, targetId, caseStudyId }) => {
-  const scrollToTarget = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      window.history.pushState(null, '', `#${id}`);
-    }
-  };
-
-  return (
-    <div className="relative group/ticker">
-      <button
-        onClick={() => scrollToTarget(targetId)}
-        className="w-full text-center p-4 rounded-xl transition-all duration-300 hover:bg-white dark:hover:bg-white/5 border border-transparent hover:border-slate-200 dark:hover:border-white/10 active:scale-95 group-hover/ticker:shadow-xl dark:group-hover/ticker:shadow-none"
-        aria-label={`Jump to ${label} details`}
-      >
-        <h3 className="text-3xl font-outfit font-bold text-navy-900 dark:text-white group-hover/ticker:text-indigo-600 dark:group-hover/ticker:text-indigo-400 transition-colors">
-          {metric}
-        </h3>
-        <div className="text-sm text-slate-500 uppercase tracking-widest mt-1 group-hover/ticker:text-slate-900 dark:group-hover/ticker:text-slate-300 transition-colors">
-          {label}
-        </div>
-      </button>
-
-      {/* Tooltip */}
-      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 w-52 opacity-0 group-hover/ticker:opacity-100 pointer-events-none group-hover/ticker:pointer-events-auto transition-all duration-300 translate-y-2 group-hover/ticker:translate-y-0 z-50">
-        <div className="relative bg-white dark:bg-slate-900/90 backdrop-blur-md border border-slate-200 dark:border-white/10 p-3 rounded-xl shadow-2xl text-xs text-slate-600 dark:text-slate-300 leading-relaxed text-center space-y-2">
-          <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-white dark:bg-slate-900 border-r border-b border-slate-200 dark:border-white/10 rotate-45"></div>
-          <p>{tooltip}</p>
-          <Link
-            to={`/case-studies/${caseStudyId}`}
-            className="inline-flex items-center gap-1 text-indigo-600 dark:text-indigo-400 font-bold hover:underline"
-          >
-            See evidence →
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 // 3-card preview strip using the first 3 entries from CASE_STUDY_REGISTRY
 const PREVIEW_STUDIES = CASE_STUDY_REGISTRY.slice(0, 3);
 
 const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContact }) => {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-  };
 
   const handleSkillClick = (skill: string) => {
     setSelectedSkill(skill);
@@ -97,51 +42,41 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
   return (
     <>
-      {/* Hero Section — reduced padding so stats row is visible at 1080p */}
-      <section
-        className="relative pt-24 pb-6 md:pt-28 md:pb-10 px-6 overflow-hidden group"
-        onMouseMove={handleMouseMove}
-      >
-        <div
-          className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-          style={{
-            background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(99, 102, 241, 0.08), transparent 40%)`,
-          }}
-          aria-hidden="true"
-        />
-
+      {/* Hero Section */}
+      <section className="relative pt-24 pb-10 md:pt-32 md:pb-14 px-6 overflow-hidden">
         <div className="max-w-5xl mx-auto flex flex-col items-center text-center space-y-6 relative z-10">
-          {/* Open-to-work signal pill */}
+          {/* Open-to-work signal */}
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-400 text-xs font-bold animate-in fade-in slide-in-from-bottom-4 duration-700">
-            <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_6px_rgba(16,185,129,0.6)]"></span>
+            <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
             Open to AI Ops &amp; CX Success roles
           </div>
 
-          {/* Role identity pill */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-widest animate-in fade-in slide-in-from-bottom-4 duration-1000">
+          {/* Role identity — plain text, no neon dots */}
+          <div className="inline-flex items-center gap-3 px-3 py-1 rounded-full bg-indigo-500/8 border border-indigo-500/15 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-widest animate-in fade-in slide-in-from-bottom-4 duration-1000">
             <span>Customer Success</span>
-            <span className="w-1 h-1 bg-indigo-500 rounded-full shadow-[0_0_5px_currentColor]"></span>
+            <span className="w-1 h-1 bg-indigo-400 rounded-full opacity-60"></span>
             <span>Systems Architect</span>
-            <span className="w-1 h-1 bg-indigo-500 rounded-full shadow-[0_0_5px_currentColor]"></span>
+            <span className="w-1 h-1 bg-indigo-400 rounded-full opacity-60"></span>
             <span>AI Operations</span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-outfit font-extrabold text-navy-900 dark:text-white leading-tight animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-100 drop-shadow-sm dark:drop-shadow-2xl">
-            Bridging <span className="gradient-text">Operations</span> &amp;{' '}
-            <span className="gradient-text">Intelligence</span>
+          {/* Headline — solid accent word, no gradient */}
+          <h1 className="text-5xl md:text-7xl font-outfit font-extrabold text-navy-900 dark:text-white leading-tight animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-100">
+            Bridging Operations &amp; <span className="text-indigo-500">Intelligence</span>
           </h1>
-          <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-3xl mx-auto animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-200">
+
+          <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-200">
             Technical Customer Success and Solutions Enablement hybrid specializing in AI workflows,
             operational triage, and reliable data systems. I partner with AI platform and SaaS teams
             to bridge the gap between model potential and enterprise-grade customer outcomes at
             scale.
           </p>
 
-          {/* CTAs — "View Case Studies" is primary, "Get in Touch" is secondary */}
+          {/* CTAs */}
           <div className="flex flex-wrap gap-4 justify-center animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
             <button
               onClick={() => onNavigateToCaseStudy()}
-              className="px-10 py-4 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 hover:-translate-y-0.5 active:scale-95 transition-all shadow-lg shadow-indigo-500/20 flex items-center gap-3 group/btn"
+              className="px-10 py-4 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 hover:-translate-y-0.5 active:scale-95 transition-all flex items-center gap-3 group/btn"
             >
               View Case Studies
               <svg
@@ -160,52 +95,61 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             </button>
             <button
               onClick={onOpenContact}
-              className="px-10 py-4 bg-indigo-500/5 dark:bg-indigo-500/10 backdrop-blur-md text-indigo-700 dark:text-indigo-400 border border-indigo-500/20 hover:border-indigo-500/50 dark:hover:border-indigo-400/50 rounded-2xl font-bold shadow-sm hover:shadow-indigo-500/10 hover:-translate-y-0.5 active:scale-95 transition-all"
+              className="px-10 py-4 text-indigo-700 dark:text-indigo-400 border border-indigo-500/25 hover:border-indigo-500/50 rounded-2xl font-bold hover:-translate-y-0.5 active:scale-95 transition-all"
             >
               Get in Touch
             </button>
           </div>
         </div>
-
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 w-[600px] h-[600px] bg-indigo-500/10 dark:bg-indigo-500/10 blur-[120px] rounded-full pointer-events-none opacity-60"
-          aria-hidden="true"
-        ></div>
       </section>
 
       <TrackSelectorSection tracks={trackSelectorCards} />
 
-      {/* Stats/Quick Glance */}
-      <section className="py-12 border-y border-black/5 dark:border-white/5 bg-white/30 dark:bg-slate-900/10 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
-          <TickerCard
-            metric="100+"
-            label="Weekly Tickets"
-            tooltip="Managed enterprise-grade pressure with ~100+ Zendesk conversations weekly at Printful."
-            targetId="exp-printful"
-            caseStudyId="ops-triage"
-          />
-          <TickerCard
-            metric="$100k+"
-            label="Client Tiers"
-            tooltip="Experience handling high-stakes accounts where operational accuracy is critical for revenue."
-            targetId="exp-printful"
-            caseStudyId="ops-triage"
-          />
-          <TickerCard
-            metric="120+"
-            label="SLA Requests/wk"
-            tooltip="Validated high-volume throughput in utility datasets via strict triage protocols at Apex Systems."
-            targetId="exp-apex"
-            caseStudyId="ops-triage"
-          />
-          <TickerCard
-            metric="4+ Years"
-            label="GIS Expertise"
-            tooltip="Core technical foundation in spatial data systems and architectural design."
-            targetId="foundation"
-            caseStudyId="nba-systems-qa"
-          />
+      {/* Evidence Row — Direction C: structured, no cards, typographic hierarchy */}
+      <section className="border-y border-[#e4dfd7] dark:border-white/5 bg-[#fefcf9] dark:bg-[#221e17]">
+        <div className="max-w-7xl mx-auto px-6">
+          <dl className="grid grid-cols-2 md:grid-cols-4 divide-x divide-[#e4dfd7] dark:divide-white/5">
+            {[
+              {
+                metric: '100+',
+                label: 'Weekly Tickets',
+                sub: 'enterprise volume · Printful',
+                caseId: 'ops-triage',
+              },
+              {
+                metric: '$100K+',
+                label: 'Client Tiers',
+                sub: 'revenue-critical accounts',
+                caseId: 'ops-triage',
+              },
+              {
+                metric: '120+',
+                label: 'SLA Requests/wk',
+                sub: 'validated throughput · Apex',
+                caseId: 'ops-triage',
+              },
+              {
+                metric: '4+ yrs',
+                label: 'GIS Depth',
+                sub: 'spatial systems foundation',
+                caseId: 'nba-systems-qa',
+              },
+            ].map(({ metric, label, sub, caseId }) => (
+              <Link
+                key={metric}
+                to={`/case-studies/${caseId}`}
+                className="px-6 py-8 first:pl-0 last:pr-0 group/stat flex flex-col gap-1 hover:bg-[#f5e2d5]/40 dark:hover:bg-[rgba(196,89,42,0.06)] transition-colors"
+              >
+                <dt className="text-3xl font-outfit font-bold text-navy-900 dark:text-white group-hover/stat:text-indigo-500 dark:group-hover/stat:text-indigo-400 transition-colors tabular-nums">
+                  {metric}
+                </dt>
+                <dd className="text-sm font-medium text-slate-700 dark:text-slate-300">{label}</dd>
+                <dd className="text-xs text-slate-400 dark:text-slate-500 leading-relaxed">
+                  {sub}
+                </dd>
+              </Link>
+            ))}
+          </dl>
         </div>
       </section>
 
