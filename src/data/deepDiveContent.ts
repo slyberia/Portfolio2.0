@@ -44,7 +44,7 @@ export const releaseLadder: TimelineEntry[] = [
     phase: 'Phase 1',
     title: 'Protocol refinement / early AI Studio constraints',
     description:
-      'Established the initial AI workflow protocols using Google AI Studio. Defined role boundaries for each LLM, set output constraints, and built the governance framework that would constrain all subsequent AI usage. Design authority stayed human-controlled from the start.',
+      'Established AI workflow protocols in Google AI Studio before any content generation began. Assigned non-overlapping roles to each LLM: ChatGPT for strategy and evidence audit, Gemini for synthesis and proof translation, Google AI Studio for iterative archive and in-flight decision capture. Defined scope constraints, output review checkpoints, and operator approval requirements at each phase boundary. Design authority and all framing decisions remained human-controlled throughout — LLMs supported execution, they did not direct it.',
     tags: ['AI Governance', 'Protocol Design', 'Google AI Studio'],
   },
   {
@@ -239,7 +239,7 @@ export const architectureSummaries: ArchitectureSummary[] = [
   {
     title: 'Server / client boundary',
     summary:
-      'The React client is intentionally dumb about AI: it sends chat messages to /api/chat and displays responses. The Express proxy on Cloud Run holds credentials, applies prompt constraints, and controls the Gemini call. No secrets touch the browser layer.',
+      'The React client is intentionally dumb about AI: it sends requests to /api/chat and displays responses. The Express proxy on Cloud Run holds credentials, applies a scoped system prompt with hard role constraints and injection detection, and controls every Gemini call. Credential isolation was verified: no API keys appear in the client bundle, network inspector, or source maps under any request pattern.',
     chips: ['Express', 'Cloud Run', 'Security Boundary'],
   },
   {
