@@ -337,171 +337,172 @@ export const AppLayout: React.FC = () => {
 
       {/* Sidebar-offset wrapper — shifts all page content right of the desktop sidebar */}
       <div className="md:pl-20 pb-16 md:pb-0">
-      {/* Recruiter Mode Banner */}
-      {isRecruiterMode && (
-        <div className="bg-emerald-500 text-white px-6 py-3 flex items-center justify-between gap-4 animate-in slide-in-from-top-2 duration-300">
-          <div className="flex items-center gap-3">
-            <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-            <span className="text-sm font-bold">
-              Recruiter Mode Active — Simplified view for hiring review
-            </span>
-          </div>
-          <button
-            onClick={toggleRecruiterMode}
-            className="text-xs font-bold px-3 py-1 rounded-full bg-white/20 hover:bg-white/30 transition-colors focus:outline-none"
-            aria-label="Exit recruiter mode"
-          >
-            Exit
-          </button>
-        </div>
-      )}
-
-      <main className="transition-opacity duration-300">
-        <Outlet context={context} />
-      </main>
-
-      {/* Footer / Contact */}
-      <footer
-        id="contact"
-        className="py-20 px-6 border-t border-[#e4dfd7] dark:border-white/5 relative bg-[#f9f7f3] dark:bg-[#1a1712] overflow-hidden scroll-mt-24 transition-colors duration-500"
-      >
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-[#e4dfd7] dark:bg-white/5"></div>
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
-          <div className="space-y-8">
-            <h2 className="text-4xl font-outfit font-extrabold text-navy-900 dark:text-white">
-              Open to AI-forward{' '}
-              <span className="text-indigo-500">Customer Success and Solutions</span> roles
-            </h2>
-            <p className="text-slate-500 dark:text-slate-400 max-w-sm">
-              I'm looking for my next challenge in an AI-forward company that values operational
-              excellence.
-            </p>
-
-            <div className="flex flex-wrap gap-4">
-              {/* Email Button */}
-              <button
-                onClick={() => handleCopyEmail('kmsemple26@gmail.com')}
-                className="flex items-center gap-4 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors group text-left p-2 rounded-2xl hover:bg-indigo-500/5"
-              >
-                <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-indigo-600 dark:text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white group-hover:scale-110 transition-all">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-5 h-5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <rect width="20" height="16" x="2" y="4" rx="2" />
-                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                  </svg>
-                </div>
-                <div className="flex flex-col items-start">
-                  <span className="font-medium">kmsemple26@gmail.com</span>
-                  <span className="text-[10px] uppercase tracking-widest text-indigo-500 font-bold">
-                    Copy Email
-                  </span>
-                </div>
-              </button>
-
-              {/* LinkedIn Link */}
-              <a
-                href="https://www.linkedin.com/in/kyle-semple-522537165/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-4 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors group text-left p-2 rounded-2xl hover:bg-blue-500/5"
-              >
-                <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:bg-blue-500 group-hover:text-white group-hover:scale-110 transition-all">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-5 h-5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                    <rect width="4" height="12" x="2" y="9" />
-                    <circle cx="4" cy="4" r="2" />
-                  </svg>
-                </div>
-                <div className="flex flex-col items-start">
-                  <span className="font-medium">Professional Profile</span>
-                  <span className="text-[10px] uppercase tracking-widest text-blue-500 font-bold">
-                    LinkedIn Profile
-                  </span>
-                </div>
-              </a>
-
-              {/* Resume Button */}
-              <button
-                onClick={navigateToResume}
-                className="flex items-center gap-4 text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors group text-left p-2 rounded-2xl hover:bg-emerald-500/5"
-              >
-                <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-emerald-600 dark:text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white group-hover:scale-110 transition-all">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-5 h-5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" x2="12" y1="15" y2="3" />
-                  </svg>
-                </div>
-                <div className="flex flex-col items-start">
-                  <span className="font-medium">Resume (Print/PDF)</span>
-                  <span className="text-[10px] uppercase tracking-widest text-emerald-500 font-bold">
-                    Open Resume
-                  </span>
-                </div>
-              </button>
-            </div>
-          </div>
-          <div className="flex flex-col justify-between">
-            <div className="flex flex-col gap-2">
-              <span className="text-slate-400 dark:text-slate-500 font-bold uppercase tracking-widest text-xs">
-                Based in
-              </span>
-              <span className="text-navy-900 dark:text-white font-outfit text-xl">
-                Ann Arbor, MI
+        {/* Recruiter Mode Banner */}
+        {isRecruiterMode && (
+          <div className="bg-emerald-500 text-white px-6 py-3 flex items-center justify-between gap-4 animate-in slide-in-from-top-2 duration-300">
+            <div className="flex items-center gap-3">
+              <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+              <span className="text-sm font-bold">
+                Recruiter Mode Active — Simplified view for hiring review
               </span>
             </div>
-            <div className="mt-12 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
-              <span className="text-slate-400 dark:text-slate-600 text-sm">
-                © 2024 Kyle Semple. All Rights Reserved.
-              </span>
-              <div className="flex items-center gap-4">
+            <button
+              onClick={toggleRecruiterMode}
+              className="text-xs font-bold px-3 py-1 rounded-full bg-white/20 hover:bg-white/30 transition-colors focus:outline-none"
+              aria-label="Exit recruiter mode"
+            >
+              Exit
+            </button>
+          </div>
+        )}
+
+        <main className="transition-opacity duration-300">
+          <Outlet context={context} />
+        </main>
+
+        {/* Footer / Contact */}
+        <footer
+          id="contact"
+          className="py-20 px-6 border-t border-[#e4dfd7] dark:border-white/5 relative bg-[#f9f7f3] dark:bg-[#1a1712] overflow-hidden scroll-mt-24 transition-colors duration-500"
+        >
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-[#e4dfd7] dark:bg-white/5"></div>
+          <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
+            <div className="space-y-8">
+              <h2 className="text-4xl font-outfit font-extrabold text-navy-900 dark:text-white">
+                Open to AI-forward{' '}
+                <span className="text-indigo-500">Customer Success and Solutions</span> roles
+              </h2>
+              <p className="text-slate-500 dark:text-slate-400 max-w-sm">
+                I'm looking for my next challenge in an AI-forward company that values operational
+                excellence.
+              </p>
+
+              <div className="flex flex-wrap gap-4">
+                {/* Email Button */}
+                <button
+                  onClick={() => handleCopyEmail('kmsemple26@gmail.com')}
+                  className="flex items-center gap-4 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors group text-left p-2 rounded-2xl hover:bg-indigo-500/5"
+                >
+                  <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-indigo-600 dark:text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white group-hover:scale-110 transition-all">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-5 h-5"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <rect width="20" height="16" x="2" y="4" rx="2" />
+                      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                    </svg>
+                  </div>
+                  <div className="flex flex-col items-start">
+                    <span className="font-medium">kmsemple26@gmail.com</span>
+                    <span className="text-[10px] uppercase tracking-widest text-indigo-500 font-bold">
+                      Copy Email
+                    </span>
+                  </div>
+                </button>
+
+                {/* LinkedIn Link */}
                 <a
                   href="https://www.linkedin.com/in/kyle-semple-522537165/"
                   target="_blank"
-                  rel="noopener"
-                  className="text-slate-400 hover:text-navy-900 dark:hover:text-white transition-colors"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors group text-left p-2 rounded-2xl hover:bg-blue-500/5"
                 >
-                  LinkedIn
+                  <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:bg-blue-500 group-hover:text-white group-hover:scale-110 transition-all">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-5 h-5"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                      <rect width="4" height="12" x="2" y="9" />
+                      <circle cx="4" cy="4" r="2" />
+                    </svg>
+                  </div>
+                  <div className="flex flex-col items-start">
+                    <span className="font-medium">Professional Profile</span>
+                    <span className="text-[10px] uppercase tracking-widest text-blue-500 font-bold">
+                      LinkedIn Profile
+                    </span>
+                  </div>
                 </a>
-                <span className="w-1 h-1 bg-slate-300 dark:bg-slate-700 rounded-full"></span>
+
+                {/* Resume Button */}
                 <button
-                  onClick={() => setIsContactOpen(true)}
-                  className="text-slate-400 hover:text-navy-900 dark:hover:text-white transition-colors"
+                  onClick={navigateToResume}
+                  className="flex items-center gap-4 text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors group text-left p-2 rounded-2xl hover:bg-emerald-500/5"
                 >
-                  Contact
+                  <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-emerald-600 dark:text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white group-hover:scale-110 transition-all">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-5 h-5"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="7 10 12 15 17 10" />
+                      <line x1="12" x2="12" y1="15" y2="3" />
+                    </svg>
+                  </div>
+                  <div className="flex flex-col items-start">
+                    <span className="font-medium">Resume (Print/PDF)</span>
+                    <span className="text-[10px] uppercase tracking-widest text-emerald-500 font-bold">
+                      Open Resume
+                    </span>
+                  </div>
                 </button>
               </div>
             </div>
+            <div className="flex flex-col justify-between">
+              <div className="flex flex-col gap-2">
+                <span className="text-slate-400 dark:text-slate-500 font-bold uppercase tracking-widest text-xs">
+                  Based in
+                </span>
+                <span className="text-navy-900 dark:text-white font-outfit text-xl">
+                  Ann Arbor, MI
+                </span>
+              </div>
+              <div className="mt-12 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+                <span className="text-slate-400 dark:text-slate-600 text-sm">
+                  © 2024 Kyle Semple. All Rights Reserved.
+                </span>
+                <div className="flex items-center gap-4">
+                  <a
+                    href="https://www.linkedin.com/in/kyle-semple-522537165/"
+                    target="_blank"
+                    rel="noopener"
+                    className="text-slate-400 hover:text-navy-900 dark:hover:text-white transition-colors"
+                  >
+                    LinkedIn
+                  </a>
+                  <span className="w-1 h-1 bg-slate-300 dark:bg-slate-700 rounded-full"></span>
+                  <button
+                    onClick={() => setIsContactOpen(true)}
+                    className="text-slate-400 hover:text-navy-900 dark:hover:text-white transition-colors"
+                  >
+                    Contact
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </footer>
-      </div>{/* end sidebar-offset wrapper */}
+        </footer>
+      </div>
+      {/* end sidebar-offset wrapper */}
 
       <BottomTabBar />
 

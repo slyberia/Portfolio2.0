@@ -47,7 +47,6 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
     <>
       {/* ── Hero Section ─────────────────────────────────────────────────────── */}
       <section className="relative pt-20 min-h-[92vh] md:min-h-[88vh] overflow-hidden bg-gold-50 dark:bg-slate-950">
-
         {/* Graph-paper grid overlay */}
         <div
           className="absolute inset-0 pointer-events-none"
@@ -82,10 +81,8 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
         {/* ── 12-column content grid ──────────────────────────────────────────── */}
         <div className="grid grid-cols-12 min-h-[88vh] md:min-h-[80vh]">
-
           {/* Left column — text content — appears second on mobile, first on desktop */}
           <div className="col-span-12 md:col-span-7 order-2 md:order-1 flex flex-col justify-center px-8 md:px-12 pt-8 pb-10 md:pt-20 md:pb-16">
-
             {/* Eyebrow — horizontal rule + mono label */}
             <div className="flex items-center gap-3 mb-7 animate-in fade-in duration-700">
               <div className="w-8 h-px bg-indigo-500 shrink-0" aria-hidden="true" />
@@ -152,10 +149,8 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
           {/* Right column — geometric visual — appears first on mobile */}
           <div className="col-span-12 md:col-span-5 order-1 md:order-2 relative flex items-stretch">
-
             {/* Visual frame */}
             <div className="relative w-full min-h-[320px] md:min-h-0 bg-[#fefcf9] dark:bg-[#1e1a14] border-b md:border-b-0 md:border-l border-[#e4dfd7] dark:border-white/5 overflow-hidden">
-
               {/* Grid background inside frame */}
               <div
                 className="absolute inset-0 pointer-events-none"
@@ -218,17 +213,91 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                 )}
 
                 {/* Primary connection paths */}
-                <line x1="60" y1="80" x2="180" y2="160" stroke="#c4592a" strokeWidth="1" opacity="0.75" />
-                <line x1="180" y1="160" x2="300" y2="100" stroke="#c4592a" strokeWidth="1" opacity="0.5" />
-                <line x1="180" y1="160" x2="180" y2="300" stroke="#c4592a" strokeWidth="1" opacity="0.8" />
-                <line x1="180" y1="160" x2="300" y2="240" stroke="#c4592a" strokeWidth="1" opacity="0.55" />
-                <line x1="300" y1="240" x2="180" y2="360" stroke="#c4592a" strokeWidth="1" opacity="0.65" />
-                <line x1="180" y1="300" x2="60" y2="380" stroke="#c4592a" strokeWidth="1" opacity="0.5" />
-                <line x1="180" y1="360" x2="60" y2="380" stroke="#c4592a" strokeWidth="1" opacity="0.4" />
+                <line
+                  x1="60"
+                  y1="80"
+                  x2="180"
+                  y2="160"
+                  stroke="#c4592a"
+                  strokeWidth="1"
+                  opacity="0.75"
+                />
+                <line
+                  x1="180"
+                  y1="160"
+                  x2="300"
+                  y2="100"
+                  stroke="#c4592a"
+                  strokeWidth="1"
+                  opacity="0.5"
+                />
+                <line
+                  x1="180"
+                  y1="160"
+                  x2="180"
+                  y2="300"
+                  stroke="#c4592a"
+                  strokeWidth="1"
+                  opacity="0.8"
+                />
+                <line
+                  x1="180"
+                  y1="160"
+                  x2="300"
+                  y2="240"
+                  stroke="#c4592a"
+                  strokeWidth="1"
+                  opacity="0.55"
+                />
+                <line
+                  x1="300"
+                  y1="240"
+                  x2="180"
+                  y2="360"
+                  stroke="#c4592a"
+                  strokeWidth="1"
+                  opacity="0.65"
+                />
+                <line
+                  x1="180"
+                  y1="300"
+                  x2="60"
+                  y2="380"
+                  stroke="#c4592a"
+                  strokeWidth="1"
+                  opacity="0.5"
+                />
+                <line
+                  x1="180"
+                  y1="360"
+                  x2="60"
+                  y2="380"
+                  stroke="#c4592a"
+                  strokeWidth="1"
+                  opacity="0.4"
+                />
 
                 {/* Secondary dashed paths */}
-                <line x1="300" y1="100" x2="300" y2="240" stroke="#c4592a" strokeWidth="1" opacity="0.2" strokeDasharray="4 4" />
-                <line x1="60" y1="80" x2="60" y2="380" stroke="#1e2030" strokeWidth="1" opacity="0.06" strokeDasharray="2 6" />
+                <line
+                  x1="300"
+                  y1="100"
+                  x2="300"
+                  y2="240"
+                  stroke="#c4592a"
+                  strokeWidth="1"
+                  opacity="0.2"
+                  strokeDasharray="4 4"
+                />
+                <line
+                  x1="60"
+                  y1="80"
+                  x2="60"
+                  y2="380"
+                  stroke="#1e2030"
+                  strokeWidth="1"
+                  opacity="0.06"
+                  strokeDasharray="2 6"
+                />
 
                 {/* Nodes — squares (zero radius, consistent with design) */}
                 {/* Input node */}
@@ -236,20 +305,71 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                 {/* Primary junction */}
                 <rect x="173" y="153" width="14" height="14" fill="#c4592a" />
                 {/* Branch A */}
-                <rect x="294" y="94" width="10" height="10" fill="none" stroke="#c4592a" strokeWidth="1.5" opacity="0.7" />
+                <rect
+                  x="294"
+                  y="94"
+                  width="10"
+                  height="10"
+                  fill="none"
+                  stroke="#c4592a"
+                  strokeWidth="1.5"
+                  opacity="0.7"
+                />
                 {/* Branch B */}
                 <rect x="294" y="234" width="12" height="12" fill="#c4592a" opacity="0.75" />
                 {/* Convergence A */}
-                <rect x="174" y="294" width="10" height="10" fill="none" stroke="#c4592a" strokeWidth="1.5" opacity="0.6" />
+                <rect
+                  x="174"
+                  y="294"
+                  width="10"
+                  height="10"
+                  fill="none"
+                  stroke="#c4592a"
+                  strokeWidth="1.5"
+                  opacity="0.6"
+                />
                 {/* Convergence B */}
-                <rect x="174" y="354" width="10" height="10" fill="none" stroke="#c4592a" strokeWidth="1.5" opacity="0.5" />
+                <rect
+                  x="174"
+                  y="354"
+                  width="10"
+                  height="10"
+                  fill="none"
+                  stroke="#c4592a"
+                  strokeWidth="1.5"
+                  opacity="0.5"
+                />
                 {/* Output node */}
                 <rect x="54" y="374" width="12" height="12" fill="#c4592a" opacity="0.65" />
 
                 {/* Measurement annotation line */}
-                <line x1="330" y1="100" x2="330" y2="380" stroke="#1e2030" strokeWidth="0.75" opacity="0.15" />
-                <line x1="324" y1="100" x2="336" y2="100" stroke="#1e2030" strokeWidth="0.75" opacity="0.15" />
-                <line x1="324" y1="380" x2="336" y2="380" stroke="#1e2030" strokeWidth="0.75" opacity="0.15" />
+                <line
+                  x1="330"
+                  y1="100"
+                  x2="330"
+                  y2="380"
+                  stroke="#1e2030"
+                  strokeWidth="0.75"
+                  opacity="0.15"
+                />
+                <line
+                  x1="324"
+                  y1="100"
+                  x2="336"
+                  y2="100"
+                  stroke="#1e2030"
+                  strokeWidth="0.75"
+                  opacity="0.15"
+                />
+                <line
+                  x1="324"
+                  y1="380"
+                  x2="336"
+                  y2="380"
+                  stroke="#1e2030"
+                  strokeWidth="0.75"
+                  opacity="0.15"
+                />
               </svg>
 
               {/* Side annotation — real data, rotated */}
