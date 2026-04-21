@@ -40,65 +40,238 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
     'AI Tooling / Prompt Governance',
   ];
 
+  // Real data for annotations — sourced from constants/experience
+  const CASE_COUNT = String(CASE_STUDY_REGISTRY.length).padStart(2, '0');
+
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative pt-24 pb-10 md:pt-32 md:pb-14 px-6 overflow-hidden">
-        <div className="max-w-5xl mx-auto flex flex-col items-center text-center space-y-6 relative z-10">
-          {/* Open-to-work signal */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-400 text-xs font-bold animate-in fade-in slide-in-from-bottom-4 duration-700">
-            <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-            Open to AI Ops &amp; CX Success roles
-          </div>
+      {/* ── Hero Section ─────────────────────────────────────────────────────── */}
+      <section className="relative pt-20 min-h-[92vh] md:min-h-[88vh] overflow-hidden bg-gold-50 dark:bg-slate-950">
 
-          {/* Role identity — plain text, no neon dots */}
-          <div className="inline-flex items-center gap-3 px-3 py-1 rounded-full bg-indigo-500/8 border border-indigo-500/15 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-widest animate-in fade-in slide-in-from-bottom-4 duration-1000">
-            <span>Customer Success</span>
-            <span className="w-1 h-1 bg-indigo-400 rounded-full opacity-60"></span>
-            <span>Systems Architect</span>
-            <span className="w-1 h-1 bg-indigo-400 rounded-full opacity-60"></span>
-            <span>AI Operations</span>
-          </div>
+        {/* Graph-paper grid overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          aria-hidden="true"
+          style={{
+            backgroundImage:
+              'linear-gradient(rgba(30,32,48,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(30,32,48,0.045) 1px, transparent 1px)',
+            backgroundSize: '40px 40px',
+          }}
+        />
+        {/* Dark-mode grid */}
+        <div
+          className="absolute inset-0 pointer-events-none hidden dark:block"
+          aria-hidden="true"
+          style={{
+            backgroundImage:
+              'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
+            backgroundSize: '40px 40px',
+          }}
+        />
 
-          {/* Headline — solid accent word, no gradient */}
-          <h1 className="text-5xl md:text-7xl font-outfit font-extrabold text-navy-900 dark:text-white leading-tight animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-100">
-            Bridging Operations &amp; <span className="text-indigo-500">Intelligence</span>
-          </h1>
+        {/* Top-right annotation — real portfolio data */}
+        <div
+          className="absolute top-24 right-6 hidden lg:block font-mono text-right leading-relaxed select-none"
+          style={{ fontSize: '10px', opacity: 0.3 }}
+          aria-hidden="true"
+        >
+          PORT_REF: KS.V2 / CASES: {CASE_COUNT}
+          <br />
+          BUILD: 2026.04 / ANN_ARBOR_MI
+        </div>
 
-          <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-200">
-            Technical Customer Success and Solutions Enablement hybrid specializing in AI workflows,
-            operational triage, and reliable data systems. I partner with AI platform and SaaS teams
-            to bridge the gap between model potential and enterprise-grade customer outcomes at
-            scale.
-          </p>
+        {/* ── 12-column content grid ──────────────────────────────────────────── */}
+        <div className="grid grid-cols-12 min-h-[88vh] md:min-h-[80vh]">
 
-          {/* CTAs */}
-          <div className="flex flex-wrap gap-4 justify-center animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
-            <button
-              onClick={() => onNavigateToCaseStudy()}
-              className="px-10 py-4 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 hover:-translate-y-0.5 active:scale-95 transition-all flex items-center gap-3 group/btn"
+          {/* Left column — text content — appears second on mobile, first on desktop */}
+          <div className="col-span-12 md:col-span-7 order-2 md:order-1 flex flex-col justify-center px-8 md:px-12 pt-8 pb-10 md:pt-20 md:pb-16">
+
+            {/* Eyebrow — horizontal rule + mono label */}
+            <div className="flex items-center gap-3 mb-7 animate-in fade-in duration-700">
+              <div className="w-8 h-px bg-indigo-500 shrink-0" aria-hidden="true" />
+              <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-indigo-500">
+                Customer Success / AI Operations
+              </span>
+            </div>
+
+            {/* Headline — split two-line architectural format */}
+            <h1
+              className="font-outfit font-extrabold text-navy-900 dark:text-white tracking-tight leading-[0.88] mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-75"
+              style={{ fontSize: 'clamp(3.25rem, 8.5vw, 7rem)' }}
             >
-              View Case Studies
+              <span className="block">OPERATIONS</span>
+              <span className="block italic text-indigo-500 md:pl-14">INTELLIGENCE_V2</span>
+            </h1>
+
+            {/* Open-to-work signal */}
+            <div className="flex items-center gap-2.5 mb-5 md:pl-14 animate-in fade-in duration-700 delay-100">
+              <span className="w-2 h-2 bg-emerald-500 animate-pulse shrink-0" aria-hidden="true" />
+              <span className="font-mono text-[11px] uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                Open to AI Ops &amp; CX Success roles
+              </span>
+            </div>
+
+            {/* Body text */}
+            <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-lg mb-10 md:pl-14 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150">
+              Technical Customer Success and Solutions Enablement hybrid specializing in AI
+              workflows, operational triage, and reliable data systems. I partner with AI platform
+              and SaaS teams to bridge the gap between model potential and enterprise-grade customer
+              outcomes at scale.
+            </p>
+
+            {/* CTAs — sharp corners, full-width on mobile */}
+            <div className="flex flex-col sm:flex-row gap-0 md:pl-14 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
+              <button
+                onClick={() => onNavigateToCaseStudy()}
+                className="flex items-center justify-between gap-4 px-8 py-4 bg-indigo-500 text-white font-mono text-sm uppercase tracking-wider hover:bg-indigo-600 active:bg-indigo-700 transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+              >
+                <span>View Case Studies</span>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
+              </button>
+              <button
+                onClick={onOpenContact}
+                className="flex items-center justify-center px-8 py-4 border border-indigo-500/30 text-indigo-600 dark:text-indigo-400 font-mono text-sm uppercase tracking-wider hover:border-indigo-500/60 hover:bg-indigo-500/5 transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+              >
+                Get in Touch
+              </button>
+            </div>
+          </div>
+
+          {/* Right column — geometric visual — appears first on mobile */}
+          <div className="col-span-12 md:col-span-5 order-1 md:order-2 relative flex items-stretch">
+
+            {/* Visual frame */}
+            <div className="relative w-full min-h-[320px] md:min-h-0 bg-[#fefcf9] dark:bg-[#1e1a14] border-b md:border-b-0 md:border-l border-[#e4dfd7] dark:border-white/5 overflow-hidden">
+
+              {/* Grid background inside frame */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                aria-hidden="true"
+                style={{
+                  backgroundImage:
+                    'linear-gradient(rgba(30,32,48,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(30,32,48,0.04) 1px, transparent 1px)',
+                  backgroundSize: '40px 40px',
+                }}
+              />
+
+              {/* Version / ref tag — top-right, sharp corners */}
+              <div className="absolute top-0 right-0 z-10 bg-indigo-500 text-white font-mono text-[10px] uppercase tracking-wider px-3 py-1.5 select-none">
+                OPS_REF: V2
+              </div>
+
+              {/* Corner brackets */}
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform"
+                className="absolute top-3 left-3 text-indigo-500/60"
+                width="24"
+                height="24"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+                aria-hidden="true"
               >
-                <path d="M5 12h14" />
-                <path d="m12 5 7 7-7 7" />
+                <path d="M24 0 L0 0 L0 24" stroke="currentColor" strokeWidth="1.5" />
               </svg>
-            </button>
-            <button
-              onClick={onOpenContact}
-              className="px-10 py-4 text-indigo-700 dark:text-indigo-400 border border-indigo-500/25 hover:border-indigo-500/50 rounded-2xl font-bold hover:-translate-y-0.5 active:scale-95 transition-all"
-            >
-              Get in Touch
-            </button>
+              <svg
+                className="absolute bottom-12 right-3 text-indigo-500/60"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path d="M0 24 L24 24 L24 0" stroke="currentColor" strokeWidth="1.5" />
+              </svg>
+
+              {/* Operations network diagram — SVG */}
+              <svg
+                className="absolute inset-0 w-full h-full"
+                viewBox="0 0 380 460"
+                fill="none"
+                preserveAspectRatio="xMidYMid slice"
+                aria-label="Operations workflow network diagram"
+                role="img"
+              >
+                {/* Dot grid */}
+                {Array.from({ length: 11 }, (_, row) =>
+                  Array.from({ length: 9 }, (_, col) => (
+                    <circle
+                      key={`d-${row}-${col}`}
+                      cx={20 + col * 40}
+                      cy={20 + row * 40}
+                      r="1.5"
+                      fill="#1e2030"
+                      opacity="0.07"
+                    />
+                  )),
+                )}
+
+                {/* Primary connection paths */}
+                <line x1="60" y1="80" x2="180" y2="160" stroke="#c4592a" strokeWidth="1" opacity="0.75" />
+                <line x1="180" y1="160" x2="300" y2="100" stroke="#c4592a" strokeWidth="1" opacity="0.5" />
+                <line x1="180" y1="160" x2="180" y2="300" stroke="#c4592a" strokeWidth="1" opacity="0.8" />
+                <line x1="180" y1="160" x2="300" y2="240" stroke="#c4592a" strokeWidth="1" opacity="0.55" />
+                <line x1="300" y1="240" x2="180" y2="360" stroke="#c4592a" strokeWidth="1" opacity="0.65" />
+                <line x1="180" y1="300" x2="60" y2="380" stroke="#c4592a" strokeWidth="1" opacity="0.5" />
+                <line x1="180" y1="360" x2="60" y2="380" stroke="#c4592a" strokeWidth="1" opacity="0.4" />
+
+                {/* Secondary dashed paths */}
+                <line x1="300" y1="100" x2="300" y2="240" stroke="#c4592a" strokeWidth="1" opacity="0.2" strokeDasharray="4 4" />
+                <line x1="60" y1="80" x2="60" y2="380" stroke="#1e2030" strokeWidth="1" opacity="0.06" strokeDasharray="2 6" />
+
+                {/* Nodes — squares (zero radius, consistent with design) */}
+                {/* Input node */}
+                <rect x="54" y="74" width="12" height="12" fill="#c4592a" opacity="0.9" />
+                {/* Primary junction */}
+                <rect x="173" y="153" width="14" height="14" fill="#c4592a" />
+                {/* Branch A */}
+                <rect x="294" y="94" width="10" height="10" fill="none" stroke="#c4592a" strokeWidth="1.5" opacity="0.7" />
+                {/* Branch B */}
+                <rect x="294" y="234" width="12" height="12" fill="#c4592a" opacity="0.75" />
+                {/* Convergence A */}
+                <rect x="174" y="294" width="10" height="10" fill="none" stroke="#c4592a" strokeWidth="1.5" opacity="0.6" />
+                {/* Convergence B */}
+                <rect x="174" y="354" width="10" height="10" fill="none" stroke="#c4592a" strokeWidth="1.5" opacity="0.5" />
+                {/* Output node */}
+                <rect x="54" y="374" width="12" height="12" fill="#c4592a" opacity="0.65" />
+
+                {/* Measurement annotation line */}
+                <line x1="330" y1="100" x2="330" y2="380" stroke="#1e2030" strokeWidth="0.75" opacity="0.15" />
+                <line x1="324" y1="100" x2="336" y2="100" stroke="#1e2030" strokeWidth="0.75" opacity="0.15" />
+                <line x1="324" y1="380" x2="336" y2="380" stroke="#1e2030" strokeWidth="0.75" opacity="0.15" />
+              </svg>
+
+              {/* Side annotation — real data, rotated */}
+              <div
+                className="absolute right-[-1.75rem] top-1/2 -translate-y-1/2 font-mono uppercase tracking-widest text-navy-900/25 dark:text-white/15 select-none hidden md:block"
+                style={{ fontSize: '8px', writingMode: 'vertical-rl' }}
+                aria-hidden="true"
+              >
+                120+ REQ/WK · $100K+ ACCOUNTS
+              </div>
+
+              {/* Status overlay — bottom strip */}
+              <div className="absolute bottom-0 left-0 right-0 bg-navy-900/90 dark:bg-[#0d0c09]/95 text-white px-4 py-3 flex items-center gap-3">
+                <span
+                  className="w-2 h-2 bg-emerald-500 animate-pulse shrink-0"
+                  aria-hidden="true"
+                />
+                <span className="font-mono text-[11px] uppercase tracking-wider">
+                  UNIT_STATUS: OPEN_TO_WORK
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </section>

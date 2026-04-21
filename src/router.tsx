@@ -8,6 +8,8 @@ import {
   useOutletContext,
 } from 'react-router-dom';
 import HomeView from './views/HomeView';
+import SidebarNav from './components/SidebarNav';
+import BottomTabBar from './components/BottomTabBar';
 import CaseStudyView from './views/CaseStudyView';
 import ResumeView from './views/ResumeView';
 import ImplementationTrackView from './views/ImplementationTrackView';
@@ -331,6 +333,10 @@ export const AppLayout: React.FC = () => {
         </div>
       </nav>
 
+      <SidebarNav />
+
+      {/* Sidebar-offset wrapper — shifts all page content right of the desktop sidebar */}
+      <div className="md:pl-20 pb-16 md:pb-0">
       {/* Recruiter Mode Banner */}
       {isRecruiterMode && (
         <div className="bg-emerald-500 text-white px-6 py-3 flex items-center justify-between gap-4 animate-in slide-in-from-top-2 duration-300">
@@ -495,6 +501,9 @@ export const AppLayout: React.FC = () => {
           </div>
         </div>
       </footer>
+      </div>{/* end sidebar-offset wrapper */}
+
+      <BottomTabBar />
 
       <ContactModal
         isOpen={isContactOpen}
