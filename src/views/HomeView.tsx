@@ -82,7 +82,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
         {/* ── 12-column content grid ──────────────────────────────────────────── */}
         <div className="grid grid-cols-12 min-h-[88vh] md:min-h-[80vh]">
           {/* Left column — text content — appears second on mobile, first on desktop */}
-          <div className="col-span-12 md:col-span-7 order-2 md:order-1 flex flex-col justify-center px-8 md:px-12 pt-8 pb-10 md:pt-20 md:pb-16">
+          <div className="col-span-12 md:col-span-7 order-2 md:order-1 flex flex-col justify-center px-8 md:px-12 pt-8 pb-10 md:pt-10 md:pb-16">
             {/* Eyebrow — horizontal rule + mono label */}
             <div className="flex items-center gap-3 mb-7 animate-in fade-in duration-700">
               <div className="w-8 h-px bg-indigo-500 shrink-0" aria-hidden="true" />
@@ -93,8 +93,8 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
             {/* Headline — split two-line architectural format */}
             <h1
-              className="font-outfit font-extrabold text-navy-900 dark:text-white tracking-tight leading-[0.88] mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-75"
-              style={{ fontSize: 'clamp(3.25rem, 8.5vw, 7rem)' }}
+              className="font-outfit font-extrabold text-navy-900 dark:text-white tracking-tight leading-[1.05] mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-75"
+              style={{ fontSize: 'clamp(2rem, 5.25vw, 4.34rem)' }}
             >
               <span className="block">OPERATIONS</span>
               <span className="block italic text-indigo-500 md:pl-14">INTELLIGENCE_V2</span>

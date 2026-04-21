@@ -2,7 +2,13 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { CASE_STUDY_REGISTRY } from '../constants';
 
-const SidebarNav: React.FC = () => {
+interface SidebarNavProps {
+  theme: 'light' | 'dark';
+  toggleTheme: () => void;
+  onOpenContact: () => void;
+}
+
+const SidebarNav: React.FC<SidebarNavProps> = ({ theme, toggleTheme, onOpenContact }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -23,8 +29,8 @@ const SidebarNav: React.FC = () => {
 
   const items = [
     {
-      id: 'status',
-      label: 'Status',
+      id: 'home',
+      label: 'Home',
       active: isHome,
       onClick: () => navigate('/'),
       icon: (
@@ -44,8 +50,8 @@ const SidebarNav: React.FC = () => {
       ),
     },
     {
-      id: 'index',
-      label: 'Index',
+      id: 'cases',
+      label: 'Case Studies',
       active: isCases,
       onClick: () => navigate(`/case-studies/${CASE_STUDY_REGISTRY[0].id}`),
       icon: (
@@ -68,8 +74,8 @@ const SidebarNav: React.FC = () => {
       ),
     },
     {
-      id: 'logic',
-      label: 'Logic',
+      id: 'experience',
+      label: 'Experience',
       active: false,
       onClick: scrollToExperience,
       icon: (
@@ -92,8 +98,8 @@ const SidebarNav: React.FC = () => {
       ),
     },
     {
-      id: 'system',
-      label: 'System',
+      id: 'resume',
+      label: 'Resume',
       active: isResume,
       onClick: () => navigate('/resume'),
       icon: (
@@ -108,8 +114,11 @@ const SidebarNav: React.FC = () => {
           strokeLinejoin="round"
           aria-hidden="true"
         >
-          <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
-          <circle cx="12" cy="12" r="3" />
+          <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+          <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+          <path d="M10 9H8" />
+          <path d="M16 13H8" />
+          <path d="M16 17H8" />
         </svg>
       ),
     },
@@ -117,11 +126,11 @@ const SidebarNav: React.FC = () => {
 
   return (
     <aside
-      className="fixed left-0 top-20 bottom-0 w-20 hidden md:flex flex-col z-40 bg-[#f5f3ee] dark:bg-[#1a1712] border-r border-black/10 dark:border-white/5"
+      className="fixed left-0 top-0 bottom-0 w-20 hidden md:flex flex-col z-40 bg-[#f5f3ee] dark:bg-[#1a1712] border-r border-black/10 dark:border-white/5"
       aria-label="Section Navigation"
     >
       {/* Monogram */}
-      <div className="flex items-center justify-center h-12 border-b border-black/5 dark:border-white/5 shrink-0">
+      <div className="flex items-center justify-center h-14 border-b border-black/5 dark:border-white/5 shrink-0">
         <span className="font-mono text-[9px] uppercase tracking-widest text-navy-900/40 dark:text-white/30">
           KS_01
         </span>
@@ -142,20 +151,121 @@ const SidebarNav: React.FC = () => {
             }`}
           >
             {item.icon}
-            <span className="font-mono text-[9px] uppercase tracking-wider">{item.label}</span>
+            <span className="font-mono text-[9px] uppercase tracking-wider leading-tight text-center">
+              {item.label}
+            </span>
           </button>
         ))}
       </nav>
 
-      {/* Status indicator */}
-      <div className="flex flex-col items-center justify-end pb-6 gap-2 shrink-0">
-        <span
-          className="font-mono text-[8px] uppercase tracking-widest text-navy-900/25 dark:text-white/20 select-none"
-          style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+      {/* Utility actions — divider + LinkedIn, theme toggle, contact */}
+      <div className="flex flex-col items-center pb-4 gap-1 shrink-0 border-t border-black/5 dark:border-white/5 pt-3">
+        {/* LinkedIn */}
+        <a
+          href="https://www.linkedin.com/in/kyle-semple-522537165/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Visit LinkedIn Profile"
+          className="flex items-center justify-center w-10 h-10 text-navy-900/40 dark:text-white/30 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-500/10 transition-colors duration-150 focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-indigo-500"
         >
-          active_protocol
-        </span>
-        <span className="w-2 h-2 bg-emerald-500 animate-pulse block shrink-0" />
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+            <rect width="4" height="12" x="2" y="9" />
+            <circle cx="4" cy="4" r="2" />
+          </svg>
+        </a>
+
+        {/* Theme toggle */}
+        <button
+          onClick={toggleTheme}
+          aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+          className="flex items-center justify-center w-10 h-10 text-navy-900/40 dark:text-white/30 hover:text-navy-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-150 focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-indigo-500 relative overflow-hidden"
+        >
+          <div
+            className={`transition-all duration-500 transform ${theme === 'light' ? 'rotate-0 scale-100' : 'rotate-90 scale-0 opacity-0 absolute'}`}
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2" />
+              <path d="M12 20v2" />
+              <path d="m4.93 4.93 1.41 1.41" />
+              <path d="m17.66 17.66 1.41 1.41" />
+              <path d="M2 12h2" />
+              <path d="M20 12h2" />
+              <path d="m6.34 17.66-1.41 1.41" />
+              <path d="m19.07 4.93-1.41 1.41" />
+            </svg>
+          </div>
+          <div
+            className={`transition-all duration-500 transform ${theme === 'dark' ? 'rotate-0 scale-100' : '-rotate-90 scale-0 opacity-0 absolute'}`}
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+            </svg>
+          </div>
+        </button>
+
+        {/* Contact */}
+        <button
+          onClick={onOpenContact}
+          aria-label="Open contact form"
+          className="flex items-center justify-center w-10 h-10 bg-indigo-500 text-white hover:bg-indigo-600 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          </svg>
+        </button>
+
+        {/* Status indicator */}
+        <div className="flex flex-col items-center mt-2 gap-2">
+          <span
+            className="font-mono text-[8px] uppercase tracking-widest text-navy-900/25 dark:text-white/20 select-none"
+            style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+          >
+            active_protocol
+          </span>
+          <span className="w-2 h-2 bg-emerald-500 animate-pulse block shrink-0" />
+        </div>
       </div>
     </aside>
   );

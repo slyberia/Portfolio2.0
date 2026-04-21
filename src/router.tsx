@@ -167,9 +167,9 @@ export const AppLayout: React.FC = () => {
 
   return (
     <div className="min-h-screen relative overflow-x-hidden transition-colors duration-500">
-      {/* Navigation */}
+      {/* Navigation — visible on mobile only; desktop uses SidebarNav */}
       <nav
-        className="fixed top-0 w-full z-50 border-b border-[#e4dfd7] dark:border-white/5 bg-[#f9f7f3] dark:bg-[#1a1712] transition-all duration-300"
+        className="md:hidden fixed top-0 w-full z-50 border-b border-[#e4dfd7] dark:border-white/5 bg-[#f9f7f3] dark:bg-[#1a1712] transition-all duration-300"
         role="navigation"
         aria-label="Main Navigation"
       >
@@ -333,7 +333,11 @@ export const AppLayout: React.FC = () => {
         </div>
       </nav>
 
-      <SidebarNav />
+      <SidebarNav
+        theme={theme}
+        toggleTheme={toggleTheme}
+        onOpenContact={() => setIsContactOpen(true)}
+      />
 
       {/* Sidebar-offset wrapper — shifts all page content right of the desktop sidebar */}
       <div className="md:pl-20 pb-16 md:pb-0">
