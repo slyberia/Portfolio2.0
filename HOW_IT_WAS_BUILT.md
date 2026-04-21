@@ -89,3 +89,13 @@ A recruiter or engineering manager arriving at the portfolio has limited time an
 The navigation command protocol (`<<NAVIGATE:case-study:ID>>`) lets the widget drive the UI directly. When the model determines that a specific case study is the right answer, it can emit a structured command that the client intercepts and uses to navigate to that case study — so the widget doesn't just describe the answer, it takes you there.
 
 This is an opinionated UX decision: surface the right content faster, reduce the time a hiring manager spends scanning the page, and make the portfolio itself demonstrate the AI product thinking it claims to represent.
+
+---
+
+## Design Iteration: The KS_01 Pivot
+
+The original hero shipped with a center-aligned layout, a pill-shaped badge reading "Open to Work," and two equal-weight CTAs side by side. Running that against the anti-references in `.impeccable.md` — the design constraints I had written before a line of CSS was touched — the match was immediate and damning. Center-aligned hero, pill badge, dual CTAs: that is the generic SaaS startup template. It is the first pattern listed under "MUST AVOID." The portfolio was making the exact argument `.impeccable.md` existed to prevent.
+
+The KS_01 redesign was built against the five positive design principles rather than the anti-references alone. Evidence over assertion meant the hero needed to show structure and judgment, not just state a title. Scannable at speed required a clear visual hierarchy that a recruiter could parse in under ninety seconds without hunting. Distinctly human ruled out anything that looked like a template filled in — the typography and layout choices had to signal a real person with taste. Confident restraint meant no gradient text, no glassmorphism, no decorative effects doing the work that hierarchy should do. One clear step ahead meant the design had to feel like it came from someone who understands where AI ops is going, not someone following the current wave. The KS_01 design passed all five. The original did not pass the first one.
+
+The prior state is preserved at tag `v1.5.0-pre-redesign`. Nothing is hidden. The original hero is in the git history and tagged for inspection. The point is not that the first version was bad — it was a functional prototype that shipped — but that it was evaluated honestly against the stated criteria and found non-compliant. That evaluation, and the decision to act on it rather than rationalize it away, is itself the thing this portfolio claims to demonstrate. Recognizing that something you built doesn't meet the standard you set, and doing something about it, is operational judgment. The pivot documents it.

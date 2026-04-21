@@ -6,6 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.0.0] — 2026-04-21 — KS_01 Design Pivot
+
+### Changed
+
+- Hero redesigned from center-aligned SaaS template pattern to editorial layout compliant with all five `.impeccable.md` design principles
+- Removed pill badge, dual equal-weight CTAs, and center-aligned layout — each flagged as anti-reference violations
+- Design system shifted away from glassmorphism toward confident restraint: hierarchy through space and weight, not effects
+
+### Added
+
+- `.impeccable.md` — design constraints and anti-references document, now committed to main
+- Tag `v1.5.0-pre-redesign` preserves the prior state before this pivot for historical reference
+
+### Why
+
+The original hero was evaluated against the anti-references in `.impeccable.md` and found to match the generic SaaS startup template pattern — the highest-priority failure mode listed. The KS_01 redesign was built against the five positive design principles and passed all five. Prior state is preserved at `v1.5.0-pre-redesign`. Decision rationale documented in full in `HOW_IT_WAS_BUILT.md`.
+
+---
+
 ## [1.5.0] — 2025-04-xx — Documentation & Release Packaging
 
 ### Added
