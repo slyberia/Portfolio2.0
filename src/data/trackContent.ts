@@ -243,4 +243,10 @@ export const trackSelectorCards: TrackSelectorCard[] = [
       'Validation, regression prevention, failure isolation, audit trails, decision-ready reporting.',
     href: '/tracks/ops-analytics',
   },
+  {
+    title: 'GIS Professional',
+    subcopy:
+      'Spatial data analysis, geographic information systems, and 4+ years of GIS operations — from field data collection to production mapping workflows.',
+    href: '/resume',
+  },
 ];

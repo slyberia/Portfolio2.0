@@ -159,6 +159,7 @@ export const AppLayout: React.FC = () => {
   };
 
   const isOnCaseStudy = location.pathname.startsWith('/case-studies');
+  const isOnResume = location.pathname === '/resume';
 
   const context: LayoutContext = {
     onNavigateToCaseStudy: navigateToCaseStudy,
@@ -365,7 +366,7 @@ export const AppLayout: React.FC = () => {
         </main>
 
         {/* Footer / Contact */}
-        <footer
+        {!isOnResume && <footer
           id="contact"
           className="py-20 px-6 border-t border-[#e4dfd7] dark:border-white/5 relative bg-[#f9f7f3] dark:bg-[#1a1712] overflow-hidden scroll-mt-24 transition-colors duration-500"
         >
@@ -504,7 +505,7 @@ export const AppLayout: React.FC = () => {
               </div>
             </div>
           </div>
-        </footer>
+        </footer>}
       </div>
       {/* end sidebar-offset wrapper */}
 
@@ -583,21 +584,19 @@ export const routeDefinitions = [
           </ErrorBoundary>
         ),
       },
+      {
+        path: 'resume',
+        element: (
+          <ErrorBoundary location="ResumeView">
+            <ResumeView />
+          </ErrorBoundary>
+        ),
+      },
+      {
+        path: 'resume/implementation',
+        element: <Navigate to="/resume" replace />,
+      },
     ],
-  },
-  {
-    path: '/resume',
-    element: (
-      <ErrorBoundary location="ResumeView">
-        <ResumeView />
-      </ErrorBoundary>
-    ),
-    errorElement: <RouteErrorFallback />,
-  },
-  {
-    path: '/resume/implementation',
-    element: <Navigate to="/resume" replace />,
-    errorElement: <RouteErrorFallback />,
   },
 ];
 

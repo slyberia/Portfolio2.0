@@ -24,7 +24,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
   const getCategoryColorClass = (category: string) => {
     if (category.includes('Strategic'))
-      return 'hover:border-indigo-500/50 hover:bg-indigo-500/5 text-indigo-700 dark:text-indigo-400';
+      return 'hover:border-indigo-500/50 hover:bg-indigo-500/5 text-indigo-600 dark:text-indigo-400';
     if (category.includes('Data & Systems'))
       return 'hover:border-amber-500/50 hover:bg-amber-500/5 text-amber-700 dark:text-amber-400';
     if (category.includes('Stack'))
@@ -94,14 +94,14 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             {/* Headline — split two-line architectural format */}
             <h1
               className="font-outfit font-extrabold text-navy-900 dark:text-white tracking-tight leading-[1.05] mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-75"
-              style={{ fontSize: 'clamp(2rem, 5.25vw, 4.34rem)' }}
+              style={{ fontSize: 'clamp(2rem, 4.75vw, 4.34rem)' }}
             >
               <span className="block">OPERATIONS</span>
-              <span className="block italic text-indigo-500 md:pl-14">INTELLIGENCE_V2</span>
+              <span className="block italic text-indigo-500 md:pl-8 lg:pl-14">INTELLIGENCE_V2</span>
             </h1>
 
             {/* Open-to-work signal */}
-            <div className="flex items-center gap-2.5 mb-5 md:pl-14 animate-in fade-in duration-700 delay-100">
+            <div className="flex items-center gap-2.5 mb-5 md:pl-8 lg:pl-14 animate-in fade-in duration-700 delay-100">
               <span className="w-2 h-2 bg-emerald-500 animate-pulse shrink-0" aria-hidden="true" />
               <span className="font-mono text-[11px] uppercase tracking-widest text-slate-500 dark:text-slate-400">
                 Open to AI Ops &amp; CX Success roles
@@ -109,7 +109,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             </div>
 
             {/* Body text */}
-            <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-lg mb-10 md:pl-14 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150">
+            <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-lg mb-10 md:pl-8 lg:pl-14 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150">
               Technical Customer Success and Solutions Enablement hybrid specializing in AI
               workflows, operational triage, and reliable data systems. I partner with AI platform
               and SaaS teams to bridge the gap between model potential and enterprise-grade customer
@@ -117,7 +117,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             </p>
 
             {/* CTAs — sharp corners, full-width on mobile */}
-            <div className="flex flex-col sm:flex-row gap-0 md:pl-14 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
+            <div className="flex flex-col sm:flex-row gap-0 md:pl-8 lg:pl-14 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
               <button
                 onClick={() => onNavigateToCaseStudy()}
                 className="flex items-center justify-between gap-4 px-8 py-4 bg-indigo-500 text-white font-mono text-sm uppercase tracking-wider hover:bg-indigo-600 active:bg-indigo-700 transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
@@ -546,7 +546,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                       <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                     </svg>
                   </div>
-                  <span className="text-sm font-outfit font-bold text-indigo-700 dark:text-indigo-300 tracking-tight">
+                  <span className="text-sm font-outfit font-bold text-indigo-600 dark:text-indigo-400 tracking-tight">
                     {skill}
                   </span>
                 </div>

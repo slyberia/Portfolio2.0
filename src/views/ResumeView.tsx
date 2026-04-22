@@ -3,7 +3,7 @@ import { EXPERIENCE, CERTIFICATIONS } from '../constants';
 
 const ResumeView: React.FC = () => {
   return (
-    <div className="min-h-screen bg-white text-slate-900 selection:bg-indigo-500 selection:text-white font-sans p-8 md:p-16 max-w-[8.5in] mx-auto shadow-2xl print:shadow-none print:p-0">
+    <div className="min-h-screen bg-white text-slate-900 selection:bg-indigo-500 selection:text-white font-sans px-8 pt-24 pb-8 md:p-16 max-w-[8.5in] mx-auto shadow-2xl print:shadow-none print:p-0">
       {/* Header */}
       <header className="mb-10 text-center sm:text-left">
         <h1 className="text-4xl font-bold mb-2">Kyle Semple</h1>

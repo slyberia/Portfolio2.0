@@ -18,7 +18,7 @@ const TrackSelectorSection: React.FC<TrackSelectorSectionProps> = ({ tracks }) =
             Which track fits your role?
           </h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {tracks.map((track) => (
             <Link
               key={track.href}
