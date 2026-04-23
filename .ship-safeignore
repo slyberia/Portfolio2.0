@@ -1,0 +1,6 @@
+# Exclude the ship-safe CLI tool itself — scanning the scanner inflates all metrics
+.claude/skills/ship-safe/
+
+# Exclude generated scan artifacts
+ship-safe-report.html
+.ship-safe/

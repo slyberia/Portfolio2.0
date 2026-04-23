@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config({ path: '.env.local' });
 import express from 'express';
+import helmet from 'helmet';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import geminiProxy from './geminiProxy.js';
@@ -11,16 +12,10 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT ?? 8080;
 
-// Security headers
-app.use((_req, res, next) => {
-  res.setHeader('X-Content-Type-Options', 'nosniff');
-  res.setHeader('X-Frame-Options', 'DENY');
-  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-  next();
-});
+app.use(helmet({ frameguard: { action: 'deny' } }));
 
-// Parse JSON request bodies
-app.use(express.json());
+// Parse JSON request bodies — 10 KB limit prevents memory-exhaustion via large payloads
+app.use(express.json({ limit: '10kb' }));
 
 // Mount Gemini proxy before static middleware
 app.use('/api', geminiProxy);

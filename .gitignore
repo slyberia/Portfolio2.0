@@ -15,3 +15,7 @@ dist-server/
 
 # OS
 .DS_Store
+
+# ship-safe scan artifacts
+ship-safe-report.html
+.ship-safe/

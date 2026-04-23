@@ -1,0 +1,3 @@
+[submodule ".claude/skills/ship-safe"]
+	path = .claude/skills/ship-safe
+	url = https://github.com/asamassekou10/ship-safe.git
