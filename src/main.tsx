@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
 import { RecruiterModeProvider } from './context/RecruiterModeContext';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -12,8 +13,10 @@ if (!rootElement) {
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
-    <RecruiterModeProvider>
-      <App />
-    </RecruiterModeProvider>
+    <ErrorBoundary location="root">
+      <RecruiterModeProvider>
+        <App />
+      </RecruiterModeProvider>
+    </ErrorBoundary>
   </React.StrictMode>,
 );

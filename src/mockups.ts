@@ -120,7 +120,10 @@ export const PROMPTER_HUB_MOCKUP_HTML = `<!doctype html>
         const item = document.createElement('div');
         item.className = 'p-3 bg-white/5 border border-white/5 rounded-xl hover:bg-white/10 cursor-pointer flex justify-between items-center group/item';
         item.onclick = () => loadPrompt(p.id);
-        item.innerHTML = \`<span class="text-xs font-bold truncate pr-2">\${p.name}</span>\`;
+        const span = document.createElement('span');
+        span.className = 'text-xs font-bold truncate pr-2';
+        span.textContent = p.name;
+        item.appendChild(span);
         list.appendChild(item);
       });
     }
@@ -226,7 +229,11 @@ export const LUXE_LOFTS_MOCKUP_HTML = `<!doctype html>
       const list = document.getElementById('log-list'); 
       const e = document.createElement('div'); 
       const time = new Date().toLocaleTimeString();
-      e.innerHTML = '<span class="text-red-500/50">[' + time + ']</span> ' + msg; 
+      const stamp = document.createElement('span');
+      stamp.className = 'text-red-500/50';
+      stamp.textContent = '[' + time + ']';
+      e.appendChild(stamp);
+      e.appendChild(document.createTextNode(' ' + msg));
       list.prepend(e); 
     }
     
