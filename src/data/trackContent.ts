@@ -47,7 +47,7 @@ export const implementationTrackContent: TrackPageContent = {
   eyebrow: 'Track Path',
   headline: 'I design and harden systems that help users reach value faster.',
   subcopy:
-    'My work covers implementation design, technical enablement, and governed delivery — onboarding logic, rollout structure, and triage systems built to hold under real operational conditions. My strongest proof comes from designing clearer user paths, making technical systems safer to operate, and turning complex builds into governed, usable workflows. The result is delivery that is easier to trust, easier to explain, and easier to maintain.',
+    'My work covers implementation design, technical enablement, and risk-aware delivery — onboarding logic, rollout structure, and triage systems built to hold under real operational conditions. My strongest proof comes from designing clearer user paths, making technical systems safer to operate, and turning complex builds into governed, usable workflows. The result is delivery that is easier to trust, easier to explain, and easier to maintain.',
   chips: [
     'Onboarding logic',
     'Triage design',
@@ -151,7 +151,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
   ],
   whatThisPageProves: {
     heading: 'What this page proves',
-    body: 'Five proof blocks cover how I introduced CI gates before release, hardened a brittle navigation path against sandbox failures, applied sanitization as a rendering trust constraint, maintained a detailed revision trail, and structured technical depth as decision-ready reporting. Each links to the decision record or revision trail.',
+    body: 'Five proof blocks cover how I introduced CI gates before release, hardened a brittle navigation path against sandbox failures, applied sanitization as a rendering trust constraint, maintained a traceable record of revisions and risks, and structured technical depth as decision-ready reporting. Each links to the decision record or revision trail.',
   },
   proofBlocks: [
     {
@@ -237,11 +237,11 @@ export const gisTrackContent: TrackPageContent = {
   eyebrow: 'Track Path',
   headline: 'I maintain the accuracy and operational clarity of spatial data systems.',
   subcopy:
-    'My GIS work covers utility dataset maintenance, spatial QA, and stakeholder-facing visualization — grounded in 4+ years of production ESRI ArcMap experience. At Apex Systems, I supported a contracted team for CentrePoint Energy processing 120+ service requests per week through structured triage and validation loops. At HPS Geospatial, I built dashboards and documentation to help stakeholders navigate data and make operational decisions. The proof here is operational: throughput sustained under volume, accuracy maintained through structured QA, and reporting designed for the people who need to act on it.',
+    'My work covers utility dataset maintenance, spatial QA, and stakeholder-facing visualization — grounded in 4+ years of production ESRI ArcMap experience. My strongest proof comes from sustaining 120+ service requests per week for CentrePoint Energy through structured triage and validation, building operational dashboards at HPS Geospatial, and applying a QA methodology that matched the validation approach to the actual data risk. The result is throughput that held under production volume, accuracy that could be reported, and documentation that reduced friction for the people using the systems.',
   chips: ['Spatial QA', 'Utility Mapping', 'Data Integrity', 'Triage Workflows', 'ESRI ArcMap'],
   whatThisPageProves: {
     heading: 'What this page proves',
-    body: 'Four proof blocks cover how I maintained a production utility dataset at volume, built stakeholder-facing dashboards and visualization outputs, applied dual-mode QA methodology across high-throughput workflows, and produced documentation and support assets that reduced friction for end users.',
+    body: 'Four proof blocks cover how I maintained a production utility dataset at volume, built stakeholder dashboards that made spatial data usable for operational decisions, applied dual-mode QA methodology to match the validation approach to the actual data risk, and produced documentation and support assets that reduced friction for end users. Each links to the supporting case study or resume.',
   },
   proofBlocks: [
     {
