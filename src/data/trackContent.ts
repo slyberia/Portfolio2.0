@@ -47,7 +47,7 @@ export const implementationTrackContent: TrackPageContent = {
   eyebrow: 'Track Path',
   headline: 'I design and harden systems that help users reach value faster.',
   subcopy:
-    'I work at the intersection of implementation, technical guidance, rollout structure, and risk-aware delivery. My strongest proof comes from designing clearer user paths, making technical systems safer to operate, and turning complex builds into governed, usable workflows. The result is delivery that is easier to trust, easier to explain, and easier to maintain.',
+    'My work covers implementation design, technical enablement, and governed delivery — onboarding logic, rollout structure, and triage systems built to hold under real operational conditions. My strongest proof comes from designing clearer user paths, making technical systems safer to operate, and turning complex builds into governed, usable workflows. The result is delivery that is easier to trust, easier to explain, and easier to maintain.',
   chips: [
     'Onboarding logic',
     'Triage design',
@@ -57,7 +57,7 @@ export const implementationTrackContent: TrackPageContent = {
   ],
   whatThisPageProves: {
     heading: 'What this page proves',
-    body: 'Five proof blocks cover how I restructured the reviewer path, moved risk-bearing logic server-side, governed AI as a controlled delivery tool, reduced the feature surface to what added trust, and designed retrieval-ready evidence. Each links to the supporting decision record or forensic archive.',
+    body: 'Five proof blocks cover how I restructured the reviewer path, moved risk-bearing logic server-side, governed AI as a controlled delivery tool, reduced the feature surface to what added trust, and designed retrieval-ready evidence. Each links to the supporting decision record or revision trail.',
   },
   proofBlocks: [
     {
@@ -151,7 +151,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
   ],
   whatThisPageProves: {
     heading: 'What this page proves',
-    body: 'Five proof blocks cover how I introduced CI gates before release, hardened a brittle navigation path against sandbox failures, applied sanitization as a rendering trust constraint, maintained a forensic revision trail, and structured technical depth as decision-ready reporting. Each links to the decision record or forensic archive.',
+    body: 'Five proof blocks cover how I introduced CI gates before release, hardened a brittle navigation path against sandbox failures, applied sanitization as a rendering trust constraint, maintained a detailed revision trail, and structured technical depth as decision-ready reporting. Each links to the decision record or revision trail.',
   },
   proofBlocks: [
     {
@@ -224,10 +224,85 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
     'AI / systems validation roles',
   ],
   ctaCopy:
-    "The validation trail, forensic archive, and CI/testing decision block behind this track are one click away. Start with the deep-dive, or pull the resume if you're ready to move forward.",
+    "The validation trail, revision trail, and CI/testing decision block behind this track are one click away. Start with the deep-dive, or pull the resume if you're ready to move forward.",
   ctaLinks: {
     resumeHref: '/resume',
     deepDiveHref: '/portfolio2/deep-dive',
+  },
+};
+
+export const gisTrackContent: TrackPageContent = {
+  route: '/tracks/gis',
+  title: 'GIS Systems & Spatial Operations',
+  eyebrow: 'Track Path',
+  headline: 'I maintain the accuracy and operational clarity of spatial data systems.',
+  subcopy:
+    'My GIS work covers utility dataset maintenance, spatial QA, and stakeholder-facing visualization — grounded in 4+ years of production ESRI ArcMap experience. At Apex Systems, I supported a contracted team for CentrePoint Energy processing 120+ service requests per week through structured triage and validation loops. At HPS Geospatial, I built dashboards and documentation to help stakeholders navigate data and make operational decisions. The proof here is operational: throughput sustained under volume, accuracy maintained through structured QA, and reporting designed for the people who need to act on it.',
+  chips: ['Spatial QA', 'Utility Mapping', 'Data Integrity', 'Triage Workflows', 'ESRI ArcMap'],
+  whatThisPageProves: {
+    heading: 'What this page proves',
+    body: 'Four proof blocks cover how I maintained a production utility dataset at volume, built stakeholder-facing dashboards and visualization outputs, applied dual-mode QA methodology across high-throughput workflows, and produced documentation and support assets that reduced friction for end users.',
+  },
+  proofBlocks: [
+    {
+      title: 'Maintained Indiana electric operations dataset at 120+ requests per week',
+      summary:
+        'Supported a contracted team for CentrePoint Energy maintaining the accuracy and consistency of their electric operations dataset — processing service requests through structured triage and validation loops while sustaining throughput and accuracy under production volume.',
+      whyItMatters:
+        'High-volume spatial QA is a reliability problem, not just a technical one. Consistent throughput at 120+ requests/week demonstrates structured workflow discipline and the ability to hold data accuracy under operational load.',
+      artifactChips: ['Spatial QA', 'Utility Operations', 'Throughput'],
+      href: '/case-studies/ops-triage',
+    },
+    {
+      title: 'Built stakeholder dashboards and visualization outputs for operational reporting',
+      summary:
+        'At HPS Geospatial, designed and built stakeholder-facing dashboards and data visualizations to support decision-making and status reporting. Created demo environments and presentation materials to communicate data formats, risks, and feature behavior clearly during stakeholder meetings.',
+      whyItMatters:
+        'GIS data only creates value when the right people can interpret it. Visualization work that supports operational decisions shows the ability to bridge technical data systems and stakeholder communication.',
+      artifactChips: ['Data Visualization', 'Stakeholder Reporting', 'Dashboard Design'],
+      href: '/resume',
+    },
+    {
+      title: 'Applied dual-mode QA: batch validation and zero-trust triage',
+      summary:
+        'Used structured QA protocols across two validation modes — batch processing for high-throughput verification of consistent record types, and zero-trust validation for records with ambiguous or conflicting source data. The method matched the validation approach to the data risk profile rather than applying a single pace to all records.',
+      whyItMatters:
+        'Applying a single QA approach to all data types leaves the most ambiguous records underexamined. Matching the validation method to the risk profile is the judgment that separates reliable spatial operations from volume-only throughput.',
+      artifactChips: ['QA Methodology', 'Validation Design', 'Data Integrity'],
+      href: '/case-studies/ops-triage',
+    },
+    {
+      title: 'Produced documentation and support assets to reduce stakeholder friction',
+      summary:
+        'Produced end-user documentation, support assets, and workflow guides to help stakeholders navigate tooling and operational processes. Coordinated project workflows and deliverables to improve consistency and execution quality across reporting cycles.',
+      whyItMatters:
+        'Documentation is an operational asset. Support materials that reduce friction for the people using spatial systems are as important as the systems themselves — and equally testable by the evidence they leave behind.',
+      artifactChips: ['Technical Documentation', 'Enablement Assets', 'Operational Consistency'],
+      href: '/resume',
+    },
+  ],
+  howIWork: [
+    'Match the validation method to the data risk — not all records deserve the same scrutiny',
+    'Sustain throughput without sacrificing accuracy; volume is not an excuse for drift',
+    'Design reporting and documentation for the people who need to act on it, not just read it',
+    'Make spatial operations visible: if the data quality cannot be reported, it cannot be trusted',
+  ],
+  supportingArtifacts: [
+    { label: 'Ops triage case study', href: '/case-studies/ops-triage' },
+    { label: 'Dual-mode QA methodology', href: '/case-studies/ops-triage' },
+    { label: 'Resume', href: '/resume' },
+  ],
+  bestFitRoles: [
+    'GIS Analyst',
+    'Utility GIS Specialist',
+    'Geospatial Data QA',
+    'Spatial Operations Analyst',
+    'GIS Technician',
+  ],
+  ctaCopy:
+    "The ops triage case study and resume behind this track are one click away. Start with the case study for QA methodology detail, or pull the resume if you're ready to move forward.",
+  ctaLinks: {
+    resumeHref: '/resume',
   },
 };
 
@@ -244,9 +319,9 @@ export const trackSelectorCards: TrackSelectorCard[] = [
     href: '/tracks/ops-analytics',
   },
   {
-    title: 'GIS Professional',
+    title: 'GIS Systems & Spatial Operations',
     subcopy:
-      'Spatial data analysis, geographic information systems, and 4+ years of GIS operations — from field data collection to production mapping workflows.',
-    href: '/resume',
+      'Utility mapping, spatial QA, and 4+ years of production ESRI ArcMap experience — dataset maintenance at volume, stakeholder dashboards, and structured validation workflows.',
+    href: '/tracks/gis',
   },
 ];

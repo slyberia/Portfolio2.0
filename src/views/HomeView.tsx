@@ -110,10 +110,10 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
             {/* Body text */}
             <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-lg mb-10 md:pl-8 lg:pl-14 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150">
-              Technical Customer Success and Solutions Enablement hybrid specializing in AI
-              workflows, operational triage, and reliable data systems. I partner with AI platform
-              and SaaS teams to bridge the gap between model potential and enterprise-grade customer
-              outcomes at scale.
+              This portfolio covers three areas of work — implementation and technical enablement,
+              ops analytics and QA, and geospatial data systems. Each track surfaces concrete
+              artifacts: how problems were framed, how tradeoffs were handled, and how decisions held
+              up under constraint.
             </p>
 
             {/* CTAs — sharp corners, full-width on mobile */}
@@ -620,8 +620,9 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               Featured Work
             </h3>
             <p className="text-slate-500 dark:text-slate-400 max-w-xl mx-auto">
-              A curated selection of case studies demonstrating systems thinking, AI operations, and
-              customer success outcomes.
+              Cases built around concrete decisions — governing AI workflows, stabilizing triage
+              systems under volume, and maintaining spatial data accuracy. Each one shows how the
+              problem was framed and what tradeoff was accepted.
             </p>
           </div>
 

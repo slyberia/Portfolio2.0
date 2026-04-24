@@ -314,7 +314,7 @@ export const llmRoles: LLMRole[] = [
 export const forensicEntries: ArchiveEntry[] = [
   {
     id: 'evidence-bank',
-    label: 'Evidence bank overview',
+    label: 'Evidence Overview',
     description:
       'The evidence architecture for Portfolio2.0 spans three layers: track-level proof blocks (role-framed, skim-readable), deep-dive technical blocks (architecture detail, decision rationale), and a forensic revision trail (raw decision capture, governance notes, in-flight risk documentation). Each layer was designed for a different reviewer time investment and trust threshold. The forensic layer exists so that later decisions are traceable back to real evidence — not memory or polished summaries.',
     chips: ['Evidence Architecture', 'Proof System', 'Three-layer Design'],
@@ -328,7 +328,7 @@ export const forensicEntries: ArchiveEntry[] = [
   },
   {
     id: 'proof-hierarchy',
-    label: 'Proof hierarchy design',
+    label: 'How Proof Is Structured',
     description:
       'The Portfolio2.0 proof system was structured across three retrieval layers, each targeting a different reviewer time investment and trust threshold. Layer one — track-level proof blocks — is written for skim conditions: role-framed, recruiter-readable, one scroll. Layer two — deep-dive decision blocks — is written for reviewers who need rationale: each block documents the problem, risk, decision, tradeoff, validation, and business relevance. Layer three — this forensic archive — is written for reviewers who need evidence provenance: governance notes, validation checkpoints, and revision traces. The three-layer design ensures the portfolio does not require a time-committed reviewer to find its strongest proof, and does not fail a thorough reviewer who needs more.',
     chips: ['Evidence Architecture', 'Stakeholder Design', 'Proof Layers'],
@@ -357,8 +357,8 @@ export const appendixLinks = [
   { label: 'LLM governance summary', href: '/portfolio2/deep-dive#multi-llm-governance' },
   { label: 'Architecture boundary', href: '/portfolio2/deep-dive#architecture-boundary' },
   { label: 'Validation trail', href: '/portfolio2/deep-dive#validation-trail' },
-  { label: 'Forensic archive', href: '/portfolio2/deep-dive#forensic-archive' },
-  { label: 'Proof hierarchy design', href: '/portfolio2/deep-dive#proof-hierarchy' },
+  { label: 'Revision Trail', href: '/portfolio2/deep-dive#forensic-archive' },
+  { label: 'How Proof Is Structured', href: '/portfolio2/deep-dive#proof-hierarchy' },
   { label: 'Implementation track', href: '/tracks/implementation' },
   { label: 'Ops Analytics track', href: '/tracks/ops-analytics' },
   { label: 'Resume', href: '/resume' },
