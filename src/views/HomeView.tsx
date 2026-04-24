@@ -112,8 +112,8 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-lg mb-10 md:pl-8 lg:pl-14 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150">
               This portfolio covers three areas of work — implementation and technical enablement,
               ops analytics and QA, and geospatial data systems. Each track is built around concrete
-              artifacts: how problems were framed, how tradeoffs were handled, and how decisions held
-              up under constraint.
+              artifacts: how problems were framed, how tradeoffs were handled, and how decisions
+              held up under constraint.
             </p>
 
             {/* CTAs — sharp corners, full-width on mobile */}

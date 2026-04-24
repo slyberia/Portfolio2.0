@@ -386,8 +386,8 @@ const DeepDiveView: React.FC = () => {
             <SectionIntro>
               The revision trail preserves what changed during Portfolio2.0 development, why it
               changed, and what risk or ambiguity each revision resolved. It exists so later
-              decisions are traceable back to real evidence — not memory or polished summaries. It is
-              the third layer of the proof system, beneath the track summaries and these decision
+              decisions are traceable back to real evidence — not memory or polished summaries. It
+              is the third layer of the proof system, beneath the track summaries and these decision
               blocks.
             </SectionIntro>
           </div>
