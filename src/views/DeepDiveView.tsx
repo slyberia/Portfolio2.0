@@ -89,8 +89,8 @@ const DeepDiveView: React.FC = () => {
               { label: 'Decision blocks', href: '#decision-blocks' },
               { label: 'Architecture', href: '#architecture-boundary' },
               { label: 'LLM governance', href: '#multi-llm-governance' },
-              { label: 'Forensic archive', href: '#forensic-archive' },
-              { label: 'Proof hierarchy', href: '#proof-hierarchy' },
+              { label: 'Revision Trail', href: '#forensic-archive' },
+              { label: 'Proof structure', href: '#proof-hierarchy' },
             ].map((link) => (
               <a
                 key={link.href}
@@ -381,14 +381,14 @@ const DeepDiveView: React.FC = () => {
       >
         <div className="max-w-4xl mx-auto space-y-10">
           <div className="space-y-3">
-            <SectionEyebrow>Evidence bank</SectionEyebrow>
-            <SectionHeading>Forensic archive</SectionHeading>
+            <SectionEyebrow>Revision history</SectionEyebrow>
+            <SectionHeading>Revision Trail</SectionHeading>
             <SectionIntro>
-              The forensic archive preserves the revision history, risk documentation, validation
-              traces, and governance notes accumulated during Portfolio2.0 development. It exists so
-              that later decisions are traceable back to real evidence — not memory or polished
-              summaries. It is the third layer of the proof system — beneath the track summaries and
-              these decision blocks.
+              The revision trail preserves what changed during Portfolio2.0 development, why it
+              changed, and what risk or ambiguity each revision resolved. It exists so later
+              decisions are traceable back to real evidence — not memory or polished summaries. It
+              is the third layer of the proof system, beneath the track summaries and these decision
+              blocks.
             </SectionIntro>
           </div>
           <div className="space-y-6">

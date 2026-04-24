@@ -14,6 +14,7 @@ import CaseStudyView from './views/CaseStudyView';
 import ResumeView from './views/ResumeView';
 import ImplementationTrackView from './views/ImplementationTrackView';
 import OpsAnalyticsTrackView from './views/OpsAnalyticsTrackView';
+import GisTrackView from './views/GisTrackView';
 import DeepDiveView from './views/DeepDiveView';
 import ContactModal from './components/ContactModal';
 import CommandPalette from './components/CommandPalette';
@@ -575,6 +576,14 @@ export const routeDefinitions = [
         element: (
           <ErrorBoundary location="OpsAnalyticsTrackView">
             <OpsAnalyticsTrackView />
+          </ErrorBoundary>
+        ),
+      },
+      {
+        path: 'tracks/gis',
+        element: (
+          <ErrorBoundary location="GisTrackView">
+            <GisTrackView />
           </ErrorBoundary>
         ),
       },
