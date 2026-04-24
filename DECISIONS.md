@@ -1,3 +1,6 @@
+<!-- Tool attribution: undetermined. No session evidence found for these ADRs.
+     See AI_ATTRIBUTION.md §P2-06. -->
+
 # Architecture Decision Records
 
 ---

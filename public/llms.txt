@@ -160,7 +160,7 @@ Fragmented digital footprint (multiple domains, broken links) causing lead leaka
 
 ## Build Context
 
-Built in Google AI Studio (Gemini), migrated to GitHub for structured refactoring.
+Prototype built in Google AI Studio (Gemini). Design evaluation, git workflow, and security audit tooling produced in Claude Code and Claude.ai sessions (April 2026; sessions P2-01 through P2-04 per AI_ATTRIBUTION.md). Migration phases v1.1.0–v1.4.0 (TypeScript hardening, server proxy, React Router, test suite, CI pipeline) have no confirmed tool attribution. This was a multi-model build — Gemini for the prototype, Claude for post-prototype refinement and tooling; migration implementation tool undetermined.
 Build narrative: /HOW_IT_WAS_BUILT.md
 Architecture decisions: /DECISIONS.md
 Architecture overview: /ARCHITECTURE.md
