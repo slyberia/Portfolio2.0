@@ -1,4 +1,4 @@
-import { ExperienceItem, SkillGroup, Certification, CaseStudyEntry } from './types';
+import { ExperienceItem, SkillGroup, Certification, CaseStudyEntry, SkillChipConfig } from './types';
 import { CASE_STUDY_CONTENT } from './data/caseStudyData';
 import {
   PROMPTER_HUB_MOCKUP_HTML,
@@ -90,6 +90,61 @@ export const CERTIFICATIONS: Certification[] = [
   { name: 'Google Data Analytics Professional Certificate', issuer: 'Google' },
   { name: 'Intercultural Competency', issuer: "Queen's University International Center" },
 ];
+
+export const SKILL_CHIP_CONFIG: Record<string, SkillChipConfig> = {
+  'Customer Success Support': {
+    linkMode: 'secondary',
+    linkedSlugs: ['ops-triage'],
+    evidenceNote:
+      'ops-triage documents high-volume operational support at scale (Apex Systems); direct customer-facing CS evidence exists in the Printful/Zendesk role but no dedicated case study has been built for it yet.',
+  },
+  'Demo Environments': {
+    linkMode: 'filtered',
+    linkedSlugs: ['prompter-hub', 'ops-triage'],
+  },
+  'Dashboards & Reporting': {
+    linkMode: 'direct',
+    linkedSlugs: ['ops-triage'],
+  },
+  Asana: {
+    linkMode: 'flagged',
+    linkedSlugs: [],
+    evidenceNote:
+      'Project coordination evidence exists via Google Project Management certificate and the Luxe Lofts workflow design, but no case study explicitly documents Asana usage.',
+  },
+  Jira: {
+    linkMode: 'direct',
+    linkedSlugs: ['ops-triage'],
+  },
+  BigQuery: {
+    linkMode: 'flagged',
+    linkedSlugs: [],
+    evidenceNote:
+      'No case study currently references BigQuery. Google Data Analytics certificate covers data tooling breadth.',
+  },
+  'Power BI': {
+    linkMode: 'flagged',
+    linkedSlugs: [],
+    evidenceNote: 'No case study currently references Power BI.',
+  },
+  Tableau: {
+    linkMode: 'flagged',
+    linkedSlugs: [],
+    evidenceNote: 'No case study currently references Tableau.',
+  },
+  'Salesforce & CRM': {
+    linkMode: 'secondary',
+    linkedSlugs: ['luxe-lofts'],
+    evidenceNote:
+      'Luxe Lofts prototype includes CRM path orchestration (as documented in the hero artifact). The case study is proposal-phase work and does not reference Salesforce by name.',
+  },
+  Zendesk: {
+    linkMode: 'flagged',
+    linkedSlugs: [],
+    evidenceNote:
+      'Zendesk used at Printful (100+ conversations/week including $100k+ revenue accounts); no dedicated case study documents this work yet.',
+  },
+};
 
 export const CASE_STUDY_REGISTRY: CaseStudyEntry[] = [
   {

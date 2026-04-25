@@ -11,6 +11,14 @@ export interface SkillGroup {
   items: string[];
 }
 
+export type SkillLinkMode = 'direct' | 'filtered' | 'secondary' | 'flagged';
+
+export interface SkillChipConfig {
+  linkMode: SkillLinkMode;
+  linkedSlugs: string[];
+  evidenceNote?: string;
+}
+
 export interface Certification {
   name: string;
   issuer: string;
