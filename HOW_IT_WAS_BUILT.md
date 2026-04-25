@@ -66,15 +66,39 @@ Added Recruiter Mode as a session-state toggle via React Context, providing a si
 
 ## What the AI Generated vs. What I Directed
 
-| Component             | AI-Generated               | My Contribution                                                  |
-| --------------------- | -------------------------- | ---------------------------------------------------------------- |
-| Component scaffolding | Initial JSX structure      | Prop contracts, type definitions, data model                     |
-| Design system         | Tailwind token suggestions | Typography pairing, glassmorphism spec, dark/light behavior      |
-| Case study content    | First-draft markdown       | Outcome framing, rigor metrics, honest constraints               |
-| Gemini integration    | Basic chat session setup   | System prompt design, navigation command protocol, rate limiting |
-| Build config          | Vite boilerplate           | Identified CDN/importmap problem, server-side migration          |
-| Routing               | Hash-based navigation      | React Router migration, URL design, SPA fallback                 |
-| Security              | None                       | DOMPurify audit, key exposure fix, prompt injection defense      |
+| Component             | AI-Generated                        | My Contribution                                                  | Tool                      |
+| --------------------- | ----------------------------------- | ---------------------------------------------------------------- | ------------------------- |
+| Component scaffolding | Initial JSX structure               | Prop contracts, type definitions, data model                     | Gemini (Google AI Studio) |
+| Design system         | Tailwind token suggestions          | Typography pairing, glassmorphism spec, dark/light behavior      | Gemini (Google AI Studio) |
+| Case study content    | First-draft markdown                | Outcome framing, rigor metrics, honest constraints               | Unknown                   |
+| Gemini integration    | Basic chat session setup            | System prompt design, navigation command protocol, rate limiting | Gemini (Google AI Studio) |
+| Build config          | Vite boilerplate                    | Identified CDN/importmap problem                                 | Gemini (Google AI Studio) |
+| Build config          | Express proxy, Cloud Run deployment | Specified server-side migration                                  | Unknown                   |
+| Routing               | Hash-based navigation               | —                                                                | Gemini (Google AI Studio) |
+| Routing               | React Router v6 implementation      | React Router migration, URL design, SPA fallback                 | Unknown                   |
+| Security              | None                                | DOMPurify audit, key exposure fix, prompt injection defense      | Unknown                   |
+
+---
+
+## Claude Code and Claude.ai Sessions
+
+The prototype phase described above was built entirely in Google AI Studio. A second set of sessions — conducted through Claude Code (CLI) and Claude.ai — produced the design evaluation work, git workflow, and tooling artifacts that preceded and followed the KS_01 promotion.
+
+**P2-01 — KS_01 layout design evaluation (April 2026)**
+
+I supplied `.impeccable.md` as the evaluation framework and asked for a comparative critique of the KS_01 branch against the existing hero on main. The model performed the design critique, named the specific anti-reference violations in the original hero (center-aligned layout, pill badge, dual CTAs), and mapped KS_01 against all five `.impeccable.md` principles with explanations. It then recommended merging KS_01 and preserving the prior state via git tag. The prose for the KS_01 Pivot section above and the corresponding `CHANGELOG.md` v2.0.0 entry were drafted by the model.
+
+**P2-02 — Git workflow for the KS_01 promotion (April 2026)**
+
+I specified the merge strategy (`--no-ff` to preserve branch topology), conflict resolution rules (KS_01 wins on UI and design files; main wins on documentation), and the requirement for a terminal-based workflow on Windows/PowerShell. The model produced the full git command sequence — from clone through tagging and GitHub releases — and packaged it as a single Claude Code prompt.
+
+**P2-03 — Prompt audit for token efficiency (April 2026)**
+
+I supplied a Claude Code prompt intended for content and copy additions and requested both token efficiency and effectiveness analysis. The model identified six instances of redundant constraint repetition, named missing file targeting as the single highest-impact gap, flagged the `Implementation Guidance` block as redundant with Claude Code defaults, and recommended a restructure estimated to reduce token cost from approximately 1,880 to 900. This was a process artifact — no file was committed.
+
+**P2-04 — Ship-safe security audit prompt (April 2026)**
+
+I supplied the ship-safe GitHub URL and specified the intent: harden the application against API key handling, rate limiting, and prompt injection vulnerabilities. The model fetched and read the ship-safe repository, structured a six-step audit prompt with failure-handling instructions, and identified scan commands specific to this codebase. The output informed `SECURITY_AUDIT.md`.
 
 ---
 

@@ -1,6 +1,7 @@
 > **Role:** AI Systems Architect
 > **Outcome:** Eliminated "entropy drift" in multi-turn LLM sessions by engineering a Guardian Layer protocol that enforced architectural constraints, reducing destructive edits and stack violations across development workflows
 > **Stack/Tools:** Google AI Studio (Gemini 1.5 Pro), Markdown, System Prompting
+> **Protocol lineage:** Aegis v3.0 → Guynode Master Instruction File v3 → CLAUDE.md (Guynode_v2)
 > **Relevance:** Shows how to impose engineering discipline on probabilistic AI systems — critical for any team shipping AI-assisted or AI-augmented products
 
 # 🛡️ Project Aegis — Engineering Reliability into LLM Workflows
@@ -70,6 +71,9 @@ The protocol was tested across multiple full-stack development lifecycles (React
 
 - **What Went Well:** The "Two-Path" Failure Protocol (offering a "Safe" path vs. a "Creative" path) drastically improved the model's utility in ambiguous situations.
 - **Challenges:** Getting the model to consistently adhere to the "Search/Replace" syntax required 15+ iterations of few-shot prompting to perfect.
+
+<!-- Attribution note: performance metrics (50+ turns, 40% error reduction, 2x speed, 90% regression elimination) and the 15+ iteration claim are asserted outcomes — not verified from surviving artifacts. See AI_ATTRIBUTION.md Part 2. -->
+
 - **Future Iteration:** Implementing an automated "Linting Agent" that parses the LLM's output and auto-rejects code that misses the Aegis signature.
 
 ---
