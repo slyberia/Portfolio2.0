@@ -15,10 +15,18 @@ export default {
       },
       colors: {
         // Accent: amber-sienna remapped over indigo key so existing indigo-* classes update site-wide
+        // Full scale defined to prevent any shade falling back to Tailwind's default purple-indigo
         indigo: {
+          50: '#fdf4ef', // barely-there sienna tint (light mode badge bg)
+          100: '#f9e2d4', // light sienna (light mode badge border)
+          200: '#f0bfa0', // soft sienna (timeline connectors, borders)
+          300: '#e49468', // medium-light sienna (dark-mode hover text, active tab)
           400: '#df8c56', // dark mode accent (lighter amber)
           500: '#c4592a', // primary accent — warm sienna, not purple
           600: '#a84a20', // hover / darker sienna
+          700: '#8a3718', // button hover darken (was falling back to purple)
+          800: '#6e2c12', // link hover darken
+          900: '#4f200c', // dark-mode subtle bg (used at /60 opacity)
         },
         // Backgrounds: warm parchment replaces gold/white
         gold: {
