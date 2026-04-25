@@ -52,7 +52,7 @@ const DeepDiveView: React.FC = () => {
           className="absolute inset-0 opacity-30 dark:opacity-20"
           style={{
             background:
-              'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(99,102,241,0.18) 0%, transparent 70%)',
+              'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(196,89,42,0.18) 0%, transparent 70%)',
           }}
         />
         <div className="relative max-w-4xl mx-auto space-y-6">

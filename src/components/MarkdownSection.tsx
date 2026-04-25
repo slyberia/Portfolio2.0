@@ -63,7 +63,7 @@ export const CodeBlock: React.FC<{ children: React.ReactNode; className?: string
         </button>
       </div>
       <pre
-        className={`rounded-2xl overflow-x-auto bg-slate-50 dark:bg-slate-950/80 p-5 pt-12 border border-slate-200 dark:border-indigo-500/40 text-slate-900 dark:text-indigo-50 font-mono text-sm leading-relaxed shadow-sm dark:shadow-[0_0_20px_rgba(99,102,241,0.05)] transition-all duration-300 group-hover/code:dark:border-indigo-500/60 ${className}`}
+        className={`rounded-2xl overflow-x-auto bg-slate-50 dark:bg-slate-950/80 p-5 pt-12 border border-slate-200 dark:border-indigo-500/40 text-slate-900 dark:text-indigo-50 font-mono text-sm leading-relaxed shadow-sm dark:shadow-[0_0_20px_rgba(196,89,42,0.05)] transition-all duration-300 group-hover/code:dark:border-indigo-500/60 ${className}`}
       >
         {children}
       </pre>
@@ -102,7 +102,7 @@ const MarkdownSection: React.FC<MarkdownSectionProps> = ({
   return (
     <div className="relative group">
       <div
-        className="absolute -inset-1 bg-gradient-to-r from-indigo-500/5 to-purple-500/5 blur-xl opacity-75 rounded-3xl dark:opacity-75"
+        className="absolute -inset-1 bg-gradient-to-r from-indigo-500/5 to-indigo-500/5 blur-xl opacity-75 rounded-3xl dark:opacity-75"
         aria-hidden="true"
       ></div>
 
