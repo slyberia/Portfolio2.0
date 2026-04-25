@@ -1,4 +1,10 @@
-import { ExperienceItem, SkillGroup, Certification, CaseStudyEntry, SkillChipConfig } from './types';
+import {
+  ExperienceItem,
+  SkillGroup,
+  Certification,
+  CaseStudyEntry,
+  SkillChipConfig,
+} from './types';
 import { CASE_STUDY_CONTENT } from './data/caseStudyData';
 import {
   PROMPTER_HUB_MOCKUP_HTML,

@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { EXPERIENCE, SKILL_GROUPS, CERTIFICATIONS, CASE_STUDY_REGISTRY, SKILL_CHIP_CONFIG } from '../constants';
+import {
+  EXPERIENCE,
+  SKILL_GROUPS,
+  CERTIFICATIONS,
+  CASE_STUDY_REGISTRY,
+  SKILL_CHIP_CONFIG,
+} from '../constants';
 import SkillDiscoveryModal from '../components/SkillDiscoveryModal';
 import TrackSelectorSection from '../components/tracks/TrackSelectorSection';
 import { trackSelectorCards } from '../data/trackContent';
@@ -587,9 +593,10 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                       );
                     }
 
-                    const handleClick = isDirect && chipConfig.linkedSlugs[0]
-                      ? () => onNavigateToCaseStudy(chipConfig.linkedSlugs[0])
-                      : () => handleSkillClick(skill);
+                    const handleClick =
+                      isDirect && chipConfig.linkedSlugs[0]
+                        ? () => onNavigateToCaseStudy(chipConfig.linkedSlugs[0])
+                        : () => handleSkillClick(skill);
 
                     return (
                       <button
