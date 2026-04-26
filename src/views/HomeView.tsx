@@ -659,7 +659,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             {PREVIEW_STUDIES.map((study) => (
               <div
                 key={study.id}
-                className="glass-card p-6 rounded-3xl flex flex-col gap-4 hover:translate-y-[-4px] transition-all duration-300 group"
+                className="glass-card p-6 rounded-3xl flex flex-col gap-4 hover:-translate-y-1 hover:border-indigo-500/30 transition-all duration-300 group"
               >
                 {/* Primary tag */}
                 <span className="inline-flex self-start items-center px-2.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-600 dark:text-indigo-400 text-[10px] font-bold uppercase tracking-widest">
