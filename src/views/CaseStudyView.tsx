@@ -357,10 +357,10 @@ const CaseStudyView: React.FC = () => {
             <div
               className={`transition-all duration-300 ${isSidebarOpen ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 pointer-events-none absolute'}`}
             >
-              <div className="flex flex-wrap gap-2 py-2">
+              <div className="flex flex-wrap gap-1.5 pb-3 mb-1 border-b border-black/5 dark:border-white/5">
                 <button
                   onClick={() => setActiveFilter('all')}
-                  className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all border ${activeFilter === 'all' ? 'bg-navy-900 dark:bg-white text-white dark:text-navy-900 border-transparent' : 'text-slate-400 border-black/5 dark:border-white/10'}`}
+                  className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider transition-colors border ${activeFilter === 'all' ? 'bg-navy-900 dark:bg-white text-white dark:text-navy-900 border-transparent' : 'text-slate-400 border-black/10 dark:border-white/10 hover:border-black/20 dark:hover:border-white/20'}`}
                 >
                   All
                 </button>
@@ -368,18 +368,18 @@ const CaseStudyView: React.FC = () => {
                   <button
                     key={cat}
                     onClick={() => setActiveFilter(cat)}
-                    className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${activeFilter === cat ? `${CATEGORY_COLORS[cat]} text-white border-transparent` : 'text-slate-400 border-black/5 dark:border-white/10'}`}
+                    className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider transition-colors border ${activeFilter === cat ? `${CATEGORY_COLORS[cat]} text-white border-transparent` : 'text-slate-400 border-black/10 dark:border-white/10 hover:border-black/20 dark:hover:border-white/20'}`}
                   >
                     {CATEGORY_LABELS[cat]}
                   </button>
                 ))}
               </div>
-              <div className="grid gap-3 mt-4">
+              <div className="grid gap-2 mt-4">
                 {filteredStudies.map((study) => (
                   <button
                     key={study.id}
                     onClick={() => handleStudyChange(study.id)}
-                    className={`text-left p-4 rounded-3xl transition-all duration-300 border relative overflow-hidden ${activeStudyId === study.id ? 'glass-card border-indigo-500/20 shadow-xl scale-[1.02]' : 'bg-transparent border-black/5 hover:border-indigo-500/10'}`}
+                    className={`text-left p-5 rounded-2xl transition-all duration-200 border relative overflow-hidden ${activeStudyId === study.id ? 'glass-card border-indigo-500/30 shadow-md' : 'bg-transparent border-black/5 dark:border-white/5 hover:border-indigo-500/20 hover:bg-white/40 dark:hover:bg-white/[0.03]'}`}
                   >
                     <div
                       className={`absolute left-0 top-0 bottom-0 w-1 ${activeStudyId === study.id ? CATEGORY_COLORS[study.category] : 'bg-slate-200 dark:bg-slate-800'}`}
@@ -389,9 +389,7 @@ const CaseStudyView: React.FC = () => {
                     >
                       {study.title}
                     </h3>
-                    <p className="text-[11px] leading-relaxed text-slate-400 mt-1">
-                      {study.rationale}
-                    </p>
+                    <p className="text-xs leading-relaxed text-slate-400 mt-1">{study.rationale}</p>
                   </button>
                 ))}
               </div>
