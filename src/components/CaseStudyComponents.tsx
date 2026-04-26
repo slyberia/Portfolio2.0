@@ -75,7 +75,7 @@ export const HtmlPreviewCard: React.FC<{
   const isRed = accentColor === 'red';
   return (
     <div
-      className={`glass-card rounded-3xl border overflow-hidden shadow-lg transition-all duration-500 ${isRed ? 'border-red-500/20' : 'border-indigo-500/20'} ${isHero ? 'mb-12' : ''} flex flex-col`}
+      className={`glass-card rounded-3xl border overflow-hidden shadow-lg transition-all duration-500 ${isRed ? 'border-red-500/20' : 'border-indigo-500/20'} flex flex-col`}
     >
       <div className="px-8 md:px-12 py-5 bg-slate-50 dark:bg-white/5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
         <span className="text-[11px] font-bold text-navy-900 dark:text-white font-outfit tracking-wide">
