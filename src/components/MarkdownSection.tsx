@@ -149,7 +149,7 @@ const MarkdownSection: React.FC<MarkdownSectionProps> = ({
               blockquote: ({ node: _node, ...props }) => (
                 <blockquote
                   {...props}
-                  className="border-l-4 border-indigo-600 dark:border-indigo-500 pl-6 italic text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-900/30 py-6 pr-4 rounded-r-lg"
+                  className="not-italic rounded-xl bg-[#f5e2d5] dark:bg-[rgba(196,89,42,0.12)] px-6 py-4 text-slate-700 dark:text-slate-300 border-0 my-8"
                 />
               ),
               table: ({ node: _node, ...props }) => (

@@ -45,7 +45,7 @@ const EvidenceMap: React.FC<{ activeId: string; onSelect: (id: string) => void }
   onSelect,
 }) => {
   return (
-    <div className="glass-card p-6 rounded-3xl border border-indigo-500/20 bg-indigo-500/5 mb-12 relative overflow-hidden">
+    <div className="glass-card p-6 rounded-3xl border border-indigo-500/20 bg-indigo-500/5 relative overflow-hidden">
       {/* Header / Legend */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-6 border-b border-black/5 dark:border-white/5">
         <div className="flex items-center gap-3">
@@ -411,9 +411,23 @@ const CaseStudyView: React.FC = () => {
                   <p className="text-slate-500">Selection required.</p>
                 </div>
               ) : isRecruiterMode ? (
-                /* Recruiter Mode — simplified view */
+                /* Recruiter Mode — skim title → structured summary → CTA */
                 <div className="animate-in fade-in slide-in-from-right-4 duration-500 space-y-8 mx-auto w-full max-w-3xl">
-                  {activeStudy.rigor && <RigorCard rigor={activeStudy.rigor} />}
+                  {/* Skim layer */}
+                  <div className="space-y-2 pb-2 border-b border-black/5 dark:border-white/5">
+                    <span
+                      className={`inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-white ${CATEGORY_COLORS[activeStudy.category]}`}
+                    >
+                      {CATEGORY_LABELS[activeStudy.category]}
+                    </span>
+                    <h2 className="text-2xl font-outfit font-bold text-navy-900 dark:text-white leading-tight">
+                      {activeStudy.title}
+                    </h2>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                      {activeStudy.rationale}
+                    </p>
+                  </div>
+                  {activeStudy.rigor && <RigorCard rigor={activeStudy.rigor} className="" />}
                   <MarkdownSection content={recruiterSummary(activeStudy)} isLoading={false} />
                   <div className="pt-4">
                     <button
@@ -438,23 +452,68 @@ const CaseStudyView: React.FC = () => {
                   </div>
                 </div>
               ) : (
-                /* Full engineering view */
-                <div className="animate-in fade-in slide-in-from-right-4 duration-500 space-y-12 mx-auto w-full max-w-4xl">
-                  {/* Full Evidence Map (Lobby Experience) */}
+                /* Full engineering view — skim → structured → deep validation */
+                <div className="animate-in fade-in slide-in-from-right-4 duration-500 space-y-10 mx-auto w-full max-w-4xl">
+                  {/* Layer 1 — Skim summary */}
+                  <div className="space-y-3 pb-2">
+                    <div className="flex items-center gap-3 flex-wrap">
+                      <span
+                        className={`inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-white ${CATEGORY_COLORS[activeStudy.category]}`}
+                      >
+                        {CATEGORY_LABELS[activeStudy.category]}
+                      </span>
+                      {displayContent && (
+                        <span className="text-xs text-slate-400 font-medium">
+                          {readingTime(displayContent)}
+                        </span>
+                      )}
+                    </div>
+                    <h2 className="text-3xl md:text-4xl font-outfit font-bold text-navy-900 dark:text-white leading-tight">
+                      {activeStudy.title}
+                    </h2>
+                    <p className="text-base text-slate-500 dark:text-slate-400 leading-relaxed max-w-2xl">
+                      {activeStudy.rationale}
+                    </p>
+                    {activeStudy.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-2 pt-1">
+                        {activeStudy.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="inline-flex items-center px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800/60 border border-black/5 dark:border-white/10 text-slate-500 dark:text-slate-400 text-xs font-medium"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Navigation context */}
                   <EvidenceMap activeId={activeStudyId} onSelect={handleStudyChange} />
 
-                  {activeStudy.heroArtifact && (
-                    <HtmlPreviewCard
-                      content={activeStudy.heroArtifact.content as string}
-                      label={activeStudy.heroArtifact.label}
-                      description={activeStudy.heroArtifact.description}
-                      isHero={true}
-                      accentColor={activeStudy.id === 'luxe-lofts' ? 'red' : 'indigo'}
-                    />
-                  )}
-
-                  {activeStudy.rigor && <RigorCard rigor={activeStudy.rigor} />}
+                  {/* Layer 2 — Structured explanation */}
+                  {activeStudy.rigor && <RigorCard rigor={activeStudy.rigor} className="" />}
                   <MarkdownSection content={displayContent} isLoading={contentLoading} />
+
+                  {/* Layer 3 — Deep validation (hero artifact moved below prose) */}
+                  {activeStudy.heroArtifact && (
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-4">
+                        <div className="w-2 h-2 rounded-full bg-slate-400" />
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] font-outfit">
+                          Interactive Artifact
+                        </span>
+                        <div className="h-px flex-1 bg-black/5 dark:bg-white/5" />
+                      </div>
+                      <HtmlPreviewCard
+                        content={activeStudy.heroArtifact.content as string}
+                        label={activeStudy.heroArtifact.label}
+                        description={activeStudy.heroArtifact.description}
+                        isHero={true}
+                        accentColor={activeStudy.id === 'luxe-lofts' ? 'red' : 'indigo'}
+                      />
+                    </div>
+                  )}
                   {activeStudy.artifacts && activeStudy.artifacts.length > 0 && (
                     <ArtifactGallery artifacts={activeStudy.artifacts} />
                   )}
