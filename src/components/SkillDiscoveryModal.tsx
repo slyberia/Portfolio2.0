@@ -1,5 +1,5 @@
 import React from 'react';
-import { CASE_STUDY_REGISTRY } from '../constants';
+import { CASE_STUDY_REGISTRY, SKILL_CHIP_CONFIG } from '../constants';
 import { CaseStudyCategory } from '../types';
 
 interface SkillDiscoveryModalProps {
@@ -23,7 +23,12 @@ const SkillDiscoveryModal: React.FC<SkillDiscoveryModalProps> = ({
   onClose,
   onNavigateToStudy,
 }) => {
-  const relevantStudies = CASE_STUDY_REGISTRY.filter((study) => study.tags.includes(skill));
+  const chipConfig = SKILL_CHIP_CONFIG[skill];
+  const relevantStudies = chipConfig
+    ? CASE_STUDY_REGISTRY.filter((study) => chipConfig.linkedSlugs.includes(study.id))
+    : CASE_STUDY_REGISTRY.filter((study) => study.tags.includes(skill));
+  const isSecondary = chipConfig?.linkMode === 'secondary';
+  const evidenceNote = chipConfig?.evidenceNote;
 
   if (!isOpen) return null;
 
@@ -66,45 +71,66 @@ const SkillDiscoveryModal: React.FC<SkillDiscoveryModalProps> = ({
 
         <div className="p-8 max-h-[60vh] overflow-y-auto chat-scroll space-y-6">
           {relevantStudies.length > 0 ? (
-            <div className="grid gap-4">
-              {relevantStudies.map((study) => (
-                <button
-                  key={study.id}
-                  onClick={() => {
-                    onNavigateToStudy(study.id);
-                    onClose();
-                  }}
-                  className="text-left w-full group p-5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:border-indigo-500/40 dark:hover:border-indigo-500/40 hover:bg-white dark:hover:bg-white/10 transition-all shadow-sm"
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <span
-                      className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${CATEGORY_TAGS[study.category]}`}
-                    >
-                      {study.category.replace('-', ' ')}
-                    </span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M7 7h10v10" />
-                      <path d="M7 17 17 7" />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-outfit font-bold text-navy-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                    {study.title}
-                  </h3>
-                  <p className="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
-                    {study.rationale}
-                  </p>
-                </button>
-              ))}
-            </div>
+            <>
+              {isSecondary && evidenceNote && (
+                <div className="flex gap-3 p-4 rounded-xl bg-amber-500/5 border border-amber-500/20 text-amber-700 dark:text-amber-400">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-4 h-4 mt-0.5 shrink-0"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M12 9v4" />
+                    <path d="M12 17h.01" />
+                    <circle cx="12" cy="12" r="10" />
+                  </svg>
+                  <p className="text-xs leading-relaxed">{evidenceNote}</p>
+                </div>
+              )}
+              <div className="grid gap-4">
+                {relevantStudies.map((study) => (
+                  <button
+                    key={study.id}
+                    onClick={() => {
+                      onNavigateToStudy(study.id);
+                      onClose();
+                    }}
+                    className="text-left w-full group p-5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:border-indigo-500/40 dark:hover:border-indigo-500/40 hover:bg-white dark:hover:bg-white/10 transition-all shadow-sm"
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <span
+                        className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${CATEGORY_TAGS[study.category]}`}
+                      >
+                        {study.category.replace('-', ' ')}
+                      </span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M7 7h10v10" />
+                        <path d="M7 17 17 7" />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-outfit font-bold text-navy-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                      {study.title}
+                    </h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+                      {study.rationale}
+                    </p>
+                  </button>
+                ))}
+              </div>
+            </>
           ) : (
             <div className="text-center py-12 space-y-4">
               <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto text-slate-400">
