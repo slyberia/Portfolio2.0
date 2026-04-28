@@ -104,7 +104,6 @@ export const AppLayout: React.FC = () => {
     return () => window.removeEventListener('open-contact', handler);
   }, []);
 
-
   const toggleTheme = () => setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
 
   const showToast = (message: string) => {
@@ -135,7 +134,6 @@ export const AppLayout: React.FC = () => {
     }
   };
 
-
   const handleCommandNavigation = (path: string) => {
     if (path === 'home') {
       navigate('/');
@@ -165,7 +163,11 @@ export const AppLayout: React.FC = () => {
 
   return (
     <div className="min-h-screen relative overflow-x-hidden transition-colors duration-500">
-      <TopNav theme={theme} toggleTheme={toggleTheme} onOpenContact={() => setIsContactOpen(true)} />
+      <TopNav
+        theme={theme}
+        toggleTheme={toggleTheme}
+        onOpenContact={() => setIsContactOpen(true)}
+      />
 
       <div className="pt-20 pb-16 md:pb-0">
         {/* Recruiter Mode Banner */}

@@ -48,10 +48,7 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
 
     return {
       ...action,
-      href:
-        normalizedLabel.includes('guynode') && !action.href
-          ? GUYNODE_SYSTEM_HREF
-          : action.href,
+      href: normalizedLabel.includes('guynode') && !action.href ? GUYNODE_SYSTEM_HREF : action.href,
       isContact: normalizedLabel.includes('contact'),
     };
   });
