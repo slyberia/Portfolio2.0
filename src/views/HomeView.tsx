@@ -188,24 +188,28 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl">
               <Link
                 to={GUYNODE_SYSTEM_HREF}
                 aria-label="View Guynode system"
-                className="group border border-[#d7d1c8] dark:border-white/10 bg-white/90 dark:bg-slate-900/70 rounded-2xl p-4 flex items-center justify-between gap-3 hover:border-indigo-500/40 hover:shadow-[0_10px_35px_rgba(79,70,229,0.15)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                className="group min-h-[74px] border border-[#d9d1c6] dark:border-white/10 bg-[#fbfaf7]/90 dark:bg-slate-900/70 rounded-md px-4 py-3 flex items-center justify-between gap-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-orange-400/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
               >
                 {/* TODO: update this href to the dedicated Guynode case-study route when it exists. */}
                 <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+                  <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+                    <span
+                      className="h-1.5 w-1.5 rounded-full shrink-0 bg-orange-500"
+                      aria-hidden="true"
+                    />
                     FLAGSHIP PROJECT
                   </p>
-                  <p className="mt-1 text-sm font-semibold text-navy-900 dark:text-white">
+                  <p className="mt-1 font-mono text-[13px] uppercase tracking-tight text-navy-900 dark:text-white">
                     GUYNODE_SYSTEM
                   </p>
                 </div>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 transition-colors"
+                  className="w-4 h-4 shrink-0 text-slate-700 dark:text-slate-200 group-hover:translate-x-0.5 group-hover:text-orange-600 transition-all"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -222,20 +226,24 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               <Link
                 to="/resume"
                 aria-label="Download resume"
-                className="group border border-[#d7d1c8] dark:border-white/10 bg-white/90 dark:bg-slate-900/70 rounded-2xl p-4 flex items-center justify-between gap-3 hover:border-indigo-500/40 hover:shadow-[0_10px_35px_rgba(79,70,229,0.15)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                className="group min-h-[74px] border border-[#d9d1c6] dark:border-white/10 bg-[#fbfaf7]/90 dark:bg-slate-900/70 rounded-md px-4 py-3 flex items-center justify-between gap-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-slate-400/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-500"
               >
                 {/* TODO: replace /resume with a direct resume PDF asset link when available. */}
                 <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+                  <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+                    <span
+                      className="h-1.5 w-1.5 rounded-full shrink-0 bg-slate-500"
+                      aria-hidden="true"
+                    />
                     DOWNLOAD RESUME
                   </p>
-                  <p className="mt-1 text-sm font-semibold text-navy-900 dark:text-white">
+                  <p className="mt-1 font-mono text-[13px] uppercase tracking-tight text-navy-900 dark:text-white">
                     RESUME_PDF
                   </p>
                 </div>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 transition-colors"
+                  className="w-4 h-4 shrink-0 text-slate-700 dark:text-slate-200 group-hover:text-slate-900 dark:group-hover:text-white transition-colors"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -262,54 +270,59 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                 key={track.href}
                 to={track.href}
                 aria-label={`Open ${track.title} track`}
-                className={`group relative rounded-2xl border border-[#d7d1c8] dark:border-white/10 bg-white/95 dark:bg-slate-900/75 p-5 md:p-6 pl-7 md:pl-8 transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_35px_rgba(15,23,42,0.12)] focus:outline-none focus-visible:ring-2 ${track.focusClass}`}
+                className={`group block w-full focus:outline-none focus-visible:ring-2 ${track.focusClass}`}
               >
-                <div
-                  className={`absolute left-0 top-0 bottom-0 w-1.5 rounded-l-2xl ${track.railClass}`}
-                />
-                <div className="flex flex-col sm:flex-row sm:items-start gap-4 justify-between">
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`w-10 h-10 rounded-xl flex items-center justify-center ${track.iconTileClass}`}
-                      >
-                        {track.icon}
+                <article className="relative overflow-hidden rounded-2xl border border-[#d7d1c8] dark:border-white/10 bg-white/95 dark:bg-slate-900/75 p-5 md:p-6 pl-7 md:pl-8 shadow-sm transition-all group-hover:-translate-y-0.5 group-hover:shadow-[0_12px_35px_rgba(15,23,42,0.12)]">
+                  <div
+                    className={`absolute left-0 top-0 h-full w-1.5 ${track.railClass}`}
+                  />
+                  <div className="flex flex-col gap-5">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div
+                          className={`h-11 w-11 shrink-0 rounded-xl flex items-center justify-center ${track.iconTileClass}`}
+                        >
+                          {track.icon}
+                        </div>
+                        <span
+                          className={`font-mono text-[10px] uppercase tracking-[0.18em] ${track.labelClass}`}
+                        >
+                          {track.systemLabel}
+                        </span>
                       </div>
-                      <span
-                        className={`font-mono text-[10px] uppercase tracking-[0.18em] ${track.labelClass}`}
-                      >
-                        {track.systemLabel}
-                      </span>
+
+                      <div className="shrink-0 text-right text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                        <div>{track.stream}</div>
+                        <div className="mt-1">{track.path}</div>
+                      </div>
                     </div>
+
                     <div>
-                      <h2 className="text-xl font-outfit font-semibold text-navy-900 dark:text-white">
+                      <h2 className="text-xl md:text-2xl font-outfit font-semibold text-navy-900 dark:text-white">
                         {track.title}
                       </h2>
                       <div
-                        className={`mt-2 h-0.5 w-16 rounded ${track.railClass}`}
+                        className={`mt-3 h-0.5 w-16 rounded ${track.railClass}`}
                         aria-hidden="true"
                       />
                     </div>
-                    <p className="text-sm md:text-[15px] text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
+
+                    <p className="text-sm md:text-[15px] text-slate-600 dark:text-slate-300 leading-relaxed">
                       {track.subcopy}
                     </p>
+
                     <div className="flex flex-wrap gap-2">
                       {track.chips.map((chip, index) => (
                         <span
                           key={chip}
-                          className={`text-xs px-2.5 py-1 rounded-md border dark:border-white/10 ${index === 0 ? track.primaryChipClass : 'bg-slate-100 text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-white/10'}`}
+                          className={`text-xs px-2.5 py-1 rounded-md border ${index === 0 ? track.primaryChipClass : 'bg-slate-100 text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-white/10'}`}
                         >
                           {chip}
                         </span>
                       ))}
                     </div>
                   </div>
-
-                  <div className="flex sm:flex-col sm:items-end justify-between sm:justify-start gap-3 sm:gap-1 text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 shrink-0">
-                    <span>{track.stream}</span>
-                    <span>{track.path}</span>
-                  </div>
-                </div>
+                </article>
               </Link>
             ))}
           </div>
