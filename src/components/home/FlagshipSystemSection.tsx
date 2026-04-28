@@ -77,6 +77,7 @@ const FlagshipSystemSection: React.FC<FlagshipSystemSectionProps> = ({ guynodeHr
             <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
               FLAGSHIP_SYSTEM
             </p>
+            <p className="text-sm font-semibold text-navy-900 dark:text-white">Flagship System</p>
             <h2
               id="flagship-system-heading"
               className="text-3xl md:text-4xl font-outfit font-semibold text-navy-900 dark:text-white"
@@ -122,7 +123,7 @@ const FlagshipSystemSection: React.FC<FlagshipSystemSectionProps> = ({ guynodeHr
 
         <div className="xl:col-span-7 space-y-4">
           <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400">
-            Flagship Proof
+            Proof Artifacts
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">

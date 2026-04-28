@@ -18,8 +18,15 @@ interface HomeViewProps {
 // 3-card preview strip using the first 3 entries from CASE_STUDY_REGISTRY
 const PREVIEW_STUDIES = CASE_STUDY_REGISTRY.slice(0, 3);
 
-// TODO: replace with a dedicated Guynode detail route when one is added to the router/route constants.
-const GUYNODE_SYSTEM_HREF = `/case-studies/${CASE_STUDY_REGISTRY[0].id}`;
+const guynodeCaseStudy = CASE_STUDY_REGISTRY.find((study) => {
+  const normalizedTitle = study.title.toLowerCase();
+  const normalizedId = study.id.toLowerCase();
+
+  return normalizedTitle.includes('guynode') || normalizedId.includes('guynode');
+});
+
+// TODO: replace this fallback logic with a dedicated Guynode route constant when it is added.
+const GUYNODE_SYSTEM_HREF = `/case-studies/${guynodeCaseStudy?.id ?? CASE_STUDY_REGISTRY[0].id}`;
 
 const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContact }) => {
   void onOpenContact;
