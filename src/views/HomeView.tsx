@@ -54,7 +54,17 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
         'bg-orange-100 text-orange-800 border-orange-200 dark:bg-orange-500/15 dark:text-orange-200 dark:border-orange-500/30',
       focusClass: 'focus-visible:ring-orange-500 hover:border-orange-400/50',
       icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
           <path d="M12 2v4" />
           <path d="m16.2 7.8 2.9-2.9" />
           <path d="M18 12h4" />
@@ -83,7 +93,17 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
         'bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-500/15 dark:text-blue-200 dark:border-blue-500/30',
       focusClass: 'focus-visible:ring-blue-500 hover:border-blue-400/50',
       icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
           <path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z" />
           <path d="m9 12 2 2 4-4" />
         </svg>
@@ -105,7 +125,17 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
         'bg-teal-100 text-teal-800 border-teal-200 dark:bg-teal-500/15 dark:text-teal-200 dark:border-teal-500/30',
       focusClass: 'focus-visible:ring-teal-500 hover:border-teal-400/50',
       icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
           <path d="M3 6 9 3l6 3 6-3v15l-6 3-6-3-6 3z" />
           <path d="M9 3v15" />
           <path d="M15 6v15" />
@@ -153,11 +183,14 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               <h1 className="text-5xl md:text-6xl font-outfit font-bold tracking-tight text-navy-900 dark:text-white">
                 Kyle Semple
               </h1>
-              <div className="h-px w-full max-w-md bg-slate-300 dark:bg-white/15" aria-hidden="true" />
+              <div
+                className="h-px w-full max-w-md bg-slate-300 dark:bg-white/15"
+                aria-hidden="true"
+              />
               <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl">
                 A portfolio built around three target roles: technical implementation, quality
-                assurance, and GIS systems. Each path connects to tangible systems, workflows,
-                and operational proof.
+                assurance, and GIS systems. Each path connects to tangible systems, workflows, and
+                operational proof.
               </p>
             </div>
 
@@ -202,7 +235,9 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                   <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
                     DOWNLOAD RESUME
                   </p>
-                  <p className="mt-1 text-sm font-semibold text-navy-900 dark:text-white">RESUME_PDF</p>
+                  <p className="mt-1 text-sm font-semibold text-navy-900 dark:text-white">
+                    RESUME_PDF
+                  </p>
                 </div>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -235,14 +270,20 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                 aria-label={`Open ${track.title} track`}
                 className={`group relative rounded-2xl border border-[#d7d1c8] dark:border-white/10 bg-white/95 dark:bg-slate-900/75 p-5 md:p-6 pl-7 md:pl-8 transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_35px_rgba(15,23,42,0.12)] focus:outline-none focus-visible:ring-2 ${track.focusClass}`}
               >
-                <div className={`absolute left-0 top-0 bottom-0 w-1.5 rounded-l-2xl ${track.railClass}`} />
+                <div
+                  className={`absolute left-0 top-0 bottom-0 w-1.5 rounded-l-2xl ${track.railClass}`}
+                />
                 <div className="flex flex-col sm:flex-row sm:items-start gap-4 justify-between">
                   <div className="space-y-3">
                     <div className="flex items-center gap-3">
-                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${track.iconTileClass}`}>
+                      <div
+                        className={`w-10 h-10 rounded-xl flex items-center justify-center ${track.iconTileClass}`}
+                      >
                         {track.icon}
                       </div>
-                      <span className={`font-mono text-[10px] uppercase tracking-[0.18em] ${track.labelClass}`}>
+                      <span
+                        className={`font-mono text-[10px] uppercase tracking-[0.18em] ${track.labelClass}`}
+                      >
                         {track.systemLabel}
                       </span>
                     </div>
@@ -250,7 +291,10 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                       <h2 className="text-xl font-outfit font-semibold text-navy-900 dark:text-white">
                         {track.title}
                       </h2>
-                      <div className={`mt-2 h-0.5 w-16 rounded ${track.railClass}`} aria-hidden="true" />
+                      <div
+                        className={`mt-2 h-0.5 w-16 rounded ${track.railClass}`}
+                        aria-hidden="true"
+                      />
                     </div>
                     <p className="text-sm md:text-[15px] text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
                       {track.subcopy}
