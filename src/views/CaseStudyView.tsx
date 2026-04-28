@@ -17,6 +17,7 @@ import { useRecruiterMode } from '../context/RecruiterModeContext';
 import { readingTime } from '../utils/readingTime';
 import { recruiterSummary } from '../utils/recruiterSummary';
 import { CATEGORY_COLORS } from '../constants/categories';
+import { CASE_STUDY_FALLBACK_ID } from '../lib/routes';
 
 const CATEGORY_LABELS: Record<CaseStudyCategory, string> = {
   'ai-ops': 'Implementation Systems',
@@ -66,7 +67,7 @@ const EvidenceMap: React.FC<{ activeId: string; onSelect: (id: string) => void }
           </div>
           <div>
             <h3 className="font-outfit font-bold text-navy-900 dark:text-white text-sm uppercase tracking-wide">
-              Supporting Evidence Map
+              Supporting Evidence Navigator
             </h3>
             <p className="text-[10px] text-slate-500 font-medium">
               Select a node to navigate the system.
@@ -98,6 +99,7 @@ const EvidenceMap: React.FC<{ activeId: string; onSelect: (id: string) => void }
           return (
             <button
               key={id}
+              type="button"
               onClick={() => onSelect(id)}
               className={`relative p-3 rounded-xl border text-left transition-all duration-300 group hover:-translate-y-1 ${
                 isActive
@@ -170,7 +172,7 @@ const CaseStudyView: React.FC = () => {
   const navigate = useNavigate();
   const { isRecruiterMode } = useRecruiterMode();
 
-  const activeStudyId = studyId ?? CASE_STUDY_REGISTRY[0].id;
+  const activeStudyId = studyId ?? CASE_STUDY_FALLBACK_ID;
 
   const [activeFilter, setActiveFilter] = useState<CaseStudyCategory | 'all'>('all');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);

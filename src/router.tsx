@@ -21,7 +21,7 @@ import CommandPalette from './components/CommandPalette';
 import ChatWidget from './components/ChatWidget';
 import Toast from './components/Toast';
 import ErrorBoundary from './components/ErrorBoundary';
-import { CASE_STUDY_REGISTRY } from './constants';
+import { buildCaseStudyHref, SUPPORTING_EVIDENCE_DEFAULT_HREF } from './lib/routes';
 import { useRecruiterMode } from './context/RecruiterModeContext';
 
 type LayoutContext = {
@@ -116,7 +116,7 @@ export const AppLayout: React.FC = () => {
   };
 
   const navigateToCaseStudy = (id?: string) => {
-    navigate(`/case-studies/${id ?? CASE_STUDY_REGISTRY[0].id}`);
+    navigate(id ? buildCaseStudyHref(id) : SUPPORTING_EVIDENCE_DEFAULT_HREF);
   };
 
   const navigateToResume = () => navigate('/resume');
@@ -553,7 +553,7 @@ export const routeDefinitions = [
       { index: true, element: <HomeWrapper /> },
       {
         path: 'case-studies',
-        element: <Navigate to={`/case-studies/${CASE_STUDY_REGISTRY[0].id}`} replace />,
+        element: <Navigate to={SUPPORTING_EVIDENCE_DEFAULT_HREF} replace />,
       },
       {
         path: 'case-studies/:studyId',

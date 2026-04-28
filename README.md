@@ -16,9 +16,18 @@
 
 ---
 
-## What This Is
+## Current Portfolio Architecture
 
-Portfolio2.0 is now organized around three role-track entry points: Technical Implementation Specialist, Quality Assurance Analyst, and GIS Analyst. Guynode serves as the flagship proof system, while supporting evidence cards provide secondary method-level proof.
+Portfolio2.0 is organized around three role-track entry points: Technical Implementation Specialist, Quality Assurance Analyst, and GIS Analyst. Guynode functions as the flagship proof system, while Supporting Evidence cards provide secondary method-level proof across implementation, QA, GIS, and AI-assisted workflow governance.
+
+### Redesign Phase Sequence
+
+1. Role-track hero
+2. Guynode flagship proof
+3. Supporting evidence archive
+4. Track page alignment
+5. Copy/naming polish
+6. Final QA/release prep
 
 ## Stack
 
