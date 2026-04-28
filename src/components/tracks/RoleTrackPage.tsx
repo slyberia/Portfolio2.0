@@ -45,8 +45,8 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
 
   const actions = content.ctaActions.map((action) => ({
     ...action,
-    href: action.label.includes('Guynode') && !action.href ? GUYNODE_SYSTEM_HREF : action.href,
-    isContact: action.label.toLowerCase().includes('contact'),
+    href: action.href ?? GUYNODE_SYSTEM_HREF,
+    isContact: action.type === 'contact',
   }));
 
   return (
@@ -162,8 +162,7 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
                 </article>
               );
 
-              const evidenceHref =
-                item.href ?? (item.title.includes('Guynode') ? GUYNODE_SYSTEM_HREF : undefined);
+              const evidenceHref = item.href;
               if (!evidenceHref) return <div key={item.title}>{card}</div>;
               return (
                 <Link
