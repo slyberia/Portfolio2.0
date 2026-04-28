@@ -8,6 +8,7 @@ import {
   SKILL_CHIP_CONFIG,
 } from '../constants';
 import SkillDiscoveryModal from '../components/SkillDiscoveryModal';
+import FlagshipSystemSection from '../components/home/FlagshipSystemSection';
 
 interface HomeViewProps {
   onNavigateToCaseStudy: (id?: string) => void;
@@ -16,6 +17,16 @@ interface HomeViewProps {
 
 // 3-card preview strip using the first 3 entries from CASE_STUDY_REGISTRY
 const PREVIEW_STUDIES = CASE_STUDY_REGISTRY.slice(0, 3);
+
+const guynodeCaseStudy = CASE_STUDY_REGISTRY.find((study) => {
+  const normalizedTitle = study.title.toLowerCase();
+  const normalizedId = study.id.toLowerCase();
+
+  return normalizedTitle.includes('guynode') || normalizedId.includes('guynode');
+});
+
+// TODO: replace this fallback logic with a dedicated Guynode route constant when it is added.
+const GUYNODE_SYSTEM_HREF = `/case-studies/${guynodeCaseStudy?.id ?? CASE_STUDY_REGISTRY[0].id}`;
 
 const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContact }) => {
   void onOpenContact;
@@ -196,7 +207,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl">
               <Link
-                to={`/case-studies/${CASE_STUDY_REGISTRY[0].id}`}
+                to={GUYNODE_SYSTEM_HREF}
                 aria-label="Open flagship project case study"
                 className="group border border-[#d7d1c8] dark:border-white/10 bg-white/90 dark:bg-slate-900/70 rounded-2xl p-4 flex items-center justify-between gap-3 hover:border-indigo-500/40 hover:shadow-[0_10px_35px_rgba(79,70,229,0.15)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
               >
@@ -321,6 +332,8 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
           </div>
         </div>
       </section>
+
+      <FlagshipSystemSection guynodeHref={GUYNODE_SYSTEM_HREF} />
 
       {/* Evidence Row — Direction C: structured, no cards, typographic hierarchy */}
       <section className="border-y border-[#e4dfd7] dark:border-white/5 bg-[#fefcf9] dark:bg-[#221e17]">
