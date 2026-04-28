@@ -129,7 +129,8 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
   accent: 'qa',
   title: 'Quality Assurance Analyst',
   eyebrow: 'Role Track',
-  headline: 'QA proof for structured testing, issue triage, root-cause analysis, and validation workflows.',
+  headline:
+    'QA proof for structured testing, issue triage, root-cause analysis, and validation workflows.',
   summary:
     'This track highlights work that uses controlled analysis, test design, defect reasoning, and launch-readiness checks to improve system reliability.',
   proves: [
@@ -169,8 +170,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
     },
     {
       title: 'Systems at Scale: Triage & QA',
-      relevance:
-        'Issue triage and QA workflow evidence for high-volume operational scenarios.',
+      relevance: 'Issue triage and QA workflow evidence for high-volume operational scenarios.',
       proofType: 'Workflow',
       href: '/case-studies/ops-triage',
       roleChips: ['Quality Assurance Analyst'],
@@ -292,7 +292,8 @@ export const gisTrackContent: TrackPageContent = {
 export const trackSelectorCards: TrackSelectorCard[] = [
   {
     title: 'Technical Implementation Specialist',
-    subcopy: 'Onboarding, technical guidance, workflow setup, launch planning, and support handoff.',
+    subcopy:
+      'Onboarding, technical guidance, workflow setup, launch planning, and support handoff.',
     href: '/tracks/implementation',
   },
   {

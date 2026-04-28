@@ -151,7 +151,9 @@ const SupportingEvidenceSection: React.FC = () => {
                 </span>
               </div>
 
-              <h3 className="mt-3 text-base font-semibold text-navy-900 dark:text-white">{item.title}</h3>
+              <h3 className="mt-3 text-base font-semibold text-navy-900 dark:text-white">
+                {item.title}
+              </h3>
               <p className="mt-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                 {item.summary}
               </p>

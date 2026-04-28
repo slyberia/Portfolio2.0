@@ -10,4 +10,6 @@ const guynodeCaseStudy = CASE_STUDY_REGISTRY.find((study) =>
 );
 
 // TODO: Replace fallback with dedicated Guynode case study route when the Guynode detail entry is published.
-export const GUYNODE_SYSTEM_HREF = buildCaseStudyHref(guynodeCaseStudy?.id ?? CASE_STUDY_FALLBACK_ID);
+export const GUYNODE_SYSTEM_HREF = buildCaseStudyHref(
+  guynodeCaseStudy?.id ?? CASE_STUDY_FALLBACK_ID,
+);
