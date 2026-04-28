@@ -46,6 +46,7 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
   const actions = content.ctaActions.map((action) => ({
     ...action,
     href: action.label.includes('Guynode') && !action.href ? GUYNODE_SYSTEM_HREF : action.href,
+    isContact: action.label.toLowerCase().includes('contact'),
   }));
 
   return (
@@ -206,16 +207,28 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
           {/* TODO: replace generic resume download target with track-specific resume assets when files exist. */}
           <div className="mt-6 flex flex-wrap gap-3">
             {actions.map((action, index) => (
-              <Link
-                key={action.label}
-                to={action.href}
-                aria-label={`${action.label} for ${content.title}`}
-                className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-sm transition-colors focus:outline-none focus-visible:ring-2 ${
-                  index === 0 ? `text-white ${accent.cta}` : `border ${accent.ctaOutline}`
-                }`}
-              >
-                {action.label}
-              </Link>
+              action.isContact ? (
+                <button
+                  key={action.label}
+                  type="button"
+                  onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
+                  aria-label={`${action.label} for ${content.title}`}
+                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-sm transition-colors focus:outline-none focus-visible:ring-2 border ${accent.ctaOutline}`}
+                >
+                  {action.label}
+                </button>
+              ) : (
+                <Link
+                  key={action.label}
+                  to={action.href}
+                  aria-label={`${action.label} for ${content.title}`}
+                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-sm transition-colors focus:outline-none focus-visible:ring-2 ${
+                    index === 0 ? `text-white ${accent.cta}` : `border ${accent.ctaOutline}`
+                  }`}
+                >
+                  {action.label}
+                </Link>
+              )
             ))}
           </div>
         </div>

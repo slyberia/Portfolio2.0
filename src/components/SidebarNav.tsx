@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { CASE_STUDY_REGISTRY } from '../constants';
+import { SUPPORTING_EVIDENCE_DEFAULT_HREF } from '../lib/routes';
 
 interface SidebarNavProps {
   theme: 'light' | 'dark';
@@ -53,7 +53,7 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ theme, toggleTheme, onOpenConta
       id: 'cases',
       label: 'Supporting Evidence',
       active: isCases,
-      onClick: () => navigate(`/case-studies/${CASE_STUDY_REGISTRY[0].id}`),
+      onClick: () => navigate(SUPPORTING_EVIDENCE_DEFAULT_HREF),
       icon: (
         <svg
           width="20"

@@ -6,6 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.1.0] — 2026-04-28 — Final QA & Release Prep
+
+### Changed
+
+- Refactored homepage + track routing flow to keep the three role-track lanes and Guynode-first proof hierarchy stable for release
+- Centralized default Supporting Evidence navigation in `src/lib/routes.ts` and removed brittle `CASE_STUDY_REGISTRY[0]` routing dependencies in app navigation
+- Updated case study navigator labeling from "Supporting Evidence Map" to "Supporting Evidence Navigator" for terminology consistency
+- Hardened track-page contact CTAs to open the contact modal directly instead of relying on hash links
+
+### Documentation
+
+- README updated with an explicit "Current Portfolio Architecture" section and the six-phase redesign sequence
+
+### Why
+
+This release finalizes Phase 6 by tightening route reliability, clarifying public terminology, and documenting the recruiter-facing information architecture before merge/deployment.
+
+---
+
 ## [2.0.0] — 2026-04-21 — KS_01 Design Pivot
 
 ### Changed
