@@ -8,8 +8,8 @@ import {
   useOutletContext,
 } from 'react-router-dom';
 import HomeView from './views/HomeView';
-import SidebarNav from './components/SidebarNav';
 import BottomTabBar from './components/BottomTabBar';
+import TopNav from './components/TopNav';
 import CaseStudyView from './views/CaseStudyView';
 import ResumeView from './views/ResumeView';
 import ImplementationTrackView from './views/ImplementationTrackView';
@@ -104,6 +104,7 @@ export const AppLayout: React.FC = () => {
     return () => window.removeEventListener('open-contact', handler);
   }, []);
 
+
   const toggleTheme = () => setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
 
   const showToast = (message: string) => {
@@ -134,10 +135,6 @@ export const AppLayout: React.FC = () => {
     }
   };
 
-  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
-    e.preventDefault();
-    scrollToSection(sectionId);
-  };
 
   const handleCommandNavigation = (path: string) => {
     if (path === 'home') {
@@ -159,7 +156,6 @@ export const AppLayout: React.FC = () => {
     if (action === 'resume') navigateToResume();
   };
 
-  const isOnCaseStudy = location.pathname.startsWith('/case-studies');
   const isOnResume = location.pathname === '/resume';
 
   const context: LayoutContext = {
@@ -169,180 +165,9 @@ export const AppLayout: React.FC = () => {
 
   return (
     <div className="min-h-screen relative overflow-x-hidden transition-colors duration-500">
-      {/* Navigation — visible on mobile only; desktop uses SidebarNav */}
-      <nav
-        className="md:hidden fixed top-0 w-full z-50 border-b border-[#e4dfd7] dark:border-white/5 bg-[#f9f7f3] dark:bg-[#1a1712] transition-all duration-300"
-        role="navigation"
-        aria-label="Main Navigation"
-      >
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <button
-            onClick={() => navigate('/')}
-            className="flex items-center gap-2 group focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-lg p-1"
-            aria-label="Return to Homepage"
-          >
-            <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center font-bold text-lg text-white font-outfit group-hover:scale-105 transition-transform shadow-lg shadow-indigo-500/20">
-              KS
-            </div>
-            <span className="font-outfit font-bold text-xl tracking-tight text-navy-900 dark:text-white hidden sm:block">
-              Kyle Semple
-            </span>
-          </button>
+      <TopNav theme={theme} toggleTheme={toggleTheme} onOpenContact={() => setIsContactOpen(true)} />
 
-          <div className="flex items-center gap-2 md:gap-6 text-sm font-medium text-slate-500 dark:text-slate-400">
-            <button
-              onClick={() => navigate('/')}
-              className={`hidden sm:block hover:text-navy-900 dark:hover:text-white transition-colors focus:outline-none focus:text-navy-900 dark:focus:text-white ${
-                location.pathname === '/' && !isOnCaseStudy ? 'text-navy-900 dark:text-white' : ''
-              }`}
-            >
-              Home
-            </button>
-            <a
-              href="#experience"
-              onClick={(e) => handleAnchorClick(e, 'experience')}
-              className="hidden md:block hover:text-navy-900 dark:hover:text-white transition-colors focus:outline-none"
-            >
-              Experience
-            </a>
-            <button
-              onClick={() => navigateToCaseStudy()}
-              className={`hover:text-navy-900 dark:hover:text-white transition-colors focus:outline-none ${
-                isOnCaseStudy ? 'text-navy-900 dark:text-white font-bold' : ''
-              }`}
-            >
-              Supporting Evidence
-            </button>
-
-            <button
-              onClick={navigateToResume}
-              className="hover:text-navy-900 dark:hover:text-white transition-colors focus:outline-none"
-            >
-              Resume
-            </button>
-
-            <div className="hidden xl:flex items-center gap-2 text-xs text-slate-400 dark:text-slate-600 border border-black/5 dark:border-white/10 px-2 py-1 rounded bg-black/5 dark:bg-white/5">
-              <span className="font-sans">⌘</span>
-              <span>K</span>
-            </div>
-
-            {/* Social & Utility Group */}
-            <div className="flex items-center gap-1 sm:gap-2">
-              {/* LinkedIn Header Shortcut */}
-              <a
-                href="https://www.linkedin.com/in/kyle-semple-522537165/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full hover:bg-blue-500/10 text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all focus:outline-none"
-                aria-label="Visit LinkedIn Profile"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                  <rect width="4" height="12" x="2" y="9" />
-                  <circle cx="4" cy="4" r="2" />
-                </svg>
-              </a>
-
-              {/* Theme Toggle */}
-              <button
-                onClick={toggleTheme}
-                className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-slate-500 dark:text-slate-400 hover:text-navy-900 dark:hover:text-white transition-all relative group overflow-hidden"
-                aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-              >
-                <div
-                  className={`transition-all duration-500 transform ${theme === 'light' ? 'rotate-0 scale-100' : 'rotate-90 scale-0 opacity-0 absolute'}`}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-5 h-5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <circle cx="12" cy="12" r="4" />
-                    <path d="M12 2v2" />
-                    <path d="M12 20v2" />
-                    <path d="m4.93 4.93 1.41 1.41" />
-                    <path d="m17.66 17.66 1.41 1.41" />
-                    <path d="M2 12h2" />
-                    <path d="M20 12h2" />
-                    <path d="m6.34 17.66-1.41 1.41" />
-                    <path d="m19.07 4.93-1.41 1.41" />
-                  </svg>
-                </div>
-                <div
-                  className={`transition-all duration-500 transform ${theme === 'dark' ? 'rotate-0 scale-100' : '-rotate-90 scale-0 opacity-0 absolute'}`}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-5 h-5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-                  </svg>
-                </div>
-              </button>
-            </div>
-
-            {/* Nav Divider */}
-            <div className="hidden md:block w-px h-6 bg-black/10 dark:bg-white/10"></div>
-
-            {/* Recruiter Mode Toggle */}
-            <button
-              onClick={toggleRecruiterMode}
-              className="hidden lg:inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-xs font-bold transition-all hover:border-emerald-500/50 focus:outline-none"
-              aria-label="Toggle recruiter mode"
-            >
-              <span
-                className={`w-2 h-2 rounded-full ${isRecruiterMode ? 'bg-emerald-500 animate-pulse shadow-[0_0_6px_rgba(16,185,129,0.6)]' : 'bg-slate-400 dark:bg-slate-600'}`}
-              />
-              <span
-                className={
-                  isRecruiterMode
-                    ? 'text-emerald-600 dark:text-emerald-400'
-                    : 'text-slate-500 dark:text-slate-400'
-                }
-              >
-                {isRecruiterMode ? 'Recruiter Mode: ON' : 'Recruiter Mode'}
-              </span>
-            </button>
-
-            {/* Contact - Primary CTA */}
-            <button
-              onClick={() => setIsContactOpen(true)}
-              className="inline-flex items-center px-3 sm:px-5 py-1.5 sm:py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-all focus:outline-none text-xs sm:text-sm font-bold shadow-lg shadow-indigo-500/20"
-            >
-              Contact
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      <SidebarNav
-        theme={theme}
-        toggleTheme={toggleTheme}
-        onOpenContact={() => setIsContactOpen(true)}
-      />
-
-      {/* Sidebar-offset wrapper — shifts all page content right of the desktop sidebar */}
-      <div className="md:pl-20 pb-16 md:pb-0">
+      <div className="pt-20 pb-16 md:pb-0">
         {/* Recruiter Mode Banner */}
         {isRecruiterMode && (
           <div className="bg-emerald-500 text-white px-6 py-3 flex items-center justify-between gap-4 animate-in slide-in-from-top-2 duration-300">
@@ -510,8 +335,6 @@ export const AppLayout: React.FC = () => {
           </footer>
         )}
       </div>
-      {/* end sidebar-offset wrapper */}
-
       <BottomTabBar />
 
       <ContactModal
