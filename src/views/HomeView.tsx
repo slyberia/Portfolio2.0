@@ -333,7 +333,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               <h2 className="text-xs font-bold text-indigo-600 dark:text-indigo-500 uppercase tracking-[0.3em]">
                 Trajectory
               </h2>
-              <h3 className="text-4xl md:text-5xl font-outfit font-bold text-navy-900 dark:text-white">
+              <h3 className="text-3xl md:text-4xl font-outfit font-semibold text-navy-900 dark:text-white">
                 Career Experience
               </h3>
             </div>
@@ -394,14 +394,14 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
       {/* Skills Grid */}
       <section
         id="skills"
-        className="py-32 px-6 scroll-mt-24 transition-colors duration-500 relative"
+        className="py-32 px-6 scroll-mt-24 transition-colors duration-500 bg-[#f7f5f1]/70 dark:bg-slate-950/60"
       >
         <div className="max-w-7xl mx-auto">
-          <div className="mb-12 space-y-4">
+          <div className="mb-12 space-y-3">
             <h2 className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
               CAPABILITY_MATRIX
             </h2>
-            <h3 className="text-4xl md:text-5xl font-outfit font-bold text-navy-900 dark:text-white">
+            <h3 className="text-3xl md:text-4xl font-outfit font-semibold text-navy-900 dark:text-white">
               Skills &amp; Technologies
             </h3>
             <p className="max-w-2xl text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -413,19 +413,19 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             {SKILL_GROUPS.map((group, idx) => (
               <div
                 key={idx}
-                className="rounded-2xl border border-[#ddd7cd] dark:border-white/10 bg-white/80 dark:bg-slate-900/60 p-6 space-y-5"
+                className="rounded-2xl border border-[#ddd7cd] dark:border-white/10 bg-white/80 dark:bg-slate-900/60 p-6 space-y-4"
               >
-                <h4 className="text-lg font-outfit font-semibold text-navy-900 dark:text-white border-b border-[#e5e0d6] dark:border-white/10 pb-3">
+                <h4 className="text-base font-outfit font-semibold text-navy-900 dark:text-white border-b border-[#e5e0d6] dark:border-white/10 pb-3">
                   {group.category}
                 </h4>
-                <div className="flex flex-wrap content-start items-start gap-2">
+                <div className="flex flex-wrap items-start content-start gap-2">
                   {group.items.map((skill, i) => {
                     const chipConfig = SKILL_CHIP_CONFIG[skill];
                     const isFlagged = chipConfig?.linkMode === 'flagged';
                     const isDirect = chipConfig?.linkMode === 'direct';
                     const titleText = chipConfig?.evidenceNote;
                     const baseChipClass =
-                      'h-8 inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-md border border-[#d8d2c7] dark:border-white/10 bg-white/70 dark:bg-slate-900/80 text-slate-700 dark:text-slate-200';
+                      'h-8 inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-md border border-[#d8d2c7] dark:border-white/10 bg-slate-50 dark:bg-slate-900/80 text-slate-700 dark:text-slate-200';
 
                     if (isFlagged) {
                       return (
@@ -449,22 +449,9 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                         key={i}
                         onClick={handleClick}
                         title={titleText}
-                        className={`group/skill ${baseChipClass} transition-colors active:scale-[0.99] focus:outline-none focus-visible:ring-2 ${getCategoryColorClass(group.category)}`}
+                        className={`${baseChipClass} transition-colors active:scale-[0.99] focus:outline-none focus-visible:ring-2 ${getCategoryColorClass(group.category)}`}
                       >
                         {skill}
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="w-3 h-3 opacity-0 -translate-x-0.5 group-hover/skill:opacity-100 group-hover/skill:translate-x-0 transition-all"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M7 7h10v10" />
-                          <path d="M7 17 17 7" />
-                        </svg>
                       </button>
                     );
                   })}
