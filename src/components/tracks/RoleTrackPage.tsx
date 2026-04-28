@@ -43,19 +43,18 @@ const ACCENT_STYLES = {
 const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
   const accent = ACCENT_STYLES[content.accent];
 
-const actions = content.ctaActions.map((action) => {
-  const normalizedLabel = action.label.toLowerCase();
+  const actions = content.ctaActions.map((action) => {
+    const normalizedLabel = action.label.toLowerCase();
 
-  return {
-    ...action,
-    href:
-      normalizedLabel.includes('guynode') && !action.href
-        ? GUYNODE_SYSTEM_HREF
-        : action.href,
-    isContact: normalizedLabel.includes('contact'),
-  };
-});
-  }));
+    return {
+      ...action,
+      href:
+        normalizedLabel.includes('guynode') && !action.href
+          ? GUYNODE_SYSTEM_HREF
+          : action.href,
+      isContact: normalizedLabel.includes('contact'),
+    };
+  });
 
   return (
     <div className="min-h-screen">
@@ -213,18 +212,24 @@ const actions = content.ctaActions.map((action) => {
           <p className="mt-3 text-slate-600 dark:text-slate-300">{content.ctaCopy}</p>
           {/* TODO: replace generic resume download target with track-specific resume assets when files exist. */}
           <div className="mt-6 flex flex-wrap gap-3">
-            {actions.map((action, index) => (
-              action.isContact ? (
-                <button
-                  key={action.label}
-                  type="button"
-                  onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
-                  aria-label={`${action.label} for ${content.title}`}
-                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-sm transition-colors focus:outline-none focus-visible:ring-2 border ${accent.ctaOutline}`}
-                >
-                  {action.label}
-                </button>
-              ) : (
+            {actions.map((action, index) => {
+              if (action.isContact) {
+                return (
+                  <button
+                    key={action.label}
+                    type="button"
+                    onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
+                    aria-label={`${action.label} for ${content.title}`}
+                    className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-sm transition-colors focus:outline-none focus-visible:ring-2 border ${accent.ctaOutline}`}
+                  >
+                    {action.label}
+                  </button>
+                );
+              }
+
+              if (!action.href) return null;
+
+              return (
                 <Link
                   key={action.label}
                   to={action.href}
@@ -235,8 +240,8 @@ const actions = content.ctaActions.map((action) => {
                 >
                   {action.label}
                 </Link>
-              )
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
