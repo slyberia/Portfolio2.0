@@ -1,32 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  EXPERIENCE,
-  SKILL_GROUPS,
-  CERTIFICATIONS,
-  CASE_STUDY_REGISTRY,
-  SKILL_CHIP_CONFIG,
-} from '../constants';
+import { EXPERIENCE, SKILL_GROUPS, CERTIFICATIONS, SKILL_CHIP_CONFIG } from '../constants';
 import SkillDiscoveryModal from '../components/SkillDiscoveryModal';
 import FlagshipSystemSection from '../components/home/FlagshipSystemSection';
+import SupportingEvidenceSection from '../components/home/SupportingEvidenceSection';
+import { GUYNODE_SYSTEM_HREF } from '../lib/routes';
 
 interface HomeViewProps {
   onNavigateToCaseStudy: (id?: string) => void;
   onOpenContact: () => void;
 }
-
-// 3-card preview strip using the first 3 entries from CASE_STUDY_REGISTRY
-const PREVIEW_STUDIES = CASE_STUDY_REGISTRY.slice(0, 3);
-
-const guynodeCaseStudy = CASE_STUDY_REGISTRY.find((study) => {
-  const normalizedTitle = study.title.toLowerCase();
-  const normalizedId = study.id.toLowerCase();
-
-  return normalizedTitle.includes('guynode') || normalizedId.includes('guynode');
-});
-
-// TODO: replace this fallback logic with a dedicated Guynode route constant when it is added.
-const GUYNODE_SYSTEM_HREF = `/case-studies/${guynodeCaseStudy?.id ?? CASE_STUDY_REGISTRY[0].id}`;
 
 const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContact }) => {
   void onOpenContact;
@@ -335,53 +318,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
       <FlagshipSystemSection guynodeHref={GUYNODE_SYSTEM_HREF} />
 
-      {/* Evidence Row — Direction C: structured, no cards, typographic hierarchy */}
-      <section className="border-y border-[#e4dfd7] dark:border-white/5 bg-[#fefcf9] dark:bg-[#221e17]">
-        <div className="max-w-7xl mx-auto px-6">
-          <dl className="grid grid-cols-2 md:grid-cols-4 divide-x divide-[#e4dfd7] dark:divide-white/5">
-            {[
-              {
-                metric: '100+',
-                label: 'Weekly Tickets',
-                sub: 'enterprise volume · Printful',
-                caseId: 'ops-triage',
-              },
-              {
-                metric: '$100K+',
-                label: 'Client Tiers',
-                sub: 'revenue-critical accounts',
-                caseId: 'ops-triage',
-              },
-              {
-                metric: '120+',
-                label: 'SLA Requests/wk',
-                sub: 'validated throughput · Apex',
-                caseId: 'ops-triage',
-              },
-              {
-                metric: '4+ yrs',
-                label: 'GIS Depth',
-                sub: 'spatial systems foundation',
-                caseId: 'nba-systems-qa',
-              },
-            ].map(({ metric, label, sub, caseId }) => (
-              <Link
-                key={metric}
-                to={`/case-studies/${caseId}`}
-                className="px-6 py-8 first:pl-0 last:pr-0 group/stat flex flex-col gap-1 hover:bg-[#f5e2d5]/40 dark:hover:bg-[rgba(196,89,42,0.06)] transition-colors"
-              >
-                <dt className="text-3xl font-outfit font-bold text-navy-900 dark:text-white group-hover/stat:text-indigo-500 dark:group-hover/stat:text-indigo-400 transition-colors tabular-nums">
-                  {metric}
-                </dt>
-                <dd className="text-sm font-medium text-slate-700 dark:text-slate-300">{label}</dd>
-                <dd className="text-xs text-slate-400 dark:text-slate-500 leading-relaxed">
-                  {sub}
-                </dd>
-              </Link>
-            ))}
-          </dl>
-        </div>
-      </section>
+      <SupportingEvidenceSection />
 
       {/* Experience */}
       <section id="experience" className="py-32 px-6 scroll-mt-24 transition-colors duration-500">
@@ -568,67 +505,6 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
           onNavigateToStudy={onNavigateToCaseStudy}
         />
       )}
-
-      {/* Case Study Preview Strip */}
-      <section className="py-24 px-6 bg-slate-50/50 dark:bg-slate-900/30 transition-colors duration-500">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12 space-y-4">
-            <h2 className="text-xs font-bold text-indigo-600 dark:text-indigo-500 uppercase tracking-[0.3em]">
-              Evidence
-            </h2>
-            <h3 className="text-4xl md:text-5xl font-outfit font-bold text-navy-900 dark:text-white">
-              Featured Work
-            </h3>
-            <p className="text-slate-500 dark:text-slate-400 max-w-xl mx-auto">
-              Cases built around concrete decisions — governing AI workflows, stabilizing triage
-              systems under volume, and maintaining spatial data accuracy. Each one shows how the
-              problem was framed and what tradeoff was accepted.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {PREVIEW_STUDIES.map((study) => (
-              <div
-                key={study.id}
-                className="glass-card p-6 rounded-3xl flex flex-col gap-4 hover:-translate-y-1 hover:border-indigo-500/30 transition-all duration-300 group"
-              >
-                {/* Primary tag */}
-                <span className="inline-flex self-start items-center px-2.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-600 dark:text-indigo-400 text-[10px] font-bold uppercase tracking-widest">
-                  {study.tags[0]}
-                </span>
-
-                <h4 className="text-xl font-outfit font-bold text-navy-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                  {study.title}
-                </h4>
-
-                <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed flex-1">
-                  {study.rationale}
-                </p>
-
-                <Link
-                  to={`/case-studies/${study.id}`}
-                  className="inline-flex items-center gap-2 text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:gap-3 transition-all"
-                >
-                  View Case Study
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-4 h-4"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M5 12h14" />
-                    <path d="m12 5 7 7-7 7" />
-                  </svg>
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Education & Certs */}
       <section id="foundation" className="py-32 px-6 scroll-mt-24 transition-colors duration-500">
