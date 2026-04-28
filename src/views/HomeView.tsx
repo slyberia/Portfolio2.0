@@ -8,8 +8,6 @@ import {
   SKILL_CHIP_CONFIG,
 } from '../constants';
 import SkillDiscoveryModal from '../components/SkillDiscoveryModal';
-import TrackSelectorSection from '../components/tracks/TrackSelectorSection';
-import { trackSelectorCards } from '../data/trackContent';
 
 interface HomeViewProps {
   onNavigateToCaseStudy: (id?: string) => void;
@@ -20,6 +18,7 @@ interface HomeViewProps {
 const PREVIEW_STUDIES = CASE_STUDY_REGISTRY.slice(0, 3);
 
 const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContact }) => {
+  void onOpenContact;
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -38,6 +37,83 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
     return 'hover:border-slate-500/50 hover:bg-slate-500/5';
   };
 
+  const roleTrackCards = [
+    {
+      systemLabel: 'IMPLEMENTATION_TRACK',
+      title: 'Technical Implementation Specialist',
+      subcopy:
+        'Customer-facing technical delivery, workflow setup, onboarding support, and implementation-focused problem solving.',
+      chips: ['Onboarding', 'Workflow Design', 'Documentation'],
+      stream: 'STREAM 01',
+      path: 'SYS_PATH: 01.00',
+      href: '/tracks/implementation',
+      railClass: 'bg-orange-600',
+      iconTileClass: 'bg-orange-100 text-orange-700 dark:bg-orange-500/15 dark:text-orange-300',
+      labelClass: 'text-orange-700 dark:text-orange-300',
+      primaryChipClass:
+        'bg-orange-100 text-orange-800 border-orange-200 dark:bg-orange-500/15 dark:text-orange-200 dark:border-orange-500/30',
+      focusClass: 'focus-visible:ring-orange-500 hover:border-orange-400/50',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M12 2v4" />
+          <path d="m16.2 7.8 2.9-2.9" />
+          <path d="M18 12h4" />
+          <path d="m16.2 16.2 2.9 2.9" />
+          <path d="M12 18v4" />
+          <path d="m7.8 16.2-2.9 2.9" />
+          <path d="M2 12h4" />
+          <path d="m7.8 7.8-2.9-2.9" />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
+      ),
+    },
+    {
+      systemLabel: 'QA_TRACK',
+      title: 'Quality Assurance Analyst',
+      subcopy:
+        'Structured testing, issue triage, root-cause analysis, and decision-ready quality reporting.',
+      chips: ['QA Protocols', 'Test Plans', 'Root Cause Analysis'],
+      stream: 'STREAM 02',
+      path: 'SYS_PATH: 02.00',
+      href: '/tracks/ops-analytics',
+      railClass: 'bg-blue-600',
+      iconTileClass: 'bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300',
+      labelClass: 'text-blue-700 dark:text-blue-300',
+      primaryChipClass:
+        'bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-500/15 dark:text-blue-200 dark:border-blue-500/30',
+      focusClass: 'focus-visible:ring-blue-500 hover:border-blue-400/50',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z" />
+          <path d="m9 12 2 2 4-4" />
+        </svg>
+      ),
+    },
+    {
+      systemLabel: 'GIS_TRACK',
+      title: 'GIS Analyst',
+      subcopy:
+        'Spatial data operations, mapping workflows, dataset governance, and GIS-focused system delivery.',
+      chips: ['ArcGIS', 'Leaflet', 'Spatial Data'],
+      stream: 'STREAM 03',
+      path: 'SYS_PATH: 03.00',
+      href: '/tracks/gis',
+      railClass: 'bg-teal-600',
+      iconTileClass: 'bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-300',
+      labelClass: 'text-teal-700 dark:text-teal-300',
+      primaryChipClass:
+        'bg-teal-100 text-teal-800 border-teal-200 dark:bg-teal-500/15 dark:text-teal-200 dark:border-teal-500/30',
+      focusClass: 'focus-visible:ring-teal-500 hover:border-teal-400/50',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M3 6 9 3l6 3 6-3v15l-6 3-6-3-6 3z" />
+          <path d="M9 3v15" />
+          <path d="M15 6v15" />
+        </svg>
+      ),
+    },
+  ];
+
   const RECRUITER_SKILLS = [
     'Workflow Design + Triage Systems',
     'Technical Customer Enablement',
@@ -46,14 +122,9 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
     'AI Tooling / Prompt Governance',
   ];
 
-  // Real data for annotations — sourced from constants/experience
-  const CASE_COUNT = String(CASE_STUDY_REGISTRY.length).padStart(2, '0');
-
   return (
     <>
-      {/* ── Hero Section ─────────────────────────────────────────────────────── */}
-      <section className="relative pt-20 min-h-[92vh] md:min-h-[88vh] overflow-hidden bg-gold-50 dark:bg-slate-950">
-        {/* Graph-paper grid overlay */}
+      <section className="relative pt-20 overflow-hidden bg-[#f7f5f1] dark:bg-slate-950 border-b border-[#e4dfd7] dark:border-white/5">
         <div
           className="absolute inset-0 pointer-events-none"
           aria-hidden="true"
@@ -63,7 +134,6 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             backgroundSize: '40px 40px',
           }}
         />
-        {/* Dark-mode grid */}
         <div
           className="absolute inset-0 pointer-events-none hidden dark:block"
           aria-hidden="true"
@@ -74,64 +144,41 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
           }}
         />
 
-        {/* Top-right annotation — real portfolio data */}
-        <div
-          className="absolute top-24 right-6 hidden lg:block font-mono text-right leading-relaxed select-none"
-          style={{ fontSize: '10px', opacity: 0.3 }}
-          aria-hidden="true"
-        >
-          PORT_REF: KS.V2 / CASES: {CASE_COUNT}
-          <br />
-          BUILD: 2026.04 / ANN_ARBOR_MI
-        </div>
-
-        {/* ── 12-column content grid ──────────────────────────────────────────── */}
-        <div className="grid grid-cols-12 min-h-[88vh] md:min-h-[80vh]">
-          {/* Left column — text content — appears second on mobile, first on desktop */}
-          <div className="col-span-12 md:col-span-7 order-2 md:order-1 flex flex-col justify-center px-8 md:px-12 pt-8 pb-10 md:pt-10 md:pb-16">
-            {/* Eyebrow — horizontal rule + mono label */}
-            <div className="flex items-center gap-3 mb-7 animate-in fade-in duration-700">
-              <div className="w-8 h-px bg-indigo-500 shrink-0" aria-hidden="true" />
-              <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-indigo-500">
-                Customer Success / AI Operations
-              </span>
+        <div className="relative max-w-7xl mx-auto px-6 py-14 md:py-20 lg:py-24 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+          <div className="lg:col-span-5 space-y-8 lg:pr-6">
+            <div className="space-y-5">
+              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400">
+                SYSTEM_ARCHITECT_V3.1
+              </p>
+              <h1 className="text-5xl md:text-6xl font-outfit font-bold tracking-tight text-navy-900 dark:text-white">
+                Kyle Semple
+              </h1>
+              <div className="h-px w-full max-w-md bg-slate-300 dark:bg-white/15" aria-hidden="true" />
+              <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl">
+                A portfolio built around three target roles: technical implementation, quality
+                assurance, and GIS systems. Each path connects to tangible systems, workflows,
+                and operational proof.
+              </p>
             </div>
 
-            {/* Headline — split two-line architectural format */}
-            <h1
-              className="font-outfit font-extrabold text-navy-900 dark:text-white tracking-tight leading-[1.05] mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-75"
-              style={{ fontSize: 'clamp(2rem, 4.75vw, 4.34rem)' }}
-            >
-              <span className="block">OPERATIONS</span>
-              <span className="block italic text-indigo-500 md:pl-8 lg:pl-14">INTELLIGENCE_V2</span>
-            </h1>
-
-            {/* Open-to-work signal */}
-            <div className="flex items-center gap-2.5 mb-5 md:pl-8 lg:pl-14 animate-in fade-in duration-700 delay-100">
-              <span className="w-2 h-2 bg-emerald-500 animate-pulse shrink-0" aria-hidden="true" />
-              <span className="font-mono text-[11px] uppercase tracking-widest text-slate-500 dark:text-slate-400">
-                Open to AI Ops &amp; CX Success roles
-              </span>
-            </div>
-
-            {/* Body text */}
-            <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-lg mb-10 md:pl-8 lg:pl-14 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150">
-              This portfolio covers three areas of work — implementation and technical enablement,
-              ops analytics and QA, and geospatial data systems. Each track is built around concrete
-              artifacts: how problems were framed, how tradeoffs were handled, and how decisions
-              held up under constraint.
-            </p>
-
-            {/* CTAs — sharp corners, full-width on mobile */}
-            <div className="flex flex-col sm:flex-row gap-0 md:pl-8 lg:pl-14 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
-              <button
-                onClick={() => onNavigateToCaseStudy()}
-                className="flex items-center justify-between gap-4 px-8 py-4 bg-indigo-500 text-white font-mono text-sm uppercase tracking-wider hover:bg-indigo-600 active:bg-indigo-700 transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl">
+              <Link
+                to={`/case-studies/${CASE_STUDY_REGISTRY[0].id}`}
+                aria-label="Open flagship project case study"
+                className="group border border-[#d7d1c8] dark:border-white/10 bg-white/90 dark:bg-slate-900/70 rounded-2xl p-4 flex items-center justify-between gap-3 hover:border-indigo-500/40 hover:shadow-[0_10px_35px_rgba(79,70,229,0.15)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
               >
-                <span>View Case Studies</span>
+                {/* TODO: update this href to the dedicated Guynode case-study route when it exists. */}
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+                    FLAGSHIP PROJECT
+                  </p>
+                  <p className="mt-1 text-sm font-semibold text-navy-900 dark:text-white">
+                    GUYNODE_SYSTEM
+                  </p>
+                </div>
                 <svg
-                  width="16"
-                  height="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 transition-colors"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -140,269 +187,96 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                   strokeLinejoin="round"
                   aria-hidden="true"
                 >
-                  <path d="M5 12h14" />
-                  <path d="m12 5 7 7-7 7" />
+                  <path d="M7 17L17 7" />
+                  <path d="M7 7h10v10" />
                 </svg>
-              </button>
-              <button
-                onClick={onOpenContact}
-                className="flex items-center justify-center px-8 py-4 border border-indigo-500/30 text-indigo-600 dark:text-indigo-400 font-mono text-sm uppercase tracking-wider hover:border-indigo-500/60 hover:bg-indigo-500/5 transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+              </Link>
+
+              <Link
+                to="/resume"
+                aria-label="Download resume"
+                className="group border border-[#d7d1c8] dark:border-white/10 bg-white/90 dark:bg-slate-900/70 rounded-2xl p-4 flex items-center justify-between gap-3 hover:border-indigo-500/40 hover:shadow-[0_10px_35px_rgba(79,70,229,0.15)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
               >
-                Get in Touch
-              </button>
+                {/* TODO: replace /resume with a direct resume PDF asset link when available. */}
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+                    DOWNLOAD RESUME
+                  </p>
+                  <p className="mt-1 text-sm font-semibold text-navy-900 dark:text-white">RESUME_PDF</p>
+                </div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 transition-colors"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M12 3v12" />
+                  <path d="m7 10 5 5 5-5" />
+                  <path d="M5 21h14" />
+                </svg>
+              </Link>
             </div>
           </div>
 
-          {/* Right column — geometric visual — appears first on mobile */}
-          <div className="col-span-12 md:col-span-5 order-1 md:order-2 relative flex items-stretch">
-            {/* Visual frame */}
-            <div className="relative w-full min-h-[320px] md:min-h-0 bg-[#fefcf9] dark:bg-[#1e1a14] border-b md:border-b-0 md:border-l border-[#e4dfd7] dark:border-white/5 overflow-hidden">
-              {/* Grid background inside frame */}
-              <div
-                className="absolute inset-0 pointer-events-none"
-                aria-hidden="true"
-                style={{
-                  backgroundImage:
-                    'linear-gradient(rgba(30,32,48,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(30,32,48,0.04) 1px, transparent 1px)',
-                  backgroundSize: '40px 40px',
-                }}
-              />
+          <div className="lg:col-span-7 space-y-4">
+            <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
+              CHOOSE YOUR HIRING LENS
+            </p>
 
-              {/* Version / ref tag — top-right, sharp corners */}
-              <div className="absolute top-0 right-0 z-10 bg-indigo-500 text-white font-mono text-[10px] uppercase tracking-wider px-3 py-1.5 select-none">
-                OPS_REF: V2
-              </div>
-
-              {/* Corner brackets */}
-              <svg
-                className="absolute top-3 left-3 text-indigo-500/60"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                aria-hidden="true"
+            {roleTrackCards.map((track) => (
+              <Link
+                key={track.href}
+                to={track.href}
+                aria-label={`Open ${track.title} track`}
+                className={`group relative rounded-2xl border border-[#d7d1c8] dark:border-white/10 bg-white/95 dark:bg-slate-900/75 p-5 md:p-6 pl-7 md:pl-8 transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_35px_rgba(15,23,42,0.12)] focus:outline-none focus-visible:ring-2 ${track.focusClass}`}
               >
-                <path d="M24 0 L0 0 L0 24" stroke="currentColor" strokeWidth="1.5" />
-              </svg>
-              <svg
-                className="absolute bottom-12 right-3 text-indigo-500/60"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path d="M0 24 L24 24 L24 0" stroke="currentColor" strokeWidth="1.5" />
-              </svg>
+                <div className={`absolute left-0 top-0 bottom-0 w-1.5 rounded-l-2xl ${track.railClass}`} />
+                <div className="flex flex-col sm:flex-row sm:items-start gap-4 justify-between">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${track.iconTileClass}`}>
+                        {track.icon}
+                      </div>
+                      <span className={`font-mono text-[10px] uppercase tracking-[0.18em] ${track.labelClass}`}>
+                        {track.systemLabel}
+                      </span>
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-outfit font-semibold text-navy-900 dark:text-white">
+                        {track.title}
+                      </h2>
+                      <div className={`mt-2 h-0.5 w-16 rounded ${track.railClass}`} aria-hidden="true" />
+                    </div>
+                    <p className="text-sm md:text-[15px] text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
+                      {track.subcopy}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {track.chips.map((chip, index) => (
+                        <span
+                          key={chip}
+                          className={`text-xs px-2.5 py-1 rounded-md border dark:border-white/10 ${index === 0 ? track.primaryChipClass : 'bg-slate-100 text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-white/10'}`}
+                        >
+                          {chip}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
 
-              {/* Operations network diagram — SVG */}
-              <svg
-                className="absolute inset-0 w-full h-full"
-                viewBox="0 0 380 460"
-                fill="none"
-                preserveAspectRatio="xMidYMid slice"
-                aria-label="Operations workflow network diagram"
-                role="img"
-              >
-                {/* Dot grid */}
-                {Array.from({ length: 11 }, (_, row) =>
-                  Array.from({ length: 9 }, (_, col) => (
-                    <circle
-                      key={`d-${row}-${col}`}
-                      cx={20 + col * 40}
-                      cy={20 + row * 40}
-                      r="1.5"
-                      fill="#1e2030"
-                      opacity="0.07"
-                    />
-                  )),
-                )}
-
-                {/* Primary connection paths */}
-                <line
-                  x1="60"
-                  y1="80"
-                  x2="180"
-                  y2="160"
-                  stroke="#c4592a"
-                  strokeWidth="1"
-                  opacity="0.75"
-                />
-                <line
-                  x1="180"
-                  y1="160"
-                  x2="300"
-                  y2="100"
-                  stroke="#c4592a"
-                  strokeWidth="1"
-                  opacity="0.5"
-                />
-                <line
-                  x1="180"
-                  y1="160"
-                  x2="180"
-                  y2="300"
-                  stroke="#c4592a"
-                  strokeWidth="1"
-                  opacity="0.8"
-                />
-                <line
-                  x1="180"
-                  y1="160"
-                  x2="300"
-                  y2="240"
-                  stroke="#c4592a"
-                  strokeWidth="1"
-                  opacity="0.55"
-                />
-                <line
-                  x1="300"
-                  y1="240"
-                  x2="180"
-                  y2="360"
-                  stroke="#c4592a"
-                  strokeWidth="1"
-                  opacity="0.65"
-                />
-                <line
-                  x1="180"
-                  y1="300"
-                  x2="60"
-                  y2="380"
-                  stroke="#c4592a"
-                  strokeWidth="1"
-                  opacity="0.5"
-                />
-                <line
-                  x1="180"
-                  y1="360"
-                  x2="60"
-                  y2="380"
-                  stroke="#c4592a"
-                  strokeWidth="1"
-                  opacity="0.4"
-                />
-
-                {/* Secondary dashed paths */}
-                <line
-                  x1="300"
-                  y1="100"
-                  x2="300"
-                  y2="240"
-                  stroke="#c4592a"
-                  strokeWidth="1"
-                  opacity="0.2"
-                  strokeDasharray="4 4"
-                />
-                <line
-                  x1="60"
-                  y1="80"
-                  x2="60"
-                  y2="380"
-                  stroke="#1e2030"
-                  strokeWidth="1"
-                  opacity="0.06"
-                  strokeDasharray="2 6"
-                />
-
-                {/* Nodes — squares (zero radius, consistent with design) */}
-                {/* Input node */}
-                <rect x="54" y="74" width="12" height="12" fill="#c4592a" opacity="0.9" />
-                {/* Primary junction */}
-                <rect x="173" y="153" width="14" height="14" fill="#c4592a" />
-                {/* Branch A */}
-                <rect
-                  x="294"
-                  y="94"
-                  width="10"
-                  height="10"
-                  fill="none"
-                  stroke="#c4592a"
-                  strokeWidth="1.5"
-                  opacity="0.7"
-                />
-                {/* Branch B */}
-                <rect x="294" y="234" width="12" height="12" fill="#c4592a" opacity="0.75" />
-                {/* Convergence A */}
-                <rect
-                  x="174"
-                  y="294"
-                  width="10"
-                  height="10"
-                  fill="none"
-                  stroke="#c4592a"
-                  strokeWidth="1.5"
-                  opacity="0.6"
-                />
-                {/* Convergence B */}
-                <rect
-                  x="174"
-                  y="354"
-                  width="10"
-                  height="10"
-                  fill="none"
-                  stroke="#c4592a"
-                  strokeWidth="1.5"
-                  opacity="0.5"
-                />
-                {/* Output node */}
-                <rect x="54" y="374" width="12" height="12" fill="#c4592a" opacity="0.65" />
-
-                {/* Measurement annotation line */}
-                <line
-                  x1="330"
-                  y1="100"
-                  x2="330"
-                  y2="380"
-                  stroke="#1e2030"
-                  strokeWidth="0.75"
-                  opacity="0.15"
-                />
-                <line
-                  x1="324"
-                  y1="100"
-                  x2="336"
-                  y2="100"
-                  stroke="#1e2030"
-                  strokeWidth="0.75"
-                  opacity="0.15"
-                />
-                <line
-                  x1="324"
-                  y1="380"
-                  x2="336"
-                  y2="380"
-                  stroke="#1e2030"
-                  strokeWidth="0.75"
-                  opacity="0.15"
-                />
-              </svg>
-
-              {/* Side annotation — real data, rotated */}
-              <div
-                className="absolute right-[-1.75rem] top-1/2 -translate-y-1/2 font-mono uppercase tracking-widest text-navy-900/25 dark:text-white/15 select-none hidden md:block"
-                style={{ fontSize: '8px', writingMode: 'vertical-rl' }}
-                aria-hidden="true"
-              >
-                120+ REQ/WK · $100K+ ACCOUNTS
-              </div>
-
-              {/* Status overlay — bottom strip */}
-              <div className="absolute bottom-0 left-0 right-0 bg-navy-900/90 dark:bg-[#0d0c09]/95 text-white px-4 py-3 flex items-center gap-3">
-                <span
-                  className="w-2 h-2 bg-emerald-500 animate-pulse shrink-0"
-                  aria-hidden="true"
-                />
-                <span className="font-mono text-[11px] uppercase tracking-wider">
-                  UNIT_STATUS: OPEN_TO_WORK
-                </span>
-              </div>
-            </div>
+                  <div className="flex sm:flex-col sm:items-end justify-between sm:justify-start gap-3 sm:gap-1 text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 shrink-0">
+                    <span>{track.stream}</span>
+                    <span>{track.path}</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
-
-      <TrackSelectorSection tracks={trackSelectorCards} />
 
       {/* Evidence Row — Direction C: structured, no cards, typographic hierarchy */}
       <section className="border-y border-[#e4dfd7] dark:border-white/5 bg-[#fefcf9] dark:bg-[#221e17]">

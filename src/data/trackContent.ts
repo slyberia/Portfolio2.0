@@ -308,18 +308,18 @@ export const gisTrackContent: TrackPageContent = {
 
 export const trackSelectorCards: TrackSelectorCard[] = [
   {
-    title: 'Implementation / CSE-lite',
+    title: 'Technical Implementation Specialist',
     subcopy: 'Onboarding, technical guidance, rollout logic, triage design, governed AI delivery.',
     href: '/tracks/implementation',
   },
   {
-    title: 'Ops Analytics / QA',
+    title: 'Quality Assurance Analyst',
     subcopy:
       'Validation, regression prevention, failure isolation, audit trails, decision-ready reporting.',
     href: '/tracks/ops-analytics',
   },
   {
-    title: 'GIS Systems & Spatial Operations',
+    title: 'GIS Analyst',
     subcopy:
       'Utility mapping, spatial QA, and 4+ years of production ESRI ArcMap experience — dataset maintenance at volume, stakeholder dashboards, and structured validation workflows.',
     href: '/tracks/gis',
