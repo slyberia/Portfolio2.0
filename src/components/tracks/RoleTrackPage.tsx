@@ -43,10 +43,18 @@ const ACCENT_STYLES = {
 const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
   const accent = ACCENT_STYLES[content.accent];
 
-  const actions = content.ctaActions.map((action) => ({
+const actions = content.ctaActions.map((action) => {
+  const normalizedLabel = action.label.toLowerCase();
+
+  return {
     ...action,
-    href: action.label.includes('Guynode') && !action.href ? GUYNODE_SYSTEM_HREF : action.href,
-    isContact: action.label.toLowerCase().includes('contact'),
+    href:
+      normalizedLabel.includes('guynode') && !action.href
+        ? GUYNODE_SYSTEM_HREF
+        : action.href,
+    isContact: normalizedLabel.includes('contact'),
+  };
+});
   }));
 
   return (
@@ -162,8 +170,7 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
                 </article>
               );
 
-              const evidenceHref =
-                item.href ?? (item.title.includes('Guynode') ? GUYNODE_SYSTEM_HREF : undefined);
+              const evidenceHref = item.href;
               if (!evidenceHref) return <div key={item.title}>{card}</div>;
               return (
                 <Link

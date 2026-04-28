@@ -1,3 +1,5 @@
+import { GUYNODE_SYSTEM_HREF } from '../lib/routes';
+
 export type TrackAccent = 'implementation' | 'qa' | 'gis';
 
 export type SupportingEvidenceCard = {
@@ -10,7 +12,8 @@ export type SupportingEvidenceCard = {
 
 export type CtaAction = {
   label: string;
-  href: string;
+  href?: string;
+  type?: 'link' | 'contact';
 };
 
 export type TrackPageContent = {
@@ -71,6 +74,7 @@ export const implementationTrackContent: TrackPageContent = {
       relevance:
         'Flagship implementation proof showing migration planning, platform structure, and launch readiness.',
       proofType: 'Flagship System',
+      href: GUYNODE_SYSTEM_HREF,
       roleChips: ['Technical Implementation Specialist', 'GIS Analyst'],
     },
     {
@@ -119,8 +123,8 @@ export const implementationTrackContent: TrackPageContent = {
   ctaCopy: 'Review implementation-focused proof artifacts or move directly to resume and contact.',
   ctaActions: [
     { label: 'Download Resume', href: '/resume' },
-    { label: 'View Guynode System', href: '' },
-    { label: 'Contact Me', href: '/#contact' },
+    { label: 'View Guynode System', href: GUYNODE_SYSTEM_HREF },
+    { label: 'Contact Me', type: 'contact' },
   ],
 };
 
@@ -158,6 +162,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
       relevance:
         'Flagship QA surface with metadata controls, public route validation, and launch-readiness checks.',
       proofType: 'Flagship System',
+      href: GUYNODE_SYSTEM_HREF,
       roleChips: ['Quality Assurance Analyst', 'GIS Analyst'],
     },
     {
@@ -206,7 +211,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
   ctaActions: [
     { label: 'Download Resume', href: '/resume' },
     { label: 'View Supporting Evidence', href: '/portfolio2/deep-dive#ci-and-tests' },
-    { label: 'Contact Me', href: '/#contact' },
+    { label: 'Contact Me', type: 'contact' },
   ],
 };
 
@@ -243,6 +248,7 @@ export const gisTrackContent: TrackPageContent = {
       relevance:
         'Flagship GIS evidence for dataset governance, map viewer logic, and public geospatial access.',
       proofType: 'Flagship System',
+      href: GUYNODE_SYSTEM_HREF,
       roleChips: ['GIS Analyst'],
     },
     {
@@ -284,8 +290,8 @@ export const gisTrackContent: TrackPageContent = {
   ctaCopy: 'Review GIS system proof or move directly to resume and contact.',
   ctaActions: [
     { label: 'Download Resume', href: '/resume' },
-    { label: 'View Guynode System', href: '' },
-    { label: 'Contact Me', href: '/#contact' },
+    { label: 'View Guynode System', href: GUYNODE_SYSTEM_HREF },
+    { label: 'Contact Me', type: 'contact' },
   ],
 };
 
