@@ -17,7 +17,12 @@ interface TopNavProps {
 
 type NavAccent = 'orange' | 'blue' | 'teal' | 'neutral';
 
-const NAV_ITEMS: Array<{ label: string; href: string; accent: NavAccent; activeMatch: (pathname: string) => boolean }> = [
+const NAV_ITEMS: Array<{
+  label: string;
+  href: string;
+  accent: NavAccent;
+  activeMatch: (pathname: string) => boolean;
+}> = [
   {
     label: 'Implementation',
     href: IMPLEMENTATION_TRACK_HREF,
@@ -118,7 +123,7 @@ const TopNav: React.FC<TopNavProps> = ({ theme, toggleTheme, onOpenContact }) =>
 
           <button
             onClick={onOpenContact}
-          className="inline-flex items-center justify-center rounded-sm bg-slate-950 dark:bg-slate-100 text-white dark:text-slate-950 px-5 py-2.5 text-sm font-semibold hover:bg-slate-800 dark:hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-slate-600 dark:focus-visible:ring-slate-300"
+            className="inline-flex items-center justify-center rounded-sm bg-slate-950 dark:bg-slate-100 text-white dark:text-slate-950 px-5 py-2.5 text-sm font-semibold hover:bg-slate-800 dark:hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-slate-600 dark:focus-visible:ring-slate-300"
           >
             Get in Touch
           </button>

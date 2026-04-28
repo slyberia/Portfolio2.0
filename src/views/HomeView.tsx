@@ -265,9 +265,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                 className={`group block w-full focus:outline-none focus-visible:ring-2 ${track.focusClass}`}
               >
                 <article className="relative overflow-hidden rounded-2xl border border-[#d7d1c8] dark:border-white/10 bg-white/95 dark:bg-slate-900/75 p-5 md:p-6 pl-7 md:pl-8 shadow-sm transition-all group-hover:-translate-y-0.5 group-hover:shadow-[0_12px_35px_rgba(15,23,42,0.12)]">
-                  <div
-                    className={`absolute left-0 top-0 h-full w-1.5 ${track.railClass}`}
-                  />
+                  <div className={`absolute left-0 top-0 h-full w-1.5 ${track.railClass}`} />
                   <div className="flex flex-col gap-5">
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex items-center gap-3 min-w-0">
@@ -429,11 +427,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
                     if (isFlagged) {
                       return (
-                        <span
-                          key={i}
-                          title={titleText}
-                          className={`${baseChipClass} select-none`}
-                        >
+                        <span key={i} title={titleText} className={`${baseChipClass} select-none`}>
                           {skill}
                         </span>
                       );

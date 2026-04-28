@@ -3,7 +3,6 @@ import { CASE_STUDY_REGISTRY } from '../constants';
 export const CASE_STUDY_FALLBACK_ID = 'ops-triage';
 export const GUYNODE_CASE_STUDY_CANDIDATE_IDS = ['guynode', 'guynode-spatial-data-hub'] as const;
 
-
 export const HOME_HREF = '/';
 export const IMPLEMENTATION_TRACK_HREF = '/tracks/implementation';
 export const QA_TRACK_HREF = '/tracks/ops-analytics';
