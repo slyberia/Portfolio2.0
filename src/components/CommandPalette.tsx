@@ -22,7 +22,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({ onNavigate, onAction })
     { id: 'home', label: 'Go to Home', type: 'nav', path: 'home' },
     { id: 'experience', label: 'Go to Experience', type: 'nav', path: '#experience' },
     { id: 'skills', label: 'Go to Skills', type: 'nav', path: '#skills' },
-    { id: 'case-studies', label: 'Read Case Studies', type: 'nav', path: 'case-study' },
+    { id: 'case-studies', label: 'View Supporting Evidence', type: 'nav', path: 'case-study' },
     { id: 'contact', label: 'Get in Touch', type: 'action', action: 'contact' },
     { id: 'resume', label: 'Download Resume', type: 'action', action: 'resume' },
   ];

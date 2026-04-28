@@ -211,7 +211,7 @@ export const AppLayout: React.FC = () => {
                 isOnCaseStudy ? 'text-navy-900 dark:text-white font-bold' : ''
               }`}
             >
-              Case Studies
+              Supporting Evidence
             </button>
 
             <button

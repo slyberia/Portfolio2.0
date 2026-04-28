@@ -19,13 +19,13 @@ import { recruiterSummary } from '../utils/recruiterSummary';
 import { CATEGORY_COLORS } from '../constants/categories';
 
 const CATEGORY_LABELS: Record<CaseStudyCategory, string> = {
-  'ai-ops': 'AI Ops',
+  'ai-ops': 'Implementation Systems',
   'qa-data': 'QA & Data',
   'success-strategy': 'Strategy',
   creative: 'Creative',
 };
 
-// Define the "Forced Path" sequence explicitly
+// Define the recommended sequence explicitly
 const SEQUENCE_ORDER = [
   'prompter-hub', // Step 1
   'project-aegis', // Step 2
@@ -66,7 +66,7 @@ const EvidenceMap: React.FC<{ activeId: string; onSelect: (id: string) => void }
           </div>
           <div>
             <h3 className="font-outfit font-bold text-navy-900 dark:text-white text-sm uppercase tracking-wide">
-              Evidence Map
+              Supporting Evidence Map
             </h3>
             <p className="text-[10px] text-slate-500 font-medium">
               Select a node to navigate the system.

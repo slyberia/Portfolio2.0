@@ -3,7 +3,7 @@
 
 # Kyle Semple — Professional Portfolio
 
-**AI Operations & Customer Success · Ann Arbor, MI**
+**Technical Implementation · QA · GIS Systems · Ann Arbor, MI**
 
 [Live Site](https://portfoli02-786228485832.northamerica-northeast2.run.app) · [How It Was Built](HOW_IT_WAS_BUILT.md) · [Architecture Decisions](DECISIONS.md) · [Architecture Overview](ARCHITECTURE.md)
 
@@ -18,7 +18,7 @@
 
 ## What This Is
 
-A production portfolio targeting AI-forward Customer Success and Solutions roles. Built initially in Google AI Studio, then refactored across 6 phases to production quality — with server-side API security, a full test suite, React Router v6, and deployment on Google Cloud Run.
+Portfolio2.0 is now organized around three role-track entry points: Technical Implementation Specialist, Quality Assurance Analyst, and GIS Analyst. Guynode serves as the flagship proof system, while supporting evidence cards provide secondary method-level proof.
 
 ## Stack
 

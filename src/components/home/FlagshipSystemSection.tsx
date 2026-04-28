@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-type RoleTrack = 'Technical Implementation Specialist' | 'Quality Assurance Analyst' | 'GIS Analyst';
+type RoleTrack =
+  | 'Technical Implementation Specialist'
+  | 'Quality Assurance Analyst'
+  | 'GIS Analyst';
 
 interface FlagshipSystemSectionProps {
   guynodeHref: string;
@@ -132,7 +135,9 @@ const FlagshipSystemSection: React.FC<FlagshipSystemSectionProps> = ({ guynodeHr
                 key={artifact.title}
                 className="rounded-xl border border-[#ddd7cd] dark:border-white/10 bg-white/95 dark:bg-slate-900/70 p-4 md:p-5 shadow-[0_8px_24px_rgba(15,23,42,0.06)]"
               >
-                <h3 className="text-base font-semibold text-navy-900 dark:text-white">{artifact.title}</h3>
+                <h3 className="text-base font-semibold text-navy-900 dark:text-white">
+                  {artifact.title}
+                </h3>
                 <p className="mt-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                   {artifact.description}
                 </p>

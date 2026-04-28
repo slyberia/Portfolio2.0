@@ -294,6 +294,6 @@ The harness standardizes the “attempt environment” so that observed differen
 
 > This exercise reaffirmed that functional QA in games is as much about system logic as feature behavior.
 > 
-> **Why this matters for AI Ops:** 
+> **Why this matters for implementation and QA systems work:** 
 > AI tools are probabilistic systems. Just like a sports engine, an LLM's output is affected by "modifiers" (prompts, temperature, top-p). The same rigor required to debunk a "Dimer Myth" is required to validate that an AI system is operating within its intended safety boundaries.`,
 };
