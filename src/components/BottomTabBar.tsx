@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { CASE_STUDY_REGISTRY } from '../constants';
+import { SUPPORTING_EVIDENCE_DEFAULT_HREF } from '../lib/routes';
 
 const BottomTabBar: React.FC = () => {
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ const BottomTabBar: React.FC = () => {
       id: 'cases',
       label: 'Evidence',
       active: isCases,
-      onClick: () => navigate(`/case-studies/${CASE_STUDY_REGISTRY[0].id}`),
+      onClick: () => navigate(SUPPORTING_EVIDENCE_DEFAULT_HREF),
       icon: (
         <svg
           width="20"

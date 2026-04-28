@@ -4,6 +4,7 @@ export const CASE_STUDY_FALLBACK_ID = 'ops-triage';
 export const GUYNODE_CASE_STUDY_CANDIDATE_IDS = ['guynode', 'guynode-spatial-data-hub'] as const;
 
 export const buildCaseStudyHref = (id: string) => `/case-studies/${id}`;
+export const SUPPORTING_EVIDENCE_DEFAULT_HREF = buildCaseStudyHref(CASE_STUDY_FALLBACK_ID);
 
 const guynodeCaseStudy = CASE_STUDY_REGISTRY.find((study) =>
   GUYNODE_CASE_STUDY_CANDIDATE_IDS.some((candidateId) => candidateId === study.id),
