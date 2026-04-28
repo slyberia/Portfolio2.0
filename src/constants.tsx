@@ -54,7 +54,7 @@ export const EXPERIENCE: ExperienceItem[] = [
 
 export const SKILL_GROUPS: SkillGroup[] = [
   {
-    category: 'Strategic Support & CS',
+    category: 'Technical Support & Implementation',
     items: [
       'Customer Success Support',
       'Technical Troubleshooting',

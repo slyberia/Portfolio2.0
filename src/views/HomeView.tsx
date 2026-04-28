@@ -22,13 +22,13 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
   };
 
   const getCategoryColorClass = (category: string) => {
-    if (category.includes('Strategic'))
-      return 'hover:border-indigo-500/50 hover:bg-indigo-500/5 text-indigo-600 dark:text-indigo-400';
-    if (category.includes('Data & Systems'))
-      return 'hover:border-amber-500/50 hover:bg-amber-500/5 text-amber-700 dark:text-amber-400';
-    if (category.includes('Stack'))
-      return 'hover:border-emerald-500/50 hover:bg-emerald-500/5 text-emerald-700 dark:text-emerald-400';
-    return 'hover:border-slate-500/50 hover:bg-slate-500/5';
+    if (category.includes('Technical')) {
+      return 'hover:border-indigo-400/60 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 hover:text-indigo-700 dark:hover:text-indigo-300 focus-visible:ring-indigo-500';
+    }
+    if (category.includes('Operations')) {
+      return 'hover:border-blue-400/60 hover:bg-blue-50 dark:hover:bg-blue-500/10 hover:text-blue-700 dark:hover:text-blue-300 focus-visible:ring-blue-500';
+    }
+    return 'hover:border-teal-400/60 hover:bg-teal-50 dark:hover:bg-teal-500/10 hover:text-teal-700 dark:hover:text-teal-300 focus-visible:ring-teal-500';
   };
 
   const roleTrackCards = [
@@ -136,14 +136,6 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
         </svg>
       ),
     },
-  ];
-
-  const RECRUITER_SKILLS = [
-    'Workflow Design + Triage Systems',
-    'Technical Customer Enablement',
-    'QA + Data Integrity',
-    'Documentation + Stakeholder Dashboards',
-    'AI Tooling / Prompt Governance',
   ];
 
   return (
@@ -362,11 +354,11 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                       ? 'exp-apex'
                       : undefined
                 }
-                className="group glass-card p-8 rounded-3xl hover:translate-y-[-4px] transition-all duration-500 scroll-mt-28"
+                className="glass-card p-8 rounded-3xl border border-[#ddd7cd] dark:border-white/10 shadow-sm scroll-mt-28"
               >
                 <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-6">
                   <div>
-                    <h4 className="text-2xl font-outfit font-bold text-navy-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                    <h4 className="text-2xl font-outfit font-bold text-navy-900 dark:text-white">
                       {exp.role}
                     </h4>
                     <p className="text-lg text-slate-500 dark:text-slate-300 flex items-center gap-2 mt-1 font-medium">
@@ -388,7 +380,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                       key={i}
                       className="flex gap-3 text-slate-500 dark:text-slate-400 text-sm leading-relaxed"
                     >
-                      <span className="mt-2 w-1.5 h-1.5 bg-indigo-600/40 dark:bg-indigo-500/40 rounded-full shrink-0 group-hover:bg-indigo-600 dark:group-hover:bg-indigo-400 transition-colors"></span>
+                      <span className="mt-2 w-1.5 h-1.5 bg-indigo-600/50 dark:bg-indigo-500/50 rounded-full shrink-0"></span>
                       {bullet}
                     </li>
                   ))}
@@ -404,46 +396,16 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
         id="skills"
         className="py-32 px-6 scroll-mt-24 transition-colors duration-500 relative"
       >
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-4xl max-h-[600px] bg-indigo-500/5 blur-[120px] rounded-full -z-10 pointer-events-none" />
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12 space-y-4">
-            <h2 className="text-xs font-bold text-indigo-600 dark:text-indigo-500 uppercase tracking-[0.3em]">
-              Toolbox
+          <div className="mb-12 space-y-4">
+            <h2 className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
+              CAPABILITY_MATRIX
             </h2>
             <h3 className="text-4xl md:text-5xl font-outfit font-bold text-navy-900 dark:text-white">
               Skills &amp; Technologies
             </h3>
-          </div>
-
-          {/* Recruiter-Optimized Impact Strip */}
-          <div className="relative mb-20 px-4 py-8 rounded-[3rem] bg-indigo-500/[0.03] dark:bg-indigo-500/[0.05] border border-indigo-500/10 backdrop-blur-sm shadow-inner">
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-white dark:bg-slate-900 border border-indigo-500/20 rounded-full shadow-sm">
-              <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest">
-                Executive Impact Summary
-              </span>
-            </div>
-            <div className="flex flex-wrap justify-center gap-4 max-w-5xl mx-auto">
-              {RECRUITER_SKILLS.map((skill, i) => (
-                <div
-                  key={i}
-                  className="flex items-center gap-2.5 px-6 py-4 rounded-2xl bg-white dark:bg-slate-800/80 border border-indigo-500/20 hover:border-indigo-500/50 hover:bg-white dark:hover:bg-slate-800 transition-all shadow-sm hover:shadow-indigo-500/10 group/power active:scale-95 cursor-default"
-                >
-                  <div className="w-5 h-5 text-indigo-600 dark:text-indigo-400 group-hover/power:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(196,89,42,0.3)]">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                    </svg>
-                  </div>
-                  <span className="text-sm font-outfit font-bold text-indigo-600 dark:text-indigo-400 tracking-tight">
-                    {skill}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="text-center mb-10">
-            <p className="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-widest font-bold animate-pulse">
-              Click a skill below to view relevant case study evidence
+            <p className="max-w-2xl text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+              Grouped by role relevance, with proof links where available.
             </p>
           </div>
 
@@ -451,23 +413,26 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             {SKILL_GROUPS.map((group, idx) => (
               <div
                 key={idx}
-                className="glass-card p-8 rounded-3xl space-y-6 hover:translate-y-[-4px] transition-transform duration-300"
+                className="rounded-2xl border border-[#ddd7cd] dark:border-white/10 bg-white/80 dark:bg-slate-900/60 p-6 space-y-5"
               >
-                <h4 className="text-xl font-outfit font-bold text-navy-900 dark:text-white border-b border-black/5 dark:border-white/5 pb-4">
+                <h4 className="text-lg font-outfit font-semibold text-navy-900 dark:text-white border-b border-[#e5e0d6] dark:border-white/10 pb-3">
                   {group.category}
                 </h4>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap content-start items-start gap-2">
                   {group.items.map((skill, i) => {
                     const chipConfig = SKILL_CHIP_CONFIG[skill];
                     const isFlagged = chipConfig?.linkMode === 'flagged';
                     const isDirect = chipConfig?.linkMode === 'direct';
+                    const titleText = chipConfig?.evidenceNote;
+                    const baseChipClass =
+                      'h-8 inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-md border border-[#d8d2c7] dark:border-white/10 bg-white/70 dark:bg-slate-900/80 text-slate-700 dark:text-slate-200';
 
                     if (isFlagged) {
                       return (
                         <span
                           key={i}
-                          title={chipConfig.evidenceNote || 'No case study evidence available yet'}
-                          className={`px-3 py-1 text-xs font-medium rounded-lg border border-black/5 dark:border-white/5 opacity-40 cursor-not-allowed select-none bg-slate-100 dark:bg-slate-800/50 ${getCategoryColorClass(group.category)}`}
+                          title={titleText}
+                          className={`${baseChipClass} select-none`}
                         >
                           {skill}
                         </span>
@@ -483,12 +448,13 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                       <button
                         key={i}
                         onClick={handleClick}
-                        className={`group/skill px-3 py-1 bg-slate-100 dark:bg-slate-800/50 text-xs font-medium rounded-lg border border-black/5 dark:border-white/5 transition-all flex items-center gap-1.5 shadow-sm active:scale-95 ${getCategoryColorClass(group.category)}`}
+                        title={titleText}
+                        className={`group/skill ${baseChipClass} transition-colors active:scale-[0.99] focus:outline-none focus-visible:ring-2 ${getCategoryColorClass(group.category)}`}
                       >
                         {skill}
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          className="w-3 h-3 opacity-0 group-hover/skill:opacity-100 transition-opacity"
+                          className="w-3 h-3 opacity-0 -translate-x-0.5 group-hover/skill:opacity-100 group-hover/skill:translate-x-0 transition-all"
                           viewBox="0 0 24 24"
                           fill="none"
                           stroke="currentColor"
