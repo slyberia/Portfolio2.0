@@ -71,7 +71,7 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
       <section className="px-6 py-12">
         <div className="max-w-5xl mx-auto glass-card rounded-2xl p-8">
           <h2 className={`text-xs font-bold uppercase tracking-[0.3em] ${accent.section}`}>
-            What this track proves
+            What This Track Proves
           </h2>
           <ul className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-3">
             {content.proves.map((item) => (

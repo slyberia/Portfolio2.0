@@ -56,7 +56,7 @@ export const implementationTrackContent: TrackPageContent = {
     'Customer-facing problem solving',
   ],
   guynodeLabel: 'FLAGSHIP_SYSTEM',
-  guynodeTitle: 'How Guynode supports this track',
+  guynodeTitle: 'How Guynode Supports This Track',
   guynodeSummary:
     'Guynode demonstrates implementation work from planning through launch readiness by turning fragmented legacy file access into a structured, public-facing system.',
   guynodeBullets: [
@@ -115,12 +115,12 @@ export const implementationTrackContent: TrackPageContent = {
     'AI-assisted build workflows',
     'Stakeholder translation',
   ],
-  ctaTitle: 'Next step',
+  ctaTitle: 'Next Step',
   ctaCopy: 'Review implementation-focused proof artifacts or move directly to resume and contact.',
   ctaActions: [
     { label: 'Download Resume', href: '/resume' },
     { label: 'View Guynode System', href: '' },
-    { label: 'Contact me', href: '/#contact' },
+    { label: 'Contact Me', href: '/#contact' },
   ],
 };
 
@@ -142,7 +142,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
     'Decision-ready reporting',
   ],
   guynodeLabel: 'FLAGSHIP_SYSTEM',
-  guynodeTitle: 'How Guynode supports this track',
+  guynodeTitle: 'How Guynode Supports This Track',
   guynodeSummary:
     'Guynode provides QA proof through metadata validation, consistency checks, and launch-readiness review for public-facing spatial data delivery.',
   guynodeBullets: [
@@ -201,12 +201,12 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
     'Documentation QA',
     'Validation workflows',
   ],
-  ctaTitle: 'Next step',
+  ctaTitle: 'Next Step',
   ctaCopy: 'Inspect validation proof artifacts or continue to resume and contact.',
   ctaActions: [
     { label: 'Download Resume', href: '/resume' },
-    { label: 'View validation proof', href: '/portfolio2/deep-dive#ci-and-tests' },
-    { label: 'Contact me', href: '/#contact' },
+    { label: 'View Supporting Evidence', href: '/portfolio2/deep-dive#ci-and-tests' },
+    { label: 'Contact Me', href: '/#contact' },
   ],
 };
 
@@ -228,7 +228,7 @@ export const gisTrackContent: TrackPageContent = {
     'Utility and spatial operations awareness',
   ],
   guynodeLabel: 'FLAGSHIP_SYSTEM',
-  guynodeTitle: 'How Guynode supports this track',
+  guynodeTitle: 'How Guynode Supports This Track',
   guynodeSummary:
     'Guynode is the flagship GIS proof for cataloging spatial datasets and delivering public geospatial access through map-based workflows.',
   guynodeBullets: [
@@ -280,12 +280,12 @@ export const gisTrackContent: TrackPageContent = {
     'Spatial workflow documentation',
     'Map-based UX',
   ],
-  ctaTitle: 'Next step',
+  ctaTitle: 'Next Step',
   ctaCopy: 'Review GIS system proof or move directly to resume and contact.',
   ctaActions: [
     { label: 'Download Resume', href: '/resume' },
     { label: 'View Guynode System', href: '' },
-    { label: 'Contact me', href: '/#contact' },
+    { label: 'Contact Me', href: '/#contact' },
   ],
 };
 

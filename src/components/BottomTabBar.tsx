@@ -46,7 +46,7 @@ const BottomTabBar: React.FC = () => {
     },
     {
       id: 'cases',
-      label: 'Cases',
+      label: 'Evidence',
       active: isCases,
       onClick: () => navigate(`/case-studies/${CASE_STUDY_REGISTRY[0].id}`),
       icon: (

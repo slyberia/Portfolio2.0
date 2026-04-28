@@ -101,9 +101,8 @@ const SupportingEvidenceSection: React.FC = () => {
             Supporting Evidence
           </h2>
           <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-            Guynode is the flagship system. These supporting artifacts show the methods behind the
-            work: triage, validation, implementation planning, AI-assisted governance, and
-            operational documentation.
+            Selected supporting artifacts that show how I test, document, structure, and govern
+            systems across implementation, QA, and GIS workflows.
           </p>
           <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400">
             Start with Guynode for the flagship system. Use these supporting artifacts to inspect
@@ -182,7 +181,7 @@ const SupportingEvidenceSection: React.FC = () => {
                 aria-label={`View detail for ${item.title}`}
                 className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-indigo-700 dark:text-indigo-300 hover:gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded"
               >
-                View Detail
+                View Project Detail
                 <span aria-hidden="true">→</span>
               </Link>
             </article>

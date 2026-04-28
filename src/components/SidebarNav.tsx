@@ -51,7 +51,7 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ theme, toggleTheme, onOpenConta
     },
     {
       id: 'cases',
-      label: 'Case Studies',
+      label: 'Supporting Evidence',
       active: isCases,
       onClick: () => navigate(`/case-studies/${CASE_STUDY_REGISTRY[0].id}`),
       icon: (
@@ -157,7 +157,7 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ theme, toggleTheme, onOpenConta
         </span>
       </div>
 
-      {/* Primary nav: Home · Case Studies · Experience · Resume · Contact */}
+      {/* Primary nav: Home · Supporting Evidence · Experience · Resume · Contact */}
       <nav className="flex flex-col flex-1 py-3 gap-0.5" aria-label="Page sections">
         {items.map((item) => (
           <button

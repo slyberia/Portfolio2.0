@@ -191,7 +191,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl">
               <Link
                 to={GUYNODE_SYSTEM_HREF}
-                aria-label="Open flagship project case study"
+                aria-label="View Guynode system"
                 className="group border border-[#d7d1c8] dark:border-white/10 bg-white/90 dark:bg-slate-900/70 rounded-2xl p-4 flex items-center justify-between gap-3 hover:border-indigo-500/40 hover:shadow-[0_10px_35px_rgba(79,70,229,0.15)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
               >
                 {/* TODO: update this href to the dedicated Guynode case-study route when it exists. */}
