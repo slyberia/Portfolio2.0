@@ -43,10 +43,18 @@ const ACCENT_STYLES = {
 const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
   const accent = ACCENT_STYLES[content.accent];
 
-  const actions = content.ctaActions.map((action) => ({
+const actions = content.ctaActions.map((action) => {
+  const normalizedLabel = action.label.toLowerCase();
+
+  return {
     ...action,
-    href: action.href ?? GUYNODE_SYSTEM_HREF,
-    isContact: action.type === 'contact',
+    href:
+      normalizedLabel.includes('guynode') && !action.href
+        ? GUYNODE_SYSTEM_HREF
+        : action.href,
+    isContact: normalizedLabel.includes('contact'),
+  };
+});
   }));
 
   return (
@@ -205,7 +213,7 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
           <p className="mt-3 text-slate-600 dark:text-slate-300">{content.ctaCopy}</p>
           {/* TODO: replace generic resume download target with track-specific resume assets when files exist. */}
           <div className="mt-6 flex flex-wrap gap-3">
-            {actions.map((action, index) =>
+            {actions.map((action, index) => (
               action.isContact ? (
                 <button
                   key={action.label}
@@ -227,8 +235,8 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
                 >
                   {action.label}
                 </Link>
-              ),
-            )}
+              )
+            ))}
           </div>
         </div>
       </section>
