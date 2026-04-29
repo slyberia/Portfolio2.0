@@ -321,6 +321,49 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
       <FlagshipSystemSection guynodeHref={GUYNODE_SYSTEM_HREF} />
 
+      <section className="py-20 px-6 bg-[#fbfaf7] dark:bg-slate-950 border-y border-[#e4dfd7] dark:border-white/5">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+          <div className="lg:col-span-8 space-y-4">
+            <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
+              WORKING_PROFILE
+            </p>
+            <h2 className="text-3xl md:text-4xl font-outfit font-semibold text-navy-900 dark:text-white">
+              About Me
+            </h2>
+            <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
+              I&apos;m a systems-minded technical operator who translates messy workflows into
+              clearer implementation plans, QA checks, documentation, and user-facing delivery
+              paths. My background spans GIS operations, technical support, customer workflows, and
+              AI-assisted build systems, which lets me move between users, data, tools, and
+              execution without losing the thread.
+            </p>
+            <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
+              I work best where the problem is partly technical and partly operational: clarifying
+              requirements, organizing information, validating edge cases, and turning scattered
+              inputs into something a team can actually use.
+            </p>
+          </div>
+
+          <div className="lg:col-span-4">
+            <article className="h-full rounded-2xl border border-[#ddd7cd] dark:border-white/10 bg-white/85 dark:bg-slate-900/60 p-5 shadow-sm">
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+                PROFILE_SIGNAL
+              </p>
+              <div className="mt-4 space-y-3">
+                <p className="text-sm font-medium text-slate-700 dark:text-slate-200">
+                  Technical implementation · QA validation · GIS systems
+                </p>
+                <div className="h-px w-full bg-[#e5e0d6] dark:bg-white/10" />
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                  Cross-functional operator for workflow clarity, quality assurance, and
+                  documentation-forward system delivery.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <SupportingEvidenceSection />
 
       {/* Experience */}
@@ -407,7 +450,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
             {SKILL_GROUPS.map((group, idx) => (
               <div
                 key={idx}
@@ -416,6 +459,9 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                 <h4 className="text-base font-outfit font-semibold text-navy-900 dark:text-white border-b border-[#e5e0d6] dark:border-white/10 pb-3">
                   {group.category}
                 </h4>
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  {group.description}
+                </p>
                 <div className="flex flex-wrap items-start content-start gap-2">
                   {group.items.map((skill, i) => {
                     const chipConfig = SKILL_CHIP_CONFIG[skill];

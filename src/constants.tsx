@@ -54,38 +54,74 @@ export const EXPERIENCE: ExperienceItem[] = [
 
 export const SKILL_GROUPS: SkillGroup[] = [
   {
-    category: 'Technical Support & Implementation',
+    category: 'Technical Implementation',
+    description:
+      'Workflow setup, technical translation, onboarding support, and handoff-ready documentation.',
     items: [
-      'Customer Success Support',
+      'Workflow Design',
       'Technical Troubleshooting',
-      'Issue Triage',
-      'Implementation/Onboarding',
+      'Implementation Planning',
+      'Onboarding Support',
+      'Documentation',
       'Stakeholder Communication',
+      'Support Handoff',
     ],
   },
   {
-    category: 'Operations & Enablement',
+    category: 'Quality Assurance & Operations',
+    description: 'Testing logic, triage systems, data validation, and operational reliability.',
     items: [
-      'Documentation & Enablement Assets',
-      'Demo Environments',
-      'Process Improvement',
-      'Dashboards & Reporting',
+      'QA Protocols',
+      'Issue Triage',
+      'Root-Cause Analysis',
       'Data QA / Validation',
+      'Process Improvement',
       'Operational Throughput',
+      'Launch Readiness',
     ],
   },
   {
-    category: 'Tools & Technologies',
+    category: 'GIS & Spatial Data',
+    description:
+      'Spatial data workflows, mapping interfaces, metadata structure, and public data access.',
+    items: [
+      'ArcGIS',
+      'ESRI ArcMap',
+      'Leaflet',
+      'Spatial Data',
+      'Metadata',
+      'Dataset Cataloging',
+      'Map-Based UX',
+    ],
+  },
+  {
+    category: 'AI-Assisted Workflow Design',
+    description: 'Structured AI collaboration, prompt systems, governance, and human review.',
+    items: [
+      'Prompt Governance',
+      'AI-Assisted Development',
+      'LLM Workflow Design',
+      'Documentation Systems',
+      'Evidence Architecture',
+      'Human Review Loops',
+    ],
+  },
+  {
+    category: 'Tools & Platforms',
+    description:
+      'Platforms and tools used across support, data, documentation, GIS, and frontend workflows.',
     items: [
       'Zendesk',
       'Salesforce & CRM',
+      'Notion',
+      'Jira',
+      'Asana',
       'Tableau',
       'Power BI',
       'BigQuery',
-      'Notion',
-      'Asana',
-      'Jira',
-      'ESRI ArcMap',
+      'HTML / CSS',
+      'React',
+      'TypeScript',
     ],
   },
 ];
