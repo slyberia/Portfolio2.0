@@ -8,6 +8,7 @@ export interface ExperienceItem {
 
 export interface SkillGroup {
   category: string;
+  description: string;
   items: string[];
 }
 
