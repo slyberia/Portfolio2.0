@@ -321,9 +321,12 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
       <FlagshipSystemSection guynodeHref={GUYNODE_SYSTEM_HREF} />
 
-      <section className="py-20 px-6 bg-[#fbfaf7] dark:bg-slate-950 border-y border-[#e4dfd7] dark:border-white/5">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
-          <div className="lg:col-span-8 space-y-4">
+      <section
+        id="about"
+        className="py-28 px-6 scroll-mt-24 bg-[#f7f5f1]/70 dark:bg-slate-950/60 border-y border-[#e4dfd7] dark:border-white/5"
+      >
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
+          <div className="space-y-5">
             <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
               WORKING_PROFILE
             </p>
@@ -331,36 +334,47 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               About Me
             </h2>
             <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
-              I&apos;m a systems-minded technical operator who translates messy workflows into
-              clearer implementation plans, QA checks, documentation, and user-facing delivery
-              paths. My background spans GIS operations, technical support, customer workflows, and
-              AI-assisted build systems, which lets me move between users, data, tools, and
-              execution without losing the thread.
+              I&apos;m a systems-minded technical operator who likes turning ambiguity into
+              structure. My work connects technical implementation, QA reasoning, GIS workflows,
+              customer support, and AI-assisted development.
             </p>
             <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
-              I work best where the problem is partly technical and partly operational: clarifying
-              requirements, organizing information, validating edge cases, and turning scattered
-              inputs into something a team can actually use.
+              I&apos;m especially interested in the moments where tools, users, and processes stop
+              lining up. That is usually where the useful work begins: clarifying the goal, mapping
+              the workflow, testing the weak points, and documenting the path forward.
+            </p>
+            <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
+              Outside of work, I&apos;m drawn to maps, games, music tools, creative systems, and
+              product experiences. I tend to notice how things are organized, where friction
+              appears, and what would make the experience clearer.
             </p>
           </div>
 
-          <div className="lg:col-span-4">
-            <article className="h-full rounded-2xl border border-[#ddd7cd] dark:border-white/10 bg-white/85 dark:bg-slate-900/60 p-5 shadow-sm">
-              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-                PROFILE_SIGNAL
-              </p>
-              <div className="mt-4 space-y-3">
-                <p className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                  Technical implementation · QA validation · GIS systems
-                </p>
-                <div className="h-px w-full bg-[#e5e0d6] dark:bg-white/10" />
-                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                  Cross-functional operator for workflow clarity, quality assurance, and
-                  documentation-forward system delivery.
-                </p>
-              </div>
-            </article>
-          </div>
+          <article className="rounded-2xl border border-[#ddd7cd] dark:border-white/10 bg-[#fbfaf7]/95 dark:bg-slate-900/70 p-6 shadow-[0_6px_20px_rgba(15,23,42,0.06)] space-y-5">
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+              PROFILE_SIGNAL
+            </p>
+            {/* TODO: add approved profile asset at public/images/about-profile-medallion.png if missing from repo. */}
+            <div className="mx-auto w-full max-w-[320px] rounded-full border border-[#ddd7cd] bg-[#fbfaf7] p-2 shadow-sm">
+              <img
+                src="/images/about-profile-medallion.png"
+                alt="Stylized circular portrait emblem of Kyle Semple with systems, code, game, and GIS motifs."
+                className="w-full h-auto rounded-full"
+                loading="lazy"
+              />
+            </div>
+            <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-200">
+              <li>Systems thinker</li>
+              <li>Technical translator</li>
+              <li>GIS + workflow builder</li>
+              <li>QA-minded operator</li>
+            </ul>
+            <div className="h-px w-full bg-[#e5e0d6] dark:bg-white/10" />
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              <span className="font-semibold uppercase tracking-[0.16em]">Working style:</span>{' '}
+              Structured · Curious · Practical · Documentation-first
+            </p>
+          </article>
         </div>
       </section>
 
@@ -372,15 +386,15 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
             <div className="space-y-4">
               <h2 className="text-xs font-bold text-indigo-600 dark:text-indigo-500 uppercase tracking-[0.3em]">
-                Trajectory
+                EXPERIENCE_LOG
               </h2>
               <h3 className="text-3xl md:text-4xl font-outfit font-semibold text-navy-900 dark:text-white">
                 Career Experience
               </h3>
             </div>
             <p className="text-slate-500 dark:text-slate-400 max-w-md leading-relaxed">
-              A track record of stabilizing operations and delighting enterprise stakeholders in
-              data-heavy environments.
+              Relevant experience across technical implementation, GIS operations, workflow
+              delivery, customer support, and validation-heavy production environments.
             </p>
           </div>
 
