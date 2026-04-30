@@ -39,7 +39,6 @@ const roleTracks = [
   },
 ];
 
-// TODO: Update once dedicated Guynode project entry exists.
 const featuredSystems = [
   {
     title: 'Guynode Spatial Data Hub',
@@ -96,7 +95,6 @@ const requiredProjectIds = new Set([
   'ops-triage',
   'luxe-lofts',
   'guynode',
-  'guynode-spatial-data-hub',
 ]);
 
 const SiteIndexView: React.FC = () => {
