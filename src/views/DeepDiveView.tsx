@@ -8,7 +8,7 @@ import {
   forensicEntries,
   appendixLinks,
 } from '../data/deepDiveContent';
-import { SUPPORTING_EVIDENCE_DEFAULT_HREF } from '../lib/routes';
+import { SITE_INDEX_HREF, SUPPORTING_EVIDENCE_DEFAULT_HREF } from '../lib/routes';
 
 // ── Shared primitives ──────────────────────────────────────────────────────
 
@@ -152,12 +152,20 @@ const DeepDiveView: React.FC = () => {
                 validated.
               </SectionIntro>
             </div>
-            <Link
-              to={SUPPORTING_EVIDENCE_DEFAULT_HREF}
-              className="text-sm font-semibold text-indigo-700 hover:text-indigo-900 underline underline-offset-2"
-            >
-              Looking for project proof instead? View Projects.
-            </Link>
+            <div className="flex items-center gap-4">
+              <Link
+                to={SUPPORTING_EVIDENCE_DEFAULT_HREF}
+                className="text-sm font-semibold text-indigo-700 hover:text-indigo-900 underline underline-offset-2"
+              >
+                Looking for project proof instead? View Projects.
+              </Link>
+              <Link
+                to={SITE_INDEX_HREF}
+                className="text-sm font-semibold text-indigo-700 hover:text-indigo-900 underline underline-offset-2"
+              >
+                Need a full map? Open Site Index.
+              </Link>
+            </div>
           </div>
           <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
             {processIndexCards.map((card) => (

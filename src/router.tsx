@@ -6,6 +6,7 @@ import {
   useNavigate,
   useLocation,
   useOutletContext,
+  Link,
 } from 'react-router-dom';
 import HomeView from './views/HomeView';
 import BottomTabBar from './components/BottomTabBar';
@@ -16,12 +17,17 @@ import ImplementationTrackView from './views/ImplementationTrackView';
 import OpsAnalyticsTrackView from './views/OpsAnalyticsTrackView';
 import GisTrackView from './views/GisTrackView';
 import DeepDiveView from './views/DeepDiveView';
+import SiteIndexView from './views/SiteIndexView';
 import ContactModal from './components/ContactModal';
 import CommandPalette from './components/CommandPalette';
 import ChatWidget from './components/ChatWidget';
 import Toast from './components/Toast';
 import ErrorBoundary from './components/ErrorBoundary';
-import { buildCaseStudyHref, SUPPORTING_EVIDENCE_DEFAULT_HREF } from './lib/routes';
+import {
+  SITE_INDEX_HREF,
+  buildCaseStudyHref,
+  SUPPORTING_EVIDENCE_DEFAULT_HREF,
+} from './lib/routes';
 import { useRecruiterMode } from './context/RecruiterModeContext';
 
 type LayoutContext = {
@@ -324,6 +330,13 @@ export const AppLayout: React.FC = () => {
                       LinkedIn
                     </a>
                     <span className="w-1 h-1 bg-slate-300 dark:bg-slate-700 rounded-full"></span>
+                    <Link
+                      to={SITE_INDEX_HREF}
+                      className="text-slate-400 hover:text-navy-900 dark:hover:text-white transition-colors"
+                    >
+                      Site Index
+                    </Link>
+                    <span className="w-1 h-1 bg-slate-300 dark:bg-slate-700 rounded-full"></span>
                     <button
                       onClick={() => setIsContactOpen(true)}
                       className="text-slate-400 hover:text-navy-900 dark:hover:text-white transition-colors"
@@ -417,6 +430,14 @@ export const routeDefinitions = [
         element: (
           <ErrorBoundary location="DeepDiveView">
             <DeepDiveView />
+          </ErrorBoundary>
+        ),
+      },
+      {
+        path: 'site-index',
+        element: (
+          <ErrorBoundary location="SiteIndexView">
+            <SiteIndexView />
           </ErrorBoundary>
         ),
       },
