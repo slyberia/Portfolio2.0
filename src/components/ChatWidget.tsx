@@ -6,6 +6,7 @@ interface Message {
   role: 'user' | 'model';
   text: string;
 }
+type FeedbackStatus = 'helpful' | 'notHelpful' | 'handoffOffered' | 'handoffTriggered';
 
 interface ChatWidgetProps {
   onNavigate?: (path: string) => void;
@@ -38,6 +39,14 @@ const SUGGESTED_QUESTIONS = [
   'How do you handle QA?',
 ];
 
+const FALLBACK_PATTERNS = [
+  /chat limit/i,
+  /temporarily unavailable/i,
+  /too long for the portfolio assistant/i,
+  /unable to answer/i,
+  /outside my portfolio scope/i,
+];
+
 const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToast }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [shouldPulse, setShouldPulse] = useState(true);
@@ -56,7 +65,37 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
 
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [feedbackByMessage, setFeedbackByMessage] = useState<Record<number, FeedbackStatus>>({});
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const buildHandoffSummary = (
+    modelIndex: number,
+    reason = 'User marked the answer as not helpful.',
+  ) => {
+    const userQuestion =
+      messages
+        .slice(0, modelIndex)
+        .reverse()
+        .find((m) => m.role === 'user')?.text ?? '';
+    const assistantAnswer = messages[modelIndex]?.text ?? '';
+    const path = window.location.hash || window.location.pathname || '/';
+    const timestamp = new Date().toISOString();
+
+    return `Digital Twin handoff:\nUser question: "${userQuestion}"\nAssistant answer: "${assistantAnswer}"\nReason: ${reason}\nPage: "${path}"\nTime: "${timestamp}"`;
+  };
+
+  const openContactWithContext = async (modelIndex: number, reason?: string) => {
+    const handoffSummary = buildHandoffSummary(modelIndex, reason);
+    try {
+      await navigator.clipboard.writeText(handoffSummary);
+      onShowToast?.('Context copied. Paste it into your message to Kyle.');
+    } catch {
+      onShowToast?.('Contact form opened. Mention what the Digital Twin missed.');
+    }
+
+    onAction?.('contact');
+    setFeedbackByMessage((prev) => ({ ...prev, [modelIndex]: 'handoffTriggered' }));
+  };
 
   useEffect(() => {
     // Engage user with pulse for 5 seconds, then stop
@@ -176,7 +215,20 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
       { role: 'model', text: 'Conversation history reset. How can I help you today?' },
     ];
     setMessages(initial as Message[]);
+    setFeedbackByMessage({});
     sessionStorage.removeItem(STORAGE_KEY);
+  };
+
+  const shouldShowFeedback = (msg: Message, idx: number) => {
+    if (msg.role !== 'model' || isTyping || idx === 0 || !msg.text.trim()) return false;
+    if (FALLBACK_PATTERNS.some((pattern) => pattern.test(msg.text))) return false;
+    const status = feedbackByMessage[idx];
+    return status !== 'helpful' && status !== 'handoffTriggered';
+  };
+
+  const shouldShowFailureActions = (msg: Message) => {
+    if (msg.role !== 'model') return false;
+    return FALLBACK_PATTERNS.some((pattern) => pattern.test(msg.text));
   };
 
   return (
@@ -251,7 +303,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
           {messages.map((msg, idx) => (
             <div
               key={idx}
-              className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+              className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
             >
               <div
                 className={`max-w-[85%] rounded-2xl p-3 text-sm leading-relaxed ${
@@ -283,6 +335,95 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
                   msg.text
                 )}
               </div>
+              {msg.role === 'model' && shouldShowFeedback(msg, idx) && (
+                <div className="mt-2 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-slate-900/80 px-3 py-2 text-xs">
+                  <p className="text-slate-500 dark:text-slate-300 mb-2">Was this helpful?</p>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      onClick={() =>
+                        setFeedbackByMessage((prev) => ({
+                          ...prev,
+                          [idx]: 'helpful',
+                        }))
+                      }
+                      className="px-2.5 py-1 rounded-md border border-black/10 dark:border-white/20 text-slate-600 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                      aria-label="Mark response as helpful"
+                    >
+                      Helpful
+                    </button>
+                    <button
+                      onClick={() =>
+                        setFeedbackByMessage((prev) => ({
+                          ...prev,
+                          [idx]: 'handoffOffered',
+                        }))
+                      }
+                      className="px-2.5 py-1 rounded-md border border-black/10 dark:border-white/20 text-slate-600 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                      aria-label="Mark response as not quite helpful"
+                    >
+                      Not quite
+                    </button>
+                    <button
+                      onClick={() => openContactWithContext(idx, 'User requested a human handoff.')}
+                      className="px-2.5 py-1 rounded-md border border-indigo-500/30 text-indigo-600 dark:text-indigo-300 hover:bg-indigo-500/10 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                      aria-label="Contact Kyle from chat feedback"
+                    >
+                      Contact Kyle
+                    </button>
+                  </div>
+                </div>
+              )}
+              {msg.role === 'model' && feedbackByMessage[idx] === 'handoffOffered' && (
+                <div
+                  className="mt-2 rounded-xl border border-indigo-500/20 bg-indigo-500/5 dark:bg-indigo-500/10 p-3 text-xs text-slate-600 dark:text-slate-200"
+                  role="status"
+                  aria-live="polite"
+                >
+                  <p className="mb-2">
+                    Sorry about that. I can help route this to Kyle with the question and context so
+                    he can follow up directly.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      onClick={() => openContactWithContext(idx)}
+                      className="px-2.5 py-1 rounded-md bg-indigo-600 text-white hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/60"
+                      aria-label="Contact Kyle with context from this answer"
+                    >
+                      Contact Kyle with context
+                    </button>
+                    <button
+                      onClick={() =>
+                        setFeedbackByMessage((prev) => ({
+                          ...prev,
+                          [idx]: 'notHelpful',
+                        }))
+                      }
+                      className="px-2.5 py-1 rounded-md border border-black/10 dark:border-white/20 hover:bg-slate-100 dark:hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                      aria-label="Dismiss handoff panel and try another question"
+                    >
+                      Try another question
+                    </button>
+                  </div>
+                </div>
+              )}
+              {msg.role === 'model' && shouldShowFailureActions(msg) && (
+                <div className="mt-2 flex flex-wrap gap-2">
+                  <button
+                    onClick={() =>
+                      openContactWithContext(idx, 'Digital Twin hit a fallback response.')
+                    }
+                    className="px-2.5 py-1 rounded-md text-xs border border-indigo-500/30 text-indigo-600 dark:text-indigo-300 hover:bg-indigo-500/10 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                  >
+                    Contact Kyle
+                  </button>
+                  <button
+                    onClick={() => onAction?.('resume')}
+                    className="px-2.5 py-1 rounded-md text-xs border border-black/10 dark:border-white/20 text-slate-600 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                  >
+                    View Resume
+                  </button>
+                </div>
+              )}
             </div>
           ))}
           {isTyping && (
