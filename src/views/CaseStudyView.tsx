@@ -17,7 +17,7 @@ import { useRecruiterMode } from '../context/RecruiterModeContext';
 import { readingTime } from '../utils/readingTime';
 import { recruiterSummary } from '../utils/recruiterSummary';
 import { CATEGORY_COLORS } from '../constants/categories';
-import { CASE_STUDY_FALLBACK_ID } from '../lib/routes';
+import { CASE_STUDY_FALLBACK_ID, PORTFOLIO_PROCESS_HREF } from '../lib/routes';
 
 const CATEGORY_LABELS: Record<CaseStudyCategory, string> = {
   'ai-ops': 'Implementation Systems',
@@ -67,10 +67,10 @@ const EvidenceMap: React.FC<{ activeId: string; onSelect: (id: string) => void }
           </div>
           <div>
             <h3 className="font-outfit font-bold text-navy-900 dark:text-white text-sm uppercase tracking-wide">
-              Supporting Evidence Navigator
+              Project Navigator
             </h3>
             <p className="text-[10px] text-slate-500 font-medium">
-              Select a node to navigate the system.
+              Select a project to inspect related proof.
             </p>
           </div>
         </div>
@@ -252,8 +252,15 @@ const CaseStudyView: React.FC = () => {
             >
               <path d="m15 18-6-6 6-6" />
             </svg>
-            Back to Overview
+            Back to Projects
           </button>
+
+          <a
+            href={PORTFOLIO_PROCESS_HREF}
+            className="text-xs font-semibold uppercase tracking-wider text-slate-500 hover:text-indigo-700 dark:text-slate-300 dark:hover:text-indigo-300"
+          >
+            View process deep dives →
+          </a>
 
           {activeStudy && (
             <div className="flex flex-col items-end gap-3">
@@ -316,7 +323,7 @@ const CaseStudyView: React.FC = () => {
                 className={`space-y-1 transition-all duration-300 ${isSidebarOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'}`}
               >
                 <h1 className="text-3xl font-outfit font-bold text-navy-900 dark:text-white whitespace-nowrap">
-                  Evidence Hub
+                  Projects
                 </h1>
                 {displayContent && (
                   <p className="text-[11px] text-slate-400 font-medium">
@@ -501,7 +508,7 @@ const CaseStudyView: React.FC = () => {
                       <div className="flex items-center gap-4">
                         <div className="w-2 h-2 rounded-full bg-slate-400" />
                         <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] font-outfit">
-                          Interactive Artifact
+                          Project Artifact
                         </span>
                         <div className="h-px flex-1 bg-black/5 dark:bg-white/5" />
                       </div>

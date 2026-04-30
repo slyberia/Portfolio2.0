@@ -2,11 +2,11 @@ import React from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import {
   GIS_TRACK_HREF,
-  GUYNODE_SYSTEM_HREF,
   HOME_HREF,
   IMPLEMENTATION_TRACK_HREF,
   PORTFOLIO_PROCESS_HREF,
   QA_TRACK_HREF,
+  SUPPORTING_EVIDENCE_DEFAULT_HREF,
 } from '../lib/routes';
 
 interface TopNavProps {
@@ -43,7 +43,7 @@ const NAV_ITEMS: Array<{
   },
   {
     label: 'Projects',
-    href: GUYNODE_SYSTEM_HREF,
+    href: SUPPORTING_EVIDENCE_DEFAULT_HREF,
     accent: 'neutral',
     activeMatch: (pathname) => pathname.startsWith('/case-studies'),
   },

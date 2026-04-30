@@ -9,7 +9,7 @@ export const RigorCard: React.FC<{ rigor: CaseStudyRigor; title?: string; classN
   className = 'mb-12',
 }) => (
   <div
-    className={`${className} glass-card rounded-3xl border border-indigo-500/20 overflow-hidden relative group/rigor shadow-xl shadow-indigo-500/5`}
+    className={`${className} rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden relative group/rigor bg-[#fcfaf7] dark:bg-slate-900/60`}
   >
     <div className="absolute top-0 right-0 p-4 opacity-20 group-hover/rigor:opacity-100 transition-opacity">
       <svg
@@ -30,7 +30,7 @@ export const RigorCard: React.FC<{ rigor: CaseStudyRigor; title?: string; classN
         <path d="m4.9 4.9 2.9 2.9" />
       </svg>
     </div>
-    <div className="p-8 md:p-12 bg-indigo-500/5 border-b border-indigo-500/10">
+    <div className="p-8 md:p-12 bg-slate-50 dark:bg-slate-900/70 border-b border-black/5 dark:border-white/10">
       <div className="flex items-center gap-3 mb-2">
         <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
         <h4 className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-[0.3em] font-outfit">
@@ -75,7 +75,7 @@ export const HtmlPreviewCard: React.FC<{
   const isRed = accentColor === 'red';
   return (
     <div
-      className={`glass-card rounded-3xl border overflow-hidden shadow-lg transition-all duration-500 ${isRed ? 'border-red-500/20' : 'border-indigo-500/20'} flex flex-col`}
+      className={`rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden bg-[#fcfaf7] dark:bg-slate-900/60 transition-all duration-500 ${isRed ? 'border-red-500/20' : 'border-indigo-500/20'} flex flex-col`}
     >
       <div className="px-8 md:px-12 py-5 bg-slate-50 dark:bg-white/5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
         <span className="text-[11px] font-bold text-navy-900 dark:text-white font-outfit tracking-wide">
@@ -117,7 +117,7 @@ export const TabsArtifact: React.FC<{ artifacts: CaseStudyArtifact[] }> = ({ art
   const activeArt = artifacts[activeIndex];
 
   return (
-    <div className="glass-card rounded-3xl border border-black/5 dark:border-white/10 overflow-hidden shadow-lg">
+    <div className="rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden bg-[#fcfaf7] dark:bg-slate-900/60">
       <div className="px-4 py-2 bg-slate-50 dark:bg-white/5 border-b border-black/5 dark:border-white/10 flex gap-1 overflow-x-auto scrollbar-hide">
         {artifacts.map((art, i) => (
           <button
@@ -159,7 +159,7 @@ export const ArtifactGallery: React.FC<{
     <div className="flex items-center gap-4">
       <div className="w-2 h-2 rounded-full bg-slate-400" />
       <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] font-outfit">
-        Evidence Vault
+        Project Artifact Library
       </h4>
       <div className="h-px w-full bg-black/5 dark:bg-white/5" />
     </div>
@@ -177,13 +177,13 @@ export const ArtifactGallery: React.FC<{
               <RigorCard rigor={art.data} title={art.label.toUpperCase()} className="mb-0" />
             </div>
           ) : art.type === 'audit-log' && art.auditData ? (
-            <div className="glass-card rounded-3xl border border-black/5 dark:border-white/10 overflow-hidden shadow-lg">
+            <div className="rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden bg-[#fcfaf7] dark:bg-slate-900/60">
               <AuditLog data={art.auditData} />
             </div>
           ) : art.type === 'tabs' && Array.isArray(art.content) ? (
             <TabsArtifact artifacts={art.content as CaseStudyArtifact[]} />
           ) : (
-            <div className="glass-card rounded-3xl border border-black/5 dark:border-white/10 overflow-hidden shadow-lg">
+            <div className="rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden bg-[#fcfaf7] dark:bg-slate-900/60">
               <div className="px-8 md:px-12 py-5 bg-slate-50 dark:bg-white/5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
                 <span className="text-[11px] font-bold text-navy-900 dark:text-white font-outfit tracking-wide">
                   {art.label}
