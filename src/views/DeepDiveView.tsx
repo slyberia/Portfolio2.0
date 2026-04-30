@@ -8,6 +8,7 @@ import {
   forensicEntries,
   appendixLinks,
 } from '../data/deepDiveContent';
+import { SUPPORTING_EVIDENCE_DEFAULT_HREF } from '../lib/routes';
 
 // ── Shared primitives ──────────────────────────────────────────────────────
 
@@ -42,6 +43,42 @@ const FieldText: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 );
 
 // ── Page ───────────────────────────────────────────────────────────────────
+
+const processIndexCards = [
+  {
+    title: 'Release Ladder',
+    description: 'Phase-by-phase evolution from AI-assisted prototype to role-track proof system.',
+    href: '#release-ladder',
+  },
+  {
+    title: 'Decision Blocks',
+    description:
+      'Architecture and product decisions with risk, tradeoff, validation, and business relevance.',
+    href: '#decision-blocks',
+  },
+  {
+    title: 'Architecture & QA',
+    description: 'Technical boundaries, routing, testing, CI, and reliability decisions.',
+    href: '#architecture-boundary',
+  },
+  {
+    title: 'LLM Governance',
+    description:
+      'How AI tools were scoped, controlled, reviewed, and prevented from driving the work.',
+    href: '#multi-llm-governance',
+  },
+  {
+    title: 'Revision Trail',
+    description:
+      'Traceable record of what changed, why it changed, and what ambiguity each change resolved.',
+    href: '#forensic-archive',
+  },
+  {
+    title: 'Supporting Artifacts',
+    description: 'Appendix links and related proof surfaces across the portfolio.',
+    href: '#supporting-artifacts',
+  },
+];
 
 const DeepDiveView: React.FC = () => {
   return (
@@ -101,6 +138,47 @@ const DeepDiveView: React.FC = () => {
               </a>
             ))}
           </nav>
+        </div>
+      </section>
+
+      <section className="py-10 px-6">
+        <div className="max-w-6xl mx-auto space-y-5">
+          <SectionEyebrow>PROCESS_INDEX</SectionEyebrow>
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div className="space-y-2">
+              <SectionHeading>Choose a Deep Dive</SectionHeading>
+              <SectionIntro>
+                Use these modules to inspect how the portfolio was planned, governed, hardened, and
+                validated.
+              </SectionIntro>
+            </div>
+            <Link
+              to={SUPPORTING_EVIDENCE_DEFAULT_HREF}
+              className="text-sm font-semibold text-indigo-700 hover:text-indigo-900 underline underline-offset-2"
+            >
+              Looking for project proof instead? View Projects.
+            </Link>
+          </div>
+          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+            {processIndexCards.map((card) => (
+              <a
+                key={card.href}
+                href={card.href}
+                className="group rounded-xl border border-[#ddd7cd] bg-[#fcfaf7] dark:bg-slate-900/60 dark:border-white/10 p-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+              >
+                <span
+                  className="block h-1 w-12 rounded bg-indigo-300 mb-3 group-hover:w-16 transition-all"
+                  aria-hidden="true"
+                />
+                <h3 className="text-sm font-semibold text-navy-900 dark:text-white">
+                  {card.title}
+                </h3>
+                <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
+                  {card.description}
+                </p>
+              </a>
+            ))}
+          </div>
         </div>
       </section>
 

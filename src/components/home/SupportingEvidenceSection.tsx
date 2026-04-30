@@ -1,15 +1,15 @@
 import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CASE_STUDY_REGISTRY } from '../../constants';
-import { buildCaseStudyHref } from '../../lib/routes';
+import { PORTFOLIO_PROCESS_HREF, buildCaseStudyHref } from '../../lib/routes';
 
-type RoleLane = 'Implementation' | 'QA' | 'GIS';
+type RoleLane = 'Implementation' | 'QA' | 'GIS' | 'AI Systems';
 type FilterKey = 'All' | RoleLane | 'Process';
 
 interface EvidenceMetadata {
   relevantRoles: RoleLane[];
   proofType: 'Workflow' | 'Testing' | 'Documentation' | 'Governance';
-  statusLabel: 'Supporting Proof' | 'Methodology';
+  statusLabel: 'Supporting Proof' | 'Methodology' | 'Featured Project' | 'Flagship System';
   summary: string;
   cardTitle?: string;
 }
@@ -19,11 +19,21 @@ const ROLE_CHIP_STYLES: Record<RoleLane, string> = {
     'border-orange-200 bg-orange-50 text-orange-800 dark:border-orange-500/30 dark:bg-orange-500/10 dark:text-orange-200',
   QA: 'border-blue-200 bg-blue-50 text-blue-800 dark:border-blue-500/30 dark:bg-blue-500/10 dark:text-blue-200',
   GIS: 'border-teal-200 bg-teal-50 text-teal-800 dark:border-teal-500/30 dark:bg-teal-500/10 dark:text-teal-200',
+  'AI Systems':
+    'border-violet-200 bg-violet-50 text-violet-800 dark:border-violet-500/30 dark:bg-violet-500/10 dark:text-violet-200',
 };
 
-const FILTER_ORDER: FilterKey[] = ['All', 'Implementation', 'QA', 'GIS', 'Process'];
+const FILTER_ORDER: FilterKey[] = ['All', 'Implementation', 'QA', 'GIS', 'AI Systems', 'Process'];
 
 const EVIDENCE_METADATA_BY_ID: Record<string, EvidenceMetadata> = {
+  'digital-twin': {
+    cardTitle: 'Digital Twin AI Agent · AI Implementation System',
+    summary:
+      'Portfolio-bound AI assistant with scope controls, route/action commands, cost guardrails, failure planning, and human handoff.',
+    relevantRoles: ['Implementation', 'QA', 'AI Systems'],
+    proofType: 'Governance',
+    statusLabel: 'Featured Project',
+  },
   'project-aegis': {
     cardTitle: 'Project Aegis Protocol · Role-Lane Governance',
     summary:
@@ -38,7 +48,7 @@ const EVIDENCE_METADATA_BY_ID: Record<string, EvidenceMetadata> = {
       'Operational triage system with escalation logic, throughput controls, and QA documentation loops under production pressure.',
     relevantRoles: ['Implementation', 'QA', 'GIS'],
     proofType: 'Workflow',
-    statusLabel: 'Supporting Proof',
+    statusLabel: 'Flagship System',
   },
   'nba-systems-qa': {
     summary:
@@ -83,37 +93,50 @@ const SupportingEvidenceSection: React.FC = () => {
     [],
   );
 
+  const prioritizedItems = useMemo(() => {
+    const priorityById: Record<string, number> = { 'digital-twin': 0, 'ops-triage': 1 };
+    return [...evidenceItems].sort(
+      (a, b) => (priorityById[a.studyId] ?? 99) - (priorityById[b.studyId] ?? 99),
+    );
+  }, [evidenceItems]);
+
   const filteredItems = useMemo(() => {
-    if (activeFilter === 'All') return evidenceItems;
+    if (activeFilter === 'All') return prioritizedItems;
     if (activeFilter === 'Process')
-      return evidenceItems.filter((item) => item.statusLabel === 'Methodology');
-    return evidenceItems.filter((item) => item.relevantRoles.includes(activeFilter));
-  }, [activeFilter, evidenceItems]);
+      return prioritizedItems.filter((item) => item.statusLabel === 'Methodology');
+    return prioritizedItems.filter((item) => item.relevantRoles.includes(activeFilter));
+  }, [activeFilter, prioritizedItems]);
 
   return (
     <section className="border-b border-[#e4dfd7] dark:border-white/5 bg-[#f9f6f1] dark:bg-slate-950/60 py-20 px-6">
       <div className="max-w-7xl mx-auto space-y-8">
         <div className="space-y-4 max-w-3xl">
           <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
-            SUPPORTING_EVIDENCE
+            PROJECT_LIBRARY
           </p>
           <h2 className="text-3xl md:text-4xl font-outfit font-semibold text-navy-900 dark:text-white">
-            Supporting Evidence
+            Projects
           </h2>
           <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-            Selected supporting artifacts that show how I test, document, structure, and govern
-            systems across implementation, QA, and GIS workflows.
+            Scannable project proof across implementation, QA, GIS, AI systems, and workflow design.
           </p>
           <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400">
-            Start with Guynode for the flagship system. Use these supporting artifacts to inspect
-            specific methods behind the work.
+            Start with Guynode and the Digital Twin for the strongest system-level proof, then use
+            the filters to inspect supporting projects and methods.
           </p>
         </div>
+
+        <a
+          href={PORTFOLIO_PROCESS_HREF}
+          className="inline-flex text-xs font-semibold uppercase tracking-wider text-slate-500 hover:text-indigo-700 dark:text-slate-300 dark:hover:text-indigo-300"
+        >
+          View process deep dives →
+        </a>
 
         <div
           className="flex flex-wrap gap-2"
           role="tablist"
-          aria-label="Filter supporting evidence by role relevance"
+          aria-label="Filter projects by role relevance"
         >
           {FILTER_ORDER.map((filter) => {
             const isActive = activeFilter === filter;
@@ -172,7 +195,9 @@ const SupportingEvidenceSection: React.FC = () => {
                         ? 'Technical Implementation Specialist'
                         : role === 'QA'
                           ? 'Quality Assurance Analyst'
-                          : 'GIS Analyst'}
+                          : role === 'GIS'
+                            ? 'GIS Analyst'
+                            : 'AI Systems'}
                     </span>
                   ))}
                 </div>
