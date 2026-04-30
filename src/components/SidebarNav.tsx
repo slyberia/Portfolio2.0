@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { SUPPORTING_EVIDENCE_DEFAULT_HREF } from '../lib/routes';
+import { PROJECTS_DEFAULT_HREF } from '../lib/routes';
 
 interface SidebarNavProps {
   theme: 'light' | 'dark';
@@ -13,7 +13,7 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ theme, toggleTheme, onOpenConta
   const location = useLocation();
 
   const isHome = location.pathname === '/';
-  const isCases = location.pathname.startsWith('/case-studies');
+  const isCases = location.pathname.startsWith('/projects');
   const isResume = location.pathname === '/resume';
 
   const scrollToExperience = () => {
@@ -53,7 +53,7 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ theme, toggleTheme, onOpenConta
       id: 'cases',
       label: 'Supporting Evidence',
       active: isCases,
-      onClick: () => navigate(SUPPORTING_EVIDENCE_DEFAULT_HREF),
+      onClick: () => navigate(PROJECTS_DEFAULT_HREF),
       icon: (
         <svg
           width="20"

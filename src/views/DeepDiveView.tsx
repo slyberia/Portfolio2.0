@@ -8,7 +8,7 @@ import {
   forensicEntries,
   appendixLinks,
 } from '../data/deepDiveContent';
-import { SITE_INDEX_HREF, SUPPORTING_EVIDENCE_DEFAULT_HREF } from '../lib/routes';
+import { SITE_INDEX_HREF, PROJECTS_DEFAULT_HREF } from '../lib/routes';
 
 // ── Shared primitives ──────────────────────────────────────────────────────
 
@@ -154,7 +154,7 @@ const DeepDiveView: React.FC = () => {
             </div>
             <div className="flex items-center gap-4">
               <Link
-                to={SUPPORTING_EVIDENCE_DEFAULT_HREF}
+                to={PROJECTS_DEFAULT_HREF}
                 className="text-sm font-semibold text-indigo-700 hover:text-indigo-900 underline underline-offset-2"
               >
                 Looking for project proof instead? View Projects.

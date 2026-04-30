@@ -128,11 +128,11 @@ Only append approved commands at the end when relevant:
 <<NAVIGATE:tracks/implementation>>
 <<NAVIGATE:tracks/ops-analytics>>
 <<NAVIGATE:tracks/gis>>
-<<NAVIGATE:case-study:prompter-hub>>
-<<NAVIGATE:case-study:project-aegis>>
-<<NAVIGATE:case-study:nba-systems-qa>>
-<<NAVIGATE:case-study:luxe-lofts>>
-<<NAVIGATE:case-study:ops-triage>>
+<<NAVIGATE:project:prompter-hub>>
+<<NAVIGATE:project:project-aegis>>
+<<NAVIGATE:project:nba-systems-qa>>
+<<NAVIGATE:project:luxe-lofts>>
+<<NAVIGATE:project:ops-triage>>
 <<ACTION:contact>>
 <<ACTION:resume>>
 `;

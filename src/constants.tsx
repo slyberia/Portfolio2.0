@@ -1,10 +1,5 @@
-import {
-  ExperienceItem,
-  SkillGroup,
-  Certification,
-  CaseStudyEntry,
-  SkillChipConfig,
-} from './types';
+/* eslint-disable react-refresh/only-export-components */
+import { ExperienceItem, SkillGroup, Certification, ProjectEntry, SkillChipConfig } from './types';
 import { CASE_STUDY_CONTENT } from './data/caseStudyData';
 import {
   PROMPTER_HUB_MOCKUP_HTML,
@@ -189,7 +184,7 @@ export const SKILL_CHIP_CONFIG: Record<string, SkillChipConfig> = {
   },
 };
 
-export const CASE_STUDY_REGISTRY: CaseStudyEntry[] = [
+export const PROJECT_REGISTRY: ProjectEntry[] = [
   {
     id: 'prompter-hub',
     title: 'Prompter Hub V9',
@@ -487,3 +482,6 @@ export const CASE_STUDY_REGISTRY: CaseStudyEntry[] = [
     ],
   },
 ];
+
+// TODO: remove case-study registry alias after all internal references are migrated.
+export const CASE_STUDY_REGISTRY = PROJECT_REGISTRY;

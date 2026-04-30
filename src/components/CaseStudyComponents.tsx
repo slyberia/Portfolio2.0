@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CaseStudyArtifact, CaseStudyRigor, CaseStudyEntry } from '../types';
+import { CaseStudyArtifact, CaseStudyRigor, ProjectEntry } from '../types';
 import { CodeBlock } from './MarkdownSection';
 import AuditLog from './AuditLog';
 
@@ -153,7 +153,7 @@ export const TabsArtifact: React.FC<{ artifacts: CaseStudyArtifact[] }> = ({ art
 };
 
 export const ArtifactGallery: React.FC<{
-  artifacts: Exclude<CaseStudyEntry['artifacts'], undefined>;
+  artifacts: Exclude<ProjectEntry['artifacts'], undefined>;
 }> = ({ artifacts }) => (
   <div className="space-y-8 my-16">
     <div className="flex items-center gap-4">
@@ -215,7 +215,7 @@ export const ArtifactGallery: React.FC<{
 );
 
 export const TradeoffLog: React.FC<{
-  constraints: Exclude<CaseStudyEntry['constraints'], undefined>;
+  constraints: Exclude<ProjectEntry['constraints'], undefined>;
 }> = ({ constraints }) => (
   <div className="my-16 space-y-8">
     <div className="flex items-center gap-4">

@@ -1,6 +1,6 @@
 import React from 'react';
-import { CASE_STUDY_REGISTRY, SKILL_CHIP_CONFIG } from '../constants';
-import { CaseStudyCategory } from '../types';
+import { PROJECT_REGISTRY, SKILL_CHIP_CONFIG } from '../constants';
+import { ProjectCategory } from '../types';
 
 interface SkillDiscoveryModalProps {
   skill: string;
@@ -9,7 +9,7 @@ interface SkillDiscoveryModalProps {
   onNavigateToStudy: (id: string) => void;
 }
 
-const CATEGORY_TAGS: Record<CaseStudyCategory, string> = {
+const CATEGORY_TAGS: Record<ProjectCategory, string> = {
   'ai-ops': 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20',
   'qa-data': 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20',
   'success-strategy':
@@ -25,8 +25,8 @@ const SkillDiscoveryModal: React.FC<SkillDiscoveryModalProps> = ({
 }) => {
   const chipConfig = SKILL_CHIP_CONFIG[skill];
   const relevantStudies = chipConfig
-    ? CASE_STUDY_REGISTRY.filter((study) => chipConfig.linkedSlugs.includes(study.id))
-    : CASE_STUDY_REGISTRY.filter((study) => study.tags.includes(skill));
+    ? PROJECT_REGISTRY.filter((study) => chipConfig.linkedSlugs.includes(study.id))
+    : PROJECT_REGISTRY.filter((study) => study.tags.includes(skill));
   const isSecondary = chipConfig?.linkMode === 'secondary';
   const evidenceNote = chipConfig?.evidenceNote;
 

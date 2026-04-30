@@ -2,8 +2,8 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import MarkdownSection from '../components/MarkdownSection';
 import ErrorBoundary from '../components/ErrorBoundary';
-import { CASE_STUDY_REGISTRY } from '../constants';
-import { CaseStudyCategory } from '../types';
+import { PROJECT_REGISTRY } from '../constants';
+import { ProjectCategory } from '../types';
 import {
   RigorCard,
   HtmlPreviewCard,
@@ -19,7 +19,7 @@ import { recruiterSummary } from '../utils/recruiterSummary';
 import { CATEGORY_COLORS } from '../constants/categories';
 import { CASE_STUDY_FALLBACK_ID, PORTFOLIO_PROCESS_HREF } from '../lib/routes';
 
-const CATEGORY_LABELS: Record<CaseStudyCategory, string> = {
+const CATEGORY_LABELS: Record<ProjectCategory, string> = {
   'ai-ops': 'Implementation Systems',
   'qa-data': 'QA & Data',
   'success-strategy': 'Strategy',
@@ -90,7 +90,7 @@ const EvidenceMap: React.FC<{ activeId: string; onSelect: (id: string) => void }
       {/* The Map Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3">
         {SEQUENCE_ORDER.map((id, _index) => {
-          const study = CASE_STUDY_REGISTRY.find((s) => s.id === id);
+          const study = PROJECT_REGISTRY.find((s) => s.id === id);
           if (!study) return null;
 
           const isPath = PATH_INDICATORS[id];
@@ -174,7 +174,7 @@ const CaseStudyView: React.FC = () => {
 
   const activeStudyId = studyId ?? CASE_STUDY_FALLBACK_ID;
 
-  const [activeFilter, setActiveFilter] = useState<CaseStudyCategory | 'all'>('all');
+  const [activeFilter, setActiveFilter] = useState<ProjectCategory | 'all'>('all');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isGlowActive, setIsGlowActive] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -190,17 +190,17 @@ const CaseStudyView: React.FC = () => {
   }, [activeStudyId]);
 
   const filteredStudies = useMemo(() => {
-    if (activeFilter === 'all') return CASE_STUDY_REGISTRY;
-    return CASE_STUDY_REGISTRY.filter((s) => s.category === activeFilter);
+    if (activeFilter === 'all') return PROJECT_REGISTRY;
+    return PROJECT_REGISTRY.filter((s) => s.category === activeFilter);
   }, [activeFilter]);
 
-  const activeStudy = CASE_STUDY_REGISTRY.find((s) => s.id === activeStudyId);
+  const activeStudy = PROJECT_REGISTRY.find((s) => s.id === activeStudyId);
 
   // Use fetched content when available, fall back to in-memory content
   const displayContent = fetchedContent || activeStudy?.content || '';
 
   const handleStudyChange = (id: string) => {
-    navigate(`/case-studies/${id}`);
+    navigate(`/projects/${id}`);
   };
 
   const handleVoiceBrief = async () => {
@@ -373,7 +373,7 @@ const CaseStudyView: React.FC = () => {
                 >
                   All
                 </button>
-                {(Object.keys(CATEGORY_LABELS) as CaseStudyCategory[]).map((cat) => (
+                {(Object.keys(CATEGORY_LABELS) as ProjectCategory[]).map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setActiveFilter(cat)}

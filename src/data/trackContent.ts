@@ -82,7 +82,7 @@ export const implementationTrackContent: TrackPageContent = {
       relevance:
         'Operational triage workflow proof with support-ready process controls and escalation logic.',
       proofType: 'Workflow',
-      href: '/case-studies/ops-triage',
+      href: '/projects/ops-triage',
       roleChips: ['Technical Implementation Specialist', 'Quality Assurance Analyst'],
     },
     {
@@ -90,7 +90,7 @@ export const implementationTrackContent: TrackPageContent = {
       relevance:
         'Proposal-phase implementation planning proof focused on modular delivery and stakeholder translation.',
       proofType: 'Workflow',
-      href: '/case-studies/luxe-lofts',
+      href: '/projects/luxe-lofts',
       roleChips: ['Technical Implementation Specialist'],
     },
     {
@@ -98,7 +98,7 @@ export const implementationTrackContent: TrackPageContent = {
       relevance:
         'AI governance and implementation control system for safer execution and maintainable workflows.',
       proofType: 'Proof Artifact',
-      href: '/case-studies/project-aegis',
+      href: '/projects/project-aegis',
       roleChips: ['Technical Implementation Specialist', 'Quality Assurance Analyst'],
     },
     {
@@ -170,14 +170,14 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
       relevance:
         'Controlled testing case showing reproducibility logic, variable isolation, and decision-ready reporting.',
       proofType: 'Validation',
-      href: '/case-studies/nba-systems-qa',
+      href: '/projects/nba-systems-qa',
       roleChips: ['Quality Assurance Analyst'],
     },
     {
       title: 'Systems at Scale: Triage & QA',
       relevance: 'Issue triage and QA workflow evidence for high-volume operational scenarios.',
       proofType: 'Workflow',
-      href: '/case-studies/ops-triage',
+      href: '/projects/ops-triage',
       roleChips: ['Quality Assurance Analyst'],
     },
     {
@@ -193,7 +193,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
       relevance:
         'AI governance evidence showing quality controls, protocol boundaries, and root-cause prevention logic.',
       proofType: 'Governance',
-      href: '/case-studies/project-aegis',
+      href: '/projects/project-aegis',
       roleChips: ['Quality Assurance Analyst'],
     },
   ],
@@ -256,7 +256,7 @@ export const gisTrackContent: TrackPageContent = {
       relevance:
         'Utility operations and spatial QA workflow evidence with production-volume processing.',
       proofType: 'Spatial Workflow',
-      href: '/case-studies/ops-triage',
+      href: '/projects/ops-triage',
       roleChips: ['GIS Analyst', 'Quality Assurance Analyst'],
     },
     {
