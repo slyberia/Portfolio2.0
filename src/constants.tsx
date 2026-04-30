@@ -345,4 +345,74 @@ export const CASE_STUDY_REGISTRY: CaseStudyEntry[] = [
       window: 'Daily capacity vs Weekly defect capture.',
     },
   },
+  {
+    id: 'digital-twin',
+    title: 'Digital Twin AI Agent',
+    rationale:
+      'A portfolio-bound AI assistant that answers recruiter questions, routes visitors to relevant proof, triggers resume/contact actions, and demonstrates scoped AI implementation with guardrails and human handoff.',
+    category: 'ai-ops',
+    tags: [
+      'AI Implementation',
+      'Digital Twin',
+      'Guardrails',
+      'Human Handoff',
+      'Triage Logic',
+      'Prompt Governance',
+      'Portfolio Navigation',
+      'Technical Implementation',
+      'QA Scenarios',
+    ],
+    content: CASE_STUDY_CONTENT['digital-twin'],
+    heroArtifact: {
+      type: 'html',
+      label: 'Digital Twin: Architecture Flow',
+      description: 'High-level flow of guarded responses, command parsing, and handoff routing.',
+      content: `<div style="font-family:Inter,system-ui,sans-serif;background:#faf8f5;border:1px solid #e5e7eb;border-radius:14px;padding:16px;max-width:640px;color:#0f172a;">
+  <h4 style="margin:0 0 12px;font-size:14px;letter-spacing:.04em;text-transform:uppercase;color:#475569;">Digital Twin AI Agent · Architecture</h4>
+  <div style="display:grid;gap:8px;">
+    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">User question</div>
+    <div style="text-align:center;color:#fb923c;">↓</div>
+    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">ChatWidget UI</div>
+    <div style="text-align:center;color:#0ea5e9;">↓</div>
+    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">Gemini proxy</div>
+    <div style="text-align:center;color:#0ea5e9;">↓</div>
+    <div style="padding:10px;border:1px solid #99f6e4;border-radius:10px;background:#f0fdfa;">Guardrail checks (scope, relevance, limits)</div>
+    <div style="text-align:center;color:#14b8a6;">↓</div>
+    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">Portfolio-scoped response</div>
+    <div style="text-align:center;color:#0ea5e9;">↓</div>
+    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">Command parser</div>
+    <div style="text-align:center;color:#fb923c;">↓</div>
+    <div style="padding:10px;border:1px solid #fed7aa;border-radius:10px;background:#fff7ed;">Navigation / resume / contact / handoff</div>
+  </div>
+</div>`,
+    },
+    rigor: {
+      statement:
+        'The value of a portfolio AI assistant is not just answering questions; it is routing users to proof while controlling scope, cost, and failure states.',
+      baseline:
+        'Generic chat widgets can drift off-topic, produce long expensive responses, or trap users in unresolved answer loops.',
+      definition:
+        'Reliable AI support = scoped answers, safe routing, failure-aware fallback, and human handoff when automation is insufficient.',
+      method:
+        'Implemented relevance gates, response-budget rules, approved navigation/action commands, rate limits, prompt-injection deflection, session history trimming, and human handoff UX.',
+      window: 'Portfolio visitor interaction during recruiter review.',
+    },
+    constraints: [
+      {
+        problem: 'A general chatbot could become expensive, irrelevant, or unsafe.',
+        tradeoff:
+          'The assistant is intentionally scoped to portfolio/recruiter use cases and deflects unrelated prompts.',
+      },
+      {
+        problem: 'AI answers may be incomplete or unsatisfying.',
+        tradeoff:
+          'The system provides human handoff rather than trapping the visitor in repeated AI replies.',
+      },
+      {
+        problem: 'Generated navigation commands could create unsafe or broken behavior.',
+        tradeoff:
+          'Only approved route/action commands are supported, and unknown commands are ignored.',
+      },
+    ],
+  },
 ];
