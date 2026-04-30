@@ -9,6 +9,7 @@ export const QA_TRACK_HREF = '/tracks/ops-analytics';
 export const GIS_TRACK_HREF = '/tracks/gis';
 export const PORTFOLIO_PROCESS_HREF = '/portfolio2/deep-dive';
 export const RESUME_HREF = '/resume';
+export const SITE_INDEX_HREF = '/site-index';
 
 export const buildCaseStudyHref = (id: string) => `/case-studies/${id}`;
 export const SUPPORTING_EVIDENCE_DEFAULT_HREF = buildCaseStudyHref(CASE_STUDY_FALLBACK_ID);
