@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { CASE_STUDY_REGISTRY } from '../constants';
+import { PROJECT_REGISTRY } from '../constants';
 import {
   GIS_TRACK_HREF,
   GUYNODE_SYSTEM_HREF,
@@ -9,7 +9,7 @@ import {
   QA_TRACK_HREF,
   RESUME_HREF,
   SITE_INDEX_HREF,
-  buildCaseStudyHref,
+  buildProjectHref,
 } from '../lib/routes';
 
 const roleTracks = [
@@ -50,7 +50,7 @@ const featuredSystems = [
     title: 'Digital Twin AI Agent',
     description:
       'AI implementation proof showing scoped assistant behavior, route/action commands, guardrails, cost controls, failure planning, and human handoff.',
-    href: buildCaseStudyHref('digital-twin'),
+    href: buildProjectHref('digital-twin'),
   },
 ];
 
@@ -98,7 +98,7 @@ const requiredProjectIds = new Set([
 ]);
 
 const SiteIndexView: React.FC = () => {
-  const projects = CASE_STUDY_REGISTRY.filter((study) => requiredProjectIds.has(study.id));
+  const projects = PROJECT_REGISTRY.filter((study) => requiredProjectIds.has(study.id));
 
   const openContact = () => {
     window.dispatchEvent(new CustomEvent('open-contact'));
@@ -186,7 +186,7 @@ const SiteIndexView: React.FC = () => {
             {projects.map((project) => (
               <Link
                 key={project.id}
-                to={buildCaseStudyHref(project.id)}
+                to={buildProjectHref(project.id)}
                 className="rounded-xl border border-[#ddd7cd] dark:border-white/10 bg-[#fcfaf7] dark:bg-slate-900 p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
               >
                 <h3 className="font-semibold text-navy-900 dark:text-white">{project.title}</h3>
@@ -280,7 +280,7 @@ const SiteIndexView: React.FC = () => {
                   Guynode
                 </Link>{' '}
                 →{' '}
-                <Link to={buildCaseStudyHref('digital-twin')} className="underline">
+                <Link to={buildProjectHref('digital-twin')} className="underline">
                   Digital Twin
                 </Link>{' '}
                 →{' '}
@@ -296,15 +296,15 @@ const SiteIndexView: React.FC = () => {
                   QA Track
                 </Link>{' '}
                 →{' '}
-                <Link to={buildCaseStudyHref('digital-twin')} className="underline">
+                <Link to={buildProjectHref('digital-twin')} className="underline">
                   Digital Twin QA Scenarios
                 </Link>{' '}
                 →{' '}
-                <Link to={buildCaseStudyHref('ops-triage')} className="underline">
+                <Link to={buildProjectHref('ops-triage')} className="underline">
                   Ops Triage
                 </Link>{' '}
                 →{' '}
-                <Link to={buildCaseStudyHref('nba-2k-systems-analysis')} className="underline">
+                <Link to={buildProjectHref('nba-2k-systems-analysis')} className="underline">
                   NBA 2K Systems Analysis
                 </Link>
               </p>
@@ -320,7 +320,7 @@ const SiteIndexView: React.FC = () => {
                   Guynode
                 </Link>{' '}
                 →{' '}
-                <Link to={buildCaseStudyHref('ops-triage')} className="underline">
+                <Link to={buildProjectHref('ops-triage')} className="underline">
                   Apex / CenterPoint experience
                 </Link>{' '}
                 →{' '}

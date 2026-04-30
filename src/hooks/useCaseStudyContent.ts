@@ -18,7 +18,7 @@ export function useCaseStudyContent(studyId: string): CaseStudyContentState {
 
     setState({ content: '', isLoading: true, error: null });
 
-    fetch(`/case-studies/${studyId}.md`)
+    fetch(`/projects/${studyId}.md`)
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.text();

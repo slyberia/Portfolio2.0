@@ -6,7 +6,7 @@ import {
   IMPLEMENTATION_TRACK_HREF,
   PORTFOLIO_PROCESS_HREF,
   QA_TRACK_HREF,
-  SUPPORTING_EVIDENCE_DEFAULT_HREF,
+  PROJECTS_DEFAULT_HREF,
 } from '../lib/routes';
 
 interface TopNavProps {
@@ -43,9 +43,9 @@ const NAV_ITEMS: Array<{
   },
   {
     label: 'Projects',
-    href: SUPPORTING_EVIDENCE_DEFAULT_HREF,
+    href: PROJECTS_DEFAULT_HREF,
     accent: 'neutral',
-    activeMatch: (pathname) => pathname.startsWith('/case-studies'),
+    activeMatch: (pathname) => pathname.startsWith('/projects'),
   },
   {
     label: 'Process',

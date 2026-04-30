@@ -23,6 +23,13 @@ const ALLOWED_NAV_TARGETS = new Set([
   'tracks/implementation',
   'tracks/ops-analytics',
   'tracks/gis',
+  'project:prompter-hub',
+  'project:project-aegis',
+  'project:nba-systems-qa',
+  'project:luxe-lofts',
+  'project:ops-triage',
+  'project:guynode',
+  'project:digital-twin',
   'case-study:prompter-hub',
   'case-study:project-aegis',
   'case-study:nba-systems-qa',
@@ -127,7 +134,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
       const target = navMatch[1].trim();
       if (ALLOWED_NAV_TARGETS.has(target)) {
         if (onShowToast) onShowToast(`AI Twin: Navigating to ${target}...`);
-        if (target.startsWith('case-study:')) {
+        if (target.startsWith('case-study:') || target.startsWith('project:')) {
           onNavigate(target);
         } else {
           onNavigate(`#${target}`);

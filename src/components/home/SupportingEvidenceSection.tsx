@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { CASE_STUDY_REGISTRY } from '../../constants';
-import { PORTFOLIO_PROCESS_HREF, buildCaseStudyHref } from '../../lib/routes';
+import { PROJECT_REGISTRY } from '../../constants';
+import { PORTFOLIO_PROCESS_HREF, buildProjectHref } from '../../lib/routes';
 
 type RoleLane = 'Implementation' | 'QA' | 'GIS' | 'AI Systems';
 type FilterKey = 'All' | RoleLane | 'Process';
@@ -87,7 +87,7 @@ const SupportingEvidenceSection: React.FC = () => {
 
   const evidenceItems = useMemo(
     () =>
-      CASE_STUDY_REGISTRY.filter((study) => EVIDENCE_METADATA_BY_ID[study.id]).map((study) => {
+      PROJECT_REGISTRY.filter((study) => EVIDENCE_METADATA_BY_ID[study.id]).map((study) => {
         const metadata = EVIDENCE_METADATA_BY_ID[study.id];
         return {
           studyId: study.id,
@@ -212,7 +212,7 @@ const SupportingEvidenceSection: React.FC = () => {
               </div>
 
               <Link
-                to={buildCaseStudyHref(item.studyId)}
+                to={buildProjectHref(item.studyId)}
                 aria-label={`View detail for ${item.title}`}
                 className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-indigo-700 dark:text-indigo-300 hover:gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded"
               >

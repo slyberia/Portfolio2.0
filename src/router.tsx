@@ -7,11 +7,12 @@ import {
   useLocation,
   useOutletContext,
   Link,
+  useParams,
 } from 'react-router-dom';
 import HomeView from './views/HomeView';
 import BottomTabBar from './components/BottomTabBar';
 import TopNav from './components/TopNav';
-import CaseStudyView from './views/CaseStudyView';
+import ProjectDetailView from './views/ProjectDetailView';
 import ResumeView from './views/ResumeView';
 import ImplementationTrackView from './views/ImplementationTrackView';
 import OpsAnalyticsTrackView from './views/OpsAnalyticsTrackView';
@@ -23,15 +24,11 @@ import CommandPalette from './components/CommandPalette';
 import ChatWidget from './components/ChatWidget';
 import Toast from './components/Toast';
 import ErrorBoundary from './components/ErrorBoundary';
-import {
-  SITE_INDEX_HREF,
-  buildCaseStudyHref,
-  SUPPORTING_EVIDENCE_DEFAULT_HREF,
-} from './lib/routes';
+import { SITE_INDEX_HREF, buildProjectHref, PROJECTS_DEFAULT_HREF } from './lib/routes';
 import { useRecruiterMode } from './context/RecruiterModeContext';
 
 type LayoutContext = {
-  onNavigateToCaseStudy: (id?: string) => void;
+  onNavigateToProject: (id?: string) => void;
   onOpenContact: () => void;
 };
 
@@ -121,8 +118,8 @@ export const AppLayout: React.FC = () => {
     showToast('Email copied to clipboard');
   };
 
-  const navigateToCaseStudy = (id?: string) => {
-    navigate(id ? buildCaseStudyHref(id) : SUPPORTING_EVIDENCE_DEFAULT_HREF);
+  const navigateToProject = (id?: string) => {
+    navigate(id ? buildProjectHref(id) : PROJECTS_DEFAULT_HREF);
   };
 
   const navigateToResume = () => navigate('/resume');
@@ -143,12 +140,12 @@ export const AppLayout: React.FC = () => {
   const handleCommandNavigation = (path: string) => {
     if (path === 'home') {
       navigate('/');
-    } else if (path === 'case-study') {
-      navigateToCaseStudy();
+    } else if (path === 'project') {
+      navigateToProject();
     } else if (path === 'resume') {
       navigateToResume();
-    } else if (path.startsWith('case-study:')) {
-      navigateToCaseStudy(path.split(':')[1]);
+    } else if (path.startsWith('project:') || path.startsWith('case-study:')) {
+      navigateToProject(path.split(':')[1]);
     } else if (path === 'experience' || path === 'skills' || path.startsWith('#')) {
       const id = path.replace('#', '');
       scrollToSection(id);
@@ -163,7 +160,7 @@ export const AppLayout: React.FC = () => {
   const isOnResume = location.pathname === '/resume';
 
   const context: LayoutContext = {
-    onNavigateToCaseStudy: navigateToCaseStudy,
+    onNavigateToProject: navigateToProject,
     onOpenContact: () => setIsContactOpen(true),
   };
 
@@ -372,11 +369,16 @@ export const AppLayout: React.FC = () => {
   );
 };
 
+const CaseStudyRedirect: React.FC = () => {
+  const { studyId } = useParams<{ studyId: string }>();
+  return <Navigate to={studyId ? buildProjectHref(studyId) : PROJECTS_DEFAULT_HREF} replace />;
+};
+
 const HomeWrapper: React.FC = () => {
-  const { onNavigateToCaseStudy, onOpenContact } = useOutletContext<LayoutContext>();
+  const { onNavigateToProject, onOpenContact } = useOutletContext<LayoutContext>();
   return (
     <ErrorBoundary location="HomeView">
-      <HomeView onNavigateToCaseStudy={onNavigateToCaseStudy} onOpenContact={onOpenContact} />
+      <HomeView onNavigateToCaseStudy={onNavigateToProject} onOpenContact={onOpenContact} />
     </ErrorBoundary>
   );
 };
@@ -391,15 +393,23 @@ export const routeDefinitions = [
       { index: true, element: <HomeWrapper /> },
       {
         path: 'case-studies',
-        element: <Navigate to={SUPPORTING_EVIDENCE_DEFAULT_HREF} replace />,
+        element: <Navigate to={PROJECTS_DEFAULT_HREF} replace />,
+      },
+      {
+        path: 'projects',
+        element: <Navigate to={PROJECTS_DEFAULT_HREF} replace />,
+      },
+      {
+        path: 'projects/:projectId',
+        element: (
+          <ErrorBoundary location="ProjectDetailView">
+            <ProjectDetailView />
+          </ErrorBoundary>
+        ),
       },
       {
         path: 'case-studies/:studyId',
-        element: (
-          <ErrorBoundary location="CaseStudyView">
-            <CaseStudyView />
-          </ErrorBoundary>
-        ),
+        element: <CaseStudyRedirect />,
       },
       {
         path: 'tracks/implementation',

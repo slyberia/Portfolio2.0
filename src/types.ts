@@ -25,7 +25,8 @@ export interface Certification {
   issuer: string;
 }
 
-export type CaseStudyCategory = 'ai-ops' | 'qa-data' | 'success-strategy' | 'creative';
+export type ProjectCategory = 'ai-ops' | 'qa-data' | 'success-strategy' | 'creative';
+export type CaseStudyCategory = ProjectCategory;
 
 export interface CaseStudyRigor {
   statement: string;
@@ -73,12 +74,12 @@ export interface CaseStudyConstraint {
   tradeoff: string;
 }
 
-export interface CaseStudyEntry {
+export interface ProjectEntry {
   id: string;
   title: string;
   content: string;
   rationale: string;
-  category: CaseStudyCategory;
+  category: ProjectCategory;
   tags: string[];
   // High-Rigor Evidence Fields
   heroArtifact?: CaseStudyArtifact;
@@ -86,3 +87,5 @@ export interface CaseStudyEntry {
   rigor?: CaseStudyRigor;
   constraints?: CaseStudyConstraint[];
 }
+
+export type CaseStudyEntry = ProjectEntry;
