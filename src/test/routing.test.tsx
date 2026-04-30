@@ -3,7 +3,6 @@ import { describe, it, expect, vi, beforeAll } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { routeDefinitions } from '../router';
-import { PROJECTS_DEFAULT_HREF } from '../lib/routes';
 import { RecruiterModeProvider } from '../context/RecruiterModeContext';
 
 beforeAll(() => {
@@ -53,10 +52,10 @@ describe('routing', () => {
     expect(screen.getByTestId('home-view')).toBeInTheDocument();
   });
 
-  it('/projects routes to canonical default project detail', async () => {
+  it('/projects renders dedicated projects index', async () => {
     const router = renderRoute('/projects');
-    await waitFor(() => expect(router.state.location.pathname).toBe(PROJECTS_DEFAULT_HREF));
-    expect(screen.getByTestId('project-detail-view')).toBeInTheDocument();
+    await waitFor(() => expect(router.state.location.pathname).toBe('/projects'));
+    expect(screen.getByRole('heading', { name: 'Projects' })).toBeInTheDocument();
   });
 
   it('/projects/:projectId renders project detail', () => {
@@ -71,8 +70,8 @@ describe('routing', () => {
 
   it('/case-studies redirects to canonical project route', async () => {
     const router = renderRoute('/case-studies');
-    await waitFor(() => expect(router.state.location.pathname).toBe(PROJECTS_DEFAULT_HREF));
-    expect(screen.getByTestId('project-detail-view')).toBeInTheDocument();
+    await waitFor(() => expect(router.state.location.pathname).toBe('/projects'));
+    expect(screen.getByRole('heading', { name: 'Projects' })).toBeInTheDocument();
   });
 
   it('/case-studies/guynode redirects to /projects/guynode', async () => {

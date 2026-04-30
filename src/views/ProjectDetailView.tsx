@@ -18,6 +18,11 @@ import { readingTime } from '../utils/readingTime';
 import { recruiterSummary } from '../utils/recruiterSummary';
 import { CATEGORY_COLORS } from '../constants/categories';
 import { CASE_STUDY_FALLBACK_ID, PORTFOLIO_PROCESS_HREF } from '../lib/routes';
+import {
+  getProjectMetadata,
+  getSupportingProjects,
+  getFeaturedProjects,
+} from '../data/projectMetadata';
 
 const CATEGORY_LABELS: Record<ProjectCategory, string> = {
   'ai-ops': 'Implementation Systems',
@@ -26,13 +31,9 @@ const CATEGORY_LABELS: Record<ProjectCategory, string> = {
   creative: 'Creative',
 };
 
-// Define the recommended sequence explicitly
 const SEQUENCE_ORDER = [
-  'prompter-hub', // Step 1
-  'project-aegis', // Step 2
-  'ops-triage', // Step 3
-  'nba-systems-qa',
-  'luxe-lofts',
+  ...getFeaturedProjects().map((project) => project.id),
+  ...getSupportingProjects().map((project) => project.id),
 ];
 
 const PATH_INDICATORS: Record<string, { step: number; label: string }> = {
@@ -129,7 +130,11 @@ const EvidenceMap: React.FC<{ activeId: string; onSelect: (id: string) => void }
                         : 'bg-slate-100 dark:bg-white/5 text-slate-500 border-black/5 dark:border-white/5'
                     }`}
                   >
-                    {CATEGORY_LABELS[study.category].split(' ')[0]}
+                    {
+                      (getProjectMetadata(id)?.proofType ?? CATEGORY_LABELS[study.category]).split(
+                        ' ',
+                      )[0]
+                    }
                   </span>
                 )}
 
@@ -146,9 +151,7 @@ const EvidenceMap: React.FC<{ activeId: string; onSelect: (id: string) => void }
                     : 'text-navy-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400'
                 }`}
               >
-                {study.title
-                  .replace('Prompter Hub V9', 'Prompter Hub')
-                  .replace('Project Aegis Protocol', 'Project Aegis')}
+                {getProjectMetadata(id)?.displayTitle ?? study.title}
               </div>
 
               {/* Sublabel */}
@@ -157,7 +160,9 @@ const EvidenceMap: React.FC<{ activeId: string; onSelect: (id: string) => void }
                   isActive ? 'text-indigo-200' : 'text-slate-400'
                 }`}
               >
-                {isPath ? isPath.label : study.rationale.split(' ')[0] + '...'}
+                {isPath
+                  ? isPath.label
+                  : (getProjectMetadata(id)?.statusLabel ?? study.rationale.split(' ')[0] + '...')}
               </div>
             </button>
           );

@@ -13,6 +13,7 @@ import HomeView from './views/HomeView';
 import BottomTabBar from './components/BottomTabBar';
 import TopNav from './components/TopNav';
 import ProjectDetailView from './views/ProjectDetailView';
+import ProjectsIndexView from './views/ProjectsIndexView';
 import ResumeView from './views/ResumeView';
 import ImplementationTrackView from './views/ImplementationTrackView';
 import OpsAnalyticsTrackView from './views/OpsAnalyticsTrackView';
@@ -393,11 +394,15 @@ export const routeDefinitions = [
       { index: true, element: <HomeWrapper /> },
       {
         path: 'case-studies',
-        element: <Navigate to={PROJECTS_DEFAULT_HREF} replace />,
+        element: <Navigate to="/projects" replace />,
       },
       {
         path: 'projects',
-        element: <Navigate to={PROJECTS_DEFAULT_HREF} replace />,
+        element: (
+          <ErrorBoundary location="ProjectsIndexView">
+            <ProjectsIndexView />
+          </ErrorBoundary>
+        ),
       },
       {
         path: 'projects/:projectId',
