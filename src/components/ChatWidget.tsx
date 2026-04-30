@@ -14,6 +14,23 @@ interface ChatWidgetProps {
 }
 
 const STORAGE_KEY = 'kyle_twin_history';
+
+const ALLOWED_NAV_TARGETS = new Set([
+  'home',
+  'experience',
+  'skills',
+  'tracks/implementation',
+  'tracks/ops-analytics',
+  'tracks/gis',
+  'case-study:prompter-hub',
+  'case-study:project-aegis',
+  'case-study:nba-systems-qa',
+  'case-study:luxe-lofts',
+  'case-study:ops-triage',
+]);
+
+const ALLOWED_ACTIONS = new Set(['contact', 'resume']);
+
 const SUGGESTED_QUESTIONS = [
   'Download Resume',
   'Show me the Aegis Protocol',
@@ -67,27 +84,30 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
     let cleanedText = text;
 
     if (navMatch && onNavigate) {
-      const target = navMatch[1];
-      if (onShowToast) onShowToast(`AI Twin: Navigating to ${target}...`);
-
-      if (target.startsWith('case-study:')) {
-        onNavigate(target);
-      } else {
-        onNavigate(target.startsWith('#') ? target : `#${target}`);
+      const target = navMatch[1].trim();
+      if (ALLOWED_NAV_TARGETS.has(target)) {
+        if (onShowToast) onShowToast(`AI Twin: Navigating to ${target}...`);
+        if (target.startsWith('case-study:')) {
+          onNavigate(target);
+        } else {
+          onNavigate(`#${target}`);
+        }
       }
       cleanedText = cleanedText.replace(navRegex, '');
     }
 
     if (actionMatch && onAction) {
-      const actionType = actionMatch[1];
-      if (onShowToast) {
-        const msg =
-          actionType === 'resume'
-            ? 'AI Twin: Preparing Resume download...'
-            : 'AI Twin: Opening contact portal...';
-        onShowToast(msg);
+      const actionType = actionMatch[1].trim();
+      if (ALLOWED_ACTIONS.has(actionType)) {
+        if (onShowToast) {
+          const msg =
+            actionType === 'resume'
+              ? 'AI Twin: Preparing Resume download...'
+              : 'AI Twin: Opening contact portal...';
+          onShowToast(msg);
+        }
+        onAction(actionType);
       }
-      onAction(actionType);
       cleanedText = cleanedText.replace(actionRegex, '');
     }
 
