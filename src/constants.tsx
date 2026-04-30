@@ -346,6 +346,77 @@ export const CASE_STUDY_REGISTRY: CaseStudyEntry[] = [
     },
   },
   {
+    id: 'guynode',
+    title: 'Guynode Spatial Data Hub',
+    rationale:
+      'Modernized a legacy geospatial data site into a public-facing spatial data platform for organizing, previewing, documenting, and validating spatial datasets for Guyana.',
+    category: 'qa-data',
+    tags: [
+      'GIS',
+      'Spatial Data',
+      'Dataset Cataloging',
+      'Metadata',
+      'Leaflet',
+      'GeoJSON',
+      'Launch Readiness',
+      'Data QA / Validation',
+      'Technical Implementation',
+      'Documentation',
+    ],
+    content: CASE_STUDY_CONTENT.guynode,
+    heroArtifact: {
+      type: 'html',
+      label: 'Guynode Data Access Flow',
+      description:
+        'High-level architecture flow for public spatial data access and dataset governance.',
+      content: `<div style="font-family:Inter,system-ui,sans-serif;background:#faf8f5;border:1px solid #e5e7eb;border-radius:14px;padding:16px;max-width:640px;color:#0f172a;">
+  <h4 style="margin:0 0 12px;font-size:14px;letter-spacing:.04em;text-transform:uppercase;color:#475569;">Guynode Data Access Flow</h4>
+  <div style="display:grid;gap:8px;">
+    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">Legacy files</div>
+    <div style="text-align:center;color:#14b8a6;">↓</div>
+    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">Dataset registry</div>
+    <div style="text-align:center;color:#14b8a6;">↓</div>
+    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">Metadata and category structure</div>
+    <div style="text-align:center;color:#14b8a6;">↓</div>
+    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">Catalog / search / filter</div>
+    <div style="text-align:center;color:#14b8a6;">↓</div>
+    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">Map preview or download path</div>
+    <div style="text-align:center;color:#14b8a6;">↓</div>
+    <div style="padding:10px;border:1px solid #99f6e4;border-radius:10px;background:#f0fdfa;">Public user access</div>
+  </div>
+</div>`,
+    },
+    rigor: {
+      statement:
+        'Spatial data platforms succeed when users can trust what exists, understand what it contains, and access it without decoding the file system.',
+      baseline:
+        'Legacy spatial data access often depends on file listings, inconsistent metadata, and unclear preview/download paths.',
+      definition:
+        'Dataset readiness = clear title, category, description, format, provenance/attribution, download behavior, and preview status where applicable.',
+      method:
+        'Reorganized legacy spatial data access into a structured registry, map-aware frontend model, metadata-driven catalog, and launch-readiness review path.',
+      window: 'Guynode v2 modernization and portfolio proof build.',
+    },
+    constraints: [
+      {
+        problem:
+          'Legacy geospatial data access can become hard to navigate as datasets accumulate.',
+        tradeoff:
+          'Use a structured registry and public-facing catalog model before adding unnecessary complexity.',
+      },
+      {
+        problem: 'Spatial datasets vary in format, size, and preview suitability.',
+        tradeoff:
+          'Use metadata and viewer-type fields to distinguish previewable layers from download-only assets.',
+      },
+      {
+        problem: 'A public data hub must balance technical depth with general-user clarity.',
+        tradeoff:
+          'Use clearer copy, categories, tags, and download paths instead of exposing raw file storage logic.',
+      },
+    ],
+  },
+  {
     id: 'digital-twin',
     title: 'Digital Twin AI Agent',
     rationale:

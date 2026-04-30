@@ -229,6 +229,93 @@ The dashboard below demonstrates how I track these opposing forces simultaneousl
 
 > **Portfolio Note:** The dashboard uses synthetic values to mirror the reporting structure while excluding confidential proprietary records.`,
 
+  guynode: `# Guynode Spatial Data Hub
+
+## Overview
+Guynode is a public spatial data hub for Guyana, rebuilt from a legacy geospatial data site into a clearer, more structured platform for organizing, previewing, documenting, and distributing spatial datasets.
+
+## What It Does
+- Organizes spatial datasets into a searchable registry.
+- Supports dataset metadata, categories, tags, file formats, and download paths.
+- Provides a foundation for map-based preview workflows.
+- Improves public access to spatial data related to Guyana.
+- Creates a more maintainable structure for future dataset expansion and documentation.
+- Supports launch-readiness review through clearer information architecture and validation checks.
+
+## What It Proves
+- GIS and spatial data workflow understanding.
+- Technical implementation planning.
+- Dataset governance and metadata structure.
+- Frontend system organization.
+- Public-user information architecture.
+- Documentation and launch-readiness thinking.
+- Ability to modernize a legacy data-access experience into a supportable platform.
+
+## Implementation Architecture
+Guynode is represented as a React + TypeScript single-page application model that uses a dataset registry and metadata-driven content structure to make spatial resources navigable. The architecture centers on clear dataset metadata fields, category and tag organization, and predictable file/download pathways. Where represented, map-preview behavior follows Leaflet-style frontend mapping logic and GeoJSON-oriented data handling. The structure also supports validation/readiness review checks, public-facing information architecture, and a deployment-conscious static-app layout.
+
+## GIS and Dataset Governance
+Metadata is the trust layer for GIS delivery because users need to understand what each dataset contains before downloading or using it. Category and tag structure make data discoverable and reduce navigation friction as dataset volume grows. Public data access also depends on provenance, format clarity, and reliable download behavior so users can evaluate quality and applicability. GIS platforms require trust signals and clear maintenance paths to remain useful over time, especially as contributors and data sources evolve.
+
+## QA / Launch Readiness
+Guynode supports launch-readiness review through practical validation checks, including broken-link checks, metadata consistency checks, route/content consistency, dataset visibility/readability checks, and public-user navigation review. These controls help keep the platform stable as datasets are updated and expanded.
+
+## Role Relevance
+### Technical Implementation Specialist
+- implementation planning
+- workflow translation
+- documentation
+- system handoff
+- frontend/data-access structure
+
+### Quality Assurance Analyst
+- validation checks
+- metadata consistency
+- link/download review
+- launch-readiness criteria
+- public-facing reliability
+
+### GIS Analyst
+- spatial dataset organization
+- GIS metadata
+- map viewer logic
+- dataset governance
+- public spatial data access
+
+## Constraints and Tradeoffs
+1. Problem:
+Legacy geospatial data access can become hard to navigate as datasets accumulate.
+Tradeoff:
+Use a structured registry and public-facing catalog model before adding unnecessary complexity.
+
+2. Problem:
+Spatial datasets vary in format, size, and preview suitability.
+Tradeoff:
+Use metadata and viewer-type fields to distinguish previewable layers from download-only assets.
+
+3. Problem:
+A public data hub must balance technical depth with general-user clarity.
+Tradeoff:
+Use clearer copy, categories, tags, and download paths instead of exposing raw file storage logic.
+
+## Business / User Value
+Guynode reduces friction for students, researchers, public agencies, consultants, and general users who need to discover or inspect Guyana-related spatial datasets. It also demonstrates the ability to turn domain knowledge, data structure, UI planning, documentation, and launch-readiness review into a tangible public-facing system.
+
+## Current Limitations
+- Some dataset provenance/attribution may require continued review.
+- Some data types may remain download-only rather than previewable.
+- A full production replacement requires final content validation, hosting/deployment review, and maintenance planning.
+- The platform should continue evolving as dataset coverage improves.
+
+## Next Iteration
+- richer dataset detail pages
+- stronger provenance/attribution fields
+- broader map preview coverage
+- dataset health/status indicators
+- admin/editing workflow
+- public changelog or update log
+- improved SEO and metadata for public discovery`,
+
   'digital-twin': `# Digital Twin AI Agent
 
 ## Overview

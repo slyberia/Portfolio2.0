@@ -26,6 +26,14 @@ const ROLE_CHIP_STYLES: Record<RoleLane, string> = {
 const FILTER_ORDER: FilterKey[] = ['All', 'Implementation', 'QA', 'GIS', 'AI Systems', 'Process'];
 
 const EVIDENCE_METADATA_BY_ID: Record<string, EvidenceMetadata> = {
+  guynode: {
+    cardTitle: 'Guynode Spatial Data Hub · Flagship GIS System',
+    summary:
+      'Spatial data platform proof for dataset cataloging, metadata, map-preview workflows, public access, and launch-readiness review.',
+    relevantRoles: ['GIS', 'Implementation', 'QA'],
+    proofType: 'Workflow',
+    statusLabel: 'Flagship System',
+  },
   'digital-twin': {
     cardTitle: 'Digital Twin AI Agent · AI Implementation System',
     summary:
@@ -94,7 +102,7 @@ const SupportingEvidenceSection: React.FC = () => {
   );
 
   const prioritizedItems = useMemo(() => {
-    const priorityById: Record<string, number> = { 'digital-twin': 0, 'ops-triage': 1 };
+    const priorityById: Record<string, number> = { guynode: 0, 'digital-twin': 1, 'ops-triage': 2 };
     return [...evidenceItems].sort(
       (a, b) => (priorityById[a.studyId] ?? 99) - (priorityById[b.studyId] ?? 99),
     );
