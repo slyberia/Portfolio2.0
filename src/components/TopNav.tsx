@@ -6,7 +6,7 @@ import {
   IMPLEMENTATION_TRACK_HREF,
   PORTFOLIO_PROCESS_HREF,
   QA_TRACK_HREF,
-  PROJECTS_DEFAULT_HREF,
+  PROJECTS_HREF,
 } from '../lib/routes';
 
 interface TopNavProps {
@@ -43,7 +43,7 @@ const NAV_ITEMS: Array<{
   },
   {
     label: 'Projects',
-    href: PROJECTS_DEFAULT_HREF,
+    href: PROJECTS_HREF,
     accent: 'neutral',
     activeMatch: (pathname) => pathname.startsWith('/projects'),
   },

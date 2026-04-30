@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { PROJECT_REGISTRY } from '../constants';
 import {
   GIS_TRACK_HREF,
   GUYNODE_SYSTEM_HREF,
@@ -8,9 +7,11 @@ import {
   PORTFOLIO_PROCESS_HREF,
   QA_TRACK_HREF,
   RESUME_HREF,
+  PROJECTS_HREF,
   SITE_INDEX_HREF,
   buildProjectHref,
 } from '../lib/routes';
+import { getFeaturedProjects, getSupportingProjects } from '../data/projectMetadata';
 
 const roleTracks = [
   {
@@ -36,21 +37,6 @@ const roleTracks = [
     href: GIS_TRACK_HREF,
     accent: 'bg-teal-500',
     role: 'GIS',
-  },
-];
-
-const featuredSystems = [
-  {
-    title: 'Guynode Spatial Data Hub',
-    description:
-      'Flagship spatial/GIS proof system for dataset organization, map viewing, metadata, public data access, and launch-readiness thinking.',
-    href: GUYNODE_SYSTEM_HREF,
-  },
-  {
-    title: 'Digital Twin AI Agent',
-    description:
-      'AI implementation proof showing scoped assistant behavior, route/action commands, guardrails, cost controls, failure planning, and human handoff.',
-    href: buildProjectHref('digital-twin'),
   },
 ];
 
@@ -87,18 +73,9 @@ const processDeepDives = [
   },
 ];
 
-const requiredProjectIds = new Set([
-  'digital-twin',
-  'prompter-hub',
-  'project-aegis',
-  'nba-2k-systems-analysis',
-  'ops-triage',
-  'luxe-lofts',
-  'guynode',
-]);
-
 const SiteIndexView: React.FC = () => {
-  const projects = PROJECT_REGISTRY.filter((study) => requiredProjectIds.has(study.id));
+  const featuredSystems = getFeaturedProjects();
+  const projects = getSupportingProjects();
 
   const openContact = () => {
     window.dispatchEvent(new CustomEvent('open-contact'));
@@ -159,13 +136,15 @@ const SiteIndexView: React.FC = () => {
           <div className="grid md:grid-cols-2 gap-4">
             {featuredSystems.map((system) => (
               <Link
-                key={system.title}
+                key={system.id}
                 to={system.href}
                 className="rounded-xl border border-[#ddd7cd] dark:border-white/10 bg-[#fcfaf7] dark:bg-slate-900 p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
               >
-                <h3 className="font-semibold text-navy-900 dark:text-white">{system.title}</h3>
+                <h3 className="font-semibold text-navy-900 dark:text-white">
+                  {system.displayTitle}
+                </h3>
                 <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
-                  {system.description}
+                  {system.shortSummary}
                 </p>
               </Link>
             ))}
@@ -182,19 +161,29 @@ const SiteIndexView: React.FC = () => {
           <p className="text-slate-600 dark:text-slate-300">
             Scannable project proof across implementation, QA, GIS, AI systems, and workflow design.
           </p>
+          <div className="mb-2">
+            <Link
+              to={PROJECTS_HREF}
+              className="text-sm font-semibold text-indigo-700 dark:text-indigo-300"
+            >
+              Open full Projects Library
+            </Link>
+          </div>
           <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
             {projects.map((project) => (
               <Link
                 key={project.id}
-                to={buildProjectHref(project.id)}
+                to={project.href}
                 className="rounded-xl border border-[#ddd7cd] dark:border-white/10 bg-[#fcfaf7] dark:bg-slate-900 p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
               >
-                <h3 className="font-semibold text-navy-900 dark:text-white">{project.title}</h3>
+                <h3 className="font-semibold text-navy-900 dark:text-white">
+                  {project.displayTitle}
+                </h3>
                 <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
-                  {project.rationale}
+                  {project.shortSummary}
                 </p>
                 <p className="mt-3 text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">
-                  Proof Type: {project.category}
+                  Proof Type: {project.proofType}
                 </p>
                 <span className="mt-4 inline-block text-sm font-semibold text-indigo-700 dark:text-indigo-400">
                   View Project
@@ -304,7 +293,7 @@ const SiteIndexView: React.FC = () => {
                   Ops Triage
                 </Link>{' '}
                 →{' '}
-                <Link to={buildProjectHref('nba-2k-systems-analysis')} className="underline">
+                <Link to={buildProjectHref('nba-systems-qa')} className="underline">
                   NBA 2K Systems Analysis
                 </Link>
               </p>
