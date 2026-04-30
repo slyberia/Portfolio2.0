@@ -28,6 +28,7 @@ const ALLOWED_NAV_TARGETS = new Set([
   'case-study:nba-systems-qa',
   'case-study:luxe-lofts',
   'case-study:ops-triage',
+  'case-study:digital-twin',
 ]);
 
 const ALLOWED_ACTIONS = new Set(['contact', 'resume']);
@@ -252,6 +253,13 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
               <p className="text-[10px] text-indigo-600 dark:text-indigo-300 uppercase tracking-wider font-medium">
                 Verified Ops Agent
               </p>
+              <button
+                type="button"
+                onClick={() => onNavigate?.('case-study:digital-twin')}
+                className="mt-1 text-[10px] text-slate-600 dark:text-slate-300 underline hover:text-indigo-600 dark:hover:text-indigo-300"
+              >
+                View how this works
+              </button>
             </div>
           </div>
           <div className="flex items-center gap-2">
