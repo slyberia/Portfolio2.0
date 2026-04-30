@@ -32,9 +32,9 @@ export const RigorCard: React.FC<{ rigor: CaseStudyRigor; title?: string; classN
     </div>
     <div className="p-8 md:p-12 bg-slate-50 dark:bg-slate-900/70 border-b border-black/5 dark:border-white/10">
       <div className="flex items-center gap-3 mb-2">
-        <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
+        <div className="w-2 h-2 rounded-full bg-indigo-500 " />
         <h4 className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-[0.3em] font-outfit">
-          {title || 'Operational Rigor Protocol'}
+          {title || 'Project Proof Summary'}
         </h4>
       </div>
       <p className="text-navy-900 dark:text-white font-outfit text-lg font-bold leading-tight">
@@ -43,14 +43,14 @@ export const RigorCard: React.FC<{ rigor: CaseStudyRigor; title?: string; classN
     </div>
     <div className="grid sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-black/5 dark:divide-white/5">
       {[
-        { label: 'Baseline', val: rigor.baseline, icon: '📉' },
-        { label: 'Definition', val: rigor.definition, icon: '🎯' },
-        { label: 'Method', val: rigor.method, icon: '🧪' },
-        { label: 'Window', val: rigor.window, icon: '⏱️' },
+        { label: 'Baseline', val: rigor.baseline },
+        { label: 'Definition', val: rigor.definition },
+        { label: 'Method', val: rigor.method },
+        { label: 'Window', val: rigor.window },
       ].map((item, i) => (
         <div key={i} className="p-6 md:p-8 hover:bg-white/5 transition-colors">
           <div className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 flex items-center gap-2">
-            <span>{item.icon}</span> {item.label}
+            {item.label}
           </div>
           <div className="text-[13px] font-medium text-slate-700 dark:text-slate-300 leading-relaxed break-words">
             {item.val}
@@ -125,8 +125,8 @@ export const TabsArtifact: React.FC<{ artifacts: CaseStudyArtifact[] }> = ({ art
             onClick={() => setActiveIndex(i)}
             className={`px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${
               i === activeIndex
-                ? 'bg-indigo-600 text-white'
-                : 'text-slate-500 hover:bg-black/5 dark:hover:bg-white/5'
+                ? 'bg-slate-900 text-white'
+                : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-white/5'
             }`}
           >
             {art.label}
@@ -228,7 +228,7 @@ export const TradeoffLog: React.FC<{
     <div className="grid gap-4">
       {constraints.map((c, i) => (
         <div key={i} className="grid md:grid-cols-2 gap-4">
-          <div className="p-6 rounded-3xl bg-slate-100 dark:bg-slate-900/50 border border-black/5 shadow-sm">
+          <div className="p-6 rounded-3xl bg-white dark:bg-slate-900/50 border border-slate-200 shadow-sm">
             <div className="text-[10px] font-bold text-rose-500 uppercase tracking-widest mb-3 font-outfit">
               The Constraint
             </div>
@@ -236,7 +236,7 @@ export const TradeoffLog: React.FC<{
               {c.problem}
             </p>
           </div>
-          <div className="p-6 rounded-3xl bg-emerald-500/5 border border-emerald-500/10 shadow-sm">
+          <div className="p-6 rounded-3xl bg-[#fcfbf9] border border-slate-200 shadow-sm">
             <div className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-3 font-outfit">
               The Operational Choice
             </div>
