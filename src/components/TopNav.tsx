@@ -24,10 +24,16 @@ const NAV_ITEMS: Array<{
   activeMatch: (pathname: string) => boolean;
 }> = [
   {
+    label: 'Home',
+    href: HOME_HREF,
+    accent: 'neutral',
+    activeMatch: (pathname) => pathname === HOME_HREF,
+  },
+  {
     label: 'Implementation',
     href: IMPLEMENTATION_TRACK_HREF,
     accent: 'orange',
-    activeMatch: (pathname) => pathname === HOME_HREF || pathname === IMPLEMENTATION_TRACK_HREF,
+    activeMatch: (pathname) => pathname === IMPLEMENTATION_TRACK_HREF,
   },
   {
     label: 'QA',
