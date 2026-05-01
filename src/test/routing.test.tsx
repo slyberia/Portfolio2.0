@@ -1,7 +1,7 @@
 import React from 'react';
 import { describe, it, expect, vi, beforeAll } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider, useParams } from 'react-router-dom';
 import { routeDefinitions } from '../router';
 import { RecruiterModeProvider } from '../context/RecruiterModeContext';
 
@@ -26,7 +26,10 @@ vi.mock('../views/HomeView', () => ({
   default: () => <div data-testid="home-view">HomeView</div>,
 }));
 vi.mock('../views/ProjectDetailView', () => ({
-  default: () => <div data-testid="project-detail-view">ProjectDetailView</div>,
+  default: function MockProjectDetailView() {
+    const { projectId } = useParams();
+    return <div data-testid="project-detail-view">ProjectDetailView:{projectId}</div>;
+  },
 }));
 vi.mock('../views/ResumeView', () => ({
   default: () => <div data-testid="resume-view">ResumeView</div>,
@@ -58,14 +61,32 @@ describe('routing', () => {
     expect(screen.getByRole('heading', { name: 'Projects' })).toBeInTheDocument();
   });
 
-  it('/projects/:projectId renders project detail', () => {
+  it('/projects/guynode renders matching project detail route param', () => {
     renderRoute('/projects/guynode');
-    expect(screen.getByTestId('project-detail-view')).toBeInTheDocument();
+    expect(screen.getByTestId('project-detail-view')).toHaveTextContent(
+      'ProjectDetailView:guynode',
+    );
   });
 
-  it('/projects/digital-twin renders project detail', () => {
+  it('/projects/digital-twin renders matching project detail route param', () => {
     renderRoute('/projects/digital-twin');
-    expect(screen.getByTestId('project-detail-view')).toBeInTheDocument();
+    expect(screen.getByTestId('project-detail-view')).toHaveTextContent(
+      'ProjectDetailView:digital-twin',
+    );
+  });
+
+  it('/projects/ops-triage renders matching project detail route param', () => {
+    renderRoute('/projects/ops-triage');
+    expect(screen.getByTestId('project-detail-view')).toHaveTextContent(
+      'ProjectDetailView:ops-triage',
+    );
+  });
+
+  it('/projects/nba-systems-qa renders matching project detail route param', () => {
+    renderRoute('/projects/nba-systems-qa');
+    expect(screen.getByTestId('project-detail-view')).toHaveTextContent(
+      'ProjectDetailView:nba-systems-qa',
+    );
   });
 
   it('/case-studies redirects to canonical project route', async () => {

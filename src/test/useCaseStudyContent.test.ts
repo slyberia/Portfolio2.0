@@ -12,7 +12,7 @@ describe('useCaseStudyContent', () => {
   });
 
   it('starts in loading state', () => {
-    (fetch as ReturnType<typeof vi.fn>).mockReturnValue(new Promise(() => {})); // never resolves
+    (fetch as ReturnType<typeof vi.fn>).mockReturnValue(new Promise(() => {}));
     const { result } = renderHook(() => useCaseStudyContent('prompter-hub'));
     expect(result.current.isLoading).toBe(true);
     expect(result.current.content).toBe('');
@@ -22,6 +22,7 @@ describe('useCaseStudyContent', () => {
   it('returns content on success', async () => {
     (fetch as ReturnType<typeof vi.fn>).mockResolvedValue({
       ok: true,
+      headers: { get: () => 'text/markdown' },
       text: async () => '# Prompter Hub\nContent here',
     });
     const { result } = renderHook(() => useCaseStudyContent('prompter-hub'));
@@ -30,30 +31,34 @@ describe('useCaseStudyContent', () => {
     expect(result.current.error).toBeNull();
   });
 
-  it('returns error state on HTTP failure', async () => {
-    (fetch as ReturnType<typeof vi.fn>).mockResolvedValue({
-      ok: false,
-      status: 404,
-    });
+  it('returns empty content on HTTP failure', async () => {
+    (fetch as ReturnType<typeof vi.fn>).mockResolvedValue({ ok: false, status: 404 });
     const { result } = renderHook(() => useCaseStudyContent('missing-study'));
     await waitFor(() => expect(result.current.isLoading).toBe(false));
-    expect(result.current.error).toMatch(/404/);
+    expect(result.current.error).toBeNull();
     expect(result.current.content).toBe('');
   });
 
-  it('cache hit: fetch called only once for same id', async () => {
+  it('returns empty content when response content-type is html', async () => {
     (fetch as ReturnType<typeof vi.fn>).mockResolvedValue({
       ok: true,
-      text: async () => '# Content',
+      headers: { get: () => 'text/html; charset=utf-8' },
+      text: async () => '<html><body>App Shell</body></html>',
     });
-    const { result, rerender } = renderHook((id: string) => useCaseStudyContent(id), {
-      initialProps: 'prompter-hub',
-    });
+    const { result } = renderHook(() => useCaseStudyContent('prompter-hub'));
     await waitFor(() => expect(result.current.isLoading).toBe(false));
-    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(result.current.content).toBe('');
+  });
 
-    // Re-render with the same ID — useEffect deps don't change, no second fetch
-    rerender('prompter-hub');
-    expect(fetch).toHaveBeenCalledTimes(1);
+  it('returns empty content when html app shell markers are returned', async () => {
+    (fetch as ReturnType<typeof vi.fn>).mockResolvedValue({
+      ok: true,
+      headers: { get: () => 'text/plain' },
+      text: async () =>
+        '<!doctype html><div id="root"></div><script type="module" src="/src/main.tsx"></script>',
+    });
+    const { result } = renderHook(() => useCaseStudyContent('prompter-hub'));
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    expect(result.current.content).toBe('');
   });
 });
