@@ -14,6 +14,7 @@ import { useRecruiterMode } from '../context/RecruiterModeContext';
 import { recruiterSummary } from '../utils/recruiterSummary';
 import { PROJECT_FALLBACK_ID, PORTFOLIO_PROCESS_HREF } from '../lib/routes';
 import { getProjectMetadata, PROJECT_METADATA } from '../data/projectMetadata';
+import ScrollToTopButton from '../components/ScrollToTopButton';
 
 const ACCENT_STYLES = {
   orange: 'border-orange-300/70 bg-orange-50 text-orange-700',
@@ -103,12 +104,12 @@ const ProjectDetailView: React.FC = () => {
             >
               ← Back to Projects
             </Link>
-            <a
-              href={PORTFOLIO_PROCESS_HREF}
+            <Link
+              to={PORTFOLIO_PROCESS_HREF}
               className="text-slate-600 hover:text-slate-900 focus-visible:ring-2 ring-slate-500 rounded"
             >
-              Process Deep Dives
-            </a>
+              View Process Deep Dives
+            </Link>
           </div>
           <div className="mt-5 space-y-3">
             <span
@@ -141,12 +142,12 @@ const ProjectDetailView: React.FC = () => {
             >
               View Projects Library
             </Link>
-            <a
-              href={PORTFOLIO_PROCESS_HREF}
+            <Link
+              to={PORTFOLIO_PROCESS_HREF}
               className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium hover:bg-slate-50 focus-visible:ring-2 ring-slate-500"
             >
               View Process Deep Dives
-            </a>
+            </Link>
             <button
               onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
               className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white hover:bg-slate-800 focus-visible:ring-2 ring-slate-500"
@@ -234,6 +235,7 @@ const ProjectDetailView: React.FC = () => {
           </div>
         </ErrorBoundary>
       </div>
+      <ScrollToTopButton />
     </section>
   );
 };

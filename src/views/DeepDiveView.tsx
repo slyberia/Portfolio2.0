@@ -7,6 +7,7 @@ import {
   RESUME_HREF,
   SITE_INDEX_HREF,
 } from '../lib/routes';
+import ScrollToTopButton from '../components/ScrollToTopButton';
 
 type IndexCard = { title: string; description: string; href: string };
 type TimelineRow = {
@@ -34,7 +35,7 @@ const processIndexCards: IndexCard[] = [
     title: 'Projects Architecture',
     description:
       'Migration from case-study language to canonical Projects routes, shared metadata, and recruiter-friendly proof browsing.',
-    href: '#projects-architecture-migration',
+    href: '#projects-architecture',
   },
   {
     title: 'Digital Twin Governance',
@@ -172,7 +173,7 @@ const buildTimeline: TimelineRow[] = [
 ];
 
 const DeepDiveView: React.FC = () => (
-  <div className="min-h-screen pt-20 pb-20 px-6">
+  <div id="deep-dive-top" className="min-h-screen pt-20 pb-20 px-6">
     <div className="max-w-6xl mx-auto space-y-12">
       <section className="space-y-4">
         <p className="text-xs font-bold uppercase tracking-[0.3em] text-indigo-600">Process</p>
@@ -309,7 +310,8 @@ const DeepDiveView: React.FC = () => (
         </ol>
       </section>
 
-      <section id="projects-architecture-migration" className="scroll-mt-24 space-y-3">
+      <section id="projects-architecture" className="scroll-mt-24 space-y-3">
+        <div id="projects-architecture-migration" />
         <h2 className="text-2xl font-bold">Projects Architecture Migration</h2>
         <p>
           Legacy <code>/case-studies</code> naming became technical debt as project taxonomy
@@ -411,6 +413,7 @@ const DeepDiveView: React.FC = () => (
         </ul>
       </section>
     </div>
+    <ScrollToTopButton />
   </div>
 );
 

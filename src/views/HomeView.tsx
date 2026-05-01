@@ -354,11 +354,11 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
               PROFILE_SIGNAL
             </p>
-            {/* TODO: add approved profile asset at public/images/about-profile-medallion.png if missing from repo. */}
             <div className="mx-auto w-full max-w-[320px] rounded-full border border-[#ddd7cd] bg-[#fbfaf7] p-2 shadow-sm">
+              {/* TODO: Add public/images/about-profile-medallion.png manually because Codex PR creation does not support binary image assets. */}
               <img
                 src="/images/about-profile-medallion.png"
-                alt="Stylized circular portrait emblem of Kyle Semple with systems, code, game, and GIS motifs."
+                alt="Stylized circular portrait medallion of Kyle Semple with systems, code, game, and GIS motifs."
                 className="w-full h-auto rounded-full"
                 loading="lazy"
               />

@@ -8,10 +8,10 @@ import {
   QA_TRACK_HREF,
   RESUME_HREF,
   PROJECTS_HREF,
-  SITE_INDEX_HREF,
   buildProjectHref,
 } from '../lib/routes';
 import { getFeaturedProjects, getSupportingProjects } from '../data/projectMetadata';
+import ScrollToTopButton from '../components/ScrollToTopButton';
 
 const roleTracks = [
   {
@@ -44,32 +44,32 @@ const processDeepDives = [
   {
     title: 'Release Ladder',
     description: 'See the phased evolution and release logic of Portfolio2.0.',
-    href: '/portfolio2/deep-dive#release-ladder',
+    href: '/portfolio2/deep-dive#build-timeline',
   },
   {
     title: 'Decision Blocks',
     description: 'Review architecture and product decisions with tradeoffs and outcomes.',
-    href: '/portfolio2/deep-dive#decision-blocks',
+    href: '/portfolio2/deep-dive#projects-architecture',
   },
   {
     title: 'Architecture & QA',
     description: 'Inspect routing, testing boundaries, and reliability safeguards.',
-    href: '/portfolio2/deep-dive#architecture-boundary',
+    href: '/portfolio2/deep-dive#validation-trail',
   },
   {
     title: 'LLM Governance',
     description: 'Understand human review loops, constraints, and AI-use guardrails.',
-    href: '/portfolio2/deep-dive#multi-llm-governance',
+    href: '/portfolio2/deep-dive#digital-twin-governance',
   },
   {
     title: 'Revision Trail',
     description: 'Trace major revisions and what ambiguity each change resolved.',
-    href: '/portfolio2/deep-dive#forensic-archive',
+    href: '/portfolio2/deep-dive#evidence-ledger',
   },
   {
     title: 'Supporting Artifacts',
     description: 'Open supporting documents and linked proof assets.',
-    href: '/portfolio2/deep-dive#supporting-artifacts',
+    href: '/portfolio2/deep-dive#remaining-release-hardening',
   },
 ];
 
@@ -84,7 +84,7 @@ const SiteIndexView: React.FC = () => {
   return (
     <div className="min-h-screen pt-20 pb-20 px-6 bg-[#f8f7f3] dark:bg-slate-950">
       <div className="max-w-6xl mx-auto space-y-16">
-        <section className="space-y-5">
+        <section id="site-index-top" className="space-y-5 scroll-mt-24">
           <p className="text-xs font-bold text-indigo-600 uppercase tracking-[0.3em]">SITE_INDEX</p>
           <h1 className="text-4xl sm:text-5xl font-outfit font-extrabold text-navy-900 dark:text-white">
             Portfolio Site Index
@@ -98,8 +98,33 @@ const SiteIndexView: React.FC = () => {
             project, or implementation question.
           </p>
         </section>
+        <nav aria-label="Jump to section" className="space-y-3">
+          <p className="text-xs font-bold text-indigo-600 uppercase tracking-[0.3em]">INDEX_MAP</p>
+          <div className="flex flex-wrap gap-2 text-sm">
+            {[
+              ['Role Tracks', '#role-tracks'],
+              ['Featured Systems', '#featured-systems'],
+              ['Projects', '#projects'],
+              ['Process', '#process-deep-dives'],
+              ['Resume / Contact', '#resume-contact'],
+              ['Suggested Paths', '#suggested-paths'],
+            ].map(([label, href]) => (
+              <a
+                key={href}
+                href={href}
+                className="rounded-full border border-[#ddd7cd] px-3 py-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+        </nav>
 
-        <section className="space-y-5" aria-labelledby="site-index-role-tracks">
+        <section
+          id="role-tracks"
+          className="space-y-5 scroll-mt-24"
+          aria-labelledby="site-index-role-tracks"
+        >
           <h2
             id="site-index-role-tracks"
             className="text-2xl font-outfit font-extrabold text-navy-900 dark:text-white"
@@ -126,7 +151,11 @@ const SiteIndexView: React.FC = () => {
           </div>
         </section>
 
-        <section className="space-y-5" aria-labelledby="site-index-featured-systems">
+        <section
+          id="featured-systems"
+          className="space-y-5 scroll-mt-24"
+          aria-labelledby="site-index-featured-systems"
+        >
           <h2
             id="site-index-featured-systems"
             className="text-2xl font-outfit font-extrabold text-navy-900 dark:text-white"
@@ -151,7 +180,11 @@ const SiteIndexView: React.FC = () => {
           </div>
         </section>
 
-        <section className="space-y-5" aria-labelledby="site-index-projects">
+        <section
+          id="projects"
+          className="space-y-5 scroll-mt-24"
+          aria-labelledby="site-index-projects"
+        >
           <h2
             id="site-index-projects"
             className="text-2xl font-outfit font-extrabold text-navy-900 dark:text-white"
@@ -193,7 +226,11 @@ const SiteIndexView: React.FC = () => {
           </div>
         </section>
 
-        <section className="space-y-5" aria-labelledby="site-index-process">
+        <section
+          id="process-deep-dives"
+          className="space-y-5 scroll-mt-24"
+          aria-labelledby="site-index-process"
+        >
           <h2
             id="site-index-process"
             className="text-2xl font-outfit font-extrabold text-navy-900 dark:text-white"
@@ -216,7 +253,11 @@ const SiteIndexView: React.FC = () => {
           </div>
         </section>
 
-        <section className="space-y-5" aria-labelledby="site-index-resume-contact">
+        <section
+          id="resume-contact"
+          className="space-y-5 scroll-mt-24"
+          aria-labelledby="site-index-resume-contact"
+        >
           <h2
             id="site-index-resume-contact"
             className="text-2xl font-outfit font-extrabold text-navy-900 dark:text-white"
@@ -248,7 +289,11 @@ const SiteIndexView: React.FC = () => {
           </div>
         </section>
 
-        <section className="space-y-5" aria-labelledby="site-index-suggested-paths">
+        <section
+          id="suggested-paths"
+          className="space-y-5 scroll-mt-24"
+          aria-labelledby="site-index-suggested-paths"
+        >
           <h2
             id="site-index-suggested-paths"
             className="text-2xl font-outfit font-extrabold text-navy-900 dark:text-white"
@@ -345,12 +390,13 @@ const SiteIndexView: React.FC = () => {
 
         <p className="text-xs text-slate-500 dark:text-slate-400">
           Need another entry point? Return to the{' '}
-          <Link to={SITE_INDEX_HREF} className="underline">
+          <a href="#site-index-top" className="underline">
             Site Index top
-          </Link>
+          </a>
           .
         </p>
       </div>
+      <ScrollToTopButton />
     </div>
   );
 };
