@@ -17,7 +17,7 @@ export const SITE_INDEX_HREF = '/site-index';
 export const PROJECTS_HREF = '/projects';
 
 export const buildProjectHref = (id: string) => `${PROJECTS_HREF}/${id}`;
-export const PROJECTS_DEFAULT_HREF = buildProjectHref(PROJECT_FALLBACK_ID);
+export const PROJECTS_DEFAULT_HREF = PROJECTS_HREF;
 export const SUPPORTING_PROJECTS_DEFAULT_HREF = PROJECTS_DEFAULT_HREF;
 
 const guynodeProject = PROJECT_REGISTRY.find((project) =>

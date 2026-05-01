@@ -8,7 +8,7 @@ const RATE_LIMIT_MESSAGE =
   'I’ve reached today’s chat limit. You can still review Kyle’s projects, resume, or contact him directly. <<ACTION:contact>>';
 
 const OFFLINE_MESSAGE =
-  'I’m temporarily unavailable. You can still contact Kyle directly or use the site navigation to review his projects. <<ACTION:contact>>';
+  'I’m temporarily unavailable. You can still contact Kyle directly or use the site navigation to review his projects.';
 
 export async function* sendMessageStream(
   message: string,
