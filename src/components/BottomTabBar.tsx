@@ -46,7 +46,7 @@ const BottomTabBar: React.FC = () => {
     },
     {
       id: 'cases',
-      label: 'Evidence',
+      label: 'Projects',
       active: isCases,
       onClick: () => navigate(PROJECTS_DEFAULT_HREF),
       icon: (
