@@ -224,6 +224,37 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
                 );
               }
 
+              if (action.twinSource) {
+                return (
+                  <button
+                    key={action.label}
+                    type="button"
+                    onClick={() =>
+                      window.dispatchEvent(
+                        new CustomEvent('open-digital-twin', {
+                          detail: {
+                            source: action.twinSource,
+                            modeLabel:
+                              action.twinSource === 'implementation'
+                                ? 'Implementation Track'
+                                : action.twinSource === 'qa'
+                                  ? 'QA Track'
+                                  : action.twinSource === 'gis'
+                                    ? 'GIS Track'
+                                    : 'General Recruiter Mode',
+                            starterPrompt: action.twinStarterPrompt,
+                          },
+                        }),
+                      )
+                    }
+                    aria-label={`${action.label} for ${content.title}`}
+                    className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-sm transition-colors focus:outline-none focus-visible:ring-2 border ${accent.ctaOutline}`}
+                  >
+                    {action.label}
+                  </button>
+                );
+              }
+
               if (!action.href) return null;
 
               return (

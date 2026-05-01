@@ -14,6 +14,8 @@ export type CtaAction = {
   label: string;
   href?: string;
   type?: 'link' | 'contact';
+  twinSource?: 'implementation' | 'qa' | 'gis' | 'general';
+  twinStarterPrompt?: string;
 };
 
 export type TrackPageContent = {
@@ -124,6 +126,13 @@ export const implementationTrackContent: TrackPageContent = {
   ctaActions: [
     { label: 'Download Resume', href: '/resume' },
     { label: 'View Guynode System', href: GUYNODE_SYSTEM_HREF },
+    {
+      label: 'Ask the Digital Twin about implementation fit',
+      type: 'link',
+      twinSource: 'implementation',
+      twinStarterPrompt:
+        'Help this visitor evaluate Kyle for a Technical Implementation Specialist role.',
+    },
     { label: 'Contact Me', type: 'contact' },
   ],
 };
@@ -211,6 +220,12 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
   ctaActions: [
     { label: 'Download Resume', href: '/resume' },
     { label: 'View Supporting Evidence', href: '/portfolio2/deep-dive#ci-and-tests' },
+    {
+      label: 'Ask the Digital Twin about QA proof',
+      type: 'link',
+      twinSource: 'qa',
+      twinStarterPrompt: 'Help this visitor evaluate Kyle for a Quality Assurance Analyst role.',
+    },
     { label: 'Contact Me', type: 'contact' },
   ],
 };
@@ -291,6 +306,12 @@ export const gisTrackContent: TrackPageContent = {
   ctaActions: [
     { label: 'Download Resume', href: '/resume' },
     { label: 'View Guynode System', href: GUYNODE_SYSTEM_HREF },
+    {
+      label: 'Ask the Digital Twin about GIS experience',
+      type: 'link',
+      twinSource: 'gis',
+      twinStarterPrompt: 'Help this visitor evaluate Kyle for a GIS Analyst role.',
+    },
     { label: 'Contact Me', type: 'contact' },
   ],
 };
