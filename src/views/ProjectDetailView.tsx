@@ -12,7 +12,7 @@ import {
 import { useCaseStudyContent } from '../hooks/useCaseStudyContent';
 import { useRecruiterMode } from '../context/RecruiterModeContext';
 import { recruiterSummary } from '../utils/recruiterSummary';
-import { CASE_STUDY_FALLBACK_ID, PORTFOLIO_PROCESS_HREF } from '../lib/routes';
+import { PROJECT_FALLBACK_ID, PORTFOLIO_PROCESS_HREF } from '../lib/routes';
 import { getProjectMetadata, PROJECT_METADATA } from '../data/projectMetadata';
 
 const ACCENT_STYLES = {
@@ -63,14 +63,15 @@ const ProjectSwitcher: React.FC<{ activeId: string }> = ({ activeId }) => {
 };
 
 const ProjectDetailView: React.FC = () => {
-  const { studyId } = useParams<{ studyId: string }>();
+  const { projectId, studyId } = useParams<{ projectId?: string; studyId?: string }>();
   const { isRecruiterMode } = useRecruiterMode();
-  const activeStudyId = studyId ?? CASE_STUDY_FALLBACK_ID;
+  const activeProjectId = projectId ?? studyId ?? PROJECT_FALLBACK_ID;
 
-  const activeStudy = PROJECT_REGISTRY.find((s) => s.id === activeStudyId);
-  const metadata = getProjectMetadata(activeStudyId);
-  const { content: fetchedContent, isLoading: contentLoading } = useCaseStudyContent(activeStudyId);
-  const displayContent = fetchedContent || activeStudy?.content || '';
+  const activeProject = PROJECT_REGISTRY.find((s) => s.id === activeProjectId);
+  const metadata = getProjectMetadata(activeProjectId);
+  const { content: fetchedContent, isLoading: contentLoading } =
+    useCaseStudyContent(activeProjectId);
+  const displayContent = fetchedContent || activeProject?.content || '';
 
   const cleanContent = React.useMemo(() => {
     if (!displayContent || !metadata) return displayContent;
@@ -79,7 +80,7 @@ const ProjectDetailView: React.FC = () => {
     return displayContent.replace(titleMatch, '');
   }, [displayContent, metadata]);
 
-  if (!activeStudy || !metadata) {
+  if (!activeProject || !metadata) {
     return (
       <section className="pt-28 pb-24 px-4 sm:px-6">
         <div className="mx-auto max-w-4xl rounded-2xl border border-slate-200 bg-white p-8 text-center text-slate-600">
@@ -171,25 +172,25 @@ const ProjectDetailView: React.FC = () => {
             </div>
             <div>
               <p className="text-xs uppercase text-slate-500">Key capabilities</p>
-              <p className="text-sm text-slate-700">{activeStudy.tags.join(', ')}</p>
+              <p className="text-sm text-slate-700">{activeProject.tags.join(', ')}</p>
             </div>
             <div>
               <p className="text-xs uppercase text-slate-500">Why it matters</p>
-              <p className="text-sm text-slate-700">{activeStudy.rationale}</p>
+              <p className="text-sm text-slate-700">{activeProject.rationale}</p>
             </div>
           </div>
         </section>
 
-        <ProjectSwitcher activeId={activeStudyId} />
+        <ProjectSwitcher activeId={activeProjectId} />
 
         <ErrorBoundary location="Project Detail">
           <div className="space-y-8">
-            {activeStudy.rigor && (
+            {activeProject.rigor && (
               <section>
                 <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
                   Project Proof Summary
                 </p>
-                <RigorCard rigor={activeStudy.rigor} className="mb-0" />
+                <RigorCard rigor={activeProject.rigor} className="mb-0" />
               </section>
             )}
 
@@ -198,36 +199,36 @@ const ProjectDetailView: React.FC = () => {
                 Project Detail
               </p>
               <MarkdownSection
-                content={isRecruiterMode ? recruiterSummary(activeStudy) : cleanContent}
+                content={isRecruiterMode ? recruiterSummary(activeProject) : cleanContent}
                 isLoading={contentLoading}
               />
             </section>
 
-            {activeStudy.heroArtifact && (
+            {activeProject.heroArtifact && (
               <section>
                 <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
                   Project Artifacts
                 </p>
                 <HtmlPreviewCard
-                  content={activeStudy.heroArtifact.content as string}
-                  label={activeStudy.heroArtifact.label}
-                  description={activeStudy.heroArtifact.description}
+                  content={activeProject.heroArtifact.content as string}
+                  label={activeProject.heroArtifact.label}
+                  description={activeProject.heroArtifact.description}
                   isHero={true}
-                  accentColor={activeStudy.id === 'luxe-lofts' ? 'red' : 'indigo'}
+                  accentColor={activeProject.id === 'luxe-lofts' ? 'red' : 'indigo'}
                 />
               </section>
             )}
-            {activeStudy.artifacts && activeStudy.artifacts.length > 0 && (
+            {activeProject.artifacts && activeProject.artifacts.length > 0 && (
               <section>
-                <ArtifactGallery artifacts={activeStudy.artifacts} />
+                <ArtifactGallery artifacts={activeProject.artifacts} />
               </section>
             )}
-            {activeStudy.constraints && activeStudy.constraints.length > 0 && (
+            {activeProject.constraints && activeProject.constraints.length > 0 && (
               <section>
                 <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
                   Decision Journal
                 </p>
-                <TradeoffLog constraints={activeStudy.constraints} />
+                <TradeoffLog constraints={activeProject.constraints} />
               </section>
             )}
           </div>
