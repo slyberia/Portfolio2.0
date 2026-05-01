@@ -7,6 +7,7 @@ interface Message {
   text: string;
 }
 type FeedbackStatus = 'helpful' | 'notHelpful' | 'handoffOffered' | 'handoffTriggered';
+type DigitalTwinMode = 'general' | 'implementation' | 'qa' | 'gis';
 
 interface ChatWidgetProps {
   onNavigate?: (path: string) => void;
@@ -40,12 +41,61 @@ const ALLOWED_NAV_TARGETS = new Set([
 
 const ALLOWED_ACTIONS = new Set(['contact', 'resume']);
 
-const SUGGESTED_QUESTIONS = [
-  'Download Resume',
-  'Show me the Aegis Protocol',
-  'What is your Ops experience?',
-  'How do you handle QA?',
-];
+const MODE_CONFIG: Record<
+  DigitalTwinMode,
+  { label: string; intro: string; suggestions: string[]; pillClassName: string }
+> = {
+  general: {
+    label: 'General Recruiter Mode',
+    intro:
+      "Hi! I'm Kyle's Digital Twin. I can answer questions about his work or navigate the site for you.\n\n*(Note: I'm an AI agent based on Kyle's documentation and may occasionally miss details.)*",
+    suggestions: [
+      'Which role track fits Kyle best?',
+      'Show implementation proof.',
+      'Show QA proof.',
+      'Show GIS proof.',
+      'Explain Guynode.',
+      'Explain the Digital Twin.',
+    ],
+    pillClassName: 'bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-200',
+  },
+  implementation: {
+    label: 'Implementation Track',
+    intro:
+      'You’re viewing Kyle’s Technical Implementation track. I can help you inspect proof around workflow delivery, implementation planning, documentation, Guynode, the Digital Twin, and customer-facing technical support.',
+    suggestions: [
+      'Show me Kyle’s implementation proof.',
+      'How does Guynode support this track?',
+      'Explain the Digital Twin as AI implementation proof.',
+      'What experience supports technical implementation roles?',
+    ],
+    pillClassName: 'bg-orange-100 text-orange-800 dark:bg-orange-500/20 dark:text-orange-200',
+  },
+  qa: {
+    label: 'QA Track',
+    intro:
+      'You’re viewing Kyle’s QA track. I can help you inspect proof around validation, issue triage, failure planning, QA scenarios, Ops Triage, NBA 2K Systems Analysis, and Digital Twin guardrails.',
+    suggestions: [
+      'Show me Kyle’s QA proof.',
+      'Explain the Digital Twin failure planning.',
+      'What does Ops Triage demonstrate?',
+      'How does Kyle approach validation and edge cases?',
+    ],
+    pillClassName: 'bg-blue-100 text-blue-800 dark:bg-blue-500/20 dark:text-blue-200',
+  },
+  gis: {
+    label: 'GIS Track',
+    intro:
+      'You’re viewing Kyle’s GIS track. I can help you inspect proof around Guynode, spatial data workflows, metadata, dataset governance, map-based UX, and utility GIS operations.',
+    suggestions: [
+      'Show me Kyle’s GIS proof.',
+      'What does Guynode demonstrate?',
+      'How does Kyle’s utility GIS experience apply?',
+      'Explain the spatial data workflow evidence.',
+    ],
+    pillClassName: 'bg-teal-100 text-teal-800 dark:bg-teal-500/20 dark:text-teal-200',
+  },
+};
 
 const FALLBACK_PATTERNS = [
   /chat limit/i,
@@ -58,6 +108,8 @@ const FALLBACK_PATTERNS = [
 const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToast }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [shouldPulse, setShouldPulse] = useState(true);
+  const [mode, setMode] = useState<DigitalTwinMode>('general');
+  const [modeLabelOverride, setModeLabelOverride] = useState<string | null>(null);
 
   const [messages, setMessages] = useState<Message[]>(() => {
     const saved = sessionStorage.getItem(STORAGE_KEY);
@@ -66,7 +118,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
       : [
           {
             role: 'model',
-            text: "Hi! I'm Kyle's Digital Twin. I can answer questions about his work or navigate the site for you.\n\n*(Note: I'm an AI agent based on Kyle's documentation and may occasionally miss details.)*",
+            text: MODE_CONFIG.general.intro,
           },
         ];
   });
@@ -104,6 +156,35 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
     onAction?.('contact');
     setFeedbackByMessage((prev) => ({ ...prev, [modelIndex]: 'handoffTriggered' }));
   };
+
+  useEffect(() => {
+    const handleOpenDigitalTwin = (
+      event: Event & {
+        detail?: { source?: DigitalTwinMode; starterPrompt?: string; modeLabel?: string };
+      },
+    ) => {
+      const source = event.detail?.source ?? 'general';
+      const safeMode = MODE_CONFIG[source] ? source : 'general';
+      setMode(safeMode);
+      setModeLabelOverride(event.detail?.modeLabel?.trim() || null);
+      setIsOpen(true);
+      setShouldPulse(false);
+      const nextIntro = event.detail?.starterPrompt?.trim() || MODE_CONFIG[safeMode].intro;
+      setMessages((prev) => {
+        if (!prev.length) return [{ role: 'model', text: nextIntro }];
+        if (prev[0].role === 'model') {
+          const updated = [...prev];
+          updated[0] = { role: 'model', text: nextIntro };
+          return updated;
+        }
+        return [{ role: 'model', text: nextIntro }, ...prev];
+      });
+    };
+
+    window.addEventListener('open-digital-twin', handleOpenDigitalTwin as EventListener);
+    return () =>
+      window.removeEventListener('open-digital-twin', handleOpenDigitalTwin as EventListener);
+  }, []);
 
   useEffect(() => {
     // Engage user with pulse for 5 seconds, then stop
@@ -219,6 +300,8 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
   };
 
   const clearHistory = () => {
+    setMode('general');
+    setModeLabelOverride(null);
     const initial = [
       { role: 'model', text: 'Conversation history reset. How can I help you today?' },
     ];
@@ -240,7 +323,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[90] flex flex-col items-end pointer-events-none transition-colors duration-500">
+    <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[90] flex flex-col items-end pointer-events-none transition-colors duration-500">
       <div
         className={`pointer-events-auto w-[90vw] md:w-[400px] bg-white dark:bg-slate-900/90 backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 origin-bottom-right mb-4 flex flex-col ${
           isOpen
@@ -260,6 +343,13 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
               <p className="text-[10px] text-indigo-600 dark:text-indigo-300 uppercase tracking-wider font-medium">
                 Verified Ops Agent
               </p>
+              {mode !== 'general' && (
+                <span
+                  className={`mt-1 inline-flex rounded-full px-2 py-0.5 text-[10px] font-semibold ${MODE_CONFIG[mode].pillClassName}`}
+                >
+                  {modeLabelOverride || MODE_CONFIG[mode].label}
+                </span>
+              )}
               <button
                 type="button"
                 onClick={() => onNavigate?.('case-study:digital-twin')}
@@ -453,7 +543,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
         </div>
 
         <div className="px-4 pt-2 pb-0 flex gap-2 overflow-x-auto scrollbar-hide bg-slate-50 dark:bg-slate-950/50">
-          {SUGGESTED_QUESTIONS.map((q, i) => (
+          {MODE_CONFIG[mode].suggestions.map((q, i) => (
             <button
               key={i}
               onClick={() => handleSend(q)}
@@ -500,8 +590,8 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
 
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`pointer-events-auto group relative flex items-center justify-center w-14 h-14 rounded-full bg-indigo-600 text-white shadow-lg shadow-indigo-500/30 hover:bg-indigo-500 hover:scale-110 transition-all duration-300 ${shouldPulse ? 'animate-chat-pulse' : ''}`}
-        aria-label="Toggle AI Chat"
+        className={`pointer-events-auto group relative flex items-center justify-center gap-2 h-12 w-12 md:h-14 md:w-auto md:px-4 rounded-full bg-indigo-600 text-white shadow-lg shadow-indigo-500/30 hover:bg-indigo-500 hover:scale-[1.03] transition-all duration-300 ${shouldPulse ? 'animate-chat-pulse' : ''}`}
+        aria-label="Ask the Digital Twin"
       >
         <div className="absolute inset-0 rounded-full bg-indigo-400 animate-ping opacity-20 duration-[2000ms]"></div>
         {isOpen ? (
@@ -530,6 +620,11 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
           >
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
           </svg>
+        )}
+        {!isOpen && (
+          <span className="hidden md:inline text-sm font-semibold whitespace-nowrap">
+            Ask the Digital Twin
+          </span>
         )}
         <div className="absolute -top-1 -right-1 bg-white text-indigo-600 rounded-full p-0.5 border-2 border-white dark:border-slate-950 shadow-sm">
           <svg
