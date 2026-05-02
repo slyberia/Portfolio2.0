@@ -25,6 +25,7 @@ import CommandPalette from './components/CommandPalette';
 import ChatWidget from './components/ChatWidget';
 import Toast from './components/Toast';
 import ErrorBoundary from './components/ErrorBoundary';
+import RouteSeo from './components/RouteSeo';
 import { SITE_INDEX_HREF, buildProjectHref, PROJECTS_DEFAULT_HREF } from './lib/routes';
 import { useRecruiterMode } from './context/RecruiterModeContext';
 
@@ -167,6 +168,7 @@ export const AppLayout: React.FC = () => {
 
   return (
     <div className="min-h-screen relative overflow-x-hidden transition-colors duration-500">
+      <RouteSeo />
       <TopNav
         theme={theme}
         toggleTheme={toggleTheme}

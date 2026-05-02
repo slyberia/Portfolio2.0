@@ -51,6 +51,17 @@ function assertSnapshotHtml(route) {
   if (bodyText.length < 120) fail(`${route}: missing meaningful body text`);
   if (!/href="\/llms\.txt"/i.test(html)) fail(`${route}: missing /llms.txt link`);
   if (!/href="\/ai-index"/i.test(html)) fail(`${route}: missing /ai-index link`);
+  const jsonLdBlocks = [
+    ...html.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gi),
+  ];
+  if (jsonLdBlocks.length === 0) fail(`${route}: missing JSON-LD block`);
+  for (const block of jsonLdBlocks) {
+    try {
+      JSON.parse(block[1]);
+    } catch {
+      fail(`${route}: invalid JSON-LD JSON`);
+    }
+  }
   if (html.includes(LEGACY_CLOUD_RUN)) fail(`${route}: contains stale Cloud Run domain`);
 }
 
@@ -82,6 +93,44 @@ function validateSitemap() {
   if (xml.includes(LEGACY_CLOUD_RUN)) fail('sitemap contains stale Cloud Run domain');
 }
 
+function validateCrawlerIndexes() {
+  const ai = readFileSync(resolve(ROOT, 'public', 'ai-index.html'), 'utf8');
+  for (const href of [
+    '/tracks/implementation',
+    '/tracks/ops-analytics',
+    '/tracks/gis',
+    '/projects',
+    '/resume',
+    '/portfolio2/deep-dive',
+    '/markdown/home.md',
+    '/markdown/index.md',
+  ]) {
+    if (!ai.includes(href)) fail(`ai-index.html missing link: ${href}`);
+  }
+  const site = readFileSync(resolve(ROOT, 'public', 'site-index.html'), 'utf8')
+    .replace(/<[^>]+>/g, '')
+    .trim();
+  if (site.length < 120) fail('site-index.html appears empty');
+}
+
+function validateMarkdownMirrors() {
+  const required = [
+    'home.md',
+    'index.md',
+    'resume.md',
+    'process.md',
+    'tracks/implementation.md',
+    'tracks/ops-analytics.md',
+    'tracks/gis.md',
+    'projects/guynode.md',
+    'projects/digital-twin.md',
+  ];
+  for (const rel of required) {
+    const p = resolve(ROOT, 'public', 'markdown', rel);
+    if (!existsSync(p)) fail(`missing markdown mirror: /markdown/${rel}`);
+  }
+}
+
 function validateMetadataFiles() {
   for (const file of ['index.html', 'public/ai-index.html', 'public/site-index.html']) {
     const text = readFileSync(resolve(ROOT, file), 'utf8');
@@ -105,6 +154,8 @@ validateGeneratorRouteList();
 for (const route of REQUIRED_ROUTES) assertSnapshotHtml(route);
 validateSitemap();
 validateMetadataFiles();
+validateCrawlerIndexes();
+validateMarkdownMirrors();
 
 if (process.exitCode) process.exit(process.exitCode);
 pass(
