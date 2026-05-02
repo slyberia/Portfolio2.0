@@ -6,6 +6,8 @@ const siteUrl = (process.env.SITE_URL || 'https://kylesemple.com').replace(/\/$/
 
 const sharedLinks = `<nav aria-label="Related routes"><ul><li><a href="/">Home</a></li><li><a href="/projects">Projects</a></li><li><a href="/resume">Resume</a></li><li><a href="/site-index">Site Index</a></li><li><a href="/ai-index">AI Index</a></li><li><a href="/llms.txt">llms.txt</a></li></ul></nav>`;
 
+const jsonLd = (obj) => `<script type="application/ld+json">${JSON.stringify(obj)}</script>`;
+
 const routes = [
   [
     '/',
@@ -163,7 +165,14 @@ for (const [route, title, desc, heading, summary, links, md] of routes) {
   const canonical = `${siteUrl}${route}`;
   const routeLinks = links.map((href) => `<li><a href="${href}">${href}</a></li>`).join('');
   const mdLink = md ? `<p>Markdown mirror: <a href="${md}">${md}</a></p>` : '';
-  const html = `<!doctype html><html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>${title}</title><meta name="description" content="${desc}" /><link rel="canonical" href="${canonical}" /></head><body><main><h1>${heading}</h1><p>${summary}</p><section><h2>Related internal routes</h2><ul>${routeLinks}</ul></section>${mdLink}${sharedLinks}</main></body></html>`;
+  const routeJsonLd = jsonLd({
+    '@context': 'https://schema.org',
+    '@type': route.startsWith('/projects/') ? 'CreativeWork' : 'CollectionPage',
+    name: heading,
+    description: summary,
+    url: canonical,
+  });
+  const html = `<!doctype html><html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>${title}</title><meta name="description" content="${desc}" /><meta property="og:title" content="${title}" /><meta property="og:description" content="${desc}" /><meta property="og:url" content="${canonical}" /><link rel="canonical" href="${canonical}" /><link rel="alternate" href="/llms.txt" /><link rel="bookmark" href="/ai-index" /></head><body><main><h1>${heading}</h1><p>${summary}</p><section><h2>Related internal routes</h2><ul>${routeLinks}</ul></section>${mdLink}${sharedLinks}</main>${routeJsonLd}</body></html>`;
   const outPath =
     route === '/' ? resolve(distDir, 'index.html') : resolve(distDir, route.slice(1), 'index.html');
   mkdirSync(dirname(outPath), { recursive: true });
