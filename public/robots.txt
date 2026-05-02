@@ -1,8 +1,11 @@
 User-agent: *
 Allow: /
 
-# Standard SEO
-Sitemap: https://kyle-semple-professional-portfolio-ai-ops-cx-succ-786228485832.us-west1.run.app/sitemap.xml
+# Primary sitemap for crawler discovery
+Sitemap: https://kyle-semple-portfolio-786228485832.northamerica-northeast2.run.app/sitemap.xml
 
-# AI Context Discovery
-Sitemap: https://kyle-semple-professional-portfolio-ai-ops-cx-succ-786228485832.us-west1.run.app/llms.txt
+# AI-readable companion files for non-JS and LLM crawlers:
+# /llms.txt
+# /ai-index
+# /site-index.html
+# /markdown/index.md
