@@ -65,16 +65,29 @@ npm run dev
 
 ## Scripts
 
-| Script                 | Description                         |
-| ---------------------- | ----------------------------------- |
-| `npm run dev`          | Vite dev server on :5173            |
-| `npm run build`        | Type-check and build for production |
-| `npm test`             | Run Vitest                          |
-| `npm run typecheck`    | TypeScript type checker (no emit)   |
-| `npm run lint`         | ESLint (zero warnings)              |
-| `npm run format:check` | Check formatting without writing    |
-| `npm run dev:full`     | Vite + Express concurrently         |
-| `npm run serve`        | Express server on :8080             |
+| Script                          | Description                                                   |
+| ------------------------------- | ------------------------------------------------------------- |
+| `npm run dev`                   | Vite dev server on :5173                                      |
+| `npm run build`                 | Type-check and build for production                           |
+| `npm test`                      | Run Vitest                                                    |
+| `npm run typecheck`             | TypeScript type checker (no emit)                             |
+| `npm run lint`                  | ESLint (zero warnings)                                        |
+| `npm run format:check`          | Check formatting without writing                              |
+| `npm run dev:full`              | Vite + Express concurrently                                   |
+| `npm run serve`                 | Express server on :8080                                       |
+| `npm run generate:crawler-html` | Generate dist HTML snapshots for crawler routes               |
+| `npm run validate:crawler`      | Validate snapshot route coverage + sitemap/canonical metadata |
+
+## Crawler Snapshot Drift Guardrail
+
+Crawler snapshots are intentionally maintained manually for stability (not derived from React components). To reduce content drift risk, run:
+
+```bash
+npm run build
+npm run validate:crawler
+```
+
+This validator checks required canonical route coverage in the generator and sitemap, snapshot metadata completeness (`title`, description, canonical, meaningful body text), `/llms.txt` and `/ai-index` links, deprecated `/case-studies` exclusions from primary sitemap entries, and stale Cloud Run domain references in sitemap/metadata/snapshots.
 
 ## Project Structure
 
