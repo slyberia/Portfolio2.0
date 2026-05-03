@@ -1,5 +1,13 @@
 # Security Audit — Portfolio2.0
 
+## 2026-05-03 Hardening Pass Update
+
+- ✅ `src/mockups.ts` no longer uses `innerHTML = ''` for dynamic UI reset paths; these were switched to `replaceChildren()` to avoid unsafe `innerHTML` patterns in user-influenced flows.
+- ✅ Docker runtime stage is configured to run as non-root (`appuser`/`appgroup`).
+- ✅ GitHub Actions in `.github/workflows/ci.yml` are pinned to immutable full commit SHAs (with version comments).
+- ⚠️ Dependency remediation (`npm audit fix`, `npm install dompurify@latest`, and fresh `npm audit`) could not be completed in this environment because the npm registry/audit endpoints returned HTTP 403.
+- ⚠️ Vite major-upgrade evaluation remains pending until dependency network access is available.
+
 **Tool:** ship-safe v9.1.1  
 **Date:** 2026-04-23  
 **Branch:** `claude/ship-safe-security-audit-GsZa6`  
@@ -206,3 +214,17 @@ The `.claude/skills/ship-safe/` directory (the scanner tool itself) was present 
 | 7        | MED-02: Add `helmet`                         | Install + configure (30 min)             |
 | 8        | MED-03: Add React Error Boundary             | New component (20 min)                   |
 | 9        | MED-05: Upgrade `vite`                       | Major version upgrade (review changelog) |
+
+## Remediation Status
+
+| ID      | Finding                                                 | Status               | Remediation                                                                                                                   | Commit                         |
+| ------- | ------------------------------------------------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| DEP-01  | `protobufjs` critical vulnerability via `@google/genai` | Deferred             | `npm audit fix` attempted, but audit endpoint returned HTTP 403 in this environment; retry in CI/network-enabled environment. | Pending current PR commit hash |
+| HIGH-01 | GitHub Actions not pinned to SHA                        | Remediated           | `actions/checkout` and `actions/setup-node` are pinned to full commit SHAs in CI workflow.                                    | Pending current PR commit hash |
+| HIGH-02 | XSS via unsafe `innerHTML` patterns in mockups          | Remediated           | Dynamic mockup reset patterns switched away from `innerHTML` usage (`replaceChildren`/text-safe patterns).                    | Pending current PR commit hash |
+| HIGH-03 | Docker container runs as root                           | Remediated           | Production stage uses non-root `appuser`/`appgroup`.                                                                          | Pending current PR commit hash |
+| MED-01  | No JSON body size limit on Express                      | False positive       | `express.json({ limit: '10kb' })` already present.                                                                            | Pending current PR commit hash |
+| MED-02  | Missing CSP/HSTS/security header posture                | Partially remediated | Helmet is enabled; production header posture still requires deployed verification.                                            | Pending current PR commit hash |
+| MED-03  | Missing React Error Boundary                            | Remediated           | Root app is wrapped in an Error Boundary with fallback rendering and console error logging.                                   | Pending current PR commit hash |
+| MED-04  | `dompurify` vulnerabilities                             | Deferred             | `npm install dompurify@latest` blocked by npm registry HTTP 403 in this environment; retry with network-enabled install.      | Pending current PR commit hash |
+| MED-05  | Vite dev-server vulnerability                           | Deferred             | Requires Vite major upgrade evaluation; deferred pending compatibility review and dependency update access.                   | Pending current PR commit hash |

@@ -13,6 +13,11 @@ export function createApp(distDir = path.resolve(__dirname, '..', 'dist')) {
   const app = express();
 
   app.use(helmet({ frameguard: { action: 'deny' } }));
+
+  app.get('/healthz', (_req, res) => {
+    res.status(200).json({ ok: true });
+  });
+
   app.use(express.json({ limit: '10kb' }));
   app.use('/api', geminiProxy);
   app.use(express.static(distDir));
