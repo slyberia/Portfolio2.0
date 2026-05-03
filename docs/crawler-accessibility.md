@@ -1,43 +1,44 @@
 # Crawler accessibility for Portfolio2.0
 
-Portfolio2.0 is a React SPA, so many crawlers and LLM agents may miss route content when JavaScript is not executed. This repo includes crawler-first files so the role-track narrative and project evidence remain discoverable.
+Portfolio2.0 is a React SPA. The React app remains the canonical website, and crawler snapshots are now isolated under `/crawler/...` so they cannot overwrite app routes.
 
-## Why crawler support is required
+## Canonical architecture
 
-- Route content is rendered client-side in the SPA.
-- Search/crawler agents may fetch HTML without running JS.
-- Hiring reviewers and AI systems need stable, crawlable summaries of the three role tracks and project proof.
+- Canonical user-facing routes are React app routes (`/`, `/tracks/*`, `/projects/*`, `/resume`, `/site-index`, `/ai-index`).
+- Vite owns `dist/index.html` as the production SPA entrypoint.
+- Static crawler mirrors are generated only under `dist/crawler/**`.
+- Crawler mirrors must never write into canonical app output paths (`dist/index.html`, `dist/projects/**`, etc.).
 
-## What each crawler surface does
+## Build and generation workflow
 
-- `public/llms.txt`: machine-readable discovery entrypoint with key routes and static assets.
-- `/ai-index` + `public/ai-index.html`: AI-oriented route index linking tracks, projects, resume, process, and markdown mirrors.
-- Markdown mirrors in `public/markdown/**`: plain-text route mirrors for crawler and LLM ingestion.
-- `public/site-index.html`: human-readable no-JS index for route discovery.
+- `npm run build`: builds TypeScript + Vite only. It does **not** generate crawler mirrors.
+- `npm run generate:crawler-html`: manually generates crawler snapshots under `dist/crawler/**`.
+- Optional convenience command: `npm run build:crawler` to run build + crawler generation in sequence.
 
-## robots.txt and sitemap maintenance
+## Crawler surfaces
 
-- Keep exactly one primary sitemap declaration in `public/robots.txt` pointing at `/sitemap.xml`.
-- Do not declare `/llms.txt` as a sitemap.
-- Keep `public/sitemap.xml` aligned with canonical routes under `/tracks/*`, `/projects/*`, `/resume`, `/ai-index`, and `/site-index`.
-- Keep deprecated `/case-studies/*` routes out of sitemap primary entries.
+- `public/llms.txt`: discovery index with canonical routes and alternate crawler mirror links.
+- `public/ai-index.html` and `public/site-index.html`: static indexes that keep canonical links primary and present `/crawler/...` links as alternate mirrors.
+- `public/sitemap.xml`: canonical routes only.
+- `public/crawler-sitemap.xml`: crawler mirror namespace routes only.
+- `public/robots.txt`: references both canonical and crawler sitemaps.
 
-## Static/pre-rendered snapshots
+## Validation requirements
 
-- Build pipeline runs `npm run generate:crawler-html` to emit route snapshots under `dist/**/index.html`.
-- These snapshots include route metadata, crawler links (`/llms.txt`, `/ai-index`), markdown mirror links, and JSON-LD.
-- Snapshot HTML must contain meaningful text, not only the SPA mount node.
+Run these commands before deployment:
 
-## Updating canonical base URL
-
-- Canonical base URL is defined in `src/lib/seo.ts` and used across route metadata/JSON-LD.
-- Update the same domain references in `index.html`, `public/sitemap.xml`, and any static index files when a custom domain changes.
-- Re-run crawler validation before deploy.
-
-## Validation commands before deployment
-
+- `npm run format:check`
 - `npm run typecheck`
 - `npm run lint`
 - `npm test`
 - `npm run build`
+- `npm run generate:crawler-html`
 - `npm run validate:crawler`
+
+Validation asserts:
+
+- `dist/index.html` still contains React mount node and Vite module script.
+- crawler generation does not overwrite `dist/index.html`.
+- crawler snapshots are emitted only under `dist/crawler/**`.
+- required crawler files exist (including `/crawler/index.html`, `/crawler/projects/guynode/index.html`, `/crawler/tracks/implementation/index.html`).
+- crawler snapshots contain required metadata, canonical URLs to real app routes, meaningful body text, and links to `/llms.txt` + `/ai-index`.

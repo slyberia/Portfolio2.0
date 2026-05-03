@@ -1,11 +1,8 @@
 User-agent: *
 Allow: /
 
-# Primary sitemap for crawler discovery
-Sitemap: https://kyle-semple-portfolio-786228485832.northamerica-northeast2.run.app/sitemap.xml
+# Primary sitemap for canonical app routes
+Sitemap: https://kylesemple.com/sitemap.xml
 
-# AI-readable companion files for non-JS and LLM crawlers:
-# /llms.txt
-# /ai-index
-# /site-index.html
-# /markdown/index.md
+# Secondary sitemap for crawler mirror namespace
+Sitemap: https://kylesemple.com/crawler-sitemap.xml
