@@ -20,6 +20,16 @@ beforeAll(() => {
     })),
   });
   Object.defineProperty(window, 'scrollTo', { writable: true, value: vi.fn() });
+  if (typeof globalThis.AbortController !== 'undefined') {
+    Object.defineProperty(window, 'AbortController', {
+      writable: true,
+      value: globalThis.AbortController,
+    });
+    Object.defineProperty(window, 'AbortSignal', {
+      writable: true,
+      value: globalThis.AbortSignal,
+    });
+  }
 });
 
 vi.mock('../views/HomeView', () => ({
