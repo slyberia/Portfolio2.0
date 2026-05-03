@@ -7,8 +7,10 @@ RUN npm ci
 
 COPY . .
 
-# Build frontend (tsc + vite)
-RUN npm run build
+# Build frontend and crawler mirrors
+ARG SITE_URL=https://kyle-semple-portfolio-786228485832.us-central1.run.app
+ENV SITE_URL=$SITE_URL
+RUN npm run build:crawler
 
 # Compile server TypeScript to JS
 RUN npx tsc -p tsconfig.server.json

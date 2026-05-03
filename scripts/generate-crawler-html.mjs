@@ -3,7 +3,9 @@ import { resolve, dirname } from 'node:path';
 
 const distDir = resolve(process.cwd(), 'dist');
 const crawlerDir = resolve(distDir, 'crawler');
-const siteUrl = (process.env.SITE_URL || 'https://kylesemple.com').replace(/\/$/, '');
+const siteUrl = (
+  process.env.SITE_URL || 'https://kyle-semple-portfolio-786228485832.us-central1.run.app'
+).replace(/\/$/, '');
 
 const sharedLinks = `<nav aria-label="Related routes"><ul><li><a href="/">Home</a></li><li><a href="/projects">Projects</a></li><li><a href="/resume">Resume</a></li><li><a href="/site-index">Site Index</a></li><li><a href="/ai-index">AI Index</a></li><li><a href="/llms.txt">llms.txt</a></li></ul></nav>`;
 
