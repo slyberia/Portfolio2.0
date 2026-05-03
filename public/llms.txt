@@ -35,3 +35,22 @@ This file is a crawler-readable companion to the React app. It highlights stable
 - /portfolio2/deep-dive
 - /resume
 - /site-index
+
+
+## Static crawler mirrors (alternate, non-canonical)
+- /crawler/
+- /crawler/tracks/implementation
+- /crawler/tracks/ops-analytics
+- /crawler/tracks/gis
+- /crawler/projects
+- /crawler/projects/guynode
+- /crawler/projects/digital-twin
+- /crawler/projects/ops-triage
+- /crawler/projects/prompter-hub
+- /crawler/projects/project-aegis
+- /crawler/projects/nba-systems-qa
+- /crawler/projects/luxe-lofts
+- /crawler/portfolio2/deep-dive
+- /crawler/resume
+- /crawler/site-index
+- /crawler/ai-index
