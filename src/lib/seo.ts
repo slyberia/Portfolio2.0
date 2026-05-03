@@ -112,6 +112,37 @@ export const getSeoForPath = (pathname: string): RouteSeo => {
       markdownPath: '/markdown/index.md',
       jsonLd: sharedProjectJsonLd,
     },
+
+    '/portfolio2/deep-dive': {
+      title: 'Portfolio2.0 Deep Dive — Process and Governance',
+      description:
+        'Deep dive into Portfolio2.0 process, delivery timeline, governance decisions, testing evidence, and AI safety controls.',
+      canonicalPath: '/portfolio2/deep-dive',
+      markdownPath: '/markdown/process.md',
+      jsonLd: [
+        {
+          '@context': 'https://schema.org',
+          '@type': 'AboutPage',
+          name: 'Portfolio2.0 Deep Dive',
+          url: `${SITE_BASE_URL}/portfolio2/deep-dive`,
+        },
+      ],
+    },
+    '/site-index': {
+      title: 'Portfolio Site Index',
+      description:
+        'Route-level site index for crawler and no-JS navigation across primary portfolio sections and supporting resources.',
+      canonicalPath: '/site-index',
+      markdownPath: '/markdown/index.md',
+      jsonLd: [
+        {
+          '@context': 'https://schema.org',
+          '@type': 'CollectionPage',
+          name: 'Portfolio Site Index',
+          url: `${SITE_BASE_URL}/site-index`,
+        },
+      ],
+    },
     '/resume': {
       title: 'Kyle Semple Resume Summary',
       description:

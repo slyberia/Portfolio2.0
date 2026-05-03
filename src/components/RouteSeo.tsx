@@ -37,6 +37,11 @@ const RouteSeo: React.FC = () => {
       property: 'og:url',
       content: `${SITE_BASE_URL}${seo.canonicalPath}`,
     });
+    upsertMeta('meta[property="og:type"]', { property: 'og:type', content: 'website' });
+    upsertMeta('meta[property="og:image"]', {
+      property: 'og:image',
+      content: `${SITE_BASE_URL}/og-image.svg`,
+    });
     upsertLink('canonical', `${SITE_BASE_URL}${seo.canonicalPath}`);
     upsertLink('alternate', '/llms.txt');
     upsertLink('bookmark', '/ai-index');
