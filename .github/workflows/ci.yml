@@ -39,6 +39,10 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Secret scan (gitleaks)
+        # TODO: Pin to immutable commit SHA after network-enabled verification.
+        uses: gitleaks/gitleaks-action@v2
+
       - name: Key Audit
         run: |
           if grep -r "GEMINI_API_KEY" dist/; then

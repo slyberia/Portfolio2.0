@@ -117,6 +117,18 @@ public/
 | [ARCHITECTURE.md](ARCHITECTURE.md)         | Stack overview and security notes                   |
 | [public/llms.txt](public/llms.txt)         | Machine-readable project context                    |
 
+## Security Posture
+
+- Gemini calls are proxied server-side; the Gemini API key is not exposed in client bundles.
+- `/api/chat` includes server-side rate limiting, input validation, topic/prompt-injection filtering, and chat-history sanitization.
+- Helmet security headers are enabled on the Express server.
+- CI includes a Gemini bundle leak check and a general secret scan.
+- Dependabot is configured for npm and GitHub Actions updates.
+- Threat modeling is documented in `THREAT_MODEL.md`.
+- Known limitation: rate limiting is in-memory and resets on container restart/scale events.
+- Manual follow-up: set Gemini API quota cap in Google Cloud Console.
+- Manual follow-up: verify deployed production headers after each release.
+
 ## License
 
 MIT

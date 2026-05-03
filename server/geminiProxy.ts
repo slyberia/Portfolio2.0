@@ -12,6 +12,13 @@ const MAX_MESSAGE_LENGTH = 800;
 const MAX_HISTORY_MESSAGES = 8;
 const MAX_HISTORY_ENTRY_LENGTH = 1200;
 
+const ALLOWED_CHAT_ORIGINS = new Set([
+  'https://kyle-semple-portfolio-786228485832.us-central1.run.app',
+  'http://localhost:5173',
+  'http://localhost:4173',
+  'http://localhost:3000',
+]);
+
 const DEFLECTION =
   'I’m here to help with Kyle’s work, projects, skills, resume, and portfolio. Try asking about implementation proof, QA work, GIS experience, Guynode, or the Digital Twin.';
 
@@ -137,6 +144,30 @@ Only append approved commands at the end when relevant:
 <<ACTION:resume>>
 `;
 
+type ChatOutcome = 'allowed' | 'blocked' | 'rate_limited' | 'validation_error' | 'error';
+
+function logChatRequest(req: Request, outcome: ChatOutcome, messageLength: number) {
+  const payload = {
+    timestamp: new Date().toISOString(),
+    path: req.path,
+    clientIp: getClientIp(req),
+    messageLength,
+    outcome,
+  };
+
+  if (outcome === 'error') {
+    console.error(payload);
+    return;
+  }
+
+  if (outcome === 'blocked' || outcome === 'rate_limited' || outcome === 'validation_error') {
+    console.warn(payload);
+    return;
+  }
+
+  console.info(payload);
+}
+
 function detectInjectionAttempt(message: string): boolean {
   const patterns = [
     /ignore\s+(all\s+)?(previous|prior|above)\s+instructions/i,
@@ -185,32 +216,67 @@ function sanitizeHistory(history: unknown): ChatHistory {
 
 const router = Router();
 
+router.use('/chat', (req, res, next) => {
+  const origin = req.headers.origin;
+
+  if (!origin) {
+    next();
+    return;
+  }
+
+  if (ALLOWED_CHAT_ORIGINS.has(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    if (req.method === 'OPTIONS') {
+      res.status(204).end();
+      return;
+    }
+
+    next();
+    return;
+  }
+
+  if (req.method === 'OPTIONS') {
+    res.status(403).json({ error: 'Origin not allowed' });
+    return;
+  }
+
+  res.status(403).json({ error: 'Origin not allowed' });
+});
+
 router.post('/chat', async (req: Request, res: Response) => {
+  const { message, history } = req.body as { message: unknown; history: unknown };
+  const messageLength = typeof message === 'string' ? message.length : 0;
+
   const ip = getClientIp(req);
 
   if (!checkRateLimit(ip)) {
+    logChatRequest(req, 'rate_limited', messageLength);
     res.status(429).json({ error: 'Daily request limit exceeded' });
     return;
   }
 
-  const { message, history } = req.body as { message: unknown; history: unknown };
-
   if (!message || typeof message !== 'string') {
+    logChatRequest(req, 'validation_error', messageLength);
     res.status(400).json({ error: 'Invalid message' });
     return;
   }
 
   if (message.length > MAX_MESSAGE_LENGTH) {
+    logChatRequest(req, 'validation_error', messageLength);
     res.status(400).json({ error: 'Message too long' });
     return;
   }
 
-  // This assistant is intentionally scoped to portfolio/recruiter use cases to control cost, reduce abuse, and preserve relevance.
   if (
     detectInjectionAttempt(message) ||
     !isRelevant(message) ||
     (isExpensiveOrIrrelevant(message) && !isRelevant(message))
   ) {
+    logChatRequest(req, 'blocked', message.length);
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.setHeader('Cache-Control', 'no-cache');
     res.write(DEFLECTION);
@@ -220,6 +286,7 @@ router.post('/chat', async (req: Request, res: Response) => {
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
+    logChatRequest(req, 'error', message.length);
     res.status(503).json({ error: 'Service unavailable' });
     return;
   }
@@ -234,6 +301,7 @@ router.post('/chat', async (req: Request, res: Response) => {
       history: safeHistory,
     });
 
+    logChatRequest(req, 'allowed', message.length);
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('X-Accel-Buffering', 'no');
@@ -244,6 +312,7 @@ router.post('/chat', async (req: Request, res: Response) => {
     }
     res.end();
   } catch (err) {
+    logChatRequest(req, 'error', message.length);
     console.error('Gemini proxy error:', err);
     if (!res.headersSent) {
       res.status(500).json({ error: 'Internal server error' });
