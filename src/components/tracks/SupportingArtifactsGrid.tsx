@@ -16,15 +16,15 @@ const SupportingArtifactsGrid: React.FC<SupportingArtifactsGridProps> = ({ items
       {items.map((item) => {
         const isExternal = item.href.startsWith('http');
         const className =
-          'flex items-center justify-between gap-3 px-4 py-3 glass-card rounded-xl group transition-all duration-200 hover:-translate-y-0.5 hover:border-indigo-500/30';
+          'flex items-center justify-between gap-3 px-4 py-3 glass-card rounded-xl group transition-all duration-200 hover:-translate-y-0.5 hover:border-tide-aqua/30';
         const inner = (
           <>
-            <span className="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+            <span className="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-tide-aqua dark:group-hover:text-tide-softBlue transition-colors">
               {item.label}
             </span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="w-4 h-4 text-slate-400 group-hover:text-indigo-500 transition-colors shrink-0"
+              className="w-4 h-4 text-slate-400 group-hover:text-tide-aqua transition-colors shrink-0"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"

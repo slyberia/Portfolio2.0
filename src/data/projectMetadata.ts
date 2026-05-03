@@ -4,7 +4,7 @@ import { buildProjectHref } from '../lib/routes';
 export type ProjectRoleLane = 'Implementation' | 'QA' | 'GIS';
 export type ProjectFilter = 'Implementation' | 'QA' | 'GIS' | 'AI Systems' | 'Process';
 export type ProjectHierarchy = 'featured' | 'supporting';
-export type ProjectAccent = 'orange' | 'blue' | 'teal' | 'slate' | 'violet';
+export type ProjectAccent = 'aqua' | 'blue' | 'cyan' | 'gold' | 'slate';
 
 export type ProjectMetadata = {
   id: string;
@@ -42,7 +42,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     roleLanes: ['GIS', 'Implementation', 'QA'],
     filters: ['GIS', 'Implementation', 'QA', 'Process'],
     proofType: 'System',
-    accent: 'teal',
+    accent: 'gold',
     sortOrder: 1,
     href: buildProjectHref('guynode'),
   },
@@ -57,7 +57,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     roleLanes: ['Implementation', 'QA'],
     filters: ['Implementation', 'QA', 'AI Systems', 'Process'],
     proofType: 'System',
-    accent: 'orange',
+    accent: 'aqua',
     sortOrder: 2,
     href: buildProjectHref('digital-twin'),
   },
@@ -85,7 +85,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     roleLanes: ['Implementation', 'QA'],
     filters: ['Implementation', 'QA', 'AI Systems', 'Process'],
     proofType: 'Documentation',
-    accent: 'violet',
+    accent: 'aqua',
     sortOrder: 4,
     href: buildProjectHref('prompter-hub'),
   },

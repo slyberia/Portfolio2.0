@@ -20,8 +20,8 @@ const ProofBlockCard: React.FC<ProofBlockCardProps> = ({
   const isInternal = !isExternal;
 
   const cardContent = (
-    <div className="glass-card p-6 rounded-2xl flex flex-col gap-4 h-full group transition-all duration-300 hover:-translate-y-1 hover:border-indigo-500/30 cursor-pointer">
-      <h3 className="text-base font-bold text-navy-900 dark:text-white leading-snug group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+    <div className="glass-card p-6 rounded-2xl flex flex-col gap-4 h-full group transition-all duration-300 hover:-translate-y-1 hover:border-tide-aqua/30 cursor-pointer">
+      <h3 className="text-base font-bold text-navy-900 dark:text-white leading-snug group-hover:text-tide-aqua dark:group-hover:text-tide-softBlue transition-colors">
         {title}
       </h3>
       <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">{summary}</p>

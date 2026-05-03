@@ -12,11 +12,11 @@ const TrackHero: React.FC<TrackHeroProps> = ({ eyebrow, title, headline, subcopy
   return (
     <section className="relative pt-32 pb-16 px-6 overflow-hidden">
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 w-[600px] h-[600px] bg-indigo-500/10 blur-[120px] rounded-full pointer-events-none opacity-60"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 w-[600px] h-[600px] bg-tide-aqua/10 blur-[120px] rounded-full pointer-events-none opacity-60"
         aria-hidden="true"
       />
       <div className="max-w-4xl mx-auto space-y-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-widest">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-tide-aqua/10 border border-tide-aqua/20 text-tide-aqua dark:text-tide-softBlue text-xs font-bold uppercase tracking-widest">
           {eyebrow}
         </div>
         <h1 className="text-4xl md:text-5xl font-outfit font-extrabold text-navy-900 dark:text-white leading-tight">
@@ -32,7 +32,7 @@ const TrackHero: React.FC<TrackHeroProps> = ({ eyebrow, title, headline, subcopy
           {chips.map((chip) => (
             <span
               key={chip}
-              className="inline-flex items-center px-3 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-700 dark:text-indigo-400 text-xs font-bold"
+              className="inline-flex items-center px-3 py-1.5 rounded-full bg-tide-aqua/10 border border-tide-aqua/20 text-[#237f86] dark:text-tide-softBlue text-xs font-bold"
             >
               {chip}
             </span>

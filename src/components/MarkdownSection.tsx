@@ -63,7 +63,7 @@ export const CodeBlock: React.FC<{ children: React.ReactNode; className?: string
         </button>
       </div>
       <pre
-        className={`rounded-2xl overflow-x-auto bg-slate-50 dark:bg-slate-950/80 p-5 pt-12 border border-slate-200 dark:border-indigo-500/40 text-slate-900 dark:text-indigo-50 font-mono text-sm leading-relaxed shadow-sm dark:shadow-[0_0_20px_rgba(196,89,42,0.05)] transition-all duration-300 group-hover/code:dark:border-indigo-500/60 ${className}`}
+        className={`rounded-2xl overflow-x-auto bg-slate-50 dark:bg-slate-950/80 p-5 pt-12 border border-slate-200 dark:border-tide-aqua/40 text-slate-900 dark:text-tide-aqua/10 font-mono text-sm leading-relaxed shadow-sm dark:shadow-[0_0_20px_rgba(196,89,42,0.05)] transition-all duration-300 group-hover/code:dark:border-tide-aqua/60 ${className}`}
       >
         {children}
       </pre>
@@ -102,7 +102,7 @@ const MarkdownSection: React.FC<MarkdownSectionProps> = ({
   return (
     <div className="relative group">
       <div
-        className="absolute -inset-1 bg-gradient-to-r from-indigo-500/5 to-indigo-500/5 blur-xl opacity-75 rounded-3xl dark:opacity-75"
+        className="absolute -inset-1 bg-gradient-to-r from-tide-aqua/5 to-tide-aqua/5 blur-xl opacity-75 rounded-3xl dark:opacity-75"
         aria-hidden="true"
       ></div>
 
@@ -143,7 +143,7 @@ const MarkdownSection: React.FC<MarkdownSectionProps> = ({
               a: ({ node: _node, ...props }) => (
                 <a
                   {...props}
-                  className="text-indigo-600 dark:text-indigo-400 hover:underline underline-offset-4 decoration-indigo-500/30 transition-colors font-medium"
+                  className="text-tide-aqua dark:text-tide-softBlue hover:underline underline-offset-4 decoration-tide-aqua/30 transition-colors font-medium"
                 />
               ),
               blockquote: ({ node: _node, ...props }) => (
@@ -153,7 +153,7 @@ const MarkdownSection: React.FC<MarkdownSectionProps> = ({
                 />
               ),
               table: ({ node: _node, ...props }) => (
-                <div className="my-12 overflow-x-auto rounded-3xl border border-indigo-500/10 dark:border-white/10 bg-white/50 dark:bg-white/5 shadow-2xl shadow-indigo-500/5 ring-1 ring-black/5 dark:ring-white/5">
+                <div className="my-12 overflow-x-auto rounded-3xl border border-tide-aqua/10 dark:border-white/10 bg-white/50 dark:bg-white/5 shadow-2xl shadow-tide-aqua/5 ring-1 ring-black/5 dark:ring-white/5">
                   <table {...props} className="w-full text-left border-collapse table-fixed" />
                 </div>
               ),
@@ -178,7 +178,7 @@ const MarkdownSection: React.FC<MarkdownSectionProps> = ({
               tr: ({ node: _node, ...props }) => (
                 <tr
                   {...props}
-                  className="hover:bg-indigo-500/[0.02] dark:hover:bg-indigo-500/[0.04] transition-colors"
+                  className="hover:bg-tide-aqua/[0.02] dark:hover:bg-tide-aqua/[0.04] transition-colors"
                 />
               ),
             }}

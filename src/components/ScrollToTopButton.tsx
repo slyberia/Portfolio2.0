@@ -19,7 +19,7 @@ const ScrollToTopButton: React.FC = () => {
       type="button"
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       aria-label="Scroll to top"
-      className="fixed bottom-28 md:bottom-24 right-4 md:right-5 z-[70] inline-flex items-center gap-2 rounded-full border border-slate-300 bg-[#fcfaf7] px-3 py-2 text-xs font-semibold text-slate-700 shadow-md hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+      className="fixed bottom-28 md:bottom-24 right-4 md:right-5 z-[70] inline-flex items-center gap-2 rounded-full border border-slate-300 bg-[#f8fbfd] px-3 py-2 text-xs font-semibold text-slate-700 shadow-md hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
     >
       <span aria-hidden="true">↑</span>
       <span>Back to top</span>

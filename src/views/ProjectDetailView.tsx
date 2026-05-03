@@ -17,11 +17,11 @@ import { getProjectMetadata, PROJECT_METADATA } from '../data/projectMetadata';
 import ScrollToTopButton from '../components/ScrollToTopButton';
 
 const ACCENT_STYLES = {
-  orange: 'border-orange-300/70 bg-orange-50 text-orange-700',
-  blue: 'border-blue-300/70 bg-blue-50 text-blue-700',
-  teal: 'border-teal-300/70 bg-teal-50 text-teal-700',
+  aqua: 'border-tide-aqua/40 bg-tide-aqua/10 text-[#237f86]',
+  blue: 'border-tide-blue/40 bg-tide-blue/10 text-[#2a77a8]',
+  cyan: 'border-tide-cyan/40 bg-tide-cyan/10 text-[#237f86]',
   slate: 'border-slate-300/70 bg-slate-50 text-slate-700',
-  violet: 'border-violet-300/70 bg-violet-50 text-violet-700',
+  gold: 'border-gild/50 bg-gild-soft/20 text-gild-deep',
 } as const;
 
 const ProjectSwitcher: React.FC<{ activeId: string }> = ({ activeId }) => {
@@ -157,7 +157,7 @@ const ProjectDetailView: React.FC = () => {
           </div>
         </header>
 
-        <section className="rounded-2xl border border-slate-200 bg-[#fcfbf9] p-6">
+        <section className="rounded-2xl border border-slate-200 bg-[#f8fbfd] p-6">
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
             Project Overview
           </p>

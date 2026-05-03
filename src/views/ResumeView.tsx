@@ -3,7 +3,7 @@ import { EXPERIENCE, CERTIFICATIONS } from '../constants';
 
 const ResumeView: React.FC = () => {
   return (
-    <div className="min-h-screen bg-white text-slate-900 selection:bg-indigo-500 selection:text-white font-sans px-8 pt-24 pb-8 md:p-16 max-w-[8.5in] mx-auto shadow-2xl print:shadow-none print:p-0">
+    <div className="min-h-screen bg-white text-slate-900 selection:bg-tide-aqua selection:text-white font-sans px-8 pt-24 pb-8 md:p-16 max-w-[8.5in] mx-auto shadow-2xl print:shadow-none print:p-0">
       {/* Header */}
       <header className="mb-10 text-center sm:text-left">
         <h1 className="text-4xl font-bold mb-2">Kyle Semple</h1>
@@ -12,11 +12,11 @@ const ResumeView: React.FC = () => {
           <span className="hidden sm:inline">•</span>
           <span>734-882-9095</span>
           <span className="hidden sm:inline">•</span>
-          <a href="mailto:kmsemple26@gmail.com" className="text-indigo-600">
+          <a href="mailto:kmsemple26@gmail.com" className="text-tide-aqua">
             kmsemple26@gmail.com
           </a>
           <span className="hidden sm:inline">•</span>
-          <a href="https://www.linkedin.com/in/kyle-semple-522537165/" className="text-indigo-600">
+          <a href="https://www.linkedin.com/in/kyle-semple-522537165/" className="text-tide-aqua">
             LinkedIn
           </a>
         </div>
@@ -51,7 +51,7 @@ const ResumeView: React.FC = () => {
                 <span className="text-sm text-slate-600 italic">{exp.period}</span>
               </div>
               {exp.tools && (
-                <div className="text-[10px] font-bold uppercase tracking-widest text-indigo-600 mb-3 px-2 py-1 bg-indigo-50 border border-indigo-100 rounded inline-block">
+                <div className="text-[10px] font-bold uppercase tracking-widest text-tide-aqua mb-3 px-2 py-1 bg-tide-aqua/10 border border-tide-aqua/20 rounded inline-block">
                   {exp.tools}
                 </div>
               )}
@@ -145,7 +145,7 @@ const ResumeView: React.FC = () => {
       <div className="fixed bottom-8 right-8 print:hidden">
         <button
           onClick={() => window.print()}
-          className="bg-indigo-600 text-white px-6 py-3 rounded-xl font-bold shadow-xl hover:bg-indigo-700 transition-all flex items-center gap-2"
+          className="bg-tide-aqua text-white px-6 py-3 rounded-xl font-bold shadow-xl hover:bg-[#237f86] transition-all flex items-center gap-2"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

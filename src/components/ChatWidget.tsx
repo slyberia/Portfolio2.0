@@ -69,7 +69,7 @@ const MODE_CONFIG: Record<
       'Explain the Digital Twin as AI implementation proof.',
       'What experience supports technical implementation roles?',
     ],
-    pillClassName: 'bg-orange-100 text-orange-800 dark:bg-orange-500/20 dark:text-orange-200',
+    pillClassName: 'bg-tide-aqua/10 text-[#237f86] dark:bg-tide-aqua/20 dark:text-tide-aqua/30',
   },
   qa: {
     label: 'QA Track',
@@ -81,7 +81,7 @@ const MODE_CONFIG: Record<
       'What does Ops Triage demonstrate?',
       'How does Kyle approach validation and edge cases?',
     ],
-    pillClassName: 'bg-blue-100 text-blue-800 dark:bg-blue-500/20 dark:text-blue-200',
+    pillClassName: 'bg-blue-100 text-blue-800 dark:bg-tide-blue/20 dark:text-blue-200',
   },
   gis: {
     label: 'GIS Track',
@@ -93,7 +93,7 @@ const MODE_CONFIG: Record<
       'How does Kyle’s utility GIS experience apply?',
       'Explain the spatial data workflow evidence.',
     ],
-    pillClassName: 'bg-teal-100 text-teal-800 dark:bg-teal-500/20 dark:text-teal-200',
+    pillClassName: 'bg-cyan-100 text-cyan-800 dark:bg-cyan-500/20 dark:text-cyan-200',
   },
 };
 
@@ -331,16 +331,16 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
             : 'opacity-0 scale-95 translate-y-4 h-0 pointer-events-none'
         }`}
       >
-        <div className="bg-indigo-600/5 dark:bg-indigo-600/20 p-4 border-b border-black/5 dark:border-white/5 flex justify-between items-center">
+        <div className="bg-tide-aqua/5 dark:bg-tide-aqua/20 p-4 border-b border-black/5 dark:border-white/5 flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white text-xs font-bold shadow-lg shadow-indigo-500/20">
+            <div className="w-8 h-8 rounded-full bg-tide-aqua flex items-center justify-center text-white text-xs font-bold shadow-lg shadow-tide-aqua/20">
               AI
             </div>
             <div>
               <h3 className="text-navy-900 dark:text-white font-bold font-outfit text-sm">
                 Kyle's Digital Twin
               </h3>
-              <p className="text-[10px] text-indigo-600 dark:text-indigo-300 uppercase tracking-wider font-medium">
+              <p className="text-[10px] text-tide-aqua dark:text-tide-softBlue uppercase tracking-wider font-medium">
                 Verified Ops Agent
               </p>
               {mode !== 'general' && (
@@ -353,7 +353,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
               <button
                 type="button"
                 onClick={() => onNavigate?.('case-study:digital-twin')}
-                className="mt-1 text-[10px] text-slate-600 dark:text-slate-300 underline hover:text-indigo-600 dark:hover:text-indigo-300"
+                className="mt-1 text-[10px] text-slate-600 dark:text-slate-300 underline hover:text-tide-aqua dark:hover:text-tide-softBlue"
               >
                 View how this works
               </button>
@@ -413,7 +413,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
               <div
                 className={`max-w-[85%] rounded-2xl p-3 text-sm leading-relaxed ${
                   msg.role === 'user'
-                    ? 'bg-indigo-600 text-white rounded-br-none shadow-md'
+                    ? 'bg-tide-aqua text-white rounded-br-none shadow-md'
                     : 'bg-white dark:bg-white/5 text-slate-700 dark:text-slate-200 border border-black/5 dark:border-white/5 rounded-bl-none shadow-sm dark:shadow-none'
                 }`}
               >
@@ -428,7 +428,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
                       a: ({ node: _node, ...props }) => (
                         <a
                           {...props}
-                          className="text-indigo-600 dark:text-indigo-300 underline"
+                          className="text-tide-aqua dark:text-tide-softBlue underline"
                           target="_blank"
                         />
                       ),
@@ -451,7 +451,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
                           [idx]: 'helpful',
                         }))
                       }
-                      className="px-2.5 py-1 rounded-md border border-black/10 dark:border-white/20 text-slate-600 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                      className="px-2.5 py-1 rounded-md border border-black/10 dark:border-white/20 text-slate-600 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-tide-aqua/50"
                       aria-label="Mark response as helpful"
                     >
                       Helpful
@@ -463,14 +463,14 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
                           [idx]: 'handoffOffered',
                         }))
                       }
-                      className="px-2.5 py-1 rounded-md border border-black/10 dark:border-white/20 text-slate-600 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                      className="px-2.5 py-1 rounded-md border border-black/10 dark:border-white/20 text-slate-600 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-tide-aqua/50"
                       aria-label="Mark response as not quite helpful"
                     >
                       Not quite
                     </button>
                     <button
                       onClick={() => openContactWithContext(idx, 'User requested a human handoff.')}
-                      className="px-2.5 py-1 rounded-md border border-indigo-500/30 text-indigo-600 dark:text-indigo-300 hover:bg-indigo-500/10 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                      className="px-2.5 py-1 rounded-md border border-tide-aqua/30 text-tide-aqua dark:text-tide-softBlue hover:bg-tide-aqua/10 focus:outline-none focus:ring-2 focus:ring-tide-aqua/50"
                       aria-label="Contact Kyle from chat feedback"
                     >
                       Contact Kyle
@@ -480,7 +480,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
               )}
               {msg.role === 'model' && feedbackByMessage[idx] === 'handoffOffered' && (
                 <div
-                  className="mt-2 rounded-xl border border-indigo-500/20 bg-indigo-500/5 dark:bg-indigo-500/10 p-3 text-xs text-slate-600 dark:text-slate-200"
+                  className="mt-2 rounded-xl border border-tide-aqua/20 bg-tide-aqua/5 dark:bg-tide-aqua/10 p-3 text-xs text-slate-600 dark:text-slate-200"
                   role="status"
                   aria-live="polite"
                 >
@@ -491,7 +491,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
                   <div className="flex flex-wrap gap-2">
                     <button
                       onClick={() => openContactWithContext(idx)}
-                      className="px-2.5 py-1 rounded-md bg-indigo-600 text-white hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/60"
+                      className="px-2.5 py-1 rounded-md bg-tide-aqua text-white hover:bg-tide-aqua focus:outline-none focus:ring-2 focus:ring-tide-aqua/60"
                       aria-label="Contact Kyle with context from this answer"
                     >
                       Contact Kyle with context
@@ -503,7 +503,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
                           [idx]: 'notHelpful',
                         }))
                       }
-                      className="px-2.5 py-1 rounded-md border border-black/10 dark:border-white/20 hover:bg-slate-100 dark:hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                      className="px-2.5 py-1 rounded-md border border-black/10 dark:border-white/20 hover:bg-slate-100 dark:hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-tide-aqua/50"
                       aria-label="Dismiss handoff panel and try another question"
                     >
                       Try another question
@@ -517,13 +517,13 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
                     onClick={() =>
                       openContactWithContext(idx, 'Digital Twin hit a fallback response.')
                     }
-                    className="px-2.5 py-1 rounded-md text-xs border border-indigo-500/30 text-indigo-600 dark:text-indigo-300 hover:bg-indigo-500/10 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                    className="px-2.5 py-1 rounded-md text-xs border border-tide-aqua/30 text-tide-aqua dark:text-tide-softBlue hover:bg-tide-aqua/10 focus:outline-none focus:ring-2 focus:ring-tide-aqua/50"
                   >
                     Contact Kyle
                   </button>
                   <button
                     onClick={() => onAction?.('resume')}
-                    className="px-2.5 py-1 rounded-md text-xs border border-black/10 dark:border-white/20 text-slate-600 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                    className="px-2.5 py-1 rounded-md text-xs border border-black/10 dark:border-white/20 text-slate-600 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-tide-aqua/50"
                   >
                     View Resume
                   </button>
@@ -534,9 +534,9 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
           {isTyping && (
             <div className="flex justify-start">
               <div className="bg-white dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-2xl rounded-bl-none p-3 flex gap-1 items-center">
-                <span className="w-1.5 h-1.5 bg-indigo-600 rounded-full animate-bounce"></span>
-                <span className="w-1.5 h-1.5 bg-indigo-600 rounded-full animate-bounce delay-100"></span>
-                <span className="w-1.5 h-1.5 bg-indigo-600 rounded-full animate-bounce delay-200"></span>
+                <span className="w-1.5 h-1.5 bg-tide-aqua rounded-full animate-bounce"></span>
+                <span className="w-1.5 h-1.5 bg-tide-aqua rounded-full animate-bounce delay-100"></span>
+                <span className="w-1.5 h-1.5 bg-tide-aqua rounded-full animate-bounce delay-200"></span>
               </div>
             </div>
           )}
@@ -548,7 +548,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
               key={i}
               onClick={() => handleSend(q)}
               disabled={isTyping}
-              className="whitespace-nowrap px-3 py-1.5 rounded-lg bg-indigo-600/5 dark:bg-indigo-500/10 border border-indigo-600/10 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-300 text-xs hover:bg-indigo-600/10 dark:hover:bg-indigo-500/20 hover:text-indigo-700 dark:hover:text-white transition-colors shrink-0 disabled:opacity-50"
+              className="whitespace-nowrap px-3 py-1.5 rounded-lg bg-tide-aqua/5 dark:bg-tide-aqua/10 border border-tide-aqua/10 dark:border-tide-aqua/20 text-tide-aqua dark:text-tide-softBlue text-xs hover:bg-tide-aqua/10 dark:hover:bg-tide-aqua/20 hover:text-[#237f86] dark:hover:text-white transition-colors shrink-0 disabled:opacity-50"
             >
               {q}
             </button>
@@ -563,12 +563,12 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Ask Kyle's AI Twin..."
-              className="w-full bg-slate-100 dark:bg-white/5 border border-black/5 dark:border-white/10 rounded-xl pl-4 pr-10 py-3 text-sm text-navy-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all"
+              className="w-full bg-slate-100 dark:bg-white/5 border border-black/5 dark:border-white/10 rounded-xl pl-4 pr-10 py-3 text-sm text-navy-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-tide-aqua/50 transition-all"
             />
             <button
               onClick={() => handleSend()}
               disabled={!input.trim() || isTyping}
-              className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 disabled:opacity-50 transition-colors"
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 bg-tide-aqua text-white rounded-lg hover:bg-tide-aqua disabled:opacity-50 transition-colors"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -590,10 +590,10 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
 
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`pointer-events-auto group relative flex items-center justify-center gap-2 h-12 w-12 md:h-14 md:w-auto md:px-4 rounded-full bg-indigo-600 text-white shadow-lg shadow-indigo-500/30 hover:bg-indigo-500 hover:scale-[1.03] transition-all duration-300 ${shouldPulse ? 'animate-chat-pulse' : ''}`}
+        className={`pointer-events-auto group relative flex items-center justify-center gap-2 h-12 w-12 md:h-14 md:w-auto md:px-4 rounded-full bg-tide-aqua text-white shadow-lg shadow-tide-aqua/30 hover:bg-tide-aqua hover:scale-[1.03] transition-all duration-300 ${shouldPulse ? 'animate-chat-pulse' : ''}`}
         aria-label="Ask the Digital Twin"
       >
-        <div className="absolute inset-0 rounded-full bg-indigo-400 animate-ping opacity-20 duration-[2000ms]"></div>
+        <div className="absolute inset-0 rounded-full bg-tide-sky animate-ping opacity-20 duration-[2000ms]"></div>
         {isOpen ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -626,7 +626,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
             Ask the Digital Twin
           </span>
         )}
-        <div className="absolute -top-1 -right-1 bg-white text-indigo-600 rounded-full p-0.5 border-2 border-white dark:border-slate-950 shadow-sm">
+        <div className="absolute -top-1 -right-1 bg-white text-tide-aqua rounded-full p-0.5 border-2 border-white dark:border-slate-950 shadow-sm">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="w-3 h-3"

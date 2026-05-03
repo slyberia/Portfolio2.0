@@ -29,7 +29,7 @@ const PriorityBadge: React.FC<{ priority: string }> = ({ priority }) => {
   const colors = {
     High: 'text-red-600 bg-red-500/10 border-red-500/20',
     Medium: 'text-amber-600 bg-amber-500/10 border-amber-500/20',
-    Low: 'text-blue-600 bg-blue-500/10 border-blue-500/20',
+    Low: 'text-tide-blue bg-tide-blue/10 border-tide-blue/20',
   };
   const colorClass = colors[priority as keyof typeof colors] || colors.Low;
 
@@ -201,7 +201,7 @@ const AuditLog: React.FC<AuditLogProps> = ({ data }) => {
         {data.findings.map((finding, idx) => (
           <div
             key={idx}
-            className="p-4 rounded-xl bg-white dark:bg-white/5 border border-black/5 dark:border-white/5 flex gap-3 transition-all hover:border-indigo-500/20"
+            className="p-4 rounded-xl bg-white dark:bg-white/5 border border-black/5 dark:border-white/5 flex gap-3 transition-all hover:border-tide-aqua/20"
           >
             <div className="mt-0.5 w-7 h-7 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 shrink-0">
               <div className="scale-75">
@@ -263,7 +263,7 @@ const AuditLog: React.FC<AuditLogProps> = ({ data }) => {
 
         <div className="mt-8 pt-6 border-t border-black/5 dark:border-white/5">
           <p className="text-[13px] text-slate-600 dark:text-slate-400 leading-relaxed italic">
-            <span className="font-bold text-indigo-600 dark:text-indigo-400 not-italic mr-2">
+            <span className="font-bold text-tide-aqua dark:text-tide-sky not-italic mr-2">
               Lead Architect Note:
             </span>
             "{data.summary}"

@@ -14,36 +14,25 @@ export default {
         outfit: ['Epilogue', 'sans-serif'],
       },
       colors: {
-        // Accent: amber-sienna remapped over indigo key so existing indigo-* classes update site-wide
-        // Full scale defined to prevent any shade falling back to Tailwind's default purple-indigo
-        indigo: {
-          50: '#fdf4ef', // barely-there sienna tint (light mode badge bg)
-          100: '#f9e2d4', // light sienna (light mode badge border)
-          200: '#f0bfa0', // soft sienna (timeline connectors, borders)
-          300: '#e49468', // medium-light sienna (dark-mode hover text, active tab)
-          400: '#df8c56', // dark mode accent (lighter amber)
-          500: '#c4592a', // primary accent — warm sienna, not purple
-          600: '#a84a20', // hover / darker sienna
-          700: '#8a3718', // button hover darken (was falling back to purple)
-          800: '#6e2c12', // link hover darken
-          900: '#4f200c', // dark-mode subtle bg (used at /60 opacity)
+        tide: {
+          aqua: '#39b8bc',
+          blue: '#59abe4',
+          cyan: '#60bbd4',
+          sky: '#64c8f1',
+          softBlue: '#80c4f1',
         },
-        // Backgrounds: warm parchment replaces gold/white
-        gold: {
-          50: '#f9f7f3', // page background (warm parchment)
-          100: '#fefcf9', // card surface (barely-warm white)
+        gild: {
+          DEFAULT: '#d8a84f',
+          soft: '#f1c878',
+          deep: '#a8782a',
         },
-        // Border token
-        parchment: {
-          200: '#e4dfd7', // warm light gray for borders, dividers
-        },
-        // Text: slightly cooler near-black for editorial contrast
-        navy: {
-          900: '#1e2030', // heading color — cool dark ink, more editorial than blue-black
-        },
-        // Dark mode surface — warm near-black replaces blue-black slate-950
-        slate: {
-          950: '#1a1712', // warm dark bg instead of cold #020617
+        ink: {
+          deep: '#07161f',
+          navy: '#10242f',
+          slate: '#526a78',
+          mist: '#f5f9fb',
+          panel: '#f8fbfd',
+          border: '#d8e8ee',
         },
       },
       typography: (theme) => ({
@@ -60,7 +49,7 @@ export default {
             blockquote: {
               // Replaced banned border-left with background tint + padding
               borderLeft: 'none',
-              backgroundColor: '#f5e2d5', // light sienna tint
+              backgroundColor: '#e8f5f8', // light sienna tint
               borderRadius: '4px',
               padding: '0.75rem 1rem',
               color: theme('colors.slate.700'),
@@ -77,7 +66,7 @@ export default {
             strong: { color: theme('colors.slate.200') },
             blockquote: {
               borderLeft: 'none',
-              backgroundColor: 'rgba(196, 89, 42, 0.12)', // dark mode: sienna tint
+              backgroundColor: 'rgba(57, 184, 188, 0.12)', // dark mode: sienna tint
               color: theme('colors.slate.300'),
               fontStyle: 'normal',
             },

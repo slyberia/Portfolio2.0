@@ -9,12 +9,12 @@ export const RigorCard: React.FC<{ rigor: CaseStudyRigor; title?: string; classN
   className = 'mb-12',
 }) => (
   <div
-    className={`${className} rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden relative group/rigor bg-[#fcfaf7] dark:bg-slate-900/60`}
+    className={`${className} rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden relative group/rigor bg-[#f8fbfd] dark:bg-slate-900/60`}
   >
     <div className="absolute top-0 right-0 p-4 opacity-20 group-hover/rigor:opacity-100 transition-opacity">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="w-8 h-8 text-indigo-500"
+        className="w-8 h-8 text-tide-aqua"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -32,8 +32,8 @@ export const RigorCard: React.FC<{ rigor: CaseStudyRigor; title?: string; classN
     </div>
     <div className="p-8 md:p-12 bg-slate-50 dark:bg-slate-900/70 border-b border-black/5 dark:border-white/10">
       <div className="flex items-center gap-3 mb-2">
-        <div className="w-2 h-2 rounded-full bg-indigo-500 " />
-        <h4 className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-[0.3em] font-outfit">
+        <div className="w-2 h-2 rounded-full bg-tide-aqua " />
+        <h4 className="text-[10px] font-bold text-tide-aqua dark:text-tide-softBlue uppercase tracking-[0.3em] font-outfit">
           {title || 'Project Proof Summary'}
         </h4>
       </div>
@@ -75,14 +75,14 @@ export const HtmlPreviewCard: React.FC<{
   const isRed = accentColor === 'red';
   return (
     <div
-      className={`rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden bg-[#fcfaf7] dark:bg-slate-900/60 transition-all duration-500 ${isRed ? 'border-red-500/20' : 'border-indigo-500/20'} flex flex-col`}
+      className={`rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden bg-[#f8fbfd] dark:bg-slate-900/60 transition-all duration-500 ${isRed ? 'border-red-500/20' : 'border-tide-aqua/20'} flex flex-col`}
     >
       <div className="px-8 md:px-12 py-5 bg-slate-50 dark:bg-white/5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
         <span className="text-[11px] font-bold text-navy-900 dark:text-white font-outfit tracking-wide">
           {label}
         </span>
         <span
-          className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-md border ${isRed ? 'bg-red-500/10 text-red-400' : 'bg-indigo-500/10 text-indigo-400'}`}
+          className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-md border ${isRed ? 'bg-red-500/10 text-red-400' : 'bg-tide-aqua/10 text-tide-softBlue'}`}
         >
           Interactive Prototype
         </span>
@@ -117,7 +117,7 @@ export const TabsArtifact: React.FC<{ artifacts: CaseStudyArtifact[] }> = ({ art
   const activeArt = artifacts[activeIndex];
 
   return (
-    <div className="rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden bg-[#fcfaf7] dark:bg-slate-900/60">
+    <div className="rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden bg-[#f8fbfd] dark:bg-slate-900/60">
       <div className="px-4 py-2 bg-slate-50 dark:bg-white/5 border-b border-black/5 dark:border-white/10 flex gap-1 overflow-x-auto scrollbar-hide">
         {artifacts.map((art, i) => (
           <button
@@ -177,18 +177,18 @@ export const ArtifactGallery: React.FC<{
               <RigorCard rigor={art.data} title={art.label.toUpperCase()} className="mb-0" />
             </div>
           ) : art.type === 'audit-log' && art.auditData ? (
-            <div className="rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden bg-[#fcfaf7] dark:bg-slate-900/60">
+            <div className="rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden bg-[#f8fbfd] dark:bg-slate-900/60">
               <AuditLog data={art.auditData} />
             </div>
           ) : art.type === 'tabs' && Array.isArray(art.content) ? (
             <TabsArtifact artifacts={art.content as CaseStudyArtifact[]} />
           ) : (
-            <div className="rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden bg-[#fcfaf7] dark:bg-slate-900/60">
+            <div className="rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden bg-[#f8fbfd] dark:bg-slate-900/60">
               <div className="px-8 md:px-12 py-5 bg-slate-50 dark:bg-white/5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
                 <span className="text-[11px] font-bold text-navy-900 dark:text-white font-outfit tracking-wide">
                   {art.label}
                 </span>
-                <span className="text-[10px] uppercase font-bold px-2 py-0.5 bg-indigo-500/10 text-indigo-400 rounded-md">
+                <span className="text-[10px] uppercase font-bold px-2 py-0.5 bg-tide-aqua/10 text-tide-softBlue rounded-md">
                   {art.type}
                 </span>
               </div>

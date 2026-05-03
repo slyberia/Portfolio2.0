@@ -203,14 +203,14 @@ export const AppLayout: React.FC = () => {
         {!isOnResume && (
           <footer
             id="contact"
-            className="py-20 px-6 border-t border-[#e4dfd7] dark:border-white/5 relative bg-[#f9f7f3] dark:bg-[#1a1712] overflow-hidden scroll-mt-24 transition-colors duration-500"
+            className="py-20 px-6 border-t border-[#d8e8ee] dark:border-white/5 relative bg-[#f5f9fb] dark:bg-[#07161f] overflow-hidden scroll-mt-24 transition-colors duration-500"
           >
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-[#e4dfd7] dark:bg-white/5"></div>
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-[#d8e8ee] dark:bg-white/5"></div>
             <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
               <div className="space-y-8">
                 <h2 className="text-4xl font-outfit font-extrabold text-navy-900 dark:text-white">
                   Open to AI-forward{' '}
-                  <span className="text-indigo-500">Customer Success and Solutions</span> roles
+                  <span className="text-tide-aqua">Customer Success and Solutions</span> roles
                 </h2>
                 <p className="text-slate-500 dark:text-slate-400 max-w-sm">
                   I'm looking for my next challenge in an AI-forward company that values operational
@@ -221,9 +221,9 @@ export const AppLayout: React.FC = () => {
                   {/* Email Button */}
                   <button
                     onClick={() => handleCopyEmail('kmsemple26@gmail.com')}
-                    className="flex items-center gap-4 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors group text-left p-2 rounded-2xl hover:bg-indigo-500/5"
+                    className="flex items-center gap-4 text-slate-600 dark:text-slate-300 hover:text-tide-aqua dark:hover:text-tide-softBlue transition-colors group text-left p-2 rounded-2xl hover:bg-tide-aqua/5"
                   >
-                    <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-indigo-600 dark:text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white group-hover:scale-110 transition-all">
+                    <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-tide-aqua dark:text-tide-softBlue group-hover:bg-tide-aqua group-hover:text-white group-hover:scale-110 transition-all">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="w-5 h-5"
@@ -240,7 +240,7 @@ export const AppLayout: React.FC = () => {
                     </div>
                     <div className="flex flex-col items-start">
                       <span className="font-medium">kmsemple26@gmail.com</span>
-                      <span className="text-[10px] uppercase tracking-widest text-indigo-500 font-bold">
+                      <span className="text-[10px] uppercase tracking-widest text-tide-aqua font-bold">
                         Copy Email
                       </span>
                     </div>

@@ -18,12 +18,12 @@ const SharedLLMGovernanceBlock: React.FC<SharedLLMGovernanceBlockProps> = ({
   links,
 }) => {
   return (
-    <div className="glass-card rounded-2xl p-8 border-l-4 border-indigo-500/40 space-y-4">
+    <div className="glass-card rounded-2xl p-8 border-l-4 border-tide-aqua/40 space-y-4">
       <div className="flex items-start gap-3">
-        <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center shrink-0 mt-0.5">
+        <div className="w-8 h-8 rounded-lg bg-tide-aqua/10 border border-tide-aqua/20 flex items-center justify-center shrink-0 mt-0.5">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="w-4 h-4 text-indigo-500"
+            className="w-4 h-4 text-tide-aqua"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -48,7 +48,7 @@ const SharedLLMGovernanceBlock: React.FC<SharedLLMGovernanceBlockProps> = ({
           {links.map((link) => {
             const isExternal = link.href.startsWith('http');
             const className =
-              'text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline underline-offset-2';
+              'text-xs font-bold text-tide-aqua dark:text-tide-softBlue hover:underline underline-offset-2';
             if (isExternal) {
               return (
                 <a

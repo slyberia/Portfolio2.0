@@ -9,34 +9,34 @@ interface RoleTrackPageProps {
 
 const ACCENT_STYLES = {
   implementation: {
-    glow: 'bg-orange-500/10',
+    glow: 'bg-tide-aqua/10',
     badge:
-      'bg-orange-50 border-orange-300 text-orange-800 dark:bg-orange-500/10 dark:border-orange-500/30 dark:text-orange-200',
-    section: 'text-orange-700 dark:text-orange-300',
-    chip: 'bg-orange-50 border-orange-200 text-orange-800 dark:bg-orange-500/10 dark:border-orange-500/30 dark:text-orange-200',
-    cta: 'bg-orange-600 hover:bg-orange-700 focus-visible:ring-orange-500',
+      'bg-tide-aqua/10 border-tide-aqua/40 text-[#237f86] dark:bg-tide-aqua/10 dark:border-tide-aqua/30 dark:text-tide-aqua/30',
+    section: 'text-[#237f86] dark:text-tide-aqua/40',
+    chip: 'bg-tide-aqua/10 border-tide-aqua/30 text-[#237f86] dark:bg-tide-aqua/10 dark:border-tide-aqua/30 dark:text-tide-aqua/30',
+    cta: 'bg-tide-aqua hover:bg-[#237f86] focus-visible:ring-tide-aqua',
     ctaOutline:
-      'border-orange-300 text-orange-800 hover:bg-orange-50 dark:border-orange-500/30 dark:text-orange-200 dark:hover:bg-orange-500/10 focus-visible:ring-orange-500',
+      'border-tide-aqua/40 text-[#237f86] hover:bg-tide-aqua/10 dark:border-tide-aqua/30 dark:text-tide-aqua/30 dark:hover:bg-tide-aqua/10 focus-visible:ring-tide-aqua',
   },
   qa: {
-    glow: 'bg-blue-500/10',
+    glow: 'bg-tide-blue/10',
     badge:
-      'bg-blue-50 border-blue-300 text-blue-800 dark:bg-blue-500/10 dark:border-blue-500/30 dark:text-blue-200',
-    section: 'text-blue-700 dark:text-blue-300',
-    chip: 'bg-blue-50 border-blue-200 text-blue-800 dark:bg-blue-500/10 dark:border-blue-500/30 dark:text-blue-200',
-    cta: 'bg-blue-600 hover:bg-blue-700 focus-visible:ring-blue-500',
+      'bg-tide-blue/10 border-tide-softBlue text-blue-800 dark:bg-tide-blue/10 dark:border-tide-blue/30 dark:text-blue-200',
+    section: 'text-[#2a77a8] dark:text-tide-softBlue',
+    chip: 'bg-tide-blue/10 border-blue-200 text-blue-800 dark:bg-tide-blue/10 dark:border-tide-blue/30 dark:text-blue-200',
+    cta: 'bg-tide-blue hover:bg-[#2a77a8] focus-visible:ring-tide-blue',
     ctaOutline:
-      'border-blue-300 text-blue-800 hover:bg-blue-50 dark:border-blue-500/30 dark:text-blue-200 dark:hover:bg-blue-500/10 focus-visible:ring-blue-500',
+      'border-tide-softBlue text-blue-800 hover:bg-tide-blue/10 dark:border-tide-blue/30 dark:text-blue-200 dark:hover:bg-tide-blue/10 focus-visible:ring-tide-blue',
   },
   gis: {
-    glow: 'bg-teal-500/10',
+    glow: 'bg-cyan-500/10',
     badge:
-      'bg-teal-50 border-teal-300 text-teal-800 dark:bg-teal-500/10 dark:border-teal-500/30 dark:text-teal-200',
-    section: 'text-teal-700 dark:text-teal-300',
-    chip: 'bg-teal-50 border-teal-200 text-teal-800 dark:bg-teal-500/10 dark:border-teal-500/30 dark:text-teal-200',
-    cta: 'bg-teal-600 hover:bg-teal-700 focus-visible:ring-teal-500',
+      'bg-cyan-50 border-cyan-300 text-cyan-800 dark:bg-cyan-500/10 dark:border-cyan-500/30 dark:text-cyan-200',
+    section: 'text-cyan-700 dark:text-cyan-300',
+    chip: 'bg-cyan-50 border-cyan-200 text-cyan-800 dark:bg-cyan-500/10 dark:border-cyan-500/30 dark:text-cyan-200',
+    cta: 'bg-cyan-600 hover:bg-cyan-700 focus-visible:ring-cyan-500',
     ctaOutline:
-      'border-teal-300 text-teal-800 hover:bg-teal-50 dark:border-teal-500/30 dark:text-teal-200 dark:hover:bg-teal-500/10 focus-visible:ring-teal-500',
+      'border-cyan-300 text-cyan-800 hover:bg-cyan-50 dark:border-cyan-500/30 dark:text-cyan-200 dark:hover:bg-cyan-500/10 focus-visible:ring-cyan-500',
   },
 } as const;
 
@@ -115,7 +115,7 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
               >
                 <span
                   aria-hidden="true"
-                  className={`mt-1.5 w-1.5 h-1.5 rounded-full ${content.accent === 'implementation' ? 'bg-orange-500' : content.accent === 'qa' ? 'bg-blue-500' : 'bg-teal-500'}`}
+                  className={`mt-1.5 w-1.5 h-1.5 rounded-full ${content.accent === 'implementation' ? 'bg-tide-aqua' : content.accent === 'qa' ? 'bg-tide-blue' : 'bg-cyan-500'}`}
                 />
                 <span>{bullet}</span>
               </li>
@@ -139,12 +139,12 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {content.supportingEvidence.map((item) => {
               const card = (
-                <article className="h-full rounded-xl border border-[#ddd7cd] dark:border-white/10 bg-white/95 dark:bg-slate-900/70 p-5">
+                <article className="h-full rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-white/95 dark:bg-slate-900/70 p-5">
                   <div className="flex items-center justify-between gap-2">
                     <h3 className="text-base font-semibold text-navy-900 dark:text-white">
                       {item.title}
                     </h3>
-                    <span className="text-[10px] uppercase tracking-widest text-slate-500 dark:text-slate-400 border border-[#d7d1c8] dark:border-white/10 rounded-full px-2 py-0.5">
+                    <span className="text-[10px] uppercase tracking-widest text-slate-500 dark:text-slate-400 border border-[#d8e8ee] dark:border-white/10 rounded-full px-2 py-0.5">
                       {item.proofType}
                     </span>
                   </div>
@@ -173,7 +173,7 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
                   key={item.title}
                   to={evidenceHref}
                   aria-label={`View supporting evidence for ${item.title}`}
-                  className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-xl"
+                  className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua rounded-xl"
                 >
                   {card}
                 </Link>

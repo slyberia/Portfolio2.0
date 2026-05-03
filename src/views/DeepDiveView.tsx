@@ -176,7 +176,7 @@ const DeepDiveView: React.FC = () => (
   <div id="deep-dive-top" className="min-h-screen pt-20 pb-20 px-6">
     <div className="max-w-6xl mx-auto space-y-12">
       <section className="space-y-4">
-        <p className="text-xs font-bold uppercase tracking-[0.3em] text-indigo-600">Process</p>
+        <p className="text-xs font-bold uppercase tracking-[0.3em] text-tide-aqua">Process</p>
         <h1 className="text-4xl font-outfit font-extrabold text-navy-900 dark:text-white">
           Portfolio 2.0 Process Deep Dive
         </h1>
@@ -193,7 +193,7 @@ const DeepDiveView: React.FC = () => (
           Use this page to inspect the planning logic, AI-assisted workflow, route migrations,
           project taxonomy, validation passes, and remaining cleanup work behind the portfolio.
         </p>
-        <div className="flex flex-wrap gap-4 text-sm font-semibold text-indigo-700">
+        <div className="flex flex-wrap gap-4 text-sm font-semibold text-[#237f86]">
           <Link to={PROJECTS_HREF}>View Projects Library</Link>
           <Link to={SITE_INDEX_HREF}>Open Site Index</Link>
           <Link to={DIGITAL_TWIN_PROJECT_HREF}>View Digital Twin Project</Link>
@@ -209,7 +209,7 @@ const DeepDiveView: React.FC = () => (
             <a
               key={card.href}
               href={card.href}
-              className="rounded-xl border border-[#ddd7cd] bg-[#fcfaf7] dark:bg-slate-900/60 dark:border-white/10 p-4"
+              className="rounded-xl border border-[#d8e8ee] bg-[#f8fbfd] dark:bg-slate-900/60 dark:border-white/10 p-4"
             >
               <h3 className="font-semibold text-navy-900 dark:text-white">{card.title}</h3>
               <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">{card.description}</p>

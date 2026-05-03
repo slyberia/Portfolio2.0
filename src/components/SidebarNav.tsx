@@ -147,7 +147,7 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ theme, toggleTheme, onOpenConta
 
   return (
     <aside
-      className="fixed left-0 top-0 bottom-0 w-20 hidden md:flex flex-col z-40 bg-[#f5f3ee] dark:bg-[#1a1712] border-r border-black/10 dark:border-white/5"
+      className="fixed left-0 top-0 bottom-0 w-20 hidden md:flex flex-col z-40 bg-[#f5f3ee] dark:bg-[#07161f] border-r border-black/10 dark:border-white/5"
       aria-label="Section Navigation"
     >
       {/* Monogram */}
@@ -165,9 +165,9 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ theme, toggleTheme, onOpenConta
             onClick={item.onClick}
             aria-label={item.label}
             aria-current={item.active ? 'page' : undefined}
-            className={`flex flex-col items-center justify-center py-3.5 gap-1.5 w-full transition-colors duration-150 cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-indigo-500 ${
+            className={`flex flex-col items-center justify-center py-3.5 gap-1.5 w-full transition-colors duration-150 cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-tide-aqua ${
               item.active
-                ? 'bg-indigo-500/10 text-indigo-500'
+                ? 'bg-tide-aqua/10 text-tide-aqua'
                 : 'text-navy-900/40 dark:text-white/30 hover:text-navy-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
             }`}
           >
@@ -187,7 +187,7 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ theme, toggleTheme, onOpenConta
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Visit GitHub Profile"
-          className="flex items-center justify-center w-10 h-10 text-navy-900/40 dark:text-white/30 hover:text-navy-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-150 focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-indigo-500"
+          className="flex items-center justify-center w-10 h-10 text-navy-900/40 dark:text-white/30 hover:text-navy-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-150 focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-tide-aqua"
         >
           <svg
             width="18"
@@ -211,7 +211,7 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ theme, toggleTheme, onOpenConta
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Visit LinkedIn Profile"
-          className="flex items-center justify-center w-10 h-10 text-[#0A66C2] hover:bg-blue-500/10 transition-colors duration-150 focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-indigo-500"
+          className="flex items-center justify-center w-10 h-10 text-[#0A66C2] hover:bg-blue-500/10 transition-colors duration-150 focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-tide-aqua"
         >
           <svg
             width="18"
@@ -237,7 +237,7 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ theme, toggleTheme, onOpenConta
         <button
           onClick={toggleTheme}
           aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-          className="flex items-center justify-center w-10 h-10 text-navy-900/40 dark:text-white/30 hover:text-navy-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-150 focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-indigo-500 relative overflow-hidden"
+          className="flex items-center justify-center w-10 h-10 text-navy-900/40 dark:text-white/30 hover:text-navy-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-150 focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-tide-aqua relative overflow-hidden"
         >
           <div
             className={`transition-all duration-500 transform ${theme === 'light' ? 'rotate-0 scale-100' : 'rotate-90 scale-0 opacity-0 absolute'}`}

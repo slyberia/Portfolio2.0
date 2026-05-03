@@ -19,7 +19,7 @@ const roleTracks = [
     description:
       'Customer-facing technical delivery, workflow setup, onboarding support, documentation, and implementation planning.',
     href: IMPLEMENTATION_TRACK_HREF,
-    accent: 'bg-orange-500',
+    accent: 'bg-tide-aqua',
     role: 'Implementation',
   },
   {
@@ -35,7 +35,7 @@ const roleTracks = [
     description:
       'Spatial data operations, map-based workflows, dataset governance, and GIS system delivery.',
     href: GIS_TRACK_HREF,
-    accent: 'bg-teal-500',
+    accent: 'bg-tide-cyan',
     role: 'GIS',
   },
 ];
@@ -85,7 +85,7 @@ const SiteIndexView: React.FC = () => {
     <div className="min-h-screen pt-20 pb-20 px-6 bg-[#f8f7f3] dark:bg-slate-950">
       <div className="max-w-6xl mx-auto space-y-16">
         <section id="site-index-top" className="space-y-5 scroll-mt-24">
-          <p className="text-xs font-bold text-indigo-600 uppercase tracking-[0.3em]">SITE_INDEX</p>
+          <p className="text-xs font-bold text-tide-aqua uppercase tracking-[0.3em]">SITE_INDEX</p>
           <h1 className="text-4xl sm:text-5xl font-outfit font-extrabold text-navy-900 dark:text-white">
             Portfolio Site Index
           </h1>
@@ -99,7 +99,7 @@ const SiteIndexView: React.FC = () => {
           </p>
         </section>
         <nav aria-label="Jump to section" className="space-y-3">
-          <p className="text-xs font-bold text-indigo-600 uppercase tracking-[0.3em]">INDEX_MAP</p>
+          <p className="text-xs font-bold text-tide-aqua uppercase tracking-[0.3em]">INDEX_MAP</p>
           <div className="flex flex-wrap gap-2 text-sm">
             {[
               ['Role Tracks', '#role-tracks'],
@@ -112,7 +112,7 @@ const SiteIndexView: React.FC = () => {
               <a
                 key={href}
                 href={href}
-                className="rounded-full border border-[#ddd7cd] px-3 py-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                className="rounded-full border border-[#d8e8ee] px-3 py-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
               >
                 {label}
               </a>
@@ -136,7 +136,7 @@ const SiteIndexView: React.FC = () => {
               <Link
                 key={track.title}
                 to={track.href}
-                className="rounded-xl border border-[#ddd7cd] dark:border-white/10 bg-[#fcfaf7] dark:bg-slate-900 p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                className="rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd] dark:bg-slate-900 p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
               >
                 <span className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
                   {track.role}
@@ -167,7 +167,7 @@ const SiteIndexView: React.FC = () => {
               <Link
                 key={system.id}
                 to={system.href}
-                className="rounded-xl border border-[#ddd7cd] dark:border-white/10 bg-[#fcfaf7] dark:bg-slate-900 p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                className="rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd] dark:bg-slate-900 p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
               >
                 <h3 className="font-semibold text-navy-900 dark:text-white">
                   {system.displayTitle}
@@ -197,7 +197,7 @@ const SiteIndexView: React.FC = () => {
           <div className="mb-2">
             <Link
               to={PROJECTS_HREF}
-              className="text-sm font-semibold text-indigo-700 dark:text-indigo-300"
+              className="text-sm font-semibold text-[#237f86] dark:text-tide-softBlue"
             >
               Open full Projects Library
             </Link>
@@ -207,7 +207,7 @@ const SiteIndexView: React.FC = () => {
               <Link
                 key={project.id}
                 to={project.href}
-                className="rounded-xl border border-[#ddd7cd] dark:border-white/10 bg-[#fcfaf7] dark:bg-slate-900 p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                className="rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd] dark:bg-slate-900 p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
               >
                 <h3 className="font-semibold text-navy-900 dark:text-white">
                   {project.displayTitle}
@@ -218,7 +218,7 @@ const SiteIndexView: React.FC = () => {
                 <p className="mt-3 text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">
                   Proof Type: {project.proofType}
                 </p>
-                <span className="mt-4 inline-block text-sm font-semibold text-indigo-700 dark:text-indigo-400">
+                <span className="mt-4 inline-block text-sm font-semibold text-[#237f86] dark:text-tide-softBlue">
                   View Project
                 </span>
               </Link>
@@ -242,7 +242,7 @@ const SiteIndexView: React.FC = () => {
               <a
                 key={item.href}
                 href={item.href}
-                className="rounded-xl border border-[#ddd7cd] dark:border-white/10 bg-[#fcfaf7] dark:bg-slate-900 p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                className="rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd] dark:bg-slate-900 p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
               >
                 <h3 className="font-semibold text-navy-900 dark:text-white">{item.title}</h3>
                 <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
@@ -267,21 +267,21 @@ const SiteIndexView: React.FC = () => {
           <div className="grid md:grid-cols-2 gap-4">
             <Link
               to={RESUME_HREF}
-              className="rounded-xl border border-[#ddd7cd] dark:border-white/10 bg-[#fcfaf7] dark:bg-slate-900 p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+              className="rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd] dark:bg-slate-900 p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
             >
               <h3 className="font-semibold text-navy-900 dark:text-white">Resume</h3>
               <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
                 Review the current resume and role-aligned professional summary.
               </p>
             </Link>
-            <div className="rounded-xl border border-[#ddd7cd] dark:border-white/10 bg-[#fcfaf7] dark:bg-slate-900 p-5">
+            <div className="rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd] dark:bg-slate-900 p-5">
               <h3 className="font-semibold text-navy-900 dark:text-white">Contact</h3>
               <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
                 Open the contact flow to reach Kyle directly.
               </p>
               <button
                 onClick={openContact}
-                className="mt-4 inline-flex text-sm font-semibold text-indigo-700 dark:text-indigo-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded"
+                className="mt-4 inline-flex text-sm font-semibold text-[#237f86] dark:text-tide-softBlue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua rounded"
               >
                 Open Contact
               </button>
@@ -301,7 +301,7 @@ const SiteIndexView: React.FC = () => {
             Suggested Paths
           </h2>
           <div className="grid md:grid-cols-2 gap-4 text-sm">
-            <div className="rounded-xl border border-[#ddd7cd] dark:border-white/10 bg-[#fcfaf7] dark:bg-slate-900 p-5">
+            <div className="rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd] dark:bg-slate-900 p-5">
               <h3 className="font-semibold text-navy-900 dark:text-white">
                 I’m hiring for implementation
               </h3>
@@ -323,7 +323,7 @@ const SiteIndexView: React.FC = () => {
                 </Link>
               </p>
             </div>
-            <div className="rounded-xl border border-[#ddd7cd] dark:border-white/10 bg-[#fcfaf7] dark:bg-slate-900 p-5">
+            <div className="rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd] dark:bg-slate-900 p-5">
               <h3 className="font-semibold text-navy-900 dark:text-white">I’m hiring for QA</h3>
               <p className="mt-2">
                 <Link to={QA_TRACK_HREF} className="underline">
@@ -343,7 +343,7 @@ const SiteIndexView: React.FC = () => {
                 </Link>
               </p>
             </div>
-            <div className="rounded-xl border border-[#ddd7cd] dark:border-white/10 bg-[#fcfaf7] dark:bg-slate-900 p-5">
+            <div className="rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd] dark:bg-slate-900 p-5">
               <h3 className="font-semibold text-navy-900 dark:text-white">I’m hiring for GIS</h3>
               <p className="mt-2">
                 <Link to={GIS_TRACK_HREF} className="underline">
@@ -363,7 +363,7 @@ const SiteIndexView: React.FC = () => {
                 </Link>
               </p>
             </div>
-            <div className="rounded-xl border border-[#ddd7cd] dark:border-white/10 bg-[#fcfaf7] dark:bg-slate-900 p-5">
+            <div className="rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd] dark:bg-slate-900 p-5">
               <h3 className="font-semibold text-navy-900 dark:text-white">
                 I want to inspect the build process
               </h3>

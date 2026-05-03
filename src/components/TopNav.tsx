@@ -15,7 +15,7 @@ interface TopNavProps {
   onOpenContact: () => void;
 }
 
-type NavAccent = 'orange' | 'blue' | 'teal' | 'neutral';
+type NavAccent = 'aqua' | 'blue' | 'cyan' | 'neutral';
 
 const NAV_ITEMS: Array<{
   label: string;
@@ -32,7 +32,7 @@ const NAV_ITEMS: Array<{
   {
     label: 'Implementation',
     href: IMPLEMENTATION_TRACK_HREF,
-    accent: 'orange',
+    accent: 'aqua',
     activeMatch: (pathname) => pathname === IMPLEMENTATION_TRACK_HREF,
   },
   {
@@ -44,7 +44,7 @@ const NAV_ITEMS: Array<{
   {
     label: 'GIS',
     href: GIS_TRACK_HREF,
-    accent: 'teal',
+    accent: 'cyan',
     activeMatch: (pathname) => pathname === GIS_TRACK_HREF,
   },
   {
@@ -65,38 +65,38 @@ const baseLinkClass =
   'relative pb-1 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-slate-600 dark:focus-visible:ring-slate-300';
 
 const getAccentClass = (accent: NavAccent, isActive: boolean) => {
-  if (accent === 'orange') {
+  if (accent === 'aqua') {
     return isActive
-      ? 'text-orange-600 dark:text-orange-400 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-full after:bg-orange-500'
-      : 'text-slate-600 hover:text-orange-600 dark:text-slate-300 dark:hover:text-orange-300 hover:after:absolute hover:after:left-0 hover:after:-bottom-1 hover:after:h-0.5 hover:after:w-full hover:after:bg-orange-400/80';
+      ? 'text-tide-aqua after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-full after:bg-gradient-to-r after:from-tide-aqua after:to-gild'
+      : 'text-ink-slate hover:text-ink-navy dark:text-slate-300 dark:hover:text-white hover:after:absolute hover:after:left-0 hover:after:-bottom-1 hover:after:h-0.5 hover:after:w-full hover:after:bg-tide-aqua/70';
   }
 
   if (accent === 'blue') {
     return isActive
-      ? 'text-blue-700 dark:text-blue-300 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-full after:bg-blue-500'
-      : 'text-slate-600 hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-300 hover:after:absolute hover:after:left-0 hover:after:-bottom-1 hover:after:h-0.5 hover:after:w-full hover:after:bg-blue-400/80';
+      ? 'text-[#2a77a8] dark:text-tide-softBlue after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-full after:bg-tide-blue'
+      : 'text-ink-slate hover:text-[#2a77a8] dark:text-slate-300 dark:hover:text-tide-softBlue hover:after:absolute hover:after:left-0 hover:after:-bottom-1 hover:after:h-0.5 hover:after:w-full hover:after:bg-tide-softBlue/80';
   }
 
-  if (accent === 'teal') {
+  if (accent === 'cyan') {
     return isActive
-      ? 'text-teal-700 dark:text-teal-300 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-full after:bg-teal-500'
-      : 'text-slate-600 hover:text-teal-700 dark:text-slate-300 dark:hover:text-teal-300 hover:after:absolute hover:after:left-0 hover:after:-bottom-1 hover:after:h-0.5 hover:after:w-full hover:after:bg-teal-400/80';
+      ? 'text-tide-cyan after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-full after:bg-tide-cyan'
+      : 'text-ink-slate hover:text-ink-navy dark:text-slate-300 dark:hover:text-white hover:after:absolute hover:after:left-0 hover:after:-bottom-1 hover:after:h-0.5 hover:after:w-full hover:after:bg-tide-cyan/70';
   }
 
   return isActive
-    ? 'text-navy-900 dark:text-white after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-full after:bg-slate-400/80'
-    : 'text-slate-600 hover:text-navy-900 dark:text-slate-300 dark:hover:text-white hover:after:absolute hover:after:left-0 hover:after:-bottom-1 hover:after:h-0.5 hover:after:w-full hover:after:bg-slate-400/70';
+    ? 'text-ink-navy dark:text-white after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-full after:bg-slate-400/80'
+    : 'text-ink-slate hover:text-ink-navy dark:text-slate-300 dark:hover:text-white hover:after:absolute hover:after:left-0 hover:after:-bottom-1 hover:after:h-0.5 hover:after:w-full hover:after:bg-slate-400/70';
 };
 
 const TopNav: React.FC<TopNavProps> = ({ theme, toggleTheme, onOpenContact }) => {
   const location = useLocation();
 
   return (
-    <header className="sticky top-0 z-50 h-20 border-b border-[#e4dfd7] dark:border-white/10 bg-[#f8f7f3]/95 dark:bg-slate-950/95 backdrop-blur">
+    <header className="sticky top-0 z-50 h-20 border-b border-[#d8e8ee] dark:border-white/10 bg-[#f5f9fb]/95 dark:bg-slate-950/95 backdrop-blur">
       <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between gap-4">
         <Link
           to={HOME_HREF}
-          className="text-xl font-outfit font-bold tracking-tight text-navy-900 dark:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-slate-600 dark:focus-visible:ring-slate-300"
+          className="text-xl font-outfit font-bold tracking-tight text-ink-navy dark:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-slate-600 dark:focus-visible:ring-slate-300"
           aria-label="Go to homepage"
         >
           ARCHITECT.SYS

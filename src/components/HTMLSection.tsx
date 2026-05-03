@@ -27,7 +27,7 @@ const HTMLSection: React.FC<HTMLSectionProps> = ({ content, isLoading = false })
   return (
     <div className="max-w-4xl mx-auto relative group">
       {/* Decorative Glow */}
-      <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+      <div className="absolute -inset-1 bg-gradient-to-r from-tide-aqua/20 to-purple-500/20 blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
 
       {/* Container */}
       <div className="relative">

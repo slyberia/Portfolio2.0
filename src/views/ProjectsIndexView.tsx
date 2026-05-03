@@ -16,9 +16,9 @@ const roleLabel: Record<ProjectRoleLane, string> = {
 };
 
 const roleStyles: Record<ProjectRoleLane, string> = {
-  Implementation: 'border-orange-200 bg-orange-50 text-orange-800',
-  QA: 'border-blue-200 bg-blue-50 text-blue-800',
-  GIS: 'border-teal-200 bg-teal-50 text-teal-800',
+  Implementation: 'border-tide-aqua/30 bg-tide-aqua/10 text-[#237f86]',
+  QA: 'border-blue-200 bg-tide-blue/10 text-blue-800',
+  GIS: 'border-cyan-200 bg-cyan-50 text-cyan-800',
 };
 
 const ProjectsIndexView: React.FC = () => {
@@ -33,7 +33,7 @@ const ProjectsIndexView: React.FC = () => {
   }, [activeFilter, supporting]);
 
   return (
-    <div className="min-h-screen pt-20 pb-20 px-6 bg-[#f8f7f3] dark:bg-slate-950">
+    <div className="min-h-screen pt-20 pb-20 px-6 bg-[#f5f9fb] dark:bg-slate-950">
       <div className="max-w-7xl mx-auto space-y-12">
         <header className="space-y-4 max-w-4xl">
           <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500">
@@ -65,10 +65,10 @@ const ProjectsIndexView: React.FC = () => {
               <Link
                 key={project.id}
                 to={project.href}
-                className="rounded-xl border border-[#d9d1c6] bg-white dark:bg-slate-900 p-6 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                className="rounded-xl border border-[#d8e8ee] bg-white dark:bg-slate-900 p-6 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
               >
                 <div
-                  className={`h-1 w-20 rounded ${project.accent === 'teal' ? 'bg-teal-500' : 'bg-orange-500'}`}
+                  className={`h-1 w-20 rounded ${project.accent === 'cyan' ? 'bg-cyan-500' : 'bg-tide-aqua'}`}
                   aria-hidden="true"
                 />
                 <p className="mt-3 text-xs uppercase tracking-[0.18em] text-slate-500">
@@ -90,7 +90,7 @@ const ProjectsIndexView: React.FC = () => {
                     </span>
                   ))}
                 </div>
-                <span className="mt-4 inline-block text-sm font-semibold text-indigo-700 dark:text-indigo-300">
+                <span className="mt-4 inline-block text-sm font-semibold text-[#237f86] dark:text-tide-softBlue">
                   View Project →
                 </span>
               </Link>
@@ -118,7 +118,7 @@ const ProjectsIndexView: React.FC = () => {
                   role="tab"
                   aria-selected={isActive}
                   onClick={() => setActiveFilter(filter)}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-md border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${isActive ? 'border-indigo-400 bg-indigo-50 text-indigo-700' : 'border-[#d7d1c8] bg-white text-slate-600'}`}
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-md border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua ${isActive ? 'border-tide-sky bg-tide-aqua/10 text-[#237f86]' : 'border-[#d8e8ee] bg-white text-slate-600'}`}
                 >
                   {filter}
                 </button>
@@ -131,13 +131,13 @@ const ProjectsIndexView: React.FC = () => {
               <Link
                 key={project.id}
                 to={project.href}
-                className="rounded-xl border border-[#ddd7cd] bg-white dark:bg-slate-900 p-5 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                className="rounded-xl border border-[#d8e8ee] bg-white dark:bg-slate-900 p-5 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
               >
                 <div className="flex items-center justify-between gap-2">
                   <span className="text-[10px] font-mono uppercase tracking-[0.16em] text-slate-500">
                     {project.statusLabel}
                   </span>
-                  <span className="text-[10px] uppercase tracking-wider font-semibold text-slate-500 border border-[#d7d1c8] rounded-full px-2 py-0.5">
+                  <span className="text-[10px] uppercase tracking-wider font-semibold text-slate-500 border border-[#d8e8ee] rounded-full px-2 py-0.5">
                     {project.proofType}
                   </span>
                 </div>
@@ -157,7 +157,7 @@ const ProjectsIndexView: React.FC = () => {
                     </span>
                   ))}
                 </div>
-                <span className="mt-4 inline-block text-sm font-semibold text-indigo-700 dark:text-indigo-300">
+                <span className="mt-4 inline-block text-sm font-semibold text-[#237f86] dark:text-tide-softBlue">
                   View Project →
                 </span>
               </Link>
@@ -165,7 +165,7 @@ const ProjectsIndexView: React.FC = () => {
           </div>
         </section>
 
-        <section className="rounded-xl border border-[#ddd7cd] bg-white dark:bg-slate-900 p-5">
+        <section className="rounded-xl border border-[#d8e8ee] bg-white dark:bg-slate-900 p-5">
           <h2 className="text-xl font-semibold text-navy-900 dark:text-white">
             Want the build methodology?
           </h2>
@@ -175,13 +175,13 @@ const ProjectsIndexView: React.FC = () => {
           </p>
           <a
             href={PORTFOLIO_PROCESS_HREF}
-            className="mt-4 inline-flex text-sm font-semibold text-indigo-700"
+            className="mt-4 inline-flex text-sm font-semibold text-[#237f86]"
           >
             View Process Deep Dives
           </a>
           <p className="mt-4 text-sm text-slate-500">
             Need the full map?{' '}
-            <Link to={SITE_INDEX_HREF} className="font-semibold text-indigo-700">
+            <Link to={SITE_INDEX_HREF} className="font-semibold text-[#237f86]">
               Open Site Index
             </Link>
           </p>

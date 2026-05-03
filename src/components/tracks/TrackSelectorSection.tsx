@@ -11,7 +11,7 @@ const TrackSelectorSection: React.FC<TrackSelectorSectionProps> = ({ tracks }) =
     <section className="py-12 px-6 bg-slate-50/50 dark:bg-slate-900/20 border-y border-black/5 dark:border-white/5">
       <div className="max-w-5xl mx-auto space-y-6">
         <div className="text-center space-y-1">
-          <p className="text-xs font-bold text-indigo-600 dark:text-indigo-500 uppercase tracking-[0.3em]">
+          <p className="text-xs font-bold text-tide-aqua dark:text-tide-aqua uppercase tracking-[0.3em]">
             Pick a lane
           </p>
           <h2 className="text-lg font-outfit font-bold text-navy-900 dark:text-white">
@@ -23,15 +23,15 @@ const TrackSelectorSection: React.FC<TrackSelectorSectionProps> = ({ tracks }) =
             <Link
               key={track.href}
               to={track.href}
-              className="glass-card rounded-2xl p-6 flex flex-col gap-3 group transition-all duration-300 hover:-translate-y-1 hover:border-indigo-500/30"
+              className="glass-card rounded-2xl p-6 flex flex-col gap-3 group transition-all duration-300 hover:-translate-y-1 hover:border-tide-aqua/30"
             >
               <div className="flex items-center justify-between">
-                <span className="text-base font-bold text-navy-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                <span className="text-base font-bold text-navy-900 dark:text-white group-hover:text-tide-aqua dark:group-hover:text-tide-softBlue transition-colors">
                   {track.title}
                 </span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-4 h-4 text-slate-400 group-hover:text-indigo-500 group-hover:translate-x-0.5 transition-all shrink-0"
+                  className="w-4 h-4 text-slate-400 group-hover:text-tide-aqua group-hover:translate-x-0.5 transition-all shrink-0"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"

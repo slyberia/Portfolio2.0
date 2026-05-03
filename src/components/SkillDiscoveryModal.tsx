@@ -10,7 +10,7 @@ interface SkillDiscoveryModalProps {
 }
 
 const CATEGORY_TAGS: Record<ProjectCategory, string> = {
-  'ai-ops': 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20',
+  'ai-ops': 'bg-tide-aqua/10 text-tide-aqua dark:text-tide-sky border-tide-aqua/20',
   'qa-data': 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20',
   'success-strategy':
     'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20',
@@ -42,11 +42,11 @@ const SkillDiscoveryModal: React.FC<SkillDiscoveryModalProps> = ({
       <div className="relative w-full max-w-2xl bg-white dark:bg-slate-900 border border-black/5 dark:border-white/10 rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-300">
         <div className="p-8 border-b border-black/5 dark:border-white/5 flex items-center justify-between">
           <div>
-            <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-400 mb-2">
+            <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-tide-aqua dark:text-tide-sky mb-2">
               Relational Discovery
             </div>
             <h2 className="text-3xl font-outfit font-bold text-navy-900 dark:text-white flex items-center gap-3">
-              Skill: <span className="text-indigo-600 dark:text-indigo-400">{skill}</span>
+              Skill: <span className="text-tide-aqua dark:text-tide-sky">{skill}</span>
             </h2>
           </div>
           <button
@@ -99,7 +99,7 @@ const SkillDiscoveryModal: React.FC<SkillDiscoveryModalProps> = ({
                       onNavigateToStudy(study.id);
                       onClose();
                     }}
-                    className="text-left w-full group p-5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:border-indigo-500/40 dark:hover:border-indigo-500/40 hover:bg-white dark:hover:bg-white/10 transition-all shadow-sm"
+                    className="text-left w-full group p-5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:border-tide-aqua/40 dark:hover:border-tide-aqua/40 hover:bg-white dark:hover:bg-white/10 transition-all shadow-sm"
                   >
                     <div className="flex items-center justify-between mb-2">
                       <span
@@ -109,7 +109,7 @@ const SkillDiscoveryModal: React.FC<SkillDiscoveryModalProps> = ({
                       </span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors"
+                        className="w-4 h-4 text-slate-400 group-hover:text-tide-aqua dark:group-hover:text-tide-sky transition-colors"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
@@ -121,7 +121,7 @@ const SkillDiscoveryModal: React.FC<SkillDiscoveryModalProps> = ({
                         <path d="M7 17 17 7" />
                       </svg>
                     </div>
-                    <h3 className="text-lg font-outfit font-bold text-navy-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                    <h3 className="text-lg font-outfit font-bold text-navy-900 dark:text-white group-hover:text-tide-aqua dark:group-hover:text-tide-sky transition-colors">
                       {study.title}
                     </h3>
                     <p className="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">

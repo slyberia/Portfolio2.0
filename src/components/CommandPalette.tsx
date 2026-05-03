@@ -116,12 +116,12 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({ onNavigate, onAction })
               onClick={() => execute(action)}
               className={`w-full text-left px-4 py-3 flex items-center justify-between transition-all ${
                 i === selectedIndex
-                  ? 'bg-indigo-600/10 border-l-2 border-indigo-500'
+                  ? 'bg-tide-aqua/10 border-l-2 border-tide-aqua'
                   : 'hover:bg-white/5 border-l-2 border-transparent'
               }`}
             >
               <span
-                className={`text-sm font-medium ${i === selectedIndex ? 'text-indigo-400' : 'text-slate-300'}`}
+                className={`text-sm font-medium ${i === selectedIndex ? 'text-tide-sky' : 'text-slate-300'}`}
               >
                 {action.label}
               </span>

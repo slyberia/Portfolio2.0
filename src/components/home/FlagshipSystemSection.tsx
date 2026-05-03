@@ -12,11 +12,11 @@ interface FlagshipSystemSectionProps {
 
 const ROLE_CHIP_STYLES: Record<RoleTrack, string> = {
   'Technical Implementation Specialist':
-    'border-orange-200 bg-orange-50 text-orange-800 dark:border-orange-500/30 dark:bg-orange-500/10 dark:text-orange-200',
+    'border-tide-aqua/30 bg-tide-aqua/10 text-[#237f86] dark:border-tide-aqua/30 dark:bg-tide-aqua/10 dark:text-tide-aqua/30',
   'Quality Assurance Analyst':
-    'border-blue-200 bg-blue-50 text-blue-800 dark:border-blue-500/30 dark:bg-blue-500/10 dark:text-blue-200',
+    'border-blue-200 bg-tide-blue/10 text-blue-800 dark:border-tide-blue/30 dark:bg-tide-blue/10 dark:text-blue-200',
   'GIS Analyst':
-    'border-teal-200 bg-teal-50 text-teal-800 dark:border-teal-500/30 dark:bg-teal-500/10 dark:text-teal-200',
+    'border-cyan-200 bg-cyan-50 text-cyan-800 dark:border-cyan-500/30 dark:bg-cyan-500/10 dark:text-cyan-200',
 };
 
 const PROOF_ARTIFACTS: Array<{ title: string; description: string; roles: RoleTrack[] }> = [
@@ -62,7 +62,7 @@ const FlagshipSystemSection: React.FC<FlagshipSystemSectionProps> = ({ guynodeHr
   return (
     <section
       aria-labelledby="flagship-system-heading"
-      className="relative border-b border-[#e4dfd7] dark:border-white/5 bg-[#fefcf9] dark:bg-slate-950/70"
+      className="relative border-b border-[#d8e8ee] dark:border-white/5 bg-[#f8fbfd] dark:bg-slate-950/70"
     >
       <div
         className="absolute inset-0 pointer-events-none"
@@ -113,7 +113,7 @@ const FlagshipSystemSection: React.FC<FlagshipSystemSectionProps> = ({ guynodeHr
             <Link
               to={guynodeHref}
               aria-label="View Guynode system proof details"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-navy-900 dark:text-white border border-[#d7d1c8] dark:border-white/10 bg-white/95 dark:bg-slate-900/80 rounded-lg px-4 py-2.5 hover:border-indigo-500/40 hover:shadow-[0_8px_20px_rgba(79,70,229,0.16)] focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 transition-all"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-navy-900 dark:text-white border border-[#d8e8ee] dark:border-white/10 bg-white/95 dark:bg-slate-900/80 rounded-lg px-4 py-2.5 hover:border-tide-aqua/40 hover:shadow-[0_8px_20px_rgba(79,70,229,0.16)] focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua transition-all"
             >
               View Guynode System
               <span aria-hidden="true">↗</span>
@@ -133,7 +133,7 @@ const FlagshipSystemSection: React.FC<FlagshipSystemSectionProps> = ({ guynodeHr
             {PROOF_ARTIFACTS.map((artifact) => (
               <article
                 key={artifact.title}
-                className="rounded-xl border border-[#ddd7cd] dark:border-white/10 bg-white/95 dark:bg-slate-900/70 p-4 md:p-5 shadow-[0_8px_24px_rgba(15,23,42,0.06)]"
+                className="rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-white/95 dark:bg-slate-900/70 p-4 md:p-5 shadow-[0_8px_24px_rgba(15,23,42,0.06)]"
               >
                 <h3 className="text-base font-semibold text-navy-900 dark:text-white">
                   {artifact.title}

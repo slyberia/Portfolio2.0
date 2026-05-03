@@ -23,12 +23,12 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
   const getCategoryColorClass = (category: string) => {
     if (category.includes('Technical')) {
-      return 'hover:border-indigo-400/60 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 hover:text-indigo-700 dark:hover:text-indigo-300 focus-visible:ring-indigo-500';
+      return 'hover:border-tide-sky/60 hover:bg-tide-aqua/10 dark:hover:bg-tide-aqua/10 hover:text-[#237f86] dark:hover:text-tide-softBlue focus-visible:ring-tide-aqua';
     }
     if (category.includes('Operations')) {
-      return 'hover:border-blue-400/60 hover:bg-blue-50 dark:hover:bg-blue-500/10 hover:text-blue-700 dark:hover:text-blue-300 focus-visible:ring-blue-500';
+      return 'hover:border-tide-softBlue/60 hover:bg-tide-blue/10 dark:hover:bg-tide-blue/10 hover:text-[#2a77a8] dark:hover:text-tide-softBlue focus-visible:ring-tide-blue';
     }
-    return 'hover:border-teal-400/60 hover:bg-teal-50 dark:hover:bg-teal-500/10 hover:text-teal-700 dark:hover:text-teal-300 focus-visible:ring-teal-500';
+    return 'hover:border-cyan-400/60 hover:bg-cyan-50 dark:hover:bg-cyan-500/10 hover:text-cyan-700 dark:hover:text-cyan-300 focus-visible:ring-cyan-500';
   };
 
   const roleTrackCards = [
@@ -41,12 +41,12 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
       stream: 'STREAM 01',
       path: 'SYS_PATH: 01.00',
       href: '/tracks/implementation',
-      railClass: 'bg-orange-600',
-      iconTileClass: 'bg-orange-100 text-orange-700 dark:bg-orange-500/15 dark:text-orange-300',
-      labelClass: 'text-orange-700 dark:text-orange-300',
+      railClass: 'bg-tide-aqua',
+      iconTileClass: 'bg-tide-aqua/10 text-[#237f86] dark:bg-tide-aqua/15 dark:text-tide-aqua/40',
+      labelClass: 'text-[#237f86] dark:text-tide-aqua/40',
       primaryChipClass:
-        'bg-orange-100 text-orange-800 border-orange-200 dark:bg-orange-500/15 dark:text-orange-200 dark:border-orange-500/30',
-      focusClass: 'focus-visible:ring-orange-500 hover:border-orange-400/50',
+        'bg-tide-aqua/10 text-[#237f86] border-tide-aqua/30 dark:bg-tide-aqua/15 dark:text-tide-aqua/30 dark:border-tide-aqua/30',
+      focusClass: 'focus-visible:ring-tide-aqua hover:border-tide-sky/50',
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -80,12 +80,12 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
       stream: 'STREAM 02',
       path: 'SYS_PATH: 02.00',
       href: '/tracks/ops-analytics',
-      railClass: 'bg-blue-600',
-      iconTileClass: 'bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300',
-      labelClass: 'text-blue-700 dark:text-blue-300',
+      railClass: 'bg-tide-blue',
+      iconTileClass: 'bg-blue-100 text-[#2a77a8] dark:bg-tide-blue/15 dark:text-tide-softBlue',
+      labelClass: 'text-[#2a77a8] dark:text-tide-softBlue',
       primaryChipClass:
-        'bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-500/15 dark:text-blue-200 dark:border-blue-500/30',
-      focusClass: 'focus-visible:ring-blue-500 hover:border-blue-400/50',
+        'bg-blue-100 text-blue-800 border-blue-200 dark:bg-tide-blue/15 dark:text-blue-200 dark:border-tide-blue/30',
+      focusClass: 'focus-visible:ring-tide-blue hover:border-tide-softBlue/50',
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -112,12 +112,12 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
       stream: 'STREAM 03',
       path: 'SYS_PATH: 03.00',
       href: '/tracks/gis',
-      railClass: 'bg-teal-600',
-      iconTileClass: 'bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-300',
-      labelClass: 'text-teal-700 dark:text-teal-300',
+      railClass: 'bg-cyan-600',
+      iconTileClass: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-500/15 dark:text-cyan-300',
+      labelClass: 'text-cyan-700 dark:text-cyan-300',
       primaryChipClass:
-        'bg-teal-100 text-teal-800 border-teal-200 dark:bg-teal-500/15 dark:text-teal-200 dark:border-teal-500/30',
-      focusClass: 'focus-visible:ring-teal-500 hover:border-teal-400/50',
+        'bg-cyan-100 text-cyan-800 border-cyan-200 dark:bg-cyan-500/15 dark:text-cyan-200 dark:border-cyan-500/30',
+      focusClass: 'focus-visible:ring-cyan-500 hover:border-cyan-400/50',
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -140,7 +140,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
   return (
     <>
-      <section className="relative pt-20 overflow-hidden bg-[#f7f5f1] dark:bg-slate-950 border-b border-[#e4dfd7] dark:border-white/5">
+      <section className="relative pt-20 overflow-hidden bg-[#f5f9fb] dark:bg-slate-950 border-b border-[#d8e8ee] dark:border-white/5">
         <div
           className="absolute inset-0 pointer-events-none"
           aria-hidden="true"
@@ -184,13 +184,13 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               <Link
                 to={GUYNODE_SYSTEM_HREF}
                 aria-label="View Guynode system"
-                className="group min-h-[74px] border border-[#d9d1c6] dark:border-white/10 bg-[#fbfaf7]/90 dark:bg-slate-900/70 rounded-md px-4 py-3 flex items-center justify-between gap-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-orange-400/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                className="group min-h-[74px] border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd]/90 dark:bg-slate-900/70 rounded-md px-4 py-3 flex items-center justify-between gap-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-tide-sky/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
               >
                 {/* TODO: update this href to the dedicated Guynode case-study route when it exists. */}
                 <div>
                   <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
                     <span
-                      className="h-1.5 w-1.5 rounded-full shrink-0 bg-orange-500"
+                      className="h-1.5 w-1.5 rounded-full shrink-0 bg-tide-aqua"
                       aria-hidden="true"
                     />
                     FLAGSHIP PROJECT
@@ -201,7 +201,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                 </div>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-4 h-4 shrink-0 text-slate-700 dark:text-slate-200 group-hover:translate-x-0.5 group-hover:text-orange-600 transition-all"
+                  className="w-4 h-4 shrink-0 text-slate-700 dark:text-slate-200 group-hover:translate-x-0.5 group-hover:text-tide-aqua transition-all"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -218,7 +218,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               <Link
                 to="/resume"
                 aria-label="Download resume"
-                className="group min-h-[74px] border border-[#d9d1c6] dark:border-white/10 bg-[#fbfaf7]/90 dark:bg-slate-900/70 rounded-md px-4 py-3 flex items-center justify-between gap-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-slate-400/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-500"
+                className="group min-h-[74px] border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd]/90 dark:bg-slate-900/70 rounded-md px-4 py-3 flex items-center justify-between gap-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-slate-400/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-500"
               >
                 {/* TODO: replace /resume with a direct resume PDF asset link when available. */}
                 <div>
@@ -264,7 +264,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                 aria-label={`Open ${track.title} track`}
                 className={`group block w-full focus:outline-none focus-visible:ring-2 ${track.focusClass}`}
               >
-                <article className="relative overflow-hidden rounded-2xl border border-[#d7d1c8] dark:border-white/10 bg-white/95 dark:bg-slate-900/75 p-5 md:p-6 pl-7 md:pl-8 shadow-sm transition-all group-hover:-translate-y-0.5 group-hover:shadow-[0_12px_35px_rgba(15,23,42,0.12)]">
+                <article className="relative overflow-hidden rounded-2xl border border-[#d8e8ee] dark:border-white/10 bg-white/95 dark:bg-slate-900/75 p-5 md:p-6 pl-7 md:pl-8 shadow-sm transition-all group-hover:-translate-y-0.5 group-hover:shadow-[0_12px_35px_rgba(15,23,42,0.12)]">
                   <div className={`absolute left-0 top-0 h-full w-1.5 ${track.railClass}`} />
                   <div className="flex flex-col gap-5">
                     <div className="flex items-start justify-between gap-4">
@@ -323,7 +323,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
       <section
         id="about"
-        className="py-28 px-6 scroll-mt-24 bg-[#f7f5f1]/70 dark:bg-slate-950/60 border-y border-[#e4dfd7] dark:border-white/5"
+        className="py-28 px-6 scroll-mt-24 bg-[#f5f9fb]/70 dark:bg-slate-950/60 border-y border-[#d8e8ee] dark:border-white/5"
       >
         <div className="max-w-7xl mx-auto grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
           <div className="space-y-5">
@@ -350,11 +350,11 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             </p>
           </div>
 
-          <article className="rounded-2xl border border-[#ddd7cd] dark:border-white/10 bg-[#fbfaf7]/95 dark:bg-slate-900/70 p-6 shadow-[0_6px_20px_rgba(15,23,42,0.06)] space-y-5">
+          <article className="rounded-2xl border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd]/95 dark:bg-slate-900/70 p-6 shadow-[0_6px_20px_rgba(15,23,42,0.06)] space-y-5">
             <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
               PROFILE_SIGNAL
             </p>
-            <div className="mx-auto w-full max-w-[320px] rounded-full border border-[#ddd7cd] bg-[#fbfaf7] p-2 shadow-sm">
+            <div className="mx-auto w-full max-w-[320px] rounded-full border border-[#d8e8ee] bg-[#f8fbfd] p-2 shadow-sm">
               {/* TODO: Add public/images/about-profile-medallion.png manually because Codex PR creation does not support binary image assets. */}
               <img
                 src="/images/about-profile-medallion.png"
@@ -385,7 +385,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
             <div className="space-y-4">
-              <h2 className="text-xs font-bold text-indigo-600 dark:text-indigo-500 uppercase tracking-[0.3em]">
+              <h2 className="text-xs font-bold text-tide-aqua dark:text-tide-aqua uppercase tracking-[0.3em]">
                 EXPERIENCE_LOG
               </h2>
               <h3 className="text-3xl md:text-4xl font-outfit font-semibold text-navy-900 dark:text-white">
@@ -409,7 +409,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                       ? 'exp-apex'
                       : undefined
                 }
-                className="glass-card p-8 rounded-3xl border border-[#ddd7cd] dark:border-white/10 shadow-sm scroll-mt-28"
+                className="glass-card p-8 rounded-3xl border border-[#d8e8ee] dark:border-white/10 shadow-sm scroll-mt-28"
               >
                 <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-6">
                   <div>
@@ -420,7 +420,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                       {exp.company}
                     </p>
                     {exp.tools && (
-                      <p className="mt-2 text-[11px] font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400 opacity-80">
+                      <p className="mt-2 text-[11px] font-bold uppercase tracking-widest text-tide-aqua dark:text-tide-sky opacity-80">
                         {exp.tools}
                       </p>
                     )}
@@ -435,7 +435,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                       key={i}
                       className="flex gap-3 text-slate-500 dark:text-slate-400 text-sm leading-relaxed"
                     >
-                      <span className="mt-2 w-1.5 h-1.5 bg-indigo-600/50 dark:bg-indigo-500/50 rounded-full shrink-0"></span>
+                      <span className="mt-2 w-1.5 h-1.5 bg-tide-aqua/50 dark:bg-tide-aqua/50 rounded-full shrink-0"></span>
                       {bullet}
                     </li>
                   ))}
@@ -449,7 +449,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
       {/* Skills Grid */}
       <section
         id="skills"
-        className="py-32 px-6 scroll-mt-24 transition-colors duration-500 bg-[#f7f5f1]/70 dark:bg-slate-950/60"
+        className="py-32 px-6 scroll-mt-24 transition-colors duration-500 bg-[#f5f9fb]/70 dark:bg-slate-950/60"
       >
         <div className="max-w-7xl mx-auto">
           <div className="mb-12 space-y-3">
@@ -468,7 +468,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             {SKILL_GROUPS.map((group, idx) => (
               <div
                 key={idx}
-                className="rounded-2xl border border-[#ddd7cd] dark:border-white/10 bg-white/80 dark:bg-slate-900/60 p-6 space-y-4"
+                className="rounded-2xl border border-[#d8e8ee] dark:border-white/10 bg-white/80 dark:bg-slate-900/60 p-6 space-y-4"
               >
                 <h4 className="text-base font-outfit font-semibold text-navy-900 dark:text-white border-b border-[#e5e0d6] dark:border-white/10 pb-3">
                   {group.category}
@@ -531,7 +531,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16">
           <div className="space-y-12">
             <div className="space-y-4">
-              <h2 className="text-xs font-bold text-indigo-600 dark:text-indigo-500 uppercase tracking-[0.3em]">
+              <h2 className="text-xs font-bold text-tide-aqua dark:text-tide-aqua uppercase tracking-[0.3em]">
                 Foundation
               </h2>
               <h3 className="text-4xl font-outfit font-bold text-navy-900 dark:text-white">
@@ -541,7 +541,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                 <h4 className="text-xl font-outfit font-bold text-navy-900 dark:text-white">
                   B.A., Geography
                 </h4>
-                <p className="text-indigo-600 dark:text-indigo-400 font-medium font-outfit">
+                <p className="text-tide-aqua dark:text-tide-sky font-medium font-outfit">
                   Queen&#39;s University
                 </p>
                 <p className="text-slate-500 dark:text-slate-400 mt-4 text-sm leading-relaxed">
@@ -562,7 +562,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                   key={idx}
                   className="flex items-center gap-4 glass-card p-6 rounded-2xl hover:translate-x-2 transition-transform cursor-default"
                 >
-                  <div className="w-12 h-12 bg-indigo-600/10 dark:bg-indigo-600/20 rounded-xl flex items-center justify-center text-indigo-600 dark:text-indigo-400 shrink-0">
+                  <div className="w-12 h-12 bg-tide-aqua/10 dark:bg-tide-aqua/20 rounded-xl flex items-center justify-center text-tide-aqua dark:text-tide-sky shrink-0">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="w-6 h-6"

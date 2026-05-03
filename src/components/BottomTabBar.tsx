@@ -121,7 +121,7 @@ const BottomTabBar: React.FC = () => {
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-40 flex md:hidden bg-[#f9f7f3] dark:bg-[#1a1712] border-t border-[#e4dfd7] dark:border-white/5"
+      className="fixed bottom-0 left-0 right-0 z-40 flex md:hidden bg-[#f5f9fb] dark:bg-[#07161f] border-t border-[#d8e8ee] dark:border-white/5"
       aria-label="Mobile Navigation"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
@@ -131,14 +131,14 @@ const BottomTabBar: React.FC = () => {
           onClick={tab.onClick}
           aria-label={tab.label}
           aria-current={tab.active ? 'page' : undefined}
-          className={`flex-1 flex flex-col items-center justify-center py-3 gap-1 min-h-[56px] cursor-pointer transition-colors duration-150 focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-indigo-500 ${
+          className={`flex-1 flex flex-col items-center justify-center py-3 gap-1 min-h-[56px] cursor-pointer transition-colors duration-150 focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-tide-aqua ${
             tab.active
-              ? 'text-indigo-500'
+              ? 'text-tide-aqua'
               : 'text-navy-900/40 dark:text-white/30 hover:text-navy-900 dark:hover:text-white'
           }`}
         >
           {tab.active && (
-            <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-indigo-500" />
+            <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-tide-aqua" />
           )}
           {tab.icon}
           <span className="font-mono text-[9px] uppercase tracking-wider">{tab.label}</span>
