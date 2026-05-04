@@ -69,7 +69,7 @@ const MODE_CONFIG: Record<
       'Explain the Digital Twin as AI implementation proof.',
       'What experience supports technical implementation roles?',
     ],
-    pillClassName: 'bg-tide-aqua/10 text-[#237f86] dark:bg-tide-aqua/20 dark:text-tide-aqua/30',
+    pillClassName: 'bg-tide-aqua/10 text-[#237f86] dark:bg-tide-aqua/20 dark:text-tide-sky',
   },
   qa: {
     label: 'QA Track',

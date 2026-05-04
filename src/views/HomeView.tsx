@@ -42,10 +42,10 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
       path: 'SYS_PATH: 01.00',
       href: '/tracks/implementation',
       railClass: 'bg-tide-aqua',
-      iconTileClass: 'bg-tide-aqua/10 text-[#237f86] dark:bg-tide-aqua/15 dark:text-tide-aqua/40',
-      labelClass: 'text-[#237f86] dark:text-tide-aqua/40',
+      iconTileClass: 'bg-tide-aqua/10 text-[#237f86] dark:bg-tide-aqua/15 dark:text-tide-sky',
+      labelClass: 'text-[#237f86] dark:text-tide-sky',
       primaryChipClass:
-        'bg-tide-aqua/10 text-[#237f86] border-tide-aqua/30 dark:bg-tide-aqua/15 dark:text-tide-aqua/30 dark:border-tide-aqua/30',
+        'bg-tide-aqua/10 text-[#237f86] border-tide-aqua/30 dark:bg-tide-aqua/15 dark:text-tide-sky dark:border-tide-aqua/30',
       focusClass: 'focus-visible:ring-tide-aqua hover:border-tide-sky/50',
       icon: (
         <svg
