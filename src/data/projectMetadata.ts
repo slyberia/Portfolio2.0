@@ -5,6 +5,7 @@ export type ProjectRoleLane = 'Implementation' | 'QA' | 'GIS';
 export type ProjectFilter = 'Implementation' | 'QA' | 'GIS' | 'AI Systems' | 'Process';
 export type ProjectHierarchy = 'featured' | 'supporting';
 export type ProjectAccent = 'aqua' | 'blue' | 'cyan' | 'gold' | 'slate';
+export type EvidenceTier = 'primary' | 'secondary' | 'supporting';
 
 export type ProjectMetadata = {
   id: string;
@@ -19,9 +20,22 @@ export type ProjectMetadata = {
   accent: ProjectAccent;
   sortOrder: number;
   href: string;
+  evidenceTier?: EvidenceTier;
+  flagship?: boolean;
+  showInSwitcher?: boolean;
+  switcherRank?: number;
+  caseStudyRoute?: string;
+  markdownRoute?: string;
+  crawlerRoute?: string;
 };
 
-const PROJECT_ACCENTS: readonly ProjectAccent[] = ['aqua', 'blue', 'cyan', 'gold', 'slate'] as const;
+const PROJECT_ACCENTS: readonly ProjectAccent[] = [
+  'aqua',
+  'blue',
+  'cyan',
+  'gold',
+  'slate',
+] as const;
 
 export const PROJECT_FILTERS: Array<'All' | ProjectFilter> = [
   'All',
@@ -47,6 +61,13 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     accent: 'gold',
     sortOrder: 1,
     href: buildProjectHref('guynode'),
+    evidenceTier: 'primary',
+    flagship: true,
+    showInSwitcher: true,
+    switcherRank: 1,
+    caseStudyRoute: '/projects/guynode',
+    markdownRoute: '/content/projects/guynode.md',
+    crawlerRoute: '/projects/guynode/',
   },
   {
     id: 'digital-twin',
@@ -62,6 +83,12 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     accent: 'aqua',
     sortOrder: 2,
     href: buildProjectHref('digital-twin'),
+    evidenceTier: 'secondary',
+    showInSwitcher: true,
+    switcherRank: 2,
+    caseStudyRoute: '/projects/digital-twin',
+    markdownRoute: '/content/projects/digital-twin.md',
+    crawlerRoute: '/projects/digital-twin/',
   },
   {
     id: 'ops-triage',
@@ -76,6 +103,9 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     accent: 'blue',
     sortOrder: 3,
     href: buildProjectHref('ops-triage'),
+    evidenceTier: 'supporting',
+    showInSwitcher: true,
+    switcherRank: 3,
   },
   {
     id: 'prompter-hub',
@@ -90,6 +120,9 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     accent: 'aqua',
     sortOrder: 4,
     href: buildProjectHref('prompter-hub'),
+    evidenceTier: 'supporting',
+    showInSwitcher: true,
+    switcherRank: 4,
   },
   {
     id: 'project-aegis',
@@ -104,6 +137,9 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     accent: 'slate',
     sortOrder: 5,
     href: buildProjectHref('project-aegis'),
+    evidenceTier: 'supporting',
+    showInSwitcher: true,
+    switcherRank: 5,
   },
   {
     id: 'nba-systems-qa',
@@ -118,6 +154,9 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     accent: 'blue',
     sortOrder: 6,
     href: buildProjectHref('nba-systems-qa'),
+    evidenceTier: 'supporting',
+    showInSwitcher: true,
+    switcherRank: 6,
   },
   {
     id: 'luxe-lofts',
@@ -132,6 +171,9 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     accent: 'slate',
     sortOrder: 7,
     href: buildProjectHref('luxe-lofts'),
+    evidenceTier: 'supporting',
+    showInSwitcher: true,
+    switcherRank: 7,
   },
 ];
 
@@ -182,6 +224,13 @@ export const validateProjectMetadataContracts = () => {
   const missingHrefPrefix = PROJECT_METADATA.filter(
     (project) => !project.href.startsWith('/projects/'),
   ).map((project) => project.id);
+  const featuredWithoutEvidence = PROJECT_METADATA.filter(
+    (p) => p.hierarchy === 'featured' && (!p.featuredLabel || !p.evidenceTier),
+  ).map((p) => p.id);
+  const flagshipCount = PROJECT_METADATA.filter((p) => p.flagship).length;
+  const duplicateSwitcherRank = PROJECT_METADATA.filter((p) => typeof p.switcherRank === 'number')
+    .map((p) => p.switcherRank as number)
+    .filter((rank, index, arr) => arr.indexOf(rank) !== index);
 
   return {
     duplicateHrefs,
@@ -190,6 +239,9 @@ export const validateProjectMetadataContracts = () => {
     invalidFilters,
     invalidRoleLanes,
     missingHrefPrefix,
+    featuredWithoutEvidence,
+    flagshipCount,
+    duplicateSwitcherRank,
     uniqueIds: new Set(ids).size === ids.length,
   };
 };

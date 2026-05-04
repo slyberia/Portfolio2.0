@@ -1,9 +1,10 @@
 import React from 'react';
 import { EXPERIENCE, CERTIFICATIONS } from '../constants';
+import { componentRecipes } from '../lib/design-system';
 
 const ResumeView: React.FC = () => {
   return (
-    <div className="min-h-screen bg-white text-slate-900 selection:bg-tide-aqua selection:text-white font-sans px-8 pt-24 pb-8 md:p-16 max-w-[8.5in] mx-auto shadow-2xl print:shadow-none print:p-0">
+    <div className="min-h-screen bg-ink-panel dark:bg-ink-deep text-ink-navy dark:text-ink-border selection:bg-tide-aqua selection:text-white font-sans px-8 pt-24 pb-8 md:p-16 max-w-[8.5in] mx-auto shadow-2xl print:shadow-none print:p-0">
       {/* Header */}
       <header className="mb-10 text-center sm:text-left">
         <h1 className="text-4xl font-bold mb-2">Kyle Semple</h1>
@@ -145,7 +146,7 @@ const ResumeView: React.FC = () => {
       <div className="fixed bottom-8 right-8 print:hidden">
         <button
           onClick={() => window.print()}
-          className="bg-tide-aqua text-white px-6 py-3 rounded-xl font-bold shadow-xl hover:bg-[#237f86] transition-all flex items-center gap-2"
+          className={`px-6 py-3 rounded-xl font-bold shadow-xl transition-all flex items-center gap-2 ${componentRecipes.button.primary}`}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

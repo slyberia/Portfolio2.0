@@ -39,7 +39,7 @@ const ProjectsIndexView: React.FC = () => {
           <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500">
             PROJECT_LIBRARY
           </p>
-          <h1 className="text-4xl md:text-5xl font-outfit font-semibold text-navy-900 dark:text-white">
+          <h1 className="text-4xl md:text-5xl font-outfit font-semibold text-ink-navy dark:text-white">
             Projects
           </h1>
           <p className="text-base text-slate-700 dark:text-slate-300">
@@ -56,7 +56,7 @@ const ProjectsIndexView: React.FC = () => {
         <section aria-labelledby="featured-systems" className="space-y-4">
           <h2
             id="featured-systems"
-            className="text-2xl font-outfit font-bold text-navy-900 dark:text-white"
+            className="text-2xl font-outfit font-bold text-ink-navy dark:text-white"
           >
             Featured Systems
           </h2>
@@ -74,7 +74,7 @@ const ProjectsIndexView: React.FC = () => {
                 <p className="mt-3 text-xs uppercase tracking-[0.18em] text-slate-500">
                   {project.featuredLabel}
                 </p>
-                <h3 className="mt-2 text-xl font-semibold text-navy-900 dark:text-white">
+                <h3 className="mt-2 text-xl font-semibold text-ink-navy dark:text-white">
                   {project.displayTitle}
                 </h3>
                 <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
@@ -101,7 +101,7 @@ const ProjectsIndexView: React.FC = () => {
         <section aria-labelledby="supporting-projects" className="space-y-4">
           <h2
             id="supporting-projects"
-            className="text-2xl font-outfit font-bold text-navy-900 dark:text-white"
+            className="text-2xl font-outfit font-bold text-ink-navy dark:text-white"
           >
             Supporting Projects
           </h2>
@@ -141,7 +141,7 @@ const ProjectsIndexView: React.FC = () => {
                     {project.proofType}
                   </span>
                 </div>
-                <h3 className="mt-3 text-base font-semibold text-navy-900 dark:text-white">
+                <h3 className="mt-3 text-base font-semibold text-ink-navy dark:text-white">
                   {project.displayTitle}
                 </h3>
                 <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
@@ -166,7 +166,7 @@ const ProjectsIndexView: React.FC = () => {
         </section>
 
         <section className="rounded-xl border border-[#d8e8ee] bg-white dark:bg-slate-900 p-5">
-          <h2 className="text-xl font-semibold text-navy-900 dark:text-white">
+          <h2 className="text-xl font-semibold text-ink-navy dark:text-white">
             Want the build methodology?
           </h2>
           <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">

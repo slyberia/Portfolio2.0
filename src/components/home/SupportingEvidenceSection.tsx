@@ -3,20 +3,13 @@ import { Link } from 'react-router-dom';
 import { PORTFOLIO_PROCESS_HREF } from '../../lib/routes';
 import {
   ProjectFilter,
-  ProjectRoleLane,
   PROJECT_FILTERS,
   getFeaturedProjects,
   getSupportingProjects,
 } from '../../data/projectMetadata';
+import { getRoleAccentRecipe, getProjectAccentRecipe } from '../../lib/design-system';
 
 type FilterKey = 'All' | ProjectFilter;
-
-const ROLE_CHIP_STYLES: Record<ProjectRoleLane, string> = {
-  Implementation:
-    'border-tide-aqua/30 bg-tide-aqua/10 text-[#237f86] dark:border-tide-aqua/30 dark:bg-tide-aqua/10 dark:text-tide-aqua/30',
-  QA: 'border-blue-200 bg-tide-blue/10 text-blue-800 dark:border-tide-blue/30 dark:bg-tide-blue/10 dark:text-blue-200',
-  GIS: 'border-cyan-200 bg-cyan-50 text-cyan-800 dark:border-cyan-500/30 dark:bg-cyan-500/10 dark:text-cyan-200',
-};
 
 const SupportingEvidenceSection: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<FilterKey>('All');
@@ -35,7 +28,7 @@ const SupportingEvidenceSection: React.FC = () => {
           <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
             PROJECT_LIBRARY
           </p>
-          <h2 className="text-3xl md:text-4xl font-outfit font-semibold text-navy-900 dark:text-white">
+          <h2 className="text-3xl md:text-4xl font-outfit font-semibold text-ink-navy dark:text-white">
             Projects
           </h2>
           <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -76,7 +69,7 @@ const SupportingEvidenceSection: React.FC = () => {
           {filteredItems.map((item) => (
             <article
               key={item.id}
-              className="rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-white/95 dark:bg-slate-900/70 px-4 py-4 md:px-5 shadow-[0_4px_12px_rgba(15,23,42,0.05)]"
+              className={`rounded-xl border px-4 py-4 md:px-5 shadow-[0_4px_12px_rgba(15,23,42,0.05)] ${getProjectAccentRecipe(item.accent).borderClass} bg-white/95 dark:bg-slate-900/70`}
             >
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="text-[10px] font-mono uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
@@ -86,25 +79,28 @@ const SupportingEvidenceSection: React.FC = () => {
                   {item.proofType}
                 </span>
               </div>
-              <h3 className="mt-3 text-base font-semibold text-navy-900 dark:text-white">
+              <h3 className="mt-3 text-base font-semibold text-ink-navy dark:text-white">
                 {item.displayTitle}
               </h3>
               <p className="mt-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                 {item.shortSummary}
               </p>
               <div className="mt-3 flex flex-wrap gap-1.5">
-                {item.roleLanes.map((role) => (
-                  <span
-                    key={`${item.id}-${role}`}
-                    className={`text-[11px] px-2 py-0.5 rounded-md border ${ROLE_CHIP_STYLES[role]}`}
-                  >
-                    {role === 'Implementation'
-                      ? 'Technical Implementation Specialist'
-                      : role === 'QA'
-                        ? 'Quality Assurance Analyst'
-                        : 'GIS Analyst'}
-                  </span>
-                ))}
+                {item.roleLanes.map((role) => {
+                  const roleAccent = getRoleAccentRecipe(role);
+                  return (
+                    <span
+                      key={`${item.id}-${role}`}
+                      className={`text-[11px] px-2 py-0.5 rounded-md border ${roleAccent.chipClass}`}
+                    >
+                      {role === 'Implementation'
+                        ? 'Technical Implementation Specialist'
+                        : role === 'QA'
+                          ? 'Quality Assurance Analyst'
+                          : 'GIS Analyst'}
+                    </span>
+                  );
+                })}
               </div>
               <Link
                 to={item.href}

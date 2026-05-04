@@ -337,7 +337,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
               AI
             </div>
             <div>
-              <h3 className="text-navy-900 dark:text-white font-bold font-outfit text-sm">
+              <h3 className="text-ink-navy dark:text-white font-bold font-outfit text-sm">
                 Kyle's Digital Twin
               </h3>
               <p className="text-[10px] text-tide-aqua dark:text-tide-softBlue uppercase tracking-wider font-medium">
@@ -362,7 +362,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
           <div className="flex items-center gap-2">
             <button
               onClick={clearHistory}
-              className="p-1.5 text-slate-400 hover:text-navy-900 dark:hover:text-white transition-colors"
+              className="p-1.5 text-slate-400 hover:text-ink-navy dark:hover:text-white transition-colors"
               title="Reset conversation"
             >
               <svg
@@ -382,7 +382,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
             </button>
             <button
               onClick={() => setIsOpen(false)}
-              className="p-1.5 text-slate-400 hover:text-navy-900 dark:hover:text-white transition-colors"
+              className="p-1.5 text-slate-400 hover:text-ink-navy dark:hover:text-white transition-colors"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -563,7 +563,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Ask Kyle's AI Twin..."
-              className="w-full bg-slate-100 dark:bg-white/5 border border-black/5 dark:border-white/10 rounded-xl pl-4 pr-10 py-3 text-sm text-navy-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-tide-aqua/50 transition-all"
+              className="w-full bg-slate-100 dark:bg-white/5 border border-black/5 dark:border-white/10 rounded-xl pl-4 pr-10 py-3 text-sm text-ink-navy dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-tide-aqua/50 transition-all"
             />
             <button
               onClick={() => handleSend()}
