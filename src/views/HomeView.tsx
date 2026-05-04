@@ -166,7 +166,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400">
                 SYSTEM_ARCHITECT_V3.1
               </p>
-              <h1 className="text-5xl md:text-6xl font-outfit font-bold tracking-tight text-navy-900 dark:text-white">
+              <h1 className="text-5xl md:text-6xl font-outfit font-bold tracking-tight text-ink-navy dark:text-white">
                 Kyle Semple
               </h1>
               <div
@@ -195,7 +195,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                     />
                     FLAGSHIP PROJECT
                   </p>
-                  <p className="mt-1 font-mono text-[13px] uppercase tracking-tight text-navy-900 dark:text-white">
+                  <p className="mt-1 font-mono text-[13px] uppercase tracking-tight text-ink-navy dark:text-white">
                     GUYNODE_SYSTEM
                   </p>
                 </div>
@@ -229,7 +229,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                     />
                     DOWNLOAD RESUME
                   </p>
-                  <p className="mt-1 font-mono text-[13px] uppercase tracking-tight text-navy-900 dark:text-white">
+                  <p className="mt-1 font-mono text-[13px] uppercase tracking-tight text-ink-navy dark:text-white">
                     RESUME_PDF
                   </p>
                 </div>
@@ -288,7 +288,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                     </div>
 
                     <div>
-                      <h2 className="text-xl md:text-2xl font-outfit font-semibold text-navy-900 dark:text-white">
+                      <h2 className="text-xl md:text-2xl font-outfit font-semibold text-ink-navy dark:text-white">
                         {track.title}
                       </h2>
                       <div
@@ -330,7 +330,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
               WORKING_PROFILE
             </p>
-            <h2 className="text-3xl md:text-4xl font-outfit font-semibold text-navy-900 dark:text-white">
+            <h2 className="text-3xl md:text-4xl font-outfit font-semibold text-ink-navy dark:text-white">
               About Me
             </h2>
             <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
@@ -388,7 +388,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               <h2 className="text-xs font-bold text-tide-aqua dark:text-tide-aqua uppercase tracking-[0.3em]">
                 EXPERIENCE_LOG
               </h2>
-              <h3 className="text-3xl md:text-4xl font-outfit font-semibold text-navy-900 dark:text-white">
+              <h3 className="text-3xl md:text-4xl font-outfit font-semibold text-ink-navy dark:text-white">
                 Career Experience
               </h3>
             </div>
@@ -413,7 +413,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               >
                 <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-6">
                   <div>
-                    <h4 className="text-2xl font-outfit font-bold text-navy-900 dark:text-white">
+                    <h4 className="text-2xl font-outfit font-bold text-ink-navy dark:text-white">
                       {exp.role}
                     </h4>
                     <p className="text-lg text-slate-500 dark:text-slate-300 flex items-center gap-2 mt-1 font-medium">
@@ -456,7 +456,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             <h2 className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
               CAPABILITY_MATRIX
             </h2>
-            <h3 className="text-3xl md:text-4xl font-outfit font-semibold text-navy-900 dark:text-white">
+            <h3 className="text-3xl md:text-4xl font-outfit font-semibold text-ink-navy dark:text-white">
               Skills &amp; Technologies
             </h3>
             <p className="max-w-2xl text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -470,7 +470,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                 key={idx}
                 className="rounded-2xl border border-[#d8e8ee] dark:border-white/10 bg-white/80 dark:bg-slate-900/60 p-6 space-y-4"
               >
-                <h4 className="text-base font-outfit font-semibold text-navy-900 dark:text-white border-b border-[#e5e0d6] dark:border-white/10 pb-3">
+                <h4 className="text-base font-outfit font-semibold text-ink-navy dark:text-white border-b border-[#e5e0d6] dark:border-white/10 pb-3">
                   {group.category}
                 </h4>
                 <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -534,11 +534,11 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               <h2 className="text-xs font-bold text-tide-aqua dark:text-tide-aqua uppercase tracking-[0.3em]">
                 Foundation
               </h2>
-              <h3 className="text-4xl font-outfit font-bold text-navy-900 dark:text-white">
+              <h3 className="text-4xl font-outfit font-bold text-ink-navy dark:text-white">
                 Education
               </h3>
               <div className="glass-card p-8 rounded-3xl mt-6">
-                <h4 className="text-xl font-outfit font-bold text-navy-900 dark:text-white">
+                <h4 className="text-xl font-outfit font-bold text-ink-navy dark:text-white">
                   B.A., Geography
                 </h4>
                 <p className="text-tide-aqua dark:text-tide-sky font-medium font-outfit">
@@ -553,7 +553,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
           </div>
 
           <div className="space-y-8">
-            <h3 className="text-4xl font-outfit font-bold text-navy-900 dark:text-white">
+            <h3 className="text-4xl font-outfit font-bold text-ink-navy dark:text-white">
               Certifications
             </h3>
             <div className="grid gap-4">
@@ -580,7 +580,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                     </svg>
                   </div>
                   <div>
-                    <h5 className="font-outfit font-bold text-navy-900 dark:text-white text-sm">
+                    <h5 className="font-outfit font-bold text-ink-navy dark:text-white text-sm">
                       {cert.name}
                     </h5>
                     <p className="text-xs text-slate-500">{cert.issuer}</p>

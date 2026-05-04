@@ -45,13 +45,13 @@ const SkillDiscoveryModal: React.FC<SkillDiscoveryModalProps> = ({
             <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-tide-aqua dark:text-tide-sky mb-2">
               Relational Discovery
             </div>
-            <h2 className="text-3xl font-outfit font-bold text-navy-900 dark:text-white flex items-center gap-3">
+            <h2 className="text-3xl font-outfit font-bold text-ink-navy dark:text-white flex items-center gap-3">
               Skill: <span className="text-tide-aqua dark:text-tide-sky">{skill}</span>
             </h2>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 text-slate-400 hover:text-navy-900 dark:hover:text-white transition-colors"
+            className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 text-slate-400 hover:text-ink-navy dark:hover:text-white transition-colors"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -121,7 +121,7 @@ const SkillDiscoveryModal: React.FC<SkillDiscoveryModalProps> = ({
                         <path d="M7 17 17 7" />
                       </svg>
                     </div>
-                    <h3 className="text-lg font-outfit font-bold text-navy-900 dark:text-white group-hover:text-tide-aqua dark:group-hover:text-tide-sky transition-colors">
+                    <h3 className="text-lg font-outfit font-bold text-ink-navy dark:text-white group-hover:text-tide-aqua dark:group-hover:text-tide-sky transition-colors">
                       {study.title}
                     </h3>
                     <p className="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">

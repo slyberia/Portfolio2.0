@@ -1,23 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-type RoleTrack =
-  | 'Technical Implementation Specialist'
-  | 'Quality Assurance Analyst'
-  | 'GIS Analyst';
-
 interface FlagshipSystemSectionProps {
   guynodeHref: string;
 }
 
-const ROLE_CHIP_STYLES: Record<RoleTrack, string> = {
-  'Technical Implementation Specialist':
-    'border-tide-aqua/30 bg-tide-aqua/10 text-[#237f86] dark:border-tide-aqua/30 dark:bg-tide-aqua/10 dark:text-tide-aqua/30',
-  'Quality Assurance Analyst':
-    'border-blue-200 bg-tide-blue/10 text-blue-800 dark:border-tide-blue/30 dark:bg-tide-blue/10 dark:text-blue-200',
-  'GIS Analyst':
-    'border-cyan-200 bg-cyan-50 text-cyan-800 dark:border-cyan-500/30 dark:bg-cyan-500/10 dark:text-cyan-200',
-};
+import {
+  getRoleAccentRecipe,
+  componentRecipes,
+  getProjectAccentRecipe,
+} from '../../lib/design-system';
+const roleToLane = {
+  'Technical Implementation Specialist': 'Implementation',
+  'Quality Assurance Analyst': 'QA',
+  'GIS Analyst': 'GIS',
+} as const;
+
+type RoleTrack = keyof typeof roleToLane;
 
 const PROOF_ARTIFACTS: Array<{ title: string; description: string; roles: RoleTrack[] }> = [
   {
@@ -80,10 +79,10 @@ const FlagshipSystemSection: React.FC<FlagshipSystemSectionProps> = ({ guynodeHr
             <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
               FLAGSHIP_SYSTEM
             </p>
-            <p className="text-sm font-semibold text-navy-900 dark:text-white">Flagship System</p>
+            <p className="text-sm font-semibold text-ink-navy dark:text-white">Flagship System</p>
             <h2
               id="flagship-system-heading"
-              className="text-3xl md:text-4xl font-outfit font-semibold text-navy-900 dark:text-white"
+              className="text-3xl md:text-4xl font-outfit font-semibold text-ink-navy dark:text-white"
             >
               Guynode Spatial Data Hub
             </h2>
@@ -99,21 +98,24 @@ const FlagshipSystemSection: React.FC<FlagshipSystemSectionProps> = ({ guynodeHr
           </div>
 
           <div className="flex flex-wrap gap-2">
-            {(Object.keys(ROLE_CHIP_STYLES) as RoleTrack[]).map((role) => (
-              <span
-                key={role}
-                className={`text-xs font-medium px-2.5 py-1 rounded-md border ${ROLE_CHIP_STYLES[role]}`}
-              >
-                {role}
-              </span>
-            ))}
+            {(Object.keys(roleToLane) as Array<keyof typeof roleToLane>).map((role) => {
+              const accent = getRoleAccentRecipe(roleToLane[role]);
+              return (
+                <span
+                  key={role}
+                  className={`text-xs font-medium px-2.5 py-1 rounded-md border ${accent.chipClass}`}
+                >
+                  {role}
+                </span>
+              );
+            })}
           </div>
 
           <div className="flex flex-wrap items-center gap-4">
             <Link
               to={guynodeHref}
               aria-label="View Guynode system proof details"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-navy-900 dark:text-white border border-[#d8e8ee] dark:border-white/10 bg-white/95 dark:bg-slate-900/80 rounded-lg px-4 py-2.5 hover:border-tide-aqua/40 hover:shadow-[0_8px_20px_rgba(79,70,229,0.16)] focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua transition-all"
+              className={`inline-flex items-center gap-2 text-sm font-semibold rounded-lg px-4 py-2.5 ${componentRecipes.button.secondary} ${getProjectAccentRecipe('gold').borderClass}`}
             >
               View Guynode System
               <span aria-hidden="true">↗</span>
@@ -135,7 +137,7 @@ const FlagshipSystemSection: React.FC<FlagshipSystemSectionProps> = ({ guynodeHr
                 key={artifact.title}
                 className="rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-white/95 dark:bg-slate-900/70 p-4 md:p-5 shadow-[0_8px_24px_rgba(15,23,42,0.06)]"
               >
-                <h3 className="text-base font-semibold text-navy-900 dark:text-white">
+                <h3 className="text-base font-semibold text-ink-navy dark:text-white">
                   {artifact.title}
                 </h3>
                 <p className="mt-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -145,7 +147,7 @@ const FlagshipSystemSection: React.FC<FlagshipSystemSectionProps> = ({ guynodeHr
                   {artifact.roles.map((role) => (
                     <span
                       key={`${artifact.title}-${role}`}
-                      className={`text-[11px] px-2 py-0.5 rounded-md border ${ROLE_CHIP_STYLES[role]}`}
+                      className={`text-[11px] px-2 py-0.5 rounded-md border ${getRoleAccentRecipe(roleToLane[role]).chipClass}`}
                     >
                       {role}
                     </span>

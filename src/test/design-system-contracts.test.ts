@@ -1,7 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { validateProjectMetadataContracts, validateProjectMetadataIds } from '../data/projectMetadata';
+import {
+  validateProjectMetadataContracts,
+  validateProjectMetadataIds,
+} from '../data/projectMetadata';
 
 const root = process.cwd();
 
@@ -33,8 +36,25 @@ describe('design-system and metadata contracts', () => {
   });
 
   it('markdown rendering uses portfolio prose contract class', () => {
-    const markdownSection = readFileSync(join(root, 'src', 'components', 'MarkdownSection.tsx'), 'utf8');
-    expect(markdownSection).toContain('prose-portfolio');
+    const markdownSection = readFileSync(
+      join(root, 'src', 'components', 'MarkdownSection.tsx'),
+      'utf8',
+    );
+    expect(markdownSection).toMatch(/prose-portfolio|proseTheme\.container/);
     expect(markdownSection).not.toContain('prose-indigo');
   });
+});
+
+it('project detail view consumes shared project accent recipe', () => {
+  const projectDetail = readFileSync(join(root, 'src', 'views', 'ProjectDetailView.tsx'), 'utf8');
+  expect(projectDetail).toContain('getProjectAccentRecipe');
+});
+
+it('command palette consumes shared interaction/nav recipes', () => {
+  const commandPalette = readFileSync(
+    join(root, 'src', 'components', 'CommandPalette.tsx'),
+    'utf8',
+  );
+  expect(commandPalette).toContain('interactionStyles');
+  expect(commandPalette).toContain('navStyles');
 });

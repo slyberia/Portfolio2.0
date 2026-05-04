@@ -26,6 +26,10 @@ export default {
           soft: '#f1c878',
           deep: '#a8782a',
         },
+        // Temporary compatibility alias for legacy text-navy-900 usages. Remove in Prompt 1B.
+        navy: {
+          900: '#10242f',
+        },
         ink: {
           deep: '#07161f',
           navy: '#10242f',
@@ -49,7 +53,7 @@ export default {
             blockquote: {
               // Replaced banned border-left with background tint + padding
               borderLeft: 'none',
-              backgroundColor: '#e8f5f8', // light sienna tint
+              backgroundColor: 'rgba(100, 200, 241, 0.18)',
               borderRadius: '4px',
               padding: '0.75rem 1rem',
               color: theme('colors.ink.slate'),
@@ -66,7 +70,7 @@ export default {
             strong: { color: theme('colors.ink.mist') },
             blockquote: {
               borderLeft: 'none',
-              backgroundColor: 'rgba(57, 184, 188, 0.12)', // dark mode: sienna tint
+              backgroundColor: 'rgba(96, 187, 212, 0.18)',
               color: theme('colors.ink.border'),
               fontStyle: 'normal',
             },

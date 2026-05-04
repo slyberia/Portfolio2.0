@@ -59,7 +59,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, onCopyEmai
         <div className="absolute top-0 right-0 p-6">
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-navy-900 dark:hover:text-white transition-colors p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full"
+            className="text-slate-400 hover:text-ink-navy dark:hover:text-white transition-colors p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full"
             aria-label="Close modal"
           >
             <svg
@@ -83,7 +83,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, onCopyEmai
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-tide-aqua/10 border border-tide-aqua/20 text-tide-aqua dark:text-tide-sky text-xs font-bold uppercase tracking-widest mb-4">
               Contact
             </div>
-            <h2 className="text-3xl font-outfit font-bold text-navy-900 dark:text-white">
+            <h2 className="text-3xl font-outfit font-bold text-ink-navy dark:text-white">
               Let's Connect
             </h2>
             <p className="text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
@@ -117,7 +117,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, onCopyEmai
                   <div className="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-wider font-bold mb-0.5">
                     Email
                   </div>
-                  <div className="text-navy-900 dark:text-white font-medium truncate">
+                  <div className="text-ink-navy dark:text-white font-medium truncate">
                     {fullEmail}
                   </div>
                 </div>
@@ -185,7 +185,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, onCopyEmai
                 <div className="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-wider font-bold mb-0.5">
                   LinkedIn
                 </div>
-                <div className="text-navy-900 dark:text-white font-medium">Connect on LinkedIn</div>
+                <div className="text-ink-navy dark:text-white font-medium">Connect on LinkedIn</div>
               </div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -227,7 +227,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, onCopyEmai
                 <div className="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-wider font-bold mb-0.5">
                   Resume
                 </div>
-                <div className="text-navy-900 dark:text-white font-medium">
+                <div className="text-ink-navy dark:text-white font-medium">
                   View & Save PDF Resume
                 </div>
               </div>
