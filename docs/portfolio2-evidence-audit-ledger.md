@@ -129,6 +129,96 @@ The redesign matters because it shifts from loosely coupled case-study navigatio
 | Route migration + compatibility        | Routing tests updated during PR #45 and #48 workstreams.     | Repo-confirmed in git history.                                                                       | Includes canonical redirect expectations and param compatibility hardening.                                                       |
 | Project detail routing/content bugfix  | Loader and route-param tests modified in same stream as fix. | Repo-confirmed in git history (`src/test/routing.test.tsx`, `src/test/useCaseStudyContent.test.ts`). | Addresses fallback and app-shell response handling.                                                                               |
 
+## Evidence Record: Palette Migration Audit and Design-System Remediation
+
+**Problem:**  
+The Technical Tide / Gilded Variant palette migration exposed visual regressions across text color, dark-mode readability, semantic token usage, project accent mapping, and markdown/prose surfaces.
+
+**Root Cause:**  
+The source branch relied on fragile color architecture: Tailwind aliases used as semantic tokens, duplicated component-local role maps, scattered dark-mode styling, hardcoded hex values, old global utilities, and insufficient visual/token regression testing.
+
+**Decision:**  
+Treat the issue as a design-system remediation problem, not a simple color cleanup.
+
+**Action:**  
+Introduce enforceable design-system modules, shared accent/style recipes, dark-mode mappings, prose rules, project metadata contracts, component migration, and regression tests.
+
+**Validation:**  
+Run format, typecheck, lint, tests, build, crawler generation, crawler validation, static theme tests, and light/dark review.
+
+**Impact:**  
+Improves merge safety, reduces future theme migration risk, supports easier project priority updates, improves dark-mode and prose reliability, and demonstrates operational maturity, architecture depth, and continuous ownership across development cycles.
+
+**Role Lane Relevance:**
+
+- Implementation / CSE-lite
+- Ops Analytics / QA
+- Portfolio governance
+- Design systems
+- Frontend implementation
+
+**Evidence Tags:**  
+design-system, visual-regression, accessibility, dark-mode, color-migration, audit, remediation, changelog, architecture
+
+### Decision Impact: Design-System Remediation
+
+**Constraint:**  
+The Technical Tide migration could not be safely stabilized through one-off color replacement because visual styling was distributed across local maps, Tailwind aliases, dark-mode classes, markdown/prose styling, and project metadata assumptions.
+
+**Decision:**  
+Convert the migration into a design-system hardening pass with centralized tokens, shared recipes, project metadata contracts, and regression tests.
+
+**Tradeoff:**  
+This required more upfront structure than a direct color swap, and it intentionally avoided broad redesign or unrelated feature work.
+
+**Validation:**  
+The work was validated through formatting, typecheck, lint, tests, build, crawler generation, crawler validation, and targeted static theme regression coverage.
+
+**Operational Relevance:**  
+This demonstrates the ability to diagnose root causes, reduce regression risk, preserve production behavior, and convert implementation cleanup into reusable system governance.
+
+### Architecture Maturity Note
+
+This remediation upgraded Portfolio2.0 from a visually themed application into a more governed interface system. Instead of relying on scattered Tailwind classes and duplicated component-level color maps, the app now uses centralized design-system recipes for role lanes, project accents, prose, dark mode, interaction states, cards, badges, and metadata-backed project priority.
+
+The value of the work is not only visual consistency. It improves maintainability, reduces future migration risk, protects accessibility-sensitive surfaces, and gives the portfolio a stronger evidence trail for implementation judgment.
+
+### Before / After
+
+| Area                | Before                                              | After                                                                                    |
+| ------------------- | --------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Color architecture  | Scattered aliases and local maps                    | Centralized Technical Tide / Gilded Variant tokens and recipes                           |
+| Role accents        | Duplicated across components                        | Shared role-lane recipes                                                                 |
+| Project accents     | Metadata existed but was not consistently honored   | Project accents resolve through shared recipes                                           |
+| Gold usage          | Risked blending into generic accent/warning styling | Reserved for flagship/proof prestige                                                     |
+| QA/Ops color logic  | Risked amber/warning conflation                     | Blue/system validation semantics                                                         |
+| Dark mode           | Component-level guesses and low-opacity text risk   | Shared dark-mode/prose recipes and regression checks                                     |
+| Markdown/prose      | Old `prose-indigo` assumptions                      | Shared readable prose theme                                                              |
+| Metadata governance | Useful but under-protected                          | Contract tests and deterministic project metadata                                        |
+| Regression safety   | Limited static theme coverage                       | Static tests for legacy classes, low-opacity dark text, accent contracts, metadata rules |
+
+### Validation
+
+The remediation was validated with:
+
+- `npm run format:check`
+- `npm run typecheck`
+- `npm run lint`
+- `npm test -- --run`
+- `npm run build`
+- `npm run generate:crawler-html`
+- `npm run validate:crawler`
+
+All listed checks passed locally.
+
+Remote CI status should be described only if an actual CI run was visible and successful.
+
+### Design-System Remediation
+
+A palette migration exposed deeper design-system debt across theme tokens, dark mode, markdown/prose styling, project accents, and component-local style maps. I treated the issue as an implementation-governance problem rather than a one-off color fix.
+
+The remediation introduced centralized Technical Tide / Gilded Variant tokens, shared role/project/status recipes, dark-mode and prose rules, project metadata contracts, and static regression tests. The result is a more maintainable portfolio system with stronger visual consistency, better regression protection, and clearer evidence of production-minded frontend ownership.
+
 ## Evidence Gaps / Remaining Risks
 
 ### Blocker-level

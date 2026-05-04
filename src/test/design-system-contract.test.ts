@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { darkModeStyles, interactionStyles, navStyles, proseTheme } from '../lib/design-system';
 import { ROLE_ACCENTS } from '../lib/design-system/roleAccents';
 import { PROJECT_ACCENT_RECIPES } from '../lib/design-system/projectAccents';
 import { CATEGORY_ACCENTS } from '../lib/design-system/categoryAccents';
@@ -44,5 +45,19 @@ describe('design system contracts', () => {
     });
     expect(STATUS_COLORS.featured.textClass).toMatch(/gild/);
     expect(STATUS_COLORS.warning.textClass).not.toMatch(/gild/);
+  });
+
+  it('shared interaction/nav/prose/dark recipes are import-safe and complete', () => {
+    expect(interactionStyles.hover).toBeTruthy();
+    expect(interactionStyles.active).toBeTruthy();
+    expect(interactionStyles.focusVisible).toContain('focus-visible:ring');
+    expect(interactionStyles.disabled).toContain('disabled:');
+    expect(interactionStyles.loading).toBeTruthy();
+    expect(interactionStyles.emptyState).toContain('border-dashed');
+    expect(navStyles.item).toBeTruthy();
+    expect(navStyles.itemActive).toBeTruthy();
+    expect(navStyles.itemFocus).toContain('focus-visible');
+    expect(proseTheme.container).toContain('prose-portfolio');
+    expect(darkModeStyles.surface).toContain('dark:bg');
   });
 });

@@ -11,7 +11,7 @@ interface SkillDiscoveryModalProps {
 
 const CATEGORY_TAGS: Record<ProjectCategory, string> = {
   'ai-ops': 'bg-tide-aqua/10 text-tide-aqua dark:text-tide-sky border-tide-aqua/20',
-  'qa-data': 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20',
+  'qa-data': 'bg-tide-blue/10 text-tide-blue dark:text-tide-sky border-tide-blue/30',
   'success-strategy':
     'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20',
   creative: 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20',
@@ -73,7 +73,7 @@ const SkillDiscoveryModal: React.FC<SkillDiscoveryModalProps> = ({
           {relevantStudies.length > 0 ? (
             <>
               {isSecondary && evidenceNote && (
-                <div className="flex gap-3 p-4 rounded-xl bg-amber-500/5 border border-amber-500/20 text-amber-700 dark:text-amber-400">
+                <div className="flex gap-3 rounded-xl border border-tide-blue/30 bg-tide-blue/10 p-4 text-tide-blue dark:text-tide-sky">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="w-4 h-4 mt-0.5 shrink-0"

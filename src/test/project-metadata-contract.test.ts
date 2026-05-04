@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import {
   PROJECT_METADATA,
+  getFeaturedProjects,
+  getProjectHref,
+  getProjectMetadata,
+  getProjectsByFilter,
+  getProjectsByRoleLane,
+  getSupportingProjects,
   validateProjectMetadataContracts,
   validateProjectMetadataIds,
 } from '../data/projectMetadata';
@@ -55,5 +61,14 @@ describe('project metadata contracts', () => {
     expect(contracts.featuredWithoutEvidence).toEqual([]);
     expect(contracts.flagshipCount).toBe(1);
     expect(contracts.duplicateSwitcherRank).toEqual([]);
+  });
+
+  it('metadata helper functions remain stable', () => {
+    expect(getProjectMetadata('guynode')?.id).toBe('guynode');
+    expect(getProjectHref('guynode')).toBe('/projects/guynode');
+    expect(getFeaturedProjects().every((p) => p.hierarchy === 'featured')).toBe(true);
+    expect(getSupportingProjects().every((p) => p.hierarchy === 'supporting')).toBe(true);
+    expect(getProjectsByFilter('QA').every((p) => p.filters.includes('QA'))).toBe(true);
+    expect(getProjectsByRoleLane('GIS').every((p) => p.roleLanes.includes('GIS'))).toBe(true);
   });
 });

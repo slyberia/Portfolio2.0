@@ -13,6 +13,9 @@ const migratedFiles = [
   'src/views/ProjectDetailView.tsx',
   'tailwind.config.js',
   'src/index.css',
+  'src/components/SkillDiscoveryModal.tsx',
+  'src/components/ChatWidget.tsx',
+  'src/views/HomeView.tsx',
 ];
 
 describe('theme regression checks', () => {
@@ -20,8 +23,13 @@ describe('theme regression checks', () => {
     const content = migratedFiles.map((f) => readFileSync(join(root, f), 'utf8')).join('\n');
     expect(content).not.toContain('prose-indigo');
     expect(content).not.toContain('colors.navy.900');
+    expect(content).not.toMatch(/\b(?:border|bg)-navy-[\w-]+\b/);
+    expect(content).not.toMatch(/\bdark:text-navy-900\b/);
     expect(content).not.toMatch(/dark:text-[^\s"']+\/(10|20|30|40)\b/);
+    expect(content).not.toMatch(/\b(?:text|border|bg)-amber-[\w/.-]+\b/);
+    expect(content).not.toMatch(/\bwarning semantics\b/i);
     expect(content).not.toMatch(/sienna instead of indigo/i);
+    expect(content).not.toMatch(/old theme|legacy warm/i);
 
     const componentContent = migratedFiles
       .filter((f) => f !== 'tailwind.config.js')
