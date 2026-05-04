@@ -21,6 +21,8 @@ export type ProjectMetadata = {
   href: string;
 };
 
+const PROJECT_ACCENTS: readonly ProjectAccent[] = ['aqua', 'blue', 'cyan', 'gold', 'slate'] as const;
+
 export const PROJECT_FILTERS: Array<'All' | ProjectFilter> = [
   'All',
   'Implementation',
@@ -159,4 +161,35 @@ export const validateProjectMetadataIds = () => {
     (id, index, arr) => arr.indexOf(id) !== index,
   );
   return { missing, duplicates };
+};
+
+export const validateProjectMetadataContracts = () => {
+  const ids = PROJECT_METADATA.map((project) => project.id);
+  const hrefs = PROJECT_METADATA.map((project) => project.href);
+  const invalidAccents = PROJECT_METADATA.filter(
+    (project) => !PROJECT_ACCENTS.includes(project.accent),
+  ).map((project) => project.id);
+  const invalidRoleLanes = PROJECT_METADATA.filter((project) => project.roleLanes.length === 0).map(
+    (project) => project.id,
+  );
+  const invalidFilters = PROJECT_METADATA.filter((project) => project.filters.length === 0).map(
+    (project) => project.id,
+  );
+  const duplicateHrefs = hrefs.filter((href, index, arr) => arr.indexOf(href) !== index);
+  const duplicateSortOrder = PROJECT_METADATA.map((project) => project.sortOrder).filter(
+    (sortOrder, index, arr) => arr.indexOf(sortOrder) !== index,
+  );
+  const missingHrefPrefix = PROJECT_METADATA.filter(
+    (project) => !project.href.startsWith('/projects/'),
+  ).map((project) => project.id);
+
+  return {
+    duplicateHrefs,
+    duplicateSortOrder,
+    invalidAccents,
+    invalidFilters,
+    invalidRoleLanes,
+    missingHrefPrefix,
+    uniqueIds: new Set(ids).size === ids.length,
+  };
 };
