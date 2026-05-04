@@ -107,7 +107,7 @@ const MarkdownSection: React.FC<MarkdownSectionProps> = ({
       ></div>
 
       <div className="relative glass-card p-8 md:p-12 rounded-3xl border border-black/5 dark:border-white/10 transition-colors duration-500">
-        <div className="prose prose-lg dark:prose-invert max-w-none prose-indigo">
+        <div className="prose prose-lg dark:prose-invert max-w-none prose-portfolio">
           <ReactMarkdown
             urlTransform={transformUrl}
             remarkPlugins={[remarkGfm]}

@@ -5,6 +5,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .prose-portfolio a {
+    color: #39b8bc;
+  }
+
+  .prose-portfolio a:hover {
+    color: #2f9ca0;
+  }
+
+  .dark .prose-portfolio a {
+    color: #80c4f1;
+  }
+}
+
 @layer utilities {
   /* Opaque editorial card — replaces glassmorphism */
   .glass-card {
