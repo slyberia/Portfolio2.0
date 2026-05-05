@@ -83,6 +83,19 @@ const processIndexTabs: IndexTab[] = [
   },
 ];
 
+const hashToSectionMap: Partial<Record<string, SectionKey>> = {
+  '#build-timeline': 'build-timeline',
+  '#multi-llm-toolchain': 'multi-llm-toolchain',
+  '#ai-assisted-delivery-model': 'ai-assisted-delivery-model',
+  '#projects-architecture': 'project-architecture-migration',
+  '#projects-architecture-migration': 'project-architecture-migration',
+  '#digital-twin-governance': 'digital-twin-governance',
+  '#validation-trail': 'validation-trail',
+  '#evidence-ledger': 'evidence-ledger',
+  '#decision-log': 'evidence-ledger',
+  '#remaining-release-hardening': 'evidence-ledger',
+};
+
 const buildTimeline: TimelineRow[] = [
   {
     phase: 'Role-track hero redesign',
@@ -201,6 +214,17 @@ const buildTimeline: TimelineRow[] = [
 const DeepDiveView: React.FC = () => {
   const [activeSection, setActiveSection] = React.useState<SectionKey>('build-timeline');
   const currentIndex = sectionOrder.indexOf(activeSection);
+
+  React.useEffect(() => {
+    const syncSectionToHash = () => {
+      const mappedSection = hashToSectionMap[window.location.hash];
+      if (mappedSection) setActiveSection(mappedSection);
+    };
+
+    syncSectionToHash();
+    window.addEventListener('hashchange', syncSectionToHash);
+    return () => window.removeEventListener('hashchange', syncSectionToHash);
+  }, []);
 
   const handleTabKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
     if (

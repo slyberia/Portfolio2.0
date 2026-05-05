@@ -6,6 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.1.2] — 2026-05-05 — Phase 2E Final QA Hardening
+
+### Changed
+
+- Hardened Process Deep Dive hash navigation by mapping legacy/internal anchors (including `#projects-architecture-migration`, `#decision-log`, and `#remaining-release-hardening`) to the correct major tab so anchored entry points reveal visible content instead of hidden tab panels.
+- Verified Skills Inspector proof links for `ops-triage`, `guynode`, and `project-aegis` against existing canonical `/projects/:projectId` routes and retained current paths to avoid introducing route-constant circular imports.
+
+### Validation
+
+- Re-ran local validation commands for formatting, type safety, linting, tests, build, crawler generation, and crawler validation.
+- Verified the existing Vite chunk-size warning remains informational and unchanged in severity for this phase; no risky bundler architecture changes were introduced.
+
+### Why
+
+This release closes Phase 2E with low-risk reliability hardening for anchored process navigation and route-safe proof linking while preserving existing architecture and crawler/static outputs.
+
+---
+
 ## [2.1.1] — 2026-05-04 — Technical Tide / Gilded Variant Remediation Packaging
 
 ### Changed
