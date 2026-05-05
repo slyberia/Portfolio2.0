@@ -48,7 +48,7 @@ export const RigorCard: React.FC<{ rigor: CaseStudyRigor; title?: string; classN
         { label: 'Method', val: rigor.method },
         { label: 'Window', val: rigor.window },
       ].map((item, i) => (
-        <div key={i} className="p-6 md:p-8 hover:bg-white/5 transition-colors">
+        <div key={i} className="p-6 md:p-8">
           <div className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 flex items-center gap-2">
             {item.label}
           </div>
@@ -75,14 +75,14 @@ export const HtmlPreviewCard: React.FC<{
   const isRed = accentColor === 'red';
   return (
     <div
-      className={`rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden bg-[#f8fbfd] dark:bg-slate-900/60 transition-all duration-500 ${isRed ? 'border-red-500/20' : 'border-tide-aqua/20'} flex flex-col`}
+      className={`rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden bg-[#f8fbfd] dark:bg-slate-900/60 ${isRed ? 'border-gild/35' : 'border-tide-aqua/25'} flex flex-col`}
     >
       <div className="px-8 md:px-12 py-5 bg-slate-50 dark:bg-white/5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
         <span className="text-[11px] font-bold text-navy-900 dark:text-white font-outfit tracking-wide">
           {label}
         </span>
         <span
-          className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-md border ${isRed ? 'bg-red-500/10 text-red-400' : 'bg-tide-aqua/10 text-tide-softBlue'}`}
+          className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-md border ${isRed ? 'bg-gild/15 text-gild-deep border-gild/40 dark:text-gild' : 'bg-tide-aqua/10 text-tide-softBlue border-tide-aqua/30'}`}
         >
           Interactive Prototype
         </span>
@@ -229,15 +229,15 @@ export const TradeoffLog: React.FC<{
       {constraints.map((c, i) => (
         <div key={i} className="grid md:grid-cols-2 gap-4">
           <div className="p-6 rounded-3xl bg-white dark:bg-slate-900/50 border border-slate-200 shadow-sm">
-            <div className="text-[10px] font-bold text-rose-500 uppercase tracking-widest mb-3 font-outfit">
+            <div className="text-[10px] font-bold text-tide-blue uppercase tracking-widest mb-3 font-outfit">
               The Constraint
             </div>
             <p className="text-[13px] font-medium text-slate-700 dark:text-slate-300">
               {c.problem}
             </p>
           </div>
-          <div className="p-6 rounded-3xl bg-[#fcfbf9] border border-slate-200 shadow-sm">
-            <div className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-3 font-outfit">
+          <div className="p-6 rounded-3xl bg-[#fcfbf9] dark:bg-slate-900/50 border border-slate-200 dark:border-white/10 shadow-sm">
+            <div className="text-[10px] font-bold text-tide-cyan uppercase tracking-widest mb-3 font-outfit">
               The Operational Choice
             </div>
             <p className="text-[13px] font-medium text-slate-700 dark:text-slate-300">
