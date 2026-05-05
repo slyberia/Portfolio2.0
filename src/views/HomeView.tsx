@@ -160,8 +160,8 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
           }}
         />
 
-        <div className="relative max-w-7xl mx-auto px-6 py-14 md:py-20 lg:py-24 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
-          <div className="lg:col-span-5 space-y-8 lg:pr-6">
+        <div className="relative max-w-7xl mx-auto px-6 py-14 md:py-20 lg:py-24 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start lg:items-center">
+          <div className="lg:col-span-5 space-y-8 lg:pr-6 lg:self-center">
             <div className="space-y-5">
               <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400">
                 SYSTEM_ARCHITECT_V3.1
@@ -180,11 +180,11 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl w-full">
               <Link
                 to={GUYNODE_SYSTEM_HREF}
-                aria-label="View Guynode system"
-                className="group min-h-[74px] border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd]/90 dark:bg-slate-900/70 rounded-md px-4 py-3 flex items-center justify-between gap-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-tide-sky/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
+                aria-label="View Flagship Project"
+                className="group min-h-[80px] border border-tide-aqua/70 dark:border-tide-sky/60 bg-tide-aqua dark:bg-tide-sky rounded-md px-5 py-4 flex items-center justify-between gap-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all hover:-translate-y-0.5 hover:shadow-md hover:bg-tide-aqua/90 dark:hover:bg-tide-sky/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f5f9fb] dark:focus-visible:ring-offset-slate-950 focus-visible:ring-tide-aqua"
               >
                 {/* TODO: update this href to the dedicated Guynode case-study route when it exists. */}
                 <div>
@@ -193,15 +193,15 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                       className="h-1.5 w-1.5 rounded-full shrink-0 bg-tide-aqua"
                       aria-hidden="true"
                     />
-                    FLAGSHIP PROJECT
+                    PRIMARY ACTION
                   </p>
-                  <p className="mt-1 font-mono text-[13px] uppercase tracking-tight text-ink-navy dark:text-white">
-                    GUYNODE_SYSTEM
+                  <p className="mt-1 text-base md:text-lg font-outfit font-semibold text-white dark:text-ink-navy">
+                    View Flagship Project
                   </p>
                 </div>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-4 h-4 shrink-0 text-slate-700 dark:text-slate-200 group-hover:translate-x-0.5 group-hover:text-tide-aqua transition-all"
+                  className="w-5 h-5 shrink-0 text-white dark:text-ink-navy group-hover:translate-x-0.5 transition-all"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -218,7 +218,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               <Link
                 to="/resume"
                 aria-label="Download resume"
-                className="group min-h-[74px] border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd]/90 dark:bg-slate-900/70 rounded-md px-4 py-3 flex items-center justify-between gap-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-slate-400/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-500"
+                className="group min-h-[80px] border border-[#c2d6df] dark:border-white/20 bg-white/95 dark:bg-slate-900/75 rounded-md px-5 py-4 flex items-center justify-between gap-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-slate-500/80 dark:hover:border-slate-300/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f5f9fb] dark:focus-visible:ring-offset-slate-950 focus-visible:ring-slate-500"
               >
                 {/* TODO: replace /resume with a direct resume PDF asset link when available. */}
                 <div>
@@ -227,10 +227,10 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                       className="h-1.5 w-1.5 rounded-full shrink-0 bg-slate-500"
                       aria-hidden="true"
                     />
-                    DOWNLOAD RESUME
+                    SECONDARY ACTION
                   </p>
-                  <p className="mt-1 font-mono text-[13px] uppercase tracking-tight text-ink-navy dark:text-white">
-                    RESUME_PDF
+                  <p className="mt-1 text-base md:text-lg font-outfit font-semibold text-ink-navy dark:text-white">
+                    Download Resume
                   </p>
                 </div>
                 <svg
@@ -252,10 +252,15 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             </div>
           </div>
 
-          <div className="lg:col-span-7 space-y-4">
-            <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
-              CHOOSE YOUR HIRING LENS
-            </p>
+          <div className="lg:col-span-7 space-y-5">
+            <div className="space-y-2">
+              <h2 className="text-2xl font-outfit font-semibold text-ink-navy dark:text-white">
+                Choose your hiring lens
+              </h2>
+              <p className="text-sm md:text-base text-slate-600 dark:text-slate-300">
+                Select the path that matches how you evaluate my work.
+              </p>
+            </div>
 
             {roleTrackCards.map((track) => (
               <Link
