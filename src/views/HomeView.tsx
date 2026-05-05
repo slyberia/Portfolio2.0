@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { EXPERIENCE, SKILL_GROUPS, CERTIFICATIONS, SKILL_CHIP_CONFIG } from '../constants';
-import SkillDiscoveryModal from '../components/SkillDiscoveryModal';
 import FlagshipSystemSection from '../components/home/FlagshipSystemSection';
 import SupportingEvidenceSection from '../components/home/SupportingEvidenceSection';
 import { GUYNODE_SYSTEM_HREF } from '../lib/routes';
@@ -12,14 +11,17 @@ interface HomeViewProps {
 }
 
 const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContact }) => {
+  void onNavigateToCaseStudy;
   void onOpenContact;
-  const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleSkillClick = (skill: string) => {
-    setSelectedSkill(skill);
-    setIsModalOpen(true);
-  };
+  const [activeSkillName, setActiveSkillName] = useState<string | null>(null);
+  const activeSkill = useMemo(() => {
+    if (!activeSkillName) return null;
+    for (const group of SKILL_GROUPS) {
+      const found = group.items.find((item) => item.name === activeSkillName);
+      if (found) return found;
+    }
+    return null;
+  }, [activeSkillName]);
 
   const getCategoryColorClass = (category: string) => {
     if (category.includes('Technical')) {
@@ -469,67 +471,84 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-            {SKILL_GROUPS.map((group, idx) => (
-              <div
-                key={idx}
-                className="rounded-2xl border border-[#d8e8ee] dark:border-white/10 bg-white/80 dark:bg-slate-900/60 p-6 space-y-4"
-              >
-                <h4 className="text-base font-outfit font-semibold text-ink-navy dark:text-white border-b border-[#e5e0d6] dark:border-white/10 pb-3">
-                  {group.category}
-                </h4>
-                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                  {group.description}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div
+              id="skills-inspector"
+              aria-live="polite"
+              className="lg:col-span-5 lg:order-2 rounded-2xl border border-[#d8e8ee] dark:border-white/10 bg-white/90 dark:bg-slate-900/70 p-6 space-y-4"
+            >
+              <p className="text-xs font-mono uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+                Inspector Panel
+              </p>
+              <h4 className="text-xl font-outfit font-semibold text-ink-navy dark:text-white">
+                {activeSkill ? activeSkill.name : 'Skill Inspector'}
+              </h4>
+              {activeSkill?.lane && (
+                <p className="inline-flex rounded-md border border-tide-aqua/30 dark:border-tide-sky/40 bg-tide-aqua/10 dark:bg-tide-sky/10 px-2.5 py-1 text-xs font-semibold text-[#237f86] dark:text-tide-sky">
+                  {activeSkill.lane}
                 </p>
-                <div className="flex flex-wrap items-start content-start gap-2">
-                  {group.items.map((skill, i) => {
-                    const chipConfig = SKILL_CHIP_CONFIG[skill];
-                    const isFlagged = chipConfig?.linkMode === 'flagged';
-                    const isDirect = chipConfig?.linkMode === 'direct';
-                    const titleText = chipConfig?.evidenceNote;
-                    const baseChipClass =
-                      'h-8 inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-md border border-[#d8d2c7] dark:border-white/10 bg-slate-50 dark:bg-slate-900/80 text-slate-700 dark:text-slate-200';
+              )}
+              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                {activeSkill
+                  ? activeSkill.description
+                  : 'Select a skill from the matrix to view its operational definition and portfolio use case.'}
+              </p>
+              {activeSkill?.proof && (
+                <p className="text-sm text-slate-700 dark:text-slate-200">
+                  Proof: {activeSkill.proof}
+                  {activeSkill.proofHref && (
+                    <Link
+                      to={activeSkill.proofHref}
+                      className="ml-2 underline underline-offset-2 text-[#237f86] dark:text-tide-sky hover:text-[#1d6970] dark:hover:text-tide-softBlue focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua rounded-sm"
+                    >
+                      View project
+                    </Link>
+                  )}
+                </p>
+              )}
+            </div>
 
-                    if (isFlagged) {
+            <div className="lg:col-span-7 lg:order-1 grid md:grid-cols-2 gap-6">
+              {SKILL_GROUPS.map((group, idx) => (
+                <div
+                  key={idx}
+                  className="rounded-2xl border border-[#d8e8ee] dark:border-white/10 bg-white/80 dark:bg-slate-900/60 p-6 space-y-4"
+                >
+                  <h4 className="text-base font-outfit font-semibold text-ink-navy dark:text-white border-b border-[#e5e0d6] dark:border-white/10 pb-3">
+                    {group.category}
+                  </h4>
+                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                    {group.description}
+                  </p>
+                  <div className="flex flex-wrap items-start content-start gap-2">
+                    {group.items.map((skill, i) => {
+                      const chipConfig = SKILL_CHIP_CONFIG[skill.name];
+                      const titleText = chipConfig?.evidenceNote;
+                      const isActive = activeSkillName === skill.name;
+                      const baseChipClass =
+                        'h-8 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md border border-[#d8d2c7] dark:border-white/10 bg-slate-50 dark:bg-slate-900/80 text-slate-700 dark:text-slate-200';
+
                       return (
-                        <span key={i} title={titleText} className={`${baseChipClass} select-none`}>
-                          {skill}
-                        </span>
+                        <button
+                          key={i}
+                          onClick={() => setActiveSkillName(skill.name)}
+                          title={titleText}
+                          aria-pressed={isActive}
+                          aria-controls="skills-inspector"
+                          className={`${baseChipClass} transition-colors active:scale-[0.99] focus:outline-none focus-visible:ring-2 ${getCategoryColorClass(group.category)} ${isActive ? 'border-tide-aqua dark:border-tide-sky ring-1 ring-tide-aqua/60 dark:ring-tide-sky/50 font-semibold' : ''}`}
+                        >
+                          <span aria-hidden="true">{isActive ? '✓' : ''}</span>
+                          <span>{skill.name}</span>
+                        </button>
                       );
-                    }
-
-                    const handleClick =
-                      isDirect && chipConfig.linkedSlugs[0]
-                        ? () => onNavigateToCaseStudy(chipConfig.linkedSlugs[0])
-                        : () => handleSkillClick(skill);
-
-                    return (
-                      <button
-                        key={i}
-                        onClick={handleClick}
-                        title={titleText}
-                        className={`${baseChipClass} transition-colors active:scale-[0.99] focus:outline-none focus-visible:ring-2 ${getCategoryColorClass(group.category)}`}
-                      >
-                        {skill}
-                      </button>
-                    );
-                  })}
+                    })}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
-
-      {/* Discovery Modal */}
-      {selectedSkill && (
-        <SkillDiscoveryModal
-          skill={selectedSkill}
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          onNavigateToStudy={onNavigateToCaseStudy}
-        />
-      )}
 
       {/* Education & Certs */}
       <section id="foundation" className="py-32 px-6 scroll-mt-24 transition-colors duration-500">

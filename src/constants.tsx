@@ -54,26 +54,100 @@ export const SKILL_GROUPS: SkillGroup[] = [
     description:
       'Workflow setup, technical translation, onboarding support, and handoff-ready documentation.',
     items: [
-      'Workflow Design',
-      'Technical Troubleshooting',
-      'Implementation Planning',
-      'Onboarding Support',
-      'Documentation',
-      'Stakeholder Communication',
-      'Support Handoff',
+      {
+        name: 'Workflow Design',
+        lane: 'Implementation',
+        description:
+          'Used to map requirements into step-by-step delivery flows so onboarding and implementation work can move without guesswork.',
+      },
+      {
+        name: 'Technical Troubleshooting',
+        lane: 'Implementation',
+        description:
+          'Applied when diagnosing blockers across tooling, configuration, and handoff boundaries to keep delivery moving under time pressure.',
+        proof: 'Demonstrated in Ops Triage workflow diagnostics',
+        proofHref: '/projects/ops-triage',
+      },
+      {
+        name: 'Implementation Planning',
+        lane: 'Implementation',
+        description:
+          'Supports phased rollout planning by turning broad goals into scoped tasks, dependencies, and validation checkpoints.',
+      },
+      {
+        name: 'Onboarding Support',
+        lane: 'Implementation',
+        description:
+          'Used to guide users through setup and early adoption so systems become usable quickly and support load stays controlled.',
+      },
+      {
+        name: 'Documentation',
+        lane: 'Implementation',
+        description:
+          'Used to produce handoff-ready guides that reduce repeat questions and preserve decision context for future contributors.',
+      },
+      {
+        name: 'Stakeholder Communication',
+        lane: 'Implementation',
+        description:
+          'Helps translate technical status into decision-ready updates for cross-functional teams, reviewers, and non-technical partners.',
+      },
+      {
+        name: 'Support Handoff',
+        lane: 'Implementation',
+        description:
+          'Applied when transferring ownership between teams so unresolved issues, context, and next actions remain traceable.',
+      },
     ],
   },
   {
     category: 'Quality Assurance & Operations',
     description: 'Testing logic, triage systems, data validation, and operational reliability.',
     items: [
-      'QA Protocols',
-      'Issue Triage',
-      'Root-Cause Analysis',
-      'Data QA / Validation',
-      'Process Improvement',
-      'Operational Throughput',
-      'Launch Readiness',
+      {
+        name: 'QA Protocols',
+        lane: 'QA',
+        description:
+          'Used to run consistent validation passes so defects are surfaced early and release decisions are evidence-based.',
+      },
+      {
+        name: 'Issue Triage',
+        lane: 'QA',
+        description:
+          'Applied to prioritize incoming problems by impact, urgency, and dependency risk so teams address the right failures first.',
+        proof: 'Used in Ops Triage incident workflow',
+        proofHref: '/projects/ops-triage',
+      },
+      {
+        name: 'Root-Cause Analysis',
+        lane: 'QA',
+        description:
+          'Supports post-issue analysis by tracing failures to process, data, or implementation causes rather than treating symptoms.',
+      },
+      {
+        name: 'Data QA / Validation',
+        lane: 'QA',
+        description:
+          'Used to verify data quality before downstream use so reports, maps, and operational decisions stay reliable.',
+      },
+      {
+        name: 'Process Improvement',
+        lane: 'QA',
+        description:
+          'Applied when refining workflows to reduce repeat failure patterns and improve throughput without losing controls.',
+      },
+      {
+        name: 'Operational Throughput',
+        lane: 'QA',
+        description:
+          'Useful for balancing speed and quality in high-volume queues with clear escalation and completion standards.',
+      },
+      {
+        name: 'Launch Readiness',
+        lane: 'QA',
+        description:
+          'Used to assess whether systems meet baseline reliability, documentation, and support criteria before release.',
+      },
     ],
   },
   {
@@ -81,25 +155,94 @@ export const SKILL_GROUPS: SkillGroup[] = [
     description:
       'Spatial data workflows, mapping interfaces, metadata structure, and public data access.',
     items: [
-      'ArcGIS',
-      'ESRI ArcMap',
-      'Leaflet',
-      'Spatial Data',
-      'Metadata',
-      'Dataset Cataloging',
-      'Map-Based UX',
+      {
+        name: 'ArcGIS',
+        lane: 'GIS',
+        description:
+          'Used to manage and validate spatial datasets in structured GIS workflows where data accuracy affects downstream operations.',
+      },
+      {
+        name: 'ESRI ArcMap',
+        lane: 'GIS',
+        description:
+          'Applied in production data maintenance workflows to execute map edits and utility-related updates with repeatable QA checks.',
+      },
+      {
+        name: 'Leaflet',
+        lane: 'GIS',
+        description:
+          'Used to create lightweight web map previews and interactive spatial interfaces for portfolio and project communication.',
+        proof: 'Used in Guynode Spatial Data Hub',
+        proofHref: '/projects/guynode',
+      },
+      {
+        name: 'Spatial Data',
+        lane: 'GIS',
+        description:
+          'Supports location-based analysis by structuring geospatial information for map display, validation, and operational decision support.',
+      },
+      {
+        name: 'Metadata',
+        lane: 'GIS',
+        description:
+          'Used to document dataset context, source quality, and handling constraints so teams can trust and reuse spatial assets.',
+      },
+      {
+        name: 'Dataset Cataloging',
+        lane: 'GIS',
+        description:
+          'Applied to organize data inventories and access paths so reviewers can locate relevant spatial assets quickly.',
+      },
+      {
+        name: 'Map-Based UX',
+        lane: 'GIS',
+        description:
+          'Used to present complex spatial information through clear interaction patterns that non-specialists can interpret.',
+      },
     ],
   },
   {
     category: 'AI-Assisted Workflow Design',
     description: 'Structured AI collaboration, prompt systems, governance, and human review.',
     items: [
-      'Prompt Governance',
-      'AI-Assisted Development',
-      'LLM Workflow Design',
-      'Documentation Systems',
-      'Evidence Architecture',
-      'Human Review Loops',
+      {
+        name: 'Prompt Governance',
+        lane: 'AI Systems',
+        description:
+          'Used to enforce prompt standards and review controls so AI outputs remain consistent with project constraints.',
+        proof: 'Applied in Project Aegis governance framework',
+        proofHref: '/projects/project-aegis',
+      },
+      {
+        name: 'AI-Assisted Development',
+        lane: 'AI Systems',
+        description:
+          'Supports faster build iteration by combining AI drafting with human validation, scope checks, and targeted patching.',
+      },
+      {
+        name: 'LLM Workflow Design',
+        lane: 'AI Systems',
+        description:
+          'Applied when designing multi-step AI workflows that require guardrails, fallback plans, and clear handoff points.',
+      },
+      {
+        name: 'Documentation Systems',
+        lane: 'AI Systems',
+        description:
+          'Used to maintain structured records of implementation decisions, risks, and validation outcomes across phases.',
+      },
+      {
+        name: 'Evidence Architecture',
+        lane: 'AI Systems',
+        description:
+          'Helps organize claims, artifacts, and proof links so portfolio systems can be reviewed quickly and credibly.',
+      },
+      {
+        name: 'Human Review Loops',
+        lane: 'AI Systems',
+        description:
+          'Used to keep humans in critical checkpoints where judgment, risk acceptance, or external-facing quality must be confirmed.',
+      },
     ],
   },
   {
@@ -107,17 +250,72 @@ export const SKILL_GROUPS: SkillGroup[] = [
     description:
       'Platforms and tools used across support, data, documentation, GIS, and frontend workflows.',
     items: [
-      'Zendesk',
-      'Salesforce & CRM',
-      'Notion',
-      'Jira',
-      'Asana',
-      'Tableau',
-      'Power BI',
-      'BigQuery',
-      'HTML / CSS',
-      'React',
-      'TypeScript',
+      {
+        name: 'Zendesk',
+        lane: 'Tools',
+        description:
+          'Used in customer support workflows for ticket triage, escalation tracking, and communication continuity.',
+      },
+      {
+        name: 'Salesforce & CRM',
+        lane: 'Tools',
+        description:
+          'Supports CRM-oriented workflow planning where lead context, ownership, and follow-up paths need to stay visible.',
+      },
+      {
+        name: 'Notion',
+        lane: 'Tools',
+        description:
+          'Used to centralize project notes, planning artifacts, and implementation references for cross-functional visibility.',
+      },
+      {
+        name: 'Jira',
+        lane: 'Tools',
+        description:
+          'Applied to track issues, implementation tasks, QA follow-up, and delivery progress across teams.',
+      },
+      {
+        name: 'Asana',
+        lane: 'Tools',
+        description:
+          'Used for task coordination and timeline management when delivery work spans multiple owners and dependencies.',
+      },
+      {
+        name: 'Tableau',
+        lane: 'Tools',
+        description:
+          'Useful for translating operational data into visual summaries that support trend review and stakeholder reporting.',
+      },
+      {
+        name: 'Power BI',
+        lane: 'Tools',
+        description:
+          'Used to structure dashboards that highlight performance patterns, exceptions, and workflow outcomes over time.',
+      },
+      {
+        name: 'BigQuery',
+        lane: 'Tools',
+        description:
+          'Supports large-scale data querying and analysis workflows when operational datasets need structured exploration.',
+      },
+      {
+        name: 'HTML / CSS',
+        lane: 'Implementation',
+        description:
+          'Used to build and refine responsive interface structure, accessibility behavior, and visual hierarchy.',
+      },
+      {
+        name: 'React',
+        lane: 'Implementation',
+        description:
+          'Used to build modular portfolio interfaces where reusable components can be validated, refined, and extended.',
+      },
+      {
+        name: 'TypeScript',
+        lane: 'Implementation',
+        description:
+          'Used to enforce safer contracts across components and data models so implementation changes remain predictable.',
+      },
     ],
   },
 ];

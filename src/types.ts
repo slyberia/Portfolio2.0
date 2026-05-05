@@ -9,7 +9,15 @@ export interface ExperienceItem {
 export interface SkillGroup {
   category: string;
   description: string;
-  items: string[];
+  items: SkillItem[];
+}
+
+export interface SkillItem {
+  name: string;
+  description: string;
+  proof?: string;
+  proofHref?: string;
+  lane?: 'Implementation' | 'QA' | 'GIS' | 'AI Systems' | 'Tools';
 }
 
 export type SkillLinkMode = 'direct' | 'filtered' | 'secondary' | 'flagged';
