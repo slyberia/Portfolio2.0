@@ -30,3 +30,4 @@ export const DIGITAL_TWIN_PROJECT_HREF = buildProjectHref('digital-twin');
 // TODO: remove case-study route aliases after all internal references are migrated.
 export const buildCaseStudyHref = buildProjectHref;
 export const SUPPORTING_EVIDENCE_DEFAULT_HREF = PROJECTS_DEFAULT_HREF;
+export const GOVERNANCE_LOGS_HREF = `${PORTFOLIO_PROCESS_HREF}#governance-logs`;

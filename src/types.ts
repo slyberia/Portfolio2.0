@@ -95,7 +95,6 @@ export interface ProjectEntry {
   category: ProjectCategory;
   tags: string[];
   roleLanes?: RecruiterRoleLane[];
-  // High-Rigor Evidence Fields
   heroArtifact?: CaseStudyArtifact;
   artifacts?: CaseStudyArtifact[];
   rigor?: CaseStudyRigor;
@@ -109,12 +108,25 @@ export type CaseStudyEntry = ProjectEntry;
  * Used to surface technical and business outcomes to the portfolio UI.
  */
 export interface EvidenceBlock {
-  /** The high-level name of the engineering or governance initiative. */
+  /** Unique identifier for the block, ideally derived from source filename for stability. */
+  id: string;
+  /** Primary title of the initiative being evidenced. */
   initiativeTitle: string;
-  /** Narrative background explaining the 'Why' behind the change, including constraints and triggers. */
+  /** Brief context summarizing the background and scope. */
   context: string;
-  /** Specific implementation details, architectural decisions, and technical mutations applied. */
+  /** Detailed technical implementation or process specifics. */
   technicalDetail: string;
-  /** The measurable impact or stakeholder benefit derived from the initiative. */
+  /** Quantifiable outcome or business impact of the initiative. */
   businessValue: string;
+  /** List of recruiter-facing role lanes this evidence belongs to (Implementation, QA, GIS). */
+  roleLanes?: RecruiterRoleLane[];
+  /** Explicit list of technology or process chips to display (e.g., 'Automation', 'AI-Assisted'). */
+  artifactChips?: string[];
 }
+
+export const VALID_RECRUITER_LANES = [
+  'AI Workflow / Portfolio Governance',
+  'Implementation / CSE-lite',
+  'Ops Analytics / QA',
+  'GIS / Spatial Systems',
+];

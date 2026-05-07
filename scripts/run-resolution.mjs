@@ -50,7 +50,14 @@ try {
   execSync('git add .');
   execSync('git commit -m "chore(resolution): apply architect-approved fixes"');
 
+  const nextStepRegex = /<Next_Step>([\s\S]*?)<\/Next_Step>/;
+  const stepMatch = output.match(nextStepRegex);
+
   console.log('\n🏁 Assistant Coach: Resolution applied successfully. Ready for merge!');
+  if (stepMatch) {
+    console.log('\n\x1b[36m%s\x1b[0m', 'NOTE'); // Cyan text for NOTE
+    console.log(stepMatch[1].trim());
+  }
 } catch (err) {
   console.error('\n❌ Resolution Halted:', err.message);
   console.log(

@@ -542,6 +542,13 @@ const DeepDiveView: React.FC = () => {
             </p>
           </section>
         )}
+        <section id="governance-logs" className="scroll-mt-24">
+          <h2 className="text-2xl font-bold">Governance & Implementation Logs</h2>
+          <p className="mt-2 text-ink-slate dark:text-ink-border">
+            Audit logs for the Portfolio 2.0 implementation phases, including automated review
+            summaries, design system alignment reports, and accessibility validation trails.
+          </p>
+        </section>
         <section id="remaining-release-hardening" className="scroll-mt-24">
           <h2 className="text-2xl font-bold">Remaining Release-Hardening Items</h2>
           <ul className="list-disc pl-5 mt-2 space-y-1">
