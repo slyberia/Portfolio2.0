@@ -1,24 +1,24 @@
 # Codex Appellate Defense
 
-**Generated:** 5/6/2026, 8:14:44 PM
+**Generated:** 5/6/2026, 10:10:43 PM
 
 <Defense_Block>
 
-- **Issue:** `run-jules-review.mjs` relies on global `fetch`, creating an implicit Node.js >=18 runtime requirement.
+- **Issue:** Duplicated `canonicalRoleAccent` constant creates maintenance risk.
 - **Classification:** Concede
-- **Rationale:** Change `package.json` at line 6 by adding an explicit `engines.node` constraint before the `scripts` block.
+- **Rationale:** Change `src/data/projectMetadata.ts:21` to export a single canonical role-to-accent mapping, then replace duplicate local declarations at `src/components/home/SupportingEvidenceSection.tsx:13` and `src/views/ProjectDetailView.tsx:26`.
   </Defense_Block>
 
 <Defense_Block>
 
-- **Issue:** `run-jules-review.mjs` dereferences `data.candidates[0].content.parts[0].text` without validating the Gemini response shape.
+- **Issue:** `ProjectsIndexView` uses local hardcoded `roleStyles` instead of the shared role accent recipe.
 - **Classification:** Concede
-- **Rationale:** Change `scripts/run-jules-review.mjs` at line 60 to validate `candidates`, `content`, `parts`, and `text` before dereference and fail with a deterministic error path.
+- **Rationale:** Change `src/views/ProjectsIndexView.tsx:12` to remove the local `roleStyles` map, then update role chip style derivation at `src/views/ProjectsIndexView.tsx:82` and `src/views/ProjectsIndexView.tsx:149` to use the centralized accent mapping plus `getRoleAccentRecipe`.
   </Defense_Block>
 
 <Defense_Block>
 
-- **Issue:** `run-jules-review.mjs` and `run-appellate-defense.mjs` lack automated tests for developer workflow behavior.
-- **Classification:** Defend
-- **Rationale:** The architectural invariant is that these scripts are developer-only orchestration tools outside the application runtime and outside the phase validation contract; failures are surfaced synchronously through process exit behavior and do not affect routes, components, production bundles, accessibility, SEO, or design-system state.
+- **Issue:** Missing component test updates for modified `canonicalRoleLanes` UI rendering.
+- **Classification:** Concede
+- **Rationale:** Change `src/test/components.test.tsx:110` to add component-level coverage for rendered canonical role lane text and chip styling behavior for `SupportingEvidenceSection`, `ProjectDetailView`, and `ProjectsIndexView`.
   </Defense_Block>

@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PORTFOLIO_PROCESS_HREF } from '../../lib/routes';
 import {
+  CANONICAL_ROLE_ACCENT,
   ProjectFilter,
   PROJECT_FILTERS,
   getFeaturedProjects,
@@ -86,18 +87,14 @@ const SupportingEvidenceSection: React.FC = () => {
                 {item.shortSummary}
               </p>
               <div className="mt-3 flex flex-wrap gap-1.5">
-                {item.roleLanes.map((role) => {
-                  const roleAccent = getRoleAccentRecipe(role);
+                {item.canonicalRoleLanes.map((role) => {
+                  const roleAccent = getRoleAccentRecipe(CANONICAL_ROLE_ACCENT[role]);
                   return (
                     <span
                       key={`${item.id}-${role}`}
                       className={`text-[11px] px-2 py-0.5 rounded-md border ${roleAccent.chipClass}`}
                     >
-                      {role === 'Implementation'
-                        ? 'Technical Implementation Specialist'
-                        : role === 'QA'
-                          ? 'Quality Assurance Analyst'
-                          : 'GIS Analyst'}
+                      {role}
                     </span>
                   );
                 })}

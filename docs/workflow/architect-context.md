@@ -39,6 +39,8 @@ The content is organized as follows:
 docs/checklists/phase-closure.md
 docs/crawler-accessibility.md
 docs/executive-summaries/summary-2026-05-06.md
+docs/executive-summaries/summary-2026-05-07-201507.md
+docs/executive-summaries/summary-2026-05-07-220158.md
 docs/portfolio2-evidence-audit-ledger.md
 docs/product-lifecycle.md
 docs/prompts/codex-phase-template.md
@@ -130,232 +132,14 @@ vitest.config.ts
 
 # Files
 
-## File: docs/executive-summaries/summary-2026-05-06.md
+## File: docs/executive-summaries/summary-2026-05-07-220158.md
 ```markdown
-# Executive Summary: 2026-05-06
+# Automated Review Governance Pipeline for Portfolio Delivery
+**Initiative Context:** This work formalized a quality-control workflow for the portfolio codebase by adding automated AI review, appellate triage, documentation generation, and validation routing around developer changes.
 
-A new automated review pipeline was built for the portfolio codebase. Instead of relying only on manual inspection, the system can package recent code changes, send them to an AI reviewer, save the review, and then run a second “appeal” step where Codex decides which findings should be fixed and which are acceptable risks. It is like adding a quality-control station to a production line: one machine inspects the work, another checks whether the inspection itself is fair.
+The project added a structured review station to the development process. One tool packages code changes and asks an AI reviewer to inspect them, another tool evaluates which findings should actually be fixed, and a documentation step turns the outcome into both technical notes and stakeholder-friendly summaries. In plain terms, the system does not just ask “did something change?” It asks “was the change reviewed, was the review fair, and was the decision recorded?”
 
-This matters because it makes the project easier to govern as it grows. The automated decision was practical: accept two small reliability fixes, but avoid overbuilding tests for scripts that only run behind the scenes during development. The business value is faster, more consistent review without adding risk to visitors, recruiters, or customers using the live portfolio. It shows judgment: fix what could break the workflow, but do not spend effort hardening tooling that cannot affect the end user.
-```
-
-## File: docs/product-lifecycle.md
-```markdown
-## Build Run: 5/6/2026, 7:16:34 PM
-
-- Code churn added a developer-only AI review workflow: `run-jules-review.mjs` sends git diffs to Gemini using the Jules review template, `run-appellate-defense.mjs` feeds the Jules report back through Codex for appellate classification, and `validate-phase.mjs` replaces the prior phase validation shell flow with a cross-platform Node validation runner.
-- Jules reviewed the churn as scope-compliant and isolated from app runtime, routes, SEO, accessibility, and design-system behavior, but flagged two P3 robustness issues in `run-jules-review.mjs`: implicit Node 18+ reliance on global `fetch`, and unsafe dereference of `data.candidates[0].content.parts[0].text`; it also noted P4 missing tests for internal workflow scripts.
-- Appellate defense conceded the runtime declaration and Gemini response-shape validation fixes, while defending the lack of tests on containment grounds: the scripts are local developer workflow entrypoints whose failures terminate local automation or omit generated files, without mutating production user-facing application state.
-
----
-```
-
-## File: docs/workflow/codex-defense.md
-```markdown
-# Codex Appellate Defense
-**Generated:** 5/6/2026, 8:14:44 PM
-
-<Defense_Block>
-- **Issue:** `run-jules-review.mjs` relies on global `fetch`, creating an implicit Node.js >=18 runtime requirement.
-- **Classification:** Concede
-- **Rationale:** Change `package.json` at line 6 by adding an explicit `engines.node` constraint before the `scripts` block.
-</Defense_Block>
-
-<Defense_Block>
-- **Issue:** `run-jules-review.mjs` dereferences `data.candidates[0].content.parts[0].text` without validating the Gemini response shape.
-- **Classification:** Concede
-- **Rationale:** Change `scripts/run-jules-review.mjs` at line 60 to validate `candidates`, `content`, `parts`, and `text` before dereference and fail with a deterministic error path.
-</Defense_Block>
-
-<Defense_Block>
-- **Issue:** `run-jules-review.mjs` and `run-appellate-defense.mjs` lack automated tests for developer workflow behavior.
-- **Classification:** Defend
-- **Rationale:** The architectural invariant is that these scripts are developer-only orchestration tools outside the application runtime and outside the phase validation contract; failures are surfaced synchronously through process exit behavior and do not affect routes, components, production bundles, accessibility, SEO, or design-system state.
-</Defense_Block>
-```
-
-## File: docs/workflow/jules-report.md
-```markdown
-# Jules Code Review
-**Generated:** 5/6/2026, 8:13:58 PM
-
-### Summary
-
-The submitted changes introduce a suite of developer-facing workflow scripts and migrate the existing phase validation script from Bash to Node.js.
-
-The work is compliant with the phase contract. It is confined to developer tooling and introduces no changes to the user-facing application, its routes, components, or styling. Consequently, there is no risk of regression to accessibility, SEO, or design-system integrity.
-
-The migration of `validate-phase.sh` to `validate-phase.mjs` is a sound technical improvement for cross-platform compatibility. The new review scripts (`run-jules-review.mjs` and `run-appellate-defense.mjs`) are functional but introduce minor, addressable risks related to runtime assumptions and error handling.
-
-### Files Inspected
-
--   `package.json`
--   `scripts/run-jules-review.mjs`
--   `scripts/run-appellate-defense.mjs`
--   `scripts/validate-phase.mjs`
--   `docs/workflow/architect-context.md`
-
----
-
-### Issues
-
-#### P3: Minor
-
--   **File:** `scripts/run-jules-review.mjs`
-    -   **Issue:** The script relies on the global `fetch` API, which is only available by default in Node.js v18 and later. This creates an implicit runtime requirement that will cause the script to fail in older Node environments.
-    -   **Recommendation:** Add an `engines` field to `package.json` to declare the minimum required Node.js version (e.g., `{ "engines": { "node": ">=18.0.0" } }`), making this dependency explicit.
-
--   **File:** `scripts/run-jules-review.mjs`
-    -   **Issue:** The script unsafely assumes a specific structure for the Google Gemini API response. The line `const rawReviewText = data.candidates[0].content.parts[0].text;` will raise an unhandled `TypeError` if `data.candidates` is empty or if any part of the nested path is missing.
-    -   **Recommendation:** Implement defensive checks to validate the response shape before accessing nested properties. If the structure is invalid, the script should exit with a clear error message.
-
-#### P4: Trivial
-
--   **File:** `scripts/run-jules-review.mjs`, `scripts/run-appellate-defense.mjs`
-    -   **Issue:** The new workflow scripts lack automated tests. While they are internal developer tools, their interactions with `git`, the file system, and network APIs make them susceptible to regressions as the codebase evolves.
-    -   **Recommendation:** For long-term maintainability, consider adding basic tests to verify core logic, such as API key handling, diff generation, and report writing. This is a low-priority improvement, not a blocker.
-```
-
-## File: scripts/run-appellate-defense.mjs
-```javascript
-import fs from 'fs';
-import { execSync } from 'child_process';
-
-try {
-  console.log('Verifying Defense Node prerequisites...');
-  const instruction = fs.readFileSync('.agent/prompts/appellate-defense.md', 'utf8');
-  const julesReport = fs.readFileSync('docs/workflow/jules-report.md', 'utf8');
-
-  const fullPrompt = `${instruction}\n\n<Jules_Report>\n${julesReport}\n</Jules_Report>\n\nExecute your Execution_Taxonomy and output your Defense_Block items now.`;
-
-  fs.writeFileSync('.agent/prompts/temp-defense-prompt.md', fullPrompt);
-
-  console.log('Invoking Codex for Appellate Defense...');
-  // Pipe the generated prompt into the local Codex agent
-  const defenseOutput = execSync('codex exec < .agent/prompts/temp-defense-prompt.md').toString();
-
-  const timestamp = new Date().toLocaleString();
-  const formattedOutput = `# Codex Appellate Defense\n**Generated:** ${timestamp}\n\n${defenseOutput}`;
-
-  fs.writeFileSync('docs/workflow/codex-defense.md', formattedOutput);
-  console.log('✅ Defense analysis complete. Saved to docs/workflow/codex-defense.md');
-
-  // Cleanup staging file
-  if (fs.existsSync('.agent/prompts/temp-defense-prompt.md')) {
-    fs.unlinkSync('.agent/prompts/temp-defense-prompt.md');
-  }
-} catch (err) {
-  console.error('❌ Defense Node failed:', err.message);
-  process.exit(1);
-}
-```
-
-## File: scripts/run-documentation.mjs
-```javascript
-import fs from 'fs';
-import { execSync } from 'child_process';
-
-try {
-  console.log('Waking Documentation Agent...');
-  const instruction = fs.readFileSync('.agent/prompts/doc-generation.md', 'utf8');
-  const context = fs.readFileSync('docs/workflow/architect-context.md', 'utf8');
-
-  const prompt = `${instruction}\n\n<Architect_Context>\n${context}\n</Architect_Context>`;
-  fs.writeFileSync('.agent/prompts/temp-doc-prompt.md', prompt);
-
-  // Run Codex/LLM to generate documentation
-  const output = execSync('codex exec < .agent/prompts/temp-doc-prompt.md').toString();
-
-  // Parse the bifurcated output
-  const techMatch = output.match(/<Technical_Spec>([\s\S]*?)<\/Technical_Spec>/);
-  const execMatch = output.match(/<Executive_Summary>([\s\S]*?)<\/Executive_Summary>/);
-
-  if (!techMatch || !execMatch) {
-    throw new Error('Documentation Agent failed to respect Audience_Bifurcation tags.');
-  }
-
-  const timestamp = new Date().toLocaleString();
-
-  // 1. Append Technical Spec to Product Lifecycle
-  const techEntry = `\n## Build Run: ${timestamp}\n${techMatch[1].trim()}\n---\n`;
-  fs.appendFileSync('docs/product-lifecycle.md', techEntry);
-
-  // 2. Save Executive Summary as a standalone artifact
-  const now = new Date();
-  const safeDate = now.toISOString().split('T')[0];
-  const safeTime = now.toTimeString().split(' ')[0].replace(/:/g, ''); // e.g., 143000
-  const execFile = `docs/executive-summaries/summary-${safeDate}-${safeTime}.md`;
-
-  // The LLM now provides the markdown # Title within the tag, so we just trim and save
-  const execContent = execMatch[1].trim();
-  fs.writeFileSync(execFile, execContent);
-
-  console.log('✅ Documentation generated and routed successfully.');
-  fs.unlinkSync('.agent/prompts/temp-doc-prompt.md');
-} catch (err) {
-  console.error('❌ Documentation Node Failed:', err.message);
-  process.exit(1);
-}
-```
-
-## File: scripts/run-resolution.mjs
-```javascript
-import fs from 'fs';
-import { execSync } from 'child_process';
-
-try {
-  const ruling = process.argv[2];
-  if (!ruling) {
-    throw new Error('Architect ruling missing. Usage: npm run resolve:coach "Your ruling here"');
-  }
-
-  console.log(`\nAssistant Coach received ruling: "${ruling}"`);
-  console.log('Consulting Codex for approved mutations...');
-
-  const instruction = fs.readFileSync('.agent/prompts/resolution-coach.md', 'utf8');
-  const context = fs.readFileSync('docs/workflow/architect-context.md', 'utf8');
-
-  const prompt = `${instruction}\n\n<Architect_Context>\n${context}\n</Architect_Context>\n\n<Architect_Ruling>\n${ruling}\n</Architect_Ruling>\n\nExecute approved mutations now.`;
-  fs.writeFileSync('.agent/prompts/temp-resolution-prompt.md', prompt);
-
-  // Trigger Codex
-  const output = execSync('codex exec < .agent/prompts/temp-resolution-prompt.md').toString();
-
-  // Parse <File> tags and apply mutations to the disk
-  const fileRegex = /<File path="([^"]+)">([\s\S]*?)<\/File>/g;
-  let match;
-  let filesMutated = 0;
-
-  while ((match = fileRegex.exec(output)) !== null) {
-    const filePath = match[1];
-    const fileContent = match[2].trim();
-    fs.writeFileSync(filePath, fileContent);
-    console.log(`✅ Applied mutations to: ${filePath}`);
-    filesMutated++;
-  }
-
-  if (filesMutated === 0) {
-    console.log('No file mutations required based on ruling.');
-  }
-
-  console.log('\nRunning validation suite...');
-  execSync('npm run validate:phase', { stdio: 'inherit' });
-
-  console.log('\n✅ Validation passed. Archiving Git State...');
-  execSync('git add .');
-  execSync('git commit -m "chore(resolution): apply architect-approved fixes"');
-
-  console.log('\n🏁 Assistant Coach: Resolution applied successfully. Ready for merge!');
-  if (fs.existsSync('.agent/prompts/temp-resolution-prompt.md')) {
-    fs.unlinkSync('.agent/prompts/temp-resolution-prompt.md');
-  }
-} catch (err) {
-  console.error('\n❌ Resolution Halted:', err.message);
-  console.log(
-    'Coach Advice: The build failed after applying mutations, or an error occurred. Review the terminal output. Code state is preserved for manual inspection.',
-  );
-  process.exit(1);
-}
+This matters because it makes the portfolio easier to maintain as it grows. Recruiters and customers do not see these tools directly, but they benefit from the discipline behind them: fewer careless changes, clearer decision records, and faster iteration without sacrificing judgment. The business value is a more reliable delivery process that shows operational maturity, especially around AI-assisted work where review, accountability, and human decision-making need to remain visible.
 ```
 
 ## File: src/App.tsx
@@ -640,6 +424,51 @@ export default defineConfig({
 TODO: Populate during Phase 2G workflow codification.
 ```
 
+## File: docs/executive-summaries/summary-2026-05-06.md
+```markdown
+# Executive Summary: 2026-05-06
+
+A new automated review pipeline was built for the portfolio codebase. Instead of relying only on manual inspection, the system can package recent code changes, send them to an AI reviewer, save the review, and then run a second “appeal” step where Codex decides which findings should be fixed and which are acceptable risks. It is like adding a quality-control station to a production line: one machine inspects the work, another checks whether the inspection itself is fair.
+
+This matters because it makes the project easier to govern as it grows. The automated decision was practical: accept two small reliability fixes, but avoid overbuilding tests for scripts that only run behind the scenes during development. The business value is faster, more consistent review without adding risk to visitors, recruiters, or customers using the live portfolio. It shows judgment: fix what could break the workflow, but do not spend effort hardening tooling that cannot affect the end user.
+```
+
+## File: docs/executive-summaries/summary-2026-05-07-201507.md
+```markdown
+# Automated AI Review and Documentation Governance Pipeline
+
+**Initiative Context:** This work added a developer-only quality-control workflow for reviewing code changes, classifying reviewer findings, and generating stakeholder-ready documentation from the same architectural context.
+
+The project built an internal review pipeline that lets one AI reviewer inspect code changes, then lets Codex act as an appeal layer to decide which findings should be fixed and which can be accepted as low-risk. It works like a two-step inspection station: the first pass looks for defects, and the second pass checks whether each concern is worth acting on.
+
+This matters because it makes the portfolio easier to maintain as it grows. Instead of relying only on memory or manual judgment, the system creates repeatable review records, separates technical notes from executive summaries, and keeps decisions traceable. The business value is faster quality review, clearer documentation, and better governance without adding risk to the live portfolio experience.
+```
+
+## File: docs/product-lifecycle.md
+```markdown
+## Build Run: 5/6/2026, 7:16:34 PM
+
+- Code churn added a developer-only AI review workflow: `run-jules-review.mjs` sends git diffs to Gemini using the Jules review template, `run-appellate-defense.mjs` feeds the Jules report back through Codex for appellate classification, and `validate-phase.mjs` replaces the prior phase validation shell flow with a cross-platform Node validation runner.
+- Jules reviewed the churn as scope-compliant and isolated from app runtime, routes, SEO, accessibility, and design-system behavior, but flagged two P3 robustness issues in `run-jules-review.mjs`: implicit Node 18+ reliance on global `fetch`, and unsafe dereference of `data.candidates[0].content.parts[0].text`; it also noted P4 missing tests for internal workflow scripts.
+- Appellate defense conceded the runtime declaration and Gemini response-shape validation fixes, while defending the lack of tests on containment grounds: the scripts are local developer workflow entrypoints whose failures terminate local automation or omit generated files, without mutating production user-facing application state.
+
+---
+
+## Build Run: 5/6/2026, 8:15:07 PM
+
+- Code churn added a developer-only AI review/documentation workflow: `run-jules-review.mjs` packages git diffs and sends them to Gemini using the Jules template, `run-appellate-defense.mjs` routes Jules findings through Codex for issue classification, `run-documentation.mjs` splits technical/executive outputs into lifecycle docs, `run-resolution.mjs` applies approved mutations, and `validate-phase.mjs` replaces shell validation with a cross-platform Node runner.
+- Jules found the churn scope-compliant and isolated from runtime application surfaces, with no regression risk to routes, SEO, accessibility, components, or design-system behavior; it raised two P3 robustness issues in `run-jules-review.mjs` for implicit Node 18+ `fetch` reliance and unsafe Gemini response dereference, plus one P4 concern for missing tests on internal workflow scripts.
+- Appellate defense conceded the two P3 fixes: declare the Node runtime requirement in `package.json` and validate Gemini response shape before reading `data.candidates[0].content.parts[0].text`; it defended the P4 test gap because these scripts are local developer orchestration entrypoints whose failures stop local automation or omit generated files without mutating production-facing application state.
+
+---
+
+## Build Run: 5/6/2026, 10:01:58 PM
+- Code churn introduced a developer-only AI review and documentation workflow: Jules review generation via Gemini, Codex appellate-defense classification, documentation routing into lifecycle/executive artifacts, resolution coaching, and a cross-platform Node-based phase validation runner replacing the prior shell flow.
+- Jules found the changes scope-compliant and isolated from app runtime, routing, SEO, accessibility, and design-system behavior, but flagged two P3 risks in `run-jules-review.mjs`: implicit Node 18+ `fetch` reliance and unsafe Gemini response dereferencing; it also logged a P4 concern for missing workflow-script tests.
+- Appellate defense conceded the Node runtime declaration and Gemini response-shape validation fixes, while defending missing tests because the scripts are local developer orchestration tools whose failures stop local automation or omit generated docs without mutating production app state.
+---
+```
+
 ## File: docs/prompts/codex-phase-template.md
 ```markdown
 # CODEX PHASE TEMPLATE
@@ -720,6 +549,75 @@ TODO: Populate during Phase 2G workflow codification.
 TODO: Populate during Phase 2G workflow codification.
 ```
 
+## File: docs/workflow/codex-defense.md
+```markdown
+# Codex Appellate Defense
+**Generated:** 5/6/2026, 10:10:43 PM
+
+<Defense_Block>
+- **Issue:** Duplicated `canonicalRoleAccent` constant creates maintenance risk.
+- **Classification:** Concede
+- **Rationale:** Change `src/data/projectMetadata.ts:21` to export a single canonical role-to-accent mapping, then replace duplicate local declarations at `src/components/home/SupportingEvidenceSection.tsx:13` and `src/views/ProjectDetailView.tsx:26`.
+</Defense_Block>
+
+<Defense_Block>
+- **Issue:** `ProjectsIndexView` uses local hardcoded `roleStyles` instead of the shared role accent recipe.
+- **Classification:** Concede
+- **Rationale:** Change `src/views/ProjectsIndexView.tsx:12` to remove the local `roleStyles` map, then update role chip style derivation at `src/views/ProjectsIndexView.tsx:82` and `src/views/ProjectsIndexView.tsx:149` to use the centralized accent mapping plus `getRoleAccentRecipe`.
+</Defense_Block>
+
+<Defense_Block>
+- **Issue:** Missing component test updates for modified `canonicalRoleLanes` UI rendering.
+- **Classification:** Concede
+- **Rationale:** Change `src/test/components.test.tsx:110` to add component-level coverage for rendered canonical role lane text and chip styling behavior for `SupportingEvidenceSection`, `ProjectDetailView`, and `ProjectsIndexView`.
+</Defense_Block>
+```
+
+## File: docs/workflow/jules-report.md
+```markdown
+# Jules Code Review
+**Generated:** 5/6/2026, 10:09:59 PM
+
+## Jules Review: Summary
+
+The phase contract appears to involve a data model refactor for project role lanes, propagating the changes from `roleLanes` to `canonicalRoleLanes` throughout the UI. The changes are compliant with the scope and do not introduce issues related to routing, SEO, or accessibility.
+
+However, the implementation introduces significant code duplication and a notable deviation from the established design system pattern for component styling. This creates immediate technical debt and future maintenance risk. Additionally, user-facing presentational logic was modified without corresponding updates to component tests.
+
+The documentation updates related to the developer workflow are noted but are ancillary to the primary code review of the `src` directory changes.
+
+## Files Inspected
+
+-   `docs/product-lifecycle.md`
+-   `docs/workflow/codex-defense.md`
+-   `src/components/home/SupportingEvidenceSection.tsx`
+-   `src/views/ProjectDetailView.tsx`
+-   `src/views/ProjectsIndexView.tsx`
+
+---
+
+## Issues
+
+### P2: Medium Priority
+
+-   **Duplicated `canonicalRoleAccent` constant creates maintenance risk.**
+    -   **File(s):** `src/components/home/SupportingEvidenceSection.tsx`, `src/views/ProjectDetailView.tsx`
+    -   **Issue:** The `canonicalRoleAccent` mapping object is defined identically in two separate files. This violates the DRY principle. Any future change to this mapping must be manually synchronized across multiple locations, which is error-prone and leads to data inconsistency.
+    -   **Resolution:** Centralize this constant. Extract the `canonicalRoleAccent` object to a single, shared location (e.g., `src/data/projectMetadata.ts` or `src/lib/design-system.ts`) and import it into the required components.
+
+-   **Inconsistent styling implementation causes design system drift.**
+    -   **File(s):** `src/views/ProjectsIndexView.tsx`
+    -   **Issue:** The `SupportingEvidenceSection` and `ProjectDetailView` components correctly use the centralized `getRoleAccentRecipe` function to derive chip styles, which is the established pattern. The `ProjectsIndexView` component deviates by defining a local, one-off `roleStyles` object with hardcoded Tailwind classes. This bypasses the design system, creating visual and technical inconsistencies.
+    -   **Resolution:** Refactor `ProjectsIndexView.tsx` to remove the local `roleStyles` object. It should instead use the same data mapping and the centralized `getRoleAccentRecipe` function as the other components to ensure a single source of truth for role-based styling.
+
+### P3: Low Priority
+
+-   **Missing component test updates for modified UI logic.**
+    -   **File(s):** `src/components/home/SupportingEvidenceSection.tsx`, `src/views/ProjectDetailView.tsx`, `src/views/ProjectsIndexView.tsx`
+    -   **Issue:** The logic for rendering role chips has changed (data source, mapping, and display text). The diff does not include any updates to unit or component-level tests to validate this new user-facing presentation logic. The documentation acknowledges a test gap for developer-workflow scripts, but this is separate from the application components.
+    -   **Resolution:** Update existing tests or add new tests to cover the new `canonicalRoleLanes` rendering logic in each affected component, asserting that the correct text and styles are applied.
+```
+
 ## File: docs/workflow/jules-review-template.md
 ```markdown
 # Jules Review Task
@@ -743,80 +641,148 @@ Review the current branch for the completed phase.
 Provide a summary, files inspected, and issues ranked strictly by the P0-P4 Triage Rubric.
 ```
 
-## File: scripts/run-jules-review.mjs
+## File: scripts/run-appellate-defense.mjs
 ```javascript
 import fs from 'fs';
 import { execSync } from 'child_process';
 
-let apiKey = process.env.JULES_API_KEY;
-if (!apiKey && fs.existsSync('.env')) {
-  const envContent = fs.readFileSync('.env', 'utf8');
-  const match = envContent.match(/^JULES_API_KEY=(.*)$/m);
-  if (match) apiKey = match[1].trim();
-}
+try {
+  console.log('Verifying Defense Node prerequisites...');
+  const instruction = fs.readFileSync('.agent/prompts/appellate-defense.md', 'utf8');
+  const julesReport = fs.readFileSync('docs/workflow/jules-report.md', 'utf8');
 
-if (!apiKey || apiKey.includes('your_key_here')) {
-  console.error('❌ ERROR: Missing or invalid JULES_API_KEY in .env file.');
+  const fullPrompt = `${instruction}\n\n<Jules_Report>\n${julesReport}\n</Jules_Report>\n\nExecute your Execution_Taxonomy and output your Defense_Block items now.`;
+
+  fs.writeFileSync('.agent/prompts/temp-defense-prompt.md', fullPrompt);
+
+  console.log('Invoking Codex for Appellate Defense...');
+  // Pipe the generated prompt into the local Codex agent
+  const defenseOutput = execSync('codex exec < .agent/prompts/temp-defense-prompt.md').toString();
+
+  const timestamp = new Date().toLocaleString();
+  const formattedOutput = `# Codex Appellate Defense\n**Generated:** ${timestamp}\n\n${defenseOutput}`;
+
+  fs.writeFileSync('docs/workflow/codex-defense.md', formattedOutput);
+  console.log('✅ Defense analysis complete. Saved to docs/workflow/codex-defense.md');
+
+  // Cleanup staging file
+  if (fs.existsSync('.agent/prompts/temp-defense-prompt.md')) {
+    fs.unlinkSync('.agent/prompts/temp-defense-prompt.md');
+  }
+} catch (err) {
+  console.error('❌ Defense Node failed:', err.message);
   process.exit(1);
 }
+```
 
-console.log('Starting Jules code review...');
+## File: scripts/run-documentation.mjs
+```javascript
+import fs from 'fs';
+import { execSync } from 'child_process';
 
 try {
-  // 1. Get the Git Diff (Resilient Fallback)
-  let diff = '';
-  try {
-    diff = execSync('git diff HEAD').toString(); // Uncommitted changes
-    if (!diff.trim()) {
-      diff = execSync('git diff HEAD~1').toString(); // Last commit
-    }
-  } catch (err) {
-    console.error('❌ Error getting git diff:', err.message);
-    process.exit(1);
+  console.log('Waking Documentation Agent...');
+  const instruction = fs.readFileSync('.agent/prompts/doc-generation.md', 'utf8');
+  const context = fs.readFileSync('docs/workflow/architect-context.md', 'utf8');
+
+  const prompt = `${instruction}\n\n<Architect_Context>\n${context}\n</Architect_Context>`;
+  fs.writeFileSync('.agent/prompts/temp-doc-prompt.md', prompt);
+
+  // Run Codex/LLM to generate documentation
+  const output = execSync('codex exec < .agent/prompts/temp-doc-prompt.md').toString();
+
+  // Parse the bifurcated output
+  const techMatch = output.match(/<Technical_Spec>([\s\S]*?)<\/Technical_Spec>/);
+  const execMatch = output.match(/<Executive_Summary>([\s\S]*?)<\/Executive_Summary>/);
+
+  if (!techMatch || !execMatch) {
+    throw new Error('Documentation Agent failed to respect Audience_Bifurcation tags.');
   }
 
-  // 2. Load the Rules
-  const rulesPath = fs.existsSync('.github/pull_request_template.md')
-    ? '.github/pull_request_template.md'
-    : 'docs/workflow/jules-review-template.md';
-  const rules = fs.readFileSync(rulesPath, 'utf8');
+  const timestamp = new Date().toLocaleString();
 
-  if (!diff.trim()) {
-    console.log('No code changes detected to review.');
-    process.exit(0);
+  // 1. Append Technical Spec to Product Lifecycle
+  const techEntry = `\n## Build Run: ${timestamp}\n${techMatch[1].trim()}\n---\n`;
+  fs.appendFileSync('docs/product-lifecycle.md', techEntry);
+
+  // 2. Save Executive Summary as a standalone artifact
+  const now = new Date();
+  const safeDate = now.toISOString().split('T')[0];
+  const safeTime = now.toTimeString().split(' ')[0].replace(/:/g, ''); // e.g., 143000
+  const execFile = `docs/executive-summaries/summary-${safeDate}-${safeTime}.md`;
+
+  // The LLM now provides the markdown # Title within the tag, so we just trim and save
+  const execContent = execMatch[1].trim();
+  fs.writeFileSync(execFile, execContent);
+
+  console.log('✅ Documentation generated and routed successfully.');
+  fs.unlinkSync('.agent/prompts/temp-doc-prompt.md');
+} catch (err) {
+  console.error('❌ Documentation Node Failed:', err.message);
+  process.exit(1);
+}
+```
+
+## File: scripts/run-resolution.mjs
+```javascript
+import fs from 'fs';
+import { execSync } from 'child_process';
+
+try {
+  const ruling = process.argv[2];
+  if (!ruling) {
+    throw new Error('Architect ruling missing. Usage: npm run resolve:coach "Your ruling here"');
   }
 
-  // 3. Construct Google Gemini API payload
-  const promptText = `You are Jules, a strict code reviewer. Review this code diff based on the following rules:\n\nRULES:\n${rules}\n\nGIT DIFF:\n${diff}`;
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=${apiKey.trim()}`;
-  const payload = { contents: [{ parts: [{ text: promptText }] }] };
+  console.log(`\nAssistant Coach received ruling: "${ruling}"`);
+  console.log('Consulting Codex for approved mutations...');
 
-  // 4. Execute the call
-  console.log('Sending diff to Google Gemini API...');
-  fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.error) {
-        console.error('❌ API Error:', data.error.message);
-        process.exit(1);
-      }
-      const rawReviewText = data.candidates[0].content.parts[0].text;
-      const timestamp = new Date().toLocaleString();
-      const formattedReport = `# Jules Code Review\n**Generated:** ${timestamp}\n\n${rawReviewText}`;
+  const instruction = fs.readFileSync('.agent/prompts/resolution-coach.md', 'utf8');
+  const context = fs.readFileSync('docs/workflow/architect-context.md', 'utf8');
 
-      fs.writeFileSync('docs/workflow/jules-report.md', formattedReport);
-      console.log('✅ Jules review complete. Saved to docs/workflow/jules-report.md');
-    })
-    .catch((err) => {
-      console.error('❌ Fetch failed:', err);
-      process.exit(1);
-    });
-} catch (error) {
-  console.error('❌ Execution failed:', error.message);
+  const prompt = `${instruction}\n\n<Architect_Context>\n${context}\n</Architect_Context>\n\n<Architect_Ruling>\n${ruling}\n</Architect_Ruling>\n\nExecute approved mutations now.`;
+  fs.writeFileSync('.agent/prompts/temp-resolution-prompt.md', prompt);
+
+  // Trigger Codex
+  const output = execSync('codex exec < .agent/prompts/temp-resolution-prompt.md').toString();
+
+  // Parse <File> tags and apply mutations to the disk
+  const fileRegex = /<File path="([^"]+)">([\s\S]*?)<\/File>/g;
+  let match;
+  let filesMutated = 0;
+
+  while ((match = fileRegex.exec(output)) !== null) {
+    const filePath = match[1];
+    const fileContent = match[2].trim();
+    fs.writeFileSync(filePath, fileContent);
+    console.log(`✅ Applied mutations to: ${filePath}`);
+    filesMutated++;
+  }
+
+  if (filesMutated === 0) {
+    console.log('No file mutations required based on ruling.');
+  }
+
+  if (fs.existsSync('.agent/prompts/temp-resolution-prompt.md')) {
+    fs.unlinkSync('.agent/prompts/temp-resolution-prompt.md');
+  }
+
+  console.log('\nFixing formatting...');
+  execSync('npm run fix:format', { stdio: 'inherit' });
+
+  console.log('\nRunning validation suite...');
+  execSync('npm run validate:phase', { stdio: 'inherit' });
+
+  console.log('\n✅ Validation passed. Archiving Git State...');
+  execSync('git add .');
+  execSync('git commit -m "chore(resolution): apply architect-approved fixes"');
+
+  console.log('\n🏁 Assistant Coach: Resolution applied successfully. Ready for merge!');
+} catch (err) {
+  console.error('\n❌ Resolution Halted:', err.message);
+  console.log(
+    'Coach Advice: The build failed after applying mutations, or an error occurred. Review the terminal output. Code state is preserved for manual inspection.',
+  );
   process.exit(1);
 }
 ```
@@ -2781,6 +2747,94 @@ For Phase 8E (public Process / Deep Dive update), implement:
    - Optionally public GitHub links to: `src/router.tsx`, `src/data/projectMetadata.ts`, `server/geminiProxy.ts`, `src/components/ChatWidget.tsx`.
 ```
 
+## File: scripts/run-jules-review.mjs
+```javascript
+import fs from 'fs';
+import { execSync } from 'child_process';
+
+let apiKey = process.env.JULES_API_KEY;
+if (!apiKey && fs.existsSync('.env')) {
+  const envContent = fs.readFileSync('.env', 'utf8');
+  const match = envContent.match(/^JULES_API_KEY=(.*)$/m);
+  if (match) apiKey = match[1].trim();
+}
+
+if (!apiKey || apiKey.includes('your_key_here')) {
+  console.error('❌ ERROR: Missing or invalid JULES_API_KEY in .env file.');
+  process.exit(1);
+}
+
+console.log('Starting Jules code review...');
+
+try {
+  // 1. Get the Git Diff (Resilient Fallback)
+  let diff = '';
+  try {
+    diff = execSync('git diff HEAD').toString(); // Uncommitted changes
+    if (!diff.trim()) {
+      diff = execSync('git diff HEAD~1').toString(); // Last commit
+    }
+  } catch (err) {
+    console.error('❌ Error getting git diff:', err.message);
+    process.exit(1);
+  }
+
+  // 2. Load the Rules
+  const rulesPath = fs.existsSync('.github/pull_request_template.md')
+    ? '.github/pull_request_template.md'
+    : 'docs/workflow/jules-review-template.md';
+  const rules = fs.readFileSync(rulesPath, 'utf8');
+
+  if (!diff.trim()) {
+    console.log('No code changes detected to review.');
+    process.exit(0);
+  }
+
+  // 3. Construct Google Gemini API payload
+  const promptText = `You are Jules, a strict code reviewer. Review this code diff based on the following rules:\n\nRULES:\n${rules}\n\nGIT DIFF:\n${diff}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=${apiKey.trim()}`;
+  const payload = { contents: [{ parts: [{ text: promptText }] }] };
+
+  // 4. Execute the call
+  console.log('Sending diff to Google Gemini API...');
+  fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.error) {
+        console.error('❌ API Error:', data.error.message);
+        process.exit(1);
+      }
+
+      const candidate = Array.isArray(data.candidates) ? data.candidates[0] : null;
+      const content = candidate?.content;
+      const part = Array.isArray(content?.parts) ? content.parts[0] : null;
+      const rawReviewText = typeof part?.text === 'string' ? part.text : null;
+
+      if (!candidate || !content || !part || !rawReviewText) {
+        console.error('❌ Invalid Gemini response: missing candidates[0].content.parts[0].text.');
+        process.exit(1);
+      }
+
+      const timestamp = new Date().toLocaleString();
+      const formattedReport = `# Jules Code Review\n**Generated:** ${timestamp}\n\n${rawReviewText}`;
+
+      fs.writeFileSync('docs/workflow/jules-report.md', formattedReport);
+      console.log('✅ Jules review complete. Saved to docs/workflow/jules-report.md');
+    })
+    .catch((err) => {
+      console.error('❌ Fetch failed:', err);
+      process.exit(1);
+    });
+} catch (error) {
+  console.error('❌ Execution failed:', error.message);
+  process.exit(1);
+}
+```
+
 ## File: src/components/ContactModal.tsx
 ```typescript
 import React, { useEffect } from 'react';
@@ -3618,95 +3672,6 @@ const ResumeView: React.FC = () => {
 export default ResumeView;
 ```
 
-## File: package.json
-```json
-{
-  "name": "kyle-semple-portfolio",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc --project tsconfig.json && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "typecheck": "tsc --noEmit --project tsconfig.json",
-    "test": "vitest",
-    "serve": "tsx server/index.ts",
-    "dev:full": "concurrently \"npm run dev\" \"npm run serve\"",
-    "generate:crawler-html": "node scripts/generate-crawler-html.mjs",
-    "validate:crawler": "node scripts/validate-crawler.mjs",
-    "build:crawler": "npm run build && npm run generate:crawler-html",
-    "validate:phase": "node scripts/validate-phase.mjs",
-    "fix:format": "npm run format && npm run format:check",
-    "sync:architect": "repomix --config repomix.architect.config.json",
-    "defense:codex": "node scripts/run-appellate-defense.mjs",
-    "review:jules": "node scripts/run-jules-review.mjs",
-    "docs:generate": "node scripts/run-documentation.mjs",
-    "resolve:coach": "node scripts/run-resolution.mjs"
-  },
-  "dependencies": {
-    "@google/genai": "^1.0.0",
-    "dompurify": "^3.4.1",
-    "dotenv": "^16.5.0",
-    "express": "^5.2.1",
-    "helmet": "^8.1.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-markdown": "^9.0.1",
-    "react-router-dom": "^7.14.0",
-    "remark-gfm": "^4.0.1"
-  },
-  "devDependencies": {
-    "@tailwindcss/typography": "^0.5.10",
-    "@testing-library/dom": "^10.4.1",
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.2",
-    "@testing-library/user-event": "^14.6.1",
-    "@types/dompurify": "^3.0.5",
-    "@types/express": "^5.0.6",
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
-    "@types/supertest": "^7.2.0",
-    "@typescript-eslint/eslint-plugin": "^7.2.0",
-    "@typescript-eslint/parser": "^7.2.0",
-    "@vitejs/plugin-react": "^4.2.1",
-    "@vitest/ui": "^3.1.1",
-    "autoprefixer": "^10.4.19",
-    "concurrently": "^9.2.1",
-    "eslint": "^8.57.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.6",
-    "jsdom": "^29.0.2",
-    "postcss": "^8.4.38",
-    "prettier": "^3.2.5",
-    "repomix": "^1.14.0",
-    "supertest": "^7.2.2",
-    "tailwindcss": "^3.4.3",
-    "tsx": "^4.21.0",
-    "typescript": "^5.2.2",
-    "vite": "^5.2.0",
-    "vitest": "^3.1.1"
-  },
-  "prettier": {
-    "printWidth": 100,
-    "tabWidth": 2,
-    "useTabs": false,
-    "semi": true,
-    "singleQuote": true,
-    "jsxSingleQuote": false,
-    "trailingComma": "all",
-    "bracketSpacing": true,
-    "bracketSameLine": false,
-    "arrowParens": "always",
-    "endOfLine": "lf",
-    "proseWrap": "preserve"
-  }
-}
-```
-
 ## File: scripts/validate-crawler.mjs
 ```javascript
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
@@ -4003,6 +3968,200 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({ onNavigate, onAction })
 };
 
 export default CommandPalette;
+```
+
+## File: src/components/MarkdownSection.tsx
+```typescript
+import React, { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { proseTheme } from '../lib/design-system';
+
+interface MarkdownSectionProps {
+  content: string;
+  isLoading?: boolean;
+  imageBasePath?: string;
+}
+
+export const CodeBlock: React.FC<{ children: React.ReactNode; className?: string }> = ({
+  children,
+  className,
+}) => {
+  const [copied, setCopied] = useState(false);
+  const codeContent = React.Children.toArray(children).join('').trim();
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(codeContent);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div className="relative group/code my-8">
+      <div className="absolute top-0 right-0 p-3 flex items-center gap-2 z-10 opacity-0 group-hover/code:opacity-100 transition-opacity">
+        <span className="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded border border-black/5 dark:border-white/5 uppercase tracking-widest">
+          Snippet
+        </span>
+        <button
+          onClick={handleCopy}
+          className="p-1.5 rounded-lg bg-white/80 dark:bg-slate-800/90 border border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 transition-all hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-ink-navy dark:hover:text-white shadow-sm"
+          aria-label="Copy code to clipboard"
+        >
+          {copied ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-4 h-4 text-green-600 dark:text-green-400"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-4 h-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+            </svg>
+          )}
+        </button>
+      </div>
+      <pre
+        className={`rounded-2xl overflow-x-auto bg-slate-50 dark:bg-slate-950/85 p-5 pt-12 border border-slate-200 dark:border-tide-cyan/40 text-slate-900 dark:text-ink-border font-mono text-sm leading-relaxed shadow-sm dark:shadow-[0_0_20px_rgba(57,184,188,0.08)] transition-all duration-300 group-hover/code:dark:border-tide-cyan/60 ${className}`}
+      >
+        {children}
+      </pre>
+    </div>
+  );
+};
+
+const MarkdownSection: React.FC<MarkdownSectionProps> = ({
+  content,
+  isLoading = false,
+  imageBasePath,
+}) => {
+  if (isLoading) {
+    return (
+      <div className="glass-card p-12 rounded-3xl animate-pulse" role="status">
+        <div className="h-8 bg-slate-100 dark:bg-slate-800 rounded w-1/3 mb-6"></div>
+        <div className="space-y-3">
+          <div className="h-4 bg-slate-100 dark:bg-slate-800 rounded w-full"></div>
+          <div className="h-4 bg-slate-100 dark:bg-slate-800 rounded w-5/6"></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!content) return null;
+
+  const transformUrl = (url: string) => {
+    if (url.startsWith('http') || url.startsWith('/') || url.startsWith('#')) return url;
+    if (imageBasePath) {
+      const cleanBase = imageBasePath.endsWith('/') ? imageBasePath : `${imageBasePath}/`;
+      return `${cleanBase}${url}`;
+    }
+    return url;
+  };
+
+  return (
+    <div className="relative group">
+      <div
+        className="absolute -inset-1 bg-gradient-to-r from-tide-aqua/5 to-tide-aqua/5 blur-xl opacity-75 rounded-3xl dark:opacity-75"
+        aria-hidden="true"
+      ></div>
+
+      <div className="relative glass-card p-8 md:p-12 rounded-3xl border border-black/5 dark:border-white/10 transition-colors duration-500">
+        <div className={proseTheme.container}>
+          <ReactMarkdown
+            urlTransform={transformUrl}
+            remarkPlugins={[remarkGfm]}
+            components={{
+              h1: ({ node: _node, ...props }) => (
+                <h1 {...props} className="font-outfit font-bold text-ink-navy dark:text-white" />
+              ),
+              h2: ({ node: _node, ...props }) => (
+                <h2
+                  {...props}
+                  className="font-outfit font-bold text-ink-navy dark:text-white mt-12 mb-6"
+                />
+              ),
+              h3: ({ node: _node, ...props }) => (
+                <h3
+                  {...props}
+                  className="font-outfit font-bold text-ink-navy dark:text-white mt-8 mb-4"
+                />
+              ),
+              pre: ({ node: _node, children, className }) => (
+                <CodeBlock className={className}>{children}</CodeBlock>
+              ),
+              img: ({ node: _node, ...props }) => (
+                <span className="block my-10 relative">
+                  <img
+                    {...props}
+                    loading="lazy"
+                    className="rounded-2xl shadow-2xl border border-black/5 dark:border-white/10 w-full h-auto"
+                    alt={props.alt || 'Case study visual'}
+                  />
+                </span>
+              ),
+              a: ({ node: _node, ...props }) => <a {...props} className={proseTheme.link} />,
+              blockquote: ({ node: _node, ...props }) => (
+                <blockquote
+                  {...props}
+                  className="not-italic rounded-xl bg-tide-softBlue/20 dark:bg-tide-cyan/15 px-6 py-4 text-slate-700 dark:text-ink-border border-0 my-8"
+                />
+              ),
+              table: ({ node: _node, ...props }) => (
+                <div className="my-12 overflow-x-auto rounded-3xl border border-tide-aqua/10 dark:border-white/10 bg-white/50 dark:bg-white/5 shadow-2xl shadow-tide-aqua/5 ring-1 ring-black/5 dark:ring-white/5">
+                  <table {...props} className="w-full text-left border-collapse table-fixed" />
+                </div>
+              ),
+              thead: ({ node: _node, ...props }) => (
+                <thead
+                  {...props}
+                  className="bg-slate-50/80 dark:bg-white/5 border-b border-black/5 dark:border-white/10"
+                />
+              ),
+              th: ({ node: _node, ...props }) => (
+                <th
+                  {...props}
+                  className="p-5 text-[10px] font-bold uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400 font-outfit"
+                />
+              ),
+              td: ({ node: _node, ...props }) => (
+                <td
+                  {...props}
+                  className="p-5 text-sm text-slate-600 dark:text-slate-300 border-b border-black/5 dark:border-white/5 last:border-0 align-top"
+                />
+              ),
+              tr: ({ node: _node, ...props }) => (
+                <tr
+                  {...props}
+                  className="hover:bg-tide-aqua/[0.02] dark:hover:bg-tide-aqua/[0.04] transition-colors"
+                />
+              ),
+            }}
+          >
+            {content}
+          </ReactMarkdown>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default MarkdownSection;
 ```
 
 ## File: src/data/caseStudyData.ts
@@ -4474,21 +4633,16 @@ import { PORTFOLIO_PROCESS_HREF, SITE_INDEX_HREF } from '../lib/routes';
 import {
   PROJECT_FILTERS,
   ProjectFilter,
-  ProjectRoleLane,
   getFeaturedProjects,
   getSupportingProjects,
 } from '../data/projectMetadata';
+import type { RecruiterRoleLane } from '../types';
 
-const roleLabel: Record<ProjectRoleLane, string> = {
-  Implementation: 'Technical Implementation Specialist',
-  QA: 'Quality Assurance Analyst',
-  GIS: 'GIS Analyst',
-};
-
-const roleStyles: Record<ProjectRoleLane, string> = {
-  Implementation: 'border-tide-aqua/30 bg-tide-aqua/10 text-[#237f86]',
-  QA: 'border-blue-200 bg-tide-blue/10 text-blue-800',
-  GIS: 'border-cyan-200 bg-cyan-50 text-cyan-800',
+const roleStyles: Record<RecruiterRoleLane, string> = {
+  'Implementation / CSE-lite': 'border-tide-aqua/30 bg-tide-aqua/10 text-[#237f86]',
+  'Ops Analytics / QA': 'border-blue-200 bg-tide-blue/10 text-blue-800',
+  'GIS / Spatial Systems': 'border-cyan-200 bg-cyan-50 text-cyan-800',
+  'AI Workflow / Portfolio Governance': 'border-slate-300 bg-slate-100 text-slate-700',
 };
 
 const ProjectsIndexView: React.FC = () => {
@@ -4551,12 +4705,12 @@ const ProjectsIndexView: React.FC = () => {
                   {project.shortSummary}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {project.roleLanes.map((role) => (
+                  {project.canonicalRoleLanes.map((role) => (
                     <span
                       key={role}
                       className={`text-[11px] px-2 py-0.5 rounded border ${roleStyles[role]}`}
                     >
-                      {roleLabel[role]}
+                      {role}
                     </span>
                   ))}
                 </div>
@@ -4618,12 +4772,12 @@ const ProjectsIndexView: React.FC = () => {
                   {project.shortSummary}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-1.5">
-                  {project.roleLanes.map((role) => (
+                  {project.canonicalRoleLanes.map((role) => (
                     <span
                       key={role}
                       className={`text-[11px] px-2 py-0.5 rounded border ${roleStyles[role]}`}
                     >
-                      {roleLabel[role]}
+                      {role}
                     </span>
                   ))}
                 </div>
@@ -4664,198 +4818,96 @@ const ProjectsIndexView: React.FC = () => {
 export default ProjectsIndexView;
 ```
 
-## File: src/components/MarkdownSection.tsx
-```typescript
-import React, { useState } from 'react';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import { proseTheme } from '../lib/design-system';
-
-interface MarkdownSectionProps {
-  content: string;
-  isLoading?: boolean;
-  imageBasePath?: string;
-}
-
-export const CodeBlock: React.FC<{ children: React.ReactNode; className?: string }> = ({
-  children,
-  className,
-}) => {
-  const [copied, setCopied] = useState(false);
-  const codeContent = React.Children.toArray(children).join('').trim();
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(codeContent);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  return (
-    <div className="relative group/code my-8">
-      <div className="absolute top-0 right-0 p-3 flex items-center gap-2 z-10 opacity-0 group-hover/code:opacity-100 transition-opacity">
-        <span className="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded border border-black/5 dark:border-white/5 uppercase tracking-widest">
-          Snippet
-        </span>
-        <button
-          onClick={handleCopy}
-          className="p-1.5 rounded-lg bg-white/80 dark:bg-slate-800/90 border border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 transition-all hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-ink-navy dark:hover:text-white shadow-sm"
-          aria-label="Copy code to clipboard"
-        >
-          {copied ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-4 h-4 text-green-600 dark:text-green-400"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-4 h-4"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
-              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
-            </svg>
-          )}
-        </button>
-      </div>
-      <pre
-        className={`rounded-2xl overflow-x-auto bg-slate-50 dark:bg-slate-950/85 p-5 pt-12 border border-slate-200 dark:border-tide-cyan/40 text-slate-900 dark:text-ink-border font-mono text-sm leading-relaxed shadow-sm dark:shadow-[0_0_20px_rgba(57,184,188,0.08)] transition-all duration-300 group-hover/code:dark:border-tide-cyan/60 ${className}`}
-      >
-        {children}
-      </pre>
-    </div>
-  );
-};
-
-const MarkdownSection: React.FC<MarkdownSectionProps> = ({
-  content,
-  isLoading = false,
-  imageBasePath,
-}) => {
-  if (isLoading) {
-    return (
-      <div className="glass-card p-12 rounded-3xl animate-pulse" role="status">
-        <div className="h-8 bg-slate-100 dark:bg-slate-800 rounded w-1/3 mb-6"></div>
-        <div className="space-y-3">
-          <div className="h-4 bg-slate-100 dark:bg-slate-800 rounded w-full"></div>
-          <div className="h-4 bg-slate-100 dark:bg-slate-800 rounded w-5/6"></div>
-        </div>
-      </div>
-    );
+## File: package.json
+```json
+{
+  "name": "kyle-semple-portfolio",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --project tsconfig.json && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit --project tsconfig.json",
+    "test": "vitest",
+    "serve": "tsx server/index.ts",
+    "dev:full": "concurrently \"npm run dev\" \"npm run serve\"",
+    "generate:crawler-html": "node scripts/generate-crawler-html.mjs",
+    "validate:crawler": "node scripts/validate-crawler.mjs",
+    "build:crawler": "npm run build && npm run generate:crawler-html",
+    "validate:phase": "node scripts/validate-phase.mjs",
+    "fix:format": "npm run format && npm run format:check",
+    "sync:architect": "repomix --config repomix.architect.config.json",
+    "defense:codex": "node scripts/run-appellate-defense.mjs",
+    "review:jules": "node scripts/run-jules-review.mjs",
+    "docs:generate": "node scripts/run-documentation.mjs",
+    "resolve:coach": "node scripts/run-resolution.mjs"
+  },
+  "dependencies": {
+    "@google/genai": "^1.0.0",
+    "dompurify": "^3.4.1",
+    "dotenv": "^16.5.0",
+    "express": "^5.2.1",
+    "helmet": "^8.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-markdown": "^9.0.1",
+    "react-router-dom": "^7.14.0",
+    "remark-gfm": "^4.0.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.10",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/dompurify": "^3.0.5",
+    "@types/express": "^5.0.6",
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
+    "@types/supertest": "^7.2.0",
+    "@typescript-eslint/eslint-plugin": "^7.2.0",
+    "@typescript-eslint/parser": "^7.2.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "@vitest/ui": "^3.1.1",
+    "autoprefixer": "^10.4.19",
+    "concurrently": "^9.2.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.6",
+    "jsdom": "^29.0.2",
+    "postcss": "^8.4.38",
+    "prettier": "^3.2.5",
+    "repomix": "^1.14.0",
+    "supertest": "^7.2.2",
+    "tailwindcss": "^3.4.3",
+    "tsx": "^4.21.0",
+    "typescript": "^5.2.2",
+    "vite": "^5.2.0",
+    "vitest": "^3.1.1"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "tabWidth": 2,
+    "useTabs": false,
+    "semi": true,
+    "singleQuote": true,
+    "jsxSingleQuote": false,
+    "trailingComma": "all",
+    "bracketSpacing": true,
+    "bracketSameLine": false,
+    "arrowParens": "always",
+    "endOfLine": "lf",
+    "proseWrap": "preserve"
   }
-
-  if (!content) return null;
-
-  const transformUrl = (url: string) => {
-    if (url.startsWith('http') || url.startsWith('/') || url.startsWith('#')) return url;
-    if (imageBasePath) {
-      const cleanBase = imageBasePath.endsWith('/') ? imageBasePath : `${imageBasePath}/`;
-      return `${cleanBase}${url}`;
-    }
-    return url;
-  };
-
-  return (
-    <div className="relative group">
-      <div
-        className="absolute -inset-1 bg-gradient-to-r from-tide-aqua/5 to-tide-aqua/5 blur-xl opacity-75 rounded-3xl dark:opacity-75"
-        aria-hidden="true"
-      ></div>
-
-      <div className="relative glass-card p-8 md:p-12 rounded-3xl border border-black/5 dark:border-white/10 transition-colors duration-500">
-        <div className={proseTheme.container}>
-          <ReactMarkdown
-            urlTransform={transformUrl}
-            remarkPlugins={[remarkGfm]}
-            components={{
-              h1: ({ node: _node, ...props }) => (
-                <h1 {...props} className="font-outfit font-bold text-ink-navy dark:text-white" />
-              ),
-              h2: ({ node: _node, ...props }) => (
-                <h2
-                  {...props}
-                  className="font-outfit font-bold text-ink-navy dark:text-white mt-12 mb-6"
-                />
-              ),
-              h3: ({ node: _node, ...props }) => (
-                <h3
-                  {...props}
-                  className="font-outfit font-bold text-ink-navy dark:text-white mt-8 mb-4"
-                />
-              ),
-              pre: ({ node: _node, children, className }) => (
-                <CodeBlock className={className}>{children}</CodeBlock>
-              ),
-              img: ({ node: _node, ...props }) => (
-                <span className="block my-10 relative">
-                  <img
-                    {...props}
-                    loading="lazy"
-                    className="rounded-2xl shadow-2xl border border-black/5 dark:border-white/10 w-full h-auto"
-                    alt={props.alt || 'Case study visual'}
-                  />
-                </span>
-              ),
-              a: ({ node: _node, ...props }) => <a {...props} className={proseTheme.link} />,
-              blockquote: ({ node: _node, ...props }) => (
-                <blockquote
-                  {...props}
-                  className="not-italic rounded-xl bg-tide-softBlue/20 dark:bg-tide-cyan/15 px-6 py-4 text-slate-700 dark:text-ink-border border-0 my-8"
-                />
-              ),
-              table: ({ node: _node, ...props }) => (
-                <div className="my-12 overflow-x-auto rounded-3xl border border-tide-aqua/10 dark:border-white/10 bg-white/50 dark:bg-white/5 shadow-2xl shadow-tide-aqua/5 ring-1 ring-black/5 dark:ring-white/5">
-                  <table {...props} className="w-full text-left border-collapse table-fixed" />
-                </div>
-              ),
-              thead: ({ node: _node, ...props }) => (
-                <thead
-                  {...props}
-                  className="bg-slate-50/80 dark:bg-white/5 border-b border-black/5 dark:border-white/10"
-                />
-              ),
-              th: ({ node: _node, ...props }) => (
-                <th
-                  {...props}
-                  className="p-5 text-[10px] font-bold uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400 font-outfit"
-                />
-              ),
-              td: ({ node: _node, ...props }) => (
-                <td
-                  {...props}
-                  className="p-5 text-sm text-slate-600 dark:text-slate-300 border-b border-black/5 dark:border-white/5 last:border-0 align-top"
-                />
-              ),
-              tr: ({ node: _node, ...props }) => (
-                <tr
-                  {...props}
-                  className="hover:bg-tide-aqua/[0.02] dark:hover:bg-tide-aqua/[0.04] transition-colors"
-                />
-              ),
-            }}
-          >
-            {content}
-          </ReactMarkdown>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default MarkdownSection;
+}
 ```
 
 ## File: src/components/SkillDiscoveryModal.tsx
@@ -5029,286 +5081,6 @@ const SkillDiscoveryModal: React.FC<SkillDiscoveryModalProps> = ({
 };
 
 export default SkillDiscoveryModal;
-```
-
-## File: src/data/projectMetadata.ts
-```typescript
-import { PROJECT_REGISTRY } from '../constants';
-import { buildProjectHref } from '../lib/routes';
-import type { RecruiterRoleLane } from '../types';
-
-export type ProjectRoleLane = 'Implementation' | 'QA' | 'GIS';
-export type ProjectFilter = 'Implementation' | 'QA' | 'GIS' | 'AI Systems' | 'Process';
-export type ProjectHierarchy = 'featured' | 'supporting';
-export type ProjectAccent = 'aqua' | 'blue' | 'cyan' | 'gold' | 'slate';
-export type EvidenceTier = 'primary' | 'secondary' | 'supporting';
-
-export type ProjectMetadata = {
-  id: string;
-  displayTitle: string;
-  shortSummary: string;
-  hierarchy: ProjectHierarchy;
-  featuredLabel?: string;
-  statusLabel: string;
-  roleLanes: ProjectRoleLane[];
-  canonicalRoleLanes: RecruiterRoleLane[];
-  filters: ProjectFilter[];
-  proofType: string;
-  accent: ProjectAccent;
-  sortOrder: number;
-  href: string;
-  evidenceTier?: EvidenceTier;
-  flagship?: boolean;
-  showInSwitcher?: boolean;
-  switcherRank?: number;
-  caseStudyRoute?: string;
-  markdownRoute?: string;
-  crawlerRoute?: string;
-};
-
-const PROJECT_ACCENTS: readonly ProjectAccent[] = [
-  'aqua',
-  'blue',
-  'cyan',
-  'gold',
-  'slate',
-] as const;
-
-export const PROJECT_FILTERS: Array<'All' | ProjectFilter> = [
-  'All',
-  'Implementation',
-  'QA',
-  'GIS',
-  'AI Systems',
-  'Process',
-];
-
-export const PROJECT_METADATA: ProjectMetadata[] = [
-  {
-    id: 'guynode',
-    displayTitle: 'Guynode Spatial Data Hub',
-    shortSummary:
-      'Spatial data platform proof for dataset cataloging, metadata, map-preview workflows, public access, and launch-readiness review.',
-    hierarchy: 'featured',
-    featuredLabel: 'FLAGSHIP GIS SYSTEM',
-    statusLabel: 'Featured System',
-    roleLanes: ['GIS', 'Implementation', 'QA'],
-    canonicalRoleLanes: [
-      'GIS / Spatial Systems',
-      'Implementation / CSE-lite',
-      'Ops Analytics / QA',
-    ],
-    filters: ['GIS', 'Implementation', 'QA', 'Process'],
-    proofType: 'System',
-    accent: 'gold',
-    sortOrder: 1,
-    href: buildProjectHref('guynode'),
-    evidenceTier: 'primary',
-    flagship: true,
-    showInSwitcher: true,
-    switcherRank: 1,
-    caseStudyRoute: '/projects/guynode',
-    markdownRoute: '/content/projects/guynode.md',
-    crawlerRoute: '/projects/guynode/',
-  },
-  {
-    id: 'digital-twin',
-    displayTitle: 'Digital Twin AI Agent',
-    shortSummary:
-      'Portfolio-bound AI assistant with scope controls, route/action commands, cost guardrails, failure planning, and human handoff.',
-    hierarchy: 'featured',
-    featuredLabel: 'FEATURED AI IMPLEMENTATION',
-    statusLabel: 'Featured System',
-    roleLanes: ['Implementation', 'QA'],
-    canonicalRoleLanes: [
-      'AI Workflow / Portfolio Governance',
-      'Implementation / CSE-lite',
-      'Ops Analytics / QA',
-    ],
-    filters: ['Implementation', 'QA', 'AI Systems', 'Process'],
-    proofType: 'System',
-    accent: 'aqua',
-    sortOrder: 2,
-    href: buildProjectHref('digital-twin'),
-    evidenceTier: 'secondary',
-    showInSwitcher: true,
-    switcherRank: 2,
-    caseStudyRoute: '/projects/digital-twin',
-    markdownRoute: '/content/projects/digital-twin.md',
-    crawlerRoute: '/projects/digital-twin/',
-  },
-  {
-    id: 'ops-triage',
-    displayTitle: 'Ops Triage',
-    shortSummary:
-      'Operational triage system with escalation logic, throughput controls, and QA documentation loops under production pressure.',
-    hierarchy: 'supporting',
-    statusLabel: 'QA / Operations',
-    roleLanes: ['Implementation', 'QA', 'GIS'],
-    canonicalRoleLanes: ['Ops Analytics / QA', 'GIS / Spatial Systems'],
-    filters: ['Implementation', 'QA', 'GIS', 'Process'],
-    proofType: 'Workflow',
-    accent: 'blue',
-    sortOrder: 3,
-    href: buildProjectHref('ops-triage'),
-    evidenceTier: 'supporting',
-    showInSwitcher: true,
-    switcherRank: 3,
-  },
-  {
-    id: 'prompter-hub',
-    displayTitle: 'Prompter Hub',
-    shortSummary:
-      'Structured AI-assisted build and documentation workflow showing repeatable quality controls and governance standards.',
-    hierarchy: 'supporting',
-    statusLabel: 'AI Governance',
-    roleLanes: ['Implementation', 'QA'],
-    canonicalRoleLanes: [
-      'AI Workflow / Portfolio Governance',
-      'Implementation / CSE-lite',
-      'Ops Analytics / QA',
-    ],
-    filters: ['Implementation', 'QA', 'AI Systems', 'Process'],
-    proofType: 'Documentation',
-    accent: 'aqua',
-    sortOrder: 4,
-    href: buildProjectHref('prompter-hub'),
-    evidenceTier: 'supporting',
-    showInSwitcher: true,
-    switcherRank: 4,
-  },
-  {
-    id: 'project-aegis',
-    displayTitle: 'Project Aegis',
-    shortSummary:
-      'Governance framework for role-specific architecture, implementation rigor, and review discipline.',
-    hierarchy: 'supporting',
-    statusLabel: 'AI Governance',
-    roleLanes: ['Implementation', 'QA'],
-    canonicalRoleLanes: [
-      'AI Workflow / Portfolio Governance',
-      'Implementation / CSE-lite',
-      'Ops Analytics / QA',
-    ],
-    filters: ['Implementation', 'QA', 'AI Systems', 'Process'],
-    proofType: 'Governance',
-    accent: 'slate',
-    sortOrder: 5,
-    href: buildProjectHref('project-aegis'),
-    evidenceTier: 'supporting',
-    showInSwitcher: true,
-    switcherRank: 5,
-  },
-  {
-    id: 'nba-systems-qa',
-    displayTitle: 'NBA 2K Systems Analysis',
-    shortSummary:
-      'Controlled testing artifact for variable isolation, reproducible analysis, and QA decision logic in probabilistic systems.',
-    hierarchy: 'supporting',
-    statusLabel: 'Systems Testing',
-    roleLanes: ['QA'],
-    canonicalRoleLanes: ['Ops Analytics / QA'],
-    filters: ['QA', 'Process'],
-    proofType: 'Testing',
-    accent: 'blue',
-    sortOrder: 6,
-    href: buildProjectHref('nba-systems-qa'),
-    evidenceTier: 'supporting',
-    showInSwitcher: true,
-    switcherRank: 6,
-  },
-  {
-    id: 'luxe-lofts',
-    displayTitle: 'Luxe Lofts',
-    shortSummary:
-      'Proposal-phase workflow artifact mapping business process constraints into modular implementation planning.',
-    hierarchy: 'supporting',
-    statusLabel: 'Workflow Prototype',
-    roleLanes: ['Implementation'],
-    canonicalRoleLanes: ['Implementation / CSE-lite'],
-    filters: ['Implementation', 'Process'],
-    proofType: 'Workflow',
-    accent: 'slate',
-    sortOrder: 7,
-    href: buildProjectHref('luxe-lofts'),
-    evidenceTier: 'supporting',
-    showInSwitcher: true,
-    switcherRank: 7,
-  },
-];
-
-const sorted = (projects: ProjectMetadata[]) =>
-  [...projects].sort((a, b) => a.sortOrder - b.sortOrder);
-
-export const getProjectMetadata = (id: string) =>
-  PROJECT_METADATA.find((project) => project.id === id);
-export const getProjectHref = (id: string) => getProjectMetadata(id)?.href ?? buildProjectHref(id);
-export const getFeaturedProjects = () =>
-  sorted(PROJECT_METADATA.filter((project) => project.hierarchy === 'featured'));
-export const getSupportingProjects = () =>
-  sorted(PROJECT_METADATA.filter((project) => project.hierarchy === 'supporting'));
-export const getProjectsByFilter = (filter: ProjectFilter | 'All') =>
-  filter === 'All'
-    ? sorted(PROJECT_METADATA)
-    : sorted(PROJECT_METADATA.filter((project) => project.filters.includes(filter)));
-export const getProjectsByRoleLane = (roleLane: ProjectRoleLane) =>
-  sorted(PROJECT_METADATA.filter((project) => project.roleLanes.includes(roleLane)));
-
-export const validateProjectMetadataIds = () => {
-  const registryIds = new Set(PROJECT_REGISTRY.map((project) => project.id));
-  const missing = PROJECT_METADATA.filter((project) => !registryIds.has(project.id)).map(
-    (project) => project.id,
-  );
-  const duplicates = PROJECT_METADATA.map((project) => project.id).filter(
-    (id, index, arr) => arr.indexOf(id) !== index,
-  );
-  return { missing, duplicates };
-};
-
-export const validateProjectMetadataContracts = () => {
-  const ids = PROJECT_METADATA.map((project) => project.id);
-  const hrefs = PROJECT_METADATA.map((project) => project.href);
-  const invalidAccents = PROJECT_METADATA.filter(
-    (project) => !PROJECT_ACCENTS.includes(project.accent),
-  ).map((project) => project.id);
-  const invalidRoleLanes = PROJECT_METADATA.filter((project) => project.roleLanes.length === 0).map(
-    (project) => project.id,
-  );
-  const invalidCanonicalRoleLanes = PROJECT_METADATA.filter(
-    (project) => project.canonicalRoleLanes.length === 0,
-  ).map((project) => project.id);
-  const invalidFilters = PROJECT_METADATA.filter((project) => project.filters.length === 0).map(
-    (project) => project.id,
-  );
-  const duplicateHrefs = hrefs.filter((href, index, arr) => arr.indexOf(href) !== index);
-  const duplicateSortOrder = PROJECT_METADATA.map((project) => project.sortOrder).filter(
-    (sortOrder, index, arr) => arr.indexOf(sortOrder) !== index,
-  );
-  const missingHrefPrefix = PROJECT_METADATA.filter(
-    (project) => !project.href.startsWith('/projects/'),
-  ).map((project) => project.id);
-  const featuredWithoutEvidence = PROJECT_METADATA.filter(
-    (p) => p.hierarchy === 'featured' && (!p.featuredLabel || !p.evidenceTier),
-  ).map((p) => p.id);
-  const flagshipCount = PROJECT_METADATA.filter((p) => p.flagship).length;
-  const duplicateSwitcherRank = PROJECT_METADATA.filter((p) => typeof p.switcherRank === 'number')
-    .map((p) => p.switcherRank as number)
-    .filter((rank, index, arr) => arr.indexOf(rank) !== index);
-
-  return {
-    duplicateHrefs,
-    duplicateSortOrder,
-    invalidAccents,
-    invalidFilters,
-    invalidRoleLanes,
-    invalidCanonicalRoleLanes,
-    missingHrefPrefix,
-    featuredWithoutEvidence,
-    flagshipCount,
-    duplicateSwitcherRank,
-    uniqueIds: new Set(ids).size === ids.length,
-  };
-};
 ```
 
 ## File: src/types.ts
@@ -5610,6 +5382,261 @@ for (const [route, title, desc, heading, summary, links, md] of routes) {
 }
 
 console.log(`Generated ${routes.length} crawler HTML snapshots in dist/crawler/.`);
+```
+
+## File: src/components/CaseStudyComponents.tsx
+```typescript
+import React, { useState } from 'react';
+import { CaseStudyArtifact, CaseStudyRigor, ProjectEntry } from '../types';
+import { CodeBlock } from './MarkdownSection';
+import AuditLog from './AuditLog';
+
+export const RigorCard: React.FC<{ rigor: CaseStudyRigor; title?: string; className?: string }> = ({
+  rigor,
+  title,
+  className = 'mb-12',
+}) => (
+  <div
+    className={`${className} rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden relative group/rigor bg-[#f8fbfd] dark:bg-slate-900/60`}
+  >
+    <div className="absolute top-0 right-0 p-4 opacity-20 group-hover/rigor:opacity-100 transition-opacity">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-8 h-8 text-tide-aqua"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1"
+      >
+        <path d="M12 2v4" />
+        <path d="m16.2 7.8 2.9-2.9" />
+        <path d="M18 12h4" />
+        <path d="m16.2 16.2 2.9 2.9" />
+        <path d="M12 18v4" />
+        <path d="m4.9 19.1 2.9-2.9" />
+        <path d="M2 12h4" />
+        <path d="m4.9 4.9 2.9 2.9" />
+      </svg>
+    </div>
+    <div className="p-8 md:p-12 bg-slate-50 dark:bg-slate-900/70 border-b border-black/5 dark:border-white/10">
+      <div className="flex items-center gap-3 mb-2">
+        <div className="w-2 h-2 rounded-full bg-tide-aqua " />
+        <h4 className="text-[10px] font-bold text-tide-aqua dark:text-tide-softBlue uppercase tracking-[0.3em] font-outfit">
+          {title || 'Project Proof Summary'}
+        </h4>
+      </div>
+      <p className="text-navy-900 dark:text-white font-outfit text-lg font-bold leading-tight">
+        "{rigor.statement}"
+      </p>
+    </div>
+    <div className="grid sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-black/5 dark:divide-white/5">
+      {[
+        { label: 'Baseline', val: rigor.baseline },
+        { label: 'Definition', val: rigor.definition },
+        { label: 'Method', val: rigor.method },
+        { label: 'Window', val: rigor.window },
+      ].map((item, i) => (
+        <div key={i} className="p-6 md:p-8">
+          <div className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 flex items-center gap-2">
+            {item.label}
+          </div>
+          <div className="text-[13px] font-medium text-slate-700 dark:text-slate-300 leading-relaxed break-words">
+            {item.val}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+export const HtmlPreviewCard: React.FC<{
+  content: string;
+  label: string;
+  description?: string;
+  isHero?: boolean;
+  accentColor?: string;
+}> = ({ content, label, description, isHero = false, accentColor = 'indigo' }) => {
+  const handleLaunch = () => {
+    const blob = new Blob([content], { type: 'text/html' });
+    window.open(URL.createObjectURL(blob), '_blank');
+  };
+  const isRed = accentColor === 'red';
+  return (
+    <div
+      className={`rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden bg-[#f8fbfd] dark:bg-slate-900/60 ${isRed ? 'border-gild/35' : 'border-tide-aqua/25'} flex flex-col`}
+    >
+      <div className="px-8 md:px-12 py-5 bg-slate-50 dark:bg-white/5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
+        <span className="text-[11px] font-bold text-navy-900 dark:text-white font-outfit tracking-wide">
+          {label}
+        </span>
+        <span
+          className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-md border ${isRed ? 'bg-gild/15 text-gild-deep border-gild/40 dark:text-gild' : 'bg-tide-aqua/10 text-tide-softBlue border-tide-aqua/30'}`}
+        >
+          Interactive Prototype
+        </span>
+      </div>
+      <div
+        className={`relative ${isHero ? 'h-[500px]' : 'h-96'} bg-slate-100 dark:bg-slate-900 w-full overflow-hidden cursor-pointer group/preview`}
+        onClick={handleLaunch}
+      >
+        <iframe
+          srcDoc={content}
+          title={label}
+          className="w-[200%] h-[200%] transform scale-50 origin-top-left pointer-events-none opacity-60 transition-all duration-500 group-hover/preview:opacity-100 group-hover/preview:scale-[0.51]"
+          tabIndex={-1}
+        />
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/40 dark:bg-black/60 opacity-0 group-hover/preview:opacity-100 transition-opacity backdrop-blur-sm">
+          <button className="bg-white dark:bg-slate-800 text-navy-900 dark:text-white px-8 py-3.5 rounded-full text-[13px] font-bold shadow-2xl flex items-center gap-3">
+            Launch Prototype
+          </button>
+        </div>
+      </div>
+      {description && (
+        <div className="p-8 md:p-12 bg-slate-50/50 dark:bg-black/20 text-[11px] text-slate-500 leading-relaxed italic border-t border-black/5">
+          {description}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export const TabsArtifact: React.FC<{ artifacts: CaseStudyArtifact[] }> = ({ artifacts }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeArt = artifacts[activeIndex];
+
+  return (
+    <div className="rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden bg-[#f8fbfd] dark:bg-slate-900/60">
+      <div className="px-4 py-2 bg-slate-50 dark:bg-white/5 border-b border-black/5 dark:border-white/10 flex gap-1 overflow-x-auto scrollbar-hide">
+        {artifacts.map((art, i) => (
+          <button
+            key={i}
+            onClick={() => setActiveIndex(i)}
+            className={`px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${
+              i === activeIndex
+                ? 'bg-slate-900 text-white'
+                : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-white/5'
+            }`}
+          >
+            {art.label}
+          </button>
+        ))}
+      </div>
+      <div className="p-0">
+        {activeArt.type === 'audit-log' && activeArt.auditData ? (
+          <AuditLog data={activeArt.auditData} />
+        ) : activeArt.type === 'code' ? (
+          <div className="max-h-[400px] overflow-y-auto chat-scroll">
+            <CodeBlock className="my-0 rounded-none border-0 pt-8 px-8 md:px-12">
+              {activeArt.content as string}
+            </CodeBlock>
+          </div>
+        ) : (
+          <div className="p-8 md:p-12 text-sm text-slate-500 italic">
+            Preview not available for this tab type.
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export const ArtifactGallery: React.FC<{
+  artifacts: Exclude<ProjectEntry['artifacts'], undefined>;
+}> = ({ artifacts }) => (
+  <div className="space-y-8 my-16">
+    <div className="flex items-center gap-4">
+      <div className="w-2 h-2 rounded-full bg-slate-400" />
+      <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] font-outfit">
+        Project Artifact Library
+      </h4>
+      <div className="h-px w-full bg-black/5 dark:bg-white/5" />
+    </div>
+    <div className="grid gap-10">
+      {artifacts.map((art, i) => (
+        <div key={i} className="min-w-0">
+          {art.type === 'html' ? (
+            <HtmlPreviewCard
+              content={art.content as string}
+              label={art.label}
+              description={art.description}
+            />
+          ) : art.type === 'insight' && art.data ? (
+            <div className="space-y-2">
+              <RigorCard rigor={art.data} title={art.label.toUpperCase()} className="mb-0" />
+            </div>
+          ) : art.type === 'audit-log' && art.auditData ? (
+            <div className="rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden bg-[#f8fbfd] dark:bg-slate-900/60">
+              <AuditLog data={art.auditData} />
+            </div>
+          ) : art.type === 'tabs' && Array.isArray(art.content) ? (
+            <TabsArtifact artifacts={art.content as CaseStudyArtifact[]} />
+          ) : (
+            <div className="rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden bg-[#f8fbfd] dark:bg-slate-900/60">
+              <div className="px-8 md:px-12 py-5 bg-slate-50 dark:bg-white/5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
+                <span className="text-[11px] font-bold text-navy-900 dark:text-white font-outfit tracking-wide">
+                  {art.label}
+                </span>
+                <span className="text-[10px] uppercase font-bold px-2 py-0.5 bg-tide-aqua/10 text-tide-softBlue rounded-md">
+                  {art.type}
+                </span>
+              </div>
+              <div className="p-0">
+                {art.type === 'code' ? (
+                  <div className="max-h-[400px] overflow-y-auto chat-scroll">
+                    <CodeBlock className="my-0 rounded-none border-0 pt-8 px-8 md:px-12">
+                      {art.content as string}
+                    </CodeBlock>
+                  </div>
+                ) : null}
+              </div>
+              {art.description && (
+                <div className="p-8 md:p-12 bg-slate-50/50 dark:bg-black/20 text-[11px] text-slate-500 leading-relaxed italic border-t border-black/5">
+                  {art.description}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+export const TradeoffLog: React.FC<{
+  constraints: Exclude<ProjectEntry['constraints'], undefined>;
+}> = ({ constraints }) => (
+  <div className="my-16 space-y-8">
+    <div className="flex items-center gap-4">
+      <div className="w-2 h-2 rounded-full bg-slate-400" />
+      <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] font-outfit">
+        Decision Journal
+      </h4>
+      <div className="h-px w-full bg-black/5 dark:bg-white/5" />
+    </div>
+    <div className="grid gap-4">
+      {constraints.map((c, i) => (
+        <div key={i} className="grid md:grid-cols-2 gap-4">
+          <div className="p-6 rounded-3xl bg-white dark:bg-slate-900/50 border border-slate-200 shadow-sm">
+            <div className="text-[10px] font-bold text-tide-blue uppercase tracking-widest mb-3 font-outfit">
+              The Constraint
+            </div>
+            <p className="text-[13px] font-medium text-slate-700 dark:text-slate-300">
+              {c.problem}
+            </p>
+          </div>
+          <div className="p-6 rounded-3xl bg-[#fcfbf9] dark:bg-slate-900/50 border border-slate-200 dark:border-white/10 shadow-sm">
+            <div className="text-[10px] font-bold text-tide-cyan uppercase tracking-widest mb-3 font-outfit">
+              The Operational Choice
+            </div>
+            <p className="text-[13px] font-medium text-slate-700 dark:text-slate-300">
+              {c.tradeoff}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
 ```
 
 ## File: src/components/home/FlagshipSystemSection.tsx
@@ -6086,259 +6113,284 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ theme, toggleTheme, onOpenConta
 export default SidebarNav;
 ```
 
-## File: src/components/CaseStudyComponents.tsx
+## File: src/data/projectMetadata.ts
 ```typescript
-import React, { useState } from 'react';
-import { CaseStudyArtifact, CaseStudyRigor, ProjectEntry } from '../types';
-import { CodeBlock } from './MarkdownSection';
-import AuditLog from './AuditLog';
+import { PROJECT_REGISTRY } from '../constants';
+import { buildProjectHref } from '../lib/routes';
+import type { RecruiterRoleLane } from '../types';
 
-export const RigorCard: React.FC<{ rigor: CaseStudyRigor; title?: string; className?: string }> = ({
-  rigor,
-  title,
-  className = 'mb-12',
-}) => (
-  <div
-    className={`${className} rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden relative group/rigor bg-[#f8fbfd] dark:bg-slate-900/60`}
-  >
-    <div className="absolute top-0 right-0 p-4 opacity-20 group-hover/rigor:opacity-100 transition-opacity">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="w-8 h-8 text-tide-aqua"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1"
-      >
-        <path d="M12 2v4" />
-        <path d="m16.2 7.8 2.9-2.9" />
-        <path d="M18 12h4" />
-        <path d="m16.2 16.2 2.9 2.9" />
-        <path d="M12 18v4" />
-        <path d="m4.9 19.1 2.9-2.9" />
-        <path d="M2 12h4" />
-        <path d="m4.9 4.9 2.9 2.9" />
-      </svg>
-    </div>
-    <div className="p-8 md:p-12 bg-slate-50 dark:bg-slate-900/70 border-b border-black/5 dark:border-white/10">
-      <div className="flex items-center gap-3 mb-2">
-        <div className="w-2 h-2 rounded-full bg-tide-aqua " />
-        <h4 className="text-[10px] font-bold text-tide-aqua dark:text-tide-softBlue uppercase tracking-[0.3em] font-outfit">
-          {title || 'Project Proof Summary'}
-        </h4>
-      </div>
-      <p className="text-navy-900 dark:text-white font-outfit text-lg font-bold leading-tight">
-        "{rigor.statement}"
-      </p>
-    </div>
-    <div className="grid sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-black/5 dark:divide-white/5">
-      {[
-        { label: 'Baseline', val: rigor.baseline },
-        { label: 'Definition', val: rigor.definition },
-        { label: 'Method', val: rigor.method },
-        { label: 'Window', val: rigor.window },
-      ].map((item, i) => (
-        <div key={i} className="p-6 md:p-8">
-          <div className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 flex items-center gap-2">
-            {item.label}
-          </div>
-          <div className="text-[13px] font-medium text-slate-700 dark:text-slate-300 leading-relaxed break-words">
-            {item.val}
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-);
+export type ProjectRoleLane = 'Implementation' | 'QA' | 'GIS';
+export type ProjectFilter = 'Implementation' | 'QA' | 'GIS' | 'AI Systems' | 'Process';
+export type ProjectHierarchy = 'featured' | 'supporting';
+export type ProjectAccent = 'aqua' | 'blue' | 'cyan' | 'gold' | 'slate';
+export type EvidenceTier = 'primary' | 'secondary' | 'supporting';
 
-export const HtmlPreviewCard: React.FC<{
-  content: string;
-  label: string;
-  description?: string;
-  isHero?: boolean;
-  accentColor?: string;
-}> = ({ content, label, description, isHero = false, accentColor = 'indigo' }) => {
-  const handleLaunch = () => {
-    const blob = new Blob([content], { type: 'text/html' });
-    window.open(URL.createObjectURL(blob), '_blank');
+export type ProjectMetadata = {
+  id: string;
+  displayTitle: string;
+  shortSummary: string;
+  hierarchy: ProjectHierarchy;
+  featuredLabel?: string;
+  statusLabel: string;
+  roleLanes: ProjectRoleLane[];
+  canonicalRoleLanes: RecruiterRoleLane[];
+  filters: ProjectFilter[];
+  proofType: string;
+  accent: ProjectAccent;
+  sortOrder: number;
+  href: string;
+  evidenceTier?: EvidenceTier;
+  flagship?: boolean;
+  showInSwitcher?: boolean;
+  switcherRank?: number;
+  caseStudyRoute?: string;
+  markdownRoute?: string;
+  crawlerRoute?: string;
+};
+
+const PROJECT_ACCENTS: readonly ProjectAccent[] = [
+  'aqua',
+  'blue',
+  'cyan',
+  'gold',
+  'slate',
+] as const;
+
+export const PROJECT_FILTERS: Array<'All' | ProjectFilter> = [
+  'All',
+  'Implementation',
+  'QA',
+  'GIS',
+  'AI Systems',
+  'Process',
+];
+
+export const PROJECT_METADATA: ProjectMetadata[] = [
+  {
+    id: 'guynode',
+    displayTitle: 'Guynode Spatial Data Hub',
+    shortSummary:
+      'Spatial data platform proof for dataset cataloging, metadata, map-preview workflows, public access, and launch-readiness review.',
+    hierarchy: 'featured',
+    featuredLabel: 'FLAGSHIP GIS SYSTEM',
+    statusLabel: 'Featured System',
+    roleLanes: ['GIS', 'Implementation', 'QA'],
+    canonicalRoleLanes: [
+      'GIS / Spatial Systems',
+      'Implementation / CSE-lite',
+      'Ops Analytics / QA',
+    ],
+    filters: ['GIS', 'Implementation', 'QA', 'Process'],
+    proofType: 'System',
+    accent: 'gold',
+    sortOrder: 1,
+    href: buildProjectHref('guynode'),
+    evidenceTier: 'primary',
+    flagship: true,
+    showInSwitcher: true,
+    switcherRank: 1,
+    caseStudyRoute: '/projects/guynode',
+    markdownRoute: '/content/projects/guynode.md',
+    crawlerRoute: '/projects/guynode/',
+  },
+  {
+    id: 'digital-twin',
+    displayTitle: 'Digital Twin AI Agent',
+    shortSummary:
+      'Portfolio-bound AI assistant with scope controls, route/action commands, cost guardrails, failure planning, and human handoff.',
+    hierarchy: 'featured',
+    featuredLabel: 'FEATURED AI IMPLEMENTATION',
+    statusLabel: 'Featured System',
+    roleLanes: ['Implementation', 'QA'],
+    canonicalRoleLanes: [
+      'AI Workflow / Portfolio Governance',
+      'Implementation / CSE-lite',
+      'Ops Analytics / QA',
+    ],
+    filters: ['Implementation', 'QA', 'AI Systems', 'Process'],
+    proofType: 'System',
+    accent: 'aqua',
+    sortOrder: 2,
+    href: buildProjectHref('digital-twin'),
+    evidenceTier: 'secondary',
+    showInSwitcher: true,
+    switcherRank: 2,
+    caseStudyRoute: '/projects/digital-twin',
+    markdownRoute: '/content/projects/digital-twin.md',
+    crawlerRoute: '/projects/digital-twin/',
+  },
+  {
+    id: 'ops-triage',
+    displayTitle: 'Ops Triage',
+    shortSummary:
+      'Operational triage system with escalation logic, throughput controls, and QA documentation loops under production pressure.',
+    hierarchy: 'supporting',
+    statusLabel: 'QA / Operations',
+    roleLanes: ['Implementation', 'QA', 'GIS'],
+    canonicalRoleLanes: ['Ops Analytics / QA', 'GIS / Spatial Systems'],
+    filters: ['Implementation', 'QA', 'GIS', 'Process'],
+    proofType: 'Workflow',
+    accent: 'blue',
+    sortOrder: 3,
+    href: buildProjectHref('ops-triage'),
+    evidenceTier: 'supporting',
+    showInSwitcher: true,
+    switcherRank: 3,
+  },
+  {
+    id: 'prompter-hub',
+    displayTitle: 'Prompter Hub',
+    shortSummary:
+      'Structured AI-assisted build and documentation workflow showing repeatable quality controls and governance standards.',
+    hierarchy: 'supporting',
+    statusLabel: 'AI Governance',
+    roleLanes: ['Implementation', 'QA'],
+    canonicalRoleLanes: [
+      'AI Workflow / Portfolio Governance',
+      'Implementation / CSE-lite',
+      'Ops Analytics / QA',
+    ],
+    filters: ['Implementation', 'QA', 'AI Systems', 'Process'],
+    proofType: 'Documentation',
+    accent: 'aqua',
+    sortOrder: 4,
+    href: buildProjectHref('prompter-hub'),
+    evidenceTier: 'supporting',
+    showInSwitcher: true,
+    switcherRank: 4,
+  },
+  {
+    id: 'project-aegis',
+    displayTitle: 'Project Aegis',
+    shortSummary:
+      'Governance framework for role-specific architecture, implementation rigor, and review discipline.',
+    hierarchy: 'supporting',
+    statusLabel: 'AI Governance',
+    roleLanes: ['Implementation', 'QA'],
+    canonicalRoleLanes: [
+      'AI Workflow / Portfolio Governance',
+      'Implementation / CSE-lite',
+      'Ops Analytics / QA',
+    ],
+    filters: ['Implementation', 'QA', 'AI Systems', 'Process'],
+    proofType: 'Governance',
+    accent: 'slate',
+    sortOrder: 5,
+    href: buildProjectHref('project-aegis'),
+    evidenceTier: 'supporting',
+    showInSwitcher: true,
+    switcherRank: 5,
+  },
+  {
+    id: 'nba-systems-qa',
+    displayTitle: 'NBA 2K Systems Analysis',
+    shortSummary:
+      'Controlled testing artifact for variable isolation, reproducible analysis, and QA decision logic in probabilistic systems.',
+    hierarchy: 'supporting',
+    statusLabel: 'Systems Testing',
+    roleLanes: ['QA'],
+    canonicalRoleLanes: ['Ops Analytics / QA'],
+    filters: ['QA', 'Process'],
+    proofType: 'Testing',
+    accent: 'blue',
+    sortOrder: 6,
+    href: buildProjectHref('nba-systems-qa'),
+    evidenceTier: 'supporting',
+    showInSwitcher: true,
+    switcherRank: 6,
+  },
+  {
+    id: 'luxe-lofts',
+    displayTitle: 'Luxe Lofts',
+    shortSummary:
+      'Proposal-phase workflow artifact mapping business process constraints into modular implementation planning.',
+    hierarchy: 'supporting',
+    statusLabel: 'Workflow Prototype',
+    roleLanes: ['Implementation'],
+    canonicalRoleLanes: ['Implementation / CSE-lite'],
+    filters: ['Implementation', 'Process'],
+    proofType: 'Workflow',
+    accent: 'slate',
+    sortOrder: 7,
+    href: buildProjectHref('luxe-lofts'),
+    evidenceTier: 'supporting',
+    showInSwitcher: true,
+    switcherRank: 7,
+  },
+];
+
+const sorted = (projects: ProjectMetadata[]) =>
+  [...projects].sort((a, b) => a.sortOrder - b.sortOrder);
+
+export const getProjectMetadata = (id: string) =>
+  PROJECT_METADATA.find((project) => project.id === id);
+export const getProjectHref = (id: string) => getProjectMetadata(id)?.href ?? buildProjectHref(id);
+export const getFeaturedProjects = () =>
+  sorted(PROJECT_METADATA.filter((project) => project.hierarchy === 'featured'));
+export const getSupportingProjects = () =>
+  sorted(PROJECT_METADATA.filter((project) => project.hierarchy === 'supporting'));
+export const getProjectsByFilter = (filter: ProjectFilter | 'All') =>
+  filter === 'All'
+    ? sorted(PROJECT_METADATA)
+    : sorted(PROJECT_METADATA.filter((project) => project.filters.includes(filter)));
+export const getProjectsByRoleLane = (roleLane: ProjectRoleLane) =>
+  sorted(PROJECT_METADATA.filter((project) => project.roleLanes.includes(roleLane)));
+
+export const validateProjectMetadataIds = () => {
+  const registryIds = new Set(PROJECT_REGISTRY.map((project) => project.id));
+  const missing = PROJECT_METADATA.filter((project) => !registryIds.has(project.id)).map(
+    (project) => project.id,
+  );
+  const duplicates = PROJECT_METADATA.map((project) => project.id).filter(
+    (id, index, arr) => arr.indexOf(id) !== index,
+  );
+  return { missing, duplicates };
+};
+
+export const validateProjectMetadataContracts = () => {
+  const ids = PROJECT_METADATA.map((project) => project.id);
+  const hrefs = PROJECT_METADATA.map((project) => project.href);
+  const invalidAccents = PROJECT_METADATA.filter(
+    (project) => !PROJECT_ACCENTS.includes(project.accent),
+  ).map((project) => project.id);
+  const invalidRoleLanes = PROJECT_METADATA.filter((project) => project.roleLanes.length === 0).map(
+    (project) => project.id,
+  );
+  const invalidCanonicalRoleLanes = PROJECT_METADATA.filter(
+    (project) => project.canonicalRoleLanes.length === 0,
+  ).map((project) => project.id);
+  const invalidFilters = PROJECT_METADATA.filter((project) => project.filters.length === 0).map(
+    (project) => project.id,
+  );
+  const duplicateHrefs = hrefs.filter((href, index, arr) => arr.indexOf(href) !== index);
+  const duplicateSortOrder = PROJECT_METADATA.map((project) => project.sortOrder).filter(
+    (sortOrder, index, arr) => arr.indexOf(sortOrder) !== index,
+  );
+  const missingHrefPrefix = PROJECT_METADATA.filter(
+    (project) => !project.href.startsWith('/projects/'),
+  ).map((project) => project.id);
+  const featuredWithoutEvidence = PROJECT_METADATA.filter(
+    (p) => p.hierarchy === 'featured' && (!p.featuredLabel || !p.evidenceTier),
+  ).map((p) => p.id);
+  const flagshipCount = PROJECT_METADATA.filter((p) => p.flagship).length;
+  const duplicateSwitcherRank = PROJECT_METADATA.filter((p) => typeof p.switcherRank === 'number')
+    .map((p) => p.switcherRank as number)
+    .filter((rank, index, arr) => arr.indexOf(rank) !== index);
+
+  return {
+    duplicateHrefs,
+    duplicateSortOrder,
+    invalidAccents,
+    invalidFilters,
+    invalidRoleLanes,
+    invalidCanonicalRoleLanes,
+    missingHrefPrefix,
+    featuredWithoutEvidence,
+    flagshipCount,
+    duplicateSwitcherRank,
+    uniqueIds: new Set(ids).size === ids.length,
   };
-  const isRed = accentColor === 'red';
-  return (
-    <div
-      className={`rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden bg-[#f8fbfd] dark:bg-slate-900/60 ${isRed ? 'border-gild/35' : 'border-tide-aqua/25'} flex flex-col`}
-    >
-      <div className="px-8 md:px-12 py-5 bg-slate-50 dark:bg-white/5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
-        <span className="text-[11px] font-bold text-navy-900 dark:text-white font-outfit tracking-wide">
-          {label}
-        </span>
-        <span
-          className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-md border ${isRed ? 'bg-gild/15 text-gild-deep border-gild/40 dark:text-gild' : 'bg-tide-aqua/10 text-tide-softBlue border-tide-aqua/30'}`}
-        >
-          Interactive Prototype
-        </span>
-      </div>
-      <div
-        className={`relative ${isHero ? 'h-[500px]' : 'h-96'} bg-slate-100 dark:bg-slate-900 w-full overflow-hidden cursor-pointer group/preview`}
-        onClick={handleLaunch}
-      >
-        <iframe
-          srcDoc={content}
-          title={label}
-          className="w-[200%] h-[200%] transform scale-50 origin-top-left pointer-events-none opacity-60 transition-all duration-500 group-hover/preview:opacity-100 group-hover/preview:scale-[0.51]"
-          tabIndex={-1}
-        />
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/40 dark:bg-black/60 opacity-0 group-hover/preview:opacity-100 transition-opacity backdrop-blur-sm">
-          <button className="bg-white dark:bg-slate-800 text-navy-900 dark:text-white px-8 py-3.5 rounded-full text-[13px] font-bold shadow-2xl flex items-center gap-3">
-            Launch Prototype
-          </button>
-        </div>
-      </div>
-      {description && (
-        <div className="p-8 md:p-12 bg-slate-50/50 dark:bg-black/20 text-[11px] text-slate-500 leading-relaxed italic border-t border-black/5">
-          {description}
-        </div>
-      )}
-    </div>
-  );
 };
-
-export const TabsArtifact: React.FC<{ artifacts: CaseStudyArtifact[] }> = ({ artifacts }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const activeArt = artifacts[activeIndex];
-
-  return (
-    <div className="rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden bg-[#f8fbfd] dark:bg-slate-900/60">
-      <div className="px-4 py-2 bg-slate-50 dark:bg-white/5 border-b border-black/5 dark:border-white/10 flex gap-1 overflow-x-auto scrollbar-hide">
-        {artifacts.map((art, i) => (
-          <button
-            key={i}
-            onClick={() => setActiveIndex(i)}
-            className={`px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${
-              i === activeIndex
-                ? 'bg-slate-900 text-white'
-                : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-white/5'
-            }`}
-          >
-            {art.label}
-          </button>
-        ))}
-      </div>
-      <div className="p-0">
-        {activeArt.type === 'audit-log' && activeArt.auditData ? (
-          <AuditLog data={activeArt.auditData} />
-        ) : activeArt.type === 'code' ? (
-          <div className="max-h-[400px] overflow-y-auto chat-scroll">
-            <CodeBlock className="my-0 rounded-none border-0 pt-8 px-8 md:px-12">
-              {activeArt.content as string}
-            </CodeBlock>
-          </div>
-        ) : (
-          <div className="p-8 md:p-12 text-sm text-slate-500 italic">
-            Preview not available for this tab type.
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-export const ArtifactGallery: React.FC<{
-  artifacts: Exclude<ProjectEntry['artifacts'], undefined>;
-}> = ({ artifacts }) => (
-  <div className="space-y-8 my-16">
-    <div className="flex items-center gap-4">
-      <div className="w-2 h-2 rounded-full bg-slate-400" />
-      <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] font-outfit">
-        Project Artifact Library
-      </h4>
-      <div className="h-px w-full bg-black/5 dark:bg-white/5" />
-    </div>
-    <div className="grid gap-10">
-      {artifacts.map((art, i) => (
-        <div key={i} className="min-w-0">
-          {art.type === 'html' ? (
-            <HtmlPreviewCard
-              content={art.content as string}
-              label={art.label}
-              description={art.description}
-            />
-          ) : art.type === 'insight' && art.data ? (
-            <div className="space-y-2">
-              <RigorCard rigor={art.data} title={art.label.toUpperCase()} className="mb-0" />
-            </div>
-          ) : art.type === 'audit-log' && art.auditData ? (
-            <div className="rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden bg-[#f8fbfd] dark:bg-slate-900/60">
-              <AuditLog data={art.auditData} />
-            </div>
-          ) : art.type === 'tabs' && Array.isArray(art.content) ? (
-            <TabsArtifact artifacts={art.content as CaseStudyArtifact[]} />
-          ) : (
-            <div className="rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden bg-[#f8fbfd] dark:bg-slate-900/60">
-              <div className="px-8 md:px-12 py-5 bg-slate-50 dark:bg-white/5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
-                <span className="text-[11px] font-bold text-navy-900 dark:text-white font-outfit tracking-wide">
-                  {art.label}
-                </span>
-                <span className="text-[10px] uppercase font-bold px-2 py-0.5 bg-tide-aqua/10 text-tide-softBlue rounded-md">
-                  {art.type}
-                </span>
-              </div>
-              <div className="p-0">
-                {art.type === 'code' ? (
-                  <div className="max-h-[400px] overflow-y-auto chat-scroll">
-                    <CodeBlock className="my-0 rounded-none border-0 pt-8 px-8 md:px-12">
-                      {art.content as string}
-                    </CodeBlock>
-                  </div>
-                ) : null}
-              </div>
-              {art.description && (
-                <div className="p-8 md:p-12 bg-slate-50/50 dark:bg-black/20 text-[11px] text-slate-500 leading-relaxed italic border-t border-black/5">
-                  {art.description}
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      ))}
-    </div>
-  </div>
-);
-
-export const TradeoffLog: React.FC<{
-  constraints: Exclude<ProjectEntry['constraints'], undefined>;
-}> = ({ constraints }) => (
-  <div className="my-16 space-y-8">
-    <div className="flex items-center gap-4">
-      <div className="w-2 h-2 rounded-full bg-slate-400" />
-      <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] font-outfit">
-        Decision Journal
-      </h4>
-      <div className="h-px w-full bg-black/5 dark:bg-white/5" />
-    </div>
-    <div className="grid gap-4">
-      {constraints.map((c, i) => (
-        <div key={i} className="grid md:grid-cols-2 gap-4">
-          <div className="p-6 rounded-3xl bg-white dark:bg-slate-900/50 border border-slate-200 shadow-sm">
-            <div className="text-[10px] font-bold text-tide-blue uppercase tracking-widest mb-3 font-outfit">
-              The Constraint
-            </div>
-            <p className="text-[13px] font-medium text-slate-700 dark:text-slate-300">
-              {c.problem}
-            </p>
-          </div>
-          <div className="p-6 rounded-3xl bg-[#fcfbf9] dark:bg-slate-900/50 border border-slate-200 dark:border-white/10 shadow-sm">
-            <div className="text-[10px] font-bold text-tide-cyan uppercase tracking-widest mb-3 font-outfit">
-              The Operational Choice
-            </div>
-            <p className="text-[13px] font-medium text-slate-700 dark:text-slate-300">
-              {c.tradeoff}
-            </p>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-);
 ```
 
 ## File: src/views/SiteIndexView.tsx
@@ -6812,347 +6864,6 @@ const BottomTabBar: React.FC = () => {
 };
 
 export default BottomTabBar;
-```
-
-## File: src/data/trackContent.ts
-```typescript
-import { GUYNODE_SYSTEM_HREF } from '../lib/routes';
-
-export type TrackAccent = 'implementation' | 'qa' | 'gis';
-
-export type SupportingEvidenceCard = {
-  title: string;
-  relevance: string;
-  proofType: string;
-  href?: string;
-  roleChips?: string[];
-};
-
-export type CtaAction = {
-  label: string;
-  href?: string;
-  type?: 'link' | 'contact';
-  twinSource?: 'implementation' | 'qa' | 'gis' | 'general';
-  twinStarterPrompt?: string;
-};
-
-export type TrackPageContent = {
-  route: string;
-  accent: TrackAccent;
-  title: string;
-  eyebrow: string;
-  headline: string;
-  summary: string;
-  proves: string[];
-  guynodeLabel: string;
-  guynodeTitle: string;
-  guynodeSummary: string;
-  guynodeBullets: string[];
-  supportingEvidence: SupportingEvidenceCard[];
-  skillsTools: string[];
-  ctaTitle: string;
-  ctaCopy: string;
-  ctaActions: CtaAction[];
-};
-
-export type TrackSelectorCard = {
-  title: string;
-  subcopy: string;
-  href: string;
-};
-
-export const implementationTrackContent: TrackPageContent = {
-  route: '/tracks/implementation',
-  accent: 'implementation',
-  title: 'Implementation / CSE-lite',
-  eyebrow: 'Role Track',
-  headline:
-    'Technical implementation proof for customer-facing systems, workflow setup, and operational handoff.',
-  summary:
-    'This track highlights work that translates ambiguous needs into supportable workflows, documentation, implementation steps, and user-facing delivery systems.',
-  proves: [
-    'Workflow setup',
-    'Technical discovery',
-    'Documentation',
-    'Implementation planning',
-    'Support handoff',
-    'Customer-facing problem solving',
-  ],
-  guynodeLabel: 'FLAGSHIP_SYSTEM',
-  guynodeTitle: 'How Guynode Supports This Track',
-  guynodeSummary:
-    'Guynode demonstrates implementation work from planning through launch readiness by turning fragmented legacy file access into a structured, public-facing system.',
-  guynodeBullets: [
-    'Content migration planning from legacy site structure to a cleaner delivery model',
-    'Dataset registry setup with standardized metadata and route structure',
-    'Public-facing system organization for faster reviewer and user retrieval',
-    'Documentation and launch-readiness checks to support operational handoff',
-  ],
-  supportingEvidence: [
-    {
-      title: 'Guynode Spatial Data Hub',
-      relevance:
-        'Flagship implementation proof showing migration planning, platform structure, and launch readiness.',
-      proofType: 'Flagship System',
-      href: GUYNODE_SYSTEM_HREF,
-      roleChips: ['Implementation / CSE-lite', 'GIS / Spatial Systems'],
-    },
-    {
-      title: 'Systems at Scale: Triage & QA',
-      relevance:
-        'Operational triage workflow proof with support-ready process controls and escalation logic.',
-      proofType: 'Workflow',
-      href: '/projects/ops-triage',
-      roleChips: ['Implementation / CSE-lite', 'Ops Analytics / QA'],
-    },
-    {
-      title: 'Luxe Lofts Ecosystem',
-      relevance:
-        'Proposal-phase implementation planning proof focused on modular delivery and stakeholder translation.',
-      proofType: 'Workflow',
-      href: '/projects/luxe-lofts',
-      roleChips: ['Implementation / CSE-lite'],
-    },
-    {
-      title: 'Project Aegis Protocol',
-      relevance:
-        'AI governance and implementation control system for safer execution and maintainable workflows.',
-      proofType: 'Proof Artifact',
-      href: '/projects/project-aegis',
-      roleChips: ['Implementation / CSE-lite', 'Ops Analytics / QA'],
-    },
-    {
-      title: 'Portfolio2.0 Role-Lane Conversion System',
-      relevance:
-        'Information architecture proof showing role-lane alignment and recruiter-facing delivery clarity.',
-      proofType: 'Documentation',
-      href: '/portfolio2/deep-dive#proof-hierarchy',
-      roleChips: ['Implementation / CSE-lite'],
-    },
-  ],
-  skillsTools: [
-    'Workflow design',
-    'Documentation',
-    'Technical support',
-    'Implementation planning',
-    'Frontend systems',
-    'AI-assisted build workflows',
-    'Stakeholder translation',
-  ],
-  ctaTitle: 'Next Step',
-  ctaCopy: 'Review implementation-focused proof artifacts or move directly to resume and contact.',
-  ctaActions: [
-    { label: 'Download Resume', href: '/resume' },
-    { label: 'View Guynode System', href: GUYNODE_SYSTEM_HREF },
-    {
-      label: 'Ask the Digital Twin about implementation fit',
-      type: 'link',
-      twinSource: 'implementation',
-      twinStarterPrompt: 'Help this visitor evaluate Kyle for an Implementation / CSE-lite role.',
-    },
-    { label: 'Contact Me', type: 'contact' },
-  ],
-};
-
-export const opsAnalyticsTrackContent: TrackPageContent = {
-  route: '/tracks/ops-analytics',
-  accent: 'qa',
-  title: 'Ops Analytics / QA',
-  eyebrow: 'Role Track',
-  headline:
-    'QA proof for structured testing, issue triage, root-cause analysis, and validation workflows.',
-  summary:
-    'This track highlights work that uses controlled analysis, test design, defect reasoning, and launch-readiness checks to improve system reliability.',
-  proves: [
-    'Test planning',
-    'Issue triage',
-    'Root-cause analysis',
-    'Validation logic',
-    'Reproducible testing',
-    'Launch-readiness review',
-    'Decision-ready reporting',
-  ],
-  guynodeLabel: 'FLAGSHIP_SYSTEM',
-  guynodeTitle: 'How Guynode Supports This Track',
-  guynodeSummary:
-    'Guynode provides QA proof through metadata validation, consistency checks, and launch-readiness review for public-facing spatial data delivery.',
-  guynodeBullets: [
-    'Metadata validation workflow for dataset consistency and field reliability',
-    'Broken-link checks and route/content consistency controls',
-    'Dataset QA loops to verify public-facing data quality',
-    'Launch-readiness review to ensure the system is usable and trustworthy',
-  ],
-  supportingEvidence: [
-    {
-      title: 'Guynode Spatial Data Hub',
-      relevance:
-        'Flagship QA surface with metadata controls, public route validation, and launch-readiness checks.',
-      proofType: 'Flagship System',
-      href: GUYNODE_SYSTEM_HREF,
-      roleChips: ['Ops Analytics / QA', 'GIS / Spatial Systems'],
-    },
-    {
-      title: 'NBA 2K Systems Analysis',
-      relevance:
-        'Controlled testing case showing reproducibility logic, variable isolation, and decision-ready reporting.',
-      proofType: 'Validation',
-      href: '/projects/nba-systems-qa',
-      roleChips: ['Ops Analytics / QA'],
-    },
-    {
-      title: 'Systems at Scale: Triage & QA',
-      relevance: 'Issue triage and QA workflow evidence for high-volume operational scenarios.',
-      proofType: 'Workflow',
-      href: '/projects/ops-triage',
-      roleChips: ['Ops Analytics / QA'],
-    },
-    {
-      title: 'Portfolio2.0 Role-Lane Conversion System',
-      relevance:
-        'Validation proof for route integrity, content alignment, and reviewer-ready information architecture.',
-      proofType: 'Documentation QA',
-      href: '/portfolio2/deep-dive#proof-hierarchy',
-      roleChips: ['Ops Analytics / QA'],
-    },
-    {
-      title: 'Project Aegis Protocol',
-      relevance:
-        'AI governance evidence showing quality controls, protocol boundaries, and root-cause prevention logic.',
-      proofType: 'Governance',
-      href: '/projects/project-aegis',
-      roleChips: ['Ops Analytics / QA'],
-    },
-  ],
-  skillsTools: [
-    'QA protocols',
-    'Test matrices',
-    'Defect taxonomy',
-    'Reproducibility',
-    'Root-cause analysis',
-    'Documentation QA',
-    'Validation workflows',
-  ],
-  ctaTitle: 'Next Step',
-  ctaCopy: 'Inspect validation proof artifacts or continue to resume and contact.',
-  ctaActions: [
-    { label: 'Download Resume', href: '/resume' },
-    { label: 'View Supporting Evidence', href: '/portfolio2/deep-dive#ci-and-tests' },
-    {
-      label: 'Ask the Digital Twin about QA proof',
-      type: 'link',
-      twinSource: 'qa',
-      twinStarterPrompt: 'Help this visitor evaluate Kyle for an Ops Analytics / QA role.',
-    },
-    { label: 'Contact Me', type: 'contact' },
-  ],
-};
-
-export const gisTrackContent: TrackPageContent = {
-  route: '/tracks/gis',
-  accent: 'gis',
-  title: 'GIS / Spatial Systems',
-  eyebrow: 'Role Track',
-  headline: 'GIS proof for spatial data operations, mapping workflows, and dataset governance.',
-  summary:
-    'This track highlights work involving spatial datasets, GIS workflows, map-based interfaces, metadata structure, and geospatial system delivery.',
-  proves: [
-    'Spatial data organization',
-    'GIS workflow understanding',
-    'Map viewer logic',
-    'Dataset governance',
-    'Metadata schema design',
-    'Public spatial data access',
-    'Utility and spatial operations awareness',
-  ],
-  guynodeLabel: 'FLAGSHIP_SYSTEM',
-  guynodeTitle: 'How Guynode Supports This Track',
-  guynodeSummary:
-    'Guynode is the flagship GIS proof for cataloging spatial datasets and delivering public geospatial access through map-based workflows.',
-  guynodeBullets: [
-    'Spatial data cataloging and dataset registry structure',
-    'Leaflet map viewer integration and GIS-facing user experience',
-    'Guyana-focused public data access with operational metadata',
-    'Metadata and provenance handling for dataset governance',
-  ],
-  supportingEvidence: [
-    {
-      title: 'Guynode Spatial Data Hub',
-      relevance:
-        'Flagship GIS evidence for dataset governance, map viewer logic, and public geospatial access.',
-      proofType: 'Flagship System',
-      href: GUYNODE_SYSTEM_HREF,
-      roleChips: ['GIS / Spatial Systems'],
-    },
-    {
-      title: 'Systems at Scale: Triage & QA',
-      relevance:
-        'Utility operations and spatial QA workflow evidence with production-volume processing.',
-      proofType: 'Spatial Workflow',
-      href: '/projects/ops-triage',
-      roleChips: ['GIS / Spatial Systems', 'Ops Analytics / QA'],
-    },
-    {
-      title: 'HPS Geospatial Dashboard & Utility Ops Experience',
-      relevance:
-        'Operational GIS experience evidence for stakeholder dashboards, reporting workflows, and delivery support.',
-      proofType: 'Proof Artifact',
-      href: '/resume',
-      roleChips: ['GIS / Spatial Systems'],
-    },
-    {
-      title: 'Portfolio2.0 Role-Lane Conversion System',
-      relevance:
-        'Spatial portfolio delivery proof showing how GIS evidence is organized for recruiter retrieval.',
-      proofType: 'Documentation',
-      href: '/portfolio2/deep-dive#proof-hierarchy',
-      roleChips: ['GIS / Spatial Systems'],
-    },
-  ],
-  skillsTools: [
-    'ArcGIS',
-    'Leaflet',
-    'Spatial data',
-    'Metadata',
-    'Dataset cataloging',
-    'GeoJSON and shapefile workflow concepts',
-    'Spatial workflow documentation',
-    'Map-based UX',
-  ],
-  ctaTitle: 'Next Step',
-  ctaCopy: 'Review GIS system proof or move directly to resume and contact.',
-  ctaActions: [
-    { label: 'Download Resume', href: '/resume' },
-    { label: 'View Guynode System', href: GUYNODE_SYSTEM_HREF },
-    {
-      label: 'Ask the Digital Twin about GIS experience',
-      type: 'link',
-      twinSource: 'gis',
-      twinStarterPrompt: 'Help this visitor evaluate Kyle for a GIS / Spatial Systems role.',
-    },
-    { label: 'Contact Me', type: 'contact' },
-  ],
-};
-
-export const trackSelectorCards: TrackSelectorCard[] = [
-  {
-    title: 'Implementation / CSE-lite',
-    subcopy:
-      'Onboarding, technical guidance, workflow setup, launch planning, and support handoff.',
-    href: '/tracks/implementation',
-  },
-  {
-    title: 'Ops Analytics / QA',
-    subcopy:
-      'Structured testing, issue triage, validation workflows, and decision-ready quality reporting.',
-    href: '/tracks/ops-analytics',
-  },
-  {
-    title: 'GIS / Spatial Systems',
-    subcopy:
-      'Spatial data operations, map workflows, metadata governance, and public-facing geospatial delivery.',
-    href: '/tracks/gis',
-  },
-];
 ```
 
 ## File: src/components/ChatWidget.tsx
@@ -8627,6 +8338,347 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
 export const CASE_STUDY_REGISTRY = PROJECT_REGISTRY;
 ```
 
+## File: src/data/trackContent.ts
+```typescript
+import { GUYNODE_SYSTEM_HREF } from '../lib/routes';
+
+export type TrackAccent = 'implementation' | 'qa' | 'gis';
+
+export type SupportingEvidenceCard = {
+  title: string;
+  relevance: string;
+  proofType: string;
+  href?: string;
+  roleChips?: string[];
+};
+
+export type CtaAction = {
+  label: string;
+  href?: string;
+  type?: 'link' | 'contact';
+  twinSource?: 'implementation' | 'qa' | 'gis' | 'general';
+  twinStarterPrompt?: string;
+};
+
+export type TrackPageContent = {
+  route: string;
+  accent: TrackAccent;
+  title: string;
+  eyebrow: string;
+  headline: string;
+  summary: string;
+  proves: string[];
+  guynodeLabel: string;
+  guynodeTitle: string;
+  guynodeSummary: string;
+  guynodeBullets: string[];
+  supportingEvidence: SupportingEvidenceCard[];
+  skillsTools: string[];
+  ctaTitle: string;
+  ctaCopy: string;
+  ctaActions: CtaAction[];
+};
+
+export type TrackSelectorCard = {
+  title: string;
+  subcopy: string;
+  href: string;
+};
+
+export const implementationTrackContent: TrackPageContent = {
+  route: '/tracks/implementation',
+  accent: 'implementation',
+  title: 'Implementation / CSE-lite',
+  eyebrow: 'Role Track',
+  headline:
+    'Technical implementation proof for customer-facing systems, workflow setup, and operational handoff.',
+  summary:
+    'This track highlights work that translates ambiguous needs into supportable workflows, documentation, implementation steps, and user-facing delivery systems.',
+  proves: [
+    'Workflow setup',
+    'Technical discovery',
+    'Documentation',
+    'Implementation planning',
+    'Support handoff',
+    'Customer-facing problem solving',
+  ],
+  guynodeLabel: 'FLAGSHIP_SYSTEM',
+  guynodeTitle: 'How Guynode Supports This Track',
+  guynodeSummary:
+    'Guynode demonstrates implementation work from planning through launch readiness by turning fragmented legacy file access into a structured, public-facing system.',
+  guynodeBullets: [
+    'Content migration planning from legacy site structure to a cleaner delivery model',
+    'Dataset registry setup with standardized metadata and route structure',
+    'Public-facing system organization for faster reviewer and user retrieval',
+    'Documentation and launch-readiness checks to support operational handoff',
+  ],
+  supportingEvidence: [
+    {
+      title: 'Guynode Spatial Data Hub',
+      relevance:
+        'Flagship implementation proof showing migration planning, platform structure, and launch readiness.',
+      proofType: 'Flagship System',
+      href: GUYNODE_SYSTEM_HREF,
+      roleChips: ['Implementation / CSE-lite', 'GIS / Spatial Systems'],
+    },
+    {
+      title: 'Systems at Scale: Triage & QA',
+      relevance:
+        'Operational triage workflow proof with support-ready process controls and escalation logic.',
+      proofType: 'Workflow',
+      href: '/projects/ops-triage',
+      roleChips: ['Implementation / CSE-lite', 'Ops Analytics / QA'],
+    },
+    {
+      title: 'Luxe Lofts Ecosystem',
+      relevance:
+        'Proposal-phase implementation planning proof focused on modular delivery and stakeholder translation.',
+      proofType: 'Workflow',
+      href: '/projects/luxe-lofts',
+      roleChips: ['Implementation / CSE-lite'],
+    },
+    {
+      title: 'Project Aegis Protocol',
+      relevance:
+        'AI governance and implementation control system for safer execution and maintainable workflows.',
+      proofType: 'Proof Artifact',
+      href: '/projects/project-aegis',
+      roleChips: ['Implementation / CSE-lite', 'Ops Analytics / QA'],
+    },
+    {
+      title: 'Portfolio2.0 Role-Lane Conversion System',
+      relevance:
+        'Information architecture proof showing role-lane alignment and recruiter-facing delivery clarity.',
+      proofType: 'Documentation',
+      href: '/portfolio2/deep-dive#proof-hierarchy',
+      roleChips: ['Implementation / CSE-lite'],
+    },
+  ],
+  skillsTools: [
+    'Workflow design',
+    'Documentation',
+    'Technical support',
+    'Implementation planning',
+    'Frontend systems',
+    'AI-assisted build workflows',
+    'Stakeholder translation',
+  ],
+  ctaTitle: 'Next Step',
+  ctaCopy: 'Review implementation-focused proof artifacts or move directly to resume and contact.',
+  ctaActions: [
+    { label: 'Download Resume', href: '/resume' },
+    { label: 'View Guynode System', href: GUYNODE_SYSTEM_HREF },
+    {
+      label: 'Ask the Digital Twin about implementation fit',
+      type: 'link',
+      twinSource: 'implementation',
+      twinStarterPrompt: 'Help this visitor evaluate Kyle for an Implementation / CSE-lite role.',
+    },
+    { label: 'Contact Me', type: 'contact' },
+  ],
+};
+
+export const opsAnalyticsTrackContent: TrackPageContent = {
+  route: '/tracks/ops-analytics',
+  accent: 'qa',
+  title: 'Ops Analytics / QA',
+  eyebrow: 'Role Track',
+  headline:
+    'QA proof for structured testing, issue triage, root-cause analysis, and validation workflows.',
+  summary:
+    'This track highlights work that uses controlled analysis, test design, defect reasoning, and launch-readiness checks to improve system reliability.',
+  proves: [
+    'Test planning',
+    'Issue triage',
+    'Root-cause analysis',
+    'Validation logic',
+    'Reproducible testing',
+    'Launch-readiness review',
+    'Decision-ready reporting',
+  ],
+  guynodeLabel: 'FLAGSHIP_SYSTEM',
+  guynodeTitle: 'How Guynode Supports This Track',
+  guynodeSummary:
+    'Guynode provides QA proof through metadata validation, consistency checks, and launch-readiness review for public-facing spatial data delivery.',
+  guynodeBullets: [
+    'Metadata validation workflow for dataset consistency and field reliability',
+    'Broken-link checks and route/content consistency controls',
+    'Dataset QA loops to verify public-facing data quality',
+    'Launch-readiness review to ensure the system is usable and trustworthy',
+  ],
+  supportingEvidence: [
+    {
+      title: 'Guynode Spatial Data Hub',
+      relevance:
+        'Flagship QA surface with metadata controls, public route validation, and launch-readiness checks.',
+      proofType: 'Flagship System',
+      href: GUYNODE_SYSTEM_HREF,
+      roleChips: ['Ops Analytics / QA', 'GIS / Spatial Systems'],
+    },
+    {
+      title: 'NBA 2K Systems Analysis',
+      relevance:
+        'Controlled testing case showing reproducibility logic, variable isolation, and decision-ready reporting.',
+      proofType: 'Validation',
+      href: '/projects/nba-systems-qa',
+      roleChips: ['Ops Analytics / QA'],
+    },
+    {
+      title: 'Systems at Scale: Triage & QA',
+      relevance: 'Issue triage and QA workflow evidence for high-volume operational scenarios.',
+      proofType: 'Workflow',
+      href: '/projects/ops-triage',
+      roleChips: ['Ops Analytics / QA'],
+    },
+    {
+      title: 'Portfolio2.0 Role-Lane Conversion System',
+      relevance:
+        'Validation proof for route integrity, content alignment, and reviewer-ready information architecture.',
+      proofType: 'Documentation QA',
+      href: '/portfolio2/deep-dive#proof-hierarchy',
+      roleChips: ['Ops Analytics / QA'],
+    },
+    {
+      title: 'Project Aegis Protocol',
+      relevance:
+        'AI governance evidence showing quality controls, protocol boundaries, and root-cause prevention logic.',
+      proofType: 'Governance',
+      href: '/projects/project-aegis',
+      roleChips: ['Ops Analytics / QA'],
+    },
+  ],
+  skillsTools: [
+    'QA protocols',
+    'Test matrices',
+    'Defect taxonomy',
+    'Reproducibility',
+    'Root-cause analysis',
+    'Documentation QA',
+    'Validation workflows',
+  ],
+  ctaTitle: 'Next Step',
+  ctaCopy: 'Inspect validation proof artifacts or continue to resume and contact.',
+  ctaActions: [
+    { label: 'Download Resume', href: '/resume' },
+    { label: 'View Supporting Evidence', href: '/portfolio2/deep-dive#ci-and-tests' },
+    {
+      label: 'Ask the Digital Twin about QA proof',
+      type: 'link',
+      twinSource: 'qa',
+      twinStarterPrompt: 'Help this visitor evaluate Kyle for an Ops Analytics / QA role.',
+    },
+    { label: 'Contact Me', type: 'contact' },
+  ],
+};
+
+export const gisTrackContent: TrackPageContent = {
+  route: '/tracks/gis',
+  accent: 'gis',
+  title: 'GIS / Spatial Systems',
+  eyebrow: 'Role Track',
+  headline: 'GIS proof for spatial data operations, mapping workflows, and dataset governance.',
+  summary:
+    'This track highlights work involving spatial datasets, GIS workflows, map-based interfaces, metadata structure, and geospatial system delivery.',
+  proves: [
+    'Spatial data organization',
+    'GIS workflow understanding',
+    'Map viewer logic',
+    'Dataset governance',
+    'Metadata schema design',
+    'Public spatial data access',
+    'Utility and spatial operations awareness',
+  ],
+  guynodeLabel: 'FLAGSHIP_SYSTEM',
+  guynodeTitle: 'How Guynode Supports This Track',
+  guynodeSummary:
+    'Guynode is the flagship GIS proof for cataloging spatial datasets and delivering public geospatial access through map-based workflows.',
+  guynodeBullets: [
+    'Spatial data cataloging and dataset registry structure',
+    'Leaflet map viewer integration and GIS-facing user experience',
+    'Guyana-focused public data access with operational metadata',
+    'Metadata and provenance handling for dataset governance',
+  ],
+  supportingEvidence: [
+    {
+      title: 'Guynode Spatial Data Hub',
+      relevance:
+        'Flagship GIS evidence for dataset governance, map viewer logic, and public geospatial access.',
+      proofType: 'Flagship System',
+      href: GUYNODE_SYSTEM_HREF,
+      roleChips: ['GIS / Spatial Systems'],
+    },
+    {
+      title: 'Systems at Scale: Triage & QA',
+      relevance:
+        'Utility operations and spatial QA workflow evidence with production-volume processing.',
+      proofType: 'Spatial Workflow',
+      href: '/projects/ops-triage',
+      roleChips: ['GIS / Spatial Systems', 'Ops Analytics / QA'],
+    },
+    {
+      title: 'HPS Geospatial Dashboard & Utility Ops Experience',
+      relevance:
+        'Operational GIS experience evidence for stakeholder dashboards, reporting workflows, and delivery support.',
+      proofType: 'Proof Artifact',
+      href: '/resume',
+      roleChips: ['GIS / Spatial Systems'],
+    },
+    {
+      title: 'Portfolio2.0 Role-Lane Conversion System',
+      relevance:
+        'Spatial portfolio delivery proof showing how GIS evidence is organized for recruiter retrieval.',
+      proofType: 'Documentation',
+      href: '/portfolio2/deep-dive#proof-hierarchy',
+      roleChips: ['GIS / Spatial Systems'],
+    },
+  ],
+  skillsTools: [
+    'ArcGIS',
+    'Leaflet',
+    'Spatial data',
+    'Metadata',
+    'Dataset cataloging',
+    'GeoJSON and shapefile workflow concepts',
+    'Spatial workflow documentation',
+    'Map-based UX',
+  ],
+  ctaTitle: 'Next Step',
+  ctaCopy: 'Review GIS system proof or move directly to resume and contact.',
+  ctaActions: [
+    { label: 'Download Resume', href: '/resume' },
+    { label: 'View Guynode System', href: GUYNODE_SYSTEM_HREF },
+    {
+      label: 'Ask the Digital Twin about GIS experience',
+      type: 'link',
+      twinSource: 'gis',
+      twinStarterPrompt: 'Help this visitor evaluate Kyle for a GIS / Spatial Systems role.',
+    },
+    { label: 'Contact Me', type: 'contact' },
+  ],
+};
+
+export const trackSelectorCards: TrackSelectorCard[] = [
+  {
+    title: 'Implementation / CSE-lite',
+    subcopy:
+      'Onboarding, technical guidance, workflow setup, launch planning, and support handoff.',
+    href: '/tracks/implementation',
+  },
+  {
+    title: 'Ops Analytics / QA',
+    subcopy:
+      'Structured testing, issue triage, validation workflows, and decision-ready quality reporting.',
+    href: '/tracks/ops-analytics',
+  },
+  {
+    title: 'GIS / Spatial Systems',
+    subcopy:
+      'Spatial data operations, map workflows, metadata governance, and public-facing geospatial delivery.',
+    href: '/tracks/gis',
+  },
+];
+```
+
 ## File: src/views/DeepDiveView.tsx
 ```typescript
 import React from 'react';
@@ -9218,6 +9270,14 @@ import {
   getRoleAccentRecipe,
   semanticTokens,
 } from '../lib/design-system';
+import type { RecruiterRoleLane } from '../types';
+
+const canonicalRoleAccent: Record<RecruiterRoleLane, 'Implementation' | 'QA' | 'GIS'> = {
+  'Implementation / CSE-lite': 'Implementation',
+  'Ops Analytics / QA': 'QA',
+  'GIS / Spatial Systems': 'GIS',
+  'AI Workflow / Portfolio Governance': 'Implementation',
+};
 
 const ProjectSwitcher: React.FC<{ activeId: string }> = ({ activeId }) => {
   const orderedProjects = [...PROJECT_METADATA].sort((a, b) => a.sortOrder - b.sortOrder);
@@ -9326,10 +9386,10 @@ const ProjectHero: React.FC<{
           </h1>
           <p className="max-w-3xl text-slate-700 dark:text-slate-200">{metadata.shortSummary}</p>
           <div className="flex flex-wrap gap-2">
-            {metadata.roleLanes.map((lane) => (
+            {metadata.canonicalRoleLanes.map((lane) => (
               <span
                 key={lane}
-                className={`rounded-full border px-2.5 py-1 text-xs font-medium ${getRoleAccentRecipe(lane).chipClass}`}
+                className={`rounded-full border px-2.5 py-1 text-xs font-medium ${getRoleAccentRecipe(canonicalRoleAccent[lane]).chipClass}`}
               >
                 {lane}
               </span>
@@ -9477,6 +9537,14 @@ import {
   getSupportingProjects,
 } from '../../data/projectMetadata';
 import { getRoleAccentRecipe, getProjectAccentRecipe } from '../../lib/design-system';
+import type { RecruiterRoleLane } from '../../types';
+
+const canonicalRoleAccent: Record<RecruiterRoleLane, 'Implementation' | 'QA' | 'GIS'> = {
+  'Implementation / CSE-lite': 'Implementation',
+  'Ops Analytics / QA': 'QA',
+  'GIS / Spatial Systems': 'GIS',
+  'AI Workflow / Portfolio Governance': 'Implementation',
+};
 
 type FilterKey = 'All' | ProjectFilter;
 
@@ -9555,18 +9623,14 @@ const SupportingEvidenceSection: React.FC = () => {
                 {item.shortSummary}
               </p>
               <div className="mt-3 flex flex-wrap gap-1.5">
-                {item.roleLanes.map((role) => {
-                  const roleAccent = getRoleAccentRecipe(role);
+                {item.canonicalRoleLanes.map((role) => {
+                  const roleAccent = getRoleAccentRecipe(canonicalRoleAccent[role]);
                   return (
                     <span
                       key={`${item.id}-${role}`}
                       className={`text-[11px] px-2 py-0.5 rounded-md border ${roleAccent.chipClass}`}
                     >
-                      {role === 'Implementation'
-                        ? 'Technical Implementation Specialist'
-                        : role === 'QA'
-                          ? 'Quality Assurance Analyst'
-                          : 'GIS Analyst'}
+                      {role}
                     </span>
                   );
                 })}

@@ -1,5 +1,6 @@
 import { PROJECT_REGISTRY } from '../constants';
 import { buildProjectHref } from '../lib/routes';
+import type { RoleLane } from '../lib/design-system';
 import type { RecruiterRoleLane } from '../types';
 
 export type ProjectRoleLane = 'Implementation' | 'QA' | 'GIS';
@@ -29,6 +30,13 @@ export type ProjectMetadata = {
   caseStudyRoute?: string;
   markdownRoute?: string;
   crawlerRoute?: string;
+};
+
+export const CANONICAL_ROLE_ACCENT: Record<RecruiterRoleLane, RoleLane> = {
+  'Implementation / CSE-lite': 'Implementation',
+  'Ops Analytics / QA': 'QA',
+  'GIS / Spatial Systems': 'GIS',
+  'AI Workflow / Portfolio Governance': 'Implementation',
 };
 
 const PROJECT_ACCENTS: readonly ProjectAccent[] = [
