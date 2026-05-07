@@ -2,24 +2,13 @@ import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PORTFOLIO_PROCESS_HREF, SITE_INDEX_HREF } from '../lib/routes';
 import {
+  CANONICAL_ROLE_ACCENT,
   PROJECT_FILTERS,
   ProjectFilter,
-  ProjectRoleLane,
   getFeaturedProjects,
   getSupportingProjects,
 } from '../data/projectMetadata';
-
-const roleLabel: Record<ProjectRoleLane, string> = {
-  Implementation: 'Technical Implementation Specialist',
-  QA: 'Quality Assurance Analyst',
-  GIS: 'GIS Analyst',
-};
-
-const roleStyles: Record<ProjectRoleLane, string> = {
-  Implementation: 'border-tide-aqua/30 bg-tide-aqua/10 text-[#237f86]',
-  QA: 'border-blue-200 bg-tide-blue/10 text-blue-800',
-  GIS: 'border-cyan-200 bg-cyan-50 text-cyan-800',
-};
+import { getRoleAccentRecipe } from '../lib/design-system';
 
 const ProjectsIndexView: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<'All' | ProjectFilter>('All');
@@ -81,12 +70,12 @@ const ProjectsIndexView: React.FC = () => {
                   {project.shortSummary}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {project.roleLanes.map((role) => (
+                  {project.canonicalRoleLanes.map((role) => (
                     <span
                       key={role}
-                      className={`text-[11px] px-2 py-0.5 rounded border ${roleStyles[role]}`}
+                      className={`text-[11px] px-2 py-0.5 rounded border ${getRoleAccentRecipe(CANONICAL_ROLE_ACCENT[role]).chipClass}`}
                     >
-                      {roleLabel[role]}
+                      {role}
                     </span>
                   ))}
                 </div>
@@ -148,12 +137,12 @@ const ProjectsIndexView: React.FC = () => {
                   {project.shortSummary}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-1.5">
-                  {project.roleLanes.map((role) => (
+                  {project.canonicalRoleLanes.map((role) => (
                     <span
                       key={role}
-                      className={`text-[11px] px-2 py-0.5 rounded border ${roleStyles[role]}`}
+                      className={`text-[11px] px-2 py-0.5 rounded border ${getRoleAccentRecipe(CANONICAL_ROLE_ACCENT[role]).chipClass}`}
                     >
-                      {roleLabel[role]}
+                      {role}
                     </span>
                   ))}
                 </div>

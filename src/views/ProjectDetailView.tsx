@@ -13,7 +13,11 @@ import { useCaseStudyContent } from '../hooks/useCaseStudyContent';
 import { useRecruiterMode } from '../context/RecruiterModeContext';
 import { recruiterSummary } from '../utils/recruiterSummary';
 import { PROJECT_FALLBACK_ID, PORTFOLIO_PROCESS_HREF } from '../lib/routes';
-import { getProjectMetadata, PROJECT_METADATA } from '../data/projectMetadata';
+import {
+  CANONICAL_ROLE_ACCENT,
+  getProjectMetadata,
+  PROJECT_METADATA,
+} from '../data/projectMetadata';
 import ScrollToTopButton from '../components/ScrollToTopButton';
 import {
   componentRecipes,
@@ -129,10 +133,10 @@ const ProjectHero: React.FC<{
           </h1>
           <p className="max-w-3xl text-slate-700 dark:text-slate-200">{metadata.shortSummary}</p>
           <div className="flex flex-wrap gap-2">
-            {metadata.roleLanes.map((lane) => (
+            {metadata.canonicalRoleLanes.map((lane) => (
               <span
                 key={lane}
-                className={`rounded-full border px-2.5 py-1 text-xs font-medium ${getRoleAccentRecipe(lane).chipClass}`}
+                className={`rounded-full border px-2.5 py-1 text-xs font-medium ${getRoleAccentRecipe(CANONICAL_ROLE_ACCENT[lane]).chipClass}`}
               >
                 {lane}
               </span>

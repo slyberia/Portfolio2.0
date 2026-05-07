@@ -394,6 +394,11 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
       'Documentation & Enablement Assets',
       'Process Improvement',
     ],
+    roleLanes: [
+      'AI Workflow / Portfolio Governance',
+      'Implementation / CSE-lite',
+      'Ops Analytics / QA',
+    ],
     content: CASE_STUDY_CONTENT['prompter-hub'],
     heroArtifact: {
       type: 'html',
@@ -441,6 +446,11 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
     rationale: 'LLM governance frameworks and reliability engineering in code generation.',
     category: 'ai-ops',
     tags: ['Documentation & Enablement Assets', 'Process Improvement', 'Technical Troubleshooting'],
+    roleLanes: [
+      'AI Workflow / Portfolio Governance',
+      'Implementation / CSE-lite',
+      'Ops Analytics / QA',
+    ],
     content: CASE_STUDY_CONTENT['project-aegis'],
     heroArtifact: {
       type: 'html',
@@ -480,6 +490,7 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
     rationale: 'Systemic consistency and variable isolation in probabilistic engines.',
     category: 'qa-data',
     tags: ['Data QA / Validation', 'Operational Throughput', 'Issue Triage'],
+    roleLanes: ['Ops Analytics / QA'],
     content: CASE_STUDY_CONTENT['nba-systems-qa'],
     rigor: {
       statement: 'In a probabilistic engine, the only truth is the controlled baseline.',
@@ -502,6 +513,7 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
     rationale: 'Blueprint for unified digital systems and automated conversion paths.',
     category: 'success-strategy',
     tags: ['Stakeholder Communication', 'Process Improvement', 'Notion'],
+    roleLanes: ['Implementation / CSE-lite'],
     content: CASE_STUDY_CONTENT['luxe-lofts'],
     heroArtifact: {
       type: 'html',
@@ -523,6 +535,7 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
     rationale: 'Operationalizing the gap between training theory and production reality.',
     category: 'qa-data',
     tags: ['Data QA / Validation', 'Operational Throughput', 'Issue Triage', 'ESRI ArcMap'],
+    roleLanes: ['Ops Analytics / QA', 'GIS / Spatial Systems'],
     content: CASE_STUDY_CONTENT['ops-triage'],
     heroArtifact: {
       type: 'html',
@@ -556,6 +569,7 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
       'Technical Implementation',
       'Documentation',
     ],
+    roleLanes: ['GIS / Spatial Systems', 'Implementation / CSE-lite', 'Ops Analytics / QA'],
     content: CASE_STUDY_CONTENT.guynode,
     heroArtifact: {
       type: 'html',
@@ -625,6 +639,11 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
       'Portfolio Navigation',
       'Technical Implementation',
       'QA Scenarios',
+    ],
+    roleLanes: [
+      'AI Workflow / Portfolio Governance',
+      'Implementation / CSE-lite',
+      'Ops Analytics / QA',
     ],
     content: CASE_STUDY_CONTENT['digital-twin'],
     heroArtifact: {

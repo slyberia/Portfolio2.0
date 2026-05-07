@@ -1,9 +1,14 @@
 import React from 'react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, fireEvent, act } from '@testing-library/react';
+import { render, screen, fireEvent, act, waitFor } from '@testing-library/react';
+import { createMemoryRouter, MemoryRouter, RouterProvider } from 'react-router-dom';
 import ErrorBoundary from '../components/ErrorBoundary';
 import Toast from '../components/Toast';
 import ContactModal from '../components/ContactModal';
+import SupportingEvidenceSection from '../components/home/SupportingEvidenceSection';
+import ProjectDetailView from '../views/ProjectDetailView';
+import ProjectsIndexView from '../views/ProjectsIndexView';
+import { RecruiterModeProvider } from '../context/RecruiterModeContext';
 
 // ---------------------------------------------------------------------------
 // ErrorBoundary
@@ -108,5 +113,73 @@ describe('ContactModal', () => {
     const backdrop = document.querySelector('.absolute.inset-0') as HTMLElement;
     fireEvent.click(backdrop);
     expect(onClose).toHaveBeenCalledOnce();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Canonical role lane rendering
+// ---------------------------------------------------------------------------
+
+describe('canonical role lane UI', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it('renders canonical role lanes with shared accent styling in SupportingEvidenceSection', () => {
+    render(
+      <MemoryRouter>
+        <SupportingEvidenceSection />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getAllByText('Implementation / CSE-lite')[0]).toHaveClass('text-tide-aqua');
+    expect(screen.getAllByText('Ops Analytics / QA')[0]).toHaveClass('text-tide-blue');
+    expect(screen.getAllByText('GIS / Spatial Systems')[0]).toHaveClass('text-tide-cyan');
+  });
+
+  it('renders canonical role lanes with shared accent styling in ProjectsIndexView', () => {
+    render(
+      <MemoryRouter>
+        <ProjectsIndexView />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getAllByText('Implementation / CSE-lite')[0]).toHaveClass('text-tide-aqua');
+    expect(screen.getAllByText('Ops Analytics / QA')[0]).toHaveClass('text-tide-blue');
+    expect(screen.getAllByText('GIS / Spatial Systems')[0]).toHaveClass('text-tide-cyan');
+  });
+
+  it('renders canonical role lanes with shared accent styling in ProjectDetailView', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({
+        ok: false,
+        headers: new Headers(),
+      }),
+    );
+
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/projects/:projectId',
+          element: (
+            <RecruiterModeProvider>
+              <ProjectDetailView />
+            </RecruiterModeProvider>
+          ),
+        },
+      ],
+      { initialEntries: ['/projects/digital-twin'] },
+    );
+
+    render(<RouterProvider router={router} />);
+
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: 'Digital Twin AI Agent' })).toBeInTheDocument();
+    });
+
+    expect(screen.getByText('AI Workflow / Portfolio Governance')).toHaveClass('text-tide-aqua');
+    expect(screen.getByText('Implementation / CSE-lite')).toHaveClass('text-tide-aqua');
+    expect(screen.getByText('Ops Analytics / QA')).toHaveClass('text-tide-blue');
   });
 });

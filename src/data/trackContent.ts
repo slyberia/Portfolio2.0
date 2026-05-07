@@ -46,7 +46,7 @@ export type TrackSelectorCard = {
 export const implementationTrackContent: TrackPageContent = {
   route: '/tracks/implementation',
   accent: 'implementation',
-  title: 'Technical Implementation Specialist',
+  title: 'Implementation / CSE-lite',
   eyebrow: 'Role Track',
   headline:
     'Technical implementation proof for customer-facing systems, workflow setup, and operational handoff.',
@@ -77,7 +77,7 @@ export const implementationTrackContent: TrackPageContent = {
         'Flagship implementation proof showing migration planning, platform structure, and launch readiness.',
       proofType: 'Flagship System',
       href: GUYNODE_SYSTEM_HREF,
-      roleChips: ['Technical Implementation Specialist', 'GIS Analyst'],
+      roleChips: ['Implementation / CSE-lite', 'GIS / Spatial Systems'],
     },
     {
       title: 'Systems at Scale: Triage & QA',
@@ -85,7 +85,7 @@ export const implementationTrackContent: TrackPageContent = {
         'Operational triage workflow proof with support-ready process controls and escalation logic.',
       proofType: 'Workflow',
       href: '/projects/ops-triage',
-      roleChips: ['Technical Implementation Specialist', 'Quality Assurance Analyst'],
+      roleChips: ['Implementation / CSE-lite', 'Ops Analytics / QA'],
     },
     {
       title: 'Luxe Lofts Ecosystem',
@@ -93,7 +93,7 @@ export const implementationTrackContent: TrackPageContent = {
         'Proposal-phase implementation planning proof focused on modular delivery and stakeholder translation.',
       proofType: 'Workflow',
       href: '/projects/luxe-lofts',
-      roleChips: ['Technical Implementation Specialist'],
+      roleChips: ['Implementation / CSE-lite'],
     },
     {
       title: 'Project Aegis Protocol',
@@ -101,7 +101,7 @@ export const implementationTrackContent: TrackPageContent = {
         'AI governance and implementation control system for safer execution and maintainable workflows.',
       proofType: 'Proof Artifact',
       href: '/projects/project-aegis',
-      roleChips: ['Technical Implementation Specialist', 'Quality Assurance Analyst'],
+      roleChips: ['Implementation / CSE-lite', 'Ops Analytics / QA'],
     },
     {
       title: 'Portfolio2.0 Role-Lane Conversion System',
@@ -109,7 +109,7 @@ export const implementationTrackContent: TrackPageContent = {
         'Information architecture proof showing role-lane alignment and recruiter-facing delivery clarity.',
       proofType: 'Documentation',
       href: '/portfolio2/deep-dive#proof-hierarchy',
-      roleChips: ['Technical Implementation Specialist'],
+      roleChips: ['Implementation / CSE-lite'],
     },
   ],
   skillsTools: [
@@ -130,8 +130,7 @@ export const implementationTrackContent: TrackPageContent = {
       label: 'Ask the Digital Twin about implementation fit',
       type: 'link',
       twinSource: 'implementation',
-      twinStarterPrompt:
-        'Help this visitor evaluate Kyle for a Technical Implementation Specialist role.',
+      twinStarterPrompt: 'Help this visitor evaluate Kyle for an Implementation / CSE-lite role.',
     },
     { label: 'Contact Me', type: 'contact' },
   ],
@@ -140,7 +139,7 @@ export const implementationTrackContent: TrackPageContent = {
 export const opsAnalyticsTrackContent: TrackPageContent = {
   route: '/tracks/ops-analytics',
   accent: 'qa',
-  title: 'Quality Assurance Analyst',
+  title: 'Ops Analytics / QA',
   eyebrow: 'Role Track',
   headline:
     'QA proof for structured testing, issue triage, root-cause analysis, and validation workflows.',
@@ -172,7 +171,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
         'Flagship QA surface with metadata controls, public route validation, and launch-readiness checks.',
       proofType: 'Flagship System',
       href: GUYNODE_SYSTEM_HREF,
-      roleChips: ['Quality Assurance Analyst', 'GIS Analyst'],
+      roleChips: ['Ops Analytics / QA', 'GIS / Spatial Systems'],
     },
     {
       title: 'NBA 2K Systems Analysis',
@@ -180,14 +179,14 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
         'Controlled testing case showing reproducibility logic, variable isolation, and decision-ready reporting.',
       proofType: 'Validation',
       href: '/projects/nba-systems-qa',
-      roleChips: ['Quality Assurance Analyst'],
+      roleChips: ['Ops Analytics / QA'],
     },
     {
       title: 'Systems at Scale: Triage & QA',
       relevance: 'Issue triage and QA workflow evidence for high-volume operational scenarios.',
       proofType: 'Workflow',
       href: '/projects/ops-triage',
-      roleChips: ['Quality Assurance Analyst'],
+      roleChips: ['Ops Analytics / QA'],
     },
     {
       title: 'Portfolio2.0 Role-Lane Conversion System',
@@ -195,7 +194,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
         'Validation proof for route integrity, content alignment, and reviewer-ready information architecture.',
       proofType: 'Documentation QA',
       href: '/portfolio2/deep-dive#proof-hierarchy',
-      roleChips: ['Quality Assurance Analyst'],
+      roleChips: ['Ops Analytics / QA'],
     },
     {
       title: 'Project Aegis Protocol',
@@ -203,7 +202,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
         'AI governance evidence showing quality controls, protocol boundaries, and root-cause prevention logic.',
       proofType: 'Governance',
       href: '/projects/project-aegis',
-      roleChips: ['Quality Assurance Analyst'],
+      roleChips: ['Ops Analytics / QA'],
     },
   ],
   skillsTools: [
@@ -224,7 +223,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
       label: 'Ask the Digital Twin about QA proof',
       type: 'link',
       twinSource: 'qa',
-      twinStarterPrompt: 'Help this visitor evaluate Kyle for a Quality Assurance Analyst role.',
+      twinStarterPrompt: 'Help this visitor evaluate Kyle for an Ops Analytics / QA role.',
     },
     { label: 'Contact Me', type: 'contact' },
   ],
@@ -233,7 +232,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
 export const gisTrackContent: TrackPageContent = {
   route: '/tracks/gis',
   accent: 'gis',
-  title: 'GIS Analyst',
+  title: 'GIS / Spatial Systems',
   eyebrow: 'Role Track',
   headline: 'GIS proof for spatial data operations, mapping workflows, and dataset governance.',
   summary:
@@ -264,7 +263,7 @@ export const gisTrackContent: TrackPageContent = {
         'Flagship GIS evidence for dataset governance, map viewer logic, and public geospatial access.',
       proofType: 'Flagship System',
       href: GUYNODE_SYSTEM_HREF,
-      roleChips: ['GIS Analyst'],
+      roleChips: ['GIS / Spatial Systems'],
     },
     {
       title: 'Systems at Scale: Triage & QA',
@@ -272,7 +271,7 @@ export const gisTrackContent: TrackPageContent = {
         'Utility operations and spatial QA workflow evidence with production-volume processing.',
       proofType: 'Spatial Workflow',
       href: '/projects/ops-triage',
-      roleChips: ['GIS Analyst', 'Quality Assurance Analyst'],
+      roleChips: ['GIS / Spatial Systems', 'Ops Analytics / QA'],
     },
     {
       title: 'HPS Geospatial Dashboard & Utility Ops Experience',
@@ -280,7 +279,7 @@ export const gisTrackContent: TrackPageContent = {
         'Operational GIS experience evidence for stakeholder dashboards, reporting workflows, and delivery support.',
       proofType: 'Proof Artifact',
       href: '/resume',
-      roleChips: ['GIS Analyst'],
+      roleChips: ['GIS / Spatial Systems'],
     },
     {
       title: 'Portfolio2.0 Role-Lane Conversion System',
@@ -288,7 +287,7 @@ export const gisTrackContent: TrackPageContent = {
         'Spatial portfolio delivery proof showing how GIS evidence is organized for recruiter retrieval.',
       proofType: 'Documentation',
       href: '/portfolio2/deep-dive#proof-hierarchy',
-      roleChips: ['GIS Analyst'],
+      roleChips: ['GIS / Spatial Systems'],
     },
   ],
   skillsTools: [
@@ -310,7 +309,7 @@ export const gisTrackContent: TrackPageContent = {
       label: 'Ask the Digital Twin about GIS experience',
       type: 'link',
       twinSource: 'gis',
-      twinStarterPrompt: 'Help this visitor evaluate Kyle for a GIS Analyst role.',
+      twinStarterPrompt: 'Help this visitor evaluate Kyle for a GIS / Spatial Systems role.',
     },
     { label: 'Contact Me', type: 'contact' },
   ],
@@ -318,19 +317,19 @@ export const gisTrackContent: TrackPageContent = {
 
 export const trackSelectorCards: TrackSelectorCard[] = [
   {
-    title: 'Technical Implementation Specialist',
+    title: 'Implementation / CSE-lite',
     subcopy:
       'Onboarding, technical guidance, workflow setup, launch planning, and support handoff.',
     href: '/tracks/implementation',
   },
   {
-    title: 'Quality Assurance Analyst',
+    title: 'Ops Analytics / QA',
     subcopy:
       'Structured testing, issue triage, validation workflows, and decision-ready quality reporting.',
     href: '/tracks/ops-analytics',
   },
   {
-    title: 'GIS Analyst',
+    title: 'GIS / Spatial Systems',
     subcopy:
       'Spatial data operations, map workflows, metadata governance, and public-facing geospatial delivery.',
     href: '/tracks/gis',

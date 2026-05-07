@@ -35,6 +35,11 @@ export interface Certification {
 
 export type ProjectCategory = 'ai-ops' | 'qa-data' | 'success-strategy' | 'creative';
 export type CaseStudyCategory = ProjectCategory;
+export type RecruiterRoleLane =
+  | 'Implementation / CSE-lite'
+  | 'Ops Analytics / QA'
+  | 'GIS / Spatial Systems'
+  | 'AI Workflow / Portfolio Governance';
 
 export interface CaseStudyRigor {
   statement: string;
@@ -89,6 +94,7 @@ export interface ProjectEntry {
   rationale: string;
   category: ProjectCategory;
   tags: string[];
+  roleLanes?: RecruiterRoleLane[];
   // High-Rigor Evidence Fields
   heroArtifact?: CaseStudyArtifact;
   artifacts?: CaseStudyArtifact[];

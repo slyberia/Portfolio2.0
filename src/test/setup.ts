@@ -14,3 +14,15 @@ if (typeof AbortSignal !== 'undefined') {
     configurable: true,
   });
 }
+
+// Fix undici/jsdom Request/AbortSignal mismatch
+if (typeof window !== 'undefined') {
+  Object.assign(window, {
+    Request: globalThis.Request,
+    Response: globalThis.Response,
+    Headers: globalThis.Headers,
+    fetch: globalThis.fetch,
+    AbortController: globalThis.AbortController,
+    AbortSignal: globalThis.AbortSignal,
+  });
+}
