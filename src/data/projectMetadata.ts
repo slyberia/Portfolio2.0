@@ -1,5 +1,6 @@
 import { PROJECT_REGISTRY } from '../constants';
 import { buildProjectHref } from '../lib/routes';
+import type { RecruiterRoleLane } from '../types';
 
 export type ProjectRoleLane = 'Implementation' | 'QA' | 'GIS';
 export type ProjectFilter = 'Implementation' | 'QA' | 'GIS' | 'AI Systems' | 'Process';
@@ -15,6 +16,7 @@ export type ProjectMetadata = {
   featuredLabel?: string;
   statusLabel: string;
   roleLanes: ProjectRoleLane[];
+  canonicalRoleLanes: RecruiterRoleLane[];
   filters: ProjectFilter[];
   proofType: string;
   accent: ProjectAccent;
@@ -56,6 +58,11 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     featuredLabel: 'FLAGSHIP GIS SYSTEM',
     statusLabel: 'Featured System',
     roleLanes: ['GIS', 'Implementation', 'QA'],
+    canonicalRoleLanes: [
+      'GIS / Spatial Systems',
+      'Implementation / CSE-lite',
+      'Ops Analytics / QA',
+    ],
     filters: ['GIS', 'Implementation', 'QA', 'Process'],
     proofType: 'System',
     accent: 'gold',
@@ -78,6 +85,11 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     featuredLabel: 'FEATURED AI IMPLEMENTATION',
     statusLabel: 'Featured System',
     roleLanes: ['Implementation', 'QA'],
+    canonicalRoleLanes: [
+      'AI Workflow / Portfolio Governance',
+      'Implementation / CSE-lite',
+      'Ops Analytics / QA',
+    ],
     filters: ['Implementation', 'QA', 'AI Systems', 'Process'],
     proofType: 'System',
     accent: 'aqua',
@@ -98,6 +110,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     hierarchy: 'supporting',
     statusLabel: 'QA / Operations',
     roleLanes: ['Implementation', 'QA', 'GIS'],
+    canonicalRoleLanes: ['Ops Analytics / QA', 'GIS / Spatial Systems'],
     filters: ['Implementation', 'QA', 'GIS', 'Process'],
     proofType: 'Workflow',
     accent: 'blue',
@@ -115,6 +128,11 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     hierarchy: 'supporting',
     statusLabel: 'AI Governance',
     roleLanes: ['Implementation', 'QA'],
+    canonicalRoleLanes: [
+      'AI Workflow / Portfolio Governance',
+      'Implementation / CSE-lite',
+      'Ops Analytics / QA',
+    ],
     filters: ['Implementation', 'QA', 'AI Systems', 'Process'],
     proofType: 'Documentation',
     accent: 'aqua',
@@ -132,6 +150,11 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     hierarchy: 'supporting',
     statusLabel: 'AI Governance',
     roleLanes: ['Implementation', 'QA'],
+    canonicalRoleLanes: [
+      'AI Workflow / Portfolio Governance',
+      'Implementation / CSE-lite',
+      'Ops Analytics / QA',
+    ],
     filters: ['Implementation', 'QA', 'AI Systems', 'Process'],
     proofType: 'Governance',
     accent: 'slate',
@@ -149,6 +172,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     hierarchy: 'supporting',
     statusLabel: 'Systems Testing',
     roleLanes: ['QA'],
+    canonicalRoleLanes: ['Ops Analytics / QA'],
     filters: ['QA', 'Process'],
     proofType: 'Testing',
     accent: 'blue',
@@ -166,6 +190,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     hierarchy: 'supporting',
     statusLabel: 'Workflow Prototype',
     roleLanes: ['Implementation'],
+    canonicalRoleLanes: ['Implementation / CSE-lite'],
     filters: ['Implementation', 'Process'],
     proofType: 'Workflow',
     accent: 'slate',
@@ -214,6 +239,9 @@ export const validateProjectMetadataContracts = () => {
   const invalidRoleLanes = PROJECT_METADATA.filter((project) => project.roleLanes.length === 0).map(
     (project) => project.id,
   );
+  const invalidCanonicalRoleLanes = PROJECT_METADATA.filter(
+    (project) => project.canonicalRoleLanes.length === 0,
+  ).map((project) => project.id);
   const invalidFilters = PROJECT_METADATA.filter((project) => project.filters.length === 0).map(
     (project) => project.id,
   );
@@ -238,6 +266,7 @@ export const validateProjectMetadataContracts = () => {
     invalidAccents,
     invalidFilters,
     invalidRoleLanes,
+    invalidCanonicalRoleLanes,
     missingHrefPrefix,
     featuredWithoutEvidence,
     flagshipCount,

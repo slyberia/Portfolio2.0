@@ -23,7 +23,8 @@
     "vite.config.ts",
     "vitest.config.ts",
     "tsconfig.json",
-    "docs/workflow/jules-report.md"
+    "docs/workflow/jules-report.md",
+    "docs/workflow/codex-defense.md"
   ],
   "ignore": {
     "useGitignore": true,

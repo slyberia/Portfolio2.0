@@ -1,110 +1,84 @@
 import fs from 'fs';
-import path from 'path';
 import { execSync } from 'child_process';
-import { fileURLToPath } from 'url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const rootDir = path.join(__dirname, '..');
-
-async function main() {
-  // 1. Read JULES_API_KEY from environment or .env
-  const envPath = path.join(rootDir, '.env');
-  let apiKey = process.env.JULES_API_KEY;
-
-  if (!apiKey && fs.existsSync(envPath)) {
-    const envContent = fs.readFileSync(envPath, 'utf8');
-    const match = envContent.match(/^JULES_API_KEY=(.*)$/m);
-    if (match) {
-      apiKey = match[1].trim();
-    }
-  }
-
-  if (!apiKey) {
-    console.error('❌ ERROR: JULES_API_KEY is not set in the environment or .env file.');
-    process.exit(1);
-  }
-
-  if (apiKey === 'your_key_here') {
-    console.error(
-      '⚠️ WARNING: JULES_API_KEY is still using the placeholder value. Please update your .env file.',
-    );
-  }
-
-  // 2. Execute git diff main...HEAD
-  let diff = '';
-  try {
-    diff = execSync('git diff main...HEAD', { encoding: 'utf8' });
-  } catch (error) {
-    console.error(
-      '❌ ERROR: Failed to execute git diff. Make sure you are on a branch and have commits.',
-    );
-    console.error(error.message);
-    process.exit(1);
-  }
-
-  if (!diff.trim()) {
-    console.warn(
-      '⚠️ WARNING: No diff found between main and HEAD. Ensure you have committed changes.',
-    );
-  }
-
-  // 3. Read rules from docs/workflow/jules-review-template.md
-  const templatePath = path.join(rootDir, 'docs', 'workflow', 'jules-review-template.md');
-  let template = '';
-  try {
-    template = fs.readFileSync(templatePath, 'utf8');
-  } catch (error) {
-    console.error('❌ ERROR: Failed to read docs/workflow/jules-review-template.md');
-    process.exit(1);
-  }
-
-  // 4. Construct payload and make POST request to the API
-  const payload = {
-    model: 'gpt-4o', // Assuming Jules uses an OpenAI-compatible endpoint
-    messages: [
-      {
-        role: 'system',
-        content: `You are Jules, the reviewer agent. Follow these instructions exactly:\n\n${template}`,
-      },
-      {
-        role: 'user',
-        content: `Here is the current git diff for this phase:\n\n\`\`\`diff\n${diff}\n\`\`\`\n\nProvide your review.`,
-      },
-    ],
-  };
-
-  console.log('Sending diff to Jules API for review...');
-
-  try {
-    // Note: To use a different Jules API URL, update this endpoint.
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify(payload),
-    });
-
-    if (!response.ok) {
-      throw new Error(`API returned status ${response.status}: ${await response.text()}`);
-    }
-
-    const data = await response.json();
-    const report = data.choices[0].message.content;
-
-    // 5. Write the API response to docs/workflow/jules-report.md
-    const reportPath = path.join(rootDir, 'docs', 'workflow', 'jules-report.md');
-    fs.writeFileSync(reportPath, report, 'utf8');
-    console.log(`✅ Jules review complete. Report written to ${reportPath}`);
-  } catch (error) {
-    console.error('❌ ERROR: Failed to communicate with Jules API.');
-    console.error(error.message);
-    process.exit(1);
-  }
+let apiKey = process.env.JULES_API_KEY;
+if (!apiKey && fs.existsSync('.env')) {
+  const envContent = fs.readFileSync('.env', 'utf8');
+  const match = envContent.match(/^JULES_API_KEY=(.*)$/m);
+  if (match) apiKey = match[1].trim();
 }
 
-main().catch((err) => {
-  console.error('Unexpected error:', err);
+if (!apiKey || apiKey.includes('your_key_here')) {
+  console.error('❌ ERROR: Missing or invalid JULES_API_KEY in .env file.');
   process.exit(1);
-});
+}
+
+console.log('Starting Jules code review...');
+
+try {
+  // 1. Get the Git Diff (Resilient Fallback)
+  let diff = '';
+  try {
+    diff = execSync('git diff HEAD').toString(); // Uncommitted changes
+    if (!diff.trim()) {
+      diff = execSync('git diff HEAD~1').toString(); // Last commit
+    }
+  } catch (err) {
+    console.error('❌ Error getting git diff:', err.message);
+    process.exit(1);
+  }
+
+  // 2. Load the Rules
+  const rulesPath = fs.existsSync('.github/pull_request_template.md')
+    ? '.github/pull_request_template.md'
+    : 'docs/workflow/jules-review-template.md';
+  const rules = fs.readFileSync(rulesPath, 'utf8');
+
+  if (!diff.trim()) {
+    console.log('No code changes detected to review.');
+    process.exit(0);
+  }
+
+  // 3. Construct Google Gemini API payload
+  const promptText = `You are Jules, a strict code reviewer. Review this code diff based on the following rules:\n\nRULES:\n${rules}\n\nGIT DIFF:\n${diff}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=${apiKey.trim()}`;
+  const payload = { contents: [{ parts: [{ text: promptText }] }] };
+
+  // 4. Execute the call
+  console.log('Sending diff to Google Gemini API...');
+  fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.error) {
+        console.error('❌ API Error:', data.error.message);
+        process.exit(1);
+      }
+
+      const candidate = Array.isArray(data.candidates) ? data.candidates[0] : null;
+      const content = candidate?.content;
+      const part = Array.isArray(content?.parts) ? content.parts[0] : null;
+      const rawReviewText = typeof part?.text === 'string' ? part.text : null;
+
+      if (!candidate || !content || !part || !rawReviewText) {
+        console.error('❌ Invalid Gemini response: missing candidates[0].content.parts[0].text.');
+        process.exit(1);
+      }
+
+      const timestamp = new Date().toLocaleString();
+      const formattedReport = `# Jules Code Review\n**Generated:** ${timestamp}\n\n${rawReviewText}`;
+
+      fs.writeFileSync('docs/workflow/jules-report.md', formattedReport);
+      console.log('✅ Jules review complete. Saved to docs/workflow/jules-report.md');
+    })
+    .catch((err) => {
+      console.error('❌ Fetch failed:', err);
+      process.exit(1);
+    });
+} catch (error) {
+  console.error('❌ Execution failed:', error.message);
+  process.exit(1);
+}
