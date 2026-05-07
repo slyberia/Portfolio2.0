@@ -41,6 +41,8 @@ docs/crawler-accessibility.md
 docs/executive-summaries/summary-2026-05-06.md
 docs/executive-summaries/summary-2026-05-07-201507.md
 docs/executive-summaries/summary-2026-05-07-220158.md
+docs/executive-summaries/summary-2026-05-07-222255.md
+docs/executive-summaries/summary-2026-05-07-230940.md
 docs/portfolio2-evidence-audit-ledger.md
 docs/product-lifecycle.md
 docs/prompts/codex-phase-template.md
@@ -114,6 +116,7 @@ src/main.tsx
 src/router.tsx
 src/types.ts
 src/utils/audioUtils.ts
+src/utils/evidenceBlocks.ts
 src/utils/readingTime.ts
 src/utils/recruiterSummary.ts
 src/views/DeepDiveView.tsx
@@ -132,14 +135,15 @@ vitest.config.ts
 
 # Files
 
-## File: docs/executive-summaries/summary-2026-05-07-220158.md
+## File: docs/executive-summaries/summary-2026-05-07-230940.md
 ```markdown
-# Automated Review Governance Pipeline for Portfolio Delivery
-**Initiative Context:** This work formalized a quality-control workflow for the portfolio codebase by adding automated AI review, appellate triage, documentation generation, and validation routing around developer changes.
+# Evidence Documentation Schema and Review Governance Update
 
-The project added a structured review station to the development process. One tool packages code changes and asks an AI reviewer to inspect them, another tool evaluates which findings should actually be fixed, and a documentation step turns the outcome into both technical notes and stakeholder-friendly summaries. In plain terms, the system does not just ask “did something change?” It asks “was the change reviewed, was the review fair, and was the decision recorded?”
+**Initiative Context:** This work was triggered by a review phase around a new evidence-block data structure and the automated AI review pipeline that records technical and stakeholder-facing decisions.
 
-This matters because it makes the portfolio easier to maintain as it grows. Recruiters and customers do not see these tools directly, but they benefit from the discipline behind them: fewer careless changes, clearer decision records, and faster iteration without sacrificing judgment. The business value is a more reliable delivery process that shows operational maturity, especially around AI-assisted work where review, accountability, and human decision-making need to remain visible.
+The project added a clearer structure for turning portfolio work into reusable evidence summaries. In plain terms, it defines the boxes that future documentation will fill in: what the initiative was, why it happened, what was technically built, and what value it creates for a business audience.
+
+This matters because the portfolio is becoming more than a collection of pages. It is being shaped into a proof system where technical changes, review findings, and business explanations can stay connected. The business value is stronger credibility with recruiters and customer-facing stakeholders: the work is easier to scan, easier to explain, and easier to trust because review decisions are recorded instead of left implicit.
 ```
 
 ## File: src/App.tsx
@@ -342,6 +346,132 @@ export function encode(bytes: Uint8Array) {
 }
 ```
 
+## File: src/utils/evidenceBlocks.ts
+```typescript
+import type { EvidenceBlock } from '../types';
+
+type MarkdownModuleMap = Record<string, string>;
+
+export interface EvidenceBlockParseIssue {
+  sourcePath: string;
+  reason: string;
+}
+
+export interface EvidenceBlockParseResult {
+  blocks: EvidenceBlock[];
+  issues: EvidenceBlockParseIssue[];
+}
+
+const executiveSummaryModules = import.meta.glob<string>('../../docs/executive-summaries/*.md', {
+  eager: true,
+  import: 'default',
+  query: '?raw',
+}) as MarkdownModuleMap;
+
+const REQUIRED_EVIDENCE_FIELDS: Array<keyof EvidenceBlock> = [
+  'initiativeTitle',
+  'context',
+  'technicalDetail',
+  'businessValue',
+];
+
+function stripMarkdownInline(value: string): string {
+  return value
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/__(.*?)__/g, '$1')
+    .replace(/`([^`]+)`/g, '$1')
+    .trim();
+}
+
+function toParagraphs(markdown: string): string[] {
+  return markdown
+    .replace(/\r\n/g, '\n')
+    .trim()
+    .split(/\n{2,}/)
+    .map((paragraph) => stripMarkdownInline(paragraph.replace(/\n+/g, ' ')))
+    .filter(Boolean);
+}
+
+function parseInitiativeTitle(markdown: string): string {
+  const headingMatch = markdown.replace(/\r\n/g, '\n').match(/^#\s+(.+)$/m);
+  return headingMatch ? stripMarkdownInline(headingMatch[1]) : '';
+}
+
+function validateEvidenceBlock(
+  block: EvidenceBlock,
+  _sourcePath: string,
+): EvidenceBlockParseIssue[] {
+  return REQUIRED_EVIDENCE_FIELDS.flatMap((field) =>
+    block[field].trim() ? [] : [{ sourcePath: _sourcePath, reason: `Missing ${field}` }],
+  );
+}
+
+export function parseEvidenceBlockMarkdown(
+  markdown: string,
+  _sourcePath = 'inline',
+): EvidenceBlock {
+  const initiativeTitle = parseInitiativeTitle(markdown);
+  const contentParagraphs = toParagraphs(markdown).filter(
+    (paragraph) => !paragraph.startsWith('# '),
+  );
+
+  const contextIndex = contentParagraphs.findIndex((paragraph) =>
+    /^Initiative Context:\s*/i.test(paragraph),
+  );
+
+  const context =
+    contextIndex >= 0
+      ? contentParagraphs[contextIndex].replace(/^Initiative Context:\s*/i, '').trim()
+      : (contentParagraphs[0] ?? '');
+
+  const afterContext =
+    contextIndex >= 0
+      ? contentParagraphs.filter((_, index) => index !== contextIndex)
+      : contentParagraphs.slice(1);
+
+  const businessValueIndex = afterContext.findIndex((paragraph) =>
+    /\bbusiness value\b/i.test(paragraph),
+  );
+
+  const businessValue =
+    businessValueIndex >= 0
+      ? afterContext[businessValueIndex]
+      : (afterContext[afterContext.length - 1] ?? '');
+
+  const technicalDetail =
+    businessValueIndex >= 0
+      ? afterContext.filter((_, index) => index !== businessValueIndex).join('\n\n')
+      : afterContext.slice(0, -1).join('\n\n');
+
+  return {
+    initiativeTitle,
+    context,
+    technicalDetail,
+    businessValue,
+  };
+}
+
+export function parseEvidenceBlocks(
+  markdownModules: MarkdownModuleMap = executiveSummaryModules,
+): EvidenceBlockParseResult {
+  return Object.entries(markdownModules)
+    .sort(([leftPath], [rightPath]) => leftPath.localeCompare(rightPath))
+    .reduce<EvidenceBlockParseResult>(
+      (result, [sourcePath, markdown]) => {
+        const block = parseEvidenceBlockMarkdown(markdown, sourcePath);
+        const issues = validateEvidenceBlock(block, sourcePath);
+
+        return issues.length > 0
+          ? { blocks: result.blocks, issues: [...result.issues, ...issues] }
+          : { blocks: [...result.blocks, block], issues: result.issues };
+      },
+      { blocks: [], issues: [] },
+    );
+}
+
+export const executiveEvidenceBlocks = parseEvidenceBlocks();
+```
+
 ## File: src/utils/readingTime.ts
 ```typescript
 /**
@@ -444,29 +574,26 @@ The project built an internal review pipeline that lets one AI reviewer inspect 
 This matters because it makes the portfolio easier to maintain as it grows. Instead of relying only on memory or manual judgment, the system creates repeatable review records, separates technical notes from executive summaries, and keeps decisions traceable. The business value is faster quality review, clearer documentation, and better governance without adding risk to the live portfolio experience.
 ```
 
-## File: docs/product-lifecycle.md
+## File: docs/executive-summaries/summary-2026-05-07-220158.md
 ```markdown
-## Build Run: 5/6/2026, 7:16:34 PM
+# Automated Review Governance Pipeline for Portfolio Delivery
 
-- Code churn added a developer-only AI review workflow: `run-jules-review.mjs` sends git diffs to Gemini using the Jules review template, `run-appellate-defense.mjs` feeds the Jules report back through Codex for appellate classification, and `validate-phase.mjs` replaces the prior phase validation shell flow with a cross-platform Node validation runner.
-- Jules reviewed the churn as scope-compliant and isolated from app runtime, routes, SEO, accessibility, and design-system behavior, but flagged two P3 robustness issues in `run-jules-review.mjs`: implicit Node 18+ reliance on global `fetch`, and unsafe dereference of `data.candidates[0].content.parts[0].text`; it also noted P4 missing tests for internal workflow scripts.
-- Appellate defense conceded the runtime declaration and Gemini response-shape validation fixes, while defending the lack of tests on containment grounds: the scripts are local developer workflow entrypoints whose failures terminate local automation or omit generated files, without mutating production user-facing application state.
+**Initiative Context:** This work formalized a quality-control workflow for the portfolio codebase by adding automated AI review, appellate triage, documentation generation, and validation routing around developer changes.
 
----
+The project added a structured review station to the development process. One tool packages code changes and asks an AI reviewer to inspect them, another tool evaluates which findings should actually be fixed, and a documentation step turns the outcome into both technical notes and stakeholder-friendly summaries. In plain terms, the system does not just ask “did something change?” It asks “was the change reviewed, was the review fair, and was the decision recorded?”
 
-## Build Run: 5/6/2026, 8:15:07 PM
+This matters because it makes the portfolio easier to maintain as it grows. Recruiters and customers do not see these tools directly, but they benefit from the discipline behind them: fewer careless changes, clearer decision records, and faster iteration without sacrificing judgment. The business value is a more reliable delivery process that shows operational maturity, especially around AI-assisted work where review, accountability, and human decision-making need to remain visible.
+```
 
-- Code churn added a developer-only AI review/documentation workflow: `run-jules-review.mjs` packages git diffs and sends them to Gemini using the Jules template, `run-appellate-defense.mjs` routes Jules findings through Codex for issue classification, `run-documentation.mjs` splits technical/executive outputs into lifecycle docs, `run-resolution.mjs` applies approved mutations, and `validate-phase.mjs` replaces shell validation with a cross-platform Node runner.
-- Jules found the churn scope-compliant and isolated from runtime application surfaces, with no regression risk to routes, SEO, accessibility, components, or design-system behavior; it raised two P3 robustness issues in `run-jules-review.mjs` for implicit Node 18+ `fetch` reliance and unsafe Gemini response dereference, plus one P4 concern for missing tests on internal workflow scripts.
-- Appellate defense conceded the two P3 fixes: declare the Node runtime requirement in `package.json` and validate Gemini response shape before reading `data.candidates[0].content.parts[0].text`; it defended the P4 test gap because these scripts are local developer orchestration entrypoints whose failures stop local automation or omit generated files without mutating production-facing application state.
+## File: docs/executive-summaries/summary-2026-05-07-222255.md
+```markdown
+# Role-Lane Design System Cleanup for Portfolio Project Proof
 
----
+**Initiative Context:** This work was triggered by a review of recent portfolio changes that added clearer role-lane labeling across project pages. The goal was to make project evidence easier for recruiters and reviewers to scan while keeping the underlying styling system maintainable.
 
-## Build Run: 5/6/2026, 10:01:58 PM
-- Code churn introduced a developer-only AI review and documentation workflow: Jules review generation via Gemini, Codex appellate-defense classification, documentation routing into lifecycle/executive artifacts, resolution coaching, and a cross-platform Node-based phase validation runner replacing the prior shell flow.
-- Jules found the changes scope-compliant and isolated from app runtime, routing, SEO, accessibility, and design-system behavior, but flagged two P3 risks in `run-jules-review.mjs`: implicit Node 18+ `fetch` reliance and unsafe Gemini response dereferencing; it also logged a P4 concern for missing workflow-script tests.
-- Appellate defense conceded the Node runtime declaration and Gemini response-shape validation fixes, while defending missing tests because the scripts are local developer orchestration tools whose failures stop local automation or omit generated docs without mutating production app state.
----
+The portfolio now shows project relevance through consistent role labels such as implementation, QA, GIS, and AI workflow governance. This helps visitors quickly understand which projects prove which capabilities, instead of forcing them to infer fit from long descriptions. Think of it like adding clear aisle signs in a store: the products were already there, but the signs make it much faster to find what matters.
+
+The review found that the new labels were useful, but some styling rules had been copied in multiple places. The accepted decision was to centralize those rules so future updates stay consistent across the site. The business value is stronger recruiter readability, lower maintenance risk, and a more professional proof system that demonstrates not just completed work, but disciplined product ownership.
 ```
 
 ## File: docs/prompts/codex-phase-template.md
@@ -547,75 +674,6 @@ TODO: Populate during Phase 2G workflow codification.
 # ARCHITECT CONTEXT RULES
 
 TODO: Populate during Phase 2G workflow codification.
-```
-
-## File: docs/workflow/codex-defense.md
-```markdown
-# Codex Appellate Defense
-**Generated:** 5/6/2026, 10:10:43 PM
-
-<Defense_Block>
-- **Issue:** Duplicated `canonicalRoleAccent` constant creates maintenance risk.
-- **Classification:** Concede
-- **Rationale:** Change `src/data/projectMetadata.ts:21` to export a single canonical role-to-accent mapping, then replace duplicate local declarations at `src/components/home/SupportingEvidenceSection.tsx:13` and `src/views/ProjectDetailView.tsx:26`.
-</Defense_Block>
-
-<Defense_Block>
-- **Issue:** `ProjectsIndexView` uses local hardcoded `roleStyles` instead of the shared role accent recipe.
-- **Classification:** Concede
-- **Rationale:** Change `src/views/ProjectsIndexView.tsx:12` to remove the local `roleStyles` map, then update role chip style derivation at `src/views/ProjectsIndexView.tsx:82` and `src/views/ProjectsIndexView.tsx:149` to use the centralized accent mapping plus `getRoleAccentRecipe`.
-</Defense_Block>
-
-<Defense_Block>
-- **Issue:** Missing component test updates for modified `canonicalRoleLanes` UI rendering.
-- **Classification:** Concede
-- **Rationale:** Change `src/test/components.test.tsx:110` to add component-level coverage for rendered canonical role lane text and chip styling behavior for `SupportingEvidenceSection`, `ProjectDetailView`, and `ProjectsIndexView`.
-</Defense_Block>
-```
-
-## File: docs/workflow/jules-report.md
-```markdown
-# Jules Code Review
-**Generated:** 5/6/2026, 10:09:59 PM
-
-## Jules Review: Summary
-
-The phase contract appears to involve a data model refactor for project role lanes, propagating the changes from `roleLanes` to `canonicalRoleLanes` throughout the UI. The changes are compliant with the scope and do not introduce issues related to routing, SEO, or accessibility.
-
-However, the implementation introduces significant code duplication and a notable deviation from the established design system pattern for component styling. This creates immediate technical debt and future maintenance risk. Additionally, user-facing presentational logic was modified without corresponding updates to component tests.
-
-The documentation updates related to the developer workflow are noted but are ancillary to the primary code review of the `src` directory changes.
-
-## Files Inspected
-
--   `docs/product-lifecycle.md`
--   `docs/workflow/codex-defense.md`
--   `src/components/home/SupportingEvidenceSection.tsx`
--   `src/views/ProjectDetailView.tsx`
--   `src/views/ProjectsIndexView.tsx`
-
----
-
-## Issues
-
-### P2: Medium Priority
-
--   **Duplicated `canonicalRoleAccent` constant creates maintenance risk.**
-    -   **File(s):** `src/components/home/SupportingEvidenceSection.tsx`, `src/views/ProjectDetailView.tsx`
-    -   **Issue:** The `canonicalRoleAccent` mapping object is defined identically in two separate files. This violates the DRY principle. Any future change to this mapping must be manually synchronized across multiple locations, which is error-prone and leads to data inconsistency.
-    -   **Resolution:** Centralize this constant. Extract the `canonicalRoleAccent` object to a single, shared location (e.g., `src/data/projectMetadata.ts` or `src/lib/design-system.ts`) and import it into the required components.
-
--   **Inconsistent styling implementation causes design system drift.**
-    -   **File(s):** `src/views/ProjectsIndexView.tsx`
-    -   **Issue:** The `SupportingEvidenceSection` and `ProjectDetailView` components correctly use the centralized `getRoleAccentRecipe` function to derive chip styles, which is the established pattern. The `ProjectsIndexView` component deviates by defining a local, one-off `roleStyles` object with hardcoded Tailwind classes. This bypasses the design system, creating visual and technical inconsistencies.
-    -   **Resolution:** Refactor `ProjectsIndexView.tsx` to remove the local `roleStyles` object. It should instead use the same data mapping and the centralized `getRoleAccentRecipe` function as the other components to ensure a single source of truth for role-based styling.
-
-### P3: Low Priority
-
--   **Missing component test updates for modified UI logic.**
-    -   **File(s):** `src/components/home/SupportingEvidenceSection.tsx`, `src/views/ProjectDetailView.tsx`, `src/views/ProjectsIndexView.tsx`
-    -   **Issue:** The logic for rendering role chips has changed (data source, mapping, and display text). The diff does not include any updates to unit or component-level tests to validate this new user-facing presentation logic. The documentation acknowledges a test gap for developer-workflow scripts, but this is separate from the application components.
-    -   **Resolution:** Update existing tests or add new tests to cover the new `canonicalRoleLanes` rendering logic in each affected component, asserting that the correct text and styles are applied.
 ```
 
 ## File: docs/workflow/jules-review-template.md
@@ -2747,6 +2805,101 @@ For Phase 8E (public Process / Deep Dive update), implement:
    - Optionally public GitHub links to: `src/router.tsx`, `src/data/projectMetadata.ts`, `server/geminiProxy.ts`, `src/components/ChatWidget.tsx`.
 ```
 
+## File: docs/product-lifecycle.md
+```markdown
+## Build Run: 5/6/2026, 7:16:34 PM
+
+- Code churn added a developer-only AI review workflow: `run-jules-review.mjs` sends git diffs to Gemini using the Jules review template, `run-appellate-defense.mjs` feeds the Jules report back through Codex for appellate classification, and `validate-phase.mjs` replaces the prior phase validation shell flow with a cross-platform Node validation runner.
+- Jules reviewed the churn as scope-compliant and isolated from app runtime, routes, SEO, accessibility, and design-system behavior, but flagged two P3 robustness issues in `run-jules-review.mjs`: implicit Node 18+ reliance on global `fetch`, and unsafe dereference of `data.candidates[0].content.parts[0].text`; it also noted P4 missing tests for internal workflow scripts.
+- Appellate defense conceded the runtime declaration and Gemini response-shape validation fixes, while defending the lack of tests on containment grounds: the scripts are local developer workflow entrypoints whose failures terminate local automation or omit generated files, without mutating production user-facing application state.
+
+---
+
+## Build Run: 5/6/2026, 8:15:07 PM
+
+- Code churn added a developer-only AI review/documentation workflow: `run-jules-review.mjs` packages git diffs and sends them to Gemini using the Jules template, `run-appellate-defense.mjs` routes Jules findings through Codex for issue classification, `run-documentation.mjs` splits technical/executive outputs into lifecycle docs, `run-resolution.mjs` applies approved mutations, and `validate-phase.mjs` replaces shell validation with a cross-platform Node runner.
+- Jules found the churn scope-compliant and isolated from runtime application surfaces, with no regression risk to routes, SEO, accessibility, components, or design-system behavior; it raised two P3 robustness issues in `run-jules-review.mjs` for implicit Node 18+ `fetch` reliance and unsafe Gemini response dereference, plus one P4 concern for missing tests on internal workflow scripts.
+- Appellate defense conceded the two P3 fixes: declare the Node runtime requirement in `package.json` and validate Gemini response shape before reading `data.candidates[0].content.parts[0].text`; it defended the P4 test gap because these scripts are local developer orchestration entrypoints whose failures stop local automation or omit generated files without mutating production-facing application state.
+
+---
+
+## Build Run: 5/6/2026, 10:01:58 PM
+
+- Code churn introduced a developer-only AI review and documentation workflow: Jules review generation via Gemini, Codex appellate-defense classification, documentation routing into lifecycle/executive artifacts, resolution coaching, and a cross-platform Node-based phase validation runner replacing the prior shell flow.
+- Jules found the changes scope-compliant and isolated from app runtime, routing, SEO, accessibility, and design-system behavior, but flagged two P3 risks in `run-jules-review.mjs`: implicit Node 18+ `fetch` reliance and unsafe Gemini response dereferencing; it also logged a P4 concern for missing workflow-script tests.
+- Appellate defense conceded the Node runtime declaration and Gemini response-shape validation fixes, while defending missing tests because the scripts are local developer orchestration tools whose failures stop local automation or omit generated docs without mutating production app state.
+
+---
+
+## Build Run: 5/6/2026, 10:22:55 PM
+
+- Code churn centered on `canonicalRoleLanes` propagation across project-facing UI: role-lane metadata was added/used in `projectMetadata.ts`, rendered in `SupportingEvidenceSection`, `ProjectDetailView`, and `ProjectsIndexView`, and connected to the existing role accent design-system pattern via `getRoleAccentRecipe`; related documentation and workflow artifacts were also updated.
+- Jules reviewed the phase as scope-compliant with no routing, SEO, or accessibility regression, but flagged P2 duplication/design-system drift: duplicated `canonicalRoleAccent` mappings in two components, hardcoded local `roleStyles` in `ProjectsIndexView`, and missing component test updates for changed role-chip rendering.
+- Appellate defense conceded all findings: centralize the canonical role-to-accent mapping in `src/data/projectMetadata.ts`, refactor `ProjectsIndexView` to use the shared accent mapping plus `getRoleAccentRecipe`, and add component-level coverage for role lane text and chip styling behavior across the affected views.
+
+---
+
+## Build Run: 5/6/2026, 11:09:40 PM
+
+- Code churn introduced the `EvidenceBlock` schema boundary in `src/types.ts` and connected the broader documentation pipeline context around executive-summary parsing, lifecycle logging, Jules review capture, Codex appellate defense, documentation generation, resolution coaching, and phase validation.
+- Jules reviewed the latest phase as syntactically valid but incomplete, flagging a P2 concern that `EvidenceBlock` existed only as a passive type with no consuming component, data integration, or tests, plus a P3 concern that the interface and fields lacked TSDoc clarity.
+- Appellate defense defended the P2 finding because a passive exported interface has no runtime behavior, side effects, or executable path requiring isolated coverage, but conceded the P3 documentation gap and directed `src/types.ts` to document `EvidenceBlock`, especially the semantic distinction between context, technical detail, and business value.
+
+---
+```
+
+## File: docs/workflow/codex-defense.md
+```markdown
+# Codex Appellate Defense
+
+**Generated:** 5/6/2026, 11:09:17 PM
+
+<Defense_Block>
+
+- **Issue:** Incomplete feature implementation and missing tests for `EvidenceBlock`.
+- **Classification:** Defend
+- **Rationale:** The architectural invariant is that `src/types.ts` is a shared schema boundary, and introducing a passive exported interface does not create runtime behavior, side effects, data-flow obligations, or executable paths requiring unit/integration coverage in isolation.
+  </Defense_Block>
+
+<Defense_Block>
+
+- **Issue:** Missing TSDoc comments for `EvidenceBlock` and its properties.
+- **Classification:** Concede
+- **Rationale:** Change `src/types.ts:107` to document the `EvidenceBlock` interface and its fields, especially `context`, because the semantic distinction between narrative context, technical detail, and business value is not fully inferable from the property names alone.
+  </Defense_Block>
+```
+
+## File: docs/workflow/jules-report.md
+```markdown
+# Jules Code Review
+
+**Generated:** 5/6/2026, 11:08:58 PM
+
+### Review Summary
+
+This change introduces the `EvidenceBlock` type definition. While the type itself is syntactically correct and doesn't violate build constraints, its introduction in isolation suggests the associated feature is incomplete. The primary concern is the absence of any consuming component, logic, or test coverage for the feature this type is intended to support, which is a significant gap for a "completed phase."
+
+### Files Inspected
+
+- `src/types.ts`
+
+---
+
+### Issues
+
+#### P2: Incomplete Feature Implementation and Missing Tests
+
+The phase is marked as complete, but this PR only contains a type definition. The implementation of the component that consumes the `EvidenceBlock` type, its integration with data sources, and corresponding unit/integration tests are all missing. Merging a type without its implementation leaves dead code and represents an untestable and incomplete feature.
+
+**Recommendation:** The full implementation and associated tests for the feature using this type must be included before this can be approved.
+
+#### P3: Missing Type Documentation
+
+The new `EvidenceBlock` interface and its properties lack TSDoc comments. This creates ambiguity around the intended purpose of each field (e.g., `context`).
+
+**Recommendation:** Add TSDoc comments to the interface and each of its properties to improve code clarity and long-term maintainability.
+```
+
 ## File: scripts/run-jules-review.mjs
 ```javascript
 import fs from 'fs';
@@ -4625,199 +4778,6 @@ The harness standardizes the “attempt environment” so that observed differen
 };
 ```
 
-## File: src/views/ProjectsIndexView.tsx
-```typescript
-import React, { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { PORTFOLIO_PROCESS_HREF, SITE_INDEX_HREF } from '../lib/routes';
-import {
-  PROJECT_FILTERS,
-  ProjectFilter,
-  getFeaturedProjects,
-  getSupportingProjects,
-} from '../data/projectMetadata';
-import type { RecruiterRoleLane } from '../types';
-
-const roleStyles: Record<RecruiterRoleLane, string> = {
-  'Implementation / CSE-lite': 'border-tide-aqua/30 bg-tide-aqua/10 text-[#237f86]',
-  'Ops Analytics / QA': 'border-blue-200 bg-tide-blue/10 text-blue-800',
-  'GIS / Spatial Systems': 'border-cyan-200 bg-cyan-50 text-cyan-800',
-  'AI Workflow / Portfolio Governance': 'border-slate-300 bg-slate-100 text-slate-700',
-};
-
-const ProjectsIndexView: React.FC = () => {
-  const [activeFilter, setActiveFilter] = useState<'All' | ProjectFilter>('All');
-
-  const featured = useMemo(() => getFeaturedProjects(), []);
-  const supporting = useMemo(() => getSupportingProjects(), []);
-
-  const filtered = useMemo(() => {
-    if (activeFilter === 'All') return supporting;
-    return supporting.filter((project) => project.filters.includes(activeFilter));
-  }, [activeFilter, supporting]);
-
-  return (
-    <div className="min-h-screen pt-20 pb-20 px-6 bg-[#f5f9fb] dark:bg-slate-950">
-      <div className="max-w-7xl mx-auto space-y-12">
-        <header className="space-y-4 max-w-4xl">
-          <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500">
-            PROJECT_LIBRARY
-          </p>
-          <h1 className="text-4xl md:text-5xl font-outfit font-semibold text-ink-navy dark:text-white">
-            Projects
-          </h1>
-          <p className="text-base text-slate-700 dark:text-slate-300">
-            Scannable project proof across technical implementation, QA, GIS, AI systems, and
-            workflow design.
-          </p>
-          <p className="text-sm text-slate-600 dark:text-slate-400">
-            Start with Guynode and the Digital Twin for the strongest system-level proof, then use
-            the project library to inspect supporting workflows, validation methods, and
-            implementation decisions.
-          </p>
-        </header>
-
-        <section aria-labelledby="featured-systems" className="space-y-4">
-          <h2
-            id="featured-systems"
-            className="text-2xl font-outfit font-bold text-ink-navy dark:text-white"
-          >
-            Featured Systems
-          </h2>
-          <div className="grid md:grid-cols-2 gap-4">
-            {featured.map((project) => (
-              <Link
-                key={project.id}
-                to={project.href}
-                className="rounded-xl border border-[#d8e8ee] bg-white dark:bg-slate-900 p-6 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
-              >
-                <div
-                  className={`h-1 w-20 rounded ${project.accent === 'cyan' ? 'bg-cyan-500' : 'bg-tide-aqua'}`}
-                  aria-hidden="true"
-                />
-                <p className="mt-3 text-xs uppercase tracking-[0.18em] text-slate-500">
-                  {project.featuredLabel}
-                </p>
-                <h3 className="mt-2 text-xl font-semibold text-ink-navy dark:text-white">
-                  {project.displayTitle}
-                </h3>
-                <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
-                  {project.shortSummary}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {project.canonicalRoleLanes.map((role) => (
-                    <span
-                      key={role}
-                      className={`text-[11px] px-2 py-0.5 rounded border ${roleStyles[role]}`}
-                    >
-                      {role}
-                    </span>
-                  ))}
-                </div>
-                <span className="mt-4 inline-block text-sm font-semibold text-[#237f86] dark:text-tide-softBlue">
-                  View Project →
-                </span>
-              </Link>
-            ))}
-          </div>
-        </section>
-
-        <section aria-labelledby="supporting-projects" className="space-y-4">
-          <h2
-            id="supporting-projects"
-            className="text-2xl font-outfit font-bold text-ink-navy dark:text-white"
-          >
-            Supporting Projects
-          </h2>
-          <div
-            role="tablist"
-            aria-label="Filter supporting projects"
-            className="flex flex-wrap gap-2"
-          >
-            {PROJECT_FILTERS.map((filter) => {
-              const isActive = activeFilter === filter;
-              return (
-                <button
-                  key={filter}
-                  role="tab"
-                  aria-selected={isActive}
-                  onClick={() => setActiveFilter(filter)}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-md border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua ${isActive ? 'border-tide-sky bg-tide-aqua/10 text-[#237f86]' : 'border-[#d8e8ee] bg-white text-slate-600'}`}
-                >
-                  {filter}
-                </button>
-              );
-            })}
-          </div>
-
-          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
-            {filtered.map((project) => (
-              <Link
-                key={project.id}
-                to={project.href}
-                className="rounded-xl border border-[#d8e8ee] bg-white dark:bg-slate-900 p-5 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
-              >
-                <div className="flex items-center justify-between gap-2">
-                  <span className="text-[10px] font-mono uppercase tracking-[0.16em] text-slate-500">
-                    {project.statusLabel}
-                  </span>
-                  <span className="text-[10px] uppercase tracking-wider font-semibold text-slate-500 border border-[#d8e8ee] rounded-full px-2 py-0.5">
-                    {project.proofType}
-                  </span>
-                </div>
-                <h3 className="mt-3 text-base font-semibold text-ink-navy dark:text-white">
-                  {project.displayTitle}
-                </h3>
-                <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
-                  {project.shortSummary}
-                </p>
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {project.canonicalRoleLanes.map((role) => (
-                    <span
-                      key={role}
-                      className={`text-[11px] px-2 py-0.5 rounded border ${roleStyles[role]}`}
-                    >
-                      {role}
-                    </span>
-                  ))}
-                </div>
-                <span className="mt-4 inline-block text-sm font-semibold text-[#237f86] dark:text-tide-softBlue">
-                  View Project →
-                </span>
-              </Link>
-            ))}
-          </div>
-        </section>
-
-        <section className="rounded-xl border border-[#d8e8ee] bg-white dark:bg-slate-900 p-5">
-          <h2 className="text-xl font-semibold text-ink-navy dark:text-white">
-            Want the build methodology?
-          </h2>
-          <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
-            Projects show what was built. Process shows how the portfolio was planned, governed,
-            hardened, and validated.
-          </p>
-          <a
-            href={PORTFOLIO_PROCESS_HREF}
-            className="mt-4 inline-flex text-sm font-semibold text-[#237f86]"
-          >
-            View Process Deep Dives
-          </a>
-          <p className="mt-4 text-sm text-slate-500">
-            Need the full map?{' '}
-            <Link to={SITE_INDEX_HREF} className="font-semibold text-[#237f86]">
-              Open Site Index
-            </Link>
-          </p>
-        </section>
-      </div>
-    </div>
-  );
-};
-
-export default ProjectsIndexView;
-```
-
 ## File: package.json
 ```json
 {
@@ -5190,6 +5150,208 @@ export interface ProjectEntry {
 }
 
 export type CaseStudyEntry = ProjectEntry;
+
+/**
+ * Represents a structured block of evidence extracted from pipeline governance logs.
+ * Used to surface technical and business outcomes to the portfolio UI.
+ */
+export interface EvidenceBlock {
+  /** The high-level name of the engineering or governance initiative. */
+  initiativeTitle: string;
+  /** Narrative background explaining the 'Why' behind the change, including constraints and triggers. */
+  context: string;
+  /** Specific implementation details, architectural decisions, and technical mutations applied. */
+  technicalDetail: string;
+  /** The measurable impact or stakeholder benefit derived from the initiative. */
+  businessValue: string;
+}
+```
+
+## File: src/views/ProjectsIndexView.tsx
+```typescript
+import React, { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { PORTFOLIO_PROCESS_HREF, SITE_INDEX_HREF } from '../lib/routes';
+import {
+  CANONICAL_ROLE_ACCENT,
+  PROJECT_FILTERS,
+  ProjectFilter,
+  getFeaturedProjects,
+  getSupportingProjects,
+} from '../data/projectMetadata';
+import { getRoleAccentRecipe } from '../lib/design-system';
+
+const ProjectsIndexView: React.FC = () => {
+  const [activeFilter, setActiveFilter] = useState<'All' | ProjectFilter>('All');
+
+  const featured = useMemo(() => getFeaturedProjects(), []);
+  const supporting = useMemo(() => getSupportingProjects(), []);
+
+  const filtered = useMemo(() => {
+    if (activeFilter === 'All') return supporting;
+    return supporting.filter((project) => project.filters.includes(activeFilter));
+  }, [activeFilter, supporting]);
+
+  return (
+    <div className="min-h-screen pt-20 pb-20 px-6 bg-[#f5f9fb] dark:bg-slate-950">
+      <div className="max-w-7xl mx-auto space-y-12">
+        <header className="space-y-4 max-w-4xl">
+          <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500">
+            PROJECT_LIBRARY
+          </p>
+          <h1 className="text-4xl md:text-5xl font-outfit font-semibold text-ink-navy dark:text-white">
+            Projects
+          </h1>
+          <p className="text-base text-slate-700 dark:text-slate-300">
+            Scannable project proof across technical implementation, QA, GIS, AI systems, and
+            workflow design.
+          </p>
+          <p className="text-sm text-slate-600 dark:text-slate-400">
+            Start with Guynode and the Digital Twin for the strongest system-level proof, then use
+            the project library to inspect supporting workflows, validation methods, and
+            implementation decisions.
+          </p>
+        </header>
+
+        <section aria-labelledby="featured-systems" className="space-y-4">
+          <h2
+            id="featured-systems"
+            className="text-2xl font-outfit font-bold text-ink-navy dark:text-white"
+          >
+            Featured Systems
+          </h2>
+          <div className="grid md:grid-cols-2 gap-4">
+            {featured.map((project) => (
+              <Link
+                key={project.id}
+                to={project.href}
+                className="rounded-xl border border-[#d8e8ee] bg-white dark:bg-slate-900 p-6 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
+              >
+                <div
+                  className={`h-1 w-20 rounded ${project.accent === 'cyan' ? 'bg-cyan-500' : 'bg-tide-aqua'}`}
+                  aria-hidden="true"
+                />
+                <p className="mt-3 text-xs uppercase tracking-[0.18em] text-slate-500">
+                  {project.featuredLabel}
+                </p>
+                <h3 className="mt-2 text-xl font-semibold text-ink-navy dark:text-white">
+                  {project.displayTitle}
+                </h3>
+                <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
+                  {project.shortSummary}
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {project.canonicalRoleLanes.map((role) => (
+                    <span
+                      key={role}
+                      className={`text-[11px] px-2 py-0.5 rounded border ${getRoleAccentRecipe(CANONICAL_ROLE_ACCENT[role]).chipClass}`}
+                    >
+                      {role}
+                    </span>
+                  ))}
+                </div>
+                <span className="mt-4 inline-block text-sm font-semibold text-[#237f86] dark:text-tide-softBlue">
+                  View Project →
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section aria-labelledby="supporting-projects" className="space-y-4">
+          <h2
+            id="supporting-projects"
+            className="text-2xl font-outfit font-bold text-ink-navy dark:text-white"
+          >
+            Supporting Projects
+          </h2>
+          <div
+            role="tablist"
+            aria-label="Filter supporting projects"
+            className="flex flex-wrap gap-2"
+          >
+            {PROJECT_FILTERS.map((filter) => {
+              const isActive = activeFilter === filter;
+              return (
+                <button
+                  key={filter}
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => setActiveFilter(filter)}
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-md border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua ${isActive ? 'border-tide-sky bg-tide-aqua/10 text-[#237f86]' : 'border-[#d8e8ee] bg-white text-slate-600'}`}
+                >
+                  {filter}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+            {filtered.map((project) => (
+              <Link
+                key={project.id}
+                to={project.href}
+                className="rounded-xl border border-[#d8e8ee] bg-white dark:bg-slate-900 p-5 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.16em] text-slate-500">
+                    {project.statusLabel}
+                  </span>
+                  <span className="text-[10px] uppercase tracking-wider font-semibold text-slate-500 border border-[#d8e8ee] rounded-full px-2 py-0.5">
+                    {project.proofType}
+                  </span>
+                </div>
+                <h3 className="mt-3 text-base font-semibold text-ink-navy dark:text-white">
+                  {project.displayTitle}
+                </h3>
+                <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
+                  {project.shortSummary}
+                </p>
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {project.canonicalRoleLanes.map((role) => (
+                    <span
+                      key={role}
+                      className={`text-[11px] px-2 py-0.5 rounded border ${getRoleAccentRecipe(CANONICAL_ROLE_ACCENT[role]).chipClass}`}
+                    >
+                      {role}
+                    </span>
+                  ))}
+                </div>
+                <span className="mt-4 inline-block text-sm font-semibold text-[#237f86] dark:text-tide-softBlue">
+                  View Project →
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section className="rounded-xl border border-[#d8e8ee] bg-white dark:bg-slate-900 p-5">
+          <h2 className="text-xl font-semibold text-ink-navy dark:text-white">
+            Want the build methodology?
+          </h2>
+          <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
+            Projects show what was built. Process shows how the portfolio was planned, governed,
+            hardened, and validated.
+          </p>
+          <a
+            href={PORTFOLIO_PROCESS_HREF}
+            className="mt-4 inline-flex text-sm font-semibold text-[#237f86]"
+          >
+            View Process Deep Dives
+          </a>
+          <p className="mt-4 text-sm text-slate-500">
+            Need the full map?{' '}
+            <Link to={SITE_INDEX_HREF} className="font-semibold text-[#237f86]">
+              Open Site Index
+            </Link>
+          </p>
+        </section>
+      </div>
+    </div>
+  );
+};
+
+export default ProjectsIndexView;
 ```
 
 ## File: scripts/generate-crawler-html.mjs
@@ -6117,6 +6279,7 @@ export default SidebarNav;
 ```typescript
 import { PROJECT_REGISTRY } from '../constants';
 import { buildProjectHref } from '../lib/routes';
+import type { RoleLane } from '../lib/design-system';
 import type { RecruiterRoleLane } from '../types';
 
 export type ProjectRoleLane = 'Implementation' | 'QA' | 'GIS';
@@ -6146,6 +6309,13 @@ export type ProjectMetadata = {
   caseStudyRoute?: string;
   markdownRoute?: string;
   crawlerRoute?: string;
+};
+
+export const CANONICAL_ROLE_ACCENT: Record<RecruiterRoleLane, RoleLane> = {
+  'Implementation / CSE-lite': 'Implementation',
+  'Ops Analytics / QA': 'QA',
+  'GIS / Spatial Systems': 'GIS',
+  'AI Workflow / Portfolio Governance': 'Implementation',
 };
 
 const PROJECT_ACCENTS: readonly ProjectAccent[] = [
@@ -9262,7 +9432,11 @@ import { useCaseStudyContent } from '../hooks/useCaseStudyContent';
 import { useRecruiterMode } from '../context/RecruiterModeContext';
 import { recruiterSummary } from '../utils/recruiterSummary';
 import { PROJECT_FALLBACK_ID, PORTFOLIO_PROCESS_HREF } from '../lib/routes';
-import { getProjectMetadata, PROJECT_METADATA } from '../data/projectMetadata';
+import {
+  CANONICAL_ROLE_ACCENT,
+  getProjectMetadata,
+  PROJECT_METADATA,
+} from '../data/projectMetadata';
 import ScrollToTopButton from '../components/ScrollToTopButton';
 import {
   componentRecipes,
@@ -9270,14 +9444,6 @@ import {
   getRoleAccentRecipe,
   semanticTokens,
 } from '../lib/design-system';
-import type { RecruiterRoleLane } from '../types';
-
-const canonicalRoleAccent: Record<RecruiterRoleLane, 'Implementation' | 'QA' | 'GIS'> = {
-  'Implementation / CSE-lite': 'Implementation',
-  'Ops Analytics / QA': 'QA',
-  'GIS / Spatial Systems': 'GIS',
-  'AI Workflow / Portfolio Governance': 'Implementation',
-};
 
 const ProjectSwitcher: React.FC<{ activeId: string }> = ({ activeId }) => {
   const orderedProjects = [...PROJECT_METADATA].sort((a, b) => a.sortOrder - b.sortOrder);
@@ -9389,7 +9555,7 @@ const ProjectHero: React.FC<{
             {metadata.canonicalRoleLanes.map((lane) => (
               <span
                 key={lane}
-                className={`rounded-full border px-2.5 py-1 text-xs font-medium ${getRoleAccentRecipe(canonicalRoleAccent[lane]).chipClass}`}
+                className={`rounded-full border px-2.5 py-1 text-xs font-medium ${getRoleAccentRecipe(CANONICAL_ROLE_ACCENT[lane]).chipClass}`}
               >
                 {lane}
               </span>
@@ -9531,20 +9697,13 @@ import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PORTFOLIO_PROCESS_HREF } from '../../lib/routes';
 import {
+  CANONICAL_ROLE_ACCENT,
   ProjectFilter,
   PROJECT_FILTERS,
   getFeaturedProjects,
   getSupportingProjects,
 } from '../../data/projectMetadata';
 import { getRoleAccentRecipe, getProjectAccentRecipe } from '../../lib/design-system';
-import type { RecruiterRoleLane } from '../../types';
-
-const canonicalRoleAccent: Record<RecruiterRoleLane, 'Implementation' | 'QA' | 'GIS'> = {
-  'Implementation / CSE-lite': 'Implementation',
-  'Ops Analytics / QA': 'QA',
-  'GIS / Spatial Systems': 'GIS',
-  'AI Workflow / Portfolio Governance': 'Implementation',
-};
 
 type FilterKey = 'All' | ProjectFilter;
 
@@ -9624,7 +9783,7 @@ const SupportingEvidenceSection: React.FC = () => {
               </p>
               <div className="mt-3 flex flex-wrap gap-1.5">
                 {item.canonicalRoleLanes.map((role) => {
-                  const roleAccent = getRoleAccentRecipe(canonicalRoleAccent[role]);
+                  const roleAccent = getRoleAccentRecipe(CANONICAL_ROLE_ACCENT[role]);
                   return (
                     <span
                       key={`${item.id}-${role}`}

@@ -29,3 +29,17 @@
 - Appellate defense conceded all findings: centralize the canonical role-to-accent mapping in `src/data/projectMetadata.ts`, refactor `ProjectsIndexView` to use the shared accent mapping plus `getRoleAccentRecipe`, and add component-level coverage for role lane text and chip styling behavior across the affected views.
 
 ---
+
+## Build Run: 5/6/2026, 11:09:40 PM
+
+- Code churn introduced the `EvidenceBlock` schema boundary in `src/types.ts` and connected the broader documentation pipeline context around executive-summary parsing, lifecycle logging, Jules review capture, Codex appellate defense, documentation generation, resolution coaching, and phase validation.
+- Jules reviewed the latest phase as syntactically valid but incomplete, flagging a P2 concern that `EvidenceBlock` existed only as a passive type with no consuming component, data integration, or tests, plus a P3 concern that the interface and fields lacked TSDoc clarity.
+- Appellate defense defended the P2 finding because a passive exported interface has no runtime behavior, side effects, or executable path requiring isolated coverage, but conceded the P3 documentation gap and directed `src/types.ts` to document `EvidenceBlock`, especially the semantic distinction between context, technical detail, and business value.
+
+---
+
+## Build Run: 5/7/2026, 11:27:02 AM
+- Code churn added an `EvidenceBlock` schema in `src/types.ts`, documented its semantic fields, and connected it to a new parser pipeline in `src/utils/evidenceBlocks.ts` that imports executive-summary markdown, extracts initiative title/context/technical detail/business value, validates required fields, and exposes `executiveEvidenceBlocks` for future UI consumption.
+- Jules reviewed the prior phase as syntactically valid but incomplete, flagging P2 for a passive `EvidenceBlock` type without consuming logic/tests and P3 for missing TSDoc clarity around the schema fields, especially the ambiguous distinction between context, technical detail, and business value.
+- Appellate defense defended the P2 runtime/test objection because a passive exported interface introduced no executable path, side effects, or production behavior, but conceded the P3 documentation gap; the implemented direction preserves that ruling by documenting the schema and adding parsing/validation structure without altering the historical defense facts.
+---

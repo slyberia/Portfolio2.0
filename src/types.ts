@@ -103,3 +103,18 @@ export interface ProjectEntry {
 }
 
 export type CaseStudyEntry = ProjectEntry;
+
+/**
+ * Represents a structured block of evidence extracted from pipeline governance logs.
+ * Used to surface technical and business outcomes to the portfolio UI.
+ */
+export interface EvidenceBlock {
+  /** The high-level name of the engineering or governance initiative. */
+  initiativeTitle: string;
+  /** Narrative background explaining the 'Why' behind the change, including constraints and triggers. */
+  context: string;
+  /** Specific implementation details, architectural decisions, and technical mutations applied. */
+  technicalDetail: string;
+  /** The measurable impact or stakeholder benefit derived from the initiative. */
+  businessValue: string;
+}

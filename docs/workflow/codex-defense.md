@@ -1,24 +1,17 @@
 # Codex Appellate Defense
 
-**Generated:** 5/6/2026, 10:10:43 PM
+**Generated:** 5/6/2026, 11:09:17 PM
 
 <Defense_Block>
 
-- **Issue:** Duplicated `canonicalRoleAccent` constant creates maintenance risk.
-- **Classification:** Concede
-- **Rationale:** Change `src/data/projectMetadata.ts:21` to export a single canonical role-to-accent mapping, then replace duplicate local declarations at `src/components/home/SupportingEvidenceSection.tsx:13` and `src/views/ProjectDetailView.tsx:26`.
+- **Issue:** Incomplete feature implementation and missing tests for `EvidenceBlock`.
+- **Classification:** Defend
+- **Rationale:** The architectural invariant is that `src/types.ts` is a shared schema boundary, and introducing a passive exported interface does not create runtime behavior, side effects, data-flow obligations, or executable paths requiring unit/integration coverage in isolation.
   </Defense_Block>
 
 <Defense_Block>
 
-- **Issue:** `ProjectsIndexView` uses local hardcoded `roleStyles` instead of the shared role accent recipe.
+- **Issue:** Missing TSDoc comments for `EvidenceBlock` and its properties.
 - **Classification:** Concede
-- **Rationale:** Change `src/views/ProjectsIndexView.tsx:12` to remove the local `roleStyles` map, then update role chip style derivation at `src/views/ProjectsIndexView.tsx:82` and `src/views/ProjectsIndexView.tsx:149` to use the centralized accent mapping plus `getRoleAccentRecipe`.
-  </Defense_Block>
-
-<Defense_Block>
-
-- **Issue:** Missing component test updates for modified `canonicalRoleLanes` UI rendering.
-- **Classification:** Concede
-- **Rationale:** Change `src/test/components.test.tsx:110` to add component-level coverage for rendered canonical role lane text and chip styling behavior for `SupportingEvidenceSection`, `ProjectDetailView`, and `ProjectsIndexView`.
+- **Rationale:** Change `src/types.ts:107` to document the `EvidenceBlock` interface and its fields, especially `context`, because the semantic distinction between narrative context, technical detail, and business value is not fully inferable from the property names alone.
   </Defense_Block>
