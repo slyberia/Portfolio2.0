@@ -1,17 +1,62 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { GUYNODE_SYSTEM_HREF } from '../../lib/routes';
 import { TrackPageContent } from '../../data/trackContent';
 import { componentRecipes, getRoleAccentRecipe } from '../../lib/design-system';
+import ProofBlockCard from './ProofBlockCard';
+import { executiveEvidenceBlocks } from '../../utils/evidenceBlocks';
+import { mapEvidenceToProofCard } from '../../utils/mapEvidenceToProofCard';
+import { RecruiterRoleLane, VALID_RECRUITER_LANES } from '../../types';
 
 interface RoleTrackPageProps {
   content: TrackPageContent;
 }
 
+const INITIAL_DISPLAY_COUNT = 4;
+
 const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
   const roleLane =
     content.accent === 'implementation' ? 'Implementation' : content.accent === 'qa' ? 'QA' : 'GIS';
   const accent = getRoleAccentRecipe(roleLane);
+
+  // Type guard for RecruiterRoleLane
+  const isRecruiterRoleLane = (title: string): title is RecruiterRoleLane => {
+    return (VALID_RECRUITER_LANES as string[]).includes(title);
+  };
+
+  // Filter and map dynamic evidence blocks
+  const dynamicEvidence = executiveEvidenceBlocks.blocks
+    .filter((block) => {
+      const currentTitle = content.title;
+      if (!isRecruiterRoleLane(currentTitle)) return false;
+
+      // EXCLUSIVE: Determination comes strictly from explicit roleLanes metadata
+      // per Jules P3 requirement. Heuristics removed to prevent silent failures.
+      return block.roleLanes && block.roleLanes.includes(currentTitle);
+    })
+    .map(mapEvidenceToProofCard);
+
+  const [showAllEvidence, setShowAllEvidence] = useState(false);
+  const newBatchRef = useRef<HTMLDivElement>(null);
+  
+  const displayedEvidence = showAllEvidence
+    ? dynamicEvidence
+    : dynamicEvidence.slice(0, INITIAL_DISPLAY_COUNT);
+  
+  const hasMoreEvidence = dynamicEvidence.length > INITIAL_DISPLAY_COUNT;
+
+  // Handle focus management when expanding
+  // Decoupled from INITIAL_DISPLAY_COUNT magic numbers per Jules P2 requirement.
+  useEffect(() => {
+    if (showAllEvidence && newBatchRef.current) {
+      // Jules: Focus the first interactive element (the link) inside the new content
+      // ProofBlockCard is wrapped in a Link, so we target the first 'a' tag.
+      const firstNewLink = newBatchRef.current.querySelector('a');
+      if (firstNewLink) {
+        (firstNewLink as HTMLElement).focus();
+      }
+    }
+  }, [showAllEvidence]);
 
   const actions = content.ctaActions.map((action) => {
     const normalizedLabel = action.label.toLowerCase();
@@ -50,7 +95,7 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
 
       <section className="px-6 py-12">
         <div className="max-w-5xl mx-auto glass-card rounded-2xl p-8">
-          <h2 className={`text-xs font-bold uppercase tracking-[0.3em] ${accent.textClass}`}>
+          <h2 className={componentRecipes.typography.sectionHeading + ' ' + accent.textClass}>
             What This Track Proves
           </h2>
           <ul className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -68,7 +113,7 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
 
       <section className="px-6 py-12 bg-slate-50/60 dark:bg-slate-900/20 border-y border-black/5 dark:border-white/5">
         <div className="max-w-5xl mx-auto rounded-2xl border border-black/5 dark:border-white/10 bg-white/90 dark:bg-slate-900/60 p-8">
-          <p className={`text-xs font-bold uppercase tracking-[0.3em] ${accent.textClass}`}>
+          <p className={componentRecipes.typography.sectionHeading + ' ' + accent.textClass}>
             {content.guynodeLabel}
           </p>
           <h2 className="mt-3 text-2xl font-outfit font-semibold text-ink-navy dark:text-white">
@@ -103,7 +148,7 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
 
       <section className="px-6 py-12">
         <div className="max-w-5xl mx-auto space-y-5">
-          <h2 className={`text-xs font-bold uppercase tracking-[0.3em] ${accent.textClass}`}>
+          <h2 className={componentRecipes.typography.sectionHeading + ' ' + accent.textClass}>
             Supporting Evidence
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -153,9 +198,79 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
         </div>
       </section>
 
+      {dynamicEvidence.length > 0 && (
+        <section className={`${componentRecipes.layout.section} bg-ink-mist dark:bg-ink-deep border-y border-ink-border`}>
+          <div className={componentRecipes.layout.container}>
+            <div className={componentRecipes.layout.sectionHeader}>
+              <h2 className={componentRecipes.typography.sectionHeading + ' ' + accent.textClass}>
+                Automated Governance Proof
+              </h2>
+              <p className={componentRecipes.typography.sectionSubheading}>
+                Direct evidence from development logs and automated review cycles.
+              </p>
+            </div>
+
+            <div className={componentRecipes.layout.grid}>
+              {dynamicEvidence.slice(0, INITIAL_DISPLAY_COUNT).map((evidence) => (
+                <div key={evidence.id}>
+                  <ProofBlockCard {...evidence} />
+                </div>
+              ))}
+              
+              {showAllEvidence && (
+                <div ref={newBatchRef} className="contents" data-testid="evidence-batch-new">
+                  {dynamicEvidence.slice(INITIAL_DISPLAY_COUNT).map((evidence) => (
+                    <div key={evidence.id}>
+                      <ProofBlockCard {...evidence} />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {hasMoreEvidence && (
+              <div className="flex justify-center pt-8">
+                <button
+                  type="button"
+                  aria-expanded={showAllEvidence}
+                  onClick={() => setShowAllEvidence(!showAllEvidence)}
+                  className={
+                    showAllEvidence
+                      ? componentRecipes.button.disclosureGhost
+                      : componentRecipes.button.disclosure
+                  }
+                >
+                  {showAllEvidence ? (
+                    'Show Less'
+                  ) : (
+                    <>
+                      View {dynamicEvidence.length - INITIAL_DISPLAY_COUNT} More Proof Blocks
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                        className="h-4 w-4"
+                      >
+                        <path d="m6 9 6 6 6-6" />
+                      </svg>
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
       <section className="px-6 py-12 bg-slate-50/60 dark:bg-slate-900/20 border-y border-black/5 dark:border-white/5">
         <div className="max-w-5xl mx-auto space-y-5">
-          <h2 className={`text-xs font-bold uppercase tracking-[0.3em] ${accent.textClass}`}>
+          <h2 className={componentRecipes.typography.sectionHeading + ' ' + accent.textClass}>
             Skills &amp; Tools
           </h2>
           <div className="flex flex-wrap gap-2">
@@ -173,11 +288,10 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
 
       <section className="px-6 py-12 pb-24">
         <div className="max-w-5xl mx-auto glass-card rounded-2xl p-8">
-          <h2 className={`text-xs font-bold uppercase tracking-[0.3em] ${accent.textClass}`}>
+          <h2 className={componentRecipes.typography.sectionHeading + ' ' + accent.textClass}>
             {content.ctaTitle}
           </h2>
           <p className="mt-3 text-slate-600 dark:text-slate-300">{content.ctaCopy}</p>
-          {/* TODO: replace generic resume download target with track-specific resume assets when files exist. */}
           <div className="mt-6 flex flex-wrap gap-3">
             {actions.map((action, index) => {
               if (action.isContact) {

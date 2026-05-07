@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-interface ProofBlockCardProps {
+export interface ProofBlockCardProps {
+  id: string;
   title: string;
   summary: string;
   whyItMatters: string;
@@ -46,14 +47,20 @@ const ProofBlockCard: React.FC<ProofBlockCardProps> = ({
 
   if (isInternal) {
     return (
-      <Link to={href} className="block">
+      <Link to={href} className="block" aria-label={`View full proof: ${title}`}>
         {cardContent}
       </Link>
     );
   }
 
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className="block">
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block"
+      aria-label={`View external proof: ${title} (opens in new tab)`}
+    >
       {cardContent}
     </a>
   );

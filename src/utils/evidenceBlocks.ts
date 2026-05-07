@@ -65,6 +65,30 @@ export function parseEvidenceBlockMarkdown(
     (paragraph) => !paragraph.startsWith('# '),
   );
 
+  // Generate a stable ID from the source path.
+  // Throws if path is generic to ensure we have a unique, traceable ID.
+  const id = _sourcePath.split('/').pop()?.replace('.md', '');
+  if (!id || _sourcePath === 'inline') {
+    throw new Error(`EvidenceBlock parser requires a unique source path. Found: ${_sourcePath}`);
+  }
+
+  // Look for Role Lanes metadata
+  const roleLanesIndex = contentParagraphs.findIndex((p) => /^Role Lanes:\s*/i.test(p));
+  let roleLanes: RecruiterRoleLane[] | undefined;
+  
+  if (roleLanesIndex >= 0) {
+    const lanesText = contentParagraphs[roleLanesIndex].replace(/^Role Lanes:\s*/i, '');
+    roleLanes = lanesText.split(',').map(s => s.trim()) as RecruiterRoleLane[];
+  }
+
+  // Look for Artifact Chips metadata
+  const artifactChipsIndex = contentParagraphs.findIndex((p) => /^Artifact Chips:\s*/i.test(p));
+  let artifactChips: string[] | undefined;
+  if (artifactChipsIndex >= 0) {
+    const chipsText = contentParagraphs[artifactChipsIndex].replace(/^Artifact Chips:\s*/i, '');
+    artifactChips = chipsText.split(',').map((s) => s.trim());
+  }
+
   const contextIndex = contentParagraphs.findIndex((paragraph) =>
     /^Initiative Context:\s*/i.test(paragraph),
   );
@@ -74,10 +98,10 @@ export function parseEvidenceBlockMarkdown(
       ? contentParagraphs[contextIndex].replace(/^Initiative Context:\s*/i, '').trim()
       : (contentParagraphs[0] ?? '');
 
-  const afterContext =
-    contextIndex >= 0
-      ? contentParagraphs.filter((_, index) => index !== contextIndex)
-      : contentParagraphs.slice(1);
+  const afterContext = contentParagraphs.filter(
+    (_, index) =>
+      index !== contextIndex && index !== roleLanesIndex && index !== artifactChipsIndex,
+  );
 
   const businessValueIndex = afterContext.findIndex((paragraph) =>
     /\bbusiness value\b/i.test(paragraph),
@@ -94,10 +118,13 @@ export function parseEvidenceBlockMarkdown(
       : afterContext.slice(0, -1).join('\n\n');
 
   return {
+    id,
     initiativeTitle,
     context,
     technicalDetail,
     businessValue,
+    roleLanes: roleLanes || [],
+    artifactChips: artifactChips || [],
   };
 }
 

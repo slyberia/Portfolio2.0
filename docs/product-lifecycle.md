@@ -39,7 +39,17 @@
 ---
 
 ## Build Run: 5/7/2026, 11:27:02 AM
+
 - Code churn added an `EvidenceBlock` schema in `src/types.ts`, documented its semantic fields, and connected it to a new parser pipeline in `src/utils/evidenceBlocks.ts` that imports executive-summary markdown, extracts initiative title/context/technical detail/business value, validates required fields, and exposes `executiveEvidenceBlocks` for future UI consumption.
 - Jules reviewed the prior phase as syntactically valid but incomplete, flagging P2 for a passive `EvidenceBlock` type without consuming logic/tests and P3 for missing TSDoc clarity around the schema fields, especially the ambiguous distinction between context, technical detail, and business value.
 - Appellate defense defended the P2 runtime/test objection because a passive exported interface introduced no executable path, side effects, or production behavior, but conceded the P3 documentation gap; the implemented direction preserves that ruling by documenting the schema and adding parsing/validation structure without altering the historical defense facts.
+
+---
+
+## Build Run: 5/7/2026, 2:35:20 PM
+
+- Code churn expanded the portfolio from passive `EvidenceBlock` typing into a consumed documentation/evidence pipeline: executive-summary markdown is parsed into structured `EvidenceBlock` records, governance scripts route Jules review, Codex defense, documentation generation, resolution coaching, and validation, and `package.json` now declares Node `>=18.0.0` while `run-jules-review.mjs` validates Gemini response shape before dereferencing.
+- Jules’s latest review found the isolated `EvidenceBlock` addition syntactically valid but incomplete as a “completed phase,” raising P2 for missing consuming implementation/tests and P3 for absent TSDoc; earlier Jules reviews also flagged workflow robustness issues around Node 18 `fetch`, unsafe Gemini response access, duplicated role-accent styling, and component test gaps.
+- Appellate defense split the findings by runtime risk: it defended the passive-interface P2 because a type-only schema boundary creates no executable path or user-facing side effect, conceded TSDoc clarity for `EvidenceBlock`, previously conceded Node/runtime and response-shape fixes, and accepted role-accent centralization/test coverage where duplication created design-system drift.
+
 ---
