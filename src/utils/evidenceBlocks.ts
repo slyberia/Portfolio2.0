@@ -89,6 +89,42 @@ export function parseEvidenceBlockMarkdown(
     artifactChips = chipsText.split(',').map((s) => s.trim());
   }
 
+  // Look for Project ID metadata
+  const projectIdIndex = contentParagraphs.findIndex((p) => /^Project ID:\s*/i.test(p));
+  const projectId = projectIdIndex >= 0 
+    ? contentParagraphs[projectIdIndex].replace(/^Project ID:\s*/i, '').trim()
+    : undefined;
+
+  // Look for Evidence Types metadata
+  const evidenceTypesIndex = contentParagraphs.findIndex((p) => /^Evidence Types:\s*/i.test(p));
+  const evidenceTypes = evidenceTypesIndex >= 0
+    ? contentParagraphs[evidenceTypesIndex].replace(/^Evidence Types:\s*/i, '').split(',').map(s => s.trim()) as EvidenceType[]
+    : undefined;
+
+  // Look for Proof Categories metadata
+  const proofCategoriesIndex = contentParagraphs.findIndex((p) => /^Proof Categories:\s*/i.test(p));
+  const proofCategories = proofCategoriesIndex >= 0
+    ? contentParagraphs[proofCategoriesIndex].replace(/^Proof Categories:\s*/i, '').split(',').map(s => s.trim()) as ProofCategory[]
+    : undefined;
+
+  // Look for Maturity Status metadata
+  const maturityStatusIndex = contentParagraphs.findIndex((p) => /^Maturity Status:\s*/i.test(p));
+  const maturityStatus = maturityStatusIndex >= 0
+    ? contentParagraphs[maturityStatusIndex].replace(/^Maturity Status:\s*/i, '').trim() as MaturityStatus
+    : undefined;
+
+  // Look for Visibility metadata
+  const visibilityIndex = contentParagraphs.findIndex((p) => /^Visibility:\s*/i.test(p));
+  const visibility = visibilityIndex >= 0
+    ? contentParagraphs[visibilityIndex].replace(/^Visibility:\s*/i, '').trim() as Visibility
+    : undefined;
+
+  // Look for Priority metadata
+  const priorityIndex = contentParagraphs.findIndex((p) => /^Priority:\s*/i.test(p));
+  const priority = priorityIndex >= 0
+    ? contentParagraphs[priorityIndex].replace(/^Priority:\s*/i, '').trim() as EvidencePriority
+    : undefined;
+
   const contextIndex = contentParagraphs.findIndex((paragraph) =>
     /^Initiative Context:\s*/i.test(paragraph),
   );
@@ -98,9 +134,19 @@ export function parseEvidenceBlockMarkdown(
       ? contentParagraphs[contextIndex].replace(/^Initiative Context:\s*/i, '').trim()
       : (contentParagraphs[0] ?? '');
 
+  const metaIndices = [
+    roleLanesIndex, 
+    artifactChipsIndex, 
+    projectIdIndex, 
+    evidenceTypesIndex, 
+    proofCategoriesIndex, 
+    maturityStatusIndex, 
+    visibilityIndex, 
+    priorityIndex
+  ].filter(i => i >= 0);
+
   const afterContext = contentParagraphs.filter(
-    (_, index) =>
-      index !== contextIndex && index !== roleLanesIndex && index !== artifactChipsIndex,
+    (_, index) => index !== contextIndex && !metaIndices.includes(index)
   );
 
   const businessValueIndex = afterContext.findIndex((paragraph) =>
@@ -117,6 +163,9 @@ export function parseEvidenceBlockMarkdown(
       ? afterContext.filter((_, index) => index !== businessValueIndex).join('\n\n')
       : afterContext.slice(0, -1).join('\n\n');
 
+  // Determine metadata status
+  const hasExplicitMeta = roleLanesIndex >= 0 || projectIdIndex >= 0;
+
   return {
     id,
     initiativeTitle,
@@ -125,6 +174,13 @@ export function parseEvidenceBlockMarkdown(
     businessValue,
     roleLanes: roleLanes || [],
     artifactChips: artifactChips || [],
+    projectId,
+    evidenceTypes,
+    proofCategories,
+    maturityStatus,
+    visibility,
+    priority,
+    metadataStatus: hasExplicitMeta ? 'explicit' : 'needs-tagging',
   };
 }
 
