@@ -8,7 +8,7 @@ import { GOVERNANCE_LOGS_HREF } from '../lib/routes';
  */
 export function mapEvidenceToProofCard(block: EvidenceBlock): ProofBlockCardProps {
   const chips = [...(block.artifactChips || [])];
-  
+
   // If no explicit chips provided, add a generic fallback to maintain UI standards
   if (chips.length === 0) {
     chips.push('Engineering Proof');

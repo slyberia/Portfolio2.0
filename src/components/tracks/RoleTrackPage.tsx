@@ -38,11 +38,7 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
 
   const [showAllEvidence, setShowAllEvidence] = useState(false);
   const newBatchRef = useRef<HTMLDivElement>(null);
-  
-  const displayedEvidence = showAllEvidence
-    ? dynamicEvidence
-    : dynamicEvidence.slice(0, INITIAL_DISPLAY_COUNT);
-  
+
   const hasMoreEvidence = dynamicEvidence.length > INITIAL_DISPLAY_COUNT;
 
   // Handle focus management when expanding
@@ -199,7 +195,9 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
       </section>
 
       {dynamicEvidence.length > 0 && (
-        <section className={`${componentRecipes.layout.section} bg-ink-mist dark:bg-ink-deep border-y border-ink-border`}>
+        <section
+          className={`${componentRecipes.layout.section} bg-ink-mist dark:bg-ink-deep border-y border-ink-border`}
+        >
           <div className={componentRecipes.layout.container}>
             <div className={componentRecipes.layout.sectionHeader}>
               <h2 className={componentRecipes.typography.sectionHeading + ' ' + accent.textClass}>
@@ -216,7 +214,7 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
                   <ProofBlockCard {...evidence} />
                 </div>
               ))}
-              
+
               {showAllEvidence && (
                 <div ref={newBatchRef} className="contents" data-testid="evidence-batch-new">
                   {dynamicEvidence.slice(INITIAL_DISPLAY_COUNT).map((evidence) => (
