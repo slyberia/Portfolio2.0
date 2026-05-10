@@ -187,13 +187,7 @@ export interface MediaAsset {
   id: string;
   projectId: string;
   roleLanes: RecruiterRoleLane[];
-  mediaType:
-    | 'screenshot'
-    | 'diagram'
-    | 'video'
-    | 'live-link'
-    | 'document'
-    | 'architecture-map';
+  mediaType: 'screenshot' | 'diagram' | 'video' | 'live-link' | 'document' | 'architecture-map';
   src: string;
   alt: string;
   caption: string;

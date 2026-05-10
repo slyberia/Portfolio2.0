@@ -1,9 +1,9 @@
-import { MediaAsset } from '../types';
+import type { MediaAsset, RecruiterRoleLane } from '../types';
 
 /**
  * MEDIA REGISTRY - PHASE 5.0
  * This is the central repository for all visual assets in the portfolio.
- * 
+ *
  * Naming Convention: [projectId]-[surface]-[viewport]-[variant].[ext]
  */
 export const MEDIA_REGISTRY: MediaAsset[] = [
@@ -30,17 +30,19 @@ export const MEDIA_REGISTRY: MediaAsset[] = [
 /**
  * Helper to get media by project
  */
-export const getMediaByProject = (projectId: string) => 
-  MEDIA_REGISTRY.filter(m => m.projectId === projectId && m.visibility === 'public');
+export const getMediaByProject = (projectId: string) =>
+  MEDIA_REGISTRY.filter((m) => m.projectId === projectId && m.visibility === 'public');
 
 /**
  * Helper to get media by evidence block
  */
 export const getMediaForEvidence = (evidenceId: string) =>
-  MEDIA_REGISTRY.filter(m => m.relatedEvidenceIds.includes(evidenceId) && m.visibility === 'public');
+  MEDIA_REGISTRY.filter(
+    (m) => m.relatedEvidenceIds.includes(evidenceId) && m.visibility === 'public',
+  );
 
 /**
  * Helper to get media by role lane
  */
-export const getMediaByRole = (role: string) =>
-  MEDIA_REGISTRY.filter(m => m.roleLanes.includes(role as any) && m.visibility === 'public');
+export const getMediaByRole = (role: RecruiterRoleLane) =>
+  MEDIA_REGISTRY.filter((media) => media.roleLanes.includes(role) && media.visibility === 'public');

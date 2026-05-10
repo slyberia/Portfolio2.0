@@ -1,7 +1,54 @@
 import fs from 'fs';
 import { execSync } from 'child_process';
 
+function assertSynchronizedBranch() {
+  console.log('🔍 Pre-flight: Checking branch synchronicity...');
+  const branch = execSync('git branch --show-current').toString().trim();
+
+  try {
+    // Ensure we have the latest from remote
+    execSync('git fetch origin', { stdio: 'pipe' });
+
+    // Check if branch has an upstream
+    const hasUpstream = execSync(`git rev-parse --abbrev-ref ${branch}@{u}`, { stdio: 'pipe' })
+      .toString()
+      .trim();
+
+    if (hasUpstream) {
+      const counts = execSync(`git rev-list --left-right --count HEAD...${branch}@{u}`)
+        .toString()
+        .trim()
+        .split('\t');
+
+      const ahead = parseInt(counts[0], 10);
+      const behind = parseInt(counts[1], 10);
+
+      if (behind > 0) {
+        throw new Error(
+          `Branch '${branch}' is behind upstream by ${behind} commits. Pull before proceeding.`,
+        );
+      }
+
+      if (ahead > 0) {
+        console.log(
+          `⚠️ Branch '${branch}' is ahead of upstream by ${ahead} commits. Proceeding with caution...`,
+        );
+      } else {
+        console.log(`✅ Branch '${branch}' is synchronized with upstream.`);
+      }
+    }
+  } catch (err) {
+    if (err.message.includes('no upstream')) {
+      console.log(`⚠️ Branch '${branch}' has no upstream configured. Proceeding with caution...`);
+    } else {
+      throw err;
+    }
+  }
+}
+
 try {
+  assertSynchronizedBranch();
+
   const ruling = process.argv[2];
   if (!ruling) {
     throw new Error('Architect ruling missing. Usage: npm run resolve:coach "Your ruling here"');

@@ -1,4 +1,3 @@
-import { EvidenceBlock } from '../../types';
 import { interactionStyles } from './interactionStyles';
 
 export const componentRecipes = {
@@ -16,7 +15,8 @@ export const componentRecipes = {
       'inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium bg-gild/15 text-gild-deep border border-gild/40',
   },
   card: {
-    surface: 'rounded-2xl border border-ink-border bg-ink-panel dark:bg-ink-deep/70 dark:border-white/10',
+    surface:
+      'rounded-2xl border border-ink-border bg-ink-panel dark:bg-ink-deep/70 dark:border-white/10',
     featured: 'rounded-2xl border border-gild/40 bg-gild/10 dark:bg-gild/15',
   },
   layout: {

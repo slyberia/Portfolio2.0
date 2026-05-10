@@ -8,6 +8,7 @@
 <Rule>DO NOT implement fixes for issues the Architect labeled as 'Defend'.</Rule>
 <Rule>DO NOT output conversational text, greetings, or apologies.</Rule>
 <Rule>DO NOT modify files outside the scope of the approved concessions.</Rule>
+<Rule>DO NOT mutate or commit files unless the working branch is synchronized with its upstream.</Rule>
 </Strict_Prohibitions>
 
 <Execution_Taxonomy>

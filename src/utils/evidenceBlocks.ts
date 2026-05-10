@@ -1,4 +1,12 @@
-import type { EvidenceBlock } from '../types';
+import type {
+  EvidenceBlock,
+  RecruiterRoleLane,
+  EvidenceType,
+  ProofCategory,
+  MaturityStatus,
+  Visibility,
+  EvidencePriority,
+} from '../types';
 
 type MarkdownModuleMap = Record<string, string>;
 
@@ -18,12 +26,14 @@ const executiveSummaryModules = import.meta.glob<string>('../../docs/executive-s
   query: '?raw',
 }) as MarkdownModuleMap;
 
-const REQUIRED_EVIDENCE_FIELDS: Array<keyof EvidenceBlock> = [
+const REQUIRED_EVIDENCE_FIELDS = [
   'initiativeTitle',
   'context',
   'technicalDetail',
   'businessValue',
-];
+] as const;
+
+type RequiredEvidenceField = (typeof REQUIRED_EVIDENCE_FIELDS)[number];
 
 function stripMarkdownInline(value: string): string {
   return value
@@ -49,10 +59,10 @@ function parseInitiativeTitle(markdown: string): string {
 
 function validateEvidenceBlock(
   block: EvidenceBlock,
-  _sourcePath: string,
+  sourcePath: string,
 ): EvidenceBlockParseIssue[] {
-  return REQUIRED_EVIDENCE_FIELDS.flatMap((field) =>
-    block[field].trim() ? [] : [{ sourcePath: _sourcePath, reason: `Missing ${field}` }],
+  return REQUIRED_EVIDENCE_FIELDS.flatMap((field: RequiredEvidenceField) =>
+    block[field].trim() ? [] : [{ sourcePath, reason: `Missing ${field}` }],
   );
 }
 
@@ -75,10 +85,10 @@ export function parseEvidenceBlockMarkdown(
   // Look for Role Lanes metadata
   const roleLanesIndex = contentParagraphs.findIndex((p) => /^Role Lanes:\s*/i.test(p));
   let roleLanes: RecruiterRoleLane[] | undefined;
-  
+
   if (roleLanesIndex >= 0) {
     const lanesText = contentParagraphs[roleLanesIndex].replace(/^Role Lanes:\s*/i, '');
-    roleLanes = lanesText.split(',').map(s => s.trim()) as RecruiterRoleLane[];
+    roleLanes = lanesText.split(',').map((s) => s.trim()) as RecruiterRoleLane[];
   }
 
   // Look for Artifact Chips metadata
@@ -91,39 +101,53 @@ export function parseEvidenceBlockMarkdown(
 
   // Look for Project ID metadata
   const projectIdIndex = contentParagraphs.findIndex((p) => /^Project ID:\s*/i.test(p));
-  const projectId = projectIdIndex >= 0 
-    ? contentParagraphs[projectIdIndex].replace(/^Project ID:\s*/i, '').trim()
-    : undefined;
+  const projectId =
+    projectIdIndex >= 0
+      ? contentParagraphs[projectIdIndex].replace(/^Project ID:\s*/i, '').trim()
+      : undefined;
 
   // Look for Evidence Types metadata
   const evidenceTypesIndex = contentParagraphs.findIndex((p) => /^Evidence Types:\s*/i.test(p));
-  const evidenceTypes = evidenceTypesIndex >= 0
-    ? contentParagraphs[evidenceTypesIndex].replace(/^Evidence Types:\s*/i, '').split(',').map(s => s.trim()) as EvidenceType[]
-    : undefined;
+  const evidenceTypes =
+    evidenceTypesIndex >= 0
+      ? (contentParagraphs[evidenceTypesIndex]
+          .replace(/^Evidence Types:\s*/i, '')
+          .split(',')
+          .map((s) => s.trim()) as EvidenceType[])
+      : undefined;
 
   // Look for Proof Categories metadata
   const proofCategoriesIndex = contentParagraphs.findIndex((p) => /^Proof Categories:\s*/i.test(p));
-  const proofCategories = proofCategoriesIndex >= 0
-    ? contentParagraphs[proofCategoriesIndex].replace(/^Proof Categories:\s*/i, '').split(',').map(s => s.trim()) as ProofCategory[]
-    : undefined;
+  const proofCategories =
+    proofCategoriesIndex >= 0
+      ? (contentParagraphs[proofCategoriesIndex]
+          .replace(/^Proof Categories:\s*/i, '')
+          .split(',')
+          .map((s) => s.trim()) as ProofCategory[])
+      : undefined;
 
   // Look for Maturity Status metadata
   const maturityStatusIndex = contentParagraphs.findIndex((p) => /^Maturity Status:\s*/i.test(p));
-  const maturityStatus = maturityStatusIndex >= 0
-    ? contentParagraphs[maturityStatusIndex].replace(/^Maturity Status:\s*/i, '').trim() as MaturityStatus
-    : undefined;
+  const maturityStatus =
+    maturityStatusIndex >= 0
+      ? (contentParagraphs[maturityStatusIndex]
+          .replace(/^Maturity Status:\s*/i, '')
+          .trim() as MaturityStatus)
+      : undefined;
 
   // Look for Visibility metadata
   const visibilityIndex = contentParagraphs.findIndex((p) => /^Visibility:\s*/i.test(p));
-  const visibility = visibilityIndex >= 0
-    ? contentParagraphs[visibilityIndex].replace(/^Visibility:\s*/i, '').trim() as Visibility
-    : undefined;
+  const visibility =
+    visibilityIndex >= 0
+      ? (contentParagraphs[visibilityIndex].replace(/^Visibility:\s*/i, '').trim() as Visibility)
+      : undefined;
 
   // Look for Priority metadata
   const priorityIndex = contentParagraphs.findIndex((p) => /^Priority:\s*/i.test(p));
-  const priority = priorityIndex >= 0
-    ? contentParagraphs[priorityIndex].replace(/^Priority:\s*/i, '').trim() as EvidencePriority
-    : undefined;
+  const priority =
+    priorityIndex >= 0
+      ? (contentParagraphs[priorityIndex].replace(/^Priority:\s*/i, '').trim() as EvidencePriority)
+      : undefined;
 
   const contextIndex = contentParagraphs.findIndex((paragraph) =>
     /^Initiative Context:\s*/i.test(paragraph),
@@ -135,18 +159,18 @@ export function parseEvidenceBlockMarkdown(
       : (contentParagraphs[0] ?? '');
 
   const metaIndices = [
-    roleLanesIndex, 
-    artifactChipsIndex, 
-    projectIdIndex, 
-    evidenceTypesIndex, 
-    proofCategoriesIndex, 
-    maturityStatusIndex, 
-    visibilityIndex, 
-    priorityIndex
-  ].filter(i => i >= 0);
+    roleLanesIndex,
+    artifactChipsIndex,
+    projectIdIndex,
+    evidenceTypesIndex,
+    proofCategoriesIndex,
+    maturityStatusIndex,
+    visibilityIndex,
+    priorityIndex,
+  ].filter((i) => i >= 0);
 
   const afterContext = contentParagraphs.filter(
-    (_, index) => index !== contextIndex && !metaIndices.includes(index)
+    (_, index) => index !== contextIndex && !metaIndices.includes(index),
   );
 
   const businessValueIndex = afterContext.findIndex((paragraph) =>

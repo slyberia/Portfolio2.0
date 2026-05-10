@@ -103,5 +103,5 @@ export const MEDIA_CAPTURE_PLAN: CaptureTarget[] = [
     roleLanes: ['Implementation / CSE-lite'],
     description: 'Mobile responsiveness of the landing page.',
     priority: 'medium',
-  }
+  },
 ];

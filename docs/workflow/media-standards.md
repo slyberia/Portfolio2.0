@@ -27,17 +27,18 @@ All files must follow the strict kebab-case naming pattern:
 - **ext**: Prefer `webp` for images, `mp4` for video.
 
 **Examples:**
+
 - `portfolio-v2-home-desktop-v1.webp`
 - `gis-track-map-view-mobile-v2.webp`
 
 ## 3. Technical Requirements
 
-| Specification | Requirement |
-| :--- | :--- |
-| **Format** | WebP (Lossless for screenshots, Lossy for photos) |
-| **Resolution** | Max 1920px width (Desktop), 768px (Tablet), 390px (Mobile) |
-| **File Size** | < 300KB per asset (highly recommended) |
-| **Aspect Ratio** | Standard 16:9 for desktop, 9:19 for mobile |
+| Specification    | Requirement                                                |
+| :--------------- | :--------------------------------------------------------- |
+| **Format**       | WebP (Lossless for screenshots, Lossy for photos)          |
+| **Resolution**   | Max 1920px width (Desktop), 768px (Tablet), 390px (Mobile) |
+| **File Size**    | < 300KB per asset (highly recommended)                     |
+| **Aspect Ratio** | Standard 16:9 for desktop, 9:19 for mobile                 |
 
 ## 4. Metadata Governance
 
