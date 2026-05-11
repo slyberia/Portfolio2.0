@@ -152,21 +152,35 @@ export const MEDIA_REGISTRY: MediaAsset[] = [
 ];
 
 /**
- * Helper to get media by project
+ * Helper to get public media by project
  */
-export const getMediaByProject = (projectId: string) =>
-  MEDIA_REGISTRY.filter((m) => m.projectId === projectId && m.visibility === 'public');
-
-/**
- * Helper to get media by evidence block
- */
-export const getMediaForEvidence = (evidenceId: string) =>
+export const getPublicMediaByProject = (projectId: string) =>
   MEDIA_REGISTRY.filter(
-    (m) => m.relatedEvidenceIds.includes(evidenceId) && m.visibility === 'public',
+    (m) => m.projectId === projectId && m.visibility === 'public' && m.captureStatus !== 'rejected',
   );
 
 /**
- * Helper to get media by role lane
+ * Helper to get public media for evidence block
  */
-export const getMediaByRole = (role: RecruiterRoleLane) =>
-  MEDIA_REGISTRY.filter((media) => media.roleLanes.includes(role) && media.visibility === 'public');
+export const getPublicMediaForEvidence = (evidenceId: string) =>
+  MEDIA_REGISTRY.filter(
+    (m) =>
+      m.relatedEvidenceIds.includes(evidenceId) &&
+      m.visibility === 'public' &&
+      m.captureStatus !== 'rejected',
+  );
+
+/**
+ * Helper to get public media by role lane
+ */
+export const getPublicMediaByRole = (role: RecruiterRoleLane) =>
+  MEDIA_REGISTRY.filter(
+    (m) =>
+      m.roleLanes.includes(role) && m.visibility === 'public' && m.captureStatus !== 'rejected',
+  );
+
+/**
+ * Helper to get all visible media assets
+ */
+export const getVisibleMediaAssets = () =>
+  MEDIA_REGISTRY.filter((m) => m.visibility === 'public' && m.captureStatus !== 'rejected');
