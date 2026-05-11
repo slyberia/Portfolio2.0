@@ -1,48 +1,54 @@
 # Jules Code Review
 
-**Generated:** 5/7/2026, 3:25:22 PM
+**Generated:** 5/10/2026, 10:10:33 PM
 
-Alright, let's get this done. I've reviewed the diff against the phase contract and established guidelines.
+Alright, let's get this done. I've reviewed the diff against the phase contract. The feature itself is within scope, but the execution has a critical flaw.
 
 ### Summary
 
-The phase contract was to integrate the `EvidenceBlock` data layer into the Role Lane UI, and that has been functionally achieved. The implementation correctly adds the dynamic proof section, handles progressive disclosure, and laudably centralizes new UI patterns into the design system, reducing drift. The expanded test suite, particularly for accessibility focus management, is a significant improvement.
-
-However, a misleading documentation artifact misrepresents the implemented logic, creating maintenance friction. Additionally, a new route lacks automated integrity validation. These issues must be resolved.
+This branch introduces an automated media capture utility using Playwright. The goal is to standardize and generate visual assets for the portfolio, which aligns with the expected scope. However, the implementation introduces a build-blocking dependency issue that must be resolved. Additionally, there are several minor code quality and documentation inconsistencies that reduce maintainability.
 
 ### Files Inspected
 
-- `.agent/prompts/resolution-coach.md`
-- `docs/executive-summaries/summary-2026-05-07-112702.md`
-- `docs/executive-summaries/summary-2026-05-07-143520.md`
-- `docs/product-lifecycle.md`
-- `docs/workflow/jules-report.md`
-- `docs/workflow/phase-4b-report.md`
-- `scripts/run-resolution.mjs`
-- `src/components/tracks/ProofBlockCard.tsx`
-- `src/components/tracks/RoleTrackPage.tsx`
-- `src/components/tracks/__tests__/RoleTrackPage.test.tsx`
-- `src/lib/design-system/componentRecipes.ts`
-- `src/lib/routes.ts`
-- `src/types.ts`
-- `src/utils/evidenceBlocks.ts`
-- `src/utils/mapEvidenceToProofCard.ts`
-- `src/views/DeepDiveView.tsx`
+- `package-lock.json`
+- `package.json`
+- `public/media/...` (10 new image files)
+- `scripts/capture-media.mjs`
+- `src/data/mediaRegistry.ts`
 
 ---
 
-### Triage: Issues by Priority
+### Issues
 
-#### P3: Medium
+#### P0: Build Blocker - Invalid Dependency Version
 
-- **Misleading Documentation in Implementation Report**
-  - **File**: `docs/workflow/phase-4b-report.md`
-  - **Issue**: The implementation correctly uses explicit `block.roleLanes` metadata from the source markdown, per a robust filtering strategy. However, the implementation report still refers to a "mapping heuristic" and keyword-based logic that is no longer present in the code. This outdated documentation creates confusion, misrepresents the current logic, and erodes trust in the project's own governance artifacts.
-  - **Required**: Reconcile the documentation in `docs/workflow/phase-4b-report.md` to remove all references to keyword heuristics and accurately describe the explicit `roleLanes` metadata filtering. The implementation is correct; the documentation must reflect it.
+- **File:** `package.json`, `package-lock.json`
+- **Issue:** The `playwright` dependency is pinned to version `1.59.1`. This version does not exist on the public NPM registry. This will cause any `npm install` or `ci` command to fail, blocking all builds and local development setups.
+- **Remediation:** Update the `playwright` version to a valid, stable release and regenerate the `package-lock.json` file.
 
-#### P4: Low
+#### P3: Code Quality - Misleading Comment
 
-- **Unverified Route Integrity**
-  - **File**: `src/lib/routes.ts`, `src/views/DeepDiveView.tsx`
-  - **Issue**: A new hash link, `GOVERNANCE_LOGS_HREF`, has been added, and its target `id="governance-logs"` has been placed in the `DeepDiveView`. However, there is no automated test to confirm this in-page navigation works as intended. This poses a minor risk of a broken internal link.
-  - **Required**: Provide confirmation in the pull request comments that you have manually verified the link navigates to the correct section anchor on the deep-dive page.
+- **File:** `scripts/capture-media.mjs`
+- **Line:** 61
+- **Issue:** The comment `// Construct filename following standards: [projectId]-[surface]-[viewport]-v1.webp` states that `.webp` files are the standard. The implementation generates `.png` files, and the `mediaRegistry` is updated to expect `.png`. The comment is incorrect.
+- **Remediation:** The comment must be updated to reflect the actual file format being generated (`.png`).
+
+#### P3: Code Quality - Untested Script
+
+- **File:** `scripts/capture-media.mjs`
+- **Issue:** The new build script is not covered by automated tests. While it is a development tool, adding a new, untested script increases the risk of regressions in the asset generation pipeline.
+- **Remediation:** Add basic tests to validate the script's core logic, particularly filename generation and configuration handling.
+
+#### P3: Code Quality - Dead Code
+
+- **File:** `src/data/mediaRegistry.ts`
+- **Lines:** 8-20
+- **Issue:** A large, commented-out template entry remains in the file. This is clutter and should have been removed.
+- **Remediation:** Delete the commented-out block.
+
+#### P4: Clarification - Ambiguous Screenshot Logic
+
+- **File:** `scripts/capture-media.mjs`
+- **Line:** 71
+- **Issue:** The logic `fullPage: target.viewport === 'mobile' ? false : true` is not clearly justified. The comment is vague, and it is unclear why mobile screenshots should be restricted to the visible viewport while others are full-page captures.
+- **Remediation:** Provide a clear rationale in the comments for this decision or adjust the logic if it is not intentional.
