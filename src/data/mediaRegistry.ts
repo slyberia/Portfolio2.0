@@ -1,30 +1,154 @@
 import type { MediaAsset, RecruiterRoleLane } from '../types';
 
 /**
- * MEDIA REGISTRY - PHASE 5.0
+ * MEDIA REGISTRY - PHASE 5.1
  * This is the central repository for all visual assets in the portfolio.
  *
  * Naming Convention: [projectId]-[surface]-[viewport]-[variant].[ext]
  */
 export const MEDIA_REGISTRY: MediaAsset[] = [
-  /* 
-  // Template Entry:
+  // --- CORE SURFACES ---
   {
-    id: 'portfolio-v2-home-desktop-v1',
+    id: 'portfolio-v2-home-hero-desktop-v1',
     projectId: 'portfolio-v2',
     roleLanes: ['AI Workflow / Portfolio Governance'],
     mediaType: 'screenshot',
-    src: '/media/portfolio-v2/portfolio-v2-home-desktop-v1.webp',
-    alt: 'Portfolio 2.0 Landing Page',
-    caption: 'The central hub of the unified portfolio system.',
+    src: '/media/portfolio-v2/screenshots/portfolio-v2-home-hero-desktop-v1.png',
+    alt: 'Portfolio 2.0 Landing Page Hero',
+    caption: 'Main landing page showcasing the unified portfolio system.',
     relatedEvidenceIds: [],
     maturityStatus: 'shipped',
     visibility: 'public',
-    captureStatus: 'pending-capture',
+    captureStatus: 'pending-review',
     viewport: 'desktop',
-    capturedBy: 'agent'
-  }
-  */
+    capturedBy: 'agent',
+  },
+  {
+    id: 'portfolio-v2-site-index-desktop-v1',
+    projectId: 'portfolio-v2',
+    roleLanes: ['Ops Analytics / QA'],
+    mediaType: 'screenshot',
+    src: '/media/portfolio-v2/screenshots/portfolio-v2-site-index-desktop-v1.png',
+    alt: 'Site Index and Connectivity Map',
+    caption: 'System-wide inventory demonstrating full project connectivity.',
+    relatedEvidenceIds: [],
+    maturityStatus: 'shipped',
+    visibility: 'public',
+    captureStatus: 'pending-review',
+    viewport: 'desktop',
+    capturedBy: 'agent',
+  },
+
+  // --- ROLE TRACKS ---
+  {
+    id: 'portfolio-v2-impl-overview-desktop-v1',
+    projectId: 'portfolio-v2',
+    roleLanes: ['Implementation / CSE-lite'],
+    mediaType: 'screenshot',
+    src: '/media/portfolio-v2/screenshots/portfolio-v2-impl-overview-desktop-v1.png',
+    alt: 'Implementation Track Overview',
+    caption: 'Curated evidence for implementation and engineering excellence.',
+    relatedEvidenceIds: [],
+    maturityStatus: 'shipped',
+    visibility: 'public',
+    captureStatus: 'pending-review',
+    viewport: 'desktop',
+    capturedBy: 'agent',
+  },
+  {
+    id: 'portfolio-v2-ops-overview-desktop-v1',
+    projectId: 'portfolio-v2',
+    roleLanes: ['Ops Analytics / QA'],
+    mediaType: 'screenshot',
+    src: '/media/portfolio-v2/screenshots/portfolio-v2-ops-overview-desktop-v1.png',
+    alt: 'Ops & Analytics Track Overview',
+    caption: 'Metrics and QA focused view of portfolio systems.',
+    relatedEvidenceIds: [],
+    maturityStatus: 'shipped',
+    visibility: 'public',
+    captureStatus: 'pending-review',
+    viewport: 'desktop',
+    capturedBy: 'agent',
+  },
+  {
+    id: 'portfolio-v2-gis-overview-desktop-v1',
+    projectId: 'portfolio-v2',
+    roleLanes: ['GIS / Spatial Systems'],
+    mediaType: 'screenshot',
+    src: '/media/portfolio-v2/screenshots/portfolio-v2-gis-overview-desktop-v1.png',
+    alt: 'GIS Track Overview',
+    caption: 'Spatial intelligence and mapping project integration.',
+    relatedEvidenceIds: [],
+    maturityStatus: 'shipped',
+    visibility: 'public',
+    captureStatus: 'pending-review',
+    viewport: 'desktop',
+    capturedBy: 'agent',
+  },
+
+  // --- PROJECTS ---
+  {
+    id: 'portfolio-v2-index-desktop-v1',
+    projectId: 'portfolio-v2',
+    roleLanes: ['AI Workflow / Portfolio Governance'],
+    mediaType: 'screenshot',
+    src: '/media/portfolio-v2/screenshots/portfolio-v2-index-desktop-v1.png',
+    alt: 'Project Catalog Surface',
+    caption: 'Full listing of active and archived technical projects.',
+    relatedEvidenceIds: [],
+    maturityStatus: 'shipped',
+    visibility: 'public',
+    captureStatus: 'pending-review',
+    viewport: 'desktop',
+    capturedBy: 'agent',
+  },
+  {
+    id: 'codex-technical-tide-codex-detail-desktop-v1',
+    projectId: 'codex-technical-tide',
+    roleLanes: ['Implementation / CSE-lite', 'AI Workflow / Portfolio Governance'],
+    mediaType: 'screenshot',
+    src: '/media/codex-technical-tide/screenshots/codex-technical-tide-codex-detail-desktop-v1.png',
+    alt: 'Codex Project Architecture Deep Dive',
+    caption: 'Detailed view of the Codex technical implementation.',
+    relatedEvidenceIds: [],
+    maturityStatus: 'shipped',
+    visibility: 'public',
+    captureStatus: 'pending-review',
+    viewport: 'desktop',
+    capturedBy: 'agent',
+  },
+  {
+    id: 'spatial-intel-ops-spatial-intel-detail-desktop-v1',
+    projectId: 'spatial-intel-ops',
+    roleLanes: ['GIS / Spatial Systems'],
+    mediaType: 'screenshot',
+    src: '/media/spatial-intel-ops/screenshots/spatial-intel-ops-spatial-intel-detail-desktop-v1.png',
+    alt: 'Spatial Intelligence Project Detail',
+    caption: 'Mapping and spatial data operations interface.',
+    relatedEvidenceIds: [],
+    maturityStatus: 'shipped',
+    visibility: 'public',
+    captureStatus: 'pending-review',
+    viewport: 'desktop',
+    capturedBy: 'agent',
+  },
+
+  // --- MOBILE ---
+  {
+    id: 'portfolio-v2-home-mobile-mobile-v1',
+    projectId: 'portfolio-v2',
+    roleLanes: ['Implementation / CSE-lite'],
+    mediaType: 'screenshot',
+    src: '/media/portfolio-v2/screenshots/portfolio-v2-home-mobile-mobile-v1.png',
+    alt: 'Mobile Responsive Landing Page',
+    caption: 'Demonstration of responsive UI across mobile breakpoints.',
+    relatedEvidenceIds: [],
+    maturityStatus: 'shipped',
+    visibility: 'public',
+    captureStatus: 'pending-review',
+    viewport: 'mobile',
+    capturedBy: 'agent',
+  },
 ];
 
 /**
