@@ -50,9 +50,9 @@ async function capture() {
           fs.mkdirSync(dir, { recursive: true });
         }
 
-        // Construct filename following standards: [projectId]-[surface]-[viewport]-v1.webp
+        // Construct filename following standards: [projectId]-[surface]-[viewport]-v1.png
         // We use target.id as the surface name part if it starts with 'core-' or 'track-' etc.
-        // Actually, let's use the pattern from the prompt examples.
+        // NOTE: Playwright's native screenshot engine is used to generate high-fidelity PNGs.
         const surfaceName = target.id
           .replace('core-', '')
           .replace('track-', '')
@@ -64,7 +64,9 @@ async function capture() {
         await page.screenshot({
           path: fullPath,
           type: 'png',
-          fullPage: target.viewport === 'mobile' ? false : true, // Desktop usually full page for hero, mobile we might want a specific section but for now let's do standard
+          // Desktop uses fullPage for comprehensive proof; Mobile is scoped to the initial viewport
+          // to simulate real user perspective and focus on the primary landing content.
+          fullPage: target.viewport === 'mobile' ? false : true,
         });
 
         console.log(`✅ Saved: ${filename}`);
