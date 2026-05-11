@@ -184,3 +184,13 @@ export const getPublicMediaByRole = (role: RecruiterRoleLane) =>
  */
 export const getVisibleMediaAssets = () =>
   MEDIA_REGISTRY.filter((m) => m.visibility === 'public' && m.captureStatus !== 'rejected');
+
+/**
+ * Helper to get specific media assets by their IDs
+ */
+export const getMediaByIds = (mediaIds: string[]) => {
+  const idSet = new Set(mediaIds);
+  return MEDIA_REGISTRY.filter(
+    (m) => idSet.has(m.id) && m.visibility === 'public' && m.captureStatus !== 'rejected',
+  );
+};

@@ -149,6 +149,19 @@ export function parseEvidenceBlockMarkdown(
       ? (contentParagraphs[priorityIndex].replace(/^Priority:\s*/i, '').trim() as EvidencePriority)
       : undefined;
 
+  // Look for Related Media IDs metadata
+  const relatedMediaIdsIndex = contentParagraphs.findIndex((p) =>
+    /^Related Media IDs:\s*/i.test(p),
+  );
+  const relatedMediaIds =
+    relatedMediaIdsIndex >= 0
+      ? contentParagraphs[relatedMediaIdsIndex]
+          .replace(/^Related Media IDs:\s*/i, '')
+          .split(',')
+          .map((s) => s.trim())
+          .filter(Boolean)
+      : [];
+
   const contextIndex = contentParagraphs.findIndex((paragraph) =>
     /^Initiative Context:\s*/i.test(paragraph),
   );
@@ -167,6 +180,7 @@ export function parseEvidenceBlockMarkdown(
     maturityStatusIndex,
     visibilityIndex,
     priorityIndex,
+    relatedMediaIdsIndex,
   ].filter((i) => i >= 0);
 
   const afterContext = contentParagraphs.filter(
@@ -188,7 +202,7 @@ export function parseEvidenceBlockMarkdown(
       : afterContext.slice(0, -1).join('\n\n');
 
   // Determine metadata status
-  const hasExplicitMeta = roleLanesIndex >= 0 || projectIdIndex >= 0;
+  const hasExplicitMeta = roleLanesIndex >= 0 || projectIdIndex >= 0 || relatedMediaIdsIndex >= 0;
 
   return {
     id,
@@ -204,6 +218,7 @@ export function parseEvidenceBlockMarkdown(
     maturityStatus,
     visibility,
     priority,
+    relatedMediaIds,
     metadataStatus: hasExplicitMeta ? 'explicit' : 'needs-tagging',
   };
 }
