@@ -19,7 +19,7 @@ export const MEDIA_REGISTRY: MediaAsset[] = [
     relatedEvidenceIds: [],
     maturityStatus: 'shipped',
     visibility: 'public',
-    captureStatus: 'pending-review',
+    captureStatus: 'approved',
     viewport: 'desktop',
     capturedBy: 'agent',
   },
@@ -34,7 +34,7 @@ export const MEDIA_REGISTRY: MediaAsset[] = [
     relatedEvidenceIds: [],
     maturityStatus: 'shipped',
     visibility: 'public',
-    captureStatus: 'pending-review',
+    captureStatus: 'approved',
     viewport: 'desktop',
     capturedBy: 'agent',
   },
@@ -51,7 +51,7 @@ export const MEDIA_REGISTRY: MediaAsset[] = [
     relatedEvidenceIds: [],
     maturityStatus: 'shipped',
     visibility: 'public',
-    captureStatus: 'pending-review',
+    captureStatus: 'approved',
     viewport: 'desktop',
     capturedBy: 'agent',
   },
@@ -66,7 +66,7 @@ export const MEDIA_REGISTRY: MediaAsset[] = [
     relatedEvidenceIds: [],
     maturityStatus: 'shipped',
     visibility: 'public',
-    captureStatus: 'pending-review',
+    captureStatus: 'approved',
     viewport: 'desktop',
     capturedBy: 'agent',
   },
@@ -81,7 +81,7 @@ export const MEDIA_REGISTRY: MediaAsset[] = [
     relatedEvidenceIds: [],
     maturityStatus: 'shipped',
     visibility: 'public',
-    captureStatus: 'pending-review',
+    captureStatus: 'approved',
     viewport: 'desktop',
     capturedBy: 'agent',
   },
@@ -98,7 +98,7 @@ export const MEDIA_REGISTRY: MediaAsset[] = [
     relatedEvidenceIds: [],
     maturityStatus: 'shipped',
     visibility: 'public',
-    captureStatus: 'pending-review',
+    captureStatus: 'approved',
     viewport: 'desktop',
     capturedBy: 'agent',
   },
@@ -113,7 +113,7 @@ export const MEDIA_REGISTRY: MediaAsset[] = [
     relatedEvidenceIds: [],
     maturityStatus: 'shipped',
     visibility: 'public',
-    captureStatus: 'pending-review',
+    captureStatus: 'approved',
     viewport: 'desktop',
     capturedBy: 'agent',
   },
@@ -128,7 +128,7 @@ export const MEDIA_REGISTRY: MediaAsset[] = [
     relatedEvidenceIds: [],
     maturityStatus: 'shipped',
     visibility: 'public',
-    captureStatus: 'pending-review',
+    captureStatus: 'approved',
     viewport: 'desktop',
     capturedBy: 'agent',
   },
@@ -145,7 +145,7 @@ export const MEDIA_REGISTRY: MediaAsset[] = [
     relatedEvidenceIds: [],
     maturityStatus: 'shipped',
     visibility: 'public',
-    captureStatus: 'pending-review',
+    captureStatus: 'approved',
     viewport: 'mobile',
     capturedBy: 'agent',
   },
@@ -184,3 +184,13 @@ export const getPublicMediaByRole = (role: RecruiterRoleLane) =>
  */
 export const getVisibleMediaAssets = () =>
   MEDIA_REGISTRY.filter((m) => m.visibility === 'public' && m.captureStatus !== 'rejected');
+
+/**
+ * Helper to get specific media assets by their IDs
+ */
+export const getMediaByIds = (mediaIds: string[]) => {
+  const idSet = new Set(mediaIds);
+  return MEDIA_REGISTRY.filter(
+    (m) => idSet.has(m.id) && m.visibility === 'public' && m.captureStatus !== 'rejected',
+  );
+};

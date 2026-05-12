@@ -26,23 +26,27 @@ const MediaProofGrid: React.FC<MediaProofGridProps> = ({
 
   return (
     <div className="space-y-6">
-      <div className="space-y-1">
-        <h3 className="text-lg font-bold text-navy-900 dark:text-white">{title}</h3>
-        {description && <p className="text-sm text-slate-500 dark:text-slate-400">{description}</p>}
-      </div>
+      {(title || description) && (
+        <div className="space-y-1">
+          {title && <h3 className="text-lg font-bold text-navy-900 dark:text-white">{title}</h3>}
+          {description && (
+            <p className="text-sm text-slate-500 dark:text-slate-400">{description}</p>
+          )}
+        </div>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {visibleAssets.map((asset) => (
           <div
             key={asset.id}
-            className="glass-card overflow-hidden rounded-2xl border border-black/5 dark:border-white/10 flex flex-col"
+            className="glass-card overflow-hidden rounded-2xl border border-black/5 dark:border-white/10 flex flex-col shadow-sm"
           >
             <div className="relative aspect-video bg-slate-100 dark:bg-slate-900 overflow-hidden">
               <img
                 src={asset.src}
                 alt={asset.alt}
                 loading="lazy"
-                className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                className="w-full h-full object-cover object-top transition-transform duration-500 hover:scale-105"
               />
               {asset.captureStatus === 'pending-review' && (
                 <div className="absolute top-3 left-3">
