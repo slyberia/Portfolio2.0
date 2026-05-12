@@ -268,7 +268,7 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
         </section>
       )}
 
-      {isRecruiterRoleLane(content.title) && (
+      {isRecruiterRoleLane(content.title) && getPublicMediaByRole(content.title).length > 0 && (
         <section className="px-6 py-12">
           <div className="max-w-5xl mx-auto">
             <MediaProofGrid

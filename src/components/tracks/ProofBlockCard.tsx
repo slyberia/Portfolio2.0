@@ -42,7 +42,7 @@ const ProofBlockCard: React.FC<ProofBlockCardProps> = ({
       </div>
 
       {relatedMedia && relatedMedia.length > 0 && (
-        <div className="mt-2 pointer-events-none">
+        <div className="mt-4 pt-4 border-t border-black/5 dark:border-white/5 pointer-events-none">
           <MediaProofGrid assets={relatedMedia} maxItems={2} title="" />
         </div>
       )}
