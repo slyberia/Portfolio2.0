@@ -90,17 +90,27 @@ export const HtmlPreviewCard: React.FC<{
       <div
         className={`relative ${isHero ? 'h-[500px]' : 'h-96'} bg-slate-100 dark:bg-slate-900 w-full overflow-hidden cursor-pointer group/preview`}
         onClick={handleLaunch}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleLaunch();
+          }
+        }}
+        role="button"
+        tabIndex={0}
+        aria-label={`Launch interactive prototype for ${label}`}
       >
         <iframe
           srcDoc={content}
           title={label}
           className="w-[200%] h-[200%] transform scale-50 origin-top-left pointer-events-none opacity-60 transition-all duration-500 group-hover/preview:opacity-100 group-hover/preview:scale-[0.51]"
           tabIndex={-1}
+          aria-hidden="true"
         />
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/40 dark:bg-black/60 opacity-0 group-hover/preview:opacity-100 transition-opacity backdrop-blur-sm">
-          <button className="bg-white dark:bg-slate-800 text-navy-900 dark:text-white px-8 py-3.5 rounded-full text-[13px] font-bold shadow-2xl flex items-center gap-3">
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/40 dark:bg-black/60 opacity-0 group-hover/preview:opacity-100 transition-opacity backdrop-blur-sm pointer-events-none">
+          <div className="bg-white dark:bg-slate-800 text-navy-900 dark:text-white px-8 py-3.5 rounded-full text-[13px] font-bold shadow-2xl flex items-center gap-3">
             Launch Prototype
-          </button>
+          </div>
         </div>
       </div>
       {description && (
@@ -118,12 +128,20 @@ export const TabsArtifact: React.FC<{ artifacts: CaseStudyArtifact[] }> = ({ art
 
   return (
     <div className="rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden bg-[#f8fbfd] dark:bg-slate-900/60">
-      <div className="px-4 py-2 bg-slate-50 dark:bg-white/5 border-b border-black/5 dark:border-white/10 flex gap-1 overflow-x-auto scrollbar-hide">
+      <div
+        role="tablist"
+        aria-label="Artifact Views"
+        className="px-4 py-2 bg-slate-50 dark:bg-white/5 border-b border-black/5 dark:border-white/10 flex gap-1 overflow-x-auto scrollbar-hide"
+      >
         {artifacts.map((art, i) => (
           <button
             key={i}
+            role="tab"
+            aria-selected={i === activeIndex}
+            aria-controls={`panel-${i}`}
+            id={`tab-${i}`}
             onClick={() => setActiveIndex(i)}
-            className={`px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${
+            className={`px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua focus-visible:ring-offset-2 ${
               i === activeIndex
                 ? 'bg-slate-900 text-white'
                 : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-white/5'
@@ -133,7 +151,12 @@ export const TabsArtifact: React.FC<{ artifacts: CaseStudyArtifact[] }> = ({ art
           </button>
         ))}
       </div>
-      <div className="p-0">
+      <div
+        role="tabpanel"
+        id={`panel-${activeIndex}`}
+        aria-labelledby={`tab-${activeIndex}`}
+        className="p-0"
+      >
         {activeArt.type === 'audit-log' && activeArt.auditData ? (
           <AuditLog data={activeArt.auditData} />
         ) : activeArt.type === 'code' ? (

@@ -537,7 +537,10 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                           aria-controls="skills-inspector"
                           className={`${baseChipClass} transition-colors active:scale-[0.99] focus:outline-none focus-visible:ring-2 ${getCategoryColorClass(group.category)} ${isActive ? 'border-tide-aqua dark:border-tide-sky ring-1 ring-tide-aqua/60 dark:ring-tide-sky/50 font-semibold' : ''}`}
                         >
-                          <span aria-hidden="true">{isActive ? '✓' : ''}</span>
+                          <span className="sr-only">
+                            {isActive ? 'Active skill:' : 'Activate skill:'}
+                          </span>
+                          {isActive && <span aria-hidden="true">✓</span>}
                           <span>{skill.name}</span>
                         </button>
                       );
