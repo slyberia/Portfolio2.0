@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { execSync } from 'child_process';
+import { logToLedger } from './utils/ledger.mjs';
 
 function assertSynchronizedBranch() {
   console.log('🔍 Pre-flight: Checking branch synchronicity...');
@@ -69,17 +70,17 @@ try {
   // Parse <File> tags and apply mutations to the disk
   const fileRegex = /<File path="([^"]+)">([\s\S]*?)<\/File>/g;
   let match;
-  let filesMutated = 0;
+  let filesMutated = [];
 
   while ((match = fileRegex.exec(output)) !== null) {
     const filePath = match[1];
     const fileContent = match[2].trim();
     fs.writeFileSync(filePath, fileContent);
     console.log(`✅ Applied mutations to: ${filePath}`);
-    filesMutated++;
+    filesMutated.push(filePath);
   }
 
-  if (filesMutated === 0) {
+  if (filesMutated.length === 0) {
     console.log('No file mutations required based on ruling.');
   }
 
@@ -97,16 +98,28 @@ try {
   execSync('git add .');
   execSync('git commit -m "chore(resolution): apply architect-approved fixes"');
 
-  const nextStepRegex = /<Next_Step>([\s\S]*?)<\/Next_Step>/;
-  const stepMatch = output.match(nextStepRegex);
+  // Log to Ledger
+  logToLedger({
+    phase: '6',
+    subphase: 'Resolution',
+    executor: 'Codex (via Assistant Coach)',
+    commands: [
+      { cmd: 'npm run resolve:coach', exitCode: 0, summary: 'Applied ruling' },
+      { cmd: 'npm run validate:phase', exitCode: 0, summary: 'Post-fix validation' },
+    ],
+    mutations: filesMutated,
+  });
+
+  const nextStepMatch = output.match(/<Next_Step>([\s\S]*?)<\/Next_Step>/);
 
   console.log('\n🏁 Assistant Coach: Resolution applied successfully. Ready for merge!');
-  if (stepMatch) {
-    console.log('\n\x1b[36m%s\x1b[0m', 'NOTE'); // Cyan text for NOTE
-    console.log(stepMatch[1].trim());
+  if (nextStepMatch) {
+    console.log('\n🚀 Next Step Suggested by Coach:');
+    console.log('-----------------------------------');
+    console.log(nextStepMatch[1].trim());
   }
 } catch (err) {
-  console.error('\n❌ Resolution Halted:', err.message);
+  console.error('\n❌ Assistant Coach Failed:', err.message);
   console.log(
     'Coach Advice: The build failed after applying mutations, or an error occurred. Review the terminal output. Code state is preserved for manual inspection.',
   );
