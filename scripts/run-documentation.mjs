@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { execSync } from 'child_process';
+import { logToLedger } from './utils/ledger.mjs';
 
 try {
   console.log('Waking Documentation Agent...');
@@ -32,11 +33,26 @@ try {
   const safeTime = now.toTimeString().split(' ')[0].replace(/:/g, ''); // e.g., 143000
   const execFile = `docs/executive-summaries/summary-${safeDate}-${safeTime}.md`;
 
-  // The LLM now provides the markdown # Title within the tag, so we just trim and save
   const execContent = execMatch[1].trim();
   fs.writeFileSync(execFile, execContent);
 
   console.log('✅ Documentation generated and routed successfully.');
+
+  // Log to Ledger
+  logToLedger({
+    phase: '6',
+    subphase: 'Documentation',
+    executor: 'Assistant Coach',
+    commands: [
+      {
+        cmd: 'npm run docs:generate',
+        exitCode: 0,
+        summary: 'Generated technical and executive docs',
+      },
+    ],
+    mutations: ['docs/product-lifecycle.md', execFile],
+  });
+
   fs.unlinkSync('.agent/prompts/temp-doc-prompt.md');
 } catch (err) {
   console.error('❌ Documentation Node Failed:', err.message);
