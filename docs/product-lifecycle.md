@@ -91,3 +91,9 @@
 - Jules reviewed the immediate phase as syntactically valid but incomplete, flagging a P2 that `EvidenceBlock` existed without a consuming UI/data/test path and a P3 that its field semantics lacked TSDoc clarity, especially around `context`, `technicalDetail`, and `businessValue`.
 - Appellate defense defended the P2 because a passive exported interface has no runtime behavior, side effects, or executable path requiring isolated tests, but conceded the P3 documentation gap; the accepted decision was to document the schema boundary while preserving the type-only implementation as a valid incremental architecture step.
 ---
+
+## Build Run: 5/14/2026, 5:11:31 PM
+- Code churn advanced Portfolio2.0 from static portfolio surfaces into a governed proof system: role-track routing, canonical `/projects` architecture, shared project metadata, crawler/SEO validation, media proof registry/capture tooling, evidence-block parsing, design-system recipes, Digital Twin guardrails, and automated governance scripts for Jules review, Codex appellate defense, documentation routing, resolution coaching, and phase validation.
+- Jules reviewed the latest media-capture/governance phase as scope-aligned but flagged one P0 build blocker for invalid `playwright@1.59.1`, plus P3/P4 maintainability issues around a misleading PNG/WebP comment, untested capture script logic, dead/commented registry code, and unclear mobile screenshot rationale.
+- Appellate defense pattern preserved prior rulings: concede concrete build/runtime/documentation defects that can break validation or confuse maintainers, while defending low-risk test gaps where scripts are local developer tooling and failures stop automation rather than mutating production user-facing state.
+---
