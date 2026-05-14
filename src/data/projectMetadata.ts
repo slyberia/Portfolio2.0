@@ -61,7 +61,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     id: 'guynode',
     displayTitle: 'Guynode Spatial Data Hub',
     shortSummary:
-      'Spatial data platform proof for dataset cataloging, metadata, map-preview workflows, public access, and launch-readiness review.',
+      'Flagship spatial platform proofing dataset governance, metadata integrity, and high-fidelity public access workflows.',
     hierarchy: 'featured',
     featuredLabel: 'FLAGSHIP GIS SYSTEM',
     statusLabel: 'Featured System',
@@ -88,7 +88,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     id: 'digital-twin',
     displayTitle: 'Digital Twin AI Agent',
     shortSummary:
-      'Portfolio-bound AI assistant with scope controls, route/action commands, cost guardrails, failure planning, and human handoff.',
+      'Advanced AI implementation featuring scoped interaction protocols, operational guardrails, and seamless human-in-the-loop handoff.',
     hierarchy: 'featured',
     featuredLabel: 'FEATURED AI IMPLEMENTATION',
     statusLabel: 'Featured System',
@@ -114,7 +114,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     id: 'ops-triage',
     displayTitle: 'Ops Triage',
     shortSummary:
-      'Operational triage system with escalation logic, throughput controls, and QA documentation loops under production pressure.',
+      'High-pressure operational triage proof showcasing rigorous escalation logic, throughput management, and QA audit trails.',
     hierarchy: 'supporting',
     statusLabel: 'QA / Operations',
     roleLanes: ['Implementation', 'QA', 'GIS'],
