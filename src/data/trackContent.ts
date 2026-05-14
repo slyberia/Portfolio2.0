@@ -49,9 +49,9 @@ export const implementationTrackContent: TrackPageContent = {
   title: 'Implementation / CSE-lite',
   eyebrow: 'Role Track',
   headline:
-    'Technical implementation proof for customer-facing systems, workflow setup, and operational handoff.',
+    'Bridging the gap between ambiguous requirements and production-ready workflows through disciplined technical implementation.',
   summary:
-    'This track highlights work that translates ambiguous needs into supportable workflows, documentation, implementation steps, and user-facing delivery systems.',
+    'This track showcases work that translates high-level intent into supportable workflows, robust documentation, and user-centric delivery systems, ensuring long-term operational success.',
   proves: [
     'Workflow setup',
     'Technical discovery',
@@ -142,9 +142,9 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
   title: 'Ops Analytics / QA',
   eyebrow: 'Role Track',
   headline:
-    'QA proof for structured testing, issue triage, root-cause analysis, and validation workflows.',
+    'Driving system reliability through rigorous test design, methodical triage, and evidence-based root-cause analysis.',
   summary:
-    'This track highlights work that uses controlled analysis, test design, defect reasoning, and launch-readiness checks to improve system reliability.',
+    'This track highlights the use of controlled analysis, defect taxonomy, and validation logic to deliver stable, high-quality systems and decision-ready reporting.',
   proves: [
     'Test planning',
     'Issue triage',
@@ -234,9 +234,9 @@ export const gisTrackContent: TrackPageContent = {
   accent: 'gis',
   title: 'GIS / Spatial Systems',
   eyebrow: 'Role Track',
-  headline: 'GIS proof for spatial data operations, mapping workflows, and dataset governance.',
+  headline: 'Unlocking the value of spatial data through governed catalogs, intuitive map-based interfaces, and robust metadata management.',
   summary:
-    'This track highlights work involving spatial datasets, GIS workflows, map-based interfaces, metadata structure, and geospatial system delivery.',
+    'This track demonstrates expertise in spatial dataset organization, GIS workflow automation, and the delivery of public geospatial resources with high integrity.',
   proves: [
     'Spatial data organization',
     'GIS workflow understanding',

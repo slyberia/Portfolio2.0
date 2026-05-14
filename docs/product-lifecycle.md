@@ -53,3 +53,15 @@
 - Appellate defense split the findings by runtime risk: it defended the passive-interface P2 because a type-only schema boundary creates no executable path or user-facing side effect, conceded TSDoc clarity for `EvidenceBlock`, previously conceded Node/runtime and response-shape fixes, and accepted role-accent centralization/test coverage where duplication created design-system drift.
 
 ---
+
+## Build Run: 5/14/2026, 4:08:43 PM
+- Code churn expanded Portfolio2.0 from passive schema/workflow scaffolding into a governed evidence system: `EvidenceBlock` was documented in `src/types.ts`, executive-summary markdown is parsed into structured evidence blocks, AI review/documentation scripts route Jules review, Codex appellate defense, lifecycle logging, resolution coaching, and validation through Node-based workflow entrypoints, and the broader app now centralizes role/project metadata, design-system recipes, `/projects` routing, crawler mirrors, SEO, and validation gates.
+- Jules’s latest review accepted the `EvidenceBlock` type as syntactically valid but flagged two risks: a P2 “incomplete feature” concern because the type initially appeared without a consuming UI/data path or tests, and a P3 maintainability concern because the interface fields lacked TSDoc explaining distinctions among context, technical detail, and business value.
+- Appellate defense split the findings: it defended the P2 because a passive exported schema boundary has no runtime behavior, side effects, or executable path requiring isolated tests, but conceded the P3 documentation gap and directed field-level TSDoc for `EvidenceBlock`; earlier appellate decisions likewise conceded concrete robustness fixes while defending low-risk test gaps for local-only developer workflow scripts.
+---
+
+## Build Run: 5/14/2026, 4:27:55 PM
+- Code churn introduced an `EvidenceBlock` schema boundary in `src/types.ts` and connected it to the broader documentation-governance pipeline context: Jules review capture, Codex appellate defense, documentation generation, lifecycle logging, resolution coaching, and phase validation.
+- Jules reviewed the phase as syntactically valid but incomplete, flagging a P2 that `EvidenceBlock` existed only as a passive type without consuming component, data integration, or tests, plus a P3 that the interface lacked TSDoc clarity around field semantics.
+- Appellate defense defended the P2 because a passive exported interface creates no runtime behavior or executable path requiring isolated coverage, but conceded the P3 and directed documentation of `EvidenceBlock`, especially the distinction between context, technical detail, and business value.
+---
