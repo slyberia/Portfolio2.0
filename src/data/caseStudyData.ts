@@ -229,7 +229,7 @@ The dashboard below demonstrates how I track these opposing forces simultaneousl
 
 > **Portfolio Note:** The dashboard uses synthetic values to mirror the reporting structure while excluding confidential proprietary records.`,
 
-  'guynode': `# 🗺️ Guynode Spatial Data Hub — Modernizing Geospatial Access
+  guynode: `# 🗺️ Guynode Spatial Data Hub — Modernizing Geospatial Access
 
 > **"Spatial data is only as valuable as it is accessible. Guynode transforms fragmented legacy data into a governed, high-fidelity public resource."**
 

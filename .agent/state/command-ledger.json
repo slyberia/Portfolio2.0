@@ -53,6 +53,40 @@
         "docs/product-lifecycle.md",
         "docs/executive-summaries/summary-2026-05-14-164553.md"
       ]
+    },
+    {
+      "timestamp": "2026-05-14T21:01:45.393Z",
+      "phase": "6",
+      "subphase": "Documentation",
+      "executor": "Assistant Coach",
+      "commands": [
+        {
+          "cmd": "npm run docs:generate",
+          "exitCode": 0,
+          "summary": "Generated technical and executive docs"
+        }
+      ],
+      "mutations": [
+        "docs/product-lifecycle.md",
+        "docs/executive-summaries/summary-2026-05-14-170145.md"
+      ]
+    },
+    {
+      "timestamp": "2026-05-14T21:02:31.331Z",
+      "phase": "6",
+      "subphase": "Documentation",
+      "executor": "Assistant Coach",
+      "commands": [
+        {
+          "cmd": "npm run docs:generate",
+          "exitCode": 0,
+          "summary": "Generated technical and executive docs"
+        }
+      ],
+      "mutations": [
+        "docs/product-lifecycle.md",
+        "docs/executive-summaries/summary-2026-05-14-170231.md"
+      ]
     }
   ]
 }
