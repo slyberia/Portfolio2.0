@@ -234,7 +234,8 @@ export const gisTrackContent: TrackPageContent = {
   accent: 'gis',
   title: 'GIS / Spatial Systems',
   eyebrow: 'Role Track',
-  headline: 'Unlocking the value of spatial data through governed catalogs, intuitive map-based interfaces, and robust metadata management.',
+  headline:
+    'Unlocking the value of spatial data through governed catalogs, intuitive map-based interfaces, and robust metadata management.',
   summary:
     'This track demonstrates expertise in spatial dataset organization, GIS workflow automation, and the delivery of public geospatial resources with high integrity.',
   proves: [
