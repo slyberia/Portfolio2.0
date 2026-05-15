@@ -23,8 +23,11 @@
 ## Phase 7 Subphase Map
 
 ### 7.0 — Start Path & Bundle Architecture
+
 ### 7.1 — Recruiter Start Path Implementation
+
 ### 7.2 — Component Assembly & Static Bundle UI
+
 ### 7.3 — Validation & Routing Integrity
 
 ## Execution Modes
@@ -59,6 +62,7 @@
 ## Claude Code / Codex Substitution Policy
 
 Claude Code may substitute for Codex only when:
+
 1. the task requires or benefits from local file edits;
 2. validation commands may need to be run;
 3. the task is implementation/resolution-oriented;
@@ -68,6 +72,7 @@ Claude Code may substitute for Codex only when:
 ## Command Ledger Requirements
 
 Every command execution must be tracked in a durable ledger.
+
 - **Human-readable**: `docs/workflow/reports/phase-7-command-ledger.md`
 - **Machine-readable**: `.agent/state/command-ledger.json`
 
@@ -78,10 +83,13 @@ Every command execution must be tracked in a durable ledger.
 ## Subphase 7.0 — Start Path & Bundle Architecture
 
 ### Objective
+
 Define the static routes and mapping schema for job-specific proof bundles.
 
 ### Mandatory Pre-flight
+
 Before making any changes, you MUST run the following commands and confirm you are on `archive/phase-3-baseline` and synced with remote:
+
 ```bash
 git status --short
 git branch --show-current
@@ -91,27 +99,34 @@ git rev-parse HEAD
 git rev-parse origin/archive/phase-3-baseline
 git log --oneline --decorate -5
 ```
+
 If the branch is incorrect, behind remote, or the working tree is dirty, halt and report to the Architect.
 
 ### Allowed Scope
+
 - Creation of `docs/workflow/prompts/bundle-schema-spec.md`.
 - Defining static URL structures (e.g., `/apply/pm`, `/apply/engineer`).
 - Mapping existing evidence IDs to specific job profiles.
 
 ### Forbidden Scope
+
 - Modifying React Router configuration (`App.tsx` / `main.tsx`) in this subphase.
 - Planning complex dynamic UI filters.
 
 ### Required Outputs
+
 - `docs/workflow/prompts/bundle-schema-spec.md`
 
 ### Recommended Mode
+
 documentation
 
 ### Recommended Executor Policy
+
 Claude API or Gemini.
 
 ### Completion Criteria
+
 - Route schema and evidence-to-role mapping are fully documented and approved.
 
 ---
@@ -119,10 +134,13 @@ Claude API or Gemini.
 ## Subphase 7.1 — Recruiter Start Path Implementation
 
 ### Objective
+
 Implement the defined static recruiter start paths within the application router.
 
 ### Mandatory Pre-flight
+
 Before making any changes, you MUST run the following commands and confirm you are on `archive/phase-3-baseline` and synced with remote:
+
 ```bash
 git status --short
 git branch --show-current
@@ -134,23 +152,29 @@ git log --oneline --decorate -5
 ```
 
 ### Allowed Scope
+
 - Modifying router configuration to support recruiter entry URLs.
 - Creating placeholder views for the specific roles if they do not exist.
 
 ### Forbidden Scope
+
 - Injecting stateful URL query params as the primary delivery mechanism (prefer discrete static paths).
 
 ### Required Outputs
+
 - Updated Router configuration.
 - Basic views for start paths.
 
 ### Recommended Mode
+
 implementation
 
 ### Recommended Executor Policy
+
 Claude Code or Codex.
 
 ### Completion Criteria
+
 - New routes load correctly without 404s.
 
 ---
@@ -158,10 +182,13 @@ Claude Code or Codex.
 ## Subphase 7.2 — Component Assembly & Static Bundle UI
 
 ### Objective
+
 Assemble the pre-existing evidence and media components into the recruiter start paths to create the "proof bundles".
 
 ### Mandatory Pre-flight
+
 Before making any changes, you MUST run the following commands and confirm you are on `archive/phase-3-baseline` and synced with remote:
+
 ```bash
 git status --short
 git branch --show-current
@@ -173,22 +200,28 @@ git log --oneline --decorate -5
 ```
 
 ### Allowed Scope
+
 - Populating the start path views with `MediaProofGrid` or related components.
 - Tailoring copy and layout specifically for the targeted job role.
 
 ### Forbidden Scope
+
 - Introducing new client-side filtering logic to handle the display of evidence. (We are displaying pre-curated bundles to avoid Phase 6 FMEA risks).
 
 ### Required Outputs
+
 - Fully populated recruiter bundle views.
 
 ### Recommended Mode
+
 implementation
 
 ### Recommended Executor Policy
+
 Claude Code or Codex.
 
 ### Completion Criteria
+
 - The job-specific views render the correct subset of evidence data.
 
 ---
@@ -196,10 +229,13 @@ Claude Code or Codex.
 ## Subphase 7.3 — Validation & Routing Integrity
 
 ### Objective
+
 Ensure the new static bundles did not break existing architecture and are fully accessible.
 
 ### Mandatory Pre-flight
+
 Before making any changes, you MUST run the following commands and confirm you are on `archive/phase-3-baseline` and synced with remote:
+
 ```bash
 git status --short
 git branch --show-current
@@ -211,21 +247,27 @@ git log --oneline --decorate -5
 ```
 
 ### Allowed Scope
+
 - Running `npm run validate:phase`.
 - Auditing the crawler output to ensure new paths are indexed or explicitly excluded.
 - Minor resolution patches for tests.
 
 ### Forbidden Scope
+
 - Major architectural changes.
 
 ### Required Outputs
+
 - `docs/workflow/reports/phase-7-validation-report.md`
 
 ### Recommended Mode
+
 release-validation
 
 ### Recommended Executor Policy
+
 local-script -> Assistant Coach
 
 ### Completion Criteria
+
 - All tests pass, crawler completes successfully, and no broken links are detected.
