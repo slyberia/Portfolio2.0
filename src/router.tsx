@@ -18,6 +18,9 @@ import ResumeView from './views/ResumeView';
 import ImplementationTrackView from './views/ImplementationTrackView';
 import OpsAnalyticsTrackView from './views/OpsAnalyticsTrackView';
 import GisTrackView from './views/GisTrackView';
+import ApplyImplementationView from './views/ApplyImplementationView';
+import ApplyOpsAnalyticsView from './views/ApplyOpsAnalyticsView';
+import ApplyGisView from './views/ApplyGisView';
 import DeepDiveView from './views/DeepDiveView';
 import SiteIndexView from './views/SiteIndexView';
 import ContactModal from './components/ContactModal';
@@ -439,6 +442,30 @@ export const routeDefinitions = [
         element: (
           <ErrorBoundary location="GisTrackView">
             <GisTrackView />
+          </ErrorBoundary>
+        ),
+      },
+      {
+        path: 'apply/implementation',
+        element: (
+          <ErrorBoundary location="ApplyImplementationView">
+            <ApplyImplementationView />
+          </ErrorBoundary>
+        ),
+      },
+      {
+        path: 'apply/ops-analytics',
+        element: (
+          <ErrorBoundary location="ApplyOpsAnalyticsView">
+            <ApplyOpsAnalyticsView />
+          </ErrorBoundary>
+        ),
+      },
+      {
+        path: 'apply/gis',
+        element: (
+          <ErrorBoundary location="ApplyGisView">
+            <ApplyGisView />
           </ErrorBoundary>
         ),
       },

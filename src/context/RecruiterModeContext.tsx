@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState } from 'react';
 
 interface RecruiterModeContextValue {
   isRecruiterMode: boolean;
+  setRecruiterMode: (val: boolean) => void;
   toggleRecruiterMode: () => void;
 }
 
@@ -13,7 +14,9 @@ export const RecruiterModeProvider: React.FC<{ children: React.ReactNode }> = ({
   const toggleRecruiterMode = () => setIsRecruiterMode((prev) => !prev);
 
   return (
-    <RecruiterModeContext.Provider value={{ isRecruiterMode, toggleRecruiterMode }}>
+    <RecruiterModeContext.Provider
+      value={{ isRecruiterMode, setRecruiterMode: setIsRecruiterMode, toggleRecruiterMode }}
+    >
       {children}
     </RecruiterModeContext.Provider>
   );
