@@ -333,6 +333,15 @@ export const AppLayout: React.FC = () => {
                       LinkedIn
                     </a>
                     <span className="w-1 h-1 bg-slate-300 dark:bg-slate-700 rounded-full"></span>
+                    <a
+                      href="https://github.com/slyberia"
+                      target="_blank"
+                      rel="noopener"
+                      className="text-slate-400 hover:text-navy-900 dark:hover:text-white transition-colors"
+                    >
+                      GitHub
+                    </a>
+                    <span className="w-1 h-1 bg-slate-300 dark:bg-slate-700 rounded-full"></span>
                     <Link
                       to={SITE_INDEX_HREF}
                       className="text-slate-400 hover:text-navy-900 dark:hover:text-white transition-colors"
