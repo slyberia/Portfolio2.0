@@ -128,7 +128,7 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
               >
                 <span
                   aria-hidden="true"
-                  className={`mt-1.5 w-1.5 h-1.5 rounded-full ${content.accent === 'implementation' ? 'bg-tide-aqua' : content.accent === 'qa' ? 'bg-tide-blue' : 'bg-cyan-500'}`}
+                  className={`mt-1.5 w-1.5 h-1.5 rounded-full ${content.accent === 'implementation' ? 'bg-tide-aqua' : content.accent === 'qa' ? 'bg-tide-blue' : 'bg-tide-cyan'}`}
                 />
                 <span>{bullet}</span>
               </li>

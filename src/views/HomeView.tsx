@@ -25,12 +25,12 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
   const getCategoryColorClass = (category: string) => {
     if (category.includes('Technical')) {
-      return 'hover:border-tide-sky/60 hover:bg-tide-aqua/10 dark:hover:bg-tide-aqua/10 hover:text-[#237f86] dark:hover:text-tide-softBlue focus-visible:ring-tide-aqua';
+      return 'hover:border-tide-aqua/60 hover:bg-tide-aqua/10 dark:hover:bg-tide-aqua/10 hover:text-[#237f86] dark:hover:text-tide-aqua focus-visible:ring-tide-aqua';
     }
     if (category.includes('Operations')) {
-      return 'hover:border-tide-softBlue/60 hover:bg-tide-blue/10 dark:hover:bg-tide-blue/10 hover:text-[#2a77a8] dark:hover:text-tide-softBlue focus-visible:ring-tide-blue';
+      return 'hover:border-tide-softBlue/60 hover:bg-tide-blue/10 dark:hover:bg-tide-blue/10 hover:text-tide-blue dark:hover:text-tide-softBlue focus-visible:ring-tide-blue';
     }
-    return 'hover:border-cyan-400/60 hover:bg-cyan-50 dark:hover:bg-cyan-500/10 hover:text-cyan-700 dark:hover:text-cyan-300 focus-visible:ring-cyan-500';
+    return 'hover:border-tide-cyan/60 hover:bg-tide-cyan/10 dark:hover:bg-tide-cyan/10 hover:text-tide-cyan dark:hover:text-tide-cyan focus-visible:ring-tide-cyan';
   };
 
   const roleTrackCards = [
@@ -83,10 +83,10 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
       path: 'SYS_PATH: 02.00',
       href: '/tracks/ops-analytics',
       railClass: 'bg-tide-blue',
-      iconTileClass: 'bg-blue-100 text-[#2a77a8] dark:bg-tide-blue/15 dark:text-tide-softBlue',
-      labelClass: 'text-[#2a77a8] dark:text-tide-softBlue',
+      iconTileClass: 'bg-tide-blue/10 text-tide-blue dark:bg-tide-blue/15 dark:text-tide-softBlue',
+      labelClass: 'text-tide-blue dark:text-tide-softBlue',
       primaryChipClass:
-        'bg-blue-100 text-blue-800 border-blue-200 dark:bg-tide-blue/15 dark:text-blue-200 dark:border-tide-blue/30',
+        'bg-tide-blue/10 text-tide-blue border-tide-blue/30 dark:bg-tide-blue/15 dark:text-tide-softBlue dark:border-tide-blue/30',
       focusClass: 'focus-visible:ring-tide-blue hover:border-tide-softBlue/50',
       icon: (
         <svg
@@ -114,12 +114,12 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
       stream: 'STREAM 03',
       path: 'SYS_PATH: 03.00',
       href: '/tracks/gis',
-      railClass: 'bg-cyan-600',
-      iconTileClass: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-500/15 dark:text-cyan-300',
-      labelClass: 'text-cyan-700 dark:text-cyan-300',
+      railClass: 'bg-tide-cyan',
+      iconTileClass: 'bg-tide-cyan/10 text-tide-cyan dark:bg-tide-cyan/15 dark:text-tide-cyan',
+      labelClass: 'text-tide-cyan dark:text-tide-cyan',
       primaryChipClass:
-        'bg-cyan-100 text-cyan-800 border-cyan-200 dark:bg-cyan-500/15 dark:text-cyan-200 dark:border-cyan-500/30',
-      focusClass: 'focus-visible:ring-cyan-500 hover:border-cyan-400/50',
+        'bg-tide-cyan/10 text-tide-cyan border-tide-cyan/30 dark:bg-tide-cyan/15 dark:text-tide-cyan dark:border-tide-cyan/30',
+      focusClass: 'focus-visible:ring-tide-cyan hover:border-tide-cyan/50',
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"

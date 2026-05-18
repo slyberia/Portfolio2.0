@@ -16,10 +16,10 @@ export default {
       colors: {
         tide: {
           aqua: '#39b8bc',
-          blue: '#59abe4',
-          cyan: '#60bbd4',
+          blue: '#7c6dd8',
+          cyan: '#3aab7a',
           sky: '#64c8f1',
-          softBlue: '#80c4f1',
+          softBlue: '#a99ae6',
         },
         gild: {
           DEFAULT: '#d8a84f',
