@@ -206,7 +206,7 @@ export const AppLayout: React.FC = () => {
         {!isOnResume && (
           <footer
             id="contact"
-            className="py-20 px-6 border-t border-[#d8e8ee] dark:border-white/5 relative bg-[#f5f9fb] dark:bg-[#07161f] overflow-hidden scroll-mt-24 transition-colors duration-500"
+            className="py-14 px-6 border-t border-[#d8e8ee] dark:border-white/5 relative bg-[#f5f9fb] dark:bg-[#07161f] overflow-hidden scroll-mt-24 transition-colors duration-500"
           >
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-[#d8e8ee] dark:bg-white/5"></div>
             <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
@@ -311,13 +311,39 @@ export const AppLayout: React.FC = () => {
                 </div>
               </div>
               <div className="flex flex-col justify-between">
-                <div className="flex flex-col gap-2">
+                <div className="space-y-4">
                   <span className="text-slate-400 dark:text-slate-500 font-bold uppercase tracking-widest text-xs">
-                    Based in
+                    Location
                   </span>
-                  <span className="text-navy-900 dark:text-white font-outfit text-xl">
-                    Ann Arbor, MI
-                  </span>
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-tide-aqua/10 dark:bg-tide-aqua/15 flex items-center justify-center text-tide-aqua shrink-0 mt-0.5">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                      >
+                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                        <circle cx="12" cy="10" r="3" />
+                      </svg>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-navy-900 dark:text-white font-outfit text-lg font-semibold">
+                        Ann Arbor, MI
+                      </p>
+                      <p className="font-mono text-[11px] text-slate-500 dark:text-slate-400 tracking-wide">
+                        42.2808° N · 83.7430° W
+                      </p>
+                      <p className="text-xs text-slate-400 dark:text-slate-500">
+                        Eastern Time · UTC−5
+                      </p>
+                    </div>
+                  </div>
                 </div>
                 <div className="mt-12 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
                   <span className="text-slate-400 dark:text-slate-600 text-sm">
@@ -331,6 +357,15 @@ export const AppLayout: React.FC = () => {
                       className="text-slate-400 hover:text-navy-900 dark:hover:text-white transition-colors"
                     >
                       LinkedIn
+                    </a>
+                    <span className="w-1 h-1 bg-slate-300 dark:bg-slate-700 rounded-full"></span>
+                    <a
+                      href="https://github.com/slyberia"
+                      target="_blank"
+                      rel="noopener"
+                      className="text-slate-400 hover:text-navy-900 dark:hover:text-white transition-colors"
+                    >
+                      GitHub
                     </a>
                     <span className="w-1 h-1 bg-slate-300 dark:bg-slate-700 rounded-full"></span>
                     <Link

@@ -25,12 +25,12 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
   const getCategoryColorClass = (category: string) => {
     if (category.includes('Technical')) {
-      return 'hover:border-tide-sky/60 hover:bg-tide-aqua/10 dark:hover:bg-tide-aqua/10 hover:text-[#237f86] dark:hover:text-tide-softBlue focus-visible:ring-tide-aqua';
+      return 'hover:border-tide-aqua/60 hover:bg-tide-aqua/10 dark:hover:bg-tide-aqua/10 hover:text-[#237f86] dark:hover:text-tide-aqua focus-visible:ring-tide-aqua';
     }
     if (category.includes('Operations')) {
-      return 'hover:border-tide-softBlue/60 hover:bg-tide-blue/10 dark:hover:bg-tide-blue/10 hover:text-[#2a77a8] dark:hover:text-tide-softBlue focus-visible:ring-tide-blue';
+      return 'hover:border-tide-softBlue/60 hover:bg-tide-blue/10 dark:hover:bg-tide-blue/10 hover:text-tide-blue dark:hover:text-tide-softBlue focus-visible:ring-tide-blue';
     }
-    return 'hover:border-cyan-400/60 hover:bg-cyan-50 dark:hover:bg-cyan-500/10 hover:text-cyan-700 dark:hover:text-cyan-300 focus-visible:ring-cyan-500';
+    return 'hover:border-tide-cyan/60 hover:bg-tide-cyan/10 dark:hover:bg-tide-cyan/10 hover:text-tide-cyan dark:hover:text-tide-cyan focus-visible:ring-tide-cyan';
   };
 
   const roleTrackCards = [
@@ -83,10 +83,10 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
       path: 'SYS_PATH: 02.00',
       href: '/tracks/ops-analytics',
       railClass: 'bg-tide-blue',
-      iconTileClass: 'bg-blue-100 text-[#2a77a8] dark:bg-tide-blue/15 dark:text-tide-softBlue',
-      labelClass: 'text-[#2a77a8] dark:text-tide-softBlue',
+      iconTileClass: 'bg-tide-blue/10 text-tide-blue dark:bg-tide-blue/15 dark:text-tide-softBlue',
+      labelClass: 'text-tide-blue dark:text-tide-softBlue',
       primaryChipClass:
-        'bg-blue-100 text-blue-800 border-blue-200 dark:bg-tide-blue/15 dark:text-blue-200 dark:border-tide-blue/30',
+        'bg-tide-blue/10 text-tide-blue border-tide-blue/30 dark:bg-tide-blue/15 dark:text-tide-softBlue dark:border-tide-blue/30',
       focusClass: 'focus-visible:ring-tide-blue hover:border-tide-softBlue/50',
       icon: (
         <svg
@@ -114,12 +114,12 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
       stream: 'STREAM 03',
       path: 'SYS_PATH: 03.00',
       href: '/tracks/gis',
-      railClass: 'bg-cyan-600',
-      iconTileClass: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-500/15 dark:text-cyan-300',
-      labelClass: 'text-cyan-700 dark:text-cyan-300',
+      railClass: 'bg-tide-cyan',
+      iconTileClass: 'bg-tide-cyan/10 text-tide-cyan dark:bg-tide-cyan/15 dark:text-tide-cyan',
+      labelClass: 'text-tide-cyan dark:text-tide-cyan',
       primaryChipClass:
-        'bg-cyan-100 text-cyan-800 border-cyan-200 dark:bg-cyan-500/15 dark:text-cyan-200 dark:border-cyan-500/30',
-      focusClass: 'focus-visible:ring-cyan-500 hover:border-cyan-400/50',
+        'bg-tide-cyan/10 text-tide-cyan border-tide-cyan/30 dark:bg-tide-cyan/15 dark:text-tide-cyan dark:border-tide-cyan/30',
+      focusClass: 'focus-visible:ring-tide-cyan hover:border-tide-cyan/50',
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -142,7 +142,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
   return (
     <>
-      <section className="relative pt-20 overflow-hidden bg-[#f5f9fb] dark:bg-slate-950 border-b border-[#d8e8ee] dark:border-white/5">
+      <section className="relative pt-16 overflow-hidden bg-[#f5f9fb] dark:bg-slate-950 border-b border-[#d8e8ee] dark:border-white/5">
         <div
           className="absolute inset-0 pointer-events-none"
           aria-hidden="true"
@@ -162,7 +162,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
           }}
         />
 
-        <div className="relative max-w-7xl mx-auto px-6 py-14 md:py-20 lg:py-24 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start lg:items-center">
+        <div className="relative max-w-7xl mx-auto px-6 py-8 md:py-12 lg:py-14 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           <div className="lg:col-span-5 space-y-8 lg:pr-6 lg:self-center">
             <div className="space-y-5">
               <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400">
@@ -330,7 +330,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
       <section
         id="about"
-        className="py-28 px-6 scroll-mt-24 bg-[#f5f9fb]/70 dark:bg-slate-950/60 border-y border-[#d8e8ee] dark:border-white/5"
+        className="py-16 px-6 scroll-mt-24 bg-[#f5f9fb]/70 dark:bg-slate-950/60 border-y border-[#d8e8ee] dark:border-white/5"
       >
         <div className="max-w-7xl mx-auto grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
           <div className="space-y-5">
@@ -388,9 +388,9 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
       <SupportingEvidenceSection />
 
       {/* Experience */}
-      <section id="experience" className="py-32 px-6 scroll-mt-24 transition-colors duration-500">
+      <section id="experience" className="py-20 px-6 scroll-mt-24 transition-colors duration-500">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
             <div className="space-y-4">
               <h2 className="text-xs font-bold text-tide-aqua dark:text-tide-aqua uppercase tracking-[0.3em]">
                 EXPERIENCE_LOG
@@ -456,7 +456,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
       {/* Skills Grid */}
       <section
         id="skills"
-        className="py-32 px-6 scroll-mt-24 transition-colors duration-500 bg-[#f5f9fb]/70 dark:bg-slate-950/60"
+        className="py-20 px-6 scroll-mt-24 transition-colors duration-500 bg-[#f5f9fb]/70 dark:bg-slate-950/60"
       >
         <div className="max-w-7xl mx-auto">
           <div className="mb-12 space-y-3">
@@ -554,8 +554,8 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
       </section>
 
       {/* Education & Certs */}
-      <section id="foundation" className="py-32 px-6 scroll-mt-24 transition-colors duration-500">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16">
+      <section id="foundation" className="py-20 px-6 scroll-mt-24 transition-colors duration-500">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10">
           <div className="space-y-12">
             <div className="space-y-4">
               <h2 className="text-xs font-bold text-tide-aqua dark:text-tide-aqua uppercase tracking-[0.3em]">

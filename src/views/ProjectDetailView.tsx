@@ -229,10 +229,15 @@ const ProjectDetailView: React.FC = () => {
                 <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
                   Project Detail
                 </p>
-                <MarkdownSection
-                  content={isRecruiterMode ? recruiterSummary(activeProject) : cleanContent}
-                  isLoading={contentLoading}
-                />
+                <ErrorBoundary
+                  location="Project Detail Markdown"
+                  rawContent={isRecruiterMode ? recruiterSummary(activeProject) : cleanContent}
+                >
+                  <MarkdownSection
+                    content={isRecruiterMode ? recruiterSummary(activeProject) : cleanContent}
+                    isLoading={contentLoading}
+                  />
+                </ErrorBoundary>
               </section>
 
               <MediaProofGrid

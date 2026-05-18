@@ -23,7 +23,7 @@ const SupportingEvidenceSection: React.FC = () => {
   }, [activeFilter, featured, supporting]);
 
   return (
-    <section className="border-b border-[#d8e8ee] dark:border-white/5 bg-[#f9f6f1] dark:bg-slate-950/60 py-20 px-6">
+    <section className="border-b border-[#d8e8ee] dark:border-white/5 bg-[#f5f9fb]/70 dark:bg-slate-950/60 py-20 px-6">
       <div className="max-w-7xl mx-auto space-y-8">
         <div className="space-y-4 max-w-3xl">
           <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">

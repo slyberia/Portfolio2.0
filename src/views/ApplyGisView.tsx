@@ -90,7 +90,7 @@ const ApplyGisView: React.FC = () => {
               <Link
                 key={item.title}
                 to={item.href}
-                className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded-xl"
+                className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-cyan rounded-xl"
               >
                 {card}
               </Link>

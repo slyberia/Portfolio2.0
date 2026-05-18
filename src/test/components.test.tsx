@@ -25,9 +25,7 @@ describe('ErrorBoundary', () => {
         <ThrowingChild />
       </ErrorBoundary>,
     );
-    expect(
-      screen.getByText('This section is currently unavailable due to a technical error.'),
-    ).toBeInTheDocument();
+    expect(screen.getByText('This section failed to load properly.')).toBeInTheDocument();
   });
 
   it('renders children normally when no error', () => {
@@ -47,7 +45,7 @@ describe('ErrorBoundary', () => {
       </ErrorBoundary>,
     );
     expect(screen.getByTestId('custom-fallback')).toBeInTheDocument();
-    expect(screen.queryByText('This section is currently unavailable')).not.toBeInTheDocument();
+    expect(screen.queryByText('This section failed to load properly.')).not.toBeInTheDocument();
   });
 });
 

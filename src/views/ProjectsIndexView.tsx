@@ -57,7 +57,7 @@ const ProjectsIndexView: React.FC = () => {
                 className="rounded-xl border border-[#d8e8ee] bg-white dark:bg-slate-900 p-6 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
               >
                 <div
-                  className={`h-1 w-20 rounded ${project.accent === 'cyan' ? 'bg-cyan-500' : 'bg-tide-aqua'}`}
+                  className={`h-1 w-20 rounded ${project.accent === 'cyan' ? 'bg-tide-cyan' : 'bg-tide-aqua'}`}
                   aria-hidden="true"
                 />
                 <p className="mt-3 text-xs uppercase tracking-[0.18em] text-slate-500">
