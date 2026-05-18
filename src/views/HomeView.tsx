@@ -5,6 +5,101 @@ import FlagshipSystemSection from '../components/home/FlagshipSystemSection';
 import SupportingEvidenceSection from '../components/home/SupportingEvidenceSection';
 import { GUYNODE_SYSTEM_HREF } from '../lib/routes';
 
+const getCertConfig = (issuer: string, name: string) => {
+  if (issuer.includes('IBM')) {
+    return {
+      bgClass:
+        'bg-blue-500/10 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400 border-blue-500/20 dark:border-blue-500/30',
+      hoverGlow: 'hover:shadow-[0_8px_30px_rgba(59,130,246,0.15)] hover:border-blue-500/40',
+      icon: (
+        <svg
+          className="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <rect x="2" y="2" width="20" height="8" rx="1.5" />
+          <rect x="2" y="14" width="20" height="8" rx="1.5" />
+          <line x1="6" y1="6" x2="18" y2="6" />
+          <line x1="6" y1="18" x2="18" y2="18" />
+        </svg>
+      ),
+    };
+  }
+  if (name.includes('Project Management')) {
+    return {
+      bgClass:
+        'bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400 border-emerald-500/20 dark:border-emerald-500/30',
+      hoverGlow: 'hover:shadow-[0_8px_30px_rgba(16,185,129,0.15)] hover:border-emerald-500/40',
+      icon: (
+        <svg
+          className="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <path d="m9 11 2 2 4-4" />
+        </svg>
+      ),
+    };
+  }
+  if (name.includes('Data Analytics')) {
+    return {
+      bgClass:
+        'bg-tide-aqua/10 text-[#237f86] dark:bg-tide-aqua/20 dark:text-tide-sky border-tide-aqua/20 dark:border-tide-aqua/30',
+      hoverGlow: 'hover:shadow-[0_8px_30px_rgba(57,184,188,0.15)] hover:border-tide-aqua/40',
+      icon: (
+        <svg
+          className="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <line x1="18" y1="20" x2="18" y2="10" />
+          <line x1="12" y1="20" x2="12" y2="4" />
+          <line x1="6" y1="20" x2="6" y2="14" />
+          <path d="M3 20h18" />
+        </svg>
+      ),
+    };
+  }
+  // Default/Intercultural
+  return {
+    bgClass:
+      'bg-gild/10 text-gild-deep dark:bg-gild/20 dark:text-gild-soft border-gild/20 dark:border-gild/30',
+    hoverGlow: 'hover:shadow-[0_8px_30px_rgba(216,168,79,0.15)] hover:border-gild/40',
+    icon: (
+      <svg
+        className="w-5 h-5"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+        <path d="M2 12h20" />
+      </svg>
+    ),
+  };
+};
+
 interface HomeViewProps {
   onNavigateToCaseStudy: (id?: string) => void;
   onOpenContact: () => void;
@@ -554,44 +649,44 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
       </section>
 
       {/* Education & Certs */}
-      <section id="foundation" className="py-20 px-6 scroll-mt-24 transition-colors duration-500">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10">
-          <div className="space-y-12">
-            <div className="space-y-4">
-              <h2 className="text-xs font-bold text-tide-aqua dark:text-tide-aqua uppercase tracking-[0.3em]">
-                Foundation
-              </h2>
-              <h3 className="text-4xl font-outfit font-bold text-ink-navy dark:text-white">
-                Education
-              </h3>
-              <div className="glass-card p-8 rounded-3xl mt-6">
-                <h4 className="text-xl font-outfit font-bold text-ink-navy dark:text-white">
-                  B.A., Geography
-                </h4>
-                <p className="text-tide-aqua dark:text-tide-sky font-medium font-outfit">
-                  Queen&#39;s University
-                </p>
-                <p className="text-slate-500 dark:text-slate-400 mt-4 text-sm leading-relaxed">
-                  Relevant Coursework: Data Analytics, Geographic Information Science, Project
-                  Management
-                </p>
-              </div>
-            </div>
+      <section
+        id="foundation"
+        className="py-24 px-6 scroll-mt-24 transition-colors duration-500 border-t border-[#e5e0d6]/60 dark:border-white/5 bg-slate-50/30 dark:bg-slate-950/20"
+      >
+        <div className="max-w-7xl mx-auto">
+          {/* Section Header */}
+          <div className="mb-14 space-y-3 animate-fade-in-up">
+            <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
+              Academic & Professional Foundation
+            </p>
+            <h2 className="text-3xl md:text-4xl font-outfit font-bold text-ink-navy dark:text-white">
+              Education & Certifications
+            </h2>
+            <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
+              Rigorous academic credentials combined with verified, industry-standard professional
+              certifications in AI application, systems QA, data governance, and intercultural
+              competence.
+            </p>
           </div>
 
-          <div className="space-y-8">
-            <h3 className="text-4xl font-outfit font-bold text-ink-navy dark:text-white">
-              Certifications
-            </h3>
-            <div className="grid gap-4">
-              {CERTIFICATIONS.map((cert, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-center gap-4 glass-card p-6 rounded-2xl hover:translate-x-2 transition-transform cursor-default"
-                >
-                  <div className="w-12 h-12 bg-tide-aqua/10 dark:bg-tide-aqua/20 rounded-xl flex items-center justify-center text-tide-aqua dark:text-tide-sky shrink-0">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Featured Education Card */}
+            <div
+              className="lg:col-span-1 flagship-sheen-card animate-fade-in-up rounded-3xl border border-[#d8e8ee] dark:border-white/10 bg-white/95 dark:bg-slate-900/70 p-8 shadow-[0_8px_30px_rgba(15,23,42,0.04)] dark:shadow-none flex flex-col justify-between"
+              style={{ animationDelay: '100ms' }}
+            >
+              <div className="space-y-6">
+                <div className="flex items-start justify-between">
+                  <div className="space-y-1">
+                    <p className="text-xs font-mono uppercase tracking-wider text-rose-600 dark:text-rose-400 font-bold">
+                      Higher Education
+                    </p>
+                    <h3 className="text-2xl font-outfit font-bold text-ink-navy dark:text-white mt-1">
+                      B.A., Geography
+                    </h3>
+                  </div>
+                  <div className="w-12 h-12 rounded-xl bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400 flex items-center justify-center border border-rose-500/20 dark:border-rose-500/30 shrink-0">
                     <svg
-                      xmlns="http://www.w3.org/2000/svg"
                       className="w-6 h-6"
                       viewBox="0 0 24 24"
                       fill="none"
@@ -599,21 +694,80 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
+                      aria-hidden="true"
                     >
-                      <path d="M12 15V3" />
-                      <path d="m15 12-3 3-3-3" />
-                      <path d="M18 17.66A9 9 0 1 1 5.64 5.64" />
-                      <rect width="8" height="4" x="8" y="13" rx="1" />
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                      <circle cx="12" cy="11" r="3" />
+                      <path d="M12 2v20" />
                     </svg>
                   </div>
-                  <div>
-                    <h5 className="font-outfit font-bold text-ink-navy dark:text-white text-sm">
-                      {cert.name}
-                    </h5>
-                    <p className="text-xs text-slate-500">{cert.issuer}</p>
-                  </div>
                 </div>
-              ))}
+
+                <div className="space-y-2">
+                  <p className="text-lg font-outfit font-medium text-[#237f86] dark:text-tide-sky">
+                    Queen&#39;s University
+                  </p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                    A rigorous academic foundation analyzing spatial patterns, data correlations,
+                    and regional systems dynamics.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-8 pt-6 border-t border-slate-100 dark:border-white/5 space-y-3">
+                <p className="text-xs font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                  Relevant Focus Areas
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold border bg-emerald-500/10 text-emerald-600 border-emerald-500/20 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border-emerald-500/30">
+                    Geographic Information Science (GIS)
+                  </span>
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold border bg-blue-500/10 text-blue-600 border-blue-500/20 dark:bg-blue-500/20 dark:text-blue-300 dark:border-blue-500/30">
+                    Data Analytics
+                  </span>
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold border bg-tide-aqua/10 text-[#237f86] border-tide-aqua/20 dark:bg-tide-aqua/20 dark:text-tide-sky dark:border-tide-aqua/30">
+                    Project Management
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Certifications Sub-Grid */}
+            <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+              {CERTIFICATIONS.map((cert, idx) => {
+                const config = getCertConfig(cert.issuer, cert.name);
+                return (
+                  <div
+                    key={idx}
+                    className={`flagship-sheen-card animate-fade-in-up flex flex-col justify-between rounded-2xl border border-[#d8e8ee] dark:border-white/10 bg-white/95 dark:bg-slate-900/70 p-6 shadow-[0_8px_24px_rgba(15,23,42,0.03)] dark:shadow-none hover:translate-y-[-2px] transition-all cursor-default ${config.hoverGlow}`}
+                    style={{ animationDelay: `${(idx + 2) * 80}ms` }}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div
+                        className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 border ${config.bgClass}`}
+                      >
+                        {config.icon}
+                      </div>
+                      <div className="space-y-1">
+                        <h4 className="font-outfit font-bold text-ink-navy dark:text-white text-sm md:text-base leading-snug line-clamp-2">
+                          {cert.name}
+                        </h4>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                          {cert.issuer}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="mt-4 pt-4 border-t border-slate-100 dark:border-white/5 flex items-center justify-between">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                        Verified Credential
+                      </span>
+                      <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
+                        Active
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

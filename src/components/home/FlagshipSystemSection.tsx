@@ -74,7 +74,10 @@ const FlagshipSystemSection: React.FC<FlagshipSystemSectionProps> = ({ guynodeHr
       />
 
       <div className="relative max-w-7xl mx-auto px-6 py-14 md:py-16 lg:py-20 grid grid-cols-1 xl:grid-cols-12 gap-8 xl:gap-10">
-        <div className="xl:col-span-5 space-y-6">
+        <div
+          className="xl:col-span-5 space-y-6 animate-fade-in-up"
+          style={{ animationDelay: '50ms' }}
+        >
           <div className="space-y-4">
             <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
               FLAGSHIP_SYSTEM
@@ -115,7 +118,7 @@ const FlagshipSystemSection: React.FC<FlagshipSystemSectionProps> = ({ guynodeHr
             <Link
               to={guynodeHref}
               aria-label="View Guynode system proof details"
-              className={`inline-flex items-center gap-2 text-sm font-semibold rounded-lg px-4 py-2.5 ${componentRecipes.button.secondary} ${getProjectAccentRecipe('gold').borderClass}`}
+              className={`inline-flex items-center gap-2 text-sm font-semibold rounded-lg px-4 py-2.5 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] ${componentRecipes.button.secondary} ${getProjectAccentRecipe('gold').borderClass}`}
             >
               View Guynode System
               <span aria-hidden="true">↗</span>
@@ -132,10 +135,11 @@ const FlagshipSystemSection: React.FC<FlagshipSystemSectionProps> = ({ guynodeHr
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {PROOF_ARTIFACTS.map((artifact) => (
+            {PROOF_ARTIFACTS.map((artifact, index) => (
               <article
                 key={artifact.title}
-                className="rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-white/95 dark:bg-slate-900/70 p-4 md:p-5 shadow-[0_8px_24px_rgba(15,23,42,0.06)]"
+                className="flagship-sheen-card animate-fade-in-up rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-white/95 dark:bg-slate-900/70 p-4 md:p-5 shadow-[0_8px_24px_rgba(15,23,42,0.06)]"
+                style={{ animationDelay: `${index * 80 + 100}ms` }}
               >
                 <h3 className="text-base font-semibold text-ink-navy dark:text-white">
                   {artifact.title}
