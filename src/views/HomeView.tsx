@@ -142,7 +142,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
   return (
     <>
-      <section className="relative pt-20 overflow-hidden bg-[#f5f9fb] dark:bg-slate-950 border-b border-[#d8e8ee] dark:border-white/5">
+      <section className="relative pt-16 overflow-hidden bg-[#f5f9fb] dark:bg-slate-950 border-b border-[#d8e8ee] dark:border-white/5">
         <div
           className="absolute inset-0 pointer-events-none"
           aria-hidden="true"
@@ -162,7 +162,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
           }}
         />
 
-        <div className="relative max-w-7xl mx-auto px-6 py-14 md:py-20 lg:py-24 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start lg:items-center">
+        <div className="relative max-w-7xl mx-auto px-6 py-8 md:py-12 lg:py-14 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           <div className="lg:col-span-5 space-y-8 lg:pr-6 lg:self-center">
             <div className="space-y-5">
               <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400">
