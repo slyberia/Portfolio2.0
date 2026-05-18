@@ -206,7 +206,7 @@ export const AppLayout: React.FC = () => {
         {!isOnResume && (
           <footer
             id="contact"
-            className="py-20 px-6 border-t border-[#d8e8ee] dark:border-white/5 relative bg-[#f5f9fb] dark:bg-[#07161f] overflow-hidden scroll-mt-24 transition-colors duration-500"
+            className="py-14 px-6 border-t border-[#d8e8ee] dark:border-white/5 relative bg-[#f5f9fb] dark:bg-[#07161f] overflow-hidden scroll-mt-24 transition-colors duration-500"
           >
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-[#d8e8ee] dark:bg-white/5"></div>
             <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">

@@ -330,7 +330,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
       <section
         id="about"
-        className="py-28 px-6 scroll-mt-24 bg-[#f5f9fb]/70 dark:bg-slate-950/60 border-y border-[#d8e8ee] dark:border-white/5"
+        className="py-16 px-6 scroll-mt-24 bg-[#f5f9fb]/70 dark:bg-slate-950/60 border-y border-[#d8e8ee] dark:border-white/5"
       >
         <div className="max-w-7xl mx-auto grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
           <div className="space-y-5">
@@ -388,9 +388,9 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
       <SupportingEvidenceSection />
 
       {/* Experience */}
-      <section id="experience" className="py-32 px-6 scroll-mt-24 transition-colors duration-500">
+      <section id="experience" className="py-20 px-6 scroll-mt-24 transition-colors duration-500">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
             <div className="space-y-4">
               <h2 className="text-xs font-bold text-tide-aqua dark:text-tide-aqua uppercase tracking-[0.3em]">
                 EXPERIENCE_LOG
@@ -456,7 +456,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
       {/* Skills Grid */}
       <section
         id="skills"
-        className="py-32 px-6 scroll-mt-24 transition-colors duration-500 bg-[#f5f9fb]/70 dark:bg-slate-950/60"
+        className="py-20 px-6 scroll-mt-24 transition-colors duration-500 bg-[#f5f9fb]/70 dark:bg-slate-950/60"
       >
         <div className="max-w-7xl mx-auto">
           <div className="mb-12 space-y-3">
@@ -554,8 +554,8 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
       </section>
 
       {/* Education & Certs */}
-      <section id="foundation" className="py-32 px-6 scroll-mt-24 transition-colors duration-500">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16">
+      <section id="foundation" className="py-20 px-6 scroll-mt-24 transition-colors duration-500">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10">
           <div className="space-y-12">
             <div className="space-y-4">
               <h2 className="text-xs font-bold text-tide-aqua dark:text-tide-aqua uppercase tracking-[0.3em]">
