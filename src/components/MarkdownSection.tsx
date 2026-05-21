@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { proseTheme } from '../lib/design-system';
 
 interface MarkdownSectionProps {
   content: string;
@@ -29,7 +30,7 @@ export const CodeBlock: React.FC<{ children: React.ReactNode; className?: string
         </span>
         <button
           onClick={handleCopy}
-          className="p-1.5 rounded-lg bg-white/80 dark:bg-slate-800/90 border border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 transition-all hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-navy-900 dark:hover:text-white shadow-sm"
+          className="p-1.5 rounded-lg bg-white/80 dark:bg-slate-800/90 border border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 transition-all hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-ink-navy dark:hover:text-white shadow-sm"
           aria-label="Copy code to clipboard"
         >
           {copied ? (
@@ -63,7 +64,7 @@ export const CodeBlock: React.FC<{ children: React.ReactNode; className?: string
         </button>
       </div>
       <pre
-        className={`rounded-2xl overflow-x-auto bg-slate-50 dark:bg-slate-950/80 p-5 pt-12 border border-slate-200 dark:border-indigo-500/40 text-slate-900 dark:text-indigo-50 font-mono text-sm leading-relaxed shadow-sm dark:shadow-[0_0_20px_rgba(196,89,42,0.05)] transition-all duration-300 group-hover/code:dark:border-indigo-500/60 ${className}`}
+        className={`rounded-2xl overflow-x-auto bg-slate-50 dark:bg-slate-950/85 p-5 pt-12 border border-slate-200 dark:border-tide-cyan/40 text-slate-900 dark:text-ink-border font-mono text-sm leading-relaxed shadow-sm dark:shadow-[0_0_20px_rgba(57,184,188,0.08)] transition-all duration-300 group-hover/code:dark:border-tide-cyan/60 ${className}`}
       >
         {children}
       </pre>
@@ -102,29 +103,29 @@ const MarkdownSection: React.FC<MarkdownSectionProps> = ({
   return (
     <div className="relative group">
       <div
-        className="absolute -inset-1 bg-gradient-to-r from-indigo-500/5 to-indigo-500/5 blur-xl opacity-75 rounded-3xl dark:opacity-75"
+        className="absolute -inset-1 bg-gradient-to-r from-tide-aqua/5 to-tide-aqua/5 blur-xl opacity-75 rounded-3xl dark:opacity-75"
         aria-hidden="true"
       ></div>
 
       <div className="relative glass-card p-8 md:p-12 rounded-3xl border border-black/5 dark:border-white/10 transition-colors duration-500">
-        <div className="prose prose-lg dark:prose-invert max-w-none prose-indigo">
+        <div className={proseTheme.container}>
           <ReactMarkdown
             urlTransform={transformUrl}
             remarkPlugins={[remarkGfm]}
             components={{
               h1: ({ node: _node, ...props }) => (
-                <h1 {...props} className="font-outfit font-bold text-navy-900 dark:text-white" />
+                <h1 {...props} className="font-outfit font-bold text-ink-navy dark:text-white" />
               ),
               h2: ({ node: _node, ...props }) => (
                 <h2
                   {...props}
-                  className="font-outfit font-bold text-navy-900 dark:text-white mt-12 mb-6"
+                  className="font-outfit font-bold text-ink-navy dark:text-white mt-12 mb-6"
                 />
               ),
               h3: ({ node: _node, ...props }) => (
                 <h3
                   {...props}
-                  className="font-outfit font-bold text-navy-900 dark:text-white mt-8 mb-4"
+                  className="font-outfit font-bold text-ink-navy dark:text-white mt-8 mb-4"
                 />
               ),
               pre: ({ node: _node, children, className }) => (
@@ -140,20 +141,15 @@ const MarkdownSection: React.FC<MarkdownSectionProps> = ({
                   />
                 </span>
               ),
-              a: ({ node: _node, ...props }) => (
-                <a
-                  {...props}
-                  className="text-indigo-600 dark:text-indigo-400 hover:underline underline-offset-4 decoration-indigo-500/30 transition-colors font-medium"
-                />
-              ),
+              a: ({ node: _node, ...props }) => <a {...props} className={proseTheme.link} />,
               blockquote: ({ node: _node, ...props }) => (
                 <blockquote
                   {...props}
-                  className="not-italic rounded-xl bg-[#f5e2d5] dark:bg-[rgba(196,89,42,0.12)] px-6 py-4 text-slate-700 dark:text-slate-300 border-0 my-8"
+                  className="not-italic rounded-xl bg-tide-softBlue/20 dark:bg-tide-cyan/15 px-6 py-4 text-slate-700 dark:text-ink-border border-0 my-8"
                 />
               ),
               table: ({ node: _node, ...props }) => (
-                <div className="my-12 overflow-x-auto rounded-3xl border border-indigo-500/10 dark:border-white/10 bg-white/50 dark:bg-white/5 shadow-2xl shadow-indigo-500/5 ring-1 ring-black/5 dark:ring-white/5">
+                <div className="my-12 overflow-x-auto rounded-3xl border border-tide-aqua/10 dark:border-white/10 bg-white/50 dark:bg-white/5 shadow-2xl shadow-tide-aqua/5 ring-1 ring-black/5 dark:ring-white/5">
                   <table {...props} className="w-full text-left border-collapse table-fixed" />
                 </div>
               ),
@@ -178,7 +174,7 @@ const MarkdownSection: React.FC<MarkdownSectionProps> = ({
               tr: ({ node: _node, ...props }) => (
                 <tr
                   {...props}
-                  className="hover:bg-indigo-500/[0.02] dark:hover:bg-indigo-500/[0.04] transition-colors"
+                  className="hover:bg-tide-aqua/[0.02] dark:hover:bg-tide-aqua/[0.04] transition-colors"
                 />
               ),
             }}

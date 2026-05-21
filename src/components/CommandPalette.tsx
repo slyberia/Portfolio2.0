@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { darkModeStyles, interactionStyles, navStyles, semanticTokens } from '../lib/design-system';
 
 interface PaletteAction {
   id: string;
@@ -22,7 +23,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({ onNavigate, onAction })
     { id: 'home', label: 'Go to Home', type: 'nav', path: 'home' },
     { id: 'experience', label: 'Go to Experience', type: 'nav', path: '#experience' },
     { id: 'skills', label: 'Go to Skills', type: 'nav', path: '#skills' },
-    { id: 'case-studies', label: 'Read Case Studies', type: 'nav', path: 'case-study' },
+    { id: 'case-studies', label: 'View Supporting Evidence', type: 'nav', path: 'case-study' },
     { id: 'contact', label: 'Get in Touch', type: 'action', action: 'contact' },
     { id: 'resume', label: 'Download Resume', type: 'action', action: 'resume' },
   ];
@@ -39,9 +40,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({ onNavigate, onAction })
         setQuery('');
         setSelectedIndex(0);
       }
-      if (e.key === 'Escape') {
-        setIsOpen(false);
-      }
+      if (e.key === 'Escape') setIsOpen(false);
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
@@ -59,6 +58,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({ onNavigate, onAction })
   useEffect(() => {
     if (!isOpen) return;
     const handleNav = (e: KeyboardEvent) => {
+      if (!filteredActions.length) return;
       if (e.key === 'ArrowDown') {
         e.preventDefault();
         setSelectedIndex((i) => (i + 1) % filteredActions.length);
@@ -80,10 +80,12 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({ onNavigate, onAction })
   return (
     <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[20vh] px-4">
       <div
-        className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm transition-opacity"
+        className="absolute inset-0 bg-ink-deep/60 backdrop-blur-sm transition-opacity"
         onClick={() => setIsOpen(false)}
       />
-      <div className="relative w-full max-w-lg bg-slate-900 border border-white/10 rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      <div
+        className={`relative w-full max-w-lg ${darkModeStyles.surface} border border-white/10 rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200`}
+      >
         <div className="flex items-center px-4 border-b border-white/5 bg-white/5">
           <svg
             className="w-5 h-5 text-slate-500 mr-3"
@@ -100,7 +102,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({ onNavigate, onAction })
           </svg>
           <input
             autoFocus
-            className="w-full bg-transparent border-none focus:ring-0 py-4 text-white placeholder-slate-500 font-outfit text-lg outline-none"
+            className={`w-full bg-transparent border-none focus:ring-0 py-4 ${semanticTokens.text.heading} placeholder-slate-500 font-outfit text-lg outline-none`}
             placeholder="Search commands..."
             value={query}
             onChange={(e) => {
@@ -110,23 +112,21 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({ onNavigate, onAction })
           />
         </div>
         <div className="max-h-[60vh] overflow-y-auto py-2">
-          {filteredActions.map((action, i) => (
-            <button
-              key={action.id}
-              onClick={() => execute(action)}
-              className={`w-full text-left px-4 py-3 flex items-center justify-between transition-all ${
-                i === selectedIndex
-                  ? 'bg-indigo-600/10 border-l-2 border-indigo-500'
-                  : 'hover:bg-white/5 border-l-2 border-transparent'
-              }`}
-            >
-              <span
-                className={`text-sm font-medium ${i === selectedIndex ? 'text-indigo-400' : 'text-slate-300'}`}
+          {filteredActions.length === 0 ? (
+            <div className={`${interactionStyles.emptyState} mx-3 text-sm`}>
+              No matching commands.
+            </div>
+          ) : (
+            filteredActions.map((action, i) => (
+              <button
+                key={action.id}
+                onClick={() => execute(action)}
+                className={`w-full text-left px-4 py-3 flex items-center justify-between border-l-2 transition-all ${interactionStyles.hover} ${i === selectedIndex ? 'bg-tide-aqua/10 border-tide-aqua text-tide-sky' : 'hover:bg-white/5 border-transparent text-slate-300'} ${navStyles.itemFocus}`}
               >
-                {action.label}
-              </span>
-            </button>
-          ))}
+                <span className="text-sm font-medium">{action.label}</span>
+              </button>
+            ))
+          )}
         </div>
       </div>
     </div>

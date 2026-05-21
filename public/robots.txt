@@ -1,8 +1,8 @@
 User-agent: *
 Allow: /
 
-# Standard SEO
-Sitemap: https://kyle-semple-professional-portfolio-ai-ops-cx-succ-786228485832.us-west1.run.app/sitemap.xml
+# Primary sitemap for canonical app routes
+Sitemap: https://kylesemple.com/sitemap.xml
 
-# AI Context Discovery
-Sitemap: https://kyle-semple-professional-portfolio-ai-ops-cx-succ-786228485832.us-west1.run.app/llms.txt
+# Secondary sitemap for crawler mirror namespace
+Sitemap: https://kylesemple.com/crawler-sitemap.xml

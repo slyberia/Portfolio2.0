@@ -3,9 +3,9 @@
 
 # Kyle Semple — Professional Portfolio
 
-**AI Operations & Customer Success · Ann Arbor, MI**
+**Technical Implementation · QA · GIS Systems · Ann Arbor, MI**
 
-[Live Site](https://portfoli02-786228485832.northamerica-northeast2.run.app) · [How It Was Built](HOW_IT_WAS_BUILT.md) · [Architecture Decisions](DECISIONS.md) · [Architecture Overview](ARCHITECTURE.md)
+[Live Site](https://kyle-semple-technical-portfolio-786228485832.us-central1.run.app) · [How It Was Built](HOW_IT_WAS_BUILT.md) · [Architecture Decisions](DECISIONS.md) · [Architecture Overview](ARCHITECTURE.md)
 
 [![CI](https://github.com/slyberia/Portfolio2.0/actions/workflows/ci.yml/badge.svg)](https://github.com/slyberia/Portfolio2.0/actions/workflows/ci.yml)
 ![React 19](https://img.shields.io/badge/React-19-61dafb?logo=react&logoColor=white)
@@ -16,9 +16,18 @@
 
 ---
 
-## What This Is
+## Current Portfolio Architecture
 
-A production portfolio targeting AI-forward Customer Success and Solutions roles. Built initially in Google AI Studio, then refactored across 6 phases to production quality — with server-side API security, a full test suite, React Router v6, and deployment on Google Cloud Run.
+Portfolio2.0 is organized around three role-track entry points: Technical Implementation Specialist, Quality Assurance Analyst, and GIS Analyst. Guynode functions as the flagship proof system, while Supporting Evidence cards provide secondary method-level proof across implementation, QA, GIS, and AI-assisted workflow governance.
+
+### Redesign Phase Sequence
+
+1. Role-track hero
+2. Guynode flagship proof
+3. Supporting evidence archive
+4. Track page alignment
+5. Copy/naming polish
+6. Final QA/release prep
 
 ## Stack
 
@@ -56,16 +65,29 @@ npm run dev
 
 ## Scripts
 
-| Script                 | Description                         |
-| ---------------------- | ----------------------------------- |
-| `npm run dev`          | Vite dev server on :5173            |
-| `npm run build`        | Type-check and build for production |
-| `npm test`             | Run Vitest                          |
-| `npm run typecheck`    | TypeScript type checker (no emit)   |
-| `npm run lint`         | ESLint (zero warnings)              |
-| `npm run format:check` | Check formatting without writing    |
-| `npm run dev:full`     | Vite + Express concurrently         |
-| `npm run serve`        | Express server on :8080             |
+| Script                          | Description                                                   |
+| ------------------------------- | ------------------------------------------------------------- |
+| `npm run dev`                   | Vite dev server on :5173                                      |
+| `npm run build`                 | Type-check and build for production                           |
+| `npm test`                      | Run Vitest                                                    |
+| `npm run typecheck`             | TypeScript type checker (no emit)                             |
+| `npm run lint`                  | ESLint (zero warnings)                                        |
+| `npm run format:check`          | Check formatting without writing                              |
+| `npm run dev:full`              | Vite + Express concurrently                                   |
+| `npm run serve`                 | Express server on :8080                                       |
+| `npm run generate:crawler-html` | Generate dist HTML snapshots for crawler routes               |
+| `npm run validate:crawler`      | Validate snapshot route coverage + sitemap/canonical metadata |
+
+## Crawler Snapshot Drift Guardrail
+
+Crawler snapshots are intentionally maintained manually for stability (not derived from React components). To reduce content drift risk, run:
+
+```bash
+npm run build
+npm run validate:crawler
+```
+
+This validator checks required canonical route coverage in the generator and sitemap, snapshot metadata completeness (`title`, description, canonical, meaningful body text), `/llms.txt` and `/ai-index` links, deprecated `/case-studies` exclusions from primary sitemap entries, and stale Cloud Run domain references in sitemap/metadata/snapshots.
 
 ## Project Structure
 
@@ -94,6 +116,18 @@ public/
 | [DECISIONS.md](DECISIONS.md)               | 6 Architecture Decision Records                     |
 | [ARCHITECTURE.md](ARCHITECTURE.md)         | Stack overview and security notes                   |
 | [public/llms.txt](public/llms.txt)         | Machine-readable project context                    |
+
+## Security Posture
+
+- Gemini calls are proxied server-side; the Gemini API key is not exposed in client bundles.
+- `/api/chat` includes server-side rate limiting, input validation, topic/prompt-injection filtering, and chat-history sanitization.
+- Helmet security headers are enabled on the Express server.
+- CI includes a Gemini bundle leak check and a general secret scan.
+- Dependabot is configured for npm and GitHub Actions updates.
+- Threat modeling is documented in `THREAT_MODEL.md`.
+- Known limitation: rate limiting is in-memory and resets on container restart/scale events.
+- Manual follow-up: set Gemini API quota cap in Google Cloud Console.
+- Manual follow-up: verify deployed production headers after each release.
 
 ## License
 

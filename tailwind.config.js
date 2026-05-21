@@ -14,71 +14,64 @@ export default {
         outfit: ['Epilogue', 'sans-serif'],
       },
       colors: {
-        // Accent: amber-sienna remapped over indigo key so existing indigo-* classes update site-wide
-        // Full scale defined to prevent any shade falling back to Tailwind's default purple-indigo
-        indigo: {
-          50: '#fdf4ef', // barely-there sienna tint (light mode badge bg)
-          100: '#f9e2d4', // light sienna (light mode badge border)
-          200: '#f0bfa0', // soft sienna (timeline connectors, borders)
-          300: '#e49468', // medium-light sienna (dark-mode hover text, active tab)
-          400: '#df8c56', // dark mode accent (lighter amber)
-          500: '#c4592a', // primary accent — warm sienna, not purple
-          600: '#a84a20', // hover / darker sienna
-          700: '#8a3718', // button hover darken (was falling back to purple)
-          800: '#6e2c12', // link hover darken
-          900: '#4f200c', // dark-mode subtle bg (used at /60 opacity)
+        tide: {
+          aqua: '#39b8bc',
+          blue: '#7c6dd8',
+          cyan: '#3aab7a',
+          sky: '#64c8f1',
+          softBlue: '#a99ae6',
         },
-        // Backgrounds: warm parchment replaces gold/white
-        gold: {
-          50: '#f9f7f3', // page background (warm parchment)
-          100: '#fefcf9', // card surface (barely-warm white)
+        gild: {
+          DEFAULT: '#d8a84f',
+          soft: '#f1c878',
+          deep: '#a8782a',
         },
-        // Border token
-        parchment: {
-          200: '#e4dfd7', // warm light gray for borders, dividers
-        },
-        // Text: slightly cooler near-black for editorial contrast
+        // Temporary compatibility alias for legacy text-navy-900 usages. Remove in Prompt 1B.
         navy: {
-          900: '#1e2030', // heading color — cool dark ink, more editorial than blue-black
+          900: '#10242f',
         },
-        // Dark mode surface — warm near-black replaces blue-black slate-950
-        slate: {
-          950: '#1a1712', // warm dark bg instead of cold #020617
+        ink: {
+          deep: '#07161f',
+          navy: '#10242f',
+          slate: '#526a78',
+          mist: '#f5f9fb',
+          panel: '#f8fbfd',
+          border: '#d8e8ee',
         },
       },
       typography: (theme) => ({
         DEFAULT: {
           css: {
-            color: theme('colors.slate.600'),
+            color: theme('colors.ink.slate'),
             fontFamily: theme('fontFamily.sans'),
             'h1, h2, h3, h4': {
-              color: theme('colors.navy.900'),
+              color: theme('colors.ink.navy'),
               fontFamily: theme('fontFamily.outfit'),
               fontWeight: '700',
             },
-            strong: { color: theme('colors.slate.800') },
+            strong: { color: theme('colors.ink.deep') },
             blockquote: {
               // Replaced banned border-left with background tint + padding
               borderLeft: 'none',
-              backgroundColor: '#f5e2d5', // light sienna tint
+              backgroundColor: 'rgba(100, 200, 241, 0.18)',
               borderRadius: '4px',
               padding: '0.75rem 1rem',
-              color: theme('colors.slate.700'),
+              color: theme('colors.ink.slate'),
               fontStyle: 'normal',
             },
           },
         },
         invert: {
           css: {
-            color: theme('colors.slate.400'),
+            color: theme('colors.ink.border'),
             'h1, h2, h3, h4': {
               color: theme('colors.white'),
             },
-            strong: { color: theme('colors.slate.200') },
+            strong: { color: theme('colors.ink.mist') },
             blockquote: {
               borderLeft: 'none',
-              backgroundColor: 'rgba(196, 89, 42, 0.12)', // dark mode: sienna tint
-              color: theme('colors.slate.300'),
+              backgroundColor: 'rgba(96, 187, 212, 0.18)',
+              color: theme('colors.ink.border'),
               fontStyle: 'normal',
             },
           },

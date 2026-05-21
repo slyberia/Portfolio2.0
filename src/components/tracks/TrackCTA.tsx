@@ -12,14 +12,14 @@ const TrackCTA: React.FC<TrackCTAProps> = ({ bestFitRoles, ctaCopy, resumeHref, 
   return (
     <div className="glass-card rounded-3xl p-8 md:p-12 space-y-8">
       <div className="space-y-4">
-        <h3 className="text-xs font-bold text-indigo-600 dark:text-indigo-500 uppercase tracking-[0.3em]">
+        <h3 className="text-xs font-bold text-tide-aqua dark:text-tide-aqua uppercase tracking-[0.3em]">
           Best fit roles
         </h3>
         <div className="flex flex-wrap gap-2">
           {bestFitRoles.map((role) => (
             <span
               key={role}
-              className="inline-flex items-center px-3 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-700 dark:text-indigo-400 text-sm font-medium"
+              className="inline-flex items-center px-3 py-1.5 rounded-full bg-tide-aqua/10 border border-tide-aqua/20 text-[#237f86] dark:text-tide-softBlue text-sm font-medium"
             >
               {role}
             </span>
@@ -31,7 +31,7 @@ const TrackCTA: React.FC<TrackCTAProps> = ({ bestFitRoles, ctaCopy, resumeHref, 
         {deepDiveHref && (
           <Link
             to={deepDiveHref}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 hover:-translate-y-0.5 active:scale-95 transition-all shadow-lg shadow-indigo-500/20 group"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-tide-aqua text-white rounded-2xl font-bold hover:bg-[#237f86] hover:-translate-y-0.5 active:scale-95 transition-all shadow-lg shadow-tide-aqua/20 group"
           >
             Deep-dive artifacts
             <svg
@@ -52,7 +52,7 @@ const TrackCTA: React.FC<TrackCTAProps> = ({ bestFitRoles, ctaCopy, resumeHref, 
         {resumeHref && (
           <Link
             to={resumeHref}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-500/5 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border border-indigo-500/20 hover:border-indigo-500/50 rounded-2xl font-bold hover:-translate-y-0.5 active:scale-95 transition-all"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-tide-aqua/5 dark:bg-tide-aqua/10 text-[#237f86] dark:text-tide-softBlue border border-tide-aqua/20 hover:border-tide-aqua/50 rounded-2xl font-bold hover:-translate-y-0.5 active:scale-95 transition-all"
           >
             View resume
           </Link>

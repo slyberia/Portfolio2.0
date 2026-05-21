@@ -115,7 +115,7 @@ export const PROMPTER_HUB_MOCKUP_HTML = `<!doctype html>
 
     function renderSavedList() {
       const list = document.getElementById('saved-list');
-      list.innerHTML = '';
+      list.replaceChildren();
       savedPrompts.forEach(p => {
         const item = document.createElement('div');
         item.className = 'p-3 bg-white/5 border border-white/5 rounded-xl hover:bg-white/10 cursor-pointer flex justify-between items-center group/item';
@@ -297,7 +297,7 @@ export const PROJECT_AEGIS_MOCKUP_HTML = `<!doctype html>
       const think = document.getElementById('thinking'); 
       const stepsList = document.getElementById('steps');
       think.classList.remove('hidden'); 
-      stepsList.innerHTML = '';
+      stepsList.replaceChildren();
       const s = ["Analysing Stack...", "Invariant #001: Tailwind_Locked found.", "Conflict Detected.", "Action: Refuse Request."];
       let i = 0; 
       const interval = setInterval(function() { 

@@ -6,26 +6,34 @@ import {
   useNavigate,
   useLocation,
   useOutletContext,
+  Link,
+  useParams,
 } from 'react-router-dom';
 import HomeView from './views/HomeView';
-import SidebarNav from './components/SidebarNav';
 import BottomTabBar from './components/BottomTabBar';
-import CaseStudyView from './views/CaseStudyView';
+import TopNav from './components/TopNav';
+import ProjectDetailView from './views/ProjectDetailView';
+import ProjectsIndexView from './views/ProjectsIndexView';
 import ResumeView from './views/ResumeView';
 import ImplementationTrackView from './views/ImplementationTrackView';
 import OpsAnalyticsTrackView from './views/OpsAnalyticsTrackView';
 import GisTrackView from './views/GisTrackView';
+import ApplyImplementationView from './views/ApplyImplementationView';
+import ApplyOpsAnalyticsView from './views/ApplyOpsAnalyticsView';
+import ApplyGisView from './views/ApplyGisView';
 import DeepDiveView from './views/DeepDiveView';
+import SiteIndexView from './views/SiteIndexView';
 import ContactModal from './components/ContactModal';
 import CommandPalette from './components/CommandPalette';
 import ChatWidget from './components/ChatWidget';
 import Toast from './components/Toast';
 import ErrorBoundary from './components/ErrorBoundary';
-import { CASE_STUDY_REGISTRY } from './constants';
+import RouteSeo from './components/RouteSeo';
+import { SITE_INDEX_HREF, buildProjectHref, PROJECTS_DEFAULT_HREF } from './lib/routes';
 import { useRecruiterMode } from './context/RecruiterModeContext';
 
 type LayoutContext = {
-  onNavigateToCaseStudy: (id?: string) => void;
+  onNavigateToProject: (id?: string) => void;
   onOpenContact: () => void;
 };
 
@@ -115,8 +123,8 @@ export const AppLayout: React.FC = () => {
     showToast('Email copied to clipboard');
   };
 
-  const navigateToCaseStudy = (id?: string) => {
-    navigate(`/case-studies/${id ?? CASE_STUDY_REGISTRY[0].id}`);
+  const navigateToProject = (id?: string) => {
+    navigate(id ? buildProjectHref(id) : PROJECTS_DEFAULT_HREF);
   };
 
   const navigateToResume = () => navigate('/resume');
@@ -134,20 +142,15 @@ export const AppLayout: React.FC = () => {
     }
   };
 
-  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
-    e.preventDefault();
-    scrollToSection(sectionId);
-  };
-
   const handleCommandNavigation = (path: string) => {
     if (path === 'home') {
       navigate('/');
-    } else if (path === 'case-study') {
-      navigateToCaseStudy();
+    } else if (path === 'project') {
+      navigateToProject();
     } else if (path === 'resume') {
       navigateToResume();
-    } else if (path.startsWith('case-study:')) {
-      navigateToCaseStudy(path.split(':')[1]);
+    } else if (path.startsWith('project:') || path.startsWith('case-study:')) {
+      navigateToProject(path.split(':')[1]);
     } else if (path === 'experience' || path === 'skills' || path.startsWith('#')) {
       const id = path.replace('#', '');
       scrollToSection(id);
@@ -159,190 +162,23 @@ export const AppLayout: React.FC = () => {
     if (action === 'resume') navigateToResume();
   };
 
-  const isOnCaseStudy = location.pathname.startsWith('/case-studies');
   const isOnResume = location.pathname === '/resume';
 
   const context: LayoutContext = {
-    onNavigateToCaseStudy: navigateToCaseStudy,
+    onNavigateToProject: navigateToProject,
     onOpenContact: () => setIsContactOpen(true),
   };
 
   return (
     <div className="min-h-screen relative overflow-x-hidden transition-colors duration-500">
-      {/* Navigation — visible on mobile only; desktop uses SidebarNav */}
-      <nav
-        className="md:hidden fixed top-0 w-full z-50 border-b border-[#e4dfd7] dark:border-white/5 bg-[#f9f7f3] dark:bg-[#1a1712] transition-all duration-300"
-        role="navigation"
-        aria-label="Main Navigation"
-      >
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <button
-            onClick={() => navigate('/')}
-            className="flex items-center gap-2 group focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-lg p-1"
-            aria-label="Return to Homepage"
-          >
-            <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center font-bold text-lg text-white font-outfit group-hover:scale-105 transition-transform shadow-lg shadow-indigo-500/20">
-              KS
-            </div>
-            <span className="font-outfit font-bold text-xl tracking-tight text-navy-900 dark:text-white hidden sm:block">
-              Kyle Semple
-            </span>
-          </button>
-
-          <div className="flex items-center gap-2 md:gap-6 text-sm font-medium text-slate-500 dark:text-slate-400">
-            <button
-              onClick={() => navigate('/')}
-              className={`hidden sm:block hover:text-navy-900 dark:hover:text-white transition-colors focus:outline-none focus:text-navy-900 dark:focus:text-white ${
-                location.pathname === '/' && !isOnCaseStudy ? 'text-navy-900 dark:text-white' : ''
-              }`}
-            >
-              Home
-            </button>
-            <a
-              href="#experience"
-              onClick={(e) => handleAnchorClick(e, 'experience')}
-              className="hidden md:block hover:text-navy-900 dark:hover:text-white transition-colors focus:outline-none"
-            >
-              Experience
-            </a>
-            <button
-              onClick={() => navigateToCaseStudy()}
-              className={`hover:text-navy-900 dark:hover:text-white transition-colors focus:outline-none ${
-                isOnCaseStudy ? 'text-navy-900 dark:text-white font-bold' : ''
-              }`}
-            >
-              Case Studies
-            </button>
-
-            <button
-              onClick={navigateToResume}
-              className="hover:text-navy-900 dark:hover:text-white transition-colors focus:outline-none"
-            >
-              Resume
-            </button>
-
-            <div className="hidden xl:flex items-center gap-2 text-xs text-slate-400 dark:text-slate-600 border border-black/5 dark:border-white/10 px-2 py-1 rounded bg-black/5 dark:bg-white/5">
-              <span className="font-sans">⌘</span>
-              <span>K</span>
-            </div>
-
-            {/* Social & Utility Group */}
-            <div className="flex items-center gap-1 sm:gap-2">
-              {/* LinkedIn Header Shortcut */}
-              <a
-                href="https://www.linkedin.com/in/kyle-semple-522537165/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full hover:bg-blue-500/10 text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all focus:outline-none"
-                aria-label="Visit LinkedIn Profile"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                  <rect width="4" height="12" x="2" y="9" />
-                  <circle cx="4" cy="4" r="2" />
-                </svg>
-              </a>
-
-              {/* Theme Toggle */}
-              <button
-                onClick={toggleTheme}
-                className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-slate-500 dark:text-slate-400 hover:text-navy-900 dark:hover:text-white transition-all relative group overflow-hidden"
-                aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-              >
-                <div
-                  className={`transition-all duration-500 transform ${theme === 'light' ? 'rotate-0 scale-100' : 'rotate-90 scale-0 opacity-0 absolute'}`}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-5 h-5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <circle cx="12" cy="12" r="4" />
-                    <path d="M12 2v2" />
-                    <path d="M12 20v2" />
-                    <path d="m4.93 4.93 1.41 1.41" />
-                    <path d="m17.66 17.66 1.41 1.41" />
-                    <path d="M2 12h2" />
-                    <path d="M20 12h2" />
-                    <path d="m6.34 17.66-1.41 1.41" />
-                    <path d="m19.07 4.93-1.41 1.41" />
-                  </svg>
-                </div>
-                <div
-                  className={`transition-all duration-500 transform ${theme === 'dark' ? 'rotate-0 scale-100' : '-rotate-90 scale-0 opacity-0 absolute'}`}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-5 h-5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-                  </svg>
-                </div>
-              </button>
-            </div>
-
-            {/* Nav Divider */}
-            <div className="hidden md:block w-px h-6 bg-black/10 dark:bg-white/10"></div>
-
-            {/* Recruiter Mode Toggle */}
-            <button
-              onClick={toggleRecruiterMode}
-              className="hidden lg:inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-xs font-bold transition-all hover:border-emerald-500/50 focus:outline-none"
-              aria-label="Toggle recruiter mode"
-            >
-              <span
-                className={`w-2 h-2 rounded-full ${isRecruiterMode ? 'bg-emerald-500 animate-pulse shadow-[0_0_6px_rgba(16,185,129,0.6)]' : 'bg-slate-400 dark:bg-slate-600'}`}
-              />
-              <span
-                className={
-                  isRecruiterMode
-                    ? 'text-emerald-600 dark:text-emerald-400'
-                    : 'text-slate-500 dark:text-slate-400'
-                }
-              >
-                {isRecruiterMode ? 'Recruiter Mode: ON' : 'Recruiter Mode'}
-              </span>
-            </button>
-
-            {/* Contact - Primary CTA */}
-            <button
-              onClick={() => setIsContactOpen(true)}
-              className="inline-flex items-center px-3 sm:px-5 py-1.5 sm:py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-all focus:outline-none text-xs sm:text-sm font-bold shadow-lg shadow-indigo-500/20"
-            >
-              Contact
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      <SidebarNav
+      <RouteSeo />
+      <TopNav
         theme={theme}
         toggleTheme={toggleTheme}
         onOpenContact={() => setIsContactOpen(true)}
       />
 
-      {/* Sidebar-offset wrapper — shifts all page content right of the desktop sidebar */}
-      <div className="md:pl-20 pb-16 md:pb-0">
+      <div className="pt-20 pb-16 md:pb-0">
         {/* Recruiter Mode Banner */}
         {isRecruiterMode && (
           <div className="bg-emerald-500 text-white px-6 py-3 flex items-center justify-between gap-4 animate-in slide-in-from-top-2 duration-300">
@@ -370,14 +206,14 @@ export const AppLayout: React.FC = () => {
         {!isOnResume && (
           <footer
             id="contact"
-            className="py-20 px-6 border-t border-[#e4dfd7] dark:border-white/5 relative bg-[#f9f7f3] dark:bg-[#1a1712] overflow-hidden scroll-mt-24 transition-colors duration-500"
+            className="py-14 px-6 border-t border-[#d8e8ee] dark:border-white/5 relative bg-[#f5f9fb] dark:bg-[#07161f] overflow-hidden scroll-mt-24 transition-colors duration-500"
           >
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-[#e4dfd7] dark:bg-white/5"></div>
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-[#d8e8ee] dark:bg-white/5"></div>
             <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
               <div className="space-y-8">
                 <h2 className="text-4xl font-outfit font-extrabold text-navy-900 dark:text-white">
                   Open to AI-forward{' '}
-                  <span className="text-indigo-500">Customer Success and Solutions</span> roles
+                  <span className="text-tide-aqua">Customer Success and Solutions</span> roles
                 </h2>
                 <p className="text-slate-500 dark:text-slate-400 max-w-sm">
                   I'm looking for my next challenge in an AI-forward company that values operational
@@ -388,9 +224,9 @@ export const AppLayout: React.FC = () => {
                   {/* Email Button */}
                   <button
                     onClick={() => handleCopyEmail('kmsemple26@gmail.com')}
-                    className="flex items-center gap-4 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors group text-left p-2 rounded-2xl hover:bg-indigo-500/5"
+                    className="flex items-center gap-4 text-slate-600 dark:text-slate-300 hover:text-tide-aqua dark:hover:text-tide-softBlue transition-colors group text-left p-2 rounded-2xl hover:bg-tide-aqua/5"
                   >
-                    <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-indigo-600 dark:text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white group-hover:scale-110 transition-all">
+                    <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-tide-aqua dark:text-tide-softBlue group-hover:bg-tide-aqua group-hover:text-white group-hover:scale-110 transition-all">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="w-5 h-5"
@@ -407,7 +243,7 @@ export const AppLayout: React.FC = () => {
                     </div>
                     <div className="flex flex-col items-start">
                       <span className="font-medium">kmsemple26@gmail.com</span>
-                      <span className="text-[10px] uppercase tracking-widest text-indigo-500 font-bold">
+                      <span className="text-[10px] uppercase tracking-widest text-tide-aqua font-bold">
                         Copy Email
                       </span>
                     </div>
@@ -475,13 +311,39 @@ export const AppLayout: React.FC = () => {
                 </div>
               </div>
               <div className="flex flex-col justify-between">
-                <div className="flex flex-col gap-2">
+                <div className="space-y-4">
                   <span className="text-slate-400 dark:text-slate-500 font-bold uppercase tracking-widest text-xs">
-                    Based in
+                    Location
                   </span>
-                  <span className="text-navy-900 dark:text-white font-outfit text-xl">
-                    Ann Arbor, MI
-                  </span>
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-tide-aqua/10 dark:bg-tide-aqua/15 flex items-center justify-center text-tide-aqua shrink-0 mt-0.5">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                      >
+                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                        <circle cx="12" cy="10" r="3" />
+                      </svg>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-navy-900 dark:text-white font-outfit text-lg font-semibold">
+                        Ann Arbor, MI
+                      </p>
+                      <p className="font-mono text-[11px] text-slate-500 dark:text-slate-400 tracking-wide">
+                        42.2808° N · 83.7430° W
+                      </p>
+                      <p className="text-xs text-slate-400 dark:text-slate-500">
+                        Eastern Time · UTC−5
+                      </p>
+                    </div>
+                  </div>
                 </div>
                 <div className="mt-12 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
                   <span className="text-slate-400 dark:text-slate-600 text-sm">
@@ -497,6 +359,22 @@ export const AppLayout: React.FC = () => {
                       LinkedIn
                     </a>
                     <span className="w-1 h-1 bg-slate-300 dark:bg-slate-700 rounded-full"></span>
+                    <a
+                      href="https://github.com/slyberia"
+                      target="_blank"
+                      rel="noopener"
+                      className="text-slate-400 hover:text-navy-900 dark:hover:text-white transition-colors"
+                    >
+                      GitHub
+                    </a>
+                    <span className="w-1 h-1 bg-slate-300 dark:bg-slate-700 rounded-full"></span>
+                    <Link
+                      to={SITE_INDEX_HREF}
+                      className="text-slate-400 hover:text-navy-900 dark:hover:text-white transition-colors"
+                    >
+                      Site Index
+                    </Link>
+                    <span className="w-1 h-1 bg-slate-300 dark:bg-slate-700 rounded-full"></span>
                     <button
                       onClick={() => setIsContactOpen(true)}
                       className="text-slate-400 hover:text-navy-900 dark:hover:text-white transition-colors"
@@ -510,8 +388,6 @@ export const AppLayout: React.FC = () => {
           </footer>
         )}
       </div>
-      {/* end sidebar-offset wrapper */}
-
       <BottomTabBar />
 
       <ContactModal
@@ -534,11 +410,16 @@ export const AppLayout: React.FC = () => {
   );
 };
 
+const CaseStudyRedirect: React.FC = () => {
+  const { studyId } = useParams<{ studyId: string }>();
+  return <Navigate to={studyId ? buildProjectHref(studyId) : PROJECTS_DEFAULT_HREF} replace />;
+};
+
 const HomeWrapper: React.FC = () => {
-  const { onNavigateToCaseStudy, onOpenContact } = useOutletContext<LayoutContext>();
+  const { onNavigateToProject, onOpenContact } = useOutletContext<LayoutContext>();
   return (
     <ErrorBoundary location="HomeView">
-      <HomeView onNavigateToCaseStudy={onNavigateToCaseStudy} onOpenContact={onOpenContact} />
+      <HomeView onNavigateToCaseStudy={onNavigateToProject} onOpenContact={onOpenContact} />
     </ErrorBoundary>
   );
 };
@@ -553,15 +434,27 @@ export const routeDefinitions = [
       { index: true, element: <HomeWrapper /> },
       {
         path: 'case-studies',
-        element: <Navigate to={`/case-studies/${CASE_STUDY_REGISTRY[0].id}`} replace />,
+        element: <Navigate to="/projects" replace />,
+      },
+      {
+        path: 'projects',
+        element: (
+          <ErrorBoundary location="ProjectsIndexView">
+            <ProjectsIndexView />
+          </ErrorBoundary>
+        ),
+      },
+      {
+        path: 'projects/:projectId',
+        element: (
+          <ErrorBoundary location="ProjectDetailView">
+            <ProjectDetailView />
+          </ErrorBoundary>
+        ),
       },
       {
         path: 'case-studies/:studyId',
-        element: (
-          <ErrorBoundary location="CaseStudyView">
-            <CaseStudyView />
-          </ErrorBoundary>
-        ),
+        element: <CaseStudyRedirect />,
       },
       {
         path: 'tracks/implementation',
@@ -588,10 +481,42 @@ export const routeDefinitions = [
         ),
       },
       {
+        path: 'apply/implementation',
+        element: (
+          <ErrorBoundary location="ApplyImplementationView">
+            <ApplyImplementationView />
+          </ErrorBoundary>
+        ),
+      },
+      {
+        path: 'apply/ops-analytics',
+        element: (
+          <ErrorBoundary location="ApplyOpsAnalyticsView">
+            <ApplyOpsAnalyticsView />
+          </ErrorBoundary>
+        ),
+      },
+      {
+        path: 'apply/gis',
+        element: (
+          <ErrorBoundary location="ApplyGisView">
+            <ApplyGisView />
+          </ErrorBoundary>
+        ),
+      },
+      {
         path: 'portfolio2/deep-dive',
         element: (
           <ErrorBoundary location="DeepDiveView">
             <DeepDiveView />
+          </ErrorBoundary>
+        ),
+      },
+      {
+        path: 'site-index',
+        element: (
+          <ErrorBoundary location="SiteIndexView">
+            <SiteIndexView />
           </ErrorBoundary>
         ),
       },

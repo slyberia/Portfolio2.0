@@ -1,59 +1,243 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  EXPERIENCE,
-  SKILL_GROUPS,
-  CERTIFICATIONS,
-  CASE_STUDY_REGISTRY,
-  SKILL_CHIP_CONFIG,
-} from '../constants';
-import SkillDiscoveryModal from '../components/SkillDiscoveryModal';
-import TrackSelectorSection from '../components/tracks/TrackSelectorSection';
-import { trackSelectorCards } from '../data/trackContent';
+import { EXPERIENCE, SKILL_GROUPS, CERTIFICATIONS, SKILL_CHIP_CONFIG } from '../constants';
+import FlagshipSystemSection from '../components/home/FlagshipSystemSection';
+import SupportingEvidenceSection from '../components/home/SupportingEvidenceSection';
+import { GUYNODE_SYSTEM_HREF } from '../lib/routes';
+
+const getCertConfig = (issuer: string, name: string) => {
+  if (issuer.includes('IBM')) {
+    return {
+      bgClass:
+        'bg-blue-500/10 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400 border-blue-500/20 dark:border-blue-500/30',
+      hoverGlow: 'hover:shadow-[0_8px_30px_rgba(59,130,246,0.15)] hover:border-blue-500/40',
+      icon: (
+        <svg
+          className="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <rect x="2" y="2" width="20" height="8" rx="1.5" />
+          <rect x="2" y="14" width="20" height="8" rx="1.5" />
+          <line x1="6" y1="6" x2="18" y2="6" />
+          <line x1="6" y1="18" x2="18" y2="18" />
+        </svg>
+      ),
+    };
+  }
+  if (name.includes('Project Management')) {
+    return {
+      bgClass:
+        'bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400 border-emerald-500/20 dark:border-emerald-500/30',
+      hoverGlow: 'hover:shadow-[0_8px_30px_rgba(16,185,129,0.15)] hover:border-emerald-500/40',
+      icon: (
+        <svg
+          className="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <path d="m9 11 2 2 4-4" />
+        </svg>
+      ),
+    };
+  }
+  if (name.includes('Data Analytics')) {
+    return {
+      bgClass:
+        'bg-tide-aqua/10 text-[#237f86] dark:bg-tide-aqua/20 dark:text-tide-sky border-tide-aqua/20 dark:border-tide-aqua/30',
+      hoverGlow: 'hover:shadow-[0_8px_30px_rgba(57,184,188,0.15)] hover:border-tide-aqua/40',
+      icon: (
+        <svg
+          className="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <line x1="18" y1="20" x2="18" y2="10" />
+          <line x1="12" y1="20" x2="12" y2="4" />
+          <line x1="6" y1="20" x2="6" y2="14" />
+          <path d="M3 20h18" />
+        </svg>
+      ),
+    };
+  }
+  // Default/Intercultural
+  return {
+    bgClass:
+      'bg-gild/10 text-gild-deep dark:bg-gild/20 dark:text-gild-soft border-gild/20 dark:border-gild/30',
+    hoverGlow: 'hover:shadow-[0_8px_30px_rgba(216,168,79,0.15)] hover:border-gild/40',
+    icon: (
+      <svg
+        className="w-5 h-5"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+        <path d="M2 12h20" />
+      </svg>
+    ),
+  };
+};
 
 interface HomeViewProps {
   onNavigateToCaseStudy: (id?: string) => void;
   onOpenContact: () => void;
 }
 
-// 3-card preview strip using the first 3 entries from CASE_STUDY_REGISTRY
-const PREVIEW_STUDIES = CASE_STUDY_REGISTRY.slice(0, 3);
-
 const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContact }) => {
-  const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleSkillClick = (skill: string) => {
-    setSelectedSkill(skill);
-    setIsModalOpen(true);
-  };
+  void onNavigateToCaseStudy;
+  void onOpenContact;
+  const [activeSkillName, setActiveSkillName] = useState<string | null>(null);
+  const activeSkill = useMemo(() => {
+    if (!activeSkillName) return null;
+    for (const group of SKILL_GROUPS) {
+      const found = group.items.find((item) => item.name === activeSkillName);
+      if (found) return found;
+    }
+    return null;
+  }, [activeSkillName]);
 
   const getCategoryColorClass = (category: string) => {
-    if (category.includes('Strategic'))
-      return 'hover:border-indigo-500/50 hover:bg-indigo-500/5 text-indigo-600 dark:text-indigo-400';
-    if (category.includes('Data & Systems'))
-      return 'hover:border-amber-500/50 hover:bg-amber-500/5 text-amber-700 dark:text-amber-400';
-    if (category.includes('Stack'))
-      return 'hover:border-emerald-500/50 hover:bg-emerald-500/5 text-emerald-700 dark:text-emerald-400';
-    return 'hover:border-slate-500/50 hover:bg-slate-500/5';
+    if (category.includes('Technical')) {
+      return 'hover:border-tide-aqua/60 hover:bg-tide-aqua/10 dark:hover:bg-tide-aqua/10 hover:text-[#237f86] dark:hover:text-tide-aqua focus-visible:ring-tide-aqua';
+    }
+    if (category.includes('Operations')) {
+      return 'hover:border-tide-softBlue/60 hover:bg-tide-blue/10 dark:hover:bg-tide-blue/10 hover:text-tide-blue dark:hover:text-tide-softBlue focus-visible:ring-tide-blue';
+    }
+    return 'hover:border-tide-cyan/60 hover:bg-tide-cyan/10 dark:hover:bg-tide-cyan/10 hover:text-tide-cyan dark:hover:text-tide-cyan focus-visible:ring-tide-cyan';
   };
 
-  const RECRUITER_SKILLS = [
-    'Workflow Design + Triage Systems',
-    'Technical Customer Enablement',
-    'QA + Data Integrity',
-    'Documentation + Stakeholder Dashboards',
-    'AI Tooling / Prompt Governance',
+  const roleTrackCards = [
+    {
+      systemLabel: 'IMPLEMENTATION_TRACK',
+      title: 'Technical Implementation Specialist',
+      subcopy:
+        'Customer-facing technical delivery, workflow setup, onboarding support, and implementation-focused problem solving.',
+      chips: ['Onboarding', 'Workflow Design', 'Documentation'],
+      stream: 'STREAM 01',
+      path: 'SYS_PATH: 01.00',
+      href: '/tracks/implementation',
+      railClass: 'bg-tide-aqua',
+      iconTileClass: 'bg-tide-aqua/10 text-[#237f86] dark:bg-tide-aqua/15 dark:text-tide-sky',
+      labelClass: 'text-[#237f86] dark:text-tide-sky',
+      primaryChipClass:
+        'bg-tide-aqua/10 text-[#237f86] border-tide-aqua/30 dark:bg-tide-aqua/15 dark:text-tide-sky dark:border-tide-aqua/30',
+      focusClass: 'focus-visible:ring-tide-aqua hover:border-tide-sky/50',
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M12 2v4" />
+          <path d="m16.2 7.8 2.9-2.9" />
+          <path d="M18 12h4" />
+          <path d="m16.2 16.2 2.9 2.9" />
+          <path d="M12 18v4" />
+          <path d="m7.8 16.2-2.9 2.9" />
+          <path d="M2 12h4" />
+          <path d="m7.8 7.8-2.9-2.9" />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
+      ),
+    },
+    {
+      systemLabel: 'QA_TRACK',
+      title: 'Quality Assurance Analyst',
+      subcopy:
+        'Structured testing, issue triage, root-cause analysis, and decision-ready quality reporting.',
+      chips: ['QA Protocols', 'Test Plans', 'Root Cause Analysis'],
+      stream: 'STREAM 02',
+      path: 'SYS_PATH: 02.00',
+      href: '/tracks/ops-analytics',
+      railClass: 'bg-tide-blue',
+      iconTileClass: 'bg-tide-blue/10 text-tide-blue dark:bg-tide-blue/15 dark:text-tide-softBlue',
+      labelClass: 'text-tide-blue dark:text-tide-softBlue',
+      primaryChipClass:
+        'bg-tide-blue/10 text-tide-blue border-tide-blue/30 dark:bg-tide-blue/15 dark:text-tide-softBlue dark:border-tide-blue/30',
+      focusClass: 'focus-visible:ring-tide-blue hover:border-tide-softBlue/50',
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z" />
+          <path d="m9 12 2 2 4-4" />
+        </svg>
+      ),
+    },
+    {
+      systemLabel: 'GIS_TRACK',
+      title: 'GIS Analyst',
+      subcopy:
+        'Spatial data operations, mapping workflows, dataset governance, and GIS-focused system delivery.',
+      chips: ['ArcGIS', 'Leaflet', 'Spatial Data'],
+      stream: 'STREAM 03',
+      path: 'SYS_PATH: 03.00',
+      href: '/tracks/gis',
+      railClass: 'bg-tide-cyan',
+      iconTileClass: 'bg-tide-cyan/10 text-tide-cyan dark:bg-tide-cyan/15 dark:text-tide-cyan',
+      labelClass: 'text-tide-cyan dark:text-tide-cyan',
+      primaryChipClass:
+        'bg-tide-cyan/10 text-tide-cyan border-tide-cyan/30 dark:bg-tide-cyan/15 dark:text-tide-cyan dark:border-tide-cyan/30',
+      focusClass: 'focus-visible:ring-tide-cyan hover:border-tide-cyan/50',
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M3 6 9 3l6 3 6-3v15l-6 3-6-3-6 3z" />
+          <path d="M9 3v15" />
+          <path d="M15 6v15" />
+        </svg>
+      ),
+    },
   ];
-
-  // Real data for annotations — sourced from constants/experience
-  const CASE_COUNT = String(CASE_STUDY_REGISTRY.length).padStart(2, '0');
 
   return (
     <>
-      {/* ── Hero Section ─────────────────────────────────────────────────────── */}
-      <section className="relative pt-20 min-h-[92vh] md:min-h-[88vh] overflow-hidden bg-gold-50 dark:bg-slate-950">
-        {/* Graph-paper grid overlay */}
+      <section className="relative pt-16 overflow-hidden bg-[#f5f9fb] dark:bg-slate-950 border-b border-[#d8e8ee] dark:border-white/5">
         <div
           className="absolute inset-0 pointer-events-none"
           aria-hidden="true"
@@ -63,7 +247,6 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             backgroundSize: '40px 40px',
           }}
         />
-        {/* Dark-mode grid */}
         <div
           className="absolute inset-0 pointer-events-none hidden dark:block"
           aria-hidden="true"
@@ -74,64 +257,48 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
           }}
         />
 
-        {/* Top-right annotation — real portfolio data */}
-        <div
-          className="absolute top-24 right-6 hidden lg:block font-mono text-right leading-relaxed select-none"
-          style={{ fontSize: '10px', opacity: 0.3 }}
-          aria-hidden="true"
-        >
-          PORT_REF: KS.V2 / CASES: {CASE_COUNT}
-          <br />
-          BUILD: 2026.04 / ANN_ARBOR_MI
-        </div>
-
-        {/* ── 12-column content grid ──────────────────────────────────────────── */}
-        <div className="grid grid-cols-12 min-h-[88vh] md:min-h-[80vh]">
-          {/* Left column — text content — appears second on mobile, first on desktop */}
-          <div className="col-span-12 md:col-span-7 order-2 md:order-1 flex flex-col justify-center px-8 md:px-12 pt-8 pb-10 md:pt-10 md:pb-16">
-            {/* Eyebrow — horizontal rule + mono label */}
-            <div className="flex items-center gap-3 mb-7 animate-in fade-in duration-700">
-              <div className="w-8 h-px bg-indigo-500 shrink-0" aria-hidden="true" />
-              <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-indigo-500">
-                Customer Success / AI Operations
-              </span>
+        <div className="relative max-w-7xl mx-auto px-6 py-8 md:py-12 lg:py-14 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+          <div className="lg:col-span-5 space-y-8 lg:pr-6 lg:self-center">
+            <div className="space-y-5">
+              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400">
+                SYSTEM_ARCHITECT_V3.1
+              </p>
+              <h1 className="text-5xl md:text-6xl font-outfit font-bold tracking-tight text-ink-navy dark:text-white">
+                Kyle Semple
+              </h1>
+              <div
+                className="h-px w-full max-w-md bg-slate-300 dark:bg-white/15"
+                aria-hidden="true"
+              />
+              <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl">
+                A portfolio built around three target roles: technical implementation, quality
+                assurance, and GIS systems. Each path connects to tangible systems, workflows, and
+                operational proof.
+              </p>
             </div>
 
-            {/* Headline — split two-line architectural format */}
-            <h1
-              className="font-outfit font-extrabold text-navy-900 dark:text-white tracking-tight leading-[1.05] mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-75"
-              style={{ fontSize: 'clamp(2rem, 4.75vw, 4.34rem)' }}
-            >
-              <span className="block">OPERATIONS</span>
-              <span className="block italic text-indigo-500 md:pl-8 lg:pl-14">INTELLIGENCE_V2</span>
-            </h1>
-
-            {/* Open-to-work signal */}
-            <div className="flex items-center gap-2.5 mb-5 md:pl-8 lg:pl-14 animate-in fade-in duration-700 delay-100">
-              <span className="w-2 h-2 bg-emerald-500 animate-pulse shrink-0" aria-hidden="true" />
-              <span className="font-mono text-[11px] uppercase tracking-widest text-slate-500 dark:text-slate-400">
-                Open to AI Ops &amp; CX Success roles
-              </span>
-            </div>
-
-            {/* Body text */}
-            <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-lg mb-10 md:pl-8 lg:pl-14 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150">
-              This portfolio covers three areas of work — implementation and technical enablement,
-              ops analytics and QA, and geospatial data systems. Each track is built around concrete
-              artifacts: how problems were framed, how tradeoffs were handled, and how decisions
-              held up under constraint.
-            </p>
-
-            {/* CTAs — sharp corners, full-width on mobile */}
-            <div className="flex flex-col sm:flex-row gap-0 md:pl-8 lg:pl-14 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
-              <button
-                onClick={() => onNavigateToCaseStudy()}
-                className="flex items-center justify-between gap-4 px-8 py-4 bg-indigo-500 text-white font-mono text-sm uppercase tracking-wider hover:bg-indigo-600 active:bg-indigo-700 transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl w-full">
+              <Link
+                to={GUYNODE_SYSTEM_HREF}
+                aria-label="View Flagship Project"
+                className="group min-h-[80px] border border-tide-aqua/70 dark:border-tide-sky/60 bg-tide-aqua dark:bg-tide-sky rounded-md px-5 py-4 flex items-center justify-between gap-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all hover:-translate-y-0.5 hover:shadow-md hover:bg-tide-aqua/90 dark:hover:bg-tide-sky/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f5f9fb] dark:focus-visible:ring-offset-slate-950 focus-visible:ring-tide-aqua"
               >
-                <span>View Case Studies</span>
+                {/* TODO: update this href to the dedicated Guynode case-study route when it exists. */}
+                <div>
+                  <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+                    <span
+                      className="h-1.5 w-1.5 rounded-full shrink-0 bg-tide-aqua"
+                      aria-hidden="true"
+                    />
+                    PRIMARY ACTION
+                  </p>
+                  <p className="mt-1 text-base md:text-lg font-outfit font-semibold text-white dark:text-ink-navy">
+                    View Flagship Project
+                  </p>
+                </div>
                 <svg
-                  width="16"
-                  height="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5 shrink-0 text-white dark:text-ink-navy group-hover:translate-x-0.5 transition-all"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -140,333 +307,196 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                   strokeLinejoin="round"
                   aria-hidden="true"
                 >
-                  <path d="M5 12h14" />
-                  <path d="m12 5 7 7-7 7" />
+                  <path d="M7 17L17 7" />
+                  <path d="M7 7h10v10" />
                 </svg>
-              </button>
-              <button
-                onClick={onOpenContact}
-                className="flex items-center justify-center px-8 py-4 border border-indigo-500/30 text-indigo-600 dark:text-indigo-400 font-mono text-sm uppercase tracking-wider hover:border-indigo-500/60 hover:bg-indigo-500/5 transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
-              >
-                Get in Touch
-              </button>
-            </div>
-          </div>
+              </Link>
 
-          {/* Right column — geometric visual — appears first on mobile */}
-          <div className="col-span-12 md:col-span-5 order-1 md:order-2 relative flex items-stretch">
-            {/* Visual frame */}
-            <div className="relative w-full min-h-[320px] md:min-h-0 bg-[#fefcf9] dark:bg-[#1e1a14] border-b md:border-b-0 md:border-l border-[#e4dfd7] dark:border-white/5 overflow-hidden">
-              {/* Grid background inside frame */}
-              <div
-                className="absolute inset-0 pointer-events-none"
-                aria-hidden="true"
-                style={{
-                  backgroundImage:
-                    'linear-gradient(rgba(30,32,48,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(30,32,48,0.04) 1px, transparent 1px)',
-                  backgroundSize: '40px 40px',
-                }}
-              />
-
-              {/* Version / ref tag — top-right, sharp corners */}
-              <div className="absolute top-0 right-0 z-10 bg-indigo-500 text-white font-mono text-[10px] uppercase tracking-wider px-3 py-1.5 select-none">
-                OPS_REF: V2
-              </div>
-
-              {/* Corner brackets */}
-              <svg
-                className="absolute top-3 left-3 text-indigo-500/60"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path d="M24 0 L0 0 L0 24" stroke="currentColor" strokeWidth="1.5" />
-              </svg>
-              <svg
-                className="absolute bottom-12 right-3 text-indigo-500/60"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path d="M0 24 L24 24 L24 0" stroke="currentColor" strokeWidth="1.5" />
-              </svg>
-
-              {/* Operations network diagram — SVG */}
-              <svg
-                className="absolute inset-0 w-full h-full"
-                viewBox="0 0 380 460"
-                fill="none"
-                preserveAspectRatio="xMidYMid slice"
-                aria-label="Operations workflow network diagram"
-                role="img"
-              >
-                {/* Dot grid */}
-                {Array.from({ length: 11 }, (_, row) =>
-                  Array.from({ length: 9 }, (_, col) => (
-                    <circle
-                      key={`d-${row}-${col}`}
-                      cx={20 + col * 40}
-                      cy={20 + row * 40}
-                      r="1.5"
-                      fill="#1e2030"
-                      opacity="0.07"
-                    />
-                  )),
-                )}
-
-                {/* Primary connection paths */}
-                <line
-                  x1="60"
-                  y1="80"
-                  x2="180"
-                  y2="160"
-                  stroke="#c4592a"
-                  strokeWidth="1"
-                  opacity="0.75"
-                />
-                <line
-                  x1="180"
-                  y1="160"
-                  x2="300"
-                  y2="100"
-                  stroke="#c4592a"
-                  strokeWidth="1"
-                  opacity="0.5"
-                />
-                <line
-                  x1="180"
-                  y1="160"
-                  x2="180"
-                  y2="300"
-                  stroke="#c4592a"
-                  strokeWidth="1"
-                  opacity="0.8"
-                />
-                <line
-                  x1="180"
-                  y1="160"
-                  x2="300"
-                  y2="240"
-                  stroke="#c4592a"
-                  strokeWidth="1"
-                  opacity="0.55"
-                />
-                <line
-                  x1="300"
-                  y1="240"
-                  x2="180"
-                  y2="360"
-                  stroke="#c4592a"
-                  strokeWidth="1"
-                  opacity="0.65"
-                />
-                <line
-                  x1="180"
-                  y1="300"
-                  x2="60"
-                  y2="380"
-                  stroke="#c4592a"
-                  strokeWidth="1"
-                  opacity="0.5"
-                />
-                <line
-                  x1="180"
-                  y1="360"
-                  x2="60"
-                  y2="380"
-                  stroke="#c4592a"
-                  strokeWidth="1"
-                  opacity="0.4"
-                />
-
-                {/* Secondary dashed paths */}
-                <line
-                  x1="300"
-                  y1="100"
-                  x2="300"
-                  y2="240"
-                  stroke="#c4592a"
-                  strokeWidth="1"
-                  opacity="0.2"
-                  strokeDasharray="4 4"
-                />
-                <line
-                  x1="60"
-                  y1="80"
-                  x2="60"
-                  y2="380"
-                  stroke="#1e2030"
-                  strokeWidth="1"
-                  opacity="0.06"
-                  strokeDasharray="2 6"
-                />
-
-                {/* Nodes — squares (zero radius, consistent with design) */}
-                {/* Input node */}
-                <rect x="54" y="74" width="12" height="12" fill="#c4592a" opacity="0.9" />
-                {/* Primary junction */}
-                <rect x="173" y="153" width="14" height="14" fill="#c4592a" />
-                {/* Branch A */}
-                <rect
-                  x="294"
-                  y="94"
-                  width="10"
-                  height="10"
-                  fill="none"
-                  stroke="#c4592a"
-                  strokeWidth="1.5"
-                  opacity="0.7"
-                />
-                {/* Branch B */}
-                <rect x="294" y="234" width="12" height="12" fill="#c4592a" opacity="0.75" />
-                {/* Convergence A */}
-                <rect
-                  x="174"
-                  y="294"
-                  width="10"
-                  height="10"
-                  fill="none"
-                  stroke="#c4592a"
-                  strokeWidth="1.5"
-                  opacity="0.6"
-                />
-                {/* Convergence B */}
-                <rect
-                  x="174"
-                  y="354"
-                  width="10"
-                  height="10"
-                  fill="none"
-                  stroke="#c4592a"
-                  strokeWidth="1.5"
-                  opacity="0.5"
-                />
-                {/* Output node */}
-                <rect x="54" y="374" width="12" height="12" fill="#c4592a" opacity="0.65" />
-
-                {/* Measurement annotation line */}
-                <line
-                  x1="330"
-                  y1="100"
-                  x2="330"
-                  y2="380"
-                  stroke="#1e2030"
-                  strokeWidth="0.75"
-                  opacity="0.15"
-                />
-                <line
-                  x1="324"
-                  y1="100"
-                  x2="336"
-                  y2="100"
-                  stroke="#1e2030"
-                  strokeWidth="0.75"
-                  opacity="0.15"
-                />
-                <line
-                  x1="324"
-                  y1="380"
-                  x2="336"
-                  y2="380"
-                  stroke="#1e2030"
-                  strokeWidth="0.75"
-                  opacity="0.15"
-                />
-              </svg>
-
-              {/* Side annotation — real data, rotated */}
-              <div
-                className="absolute right-[-1.75rem] top-1/2 -translate-y-1/2 font-mono uppercase tracking-widest text-navy-900/25 dark:text-white/15 select-none hidden md:block"
-                style={{ fontSize: '8px', writingMode: 'vertical-rl' }}
-                aria-hidden="true"
-              >
-                120+ REQ/WK · $100K+ ACCOUNTS
-              </div>
-
-              {/* Status overlay — bottom strip */}
-              <div className="absolute bottom-0 left-0 right-0 bg-navy-900/90 dark:bg-[#0d0c09]/95 text-white px-4 py-3 flex items-center gap-3">
-                <span
-                  className="w-2 h-2 bg-emerald-500 animate-pulse shrink-0"
-                  aria-hidden="true"
-                />
-                <span className="font-mono text-[11px] uppercase tracking-wider">
-                  UNIT_STATUS: OPEN_TO_WORK
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <TrackSelectorSection tracks={trackSelectorCards} />
-
-      {/* Evidence Row — Direction C: structured, no cards, typographic hierarchy */}
-      <section className="border-y border-[#e4dfd7] dark:border-white/5 bg-[#fefcf9] dark:bg-[#221e17]">
-        <div className="max-w-7xl mx-auto px-6">
-          <dl className="grid grid-cols-2 md:grid-cols-4 divide-x divide-[#e4dfd7] dark:divide-white/5">
-            {[
-              {
-                metric: '100+',
-                label: 'Weekly Tickets',
-                sub: 'enterprise volume · Printful',
-                caseId: 'ops-triage',
-              },
-              {
-                metric: '$100K+',
-                label: 'Client Tiers',
-                sub: 'revenue-critical accounts',
-                caseId: 'ops-triage',
-              },
-              {
-                metric: '120+',
-                label: 'SLA Requests/wk',
-                sub: 'validated throughput · Apex',
-                caseId: 'ops-triage',
-              },
-              {
-                metric: '4+ yrs',
-                label: 'GIS Depth',
-                sub: 'spatial systems foundation',
-                caseId: 'nba-systems-qa',
-              },
-            ].map(({ metric, label, sub, caseId }) => (
               <Link
-                key={metric}
-                to={`/case-studies/${caseId}`}
-                className="px-6 py-8 first:pl-0 last:pr-0 group/stat flex flex-col gap-1 hover:bg-[#f5e2d5]/40 dark:hover:bg-[rgba(196,89,42,0.06)] transition-colors"
+                to="/resume"
+                aria-label="Download resume"
+                className="group min-h-[80px] border border-[#c2d6df] dark:border-white/20 bg-white/95 dark:bg-slate-900/75 rounded-md px-5 py-4 flex items-center justify-between gap-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-slate-500/80 dark:hover:border-slate-300/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f5f9fb] dark:focus-visible:ring-offset-slate-950 focus-visible:ring-slate-500"
               >
-                <dt className="text-3xl font-outfit font-bold text-navy-900 dark:text-white group-hover/stat:text-indigo-500 dark:group-hover/stat:text-indigo-400 transition-colors tabular-nums">
-                  {metric}
-                </dt>
-                <dd className="text-sm font-medium text-slate-700 dark:text-slate-300">{label}</dd>
-                <dd className="text-xs text-slate-400 dark:text-slate-500 leading-relaxed">
-                  {sub}
-                </dd>
+                {/* TODO: replace /resume with a direct resume PDF asset link when available. */}
+                <div>
+                  <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+                    <span
+                      className="h-1.5 w-1.5 rounded-full shrink-0 bg-slate-500"
+                      aria-hidden="true"
+                    />
+                    SECONDARY ACTION
+                  </p>
+                  <p className="mt-1 text-base md:text-lg font-outfit font-semibold text-ink-navy dark:text-white">
+                    Download Resume
+                  </p>
+                </div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-4 h-4 shrink-0 text-slate-700 dark:text-slate-200 group-hover:text-slate-900 dark:group-hover:text-white transition-colors"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M12 3v12" />
+                  <path d="m7 10 5 5 5-5" />
+                  <path d="M5 21h14" />
+                </svg>
+              </Link>
+            </div>
+          </div>
+
+          <div className="lg:col-span-7 space-y-5">
+            <div className="space-y-2">
+              <h2 className="text-2xl font-outfit font-semibold text-ink-navy dark:text-white">
+                Choose your hiring lens
+              </h2>
+              <p className="text-sm md:text-base text-slate-600 dark:text-slate-300">
+                Select the path that matches how you evaluate my work.
+              </p>
+            </div>
+
+            {roleTrackCards.map((track) => (
+              <Link
+                key={track.href}
+                to={track.href}
+                aria-label={`Open ${track.title} track`}
+                className={`group block w-full focus:outline-none focus-visible:ring-2 ${track.focusClass}`}
+              >
+                <article className="relative overflow-hidden rounded-2xl border border-[#d8e8ee] dark:border-white/10 bg-white/95 dark:bg-slate-900/75 p-5 md:p-6 pl-7 md:pl-8 shadow-sm transition-all group-hover:-translate-y-0.5 group-hover:shadow-[0_12px_35px_rgba(15,23,42,0.12)]">
+                  <div className={`absolute left-0 top-0 h-full w-1.5 ${track.railClass}`} />
+                  <div className="flex flex-col gap-5">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div
+                          className={`h-11 w-11 shrink-0 rounded-xl flex items-center justify-center ${track.iconTileClass}`}
+                        >
+                          {track.icon}
+                        </div>
+                        <span
+                          className={`font-mono text-[10px] uppercase tracking-[0.18em] ${track.labelClass}`}
+                        >
+                          {track.systemLabel}
+                        </span>
+                      </div>
+
+                      <div className="shrink-0 text-right text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                        <div>{track.stream}</div>
+                        <div className="mt-1">{track.path}</div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h2 className="text-xl md:text-2xl font-outfit font-semibold text-ink-navy dark:text-white">
+                        {track.title}
+                      </h2>
+                      <div
+                        className={`mt-3 h-0.5 w-16 rounded ${track.railClass}`}
+                        aria-hidden="true"
+                      />
+                    </div>
+
+                    <p className="text-sm md:text-[15px] text-slate-600 dark:text-slate-300 leading-relaxed">
+                      {track.subcopy}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2">
+                      {track.chips.map((chip, index) => (
+                        <span
+                          key={chip}
+                          className={`text-xs px-2.5 py-1 rounded-md border ${index === 0 ? track.primaryChipClass : 'bg-slate-100 text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-white/10'}`}
+                        >
+                          {chip}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </article>
               </Link>
             ))}
-          </dl>
+          </div>
         </div>
       </section>
 
+      <FlagshipSystemSection guynodeHref={GUYNODE_SYSTEM_HREF} />
+
+      <section
+        id="about"
+        className="py-16 px-6 scroll-mt-24 bg-[#f5f9fb]/70 dark:bg-slate-950/60 border-y border-[#d8e8ee] dark:border-white/5"
+      >
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
+          <div className="space-y-5">
+            <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
+              WORKING_PROFILE
+            </p>
+            <h2 className="text-3xl md:text-4xl font-outfit font-semibold text-ink-navy dark:text-white">
+              About Me
+            </h2>
+            <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
+              I&apos;m a systems-minded technical operator who likes turning ambiguity into
+              structure. My work connects technical implementation, QA reasoning, GIS workflows,
+              customer support, and AI-assisted development.
+            </p>
+            <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
+              I&apos;m especially interested in the moments where tools, users, and processes stop
+              lining up. That is usually where the useful work begins: clarifying the goal, mapping
+              the workflow, testing the weak points, and documenting the path forward.
+            </p>
+            <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
+              Outside of work, I&apos;m drawn to maps, games, music tools, creative systems, and
+              product experiences. I tend to notice how things are organized, where friction
+              appears, and what would make the experience clearer.
+            </p>
+          </div>
+
+          <article className="rounded-2xl border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd]/95 dark:bg-slate-900/70 p-6 shadow-[0_6px_20px_rgba(15,23,42,0.06)] space-y-5">
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+              PROFILE_SIGNAL
+            </p>
+            <div className="mx-auto w-full max-w-[320px] rounded-full border border-[#d8e8ee] bg-[#f8fbfd] p-2 shadow-sm">
+              {/* TODO: Add public/images/about-profile-medallion.png manually because Codex PR creation does not support binary image assets. */}
+              <img
+                src="/images/about-profile-medallion.png"
+                alt="Stylized circular portrait medallion of Kyle Semple with systems, code, game, and GIS motifs."
+                className="w-full h-auto rounded-full"
+                loading="lazy"
+              />
+            </div>
+            <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-200">
+              <li>Systems thinker</li>
+              <li>Technical translator</li>
+              <li>GIS + workflow builder</li>
+              <li>QA-minded operator</li>
+            </ul>
+            <div className="h-px w-full bg-[#e5e0d6] dark:bg-white/10" />
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              <span className="font-semibold uppercase tracking-[0.16em]">Working style:</span>{' '}
+              Structured · Curious · Practical · Documentation-first
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <SupportingEvidenceSection />
+
       {/* Experience */}
-      <section id="experience" className="py-32 px-6 scroll-mt-24 transition-colors duration-500">
+      <section id="experience" className="py-20 px-6 scroll-mt-24 transition-colors duration-500">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
             <div className="space-y-4">
-              <h2 className="text-xs font-bold text-indigo-600 dark:text-indigo-500 uppercase tracking-[0.3em]">
-                Trajectory
+              <h2 className="text-xs font-bold text-tide-aqua dark:text-tide-aqua uppercase tracking-[0.3em]">
+                EXPERIENCE_LOG
               </h2>
-              <h3 className="text-4xl md:text-5xl font-outfit font-bold text-navy-900 dark:text-white">
+              <h3 className="text-3xl md:text-4xl font-outfit font-semibold text-ink-navy dark:text-white">
                 Career Experience
               </h3>
             </div>
             <p className="text-slate-500 dark:text-slate-400 max-w-md leading-relaxed">
-              A track record of stabilizing operations and delighting enterprise stakeholders in
-              data-heavy environments.
+              Relevant experience across technical implementation, GIS operations, workflow
+              delivery, customer support, and validation-heavy production environments.
             </p>
           </div>
 
@@ -481,18 +511,18 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                       ? 'exp-apex'
                       : undefined
                 }
-                className="group glass-card p-8 rounded-3xl hover:translate-y-[-4px] transition-all duration-500 scroll-mt-28"
+                className="glass-card p-8 rounded-3xl border border-[#d8e8ee] dark:border-white/10 shadow-sm scroll-mt-28"
               >
                 <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-6">
                   <div>
-                    <h4 className="text-2xl font-outfit font-bold text-navy-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                    <h4 className="text-2xl font-outfit font-bold text-ink-navy dark:text-white">
                       {exp.role}
                     </h4>
                     <p className="text-lg text-slate-500 dark:text-slate-300 flex items-center gap-2 mt-1 font-medium">
                       {exp.company}
                     </p>
                     {exp.tools && (
-                      <p className="mt-2 text-[11px] font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400 opacity-80">
+                      <p className="mt-2 text-[11px] font-bold uppercase tracking-widest text-tide-aqua dark:text-tide-sky opacity-80">
                         {exp.tools}
                       </p>
                     )}
@@ -507,7 +537,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                       key={i}
                       className="flex gap-3 text-slate-500 dark:text-slate-400 text-sm leading-relaxed"
                     >
-                      <span className="mt-2 w-1.5 h-1.5 bg-indigo-600/40 dark:bg-indigo-500/40 rounded-full shrink-0 group-hover:bg-indigo-600 dark:group-hover:bg-indigo-400 transition-colors"></span>
+                      <span className="mt-2 w-1.5 h-1.5 bg-tide-aqua/50 dark:bg-tide-aqua/50 rounded-full shrink-0"></span>
                       {bullet}
                     </li>
                   ))}
@@ -521,223 +551,142 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
       {/* Skills Grid */}
       <section
         id="skills"
-        className="py-32 px-6 scroll-mt-24 transition-colors duration-500 relative"
+        className="py-20 px-6 scroll-mt-24 transition-colors duration-500 bg-[#f5f9fb]/70 dark:bg-slate-950/60"
       >
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-4xl max-h-[600px] bg-indigo-500/5 blur-[120px] rounded-full -z-10 pointer-events-none" />
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12 space-y-4">
-            <h2 className="text-xs font-bold text-indigo-600 dark:text-indigo-500 uppercase tracking-[0.3em]">
-              Toolbox
+          <div className="mb-12 space-y-3">
+            <h2 className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
+              CAPABILITY_MATRIX
             </h2>
-            <h3 className="text-4xl md:text-5xl font-outfit font-bold text-navy-900 dark:text-white">
+            <h3 className="text-3xl md:text-4xl font-outfit font-semibold text-ink-navy dark:text-white">
               Skills &amp; Technologies
             </h3>
+            <p className="max-w-2xl text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+              Grouped by role relevance, with proof links where available.
+            </p>
           </div>
 
-          {/* Recruiter-Optimized Impact Strip */}
-          <div className="relative mb-20 px-4 py-8 rounded-[3rem] bg-indigo-500/[0.03] dark:bg-indigo-500/[0.05] border border-indigo-500/10 backdrop-blur-sm shadow-inner">
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-white dark:bg-slate-900 border border-indigo-500/20 rounded-full shadow-sm">
-              <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest">
-                Executive Impact Summary
-              </span>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div
+              id="skills-inspector"
+              aria-live="polite"
+              className="lg:col-span-5 lg:order-2 rounded-2xl border border-[#d8e8ee] dark:border-white/10 bg-white/90 dark:bg-slate-900/70 p-6 space-y-4"
+            >
+              <p className="text-xs font-mono uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+                Inspector Panel
+              </p>
+              <h4 className="text-xl font-outfit font-semibold text-ink-navy dark:text-white">
+                {activeSkill ? activeSkill.name : 'Skill Inspector'}
+              </h4>
+              {activeSkill?.lane && (
+                <p className="inline-flex rounded-md border border-tide-aqua/30 dark:border-tide-sky/40 bg-tide-aqua/10 dark:bg-tide-sky/10 px-2.5 py-1 text-xs font-semibold text-[#237f86] dark:text-tide-sky">
+                  {activeSkill.lane}
+                </p>
+              )}
+              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                {activeSkill
+                  ? activeSkill.description
+                  : 'Select a skill from the matrix to view its operational definition and portfolio use case.'}
+              </p>
+              {activeSkill?.proof && (
+                <p className="text-sm text-slate-700 dark:text-slate-200">
+                  Proof: {activeSkill.proof}
+                  {activeSkill.proofHref && (
+                    <Link
+                      to={activeSkill.proofHref}
+                      className="ml-2 underline underline-offset-2 text-[#237f86] dark:text-tide-sky hover:text-[#1d6970] dark:hover:text-tide-softBlue focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua rounded-sm"
+                    >
+                      View project
+                    </Link>
+                  )}
+                </p>
+              )}
             </div>
-            <div className="flex flex-wrap justify-center gap-4 max-w-5xl mx-auto">
-              {RECRUITER_SKILLS.map((skill, i) => (
+
+            <div className="lg:col-span-7 lg:order-1 grid md:grid-cols-2 gap-6">
+              {SKILL_GROUPS.map((group, idx) => (
                 <div
-                  key={i}
-                  className="flex items-center gap-2.5 px-6 py-4 rounded-2xl bg-white dark:bg-slate-800/80 border border-indigo-500/20 hover:border-indigo-500/50 hover:bg-white dark:hover:bg-slate-800 transition-all shadow-sm hover:shadow-indigo-500/10 group/power active:scale-95 cursor-default"
+                  key={idx}
+                  className="rounded-2xl border border-[#d8e8ee] dark:border-white/10 bg-white/80 dark:bg-slate-900/60 p-6 space-y-4"
                 >
-                  <div className="w-5 h-5 text-indigo-600 dark:text-indigo-400 group-hover/power:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(196,89,42,0.3)]">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                    </svg>
+                  <h4 className="text-base font-outfit font-semibold text-ink-navy dark:text-white border-b border-[#e5e0d6] dark:border-white/10 pb-3">
+                    {group.category}
+                  </h4>
+                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                    {group.description}
+                  </p>
+                  <div className="flex flex-wrap items-start content-start gap-2">
+                    {group.items.map((skill, i) => {
+                      const chipConfig = SKILL_CHIP_CONFIG[skill.name];
+                      const titleText = chipConfig?.evidenceNote;
+                      const isActive = activeSkillName === skill.name;
+                      const baseChipClass =
+                        'h-8 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md border border-[#d8d2c7] dark:border-white/10 bg-slate-50 dark:bg-slate-900/80 text-slate-700 dark:text-slate-200';
+
+                      return (
+                        <button
+                          key={i}
+                          onClick={() => setActiveSkillName(skill.name)}
+                          title={titleText}
+                          aria-pressed={isActive}
+                          aria-controls="skills-inspector"
+                          className={`${baseChipClass} transition-colors active:scale-[0.99] focus:outline-none focus-visible:ring-2 ${getCategoryColorClass(group.category)} ${isActive ? 'border-tide-aqua dark:border-tide-sky ring-1 ring-tide-aqua/60 dark:ring-tide-sky/50 font-semibold' : ''}`}
+                        >
+                          <span className="sr-only">
+                            {isActive ? 'Active skill:' : 'Activate skill:'}
+                          </span>
+                          {isActive && <span aria-hidden="true">✓</span>}
+                          <span>{skill.name}</span>
+                        </button>
+                      );
+                    })}
                   </div>
-                  <span className="text-sm font-outfit font-bold text-indigo-600 dark:text-indigo-400 tracking-tight">
-                    {skill}
-                  </span>
                 </div>
               ))}
             </div>
-          </div>
-
-          <div className="text-center mb-10">
-            <p className="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-widest font-bold animate-pulse">
-              Click a skill below to view relevant case study evidence
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {SKILL_GROUPS.map((group, idx) => (
-              <div
-                key={idx}
-                className="glass-card p-8 rounded-3xl space-y-6 hover:translate-y-[-4px] transition-transform duration-300"
-              >
-                <h4 className="text-xl font-outfit font-bold text-navy-900 dark:text-white border-b border-black/5 dark:border-white/5 pb-4">
-                  {group.category}
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {group.items.map((skill, i) => {
-                    const chipConfig = SKILL_CHIP_CONFIG[skill];
-                    const isFlagged = chipConfig?.linkMode === 'flagged';
-                    const isDirect = chipConfig?.linkMode === 'direct';
-
-                    if (isFlagged) {
-                      return (
-                        <span
-                          key={i}
-                          title={chipConfig.evidenceNote || 'No case study evidence available yet'}
-                          className={`px-3 py-1 text-xs font-medium rounded-lg border border-black/5 dark:border-white/5 opacity-40 cursor-not-allowed select-none bg-slate-100 dark:bg-slate-800/50 ${getCategoryColorClass(group.category)}`}
-                        >
-                          {skill}
-                        </span>
-                      );
-                    }
-
-                    const handleClick =
-                      isDirect && chipConfig.linkedSlugs[0]
-                        ? () => onNavigateToCaseStudy(chipConfig.linkedSlugs[0])
-                        : () => handleSkillClick(skill);
-
-                    return (
-                      <button
-                        key={i}
-                        onClick={handleClick}
-                        className={`group/skill px-3 py-1 bg-slate-100 dark:bg-slate-800/50 text-xs font-medium rounded-lg border border-black/5 dark:border-white/5 transition-all flex items-center gap-1.5 shadow-sm active:scale-95 ${getCategoryColorClass(group.category)}`}
-                      >
-                        {skill}
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="w-3 h-3 opacity-0 group-hover/skill:opacity-100 transition-opacity"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M7 7h10v10" />
-                          <path d="M7 17 17 7" />
-                        </svg>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Discovery Modal */}
-      {selectedSkill && (
-        <SkillDiscoveryModal
-          skill={selectedSkill}
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          onNavigateToStudy={onNavigateToCaseStudy}
-        />
-      )}
-
-      {/* Case Study Preview Strip */}
-      <section className="py-24 px-6 bg-slate-50/50 dark:bg-slate-900/30 transition-colors duration-500">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12 space-y-4">
-            <h2 className="text-xs font-bold text-indigo-600 dark:text-indigo-500 uppercase tracking-[0.3em]">
-              Evidence
-            </h2>
-            <h3 className="text-4xl md:text-5xl font-outfit font-bold text-navy-900 dark:text-white">
-              Featured Work
-            </h3>
-            <p className="text-slate-500 dark:text-slate-400 max-w-xl mx-auto">
-              Cases built around concrete decisions — governing AI workflows, stabilizing triage
-              systems under volume, and maintaining spatial data accuracy. Each one shows how the
-              problem was framed and what tradeoff was accepted.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {PREVIEW_STUDIES.map((study) => (
-              <div
-                key={study.id}
-                className="glass-card p-6 rounded-3xl flex flex-col gap-4 hover:-translate-y-1 hover:border-indigo-500/30 transition-all duration-300 group"
-              >
-                {/* Primary tag */}
-                <span className="inline-flex self-start items-center px-2.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-600 dark:text-indigo-400 text-[10px] font-bold uppercase tracking-widest">
-                  {study.tags[0]}
-                </span>
-
-                <h4 className="text-xl font-outfit font-bold text-navy-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                  {study.title}
-                </h4>
-
-                <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed flex-1">
-                  {study.rationale}
-                </p>
-
-                <Link
-                  to={`/case-studies/${study.id}`}
-                  className="inline-flex items-center gap-2 text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:gap-3 transition-all"
-                >
-                  View Case Study
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-4 h-4"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M5 12h14" />
-                    <path d="m12 5 7 7-7 7" />
-                  </svg>
-                </Link>
-              </div>
-            ))}
           </div>
         </div>
       </section>
 
       {/* Education & Certs */}
-      <section id="foundation" className="py-32 px-6 scroll-mt-24 transition-colors duration-500">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16">
-          <div className="space-y-12">
-            <div className="space-y-4">
-              <h2 className="text-xs font-bold text-indigo-600 dark:text-indigo-500 uppercase tracking-[0.3em]">
-                Foundation
-              </h2>
-              <h3 className="text-4xl font-outfit font-bold text-navy-900 dark:text-white">
-                Education
-              </h3>
-              <div className="glass-card p-8 rounded-3xl mt-6">
-                <h4 className="text-xl font-outfit font-bold text-navy-900 dark:text-white">
-                  B.A., Geography
-                </h4>
-                <p className="text-indigo-600 dark:text-indigo-400 font-medium font-outfit">
-                  Queen&#39;s University
-                </p>
-                <p className="text-slate-500 dark:text-slate-400 mt-4 text-sm leading-relaxed">
-                  Relevant Coursework: Data Analytics, Geographic Information Science, Project
-                  Management
-                </p>
-              </div>
-            </div>
+      <section
+        id="foundation"
+        className="py-24 px-6 scroll-mt-24 transition-colors duration-500 border-t border-[#e5e0d6]/60 dark:border-white/5 bg-slate-50/30 dark:bg-slate-950/20"
+      >
+        <div className="max-w-7xl mx-auto">
+          {/* Section Header */}
+          <div className="mb-14 space-y-3 animate-fade-in-up">
+            <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
+              Academic & Professional Foundation
+            </p>
+            <h2 className="text-3xl md:text-4xl font-outfit font-bold text-ink-navy dark:text-white">
+              Education & Certifications
+            </h2>
+            <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
+              Rigorous academic credentials combined with verified, industry-standard professional
+              certifications in AI application, systems QA, data governance, and intercultural
+              competence.
+            </p>
           </div>
 
-          <div className="space-y-8">
-            <h3 className="text-4xl font-outfit font-bold text-navy-900 dark:text-white">
-              Certifications
-            </h3>
-            <div className="grid gap-4">
-              {CERTIFICATIONS.map((cert, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-center gap-4 glass-card p-6 rounded-2xl hover:translate-x-2 transition-transform cursor-default"
-                >
-                  <div className="w-12 h-12 bg-indigo-600/10 dark:bg-indigo-600/20 rounded-xl flex items-center justify-center text-indigo-600 dark:text-indigo-400 shrink-0">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Featured Education Card */}
+            <div
+              className="lg:col-span-1 flagship-sheen-card animate-fade-in-up rounded-3xl border border-[#d8e8ee] dark:border-white/10 bg-white/95 dark:bg-slate-900/70 p-8 shadow-[0_8px_30px_rgba(15,23,42,0.04)] dark:shadow-none flex flex-col justify-between"
+              style={{ animationDelay: '100ms' }}
+            >
+              <div className="space-y-6">
+                <div className="flex items-start justify-between">
+                  <div className="space-y-1">
+                    <p className="text-xs font-mono uppercase tracking-wider text-rose-600 dark:text-rose-400 font-bold">
+                      Higher Education
+                    </p>
+                    <h3 className="text-2xl font-outfit font-bold text-ink-navy dark:text-white mt-1">
+                      B.A., Geography
+                    </h3>
+                  </div>
+                  <div className="w-12 h-12 rounded-xl bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400 flex items-center justify-center border border-rose-500/20 dark:border-rose-500/30 shrink-0">
                     <svg
-                      xmlns="http://www.w3.org/2000/svg"
                       className="w-6 h-6"
                       viewBox="0 0 24 24"
                       fill="none"
@@ -745,21 +694,80 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
+                      aria-hidden="true"
                     >
-                      <path d="M12 15V3" />
-                      <path d="m15 12-3 3-3-3" />
-                      <path d="M18 17.66A9 9 0 1 1 5.64 5.64" />
-                      <rect width="8" height="4" x="8" y="13" rx="1" />
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                      <circle cx="12" cy="11" r="3" />
+                      <path d="M12 2v20" />
                     </svg>
                   </div>
-                  <div>
-                    <h5 className="font-outfit font-bold text-navy-900 dark:text-white text-sm">
-                      {cert.name}
-                    </h5>
-                    <p className="text-xs text-slate-500">{cert.issuer}</p>
-                  </div>
                 </div>
-              ))}
+
+                <div className="space-y-2">
+                  <p className="text-lg font-outfit font-medium text-[#237f86] dark:text-tide-sky">
+                    Queen&#39;s University
+                  </p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                    A rigorous academic foundation analyzing spatial patterns, data correlations,
+                    and regional systems dynamics.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-8 pt-6 border-t border-slate-100 dark:border-white/5 space-y-3">
+                <p className="text-xs font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                  Relevant Focus Areas
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold border bg-emerald-500/10 text-emerald-600 border-emerald-500/20 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border-emerald-500/30">
+                    Geographic Information Science (GIS)
+                  </span>
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold border bg-blue-500/10 text-blue-600 border-blue-500/20 dark:bg-blue-500/20 dark:text-blue-300 dark:border-blue-500/30">
+                    Data Analytics
+                  </span>
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold border bg-tide-aqua/10 text-[#237f86] border-tide-aqua/20 dark:bg-tide-aqua/20 dark:text-tide-sky dark:border-tide-aqua/30">
+                    Project Management
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Certifications Sub-Grid */}
+            <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+              {CERTIFICATIONS.map((cert, idx) => {
+                const config = getCertConfig(cert.issuer, cert.name);
+                return (
+                  <div
+                    key={idx}
+                    className={`flagship-sheen-card animate-fade-in-up flex flex-col justify-between rounded-2xl border border-[#d8e8ee] dark:border-white/10 bg-white/95 dark:bg-slate-900/70 p-6 shadow-[0_8px_24px_rgba(15,23,42,0.03)] dark:shadow-none hover:translate-y-[-2px] transition-all cursor-default ${config.hoverGlow}`}
+                    style={{ animationDelay: `${(idx + 2) * 80}ms` }}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div
+                        className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 border ${config.bgClass}`}
+                      >
+                        {config.icon}
+                      </div>
+                      <div className="space-y-1">
+                        <h4 className="font-outfit font-bold text-ink-navy dark:text-white text-sm md:text-base leading-snug line-clamp-2">
+                          {cert.name}
+                        </h4>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                          {cert.issuer}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="mt-4 pt-4 border-t border-slate-100 dark:border-white/5 flex items-center justify-between">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                        Verified Credential
+                      </span>
+                      <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
+                        Active
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

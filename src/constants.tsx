@@ -1,91 +1,316 @@
-import {
-  ExperienceItem,
-  SkillGroup,
-  Certification,
-  CaseStudyEntry,
-  SkillChipConfig,
-} from './types';
+/* eslint-disable react-refresh/only-export-components */
+import { ExperienceItem, SkillGroup, Certification, ProjectEntry, SkillChipConfig } from './types';
 import { CASE_STUDY_CONTENT } from './data/caseStudyData';
-import {
-  PROMPTER_HUB_MOCKUP_HTML,
-  LUXE_LOFTS_MOCKUP_HTML,
-  PROJECT_AEGIS_MOCKUP_HTML,
-  OPS_TRIAGE_MOCKUP_HTML,
-} from './mockups';
+import { LUXE_LOFTS_MOCKUP_HTML, OPS_TRIAGE_MOCKUP_HTML } from './mockups';
 
 export const EXPERIENCE: ExperienceItem[] = [
   {
     company: 'HPS Geospatial',
-    role: 'GIS Technician',
-    period: 'Oct 2021 – Present',
-    tools: 'ESRI ArcMap · Stakeholder Dashboards · Technical Documentation · Data Visualization',
+    role: 'Independent Systems & Web Consultant',
+    period: '2021–Present',
+    tools:
+      'React · TypeScript · Vite · GitHub · Google Cloud Run · Google AI Studio · Claude Code · Documentation',
     bullets: [
-      'Built stakeholder-facing dashboards and data visualizations to support operational decision-making and reporting.',
-      'Created demo environments and presentation materials to clarify data formats, feature behavior, risks, and open questions during status meetings.',
-      'Produced end-user documentation and support assets to help stakeholders navigate tooling and workflows more efficiently.',
-      'Coordinated project workflows and deliverables, improving consistency and operational execution.',
+      'Designed and refined web-based systems intended to improve user clarity, trust, and delivery readiness for external reviewers and stakeholders.',
+      'Built AI-assisted application workflows using governed multi-tool processes, including roadmap creation, implementation planning, architecture hardening, and documentation.',
+      'Translated ambiguous goals into structured delivery plans, scoped phases, and supporting artifacts rather than ad hoc iteration.',
+      'Produced handoff-ready implementation guidance, roadmap materials, and documentation to support continued development and deployment.',
     ],
   },
   {
-    company: 'Apex Systems',
-    role: 'Quality Control Specialist (Contractor)',
-    period: 'Sep 2022 – Dec 2023',
-    tools: 'ESRI ArcMap · Triage Workflows · QA Protocols · Process Improvement · SQL',
+    company: 'Apex Systems / CenterPoint Energy',
+    role: 'GIS Data Operations Analyst',
+    period: '2022–2024',
+    tools: 'ESRI ArcMap · Utility GIS Workflows · Data QA · Triage · Production Data Maintenance',
     bullets: [
-      "Supported a contracted team for CentrePoint Energy maintaining the accuracy and consistency of Indiana's electric operations dataset.",
-      'Improved data quality through structured updates and attribute corrections (via ESRI ArcMap) aligned to field operations and internal record keeping.',
-      'Completed 120+ service requests/week using triage and reporting loops to maintain throughput and accuracy.',
-      'Coordinated with supervisors and team leads through weekly meetings to report status, surface pain points, and plan objectives.',
+      'Worked within structured utility GIS workflows to process service-related edits, data updates, and mapping changes with attention to accuracy and downstream usability.',
+      'Handled high-volume operational requests in a controlled environment where repeatability, consistency, and validation mattered.',
+      'Supported backlog reduction and workflow continuity through reliable data maintenance and structured execution.',
+      'Strengthened discipline around production-safe procedures, quality checks, and working within systems where errors could affect downstream operations.',
     ],
   },
   {
     company: 'Printful',
-    role: 'Customer Service Representative',
-    period: 'Sep 2021 – Dec 2021',
-    tools: 'Zendesk · Internal Tooling · SOPs · Escalation Workflows · QA Checks',
+    role: 'Technical Customer Support Representative',
+    period: '2021',
+    tools: 'Zendesk · E-commerce Support · Escalation Workflows · Customer Troubleshooting',
     bullets: [
-      'Provided technical support for international customer accounts via Zendesk, averaging 100+ conversations/week, including $100k+ revenue customers.',
-      'Triaged issues across e-commerce store integration, account management, product workflows/warehousing, and shipping; coordinated with internal teams and partner SMEs to drive timely resolutions.',
-      'Maintained strong customer satisfaction on rated conversations through clear communication, accurate troubleshooting, and follow-through.',
-      'Conducted live-chat discovery with prospective public and private sector customers to understand goals and route them to the right product path.',
+      'Provided technical support through Zendesk for customer issues spanning e-commerce integrations, account workflows, product questions, warehousing, and shipping.',
+      'Triaged support requests, clarified customer needs, and coordinated with internal teams or partner SMEs to drive timely resolution.',
+      'Supported customer trust through clear troubleshooting, accurate communication, escalation discipline, and follow-through.',
+      'Conducted live-chat discovery with prospective customers to understand goals and route them toward the right product path.',
     ],
   },
 ];
 
 export const SKILL_GROUPS: SkillGroup[] = [
   {
-    category: 'Strategic Support & CS',
+    category: 'Technical Implementation',
+    description:
+      'Workflow setup, technical translation, onboarding support, and handoff-ready documentation.',
     items: [
-      'Customer Success Support',
-      'Technical Troubleshooting',
-      'Issue Triage',
-      'Implementation/Onboarding',
-      'Stakeholder Communication',
+      {
+        name: 'Workflow Design',
+        lane: 'Implementation',
+        description:
+          'Used to map requirements into step-by-step delivery flows so onboarding and implementation work can move without guesswork.',
+      },
+      {
+        name: 'Technical Troubleshooting',
+        lane: 'Implementation',
+        description:
+          'Applied when diagnosing blockers across tooling, configuration, and handoff boundaries to keep delivery moving under time pressure.',
+        proof: 'Demonstrated in Ops Triage workflow diagnostics',
+        proofHref: '/projects/ops-triage',
+      },
+      {
+        name: 'Implementation Planning',
+        lane: 'Implementation',
+        description:
+          'Supports phased rollout planning by turning broad goals into scoped tasks, dependencies, and validation checkpoints.',
+      },
+      {
+        name: 'Onboarding Support',
+        lane: 'Implementation',
+        description:
+          'Used to guide users through setup and early adoption so systems become usable quickly and support load stays controlled.',
+      },
+      {
+        name: 'Documentation',
+        lane: 'Implementation',
+        description:
+          'Used to produce handoff-ready guides that reduce repeat questions and preserve decision context for future contributors.',
+      },
+      {
+        name: 'Stakeholder Communication',
+        lane: 'Implementation',
+        description:
+          'Helps translate technical status into decision-ready updates for cross-functional teams, reviewers, and non-technical partners.',
+      },
+      {
+        name: 'Support Handoff',
+        lane: 'Implementation',
+        description:
+          'Applied when transferring ownership between teams so unresolved issues, context, and next actions remain traceable.',
+      },
     ],
   },
   {
-    category: 'Operations & Enablement',
+    category: 'Quality Assurance & Operations',
+    description: 'Testing logic, triage systems, data validation, and operational reliability.',
     items: [
-      'Documentation & Enablement Assets',
-      'Demo Environments',
-      'Process Improvement',
-      'Dashboards & Reporting',
-      'Data QA / Validation',
-      'Operational Throughput',
+      {
+        name: 'QA Protocols',
+        lane: 'QA',
+        description:
+          'Used to run consistent validation passes so defects are surfaced early and release decisions are evidence-based.',
+      },
+      {
+        name: 'Issue Triage',
+        lane: 'QA',
+        description:
+          'Applied to prioritize incoming problems by impact, urgency, and dependency risk so teams address the right failures first.',
+        proof: 'Used in Ops Triage incident workflow',
+        proofHref: '/projects/ops-triage',
+      },
+      {
+        name: 'Root-Cause Analysis',
+        lane: 'QA',
+        description:
+          'Supports post-issue analysis by tracing failures to process, data, or implementation causes rather than treating symptoms.',
+      },
+      {
+        name: 'Data QA / Validation',
+        lane: 'QA',
+        description:
+          'Used to verify data quality before downstream use so reports, maps, and operational decisions stay reliable.',
+      },
+      {
+        name: 'Process Improvement',
+        lane: 'QA',
+        description:
+          'Applied when refining workflows to reduce repeat failure patterns and improve throughput without losing controls.',
+      },
+      {
+        name: 'Operational Throughput',
+        lane: 'QA',
+        description:
+          'Useful for balancing speed and quality in high-volume queues with clear escalation and completion standards.',
+      },
+      {
+        name: 'Launch Readiness',
+        lane: 'QA',
+        description:
+          'Used to assess whether systems meet baseline reliability, documentation, and support criteria before release.',
+      },
     ],
   },
   {
-    category: 'Tools & Technologies',
+    category: 'GIS & Spatial Data',
+    description:
+      'Spatial data workflows, mapping interfaces, metadata structure, and public data access.',
     items: [
-      'Zendesk',
-      'Salesforce & CRM',
-      'Tableau',
-      'Power BI',
-      'BigQuery',
-      'Notion',
-      'Asana',
-      'Jira',
-      'ESRI ArcMap',
+      {
+        name: 'ArcGIS',
+        lane: 'GIS',
+        description:
+          'Used to manage and validate spatial datasets in structured GIS workflows where data accuracy affects downstream operations.',
+      },
+      {
+        name: 'ESRI ArcMap',
+        lane: 'GIS',
+        description:
+          'Applied in production data maintenance workflows to execute map edits and utility-related updates with repeatable QA checks.',
+      },
+      {
+        name: 'Leaflet',
+        lane: 'GIS',
+        description:
+          'Used to create lightweight web map previews and interactive spatial interfaces for portfolio and project communication.',
+        proof: 'Used in Guynode Spatial Data Hub',
+        proofHref: '/projects/guynode',
+      },
+      {
+        name: 'Spatial Data',
+        lane: 'GIS',
+        description:
+          'Supports location-based analysis by structuring geospatial information for map display, validation, and operational decision support.',
+      },
+      {
+        name: 'Metadata',
+        lane: 'GIS',
+        description:
+          'Used to document dataset context, source quality, and handling constraints so teams can trust and reuse spatial assets.',
+      },
+      {
+        name: 'Dataset Cataloging',
+        lane: 'GIS',
+        description:
+          'Applied to organize data inventories and access paths so reviewers can locate relevant spatial assets quickly.',
+      },
+      {
+        name: 'Map-Based UX',
+        lane: 'GIS',
+        description:
+          'Used to present complex spatial information through clear interaction patterns that non-specialists can interpret.',
+      },
+    ],
+  },
+  {
+    category: 'AI-Assisted Workflow Design',
+    description: 'Structured AI collaboration, prompt systems, governance, and human review.',
+    items: [
+      {
+        name: 'Prompt Governance',
+        lane: 'AI Systems',
+        description:
+          'Used to enforce prompt standards and review controls so AI outputs remain consistent with project constraints.',
+        proof: 'Applied in Project Aegis governance framework',
+        proofHref: '/projects/project-aegis',
+      },
+      {
+        name: 'AI-Assisted Development',
+        lane: 'AI Systems',
+        description:
+          'Supports faster build iteration by combining AI drafting with human validation, scope checks, and targeted patching.',
+      },
+      {
+        name: 'LLM Workflow Design',
+        lane: 'AI Systems',
+        description:
+          'Applied when designing multi-step AI workflows that require guardrails, fallback plans, and clear handoff points.',
+      },
+      {
+        name: 'Documentation Systems',
+        lane: 'AI Systems',
+        description:
+          'Used to maintain structured records of implementation decisions, risks, and validation outcomes across phases.',
+      },
+      {
+        name: 'Evidence Architecture',
+        lane: 'AI Systems',
+        description:
+          'Helps organize claims, artifacts, and proof links so portfolio systems can be reviewed quickly and credibly.',
+      },
+      {
+        name: 'Human Review Loops',
+        lane: 'AI Systems',
+        description:
+          'Used to keep humans in critical checkpoints where judgment, risk acceptance, or external-facing quality must be confirmed.',
+      },
+    ],
+  },
+  {
+    category: 'Tools & Platforms',
+    description:
+      'Platforms and tools used across support, data, documentation, GIS, and frontend workflows.',
+    items: [
+      {
+        name: 'Zendesk',
+        lane: 'Tools',
+        description:
+          'Used in customer support workflows for ticket triage, escalation tracking, and communication continuity.',
+      },
+      {
+        name: 'Salesforce & CRM',
+        lane: 'Tools',
+        description:
+          'Supports CRM-oriented workflow planning where lead context, ownership, and follow-up paths need to stay visible.',
+      },
+      {
+        name: 'Notion',
+        lane: 'Tools',
+        description:
+          'Used to centralize project notes, planning artifacts, and implementation references for cross-functional visibility.',
+      },
+      {
+        name: 'Jira',
+        lane: 'Tools',
+        description:
+          'Applied to track issues, implementation tasks, QA follow-up, and delivery progress across teams.',
+      },
+      {
+        name: 'Asana',
+        lane: 'Tools',
+        description:
+          'Used for task coordination and timeline management when delivery work spans multiple owners and dependencies.',
+      },
+      {
+        name: 'Tableau',
+        lane: 'Tools',
+        description:
+          'Useful for translating operational data into visual summaries that support trend review and stakeholder reporting.',
+      },
+      {
+        name: 'Power BI',
+        lane: 'Tools',
+        description:
+          'Used to structure dashboards that highlight performance patterns, exceptions, and workflow outcomes over time.',
+      },
+      {
+        name: 'BigQuery',
+        lane: 'Tools',
+        description:
+          'Supports large-scale data querying and analysis workflows when operational datasets need structured exploration.',
+      },
+      {
+        name: 'HTML / CSS',
+        lane: 'Implementation',
+        description:
+          'Used to build and refine responsive interface structure, accessibility behavior, and visual hierarchy.',
+      },
+      {
+        name: 'React',
+        lane: 'Implementation',
+        description:
+          'Used to build modular portfolio interfaces where reusable components can be validated, refined, and extended.',
+      },
+      {
+        name: 'TypeScript',
+        lane: 'Implementation',
+        description:
+          'Used to enforce safer contracts across components and data models so implementation changes remain predictable.',
+      },
     ],
   },
 ];
@@ -105,8 +330,8 @@ export const SKILL_CHIP_CONFIG: Record<string, SkillChipConfig> = {
       'ops-triage documents high-volume operational support at scale (Apex Systems); direct customer-facing CS evidence exists in the Printful/Zendesk role but no dedicated case study has been built for it yet.',
   },
   'Demo Environments': {
-    linkMode: 'filtered',
-    linkedSlugs: ['prompter-hub', 'ops-triage'],
+    linkMode: 'direct',
+    linkedSlugs: ['ops-triage'],
   },
   'Dashboards & Reporting': {
     linkMode: 'direct',
@@ -152,126 +377,14 @@ export const SKILL_CHIP_CONFIG: Record<string, SkillChipConfig> = {
   },
 };
 
-export const CASE_STUDY_REGISTRY: CaseStudyEntry[] = [
-  {
-    id: 'prompter-hub',
-    title: 'Prompter Hub V9',
-    rationale: 'Middleware architecture and structured prompt engineering for AI workflows.',
-    category: 'ai-ops',
-    tags: [
-      'Technical Troubleshooting',
-      'Implementation/Onboarding',
-      'Documentation & Enablement Assets',
-      'Process Improvement',
-    ],
-    content: CASE_STUDY_CONTENT['prompter-hub'],
-    heroArtifact: {
-      type: 'html',
-      label: 'V9 Hub: Sandbox Environment',
-      description: 'Functional Prompt Generator and Recursive Schema Builder engines.',
-      content: PROMPTER_HUB_MOCKUP_HTML,
-    },
-    rigor: {
-      statement: 'Infrastructure is the only way to scale reliable intelligence.',
-      baseline: 'Manual schema drafting was a primary source of downstream pipeline failure.',
-      definition:
-        "'Infrastructure Parity' = The ability for a sandbox to mirror production logic 1:1.",
-      method: 'Ported recursive inference engine directly from production source code.',
-      window: 'Sandbox validation covers 100% of core V9 feature set.',
-    },
-    artifacts: [
-      {
-        type: 'code',
-        label: 'V9 Logic: Recursive Inference',
-        description: 'Type-safe inference logic used to ensure Gemini schema compliance.',
-        content: `const buildSchema = (obj) => {
-  if (Array.isArray(obj)) {
-    return { type: "ARRAY", items: obj.length > 0 ? buildSchema(obj[0]) : { type: "STRING" } };
-  } else if (typeof obj === 'object' && obj !== null) {
-    const properties = {};
-    for (const key in obj) { properties[key] = buildSchema(obj[key]); }
-    return { type: "OBJECT", properties, propertyOrdering: Object.keys(obj) };
-  } else {
-    return { type: typeof obj === 'boolean' ? "BOOLEAN" : typeof obj === 'number' ? "NUMBER" : "STRING" };
-  }
-};`,
-      },
-    ],
-    constraints: [
-      {
-        problem: 'Production Firebase dependencies are inaccessible to public visitors.',
-        tradeoff:
-          'Used LocalStorage for sandbox persistence to provide 100% functional proof without auth walls.',
-      },
-    ],
-  },
-  {
-    id: 'project-aegis',
-    title: 'Project Aegis Protocol',
-    rationale: 'LLM governance frameworks and reliability engineering in code generation.',
-    category: 'ai-ops',
-    tags: ['Documentation & Enablement Assets', 'Process Improvement', 'Technical Troubleshooting'],
-    content: CASE_STUDY_CONTENT['project-aegis'],
-    heroArtifact: {
-      type: 'html',
-      label: 'Aegis: Governance Console',
-      description: 'Simulates cognitive reasoning and architectural enforcement.',
-      content: PROJECT_AEGIS_MOCKUP_HTML,
-    },
-    rigor: {
-      statement: 'Governance is the infrastructure that allows for creative scale.',
-      baseline: 'Conversations > 10 turns typically lose 22% context adherence (Entropy Drift).',
-      definition: "'Drift' = LLM introducing hallucinations conflicting with project context.",
-      method: 'Ambiguous prompt stress-testing combined with <thinking> audits.',
-      window: 'Continuous 50+ turn sessions across multiple unique tech stacks.',
-    },
-    artifacts: [
-      {
-        type: 'code',
-        label: 'Aegis: Governance Layer XML',
-        description: 'System instruction forcing model into logic-first architectural role.',
-        content: `<system_core>
-  <identity>Principal Architect - Priority: Context Adherence</identity>
-  <mandate_thinking>CRITICAL: No output without prior <thinking> block.</mandate_thinking>
-</system_core>`,
-      },
-    ],
-    constraints: [
-      {
-        problem: 'Regenerating massive files flushes context memory (FIFO logic).',
-        tradeoff:
-          "Implemented 'Surgical Patching' protocol, reducing token usage by 90% and extending memory 3x.",
-      },
-    ],
-  },
-  {
-    id: 'nba-systems-qa',
-    title: 'NBA 2K Systems Analysis',
-    rationale: 'Systemic consistency and variable isolation in probabilistic engines.',
-    category: 'qa-data',
-    tags: ['Data QA / Validation', 'Operational Throughput', 'Issue Triage'],
-    content: CASE_STUDY_CONTENT['nba-systems-qa'],
-    rigor: {
-      statement: 'In a probabilistic engine, the only truth is the controlled baseline.',
-      baseline: 'Community testing typically uses low N samples, leading to high variance.',
-      definition: "'Sample Power' = Controlled attempts per condition to stabilize patterns.",
-      method:
-        'Test harness (Street Kings) with architectural alignment measuring perfect release feedback.',
-      window: 'Evaluation of bundle effects under Hall of Fame difficulty.',
-    },
-    constraints: [
-      {
-        problem: 'Online latency overwhelms marginal systemic effects.',
-        tradeoff: "Excluded online play to establish an 'optimal-state' baseline in the harness.",
-      },
-    ],
-  },
+export const PROJECT_REGISTRY: ProjectEntry[] = [
   {
     id: 'luxe-lofts',
     title: 'Luxe Lofts Ecosystem',
     rationale: 'Blueprint for unified digital systems and automated conversion paths.',
     category: 'success-strategy',
     tags: ['Stakeholder Communication', 'Process Improvement', 'Notion'],
+    roleLanes: ['Implementation / CSE-lite'],
     content: CASE_STUDY_CONTENT['luxe-lofts'],
     heroArtifact: {
       type: 'html',
@@ -293,6 +406,7 @@ export const CASE_STUDY_REGISTRY: CaseStudyEntry[] = [
     rationale: 'Operationalizing the gap between training theory and production reality.',
     category: 'qa-data',
     tags: ['Data QA / Validation', 'Operational Throughput', 'Issue Triage', 'ESRI ArcMap'],
+    roleLanes: ['Ops Analytics / QA', 'GIS / Spatial Systems'],
     content: CASE_STUDY_CONTENT['ops-triage'],
     heroArtifact: {
       type: 'html',
@@ -308,4 +422,154 @@ export const CASE_STUDY_REGISTRY: CaseStudyEntry[] = [
       window: 'Daily capacity vs Weekly defect capture.',
     },
   },
+  {
+    id: 'guynode',
+    title: 'Guynode Spatial Data Hub',
+    rationale:
+      'Modernized a legacy geospatial data site into a public-facing spatial data platform for organizing, previewing, documenting, and validating spatial datasets for Guyana.',
+    category: 'qa-data',
+    tags: [
+      'GIS',
+      'Spatial Data',
+      'Dataset Cataloging',
+      'Metadata',
+      'Leaflet',
+      'GeoJSON',
+      'Launch Readiness',
+      'Data QA / Validation',
+      'Technical Implementation',
+      'Documentation',
+    ],
+    roleLanes: ['GIS / Spatial Systems', 'Implementation / CSE-lite', 'Ops Analytics / QA'],
+    content: CASE_STUDY_CONTENT.guynode,
+    heroArtifact: {
+      type: 'html',
+      label: 'Guynode Data Access Flow',
+      description:
+        'High-level architecture flow for public spatial data access and dataset governance.',
+      content: `<div style="font-family:Inter,system-ui,sans-serif;background:#faf8f5;border:1px solid #e5e7eb;border-radius:14px;padding:16px;max-width:640px;color:#0f172a;">
+  <h4 style="margin:0 0 12px;font-size:14px;letter-spacing:.04em;text-transform:uppercase;color:#475569;">Guynode Data Access Flow</h4>
+  <div style="display:grid;gap:8px;">
+    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">Legacy files</div>
+    <div style="text-align:center;color:#14b8a6;">↓</div>
+    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">Dataset registry</div>
+    <div style="text-align:center;color:#14b8a6;">↓</div>
+    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">Metadata and category structure</div>
+    <div style="text-align:center;color:#14b8a6;">↓</div>
+    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">Catalog / search / filter</div>
+    <div style="text-align:center;color:#14b8a6;">↓</div>
+    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">Map preview or download path</div>
+    <div style="text-align:center;color:#14b8a6;">↓</div>
+    <div style="padding:10px;border:1px solid #99f6e4;border-radius:10px;background:#f0fdfa;">Public user access</div>
+  </div>
+</div>`,
+    },
+    rigor: {
+      statement:
+        'Spatial data platforms succeed when users can trust what exists, understand what it contains, and access it without decoding the file system.',
+      baseline:
+        'Legacy spatial data access often depends on file listings, inconsistent metadata, and unclear preview/download paths.',
+      definition:
+        'Dataset readiness = clear title, category, description, format, provenance/attribution, download behavior, and preview status where applicable.',
+      method:
+        'Reorganized legacy spatial data access into a structured registry, map-aware frontend model, metadata-driven catalog, and launch-readiness review path.',
+      window: 'Guynode v2 modernization and portfolio proof build.',
+    },
+    constraints: [
+      {
+        problem:
+          'Legacy geospatial data access can become hard to navigate as datasets accumulate.',
+        tradeoff:
+          'Use a structured registry and public-facing catalog model before adding unnecessary complexity.',
+      },
+      {
+        problem: 'Spatial datasets vary in format, size, and preview suitability.',
+        tradeoff:
+          'Use metadata and viewer-type fields to distinguish previewable layers from download-only assets.',
+      },
+      {
+        problem: 'A public data hub must balance technical depth with general-user clarity.',
+        tradeoff:
+          'Use clearer copy, categories, tags, and download paths instead of exposing raw file storage logic.',
+      },
+    ],
+  },
+  {
+    id: 'digital-twin',
+    title: 'Digital Twin AI Agent',
+    rationale:
+      'A portfolio-bound AI assistant that answers recruiter questions, routes visitors to relevant proof, triggers resume/contact actions, and demonstrates scoped AI implementation with guardrails and human handoff.',
+    category: 'ai-ops',
+    tags: [
+      'AI Implementation',
+      'Digital Twin',
+      'Guardrails',
+      'Human Handoff',
+      'Triage Logic',
+      'Prompt Governance',
+      'Portfolio Navigation',
+      'Technical Implementation',
+      'QA Scenarios',
+    ],
+    roleLanes: [
+      'AI Workflow / Portfolio Governance',
+      'Implementation / CSE-lite',
+      'Ops Analytics / QA',
+    ],
+    content: CASE_STUDY_CONTENT['digital-twin'],
+    heroArtifact: {
+      type: 'html',
+      label: 'Digital Twin: Architecture Flow',
+      description: 'High-level flow of guarded responses, command parsing, and handoff routing.',
+      content: `<div style="font-family:Inter,system-ui,sans-serif;background:#faf8f5;border:1px solid #e5e7eb;border-radius:14px;padding:16px;max-width:640px;color:#0f172a;">
+  <h4 style="margin:0 0 12px;font-size:14px;letter-spacing:.04em;text-transform:uppercase;color:#475569;">Digital Twin AI Agent · Architecture</h4>
+  <div style="display:grid;gap:8px;">
+    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">User question</div>
+    <div style="text-align:center;color:#fb923c;">↓</div>
+    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">ChatWidget UI</div>
+    <div style="text-align:center;color:#0ea5e9;">↓</div>
+    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">Gemini proxy</div>
+    <div style="text-align:center;color:#0ea5e9;">↓</div>
+    <div style="padding:10px;border:1px solid #99f6e4;border-radius:10px;background:#f0fdfa;">Guardrail checks (scope, relevance, limits)</div>
+    <div style="text-align:center;color:#14b8a6;">↓</div>
+    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">Portfolio-scoped response</div>
+    <div style="text-align:center;color:#0ea5e9;">↓</div>
+    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">Command parser</div>
+    <div style="text-align:center;color:#fb923c;">↓</div>
+    <div style="padding:10px;border:1px solid #fed7aa;border-radius:10px;background:#fff7ed;">Navigation / resume / contact / handoff</div>
+  </div>
+</div>`,
+    },
+    rigor: {
+      statement:
+        'The value of a portfolio AI assistant is not just answering questions; it is routing users to proof while controlling scope, cost, and failure states.',
+      baseline:
+        'Generic chat widgets can drift off-topic, produce long expensive responses, or trap users in unresolved answer loops.',
+      definition:
+        'Reliable AI support = scoped answers, safe routing, failure-aware fallback, and human handoff when automation is insufficient.',
+      method:
+        'Implemented relevance gates, response-budget rules, approved navigation/action commands, rate limits, prompt-injection deflection, session history trimming, and human handoff UX.',
+      window: 'Portfolio visitor interaction during recruiter review.',
+    },
+    constraints: [
+      {
+        problem: 'A general chatbot could become expensive, irrelevant, or unsafe.',
+        tradeoff:
+          'The assistant is intentionally scoped to portfolio/recruiter use cases and deflects unrelated prompts.',
+      },
+      {
+        problem: 'AI answers may be incomplete or unsatisfying.',
+        tradeoff:
+          'The system provides human handoff rather than trapping the visitor in repeated AI replies.',
+      },
+      {
+        problem: 'Generated navigation commands could create unsafe or broken behavior.',
+        tradeoff:
+          'Only approved route/action commands are supported, and unknown commands are ignored.',
+      },
+    ],
+  },
 ];
+
+// TODO: remove case-study registry alias after all internal references are migrated.
+export const CASE_STUDY_REGISTRY = PROJECT_REGISTRY;

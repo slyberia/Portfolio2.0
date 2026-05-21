@@ -1,0 +1,43 @@
+{
+  "output": {
+    "filePath": "docs/workflow/architect-context.md",
+    "style": "markdown"
+  },
+  "include": [
+    "docs/**",
+    "scripts/**",
+    "src/App.tsx",
+    "src/main.tsx",
+    "src/router.tsx",
+    "src/views/**",
+    "src/components/**",
+    "src/constants/**",
+    "src/constants.tsx",
+    "src/context/**",
+    "src/data/**",
+    "src/hooks/**",
+    "src/lib/**",
+    "src/types.ts",
+    "src/utils/**",
+    "package.json",
+    "vite.config.ts",
+    "vitest.config.ts",
+    "tsconfig.json",
+    "docs/workflow/jules-report.md",
+    "docs/workflow/codex-defense.md"
+  ],
+  "ignore": {
+    "useGitignore": true,
+    "useDefaultPatterns": true,
+    "customPatterns": [
+      "node_modules/**",
+      "dist/**",
+      "build/**",
+      ".git/**",
+      "coverage/**",
+      "*.log",
+      ".env*",
+      "docs/workflow/architect-context.md"
+    ]
+  }
+}

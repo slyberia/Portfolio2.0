@@ -1,3 +1,4 @@
 dist
 node_modules
 .claude/skills/
+docs/workflow/architect-context.md

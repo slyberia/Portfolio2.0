@@ -1,514 +1,628 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  releaseLadder,
-  decisionBlocks,
-  architectureSummaries,
-  llmRoles,
-  forensicEntries,
-  appendixLinks,
-} from '../data/deepDiveContent';
+  DIGITAL_TWIN_PROJECT_HREF,
+  GUYNODE_SYSTEM_HREF,
+  PROJECTS_HREF,
+  RESUME_HREF,
+  SITE_INDEX_HREF,
+} from '../lib/routes';
+import ScrollToTopButton from '../components/ScrollToTopButton';
+import ErrorBoundary from '../components/ErrorBoundary';
+import { componentRecipes, proseTheme, semanticTokens } from '../lib/design-system';
+import { OperationalTriageSimulator } from '../components/ops-triage/OperationalTriageSimulator';
 
-// ── Shared primitives ──────────────────────────────────────────────────────
+type IndexTab = { key: SectionKey; title: string; description: string; id: string };
+type TimelineRow = {
+  phase: string;
+  changed: string;
+  mattered: string;
+  proves: string;
+  validation: string;
+};
 
-const SectionEyebrow: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <p className="text-xs font-bold text-indigo-600 dark:text-indigo-500 uppercase tracking-[0.3em]">
-    {children}
-  </p>
-);
+const sectionOrder = [
+  'build-timeline',
+  'multi-llm-toolchain',
+  'ai-assisted-delivery-model',
+  'project-architecture-migration',
+  'digital-twin-governance',
+  'validation-trail',
+  'evidence-ledger',
+] as const;
 
-const SectionHeading: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <h2 className="text-2xl font-outfit font-extrabold text-navy-900 dark:text-white">{children}</h2>
-);
+type SectionKey = (typeof sectionOrder)[number];
 
-const SectionIntro: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <p className="text-slate-500 dark:text-slate-400 leading-relaxed max-w-2xl">{children}</p>
-);
+const processIndexTabs: IndexTab[] = [
+  {
+    key: 'build-timeline',
+    title: 'Build Timeline',
+    description:
+      'Major implementation phases from role-track redesign through Projects migration and Digital Twin hardening.',
+    id: 'build-timeline',
+  },
+  {
+    key: 'multi-llm-toolchain',
+    title: 'Multi-LLM Toolchain',
+    description:
+      'How ChatGPT, Gemini, Claude, Claude Code, Google Jules, Codex, and GitHub contributed to a governed AI-assisted build process.',
+    id: 'multi-llm-toolchain',
+  },
+  {
+    key: 'ai-assisted-delivery-model',
+    title: 'AI-Assisted Delivery Model',
+    description:
+      'Scoped branch-level execution model used to convert architecture decisions into validated implementation cycles.',
+    id: 'ai-assisted-delivery-model',
+  },
+  {
+    key: 'project-architecture-migration',
+    title: 'Project Architecture Migration',
+    description:
+      'Migration from case-study language to canonical Projects routes, shared metadata, and recruiter-friendly proof browsing.',
+    id: 'projects-architecture',
+  },
+  {
+    key: 'digital-twin-governance',
+    title: 'Digital Twin Governance',
+    description:
+      'Scope controls, cost limits, relevance gates, prompt-injection handling, approved commands, and human handoff.',
+    id: 'digital-twin-governance',
+  },
+  {
+    key: 'validation-trail',
+    title: 'Validation Trail',
+    description:
+      'Typecheck, lint, tests, build checks, route validation, bugfixes, and known manual QA gaps.',
+    id: 'validation-trail',
+  },
+  {
+    key: 'evidence-ledger',
+    title: 'Evidence Ledger',
+    description:
+      'Source-of-truth audit documenting files, commits, decisions, toolchain use, and remaining risks.',
+    id: 'evidence-ledger',
+  },
+];
 
-const Chip: React.FC<{ label: string }> = ({ label }) => (
-  <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800/60 border border-black/5 dark:border-white/10 text-slate-600 dark:text-slate-400 text-xs font-medium">
-    {label}
-  </span>
-);
+const hashToSectionMap: Partial<Record<string, SectionKey>> = {
+  '#build-timeline': 'build-timeline',
+  '#multi-llm-toolchain': 'multi-llm-toolchain',
+  '#ai-assisted-delivery-model': 'ai-assisted-delivery-model',
+  '#projects-architecture': 'project-architecture-migration',
+  '#projects-architecture-migration': 'project-architecture-migration',
+  '#digital-twin-governance': 'digital-twin-governance',
+  '#validation-trail': 'validation-trail',
+  '#evidence-ledger': 'evidence-ledger',
+  '#decision-log': 'evidence-ledger',
+  '#remaining-release-hardening': 'evidence-ledger',
+};
 
-const FieldLabel: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <span className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">
-    {children}
-  </span>
-);
-
-const FieldText: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">{children}</p>
-);
-
-// ── Page ───────────────────────────────────────────────────────────────────
+const buildTimeline: TimelineRow[] = [
+  {
+    phase: 'Role-track hero redesign',
+    changed: 'Home shifted to Implementation / QA / GIS role-track framing.',
+    mattered: 'Made recruiter scanning role-first instead of artifact-first.',
+    proves: 'Information architecture aligned to hiring behavior.',
+    validation: 'Git evidence PR #29/#33.',
+  },
+  {
+    phase: 'Top navigation redesign',
+    changed: 'Added TopNav and route-helper alignment.',
+    mattered: 'Reduced navigation ambiguity across tracks and proof surfaces.',
+    proves: 'Global wayfinding designed intentionally.',
+    validation: 'Git evidence PR #34.',
+  },
+  {
+    phase: 'Guynode flagship positioning',
+    changed: 'Guynode promoted as flagship GIS system.',
+    mattered: 'Raised concrete systems proof, not just summary claims.',
+    proves: 'Flagship-level GIS delivery framing.',
+    validation: 'Git evidence PR #27/#44.',
+  },
+  {
+    phase: 'About + Working Profile',
+    changed: 'Added contextual working profile section.',
+    mattered: 'Improved evaluator context for collaboration style.',
+    proves: 'Portfolio includes delivery context, not only outputs.',
+    validation: 'Git evidence PR #37/#38.',
+  },
+  {
+    phase: 'Career Experience rewrite',
+    changed: 'Resume-aligned experience entries and language.',
+    mattered: 'Consistency between portfolio narrative and resume proof.',
+    proves: 'Cross-surface content governance.',
+    validation: 'PR #35/#36/#38 stream.',
+  },
+  {
+    phase: 'Skills & Technologies matrix',
+    changed: 'Expanded capability matrix with clearer strength framing.',
+    mattered: 'Improved role-specific skill scanning.',
+    proves: 'Capability taxonomy linked to project proof.',
+    validation: 'Feature commits in same stream.',
+  },
+  {
+    phase: 'Digital Twin guardrails',
+    changed: 'Added scope, rate, relevance, cost, and injection controls.',
+    mattered: 'Moved assistant from demo bot to constrained support system.',
+    proves: 'AI governance and safety implementation depth.',
+    validation: 'Server tests and PR #39.',
+  },
+  {
+    phase: 'Digital Twin human handoff',
+    changed: 'Added feedback controls and escalation to contact flow.',
+    mattered: 'Created failure-aware support path for unresolved answers.',
+    proves: 'Human-in-the-loop design.',
+    validation: 'Git evidence PR #40/#41.',
+  },
+  {
+    phase: 'Digital Twin project page',
+    changed: 'Published Digital Twin as explicit project artifact.',
+    mattered: 'Converted hidden feature work into recruiter-visible proof.',
+    proves: 'AI system delivery traceability.',
+    validation: 'Git evidence PR #41.',
+  },
+  {
+    phase: 'Projects route migration',
+    changed: 'Canonical routes migrated to /projects and /projects/:projectId.',
+    mattered: 'Reduced naming drift and improved URL clarity.',
+    proves: 'Systematic route architecture change.',
+    validation: 'Routing tests + PR #45/#48.',
+  },
+  {
+    phase: 'Dedicated Projects Index',
+    changed: 'Added /projects index view with browsing model.',
+    mattered: 'Improved recruiter proof retrieval speed.',
+    proves: 'Scannable project library architecture.',
+    validation: 'Git evidence PR #46.',
+  },
+  {
+    phase: 'Shared project metadata',
+    changed: 'Centralized project taxonomy in projectMetadata.ts.',
+    mattered: 'Eliminated duplicated labels/hrefs across views.',
+    proves: 'Single-source-of-truth content architecture.',
+    validation: 'PR #46 and cross-view usage.',
+  },
+  {
+    phase: 'Project Detail redesign',
+    changed: 'Refactored detail layout around project-first narrative.',
+    mattered: 'Improved technical deep-dive readability.',
+    proves: 'Project proof UX maturation.',
+    validation: 'Git evidence PR #47.',
+  },
+  {
+    phase: 'Project Detail route/content bugfix',
+    changed: 'Fixed projectId compatibility and loader fallback hardening.',
+    mattered: 'Prevented empty/wrong detail resolution and app-shell misreads.',
+    proves: 'Reliability-focused iteration.',
+    validation: 'Tests in PR #48.',
+  },
+  {
+    phase: 'Site Index',
+    changed: 'Added global site index route and view.',
+    mattered: 'Improved discoverability across the portfolio.',
+    proves: 'Navigation architecture completeness.',
+    validation: 'Git evidence PR #43.',
+  },
+  {
+    phase: 'Evidence audit ledger',
+    changed: 'Published evidence-ledger source trail in docs.',
+    mattered: 'Anchored public process claims to repository evidence.',
+    proves: 'Traceability and audit discipline.',
+    validation: 'docs/portfolio2-evidence-audit-ledger.md.',
+  },
+];
 
 const DeepDiveView: React.FC = () => {
+  const [activeMainTab, setActiveMainTab] = React.useState<'process' | 'luxe-lofts'>('process');
+  const [activeSection, setActiveSection] = React.useState<SectionKey>('build-timeline');
+  const currentIndex = sectionOrder.indexOf(activeSection);
+
+  React.useEffect(() => {
+    const syncSectionToHash = () => {
+      const mappedSection = hashToSectionMap[window.location.hash];
+      if (mappedSection) setActiveSection(mappedSection);
+    };
+
+    syncSectionToHash();
+    window.addEventListener('hashchange', syncSectionToHash);
+    return () => window.removeEventListener('hashchange', syncSectionToHash);
+  }, []);
+
+  const handleTabKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
+    if (
+      event.key !== 'ArrowRight' &&
+      event.key !== 'ArrowLeft' &&
+      event.key !== 'Home' &&
+      event.key !== 'End'
+    ) {
+      return;
+    }
+    event.preventDefault();
+    if (event.key === 'Home') return setActiveSection(sectionOrder[0]);
+    if (event.key === 'End') return setActiveSection(sectionOrder[sectionOrder.length - 1]);
+    const delta = event.key === 'ArrowRight' ? 1 : -1;
+    const nextIndex = (index + delta + sectionOrder.length) % sectionOrder.length;
+    setActiveSection(sectionOrder[nextIndex]);
+  };
+
   return (
-    <div className="min-h-screen pt-20">
-      {/* ── Hero ──────────────────────────────────────────────── */}
-      <section className="relative py-20 px-6 overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-30 dark:opacity-20"
-          style={{
-            background:
-              'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(196,89,42,0.18) 0%, transparent 70%)',
-          }}
-        />
-        <div className="relative max-w-4xl mx-auto space-y-6">
-          <SectionEyebrow>Portfolio2.0 — Deep Dive</SectionEyebrow>
-          <h1 className="text-4xl sm:text-5xl font-outfit font-extrabold text-navy-900 dark:text-white leading-tight">
-            From AI-assisted prototype
-            <br />
-            to <span className="gradient-text">governed, hardened proof.</span>
-          </h1>
-          <p className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed max-w-2xl">
-            This page consolidates the decision record, architecture evidence, governance model, and
-            forensic trail behind Portfolio2.0 — built in six phases from an AI-assisted scaffold to
-            a hardened, recruiter-legible proof system. Built for skim-first reading; the depth is
-            there when you need it.
-          </p>
-          <div className="flex flex-wrap gap-2 pt-2">
-            {[
-              'Architecture',
-              'Decision-impact',
-              'CI / Testing',
-              'LLM Governance',
-              'Forensic Archive',
-            ].map((chip) => (
-              <Chip key={chip} label={chip} />
-            ))}
-          </div>
-          {/* In-page nav */}
-          <nav
-            aria-label="Page sections"
-            className="flex flex-wrap gap-3 pt-4 border-t border-black/5 dark:border-white/5"
-          >
-            {[
-              { label: 'Release ladder', href: '#release-ladder' },
-              { label: 'Decision blocks', href: '#decision-blocks' },
-              { label: 'Architecture', href: '#architecture-boundary' },
-              { label: 'LLM governance', href: '#multi-llm-governance' },
-              { label: 'Revision Trail', href: '#forensic-archive' },
-              { label: 'Proof structure', href: '#proof-hierarchy' },
-            ].map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors underline underline-offset-2"
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-        </div>
-      </section>
-
-      {/* ── Release Ladder ───────────────────────────────────── */}
-      <section
-        id="release-ladder"
-        className="py-16 px-6 bg-slate-50/50 dark:bg-slate-900/20 border-y border-black/5 dark:border-white/5 scroll-mt-24"
-      >
-        <div className="max-w-4xl mx-auto space-y-8">
-          <div className="space-y-3">
-            <SectionEyebrow>Project evolution</SectionEyebrow>
-            <SectionHeading>Release ladder</SectionHeading>
-            <SectionIntro>
-              Portfolio2.0 was built iteratively across six phases. Each phase added proof
-              capability, tightened architecture, or expanded the stakeholder surface. The ladder
-              below shows what changed at each stage and why.
-            </SectionIntro>
-          </div>
-          <div className="relative">
-            {releaseLadder.map((entry, idx) => (
-              <div key={entry.phase} className="flex gap-6">
-                {/* Spine */}
-                <div className="flex flex-col items-center">
-                  <div className="w-3 h-3 rounded-full bg-indigo-600 dark:bg-indigo-500 shrink-0 mt-1.5 ring-4 ring-indigo-500/10" />
-                  {idx < releaseLadder.length - 1 && (
-                    <div className="w-px flex-1 bg-indigo-200 dark:bg-indigo-900/60 my-1" />
-                  )}
-                </div>
-                {/* Content */}
-                <div className="pb-8 space-y-2">
-                  <span className="text-xs font-bold text-indigo-600 dark:text-indigo-500 uppercase tracking-widest">
-                    {entry.phase}
-                  </span>
-                  <h3 className="font-outfit font-bold text-navy-900 dark:text-white">
-                    {entry.title}
-                  </h3>
-                  <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
-                    {entry.description}
-                  </p>
-                  {entry.tags && (
-                    <div className="flex flex-wrap gap-1.5 pt-1">
-                      {entry.tags.map((tag) => (
-                        <Chip key={tag} label={tag} />
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Decision-Impact Blocks ───────────────────────────── */}
-      <section id="decision-blocks" className="py-16 px-6 scroll-mt-24">
-        <div className="max-w-4xl mx-auto space-y-10">
-          <div className="space-y-3">
-            <SectionEyebrow>Decision-impact library</SectionEyebrow>
-            <SectionHeading>Decision-impact blocks</SectionHeading>
-            <SectionIntro>
-              Nine decisions that shaped the architecture, trust model, and delivery structure of
-              Portfolio2.0. Each block documents the problem, the risk, what was decided, the
-              tradeoff accepted, how it was validated, and why it matters beyond the immediate
-              context.
-            </SectionIntro>
-          </div>
-          <div className="space-y-6">
-            {decisionBlocks.map((block) => (
-              <div
-                key={block.id}
-                id={block.id}
-                className="glass-card rounded-2xl p-6 space-y-5 scroll-mt-24"
-              >
-                {/* Header */}
-                <div className="flex flex-wrap items-start justify-between gap-3">
-                  <h3 className="font-outfit font-bold text-lg text-navy-900 dark:text-white leading-snug">
-                    {block.title}
-                  </h3>
-                  <div className="flex flex-wrap gap-1.5">
-                    {block.chips.map((chip) => (
-                      <Chip key={chip} label={chip} />
-                    ))}
-                  </div>
-                </div>
-                {/* Fields — 2-col grid, 3 rows */}
-                <div className="grid sm:grid-cols-2 gap-x-8 gap-y-4 border-t border-black/5 dark:border-white/5 pt-4">
-                  <div className="space-y-1">
-                    <FieldLabel>Problem</FieldLabel>
-                    <FieldText>{block.problem}</FieldText>
-                  </div>
-                  <div className="space-y-1">
-                    <FieldLabel>Risk</FieldLabel>
-                    <FieldText>{block.risk}</FieldText>
-                  </div>
-                  <div className="space-y-1">
-                    <FieldLabel>Decision</FieldLabel>
-                    <FieldText>{block.decision}</FieldText>
-                  </div>
-                  <div className="space-y-1">
-                    <FieldLabel>Tradeoff</FieldLabel>
-                    <FieldText>{block.tradeoff}</FieldText>
-                  </div>
-                  <div className="space-y-1">
-                    <FieldLabel>Validation</FieldLabel>
-                    <FieldText>{block.validation}</FieldText>
-                  </div>
-                  <div className="space-y-1">
-                    <FieldLabel>Business relevance</FieldLabel>
-                    <FieldText>{block.businessRelevance}</FieldText>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Architecture & Technical Hardening ──────────────── */}
-      <section
-        id="architecture-boundary"
-        className="py-16 px-6 bg-slate-50/50 dark:bg-slate-900/20 border-y border-black/5 dark:border-white/5 scroll-mt-24"
-      >
-        <div className="max-w-4xl mx-auto space-y-10">
-          <div className="space-y-3">
-            <SectionEyebrow>Technical hardening</SectionEyebrow>
-            <SectionHeading>Architecture and QA evidence</SectionHeading>
-            <SectionIntro>
-              Five architectural decisions moved Portfolio2.0 from a working prototype to a
-              production-grade, trustworthy application. Each summary covers what the layer does and
-              why it was designed that way.
-            </SectionIntro>
+    <div id="deep-dive-top" className="min-h-screen pt-20 pb-20 px-6">
+      <ErrorBoundary location="Deep Dive View">
+        <div className="max-w-6xl mx-auto space-y-12">
+          <div className="flex flex-wrap gap-4 border-b border-slate-200 dark:border-white/10 pb-4">
+            <button
+              onClick={() => setActiveMainTab('process')}
+              className={`text-lg font-bold px-4 py-2 rounded-t-lg transition ${activeMainTab === 'process' ? 'bg-slate-100 dark:bg-slate-800 text-navy-900 dark:text-white border-b-2 border-tide-aqua' : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'}`}
+            >
+              Portfolio 2.0 Process & Governance
+            </button>
+            <button
+              onClick={() => setActiveMainTab('luxe-lofts')}
+              className={`text-lg font-bold px-4 py-2 rounded-t-lg transition ${activeMainTab === 'luxe-lofts' ? 'bg-slate-100 dark:bg-slate-800 text-navy-900 dark:text-white border-b-2 border-rose-500' : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'}`}
+            >
+              Luxe Lofts Digital Restructuring Strategy
+            </button>
           </div>
 
-          {/* Lightweight architecture diagram */}
-          <div className="glass-card rounded-2xl p-6 space-y-4">
-            <SectionEyebrow>Architecture boundary overview</SectionEyebrow>
-            <div className="flex flex-col sm:flex-row items-stretch gap-3 pt-2">
-              {[
-                {
-                  label: 'Browser',
-                  sublabel: 'React SPA',
-                  desc: 'Renders UI, sends /api/chat requests, displays sanitized output',
-                  color: 'border-indigo-500/40 bg-indigo-500/5',
-                },
-                {
-                  label: 'Server Proxy',
-                  sublabel: 'Express on Cloud Run',
-                  desc: 'Holds Gemini API key, applies prompt constraints, forwards responses',
-                  color: 'border-emerald-500/40 bg-emerald-500/5',
-                },
-                {
-                  label: 'Governance Layer',
-                  sublabel: 'CI + Sanitization + Protocols',
-                  desc: 'Validates every push; sanitizes rendering; enforces LLM role boundaries',
-                  color: 'border-amber-500/40 bg-amber-500/5',
-                },
-              ].map((node, i) => (
-                <React.Fragment key={node.label}>
-                  <div className={`flex-1 rounded-xl border-2 p-4 space-y-1 ${node.color}`}>
-                    <p className="font-outfit font-bold text-sm text-navy-900 dark:text-white">
-                      {node.label}
-                    </p>
-                    <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">
-                      {node.sublabel}
-                    </p>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed pt-1">
-                      {node.desc}
-                    </p>
-                  </div>
-                  {i < 2 && (
-                    <div className="hidden sm:flex items-center text-slate-300 dark:text-slate-700 text-xl font-bold">
-                      →
-                    </div>
-                  )}
-                </React.Fragment>
-              ))}
-            </div>
-          </div>
-
-          {/* Architecture summaries */}
-          <div className="space-y-4">
-            {architectureSummaries.map((item) => (
-              <div key={item.title} className="glass-card rounded-2xl p-5 space-y-3">
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <h3 className="font-outfit font-bold text-navy-900 dark:text-white">
-                    {item.title}
-                  </h3>
-                  <div className="flex flex-wrap gap-1.5">
-                    {item.chips.map((chip) => (
-                      <Chip key={chip} label={chip} />
-                    ))}
-                  </div>
-                </div>
-                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                  {item.summary}
+          {activeMainTab === 'process' ? (
+            <div className="space-y-12">
+              <section className="space-y-4">
+                <p className="text-xs font-bold uppercase tracking-[0.3em] text-tide-aqua">
+                  Process
                 </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+                <h1 className="text-4xl font-outfit font-extrabold text-navy-900 dark:text-white">
+                  Portfolio 2.0 Process Deep Dive
+                </h1>
+                <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                  This page documents how Portfolio 2.0 evolved from an AI-assisted prototype into a
+                  role-track portfolio system with dedicated project architecture, Digital Twin
+                  guardrails, site-wide navigation, and validation-backed implementation phases.
+                </p>
+                <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                  Projects show what was built. Process shows how the portfolio was planned,
+                  governed, implemented, validated, and iterated.
+                </p>
+                <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                  Use this page to inspect the planning logic, AI-assisted workflow, route
+                  migrations, project taxonomy, validation passes, and remaining cleanup work behind
+                  the portfolio.
+                </p>
+                <div className="flex flex-wrap gap-4 text-sm font-semibold text-[#237f86]">
+                  <Link to={PROJECTS_HREF}>View Projects Library</Link>
+                  <Link to={SITE_INDEX_HREF}>Open Site Index</Link>
+                  <Link to={DIGITAL_TWIN_PROJECT_HREF}>View Digital Twin Project</Link>
+                  <Link to={GUYNODE_SYSTEM_HREF}>View Guynode Project</Link>
+                  <Link to={RESUME_HREF}>View Resume</Link>
+                </div>
+              </section>
 
-      {/* ── LLM Governance ──────────────────────────────────── */}
-      <section id="multi-llm-governance" className="py-16 px-6 scroll-mt-24">
-        <div className="max-w-4xl mx-auto space-y-10">
-          <div className="space-y-3">
-            <SectionEyebrow>Governed AI workflow</SectionEyebrow>
-            <SectionHeading>Multi-LLM governance</SectionHeading>
-            <SectionIntro>
-              Portfolio2.0 used three LLMs in differentiated, non-overlapping roles — not
-              interchangeably. Design authority remained human-controlled. No LLM output was
-              published without an operator checkpoint. The value was disciplined use of AI inside a
-              controlled workflow, not novelty.
-            </SectionIntro>
-          </div>
-
-          {/* Governance principles callout */}
-          <div className="border-l-4 border-indigo-500 pl-6 py-2 space-y-3">
-            <SectionEyebrow>Governance principles</SectionEyebrow>
-            <ul className="space-y-2">
-              {[
-                'Each LLM was assigned a defined, non-overlapping scope before the project began.',
-                'All output was reviewed by the operator before moving to the next stage.',
-                'Role boundaries were maintained throughout to prevent scope drift.',
-                'Decisions remain attributable to a specific tool, context, and operator checkpoint.',
-                'AI tools supported delivery. They did not direct it.',
-              ].map((principle) => (
-                <li
-                  key={principle}
-                  className="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-300"
+              <section className="space-y-4" aria-labelledby="process-index-tabs-heading">
+                <h2 className="text-2xl font-bold text-navy-900 dark:text-white">Process Index</h2>
+                <div
+                  role="tablist"
+                  aria-label="Process Deep Dive sections"
+                  className={`rounded-2xl p-3 border ${semanticTokens.border.default} ${semanticTokens.surface.panel}`}
                 >
-                  <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0" />
-                  {principle}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* LLM role cards */}
-          <div className="grid sm:grid-cols-3 gap-6">
-            {llmRoles.map((role) => (
-              <div key={role.name} className="glass-card rounded-2xl p-6 space-y-4">
-                <div className="space-y-1">
-                  <h3 className="font-outfit font-bold text-navy-900 dark:text-white">
-                    {role.name}
-                  </h3>
-                  <p className="text-xs font-bold text-indigo-600 dark:text-indigo-500 uppercase tracking-widest">
-                    {role.role}
-                  </p>
-                </div>
-                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                  {role.description}
-                </p>
-                <div className="border-t border-black/5 dark:border-white/5 pt-4 space-y-2">
-                  <FieldLabel>Used for</FieldLabel>
-                  <ul className="space-y-1">
-                    {role.examples.map((ex) => (
-                      <li
-                        key={ex}
-                        className="flex items-start gap-2 text-sm text-slate-500 dark:text-slate-400"
+                  <div className="flex flex-wrap gap-2">
+                    {processIndexTabs.map((tab, index) => (
+                      <button
+                        key={tab.key}
+                        id={`process-tab-${tab.key}`}
+                        type="button"
+                        role="tab"
+                        aria-selected={activeSection === tab.key}
+                        aria-controls={`process-panel-${tab.key}`}
+                        tabIndex={activeSection === tab.key ? 0 : -1}
+                        onClick={() => setActiveSection(tab.key)}
+                        onKeyDown={(event) => handleTabKeyDown(event, index)}
+                        className={`rounded-full border px-3 py-2 text-sm font-semibold transition ${activeSection === tab.key ? `${componentRecipes.button.primary} border-transparent shadow-sm ring-2 ring-offset-2 ring-tide-aqua dark:ring-offset-slate-950` : `${componentRecipes.button.secondary} bg-transparent`}`}
                       >
-                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0" />
-                        {ex}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Forensic Archive ─────────────────────────────────── */}
-      <section
-        id="forensic-archive"
-        className="py-16 px-6 bg-slate-50/50 dark:bg-slate-900/20 border-y border-black/5 dark:border-white/5 scroll-mt-24"
-      >
-        <div className="max-w-4xl mx-auto space-y-10">
-          <div className="space-y-3">
-            <SectionEyebrow>Revision history</SectionEyebrow>
-            <SectionHeading>Revision Trail</SectionHeading>
-            <SectionIntro>
-              The revision trail preserves what changed during Portfolio2.0 development, why it
-              changed, and what risk or ambiguity each revision resolved. It exists so later
-              decisions are traceable back to real evidence — not memory or polished summaries. It
-              is the third layer of the proof system, beneath the track summaries and these decision
-              blocks.
-            </SectionIntro>
-          </div>
-          <div className="space-y-6">
-            {forensicEntries.map((entry) => (
-              <div
-                key={entry.id}
-                id={entry.id}
-                className="glass-card rounded-2xl p-6 space-y-4 scroll-mt-24"
-              >
-                <div className="flex flex-wrap items-start justify-between gap-3">
-                  <h3 className="font-outfit font-bold text-navy-900 dark:text-white">
-                    {entry.label}
-                  </h3>
-                  <div className="flex flex-wrap gap-1.5">
-                    {entry.chips.map((chip) => (
-                      <Chip key={chip} label={chip} />
+                        {tab.title}
+                      </button>
                     ))}
                   </div>
                 </div>
-                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-black/5 dark:border-white/5 pt-4">
-                  {entry.description}
+                <p className="text-sm text-ink-slate dark:text-ink-border">
+                  Active section: <strong>{processIndexTabs[currentIndex]?.title}</strong>
                 </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+              </section>
 
-      {/* ── Appendix / Supporting Artifacts ──────────────────── */}
-      <section className="py-16 px-6">
-        <div className="max-w-4xl mx-auto space-y-8">
-          <div className="space-y-3">
-            <SectionEyebrow>Appendix</SectionEyebrow>
-            <SectionHeading>Supporting artifacts</SectionHeading>
-            <SectionIntro>
-              Cross-links to every named section and supporting page in the Portfolio2.0 proof
-              system.
-            </SectionIntro>
-          </div>
-          <div className="grid sm:grid-cols-2 gap-4">
-            {appendixLinks.map((link) => {
-              const isExternal = link.href.startsWith('http');
-              const inner = (
-                <div className="glass-card rounded-2xl p-4 flex items-center justify-between group transition-all duration-300 hover:border-indigo-500/30 hover:-translate-y-0.5 cursor-pointer">
-                  <span className="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                    {link.label}
-                  </span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M5 12h14" />
-                    <path d="m12 5 7 7-7 7" />
-                  </svg>
+              {activeSection === 'build-timeline' && (
+                <section
+                  id="build-timeline"
+                  role="tabpanel"
+                  aria-labelledby="process-tab-build-timeline"
+                  aria-live="polite"
+                  className={`scroll-mt-24 space-y-4 rounded-2xl border p-6 ${componentRecipes.card.surface}`}
+                >
+                  <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
+                    Build Timeline / Phase Ladder
+                  </h2>
+                  <p className={`${proseTheme.paragraph} max-w-4xl`}>
+                    This table captures phased implementation changes, why each shift mattered, and
+                    the validation trail used to verify delivery outcomes.
+                  </p>
+                  <div className="max-h-[36rem] overflow-y-auto overflow-x-auto rounded-xl border border-black/10 dark:border-white/10">
+                    <table className="min-w-full text-sm">
+                      <thead className="sticky top-0 bg-slate-100 dark:bg-slate-900 z-10">
+                        <tr>
+                          <th className="text-left p-3">Phase</th>
+                          <th className="text-left p-3">What changed</th>
+                          <th className="text-left p-3">Why it mattered</th>
+                          <th className="text-left p-3">What it proves</th>
+                          <th className="text-left p-3">Validation</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {buildTimeline.map((row) => (
+                          <tr
+                            key={row.phase}
+                            className="border-t border-black/10 dark:border-white/10 align-top"
+                          >
+                            <td className="p-4 font-semibold">{row.phase}</td>
+                            <td className="p-4">{row.changed}</td>
+                            <td className="p-4">{row.mattered}</td>
+                            <td className="p-4">{row.proves}</td>
+                            <td className="p-4">{row.validation}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
+              )}
+
+              {activeSection === 'multi-llm-toolchain' && (
+                <section
+                  id="multi-llm-toolchain"
+                  role="tabpanel"
+                  aria-labelledby="process-tab-multi-llm-toolchain"
+                  className={`scroll-mt-24 space-y-4 rounded-2xl border p-6 ${componentRecipes.card.surface}`}
+                >
+                  <h2 className="text-2xl font-bold">Multi-LLM Toolchain</h2>
+                  <p>
+                    The workflow used scoped tool roles, patch-note review, and validation gates. AI
+                    accelerated delivery; human judgment controlled scope and acceptance.
+                  </p>
+                  <ul className="space-y-2 list-disc pl-5">
+                    <li>
+                      <strong>ChatGPT</strong> — Strategy, critique, prompt design, information
+                      architecture, audit logic, and sequencing (user-reported context in ledger).
+                    </li>
+                    <li>
+                      <strong>Google AI Studio / Gemini</strong> — Early generation, scaffolding, UI
+                      experimentation context; Gemini also powers runtime assistant behavior via
+                      proxy (repo-confirmed for runtime integration).
+                    </li>
+                    <li>
+                      <strong>Claude</strong> — Planning/review and implementation support where
+                      used (repo evidence includes Claude co-author metadata on commits).
+                    </li>
+                    <li>
+                      <strong>Claude Code</strong> — Repo-level edits/refactoring and implementation
+                      support in commit/PR evidence.
+                    </li>
+                    <li>
+                      <strong>Google Jules</strong> — Task orchestration/code support in
+                      user-reported workflow context.
+                    </li>
+                    <li>
+                      <strong>Codex</strong> — Branch-based implementation prompts, targeted
+                      migration fixes, test-repair iteration in git history.
+                    </li>
+                    <li>
+                      <strong>GitHub</strong> — Branch/PR traceability, merges, and validation trail
+                      control plane.
+                    </li>
+                  </ul>
+                </section>
+              )}
+
+              {activeSection === 'ai-assisted-delivery-model' && (
+                <section
+                  id="ai-assisted-delivery-model"
+                  role="tabpanel"
+                  aria-labelledby="process-tab-ai-assisted-delivery-model"
+                  className={`scroll-mt-24 space-y-3 rounded-2xl border p-6 ${componentRecipes.card.surface}`}
+                >
+                  <h2 className="text-2xl font-bold">AI-Assisted Delivery Model</h2>
+                  <p>
+                    The portfolio was developed through scoped implementation cycles rather than
+                    open-ended generation. Each cycle converted a design or architecture problem
+                    into a branch-level task, reviewed the resulting patch notes, validated the
+                    output, and used follow-up prompts to resolve defects or drift.
+                  </p>
+                  <ol className="list-decimal pl-5 space-y-1">
+                    <li>Strategy and critique.</li>
+                    <li>Scoped implementation prompt.</li>
+                    <li>Branch-based execution.</li>
+                    <li>Patch-note review.</li>
+                    <li>Static validation.</li>
+                    <li>Manual/visual audit where possible.</li>
+                    <li>Bugfix prompt.</li>
+                    <li>Evidence ledger update.</li>
+                  </ol>
+                </section>
+              )}
+
+              {activeSection === 'project-architecture-migration' && (
+                <section
+                  id="projects-architecture"
+                  role="tabpanel"
+                  aria-labelledby="process-tab-project-architecture-migration"
+                  className={`scroll-mt-24 space-y-3 rounded-2xl border p-6 ${componentRecipes.card.surface}`}
+                >
+                  <div id="projects-architecture-migration" />
+                  <h2 className="text-2xl font-bold">Projects Architecture Migration</h2>
+                  <p>
+                    Legacy <code>/case-studies</code> naming became technical debt as project
+                    taxonomy expanded. The canonical model moved to <code>/projects</code> and{' '}
+                    <code>/projects/:projectId</code>, while compatibility redirects were preserved
+                    to avoid breakage during migration. Shared metadata in{' '}
+                    <code>projectMetadata.ts</code> now powers featured/supporting taxonomy, role
+                    filters, and consistent links across Home, Projects Index, Site Index, and
+                    Project Detail. Guynode and Digital Twin are featured systems; Ops Triage moved
+                    into supporting project status.
+                  </p>
+                </section>
+              )}
+
+              {activeSection === 'digital-twin-governance' && (
+                <section
+                  id="digital-twin-governance"
+                  role="tabpanel"
+                  aria-labelledby="process-tab-digital-twin-governance"
+                  className={`scroll-mt-24 space-y-3 rounded-2xl border p-6 ${componentRecipes.card.surface}`}
+                >
+                  <h2 className="text-2xl font-bold">Digital Twin Governance + Failure Planning</h2>
+                  <p>
+                    The Digital Twin is designed as a scoped AI support system, not a general
+                    chatbot. Its value comes from how it handles relevance, cost, routing, failure
+                    states, and human escalation.
+                  </p>
+                  <p>
+                    Governance includes portfolio-only scope, response budget, rate limits,
+                    message-length controls, relevance and expensive-query gates, prompt-injection
+                    deflection, approved navigation/action commands, command validation, fallback
+                    behaviors, and human handoff when confidence or relevance fails. QA scenarios
+                    and tests focus on these constraints, not open-ended chat performance.
+                  </p>
+                </section>
+              )}
+
+              {activeSection === 'validation-trail' && (
+                <section
+                  id="validation-trail"
+                  role="tabpanel"
+                  aria-labelledby="process-tab-validation-trail"
+                  className={`scroll-mt-24 space-y-3 rounded-2xl border p-6 ${componentRecipes.card.surface}`}
+                >
+                  <h2 className="text-2xl font-bold">Validation Trail</h2>
+                  <table className="min-w-full text-sm border border-black/10 dark:border-white/10">
+                    <thead>
+                      <tr className="bg-slate-100 dark:bg-slate-900/70">
+                        <th className="text-left p-2">Area</th>
+                        <th className="text-left p-2">Validation</th>
+                        <th className="text-left p-2">Result</th>
+                        <th className="text-left p-2">Notes</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-t border-black/10 dark:border-white/10">
+                        <td className="p-2">Repo checks</td>
+                        <td className="p-2">npm run typecheck / lint / test / build</td>
+                        <td className="p-2">Passing in ledger trail</td>
+                        <td className="p-2">
+                          Build includes non-blocking Vite chunk-size advisory.
+                        </td>
+                      </tr>
+                      <tr className="border-t border-black/10 dark:border-white/10">
+                        <td className="p-2">Routing</td>
+                        <td className="p-2">routing.test.tsx updates</td>
+                        <td className="p-2">Validated</td>
+                        <td className="p-2">Covers canonical and compatibility behavior.</td>
+                      </tr>
+                      <tr className="border-t border-black/10 dark:border-white/10">
+                        <td className="p-2">Project detail bugfix</td>
+                        <td className="p-2">route param + loader fallback tests</td>
+                        <td className="p-2">Validated</td>
+                        <td className="p-2">
+                          Addresses projectId compatibility and app-shell fallback hardening.
+                        </td>
+                      </tr>
+                      <tr className="border-t border-black/10 dark:border-white/10">
+                        <td className="p-2">Manual browser QA</td>
+                        <td className="p-2">Interactive page checks</td>
+                        <td className="p-2">Partial / iterative</td>
+                        <td className="p-2">
+                          Ledger distinguishes automated evidence from full browser-interactive
+                          sweeps.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </section>
+              )}
+
+              <section id="decision-log" className="scroll-mt-24">
+                <h2 className="text-2xl font-bold">Decision Log</h2>
+                <p className="mt-2">
+                  Key decisions: migrate to canonical projects routes, preserve compatibility
+                  aliases during transition, promote Guynode and Digital Twin as flagship proof
+                  systems, centralize metadata, and keep Process separate from Projects browsing for
+                  reviewer clarity.
+                </p>
+              </section>
+              {activeSection === 'evidence-ledger' && (
+                <section
+                  id="evidence-ledger"
+                  role="tabpanel"
+                  aria-labelledby="process-tab-evidence-ledger"
+                  className={`scroll-mt-24 rounded-2xl border p-6 ${componentRecipes.card.surface}`}
+                >
+                  <h2 className="text-2xl font-bold">Evidence Ledger</h2>
+                  <p className="mt-2">
+                    The public Process page summarizes the build. The evidence ledger records the
+                    deeper source trail: files, phases, decisions, Git evidence, validation notes,
+                    and remaining risks. In this repo, it is maintained as an internal documentation
+                    artifact at <code>docs/portfolio2-evidence-audit-ledger.md</code>.
+                  </p>
+                </section>
+              )}
+              <section id="governance-logs" className="scroll-mt-24">
+                <h2 className="text-2xl font-bold">Governance & Implementation Logs</h2>
+                <p className="mt-2 text-ink-slate dark:text-ink-border">
+                  Audit logs for the Portfolio 2.0 implementation phases, including automated review
+                  summaries, design system alignment reports, and accessibility validation trails.
+                </p>
+              </section>
+              <section id="remaining-release-hardening" className="scroll-mt-24">
+                <h2 className="text-2xl font-bold">Remaining Release-Hardening Items</h2>
+                <ul className="list-disc pl-5 mt-2 space-y-1">
+                  <li>Final browser-interactive QA sweep.</li>
+                  <li>Scroll-to-top and long-page usability polish.</li>
+                  <li>Contextual Digital Twin entry points on track pages.</li>
+                  <li>Final accessibility and mobile audit.</li>
+                  <li>Legacy case-study alias/naming cleanup after dependency checks.</li>
+                  <li>Final public copy audit for concise consistency.</li>
+                </ul>
+              </section>
+            </div>
+          ) : (
+            <div className="space-y-12">
+              <section className="space-y-4">
+                <p className="text-xs font-bold uppercase tracking-[0.3em] text-rose-500">
+                  Strategy
+                </p>
+                <h1 className="text-4xl font-outfit font-extrabold text-navy-900 dark:text-white">
+                  Luxe Lofts: Operational Turnaround
+                </h1>
+                <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                  This tab explores the operational systems that power the Luxe Lofts ecosystem. It
+                  breaks down the shift from a generic CRM approach to a tailored intent-to-revenue
+                  engine with dynamic rate calculations and AI-assisted triage capabilities.
+                </p>
+              </section>
+
+              <section className="space-y-6">
+                <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
+                  Live Simulator: Operational Triage
+                </h2>
+                <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                  A core challenge during the restructuring was balancing high-velocity automation
+                  with quality assurance. The simulator below demonstrates the operational triage
+                  control plane used to regulate system throughput against defect leakage.
+                </p>
+                <div className="mt-8">
+                  <OperationalTriageSimulator />
                 </div>
-              );
-              if (isExternal) {
-                return (
-                  <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer">
-                    {inner}
-                  </a>
-                );
-              }
-              return (
-                <Link key={link.href} to={link.href}>
-                  {inner}
-                </Link>
-              );
-            })}
-          </div>
+              </section>
+            </div>
+          )}
         </div>
-      </section>
-
-      {/* ── Back nav ─────────────────────────────────────────── */}
-      <div className="py-8 px-6 pb-16">
-        <div className="max-w-4xl mx-auto flex flex-wrap gap-4">
-          <Link
-            to="/tracks/implementation"
-            className="inline-flex items-center gap-2 text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-4 h-4"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="m15 18-6-6 6-6" />
-            </svg>
-            Implementation track
-          </Link>
-          <Link
-            to="/tracks/ops-analytics"
-            className="inline-flex items-center gap-2 text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-4 h-4"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="m15 18-6-6 6-6" />
-            </svg>
-            Ops Analytics track
-          </Link>
-        </div>
-      </div>
+      </ErrorBoundary>
+      <ScrollToTopButton />
     </div>
   );
 };

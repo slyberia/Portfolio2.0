@@ -5,41 +5,55 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .prose-portfolio a {
+    color: #39b8bc;
+  }
+
+  .prose-portfolio a:hover {
+    color: #2f9ca0;
+  }
+
+  .dark .prose-portfolio a {
+    color: #80c4f1;
+  }
+}
+
 @layer utilities {
   /* Opaque editorial card — replaces glassmorphism */
   .glass-card {
-    background: #fefcf9;
-    border: 1px solid #e4dfd7;
+    background: #f8fbfd;
+    border: 1px solid #d8e8ee;
     box-shadow:
-      0 1px 3px rgba(30, 20, 10, 0.04),
-      0 4px 12px rgba(30, 20, 10, 0.03);
+      0 1px 3px rgba(7, 22, 31, 0.05),
+      0 4px 12px rgba(7, 22, 31, 0.04);
   }
 
   .dark .glass-card {
-    background: #221e17;
+    background: #10242f;
     border: 1px solid rgba(255, 255, 255, 0.07);
     box-shadow: none;
   }
 
   /* Solid accent text — replaces banned gradient-text */
   .gradient-text {
-    color: #c4592a;
-    -webkit-text-fill-color: #c4592a;
+    color: #39b8bc;
+    -webkit-text-fill-color: #39b8bc;
   }
 
   .dark .gradient-text {
-    color: #df8c56;
-    -webkit-text-fill-color: #df8c56;
+    color: #64c8f1;
+    -webkit-text-fill-color: #64c8f1;
   }
 
   /* Warm parchment background — replaces radial gradient mesh */
   .bg-mesh {
-    background-color: #f9f7f3;
+    background-color: #f5f9fb;
     transition: background-color 0.5s ease;
   }
 
   .dark .bg-mesh {
-    background-color: #1a1712;
+    background-color: #07161f;
   }
 
   .scrollbar-hide::-webkit-scrollbar {
@@ -61,43 +75,118 @@
   }
 
   .chat-scroll::-webkit-scrollbar-thumb {
-    background: rgba(196, 89, 42, 0.15);
+    background: rgba(57, 184, 188, 0.2);
     border-radius: 4px;
   }
 
   .light .chat-scroll::-webkit-scrollbar-thumb {
-    background: rgba(196, 89, 42, 0.12);
+    background: rgba(57, 184, 188, 0.15);
   }
 
   .chat-scroll::-webkit-scrollbar-thumb:hover {
-    background: rgba(196, 89, 42, 0.25);
+    background: rgba(57, 184, 188, 0.3);
   }
 }
 
-/* Global selection — sienna instead of indigo */
+/* Global selection — Technical Tide accent */
 ::selection {
-  background: #c4592a;
+  background: #39b8bc;
   color: white;
 }
 
-/* Chat engagement pulse — sienna shadow instead of indigo */
+/* Chat engagement pulse — tide accent shadow */
 @keyframes chat-pulse {
   0% {
     transform: scale(1);
-    box-shadow: 0 10px 15px -3px rgba(196, 89, 42, 0.25);
+    box-shadow: 0 10px 15px -3px rgba(57, 184, 188, 0.3);
   }
   50% {
     transform: scale(1.05);
-    box-shadow: 0 20px 25px -5px rgba(196, 89, 42, 0.35);
+    box-shadow: 0 20px 25px -5px rgba(57, 184, 188, 0.4);
   }
   100% {
     transform: scale(1);
-    box-shadow: 0 10px 15px -3px rgba(196, 89, 42, 0.25);
+    box-shadow: 0 10px 15px -3px rgba(57, 184, 188, 0.3);
   }
 }
 
 .animate-chat-pulse {
   animation: chat-pulse 2s infinite ease-in-out;
+}
+
+/* Premium flagship sheen card animations */
+.flagship-sheen-card {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.flagship-sheen-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-20deg);
+  transition: none;
+  pointer-events: none;
+}
+
+.dark .flagship-sheen-card::after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.flagship-sheen-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(57, 184, 188, 0.35) !important;
+  box-shadow:
+    0 12px 30px rgba(7, 22, 31, 0.06),
+    0 0 16px rgba(57, 184, 188, 0.12);
+}
+
+.dark .flagship-sheen-card:hover {
+  border-color: rgba(57, 184, 188, 0.3) !important;
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(57, 184, 188, 0.15);
+}
+
+.flagship-sheen-card:hover::after {
+  left: 150%;
+  transition: left 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Staggered entrance animation */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* Accessibility: respect reduced-motion preferences */

@@ -59,7 +59,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, onCopyEmai
         <div className="absolute top-0 right-0 p-6">
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-navy-900 dark:hover:text-white transition-colors p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full"
+            className="text-slate-400 hover:text-ink-navy dark:hover:text-white transition-colors p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full"
             aria-label="Close modal"
           >
             <svg
@@ -80,10 +80,10 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, onCopyEmai
 
         <div className="space-y-8">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-widest mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-tide-aqua/10 border border-tide-aqua/20 text-tide-aqua dark:text-tide-sky text-xs font-bold uppercase tracking-widest mb-4">
               Contact
             </div>
-            <h2 className="text-3xl font-outfit font-bold text-navy-900 dark:text-white">
+            <h2 className="text-3xl font-outfit font-bold text-ink-navy dark:text-white">
               Let's Connect
             </h2>
             <p className="text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
@@ -96,9 +96,9 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, onCopyEmai
             <div className="flex gap-2">
               <a
                 href={`mailto:${fullEmail}`}
-                className="flex-1 flex items-center gap-4 p-4 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:bg-slate-100 dark:hover:bg-white/10 hover:border-indigo-500/30 dark:hover:border-indigo-500/30 transition-all group"
+                className="flex-1 flex items-center gap-4 p-4 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:bg-slate-100 dark:hover:bg-white/10 hover:border-tide-aqua/30 dark:hover:border-tide-aqua/30 transition-all group"
               >
-                <div className="w-12 h-12 rounded-full bg-indigo-600/10 dark:bg-indigo-500/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white group-hover:scale-110 transition-transform shadow-sm">
+                <div className="w-12 h-12 rounded-full bg-tide-aqua/10 dark:bg-tide-aqua/20 flex items-center justify-center text-tide-aqua dark:text-tide-sky group-hover:bg-tide-aqua group-hover:text-white group-hover:scale-110 transition-transform shadow-sm">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="w-6 h-6"
@@ -117,13 +117,13 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, onCopyEmai
                   <div className="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-wider font-bold mb-0.5">
                     Email
                   </div>
-                  <div className="text-navy-900 dark:text-white font-medium truncate">
+                  <div className="text-ink-navy dark:text-white font-medium truncate">
                     {fullEmail}
                   </div>
                 </div>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5 text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-white transition-colors shrink-0"
+                  className="w-5 h-5 text-slate-400 group-hover:text-tide-aqua dark:group-hover:text-white transition-colors shrink-0"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -138,7 +138,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, onCopyEmai
 
               <button
                 onClick={(e) => handleCopy(e, fullEmail)}
-                className="w-16 flex items-center justify-center rounded-xl bg-slate-50 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:bg-slate-100 dark:hover:bg-white/10 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-500/30 dark:hover:border-indigo-500/30 text-slate-400 transition-all shadow-sm dark:shadow-none"
+                className="w-16 flex items-center justify-center rounded-xl bg-slate-50 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:bg-slate-100 dark:hover:bg-white/10 hover:text-tide-aqua dark:hover:text-tide-sky hover:border-tide-aqua/30 dark:hover:border-tide-aqua/30 text-slate-400 transition-all shadow-sm dark:shadow-none"
                 aria-label="Copy email address"
                 title="Copy to clipboard"
               >
@@ -163,9 +163,9 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, onCopyEmai
               href="https://www.linkedin.com/in/kyle-semple-522537165/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:bg-slate-100 dark:hover:bg-white/10 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-all group shadow-sm hover:shadow-blue-500/10"
+              className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:bg-slate-100 dark:hover:bg-white/10 hover:border-tide-blue/30 dark:hover:border-tide-blue/30 transition-all group shadow-sm hover:shadow-tide-blue/10"
             >
-              <div className="w-12 h-12 rounded-full bg-blue-500/10 dark:bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:bg-blue-600 group-hover:text-white group-hover:scale-110 transition-transform">
+              <div className="w-12 h-12 rounded-full bg-tide-blue/10 dark:bg-tide-blue/20 flex items-center justify-center text-tide-blue dark:text-tide-softBlue group-hover:bg-tide-blue group-hover:text-white group-hover:scale-110 transition-transform">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-6 h-6"
@@ -185,11 +185,11 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, onCopyEmai
                 <div className="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-wider font-bold mb-0.5">
                   LinkedIn
                 </div>
-                <div className="text-navy-900 dark:text-white font-medium">Connect on LinkedIn</div>
+                <div className="text-ink-navy dark:text-white font-medium">Connect on LinkedIn</div>
               </div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5 text-slate-400 group-hover:text-blue-600 dark:group-hover:text-white transition-colors"
+                className="w-5 h-5 text-slate-400 group-hover:text-tide-blue dark:group-hover:text-white transition-colors"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -227,7 +227,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, onCopyEmai
                 <div className="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-wider font-bold mb-0.5">
                   Resume
                 </div>
-                <div className="text-navy-900 dark:text-white font-medium">
+                <div className="text-ink-navy dark:text-white font-medium">
                   View & Save PDF Resume
                 </div>
               </div>

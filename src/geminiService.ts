@@ -5,9 +5,10 @@ export type ChatHistoryEntry = {
 export type ChatHistory = ChatHistoryEntry[];
 
 const RATE_LIMIT_MESSAGE =
-  "I've reached my daily chat limit. Let's connect directly! <<ACTION:contact>>";
+  'I’ve reached today’s chat limit. You can still review Kyle’s projects, resume, or contact him directly. <<ACTION:contact>>';
 
-const OFFLINE_MESSAGE = "I'm currently unavailable. Please reach Kyle directly! <<ACTION:contact>>";
+const OFFLINE_MESSAGE =
+  'I’m temporarily unavailable. You can still contact Kyle directly or use the site navigation to review his projects.';
 
 export async function* sendMessageStream(
   message: string,
@@ -29,6 +30,14 @@ export async function* sendMessageStream(
   if (response.status === 429) {
     yield RATE_LIMIT_MESSAGE;
     return;
+  }
+
+  if (response.status === 400) {
+    const data = await response.json().catch(() => null);
+    if (data?.error && /too long/i.test(String(data.error))) {
+      yield 'That message is too long for the portfolio assistant. Try a shorter question about Kyle’s experience, projects, resume, or role fit.';
+      return;
+    }
   }
 
   if (!response.ok || !response.body) {

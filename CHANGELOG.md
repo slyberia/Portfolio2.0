@@ -6,6 +6,68 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.1.2] — 2026-05-05 — Phase 2E Final QA Hardening
+
+### Changed
+
+- Hardened Process Deep Dive hash navigation by mapping legacy/internal anchors (including `#projects-architecture-migration`, `#decision-log`, and `#remaining-release-hardening`) to the correct major tab so anchored entry points reveal visible content instead of hidden tab panels.
+- Verified Skills Inspector proof links for `ops-triage`, `guynode`, and `project-aegis` against existing canonical `/projects/:projectId` routes and retained current paths to avoid introducing route-constant circular imports.
+
+### Validation
+
+- Re-ran local validation commands for formatting, type safety, linting, tests, build, crawler generation, and crawler validation.
+- Verified the existing Vite chunk-size warning remains informational and unchanged in severity for this phase; no risky bundler architecture changes were introduced.
+
+### Why
+
+This release closes Phase 2E with low-risk reliability hardening for anchored process navigation and route-safe proof linking while preserving existing architecture and crawler/static outputs.
+
+---
+
+## [2.1.1] — 2026-05-04 — Technical Tide / Gilded Variant Remediation Packaging
+
+### Changed
+
+- Packaged the Technical Tide — Gilded Variant palette migration stabilization as an evidence-bank remediation record, including root-cause framing, decision-impact narrative, architecture maturity note, and before/after governance summary in `docs/portfolio2-evidence-audit-ledger.md`.
+- Consolidated remediation outcomes around the established design-system foundation: shared role/project/category/status recipes, dark-mode + prose cleanup direction, local map reduction in migrated surfaces, and metadata contract hardening coverage.
+
+### Validation
+
+- Confirmed local validation suite pass for:
+  - `npm run format:check`
+  - `npm run typecheck`
+  - `npm run lint`
+  - `npm test -- --run`
+  - `npm run build`
+  - `npm run generate:crawler-html`
+  - `npm run validate:crawler`
+- Crawler generation and crawler validation remained preserved; no crawler architecture changes were introduced.
+
+### Why
+
+This release packages the completed remediation as a portfolio proof artifact so future reviewers can trace problem → root cause → decision → action → validation → impact without inferring implementation governance from raw diffs.
+
+---
+
+## [2.1.0] — 2026-04-28 — Final QA & Release Prep
+
+### Changed
+
+- Refactored homepage + track routing flow to keep the three role-track lanes and Guynode-first proof hierarchy stable for release
+- Centralized default Supporting Evidence navigation in `src/lib/routes.ts` and removed brittle `CASE_STUDY_REGISTRY[0]` routing dependencies in app navigation
+- Updated case study navigator labeling from "Supporting Evidence Map" to "Supporting Evidence Navigator" for terminology consistency
+- Hardened track-page contact CTAs to open the contact modal directly instead of relying on hash links
+
+### Documentation
+
+- README updated with an explicit "Current Portfolio Architecture" section and the six-phase redesign sequence
+
+### Why
+
+This release finalizes Phase 6 by tightening route reliability, clarifying public terminology, and documenting the recruiter-facing information architecture before merge/deployment.
+
+---
+
 ## [2.0.0] — 2026-04-21 — KS_01 Design Pivot
 
 ### Changed

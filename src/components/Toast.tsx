@@ -18,8 +18,8 @@ const Toast: React.FC<ToastProps> = ({ message, isVisible, onClose }) => {
 
   return (
     <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[110] animate-in fade-in slide-in-from-bottom-4 duration-300">
-      <div className="bg-slate-900/90 backdrop-blur-md border border-indigo-500/30 text-indigo-100 px-6 py-3 rounded-full shadow-2xl flex items-center gap-2 ring-1 ring-indigo-500/20">
-        <div className="bg-indigo-500 rounded-full p-0.5">
+      <div className="bg-slate-900/90 backdrop-blur-md border border-tide-aqua/30 text-tide-aqua/20 px-6 py-3 rounded-full shadow-2xl flex items-center gap-2 ring-1 ring-tide-aqua/20">
+        <div className="bg-tide-aqua rounded-full p-0.5">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="w-3 h-3 text-white"
