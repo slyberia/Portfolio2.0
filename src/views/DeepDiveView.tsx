@@ -649,6 +649,30 @@ const DeepDiveView: React.FC = () => {
                 </div>
               </section>
 
+              {/* Deployed Mockup Call-to-Action */}
+              <section className="rounded-2xl border border-rose-500/20 bg-rose-500/5 p-6 dark:border-rose-500/30">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                  <div className="space-y-2">
+                    <h3 className="text-lg font-bold text-navy-900 dark:text-white flex items-center gap-2">
+                      <span className="text-xl">🏛️</span> Deployed Luxe Lofts Mockup Website
+                    </h3>
+                    <p className="text-sm text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
+                      Experience the premium frontend showcase deployed on **Google Cloud Run**. The
+                      mockup features client-side navigation, stylized booking package cards, and a
+                      demo AI Event Planner assistant.
+                    </p>
+                  </div>
+                  <a
+                    href="https://luxe-lofts-prototype.run.app"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="shrink-0 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white font-semibold text-sm px-5 py-3 transition shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+                  >
+                    Launch Mockup Prototype →
+                  </a>
+                </div>
+              </section>
+
               {/* Backlink to Simulator Callout */}
               <section className="rounded-2xl border border-rose-500/20 bg-rose-500/5 p-6 dark:border-rose-500/30">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
