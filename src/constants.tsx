@@ -2,9 +2,7 @@
 import { ExperienceItem, SkillGroup, Certification, ProjectEntry, SkillChipConfig } from './types';
 import { CASE_STUDY_CONTENT } from './data/caseStudyData';
 import {
-  PROMPTER_HUB_MOCKUP_HTML,
   LUXE_LOFTS_MOCKUP_HTML,
-  PROJECT_AEGIS_MOCKUP_HTML,
   OPS_TRIAGE_MOCKUP_HTML,
 } from './mockups';
 
@@ -335,8 +333,8 @@ export const SKILL_CHIP_CONFIG: Record<string, SkillChipConfig> = {
       'ops-triage documents high-volume operational support at scale (Apex Systems); direct customer-facing CS evidence exists in the Printful/Zendesk role but no dedicated case study has been built for it yet.',
   },
   'Demo Environments': {
-    linkMode: 'filtered',
-    linkedSlugs: ['prompter-hub', 'ops-triage'],
+    linkMode: 'direct',
+    linkedSlugs: ['ops-triage'],
   },
   'Dashboards & Reporting': {
     linkMode: 'direct',
@@ -383,130 +381,7 @@ export const SKILL_CHIP_CONFIG: Record<string, SkillChipConfig> = {
 };
 
 export const PROJECT_REGISTRY: ProjectEntry[] = [
-  {
-    id: 'prompter-hub',
-    title: 'Prompter Hub V9',
-    rationale: 'Middleware architecture and structured prompt engineering for AI workflows.',
-    category: 'ai-ops',
-    tags: [
-      'Technical Troubleshooting',
-      'Implementation/Onboarding',
-      'Documentation & Enablement Assets',
-      'Process Improvement',
-    ],
-    roleLanes: [
-      'AI Workflow / Portfolio Governance',
-      'Implementation / CSE-lite',
-      'Ops Analytics / QA',
-    ],
-    content: CASE_STUDY_CONTENT['prompter-hub'],
-    heroArtifact: {
-      type: 'html',
-      label: 'V9 Hub: Sandbox Environment',
-      description: 'Functional Prompt Generator and Recursive Schema Builder engines.',
-      content: PROMPTER_HUB_MOCKUP_HTML,
-    },
-    rigor: {
-      statement: 'Infrastructure is the only way to scale reliable intelligence.',
-      baseline: 'Manual schema drafting was a primary source of downstream pipeline failure.',
-      definition:
-        "'Infrastructure Parity' = The ability for a sandbox to mirror production logic 1:1.",
-      method: 'Ported recursive inference engine directly from production source code.',
-      window: 'Sandbox validation covers 100% of core V9 feature set.',
-    },
-    artifacts: [
-      {
-        type: 'code',
-        label: 'V9 Logic: Recursive Inference',
-        description: 'Type-safe inference logic used to ensure Gemini schema compliance.',
-        content: `const buildSchema = (obj) => {
-  if (Array.isArray(obj)) {
-    return { type: "ARRAY", items: obj.length > 0 ? buildSchema(obj[0]) : { type: "STRING" } };
-  } else if (typeof obj === 'object' && obj !== null) {
-    const properties = {};
-    for (const key in obj) { properties[key] = buildSchema(obj[key]); }
-    return { type: "OBJECT", properties, propertyOrdering: Object.keys(obj) };
-  } else {
-    return { type: typeof obj === 'boolean' ? "BOOLEAN" : typeof obj === 'number' ? "NUMBER" : "STRING" };
-  }
-};`,
-      },
-    ],
-    constraints: [
-      {
-        problem: 'Production Firebase dependencies are inaccessible to public visitors.',
-        tradeoff:
-          'Used LocalStorage for sandbox persistence to provide 100% functional proof without auth walls.',
-      },
-    ],
-  },
-  {
-    id: 'project-aegis',
-    title: 'Project Aegis Protocol',
-    rationale: 'LLM governance frameworks and reliability engineering in code generation.',
-    category: 'ai-ops',
-    tags: ['Documentation & Enablement Assets', 'Process Improvement', 'Technical Troubleshooting'],
-    roleLanes: [
-      'AI Workflow / Portfolio Governance',
-      'Implementation / CSE-lite',
-      'Ops Analytics / QA',
-    ],
-    content: CASE_STUDY_CONTENT['project-aegis'],
-    heroArtifact: {
-      type: 'html',
-      label: 'Aegis: Governance Console',
-      description: 'Simulates cognitive reasoning and architectural enforcement.',
-      content: PROJECT_AEGIS_MOCKUP_HTML,
-    },
-    rigor: {
-      statement: 'Governance is the infrastructure that allows for creative scale.',
-      baseline: 'Conversations > 10 turns typically lose 22% context adherence (Entropy Drift).',
-      definition: "'Drift' = LLM introducing hallucinations conflicting with project context.",
-      method: 'Ambiguous prompt stress-testing combined with <thinking> audits.',
-      window: 'Continuous 50+ turn sessions across multiple unique tech stacks.',
-    },
-    artifacts: [
-      {
-        type: 'code',
-        label: 'Aegis: Governance Layer XML',
-        description: 'System instruction forcing model into logic-first architectural role.',
-        content: `<system_core>
-  <identity>Principal Architect - Priority: Context Adherence</identity>
-  <mandate_thinking>CRITICAL: No output without prior <thinking> block.</mandate_thinking>
-</system_core>`,
-      },
-    ],
-    constraints: [
-      {
-        problem: 'Regenerating massive files flushes context memory (FIFO logic).',
-        tradeoff:
-          "Implemented 'Surgical Patching' protocol, reducing token usage by 90% and extending memory 3x.",
-      },
-    ],
-  },
-  {
-    id: 'nba-systems-qa',
-    title: 'NBA 2K Systems Analysis',
-    rationale: 'Systemic consistency and variable isolation in probabilistic engines.',
-    category: 'qa-data',
-    tags: ['Data QA / Validation', 'Operational Throughput', 'Issue Triage'],
-    roleLanes: ['Ops Analytics / QA'],
-    content: CASE_STUDY_CONTENT['nba-systems-qa'],
-    rigor: {
-      statement: 'In a probabilistic engine, the only truth is the controlled baseline.',
-      baseline: 'Community testing typically uses low N samples, leading to high variance.',
-      definition: "'Sample Power' = Controlled attempts per condition to stabilize patterns.",
-      method:
-        'Test harness (Street Kings) with architectural alignment measuring perfect release feedback.',
-      window: 'Evaluation of bundle effects under Hall of Fame difficulty.',
-    },
-    constraints: [
-      {
-        problem: 'Online latency overwhelms marginal systemic effects.',
-        tradeoff: "Excluded online play to establish an 'optimal-state' baseline in the harness.",
-      },
-    ],
-  },
+
   {
     id: 'luxe-lofts',
     title: 'Luxe Lofts Ecosystem',

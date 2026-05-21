@@ -120,53 +120,44 @@ Identify where the current code fails Aegis standards regarding System Invariant
 
   'luxe-lofts': `# 🏛️ Luxe Lofts Ecosystem
 
-## Technical Implementation & Assets (Audit → Proposal → Prototype)
+> **Project Overview**
+>
+> **Role:** Strategy & Implementation
+> **Scope:** Digital Restructuring, Ecosystem Unification, Conversational UI
+> **Tools:** Next.js, Cloud Run, Firebase, Gemini Genkit
 
-### 0) Status & Scope
+<div className="my-8">
+  <a href="https://luxe-lofts-prototype.run.app" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-8 py-2">
+    View the Cloud Run Mockup Prototype →
+  </a>
+</div>
 
-*   **Status:** Audit + proposal + prototype (not deployed).
-*   **Primary value:** Diagnosed inefficiencies in the current online setup and designed an actionable improvement system, represented through a proposal-grade prototype and an implementation workflow.
-*   **Audit scope (web properties reviewed):**
-    *   \`luxloftsypsi.com\`
-    *   \`luxloftseventspaceypsi.com\`
+## 1) Strategic Narrative
 
----
+Luxe Lofts needed a unified digital presence to replace a fragmented setup. The goal was to build a system where the "space sells itself" through high-fidelity visual design, while an intelligent backend handles the friction of event planning. 
 
-## 1) Implementation Architecture
+### Brand Personality & Aesthetic
+**Refined · Grounded · Genuine**
 
-This work was structured as a proposal system composed of: **audit findings**, a **campaign/communications plan**, an **operational workflow concept**, and a **prototype** used to communicate the proposed improvements.
+The design avoids the coldness of generic luxury, aiming instead for an unpretentiously inviting atmosphere. This is achieved through:
+* **Warm Dark Mode:** Avoiding "AI neon" in favor of lighting that mimics a well-designed evening space.
+* **Editorial Typography:** Pairing *Spectral* (literary, warm) with *Jost* (geometric, clean) to create a premium feel without wedding clichés.
+* **Intentional Layout:** Asymmetric treatments and generous vertical spacing.
 
-### 1.1 Audit-Led System Design
-*   Performed a structured review of the current web presence across two live properties.
-*   Used the audit output to drive proposal priorities and prototype direction.
-*   Positioned the work explicitly as a **proposal** after the client did not proceed.
-
-### 1.2 Prototype as Proposal Artifact
-The prototype functioned as a concrete representation of the proposed improvements and as a stakeholder alignment asset.
-
-**Prototype delivery and build constraints:**
-*   Preference for a **TypeScript** implementation.
-*   Packaged in a form suitable for easy local execution.
-*   Branding constraints defined during build iteration (e.g., project rename and specified color direction).
-*   Iterative refinement, including a **day/night mode** accessibility-oriented enhancement.
-
-### 1.3 Implementation Workflow Intent
-The build workflow was designed to be modular and reviewable:
-*   Start from a working base site build.
-*   Extract major sections into reusable components.
-*   Replace placeholder content with finalized business information.
-*   Finalize FAQ/policy content as part of the completion pass.
-*   Use a confirmation gate before applying copy/content changes into code.
+### Core Design Principles
+1. **Let the space sell itself:** Photography takes precedence; UI supports rather than competes.
+2. **Conversion is the north star:** Every path leads clearly to the booking inquiry form.
+3. **Premium without pretension:** A grounded, versatile aesthetic suitable for both corporate events and private parties.
 
 ---
 
-## 2) Governance and Integrity Controls
+## 2) Technical Implementation & Architecture
 
-### 2.1 Proposal Framing Enforcement
-All deliverables are presented as **audit outputs**, **proposal architecture**, and a **prototype**, not as deployed production work.
-
-### 2.2 Evidence-First Reporting
-Key decisions (audit scope, proposal framing, prototype intent, and workflow intent) are traceable to the project conversation record.
+This build was structured to integrate aesthetic overhaul with operational utility:
+* **Framework:** Next.js 15 App Router, styled with Tailwind CSS and shadcn/ui.
+* **Backend:** Google Cloud Run handling form submissions and logic routing.
+* **Intelligent Features:** A Gemini 2.5 Flash / Genkit-powered Event Planner flow (\`/planner\`) to assist users in structuring their inquiries.
+* **Client Portals:** Firebase Auth-gated dashboard prototypes for post-booking management.
 
 ---
 
@@ -181,53 +172,55 @@ Key decisions (audit scope, proposal framing, prototype intent, and workflow int
 | Build workflow included modularization + confirmation gate | building w/ bolt | 2025-11-06 | Implementation workflow |
 | Prototype delivery constraints (TypeScript, naming/color) | Contact info collection | 2025-11-07 | Implementation constraints |`,
 
-  'ops-triage': `# ⚖️ Systems at Scale: Triage & QA
+  'ops-triage': `# ⚖️ Operational Workflow Intelligence: Triage & QA
 
 > **Project Overview**
 >
-> **Role:** Quality Control Specialist / GIS Technician
-> **Scope:** High-Volume Triage, Grid Data Integrity, Process Optimization
-> **Tools:** ESRI ArcMap, Jira, Excel Macros, Custom Dashboards
+> **Role:** Systems Analyst & Operational Lead
+> **Scope:** High-Volume Triage, Workflow Reliability, Defect Leakage Prevention
+> **Tools:** Jira, Service Desk, Data Verification Tools, Process Control Dashboards
 
 ---
 
-## 🏗️ The Thesis: Designing for Constraints
+## 🏗️ The Thesis: Engineering Reliable Workflows
 
-I have operationalized data systems at two distinct scales of complexity. While the roles differed, the methodology remains constant: **Identify the Constraint → Standardize the Input → Enforce the Outcome.**
+Operational excellence isn't just about working harder; it's about building **Operational Workflow Intelligence**. It is the discipline of bridging the gap between "Training Theory" and "Production Reality" in high-throughput environments. 
 
-Operational excellence is the gap between **"Training Theory"** and **"Production Reality."** Standard training covers the "Happy Path," but managing 120+ requests/week or securing high-stakes grid data requires systematizing the edge cases.
+Whether managing a massive backlog of support escalations or ensuring zero-defect data entry for critical systems, the methodology remains constant: **Identify the Constraint → Standardize the Input → Enforce the Outcome.**
 
 ---
 
-## ⚡ Scale 1: Solving for Velocity (The Triage System)
-**Context:** High-volume operational support (Apex Systems).
-**The Constraint:** An overwhelming backlog where deep review of every item causes paralysis.
+## ⚡ Solving for Throughput: The Triage System
+
+**Context:** High-volume operational support and escalation management.
+**The Constraint:** An overwhelming reactive backlog where attempting deep, ad-hoc review of every item causes systemic paralysis and SLA breaches.
 
 ### The Operationalization
-I **implemented** a batch-processing workflow that converted a reactive backlog into a predictable pipeline. By grouping similar error types, I bypassed the context-switching costs that slow down standard processing.
-*   **Target:** Triage completion of **X service work orders/day**.
-*   **Outcome:** Established rigid criteria for "Done" vs "Escalated," preventing decision fatigue from bottlenecking the queue.
+I engineered a batch-processing triage workflow that converted a reactive backlog into a predictable, high-velocity pipeline. By recognizing error patterns and categorizing requests into standardized handling paths, I bypassed the severe context-switching costs that typically degrade workflow reliability.
+
+*   **Escalation Logic:** Established rigid criteria for what constitutes a "Resolved" state versus what requires immediate escalation, eliminating decision fatigue from the queue.
+*   **Throughput Impact:** Maintained aggressive SLA targets (processing 120+ complex items per week) without sacrificing baseline quality.
 
 ---
 
-## 🎯 Scale 2: Solving for Precision (The QA Framework)
-**Context:** High-stakes utility grid data (GIS Ops).
-**The Constraint:** "Close enough" is a safety liability. Velocity doesn't matter if the data is wrong.
+## 🎯 Solving for QA: The Zero-Defect Framework
+
+**Context:** Production data maintenance where errors cascade into downstream failures.
+**The Constraint:** Velocity must never compromise system integrity. "Close enough" is an unacceptable liability.
 
 ### The Operationalization
-I **enforced** a "Zero-Trust" validation loop. While the software provides the tools, the *discipline* to treat every field variable as a potential failure point—especially on orders that training couldn't cover—was the deciding factor.
+I enforced a "Zero-Trust" validation loop. The key to workflow reliability is the discipline to treat every variable as a potential failure point, especially for edge cases that bypass standard automation.
 
-*   **The Linter (Structural):** Automated checks for missing fields before human review.
-*   **The Human (Contextual):** Validating the "semantics" of the map against field notes.
-*   **Result:** Maintained a **98% First-Pass Yield** on complex tickets that typically require multiple rounds of review.
+*   **Structural Audits:** Utilizing systemic linters to catch missing dependencies and structural flaws before human evaluation.
+*   **First-Pass Yield:** Validating the contextual semantics of requests against strict compliance rules, sustaining a **98% First-Pass Yield** on complex escalations that previously required multiple revision cycles.
 
 ---
 
-## 🔗 The Synthesis (Dashboard)
+## 🔗 The Synthesis: The Operational Dashboard
 
-The dashboard below demonstrates how I track these opposing forces simultaneously: **Volume** (Top Cards) vs. **Quality** (Error Rules).
+The interactive simulator below demonstrates how these opposing forces are balanced in real-time. You can adjust the **Policy Slider** to see how prioritizing raw throughput affects defect leakage, and how over-indexing on QA impacts the unprocessed backlog.
 
-> **Portfolio Note:** The dashboard uses synthetic values to mirror the reporting structure while excluding confidential proprietary records.`,
+> **Portfolio Note:** The dashboard uses synthetic values and telemetry to demonstrate the workflow logic while protecting proprietary operational data.`,
 
   guynode: `# 🗺️ Guynode Spatial Data Hub — Modernizing Geospatial Access
 

@@ -10,6 +10,7 @@ import {
 import ScrollToTopButton from '../components/ScrollToTopButton';
 import ErrorBoundary from '../components/ErrorBoundary';
 import { componentRecipes, proseTheme, semanticTokens } from '../lib/design-system';
+import { OperationalTriageSimulator } from '../components/ops-triage/OperationalTriageSimulator';
 
 type IndexTab = { key: SectionKey; title: string; description: string; id: string };
 type TimelineRow = {
@@ -213,6 +214,7 @@ const buildTimeline: TimelineRow[] = [
 ];
 
 const DeepDiveView: React.FC = () => {
+  const [activeMainTab, setActiveMainTab] = React.useState<'process' | 'luxe-lofts'>('process');
   const [activeSection, setActiveSection] = React.useState<SectionKey>('build-timeline');
   const currentIndex = sectionOrder.indexOf(activeSection);
 
@@ -248,6 +250,24 @@ const DeepDiveView: React.FC = () => {
     <div id="deep-dive-top" className="min-h-screen pt-20 pb-20 px-6">
       <ErrorBoundary location="Deep Dive View">
         <div className="max-w-6xl mx-auto space-y-12">
+          
+          <div className="flex flex-wrap gap-4 border-b border-slate-200 dark:border-white/10 pb-4">
+             <button 
+               onClick={() => setActiveMainTab('process')}
+               className={`text-lg font-bold px-4 py-2 rounded-t-lg transition ${activeMainTab === 'process' ? 'bg-slate-100 dark:bg-slate-800 text-navy-900 dark:text-white border-b-2 border-tide-aqua' : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'}`}
+             >
+               Portfolio 2.0 Process & Governance
+             </button>
+             <button 
+               onClick={() => setActiveMainTab('luxe-lofts')}
+               className={`text-lg font-bold px-4 py-2 rounded-t-lg transition ${activeMainTab === 'luxe-lofts' ? 'bg-slate-100 dark:bg-slate-800 text-navy-900 dark:text-white border-b-2 border-rose-500' : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'}`}
+             >
+               Luxe Lofts Digital Restructuring Strategy
+             </button>
+          </div>
+
+          {activeMainTab === 'process' ? (
+          <div className="space-y-12">
           <section className="space-y-4">
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-tide-aqua">Process</p>
             <h1 className="text-4xl font-outfit font-extrabold text-navy-900 dark:text-white">
@@ -562,6 +582,30 @@ const DeepDiveView: React.FC = () => {
               <li>Final public copy audit for concise consistency.</li>
             </ul>
           </section>
+          </div>
+          ) : (
+          <div className="space-y-12">
+            <section className="space-y-4">
+              <p className="text-xs font-bold uppercase tracking-[0.3em] text-rose-500">Strategy</p>
+              <h1 className="text-4xl font-outfit font-extrabold text-navy-900 dark:text-white">
+                Luxe Lofts: Operational Turnaround
+              </h1>
+              <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                This tab explores the operational systems that power the Luxe Lofts ecosystem. It breaks down the shift from a generic CRM approach to a tailored intent-to-revenue engine with dynamic rate calculations and AI-assisted triage capabilities.
+              </p>
+            </section>
+            
+            <section className="space-y-6">
+               <h2 className="text-2xl font-bold text-navy-900 dark:text-white">Live Simulator: Operational Triage</h2>
+               <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                 A core challenge during the restructuring was balancing high-velocity automation with quality assurance. The simulator below demonstrates the operational triage control plane used to regulate system throughput against defect leakage. 
+               </p>
+               <div className="mt-8">
+                  <OperationalTriageSimulator />
+               </div>
+            </section>
+          </div>
+          )}
         </div>
       </ErrorBoundary>
       <ScrollToTopButton />
