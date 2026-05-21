@@ -1,10 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { ExperienceItem, SkillGroup, Certification, ProjectEntry, SkillChipConfig } from './types';
 import { CASE_STUDY_CONTENT } from './data/caseStudyData';
-import {
-  LUXE_LOFTS_MOCKUP_HTML,
-  OPS_TRIAGE_MOCKUP_HTML,
-} from './mockups';
+import { LUXE_LOFTS_MOCKUP_HTML, OPS_TRIAGE_MOCKUP_HTML } from './mockups';
 
 export const EXPERIENCE: ExperienceItem[] = [
   {
@@ -381,7 +378,6 @@ export const SKILL_CHIP_CONFIG: Record<string, SkillChipConfig> = {
 };
 
 export const PROJECT_REGISTRY: ProjectEntry[] = [
-
   {
     id: 'luxe-lofts',
     title: 'Luxe Lofts Ecosystem',

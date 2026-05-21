@@ -27,29 +27,33 @@ graph TD
 ## Phase 8 Goals
 
 - **Accelerated Job-Market Readiness**: Execute a highly targeted "Lean Launchpad" strategy to ship the portfolio within 24-48 hours. Focus strictly on integrating finished, high-fidelity assets.
-- **Flagship Curation (Pruning)**: Instantly elevate the perceived seniority of the portfolio by surgically hiding lighter/weaker project entries (NBA 2K, Project Aegis, Prompter Hub). 
+- **Flagship Curation (Pruning)**: Instantly elevate the perceived seniority of the portfolio by surgically hiding lighter/weaker project entries (NBA 2K, Project Aegis, Prompter Hub).
 - **Operations & Systems Re-framing**: Realign the OPS Triage narrative to focus strictly on operations, queues, and SLA telemetry (decoupling it from GIS).
 - **Deep-Dive Separation**: Transition the existing Deep Dive page into a strategic launchpad, cleanly separating tactical engineering proof (Projects) from strategic business and marketing plans (Deep Dives).
 
 ---
 
 ## Subphase 8.0 — FMEA Mitigation: Parse Error Handlers (COMPLETED)
-*Status: Completed & Merged.*
+
+_Status: Completed & Merged._
 
 ---
 
 ## Subphase 8.1 — Narrative Realignment & Flagship Pruning
 
 ### Objective
+
 Cleanse the project metadata to leave only elite flagship entries visible, and upgrade the written copy for Luxe Lofts and OPS Triage.
 
 ### Allowed Scope
+
 - Edit `src/constants.tsx` and `src/data/projectMetadata.ts` to hide/remove `nba-systems-qa`, `project-aegis`, and `prompter-hub` from public navigation and registries.
 - Update `src/data/caseStudyData.ts`:
   - Integrate the new operational/telemetry-focused copy for **OPS Triage**.
   - Extract and integrate the new comprehensive written work for **Luxe Lofts** (to be cloned from the external mockup repository).
 
 ### Required Outputs
+
 - Clean UI showing only the highest-quality flagship projects.
 - Updated case study copy.
 
@@ -58,9 +62,11 @@ Cleanse the project metadata to leave only elite flagship entries visible, and u
 ## Subphase 8.1.5 — Visual & Spacing Refinements
 
 ### Objective
+
 Execute a comprehensive visual audit and code sweep to integrate the shortlist of visual refinements.
 
 ### Allowed Scope
+
 1. **Whitespace Reduction**: Tighten margins, block sections, and excessive line paddings.
 2. **Project Library Color Mismatch**: Fix color schemes on the home page's project grid to strictly match curated HSL palettes (e.g., `tide`, `gild`).
 3. **Hero Section Margins**: Recalculate margins and absolute bounds in the homepage Hero section.
@@ -75,14 +81,16 @@ Execute a comprehensive visual audit and code sweep to integrate the shortlist o
 ## Subphase 8.2 — Interactive Component Integration
 
 ### Objective
+
 Embed the completed, high-fidelity interactive visual widgets into their respective project entries.
 
 ### Allowed Scope
-- **Luxe Lofts**: 
+
+- **Luxe Lofts**:
   - Clone the external Luxe Lofts mockup repository into a temporary scratch folder (`scratch/`).
   - Extract necessary interactive components, UI layouts, and styles.
   - Embed the interactive mockup/components directly into the local portfolio application.
-- **OPS Triage**: 
+- **OPS Triage**:
   - Integrate the completed interactive telemetry dashboard (Triage Policy Slider, live queue simulation, Recharts integration) into the OPS Triage project view.
 
 ---
@@ -90,9 +98,11 @@ Embed the completed, high-fidelity interactive visual widgets into their respect
 ## Subphase 8.3 — Deep Dive Launchpad Architecture
 
 ### Objective
+
 Refactor the existing monolithic `/portfolio2/deep-dive` page into a dynamic, tabbed launchpad that houses distinct strategic deep dives.
 
 ### Allowed Scope
+
 - Update `src/views/DeepDiveView.tsx` (and `src/router.tsx` if dynamic routing is necessary) to support multiple distinct deep-dive topics.
 - **Portfolio 2.0 Process**: Retain the existing build timeline, toolchain, and evidence ledger as one major deep-dive section.
 - **Luxe Lofts Strategy**: Add the new "Digital Restructuring & Marketing Strategy" business plan as a featured deep-dive tab/section.
@@ -103,9 +113,11 @@ Refactor the existing monolithic `/portfolio2/deep-dive` page into a dynamic, ta
 ## Subphase 8.4 — Final Launch Validation
 
 ### Objective
+
 Run final formatting sweeps, build scripts, execute crawler HTML generations, and test suites to freeze the project for production deployment.
 
 ### Required Outputs
+
 - `npm run fix:format` run to resolve any Windows CRLF issues.
 - `npm run validate:phase` runs successfully (0 errors across tests, linting, typecheck, and crawler generation).
 - A clean git tree with a production launch report saved in `docs/workflow/reports/phase-8-final-launch-report.md`.
