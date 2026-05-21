@@ -570,7 +570,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             <div
               id="skills-inspector"
               aria-live="polite"
-              className="lg:col-span-5 lg:order-2 rounded-2xl border border-[#d8e8ee] dark:border-white/10 bg-white/90 dark:bg-slate-900/70 p-6 space-y-4"
+              className="lg:col-span-5 lg:order-2 h-fit lg:sticky lg:top-24 rounded-2xl border border-[#d8e8ee] dark:border-white/10 bg-white/90 dark:bg-slate-900/70 p-6 space-y-4 shadow-sm"
             >
               <p className="text-xs font-mono uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
                 Inspector Panel
