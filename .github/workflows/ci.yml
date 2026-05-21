@@ -13,6 +13,8 @@ jobs:
       # Pinned to full SHA to prevent tag-repointing supply chain attacks.
       # Verify or update these SHAs at: https://github.com/actions/checkout/tags
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         # Verify or update at: https://github.com/actions/setup-node/tags
