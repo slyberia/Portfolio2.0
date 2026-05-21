@@ -42,8 +42,8 @@ jobs:
       - name: Secret scan (gitleaks)
         # TODO: Pin to immutable commit SHA after network-enabled verification.
         uses: gitleaks/gitleaks-action@v2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Key Audit
         run: |
