@@ -18,6 +18,7 @@ import {
   getProjectMetadata,
   PROJECT_METADATA,
 } from '../data/projectMetadata';
+import { OperationalTriageSimulator } from '../components/ops-triage/OperationalTriageSimulator';
 import ScrollToTopButton from '../components/ScrollToTopButton';
 import {
   componentRecipes,
@@ -121,6 +122,26 @@ const ProjectHero: React.FC<{
   metadata: NonNullable<ReturnType<typeof getProjectMetadata>>;
 }> = ({ activeProjectTags, metadata }) => {
   const accentStyle = getProjectAccentRecipe(metadata.accent);
+
+  const deepDiveInfo = React.useMemo(() => {
+    if (metadata.id === 'luxe-lofts') {
+      return {
+        href: `${PORTFOLIO_PROCESS_HREF}?tab=luxe-lofts`,
+        label: 'View Strategic Deep Dive',
+      };
+    }
+    if (metadata.id === 'ops-triage') {
+      return {
+        href: `${PORTFOLIO_PROCESS_HREF}?tab=process`,
+        label: 'View Process Deep Dive',
+      };
+    }
+    return {
+      href: `${PORTFOLIO_PROCESS_HREF}?tab=process`,
+      label: 'View Process Deep Dive',
+    };
+  }, [metadata.id]);
+
   return (
     <header className="rounded-2xl border border-slate-200 bg-white p-6 md:p-8 dark:border-white/10 dark:bg-slate-900/70">
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start">
@@ -162,10 +183,10 @@ const ProjectHero: React.FC<{
             View Project Library
           </Link>
           <Link
-            to={PORTFOLIO_PROCESS_HREF}
+            to={deepDiveInfo.href}
             className="rounded-lg border border-slate-300 px-3 py-2 text-center text-sm font-medium text-slate-700 hover:bg-slate-50 focus-visible:ring-2 ring-slate-500 dark:border-white/20 dark:text-slate-200 dark:hover:bg-white/5"
           >
-            View Process Deep Dive
+            {deepDiveInfo.label}
           </Link>
           <Link
             to="/projects"
@@ -239,6 +260,31 @@ const ProjectDetailView: React.FC = () => {
                   />
                 </ErrorBoundary>
               </section>
+
+              {activeProjectId === 'ops-triage' && (
+                <section className="space-y-4">
+                  <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+                    Live Operational Simulator
+                  </p>
+                  <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-white/10 dark:bg-slate-900/70 space-y-6">
+                    <div>
+                      <h3 className="text-xl font-bold text-ink-navy dark:text-white mb-2">
+                        Operational Triage Console
+                      </h3>
+                      <p className="text-sm text-slate-600 dark:text-slate-300 max-w-3xl">
+                        This interactive dashboard models the real-world operational triage controls
+                        built for the system turnaround. Adjust the Policy Slider to explore how the
+                        tradeoff decisions between raw pipeline throughput and quality assurance
+                        affect first-pass yield, incident leakage, unprocessed backlog capacity, and
+                        SLA risk.
+                      </p>
+                    </div>
+                    <div className="pt-2 border-t border-slate-100 dark:border-white/5">
+                      <OperationalTriageSimulator />
+                    </div>
+                  </div>
+                </section>
+              )}
 
               <MediaProofGrid
                 title="Visual Proof"
