@@ -20,3 +20,7 @@ dist-server/
 # ship-safe scan artifacts
 ship-safe-report.html
 .ship-safe/
+
+# Scratch files
+scratch/
+
