@@ -114,18 +114,46 @@ const FlagshipSystemSection: React.FC<FlagshipSystemSectionProps> = ({ guynodeHr
             })}
           </div>
 
-          <div className="flex flex-wrap items-center gap-4">
-            <Link
-              to={guynodeHref}
-              aria-label="View Guynode system proof details"
-              className={`inline-flex items-center gap-2 text-sm font-semibold rounded-lg px-4 py-2.5 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] ${componentRecipes.button.secondary} ${getProjectAccentRecipe('gold').borderClass}`}
-            >
-              View Guynode System
-              <span aria-hidden="true">↗</span>
-            </Link>
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-              EVIDENCE_SOURCE: GUYNODE_SYSTEM
-            </p>
+          <div className="space-y-4">
+            <div className="flex flex-wrap items-center gap-4">
+              <Link
+                to={guynodeHref}
+                aria-label="View Guynode system proof details"
+                className={`inline-flex items-center gap-2 text-sm font-semibold rounded-lg px-4 py-2.5 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] ${componentRecipes.button.secondary} ${getProjectAccentRecipe('gold').borderClass}`}
+              >
+                View Guynode Case Study
+                <span aria-hidden="true">→</span>
+              </Link>
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+                EVIDENCE_SOURCE: GUYNODE_SYSTEM
+              </p>
+            </div>
+
+            <div className="pt-2 border-t border-[#d8e8ee] dark:border-white/5 space-y-2">
+              <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+                Direct External Access
+              </p>
+              <div className="flex flex-wrap gap-2.5">
+                <a
+                  href="https://guynode.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold rounded-lg px-3.5 py-2 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] bg-[#0d9488] hover:bg-[#0f766e] text-white shadow-sm"
+                >
+                  Live Production Site
+                  <span aria-hidden="true">↗</span>
+                </a>
+                <a
+                  href="https://guynode-spatial-data-hub-786228485832.us-central1.run.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold rounded-lg px-3.5 py-2 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] border border-teal-500/20 bg-teal-500/5 hover:bg-teal-500/10 text-teal-600 dark:text-teal-400 shadow-sm"
+                >
+                  Redesigned Mockup Hub
+                  <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
 

@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Primary sitemap for canonical app routes
-Sitemap: https://kylesemple.com/sitemap.xml
+Sitemap: https://kyle-semple-portfolio-786228485832.us-central1.run.app/sitemap.xml
 
 # Secondary sitemap for crawler mirror namespace
-Sitemap: https://kylesemple.com/crawler-sitemap.xml
+Sitemap: https://kyle-semple-portfolio-786228485832.us-central1.run.app/crawler-sitemap.xml
