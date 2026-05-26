@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kyle Semple — Resume</title>
+  <style>
+    /* ── Reset & Base ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #1e293b;
+      background: #f1f5f9;
+    }
+
+    /* ── Page shell ───────────────────────────────── */
+    .page {
+      max-width: 8.5in;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 3rem 3.5rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+
+    /* ── Header ───────────────────────────────────── */
+    header { margin-bottom: 2rem; }
+
+    header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 0.4rem;
+    }
+
+    .contact-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem 0.6rem;
+      font-size: 12px;
+      color: #475569;
+    }
+
+    .contact-line .sep { color: #94a3b8; }
+
+    .contact-line a {
+      color: #0ea5e9;
+      text-decoration: none;
+    }
+    .contact-line a:hover { text-decoration: underline; }
+
+    /* ── Sections ─────────────────────────────────── */
+    section { margin-bottom: 2rem; }
+
+    section h2 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #0f172a;
+      border-bottom: 2px solid #0f172a;
+      padding-bottom: 0.3rem;
+      margin-bottom: 1rem;
+    }
+
+    /* ── Experience ───────────────────────────────── */
+    .exp-entry { margin-bottom: 1.75rem; }
+    .exp-entry:last-child { margin-bottom: 0; }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.4rem;
+    }
+
+    .exp-header h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .exp-header .period {
+      font-size: 12px;
+      color: #64748b;
+      font-style: italic;
+      white-space: nowrap;
+      margin-left: 1rem;
+    }
+
+    .tools-chip {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #0ea5e9;
+      background: rgba(14, 165, 233, 0.08);
+      border: 1px solid rgba(14, 165, 233, 0.2);
+      border-radius: 4px;
+      padding: 2px 8px;
+      margin-bottom: 0.6rem;
+    }
+
+    ul {
+      list-style: disc;
+      padding-left: 1.2rem;
+    }
+
+    ul li {
+      font-size: 12.5px;
+      color: #334155;
+      margin-bottom: 0.35rem;
+      line-height: 1.55;
+    }
+
+    /* ── Skills grid ──────────────────────────────── */
+    .skills-grid { display: grid; grid-template-columns: 1fr; gap: 0.25rem; }
+
+    /* ── Education ────────────────────────────────── */
+    .edu-entry { margin-bottom: 0.75rem; }
+    .edu-entry h3 { font-size: 13px; font-weight: 700; color: #0f172a; }
+    .edu-entry p  { font-size: 12px; color: #64748b; font-style: italic; }
+
+    /* ── Print trigger ────────────────────────────── */
+    .print-btn-wrap {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+    }
+
+    .print-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #0ea5e9;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.65rem 1.25rem;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(14, 165, 233, 0.4);
+      transition: background 0.15s;
+    }
+    .print-btn:hover { background: #0284c7; }
+
+    /* ── Print media ──────────────────────────────── */
+    @media print {
+      body { background: #fff; }
+      .page { margin: 0; padding: 0.6in 0.75in; box-shadow: none; }
+      .print-btn-wrap { display: none; }
+      section { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ── Header ───────────────────────────────────── -->
+  <header>
+    <h1>Kyle Semple</h1>
+    <div class="contact-line">
+      <span>Washtenaw County, MI</span>
+      <span class="sep">•</span>
+      <span>734-882-9095</span>
+      <span class="sep">•</span>
+      <a href="mailto:kmsemple26@gmail.com">kmsemple26@gmail.com</a>
+      <span class="sep">•</span>
+      <a href="https://www.linkedin.com/in/kyle-semple-522537165/" target="_blank" rel="noreferrer">LinkedIn</a>
+    </div>
+  </header>
+
+  <!-- ── Professional Summary ─────────────────────── -->
+  <section>
+    <h2>Professional Summary</h2>
+    <p style="font-size:12.5px;color:#334155;line-height:1.65;">
+      Customer-facing operator with experience spanning technical support, stakeholder-facing
+      dashboards, and high-volume operational triage. Skilled in troubleshooting across tooling
+      and workflows, coordinating cross-functional solutions, and producing documentation and
+      enablement assets that improve clarity and execution. Targeting Customer Success,
+      Implementation, and Enablement roles in AI-adjacent products.
+    </p>
+  </section>
+
+  <!-- ── Experience ───────────────────────────────── -->
+  <section>
+    <h2>Experience</h2>
+
+    <div class="exp-entry">
+      <div class="exp-header">
+        <h3>Independent Systems &amp; Web Consultant — HPS Geospatial</h3>
+        <span class="period">2021–Present</span>
+      </div>
+      <div class="tools-chip">React · TypeScript · Vite · GitHub · Google Cloud Run · Google AI Studio · Claude Code · Documentation</div>
+      <ul>
+        <li>Designed and refined web-based systems intended to improve user clarity, trust, and delivery readiness for external reviewers and stakeholders.</li>
+        <li>Built AI-assisted application workflows using governed multi-tool processes, including roadmap creation, implementation planning, architecture hardening, and documentation.</li>
+        <li>Translated ambiguous goals into structured delivery plans, scoped phases, and supporting artifacts rather than ad hoc iteration.</li>
+        <li>Produced handoff-ready implementation guidance, roadmap materials, and documentation to support continued development and deployment.</li>
+      </ul>
+    </div>
+
+    <div class="exp-entry">
+      <div class="exp-header">
+        <h3>GIS Data Operations Analyst — Apex Systems / CenterPoint Energy</h3>
+        <span class="period">2022–2024</span>
+      </div>
+      <div class="tools-chip">ESRI ArcMap · Utility GIS Workflows · Data QA · Triage · Production Data Maintenance</div>
+      <ul>
+        <li>Worked within structured utility GIS workflows to process service-related edits, data updates, and mapping changes with attention to accuracy and downstream usability.</li>
+        <li>Handled high-volume operational requests in a controlled environment where repeatability, consistency, and validation mattered.</li>
+        <li>Supported backlog reduction and workflow continuity through reliable data maintenance and structured execution.</li>
+        <li>Strengthened discipline around production-safe procedures, quality checks, and working within systems where errors could affect downstream operations.</li>
+      </ul>
+    </div>
+
+    <div class="exp-entry">
+      <div class="exp-header">
+        <h3>Technical Customer Support Representative — Printful</h3>
+        <span class="period">2021</span>
+      </div>
+      <div class="tools-chip">Zendesk · E-commerce Support · Escalation Workflows · Customer Troubleshooting</div>
+      <ul>
+        <li>Provided technical support through Zendesk for customer issues spanning e-commerce integrations, account workflows, product questions, warehousing, and shipping.</li>
+        <li>Triaged support requests, clarified customer needs, and coordinated with internal teams or partner SMEs to drive timely resolution.</li>
+        <li>Supported customer trust through clear troubleshooting, accurate communication, escalation discipline, and follow-through.</li>
+        <li>Conducted live-chat discovery with prospective customers to understand goals and route them toward the right product path.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── Core Skills ───────────────────────────────── -->
+  <section>
+    <h2>Core Skills</h2>
+    <ul class="skills-grid">
+      <li>Customer Success Support · Technical Troubleshooting · Issue Triage</li>
+      <li>Implementation/Onboarding Support · Cross-functional Coordination · Stakeholder Communication</li>
+      <li>Documentation &amp; Enablement Assets · Demo Environments · Process Improvement</li>
+      <li>Dashboards &amp; Reporting · Data QA / Validation · Operational Throughput</li>
+    </ul>
+  </section>
+
+  <!-- ── Education & Certifications ──────────────────── -->
+  <section>
+    <h2>Education &amp; Certifications</h2>
+    <div class="edu-entry">
+      <h3>B.A., Geography — Queen's University</h3>
+      <p>Relevant Coursework: Data Analytics, Geographic Information Science, Project Management</p>
+    </div>
+    <ul>
+      <li>IBM AI-Enabled Applications for Customer Service</li>
+      <li>Google Project Management Professional Certificate</li>
+      <li>Google Data Analytics Professional Certificate</li>
+      <li>Intercultural Competency — Queen's University International Center</li>
+    </ul>
+  </section>
+
+  <!-- ── Tools & Technologies ──────────────────────── -->
+  <section>
+    <h2>Tools &amp; Technologies</h2>
+    <ul>
+      <li>Zendesk · CRM &amp; customer support platforms</li>
+      <li>Microsoft Office · Google Workspace</li>
+      <li>Tableau · Power BI · BigQuery</li>
+      <li>Notion · Asana · Jira</li>
+    </ul>
+  </section>
+
+  <!-- ── Additional Information ────────────────────── -->
+  <section>
+    <h2>Additional Information</h2>
+    <ul>
+      <li>Fluent in English; formal training in French and Spanish</li>
+      <li>Experience in social impact initiatives; recipient-first / customer-first service approach</li>
+      <li>Familiarity with operational program workflows and stakeholder-facing reporting</li>
+    </ul>
+  </section>
+
+</div><!-- /.page -->
+
+<!-- ── Print Button ───────────────────────────────── -->
+<div class="print-btn-wrap">
+  <button class="print-btn" onclick="window.print()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+         fill="none" stroke="currentColor" stroke-width="2.5"
+         stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 6 2 18 2 18 9"/>
+      <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+      <rect width="12" height="8" x="6" y="14"/>
+    </svg>
+    Print to PDF
+  </button>
+</div>
+
+</body>
+</html>
