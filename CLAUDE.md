@@ -60,6 +60,7 @@ tailwind.config.js       # Tailwind theme tokens and extensions
 These rules are non-negotiable. Violating them will result in a failed review.
 
 ### Typography Contrast
+
 - **Light mode primary text**: Pure black `#000000` or `text-slate-950`. Never use mid-grey for body copy.
 - **Light mode subtext**: `text-slate-600` or warm amber-tinted grey. Never lighter than `text-slate-600`.
 - **Dark mode primary text**: `text-white` or `text-slate-50`.
@@ -67,18 +68,21 @@ These rules are non-negotiable. Violating them will result in a failed review.
 - All dark mode body text must meet WCAG AAA (7:1 contrast ratio minimum).
 
 ### Card & Border Treatment
+
 - **NO glassmorphism.** No `backdrop-blur` with translucent white fills. This is a hallmark of generic AI-generated sites and is explicitly banned by the project's design principles.
 - **Light mode cards**: Solid `border-slate-200` on `bg-white` or `bg-slate-50`.
 - **Dark mode cards**: Solid `border-slate-800` on `bg-[#0B0F19]` or `bg-slate-900`. Hover states may use `hover:border-amber-500/30` for warm accent.
 - Borders must be razor-thin (1px) and clearly visible in both themes.
 
 ### Anti-Patterns (from .impeccable.md — MUST AVOID)
+
 1. Generic SaaS startup template aesthetics (indigo/purple gradients, glassmorphism, hero metric tiles, gradient text)
 2. Overly corporate/stuffy layouts
 3. Design-flex creative portfolio (wrong audience)
 4. Plain developer resume site (forgettable)
 
 ### Design Principles (from .impeccable.md)
+
 1. Evidence over assertion — show the work, not claim it
 2. Scannable at speed, rewarding at depth — 90-second clear path; deeper exploration reveals substance
 3. Distinctly human — signal a real person with taste, not a template
@@ -94,6 +98,7 @@ These rules are non-negotiable. Violating them will result in a failed review.
 ## Git Commit Convention
 
 Use conventional commits with the subphase identifier:
+
 ```
 feat: subphase 1.1 — contrast correction & typography hardening
 fix: subphase 4.1 — markdown parsing regression
@@ -107,6 +112,7 @@ This project uses a phased execution plan. See the master execution plan documen
 **ONE SUBPHASE AT A TIME.**
 
 After completing a subphase:
+
 1. Run the full validation suite: `npm run typecheck && npm run lint && npm run build`
 2. Commit with the subphase identifier
 3. STOP and report what was done
