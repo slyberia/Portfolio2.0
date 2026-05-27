@@ -100,13 +100,13 @@ const ProjectSwitcher: React.FC<{ activeId: string }> = ({ activeId }) => {
         </p>
         <div className="mt-4 space-y-4">
           <div className="space-y-2">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-600 dark:text-slate-300">
               Featured
             </p>
             <div className="space-y-2">{featured.map(renderProjectLink)}</div>
           </div>
           <div className="space-y-2">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-600 dark:text-slate-300">
               Supporting
             </p>
             <div className="space-y-2">{supporting.map(renderProjectLink)}</div>

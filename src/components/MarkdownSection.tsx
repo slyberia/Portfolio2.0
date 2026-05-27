@@ -25,12 +25,12 @@ export const CodeBlock: React.FC<{ children: React.ReactNode; className?: string
   return (
     <div className="relative group/code my-8">
       <div className="absolute top-0 right-0 p-3 flex items-center gap-2 z-10 opacity-0 group-hover/code:opacity-100 transition-opacity">
-        <span className="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded border border-black/5 dark:border-white/5 uppercase tracking-widest">
+        <span className="text-[10px] font-mono font-bold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded border border-black/5 dark:border-white/5 uppercase tracking-widest">
           Snippet
         </span>
         <button
           onClick={handleCopy}
-          className="p-1.5 rounded-lg bg-white/80 dark:bg-slate-800/90 border border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 transition-all hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-ink-navy dark:hover:text-white shadow-sm"
+          className="p-1.5 rounded-lg bg-white/80 dark:bg-slate-800/90 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 transition-all hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-ink-navy dark:hover:text-white shadow-sm"
           aria-label="Copy code to clipboard"
         >
           {copied ? (
@@ -162,7 +162,7 @@ const MarkdownSection: React.FC<MarkdownSectionProps> = ({
               th: ({ node: _node, ...props }) => (
                 <th
                   {...props}
-                  className="p-5 text-[10px] font-bold uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400 font-outfit"
+                  className="p-5 text-[10px] font-bold uppercase tracking-[0.25em] text-slate-600 dark:text-slate-300 font-outfit"
                 />
               ),
               td: ({ node: _node, ...props }) => (

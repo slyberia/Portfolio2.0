@@ -38,7 +38,7 @@ const ApplyGisView: React.FC = () => {
         <h1 className="text-4xl md:text-5xl font-outfit font-extrabold text-navy-900 dark:text-white">
           GIS & Spatial Systems Profile
         </h1>
-        <p className="text-xl text-slate-600 dark:text-slate-400">
+        <p className="text-xl text-slate-600 dark:text-slate-300">
           Unlocking the value of spatial data through governed catalogs and robust metadata.
         </p>
       </header>
@@ -62,7 +62,7 @@ const ApplyGisView: React.FC = () => {
                   <h3 className="text-base font-semibold text-navy-900 dark:text-white">
                     {item.title}
                   </h3>
-                  <span className="text-[10px] uppercase tracking-widest text-slate-500 dark:text-slate-400 border border-[#d8e8ee] dark:border-white/10 rounded-full px-2 py-0.5">
+                  <span className="text-[10px] uppercase tracking-widest text-slate-600 dark:text-slate-300 border border-[#d8e8ee] dark:border-white/10 rounded-full px-2 py-0.5">
                     {item.proofType}
                   </span>
                 </div>
@@ -105,7 +105,7 @@ const ApplyGisView: React.FC = () => {
             <h3 className="text-lg font-bold text-navy-900 dark:text-white">
               Ready to dive deeper?
             </h3>
-            <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">
+            <p className="text-slate-600 dark:text-slate-300 text-sm mt-1">
               Explore the full GIS track or talk to the digital twin.
             </p>
           </div>

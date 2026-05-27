@@ -325,7 +325,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
   return (
     <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[90] flex flex-col items-end pointer-events-none transition-colors duration-500">
       <div
-        className={`pointer-events-auto w-[90vw] md:w-[400px] bg-white dark:bg-slate-900/90 backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 origin-bottom-right mb-4 flex flex-col ${
+        className={`pointer-events-auto w-[90vw] md:w-[400px] bg-white dark:bg-[#0B0F19] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 origin-bottom-right mb-4 flex flex-col ${
           isOpen
             ? 'opacity-100 scale-100 translate-y-0 h-[550px]'
             : 'opacity-0 scale-95 translate-y-4 h-0 pointer-events-none'
@@ -362,7 +362,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
           <div className="flex items-center gap-2">
             <button
               onClick={clearHistory}
-              className="p-1.5 text-slate-400 hover:text-ink-navy dark:hover:text-white transition-colors"
+              className="p-1.5 text-slate-600 hover:text-ink-navy dark:hover:text-white transition-colors"
               title="Reset conversation"
             >
               <svg
@@ -382,7 +382,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
             </button>
             <button
               onClick={() => setIsOpen(false)}
-              className="p-1.5 text-slate-400 hover:text-ink-navy dark:hover:text-white transition-colors"
+              className="p-1.5 text-slate-600 hover:text-ink-navy dark:hover:text-white transition-colors"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -442,7 +442,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
               </div>
               {msg.role === 'model' && shouldShowFeedback(msg, idx) && (
                 <div className="mt-2 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-slate-900/80 px-3 py-2 text-xs">
-                  <p className="text-slate-500 dark:text-slate-300 mb-2">Was this helpful?</p>
+                  <p className="text-slate-600 dark:text-slate-300 mb-2">Was this helpful?</p>
                   <div className="flex flex-wrap gap-2">
                     <button
                       onClick={() =>

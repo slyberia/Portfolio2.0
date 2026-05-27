@@ -176,7 +176,7 @@ const AuditLog: React.FC<AuditLogProps> = ({ data }) => {
       {/* Header */}
       <div className="px-8 py-6 border-b border-black/5 dark:border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-white/5">
         <div>
-          <div className="flex items-center gap-2 text-[10px] font-mono text-slate-400 dark:text-slate-500 mb-1">
+          <div className="flex items-center gap-2 text-[10px] font-mono text-slate-600 dark:text-slate-300 mb-1">
             <span>AUDIT-LOG-{data.date.replace(/-/g, '')}</span>
             <span className="w-1 h-1 bg-slate-300 rounded-full" />
             <span>{data.date}</span>
@@ -184,7 +184,7 @@ const AuditLog: React.FC<AuditLogProps> = ({ data }) => {
           <h3 className="text-lg font-bold font-outfit text-navy-900 dark:text-white leading-tight">
             {data.title}
           </h3>
-          <p className="text-xs text-slate-500 font-mono mt-1 opacity-80">{data.target}</p>
+          <p className="text-xs text-slate-600 font-mono mt-1 opacity-80">{data.target}</p>
         </div>
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 shrink-0">
           <div
@@ -203,14 +203,14 @@ const AuditLog: React.FC<AuditLogProps> = ({ data }) => {
             key={idx}
             className="p-4 rounded-xl bg-white dark:bg-white/5 border border-black/5 dark:border-white/5 flex gap-3 transition-all hover:border-tide-aqua/20"
           >
-            <div className="mt-0.5 w-7 h-7 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 shrink-0">
+            <div className="mt-0.5 w-7 h-7 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 shrink-0">
               <div className="scale-75">
                 <CategoryIcon icon={finding.icon} />
               </div>
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between mb-1.5">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 truncate mr-2">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 truncate mr-2">
                   {finding.category}
                 </span>
                 <StatusIcon status={finding.status} />
@@ -225,7 +225,7 @@ const AuditLog: React.FC<AuditLogProps> = ({ data }) => {
 
       {/* Recommendations / Summary */}
       <div className="mt-auto border-t border-black/5 dark:border-white/5 bg-slate-100/50 dark:bg-black/20 p-8">
-        <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-6 flex items-center gap-2">
+        <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600 mb-6 flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="w-3.5 h-3.5"
@@ -254,7 +254,7 @@ const AuditLog: React.FC<AuditLogProps> = ({ data }) => {
               <div className="flex-1 font-medium text-navy-900 dark:text-white truncate">
                 {rec.action}
               </div>
-              <div className="hidden sm:block text-slate-400 text-[11px] px-2 border-l border-black/5 dark:border-white/10 whitespace-nowrap">
+              <div className="hidden sm:block text-slate-600 text-[11px] px-2 border-l border-black/5 dark:border-white/10 whitespace-nowrap">
                 {rec.impact}
               </div>
             </div>
@@ -262,7 +262,7 @@ const AuditLog: React.FC<AuditLogProps> = ({ data }) => {
         </div>
 
         <div className="mt-8 pt-6 border-t border-black/5 dark:border-white/5">
-          <p className="text-[13px] text-slate-600 dark:text-slate-400 leading-relaxed italic">
+          <p className="text-[13px] text-slate-600 dark:text-slate-300 leading-relaxed italic">
             <span className="font-bold text-tide-aqua dark:text-tide-sky not-italic mr-2">
               Lead Architect Note:
             </span>

@@ -343,7 +343,7 @@ const DeepDiveView: React.FC = () => {
                     ))}
                   </div>
                 </div>
-                <p className="text-sm text-ink-slate dark:text-ink-border">
+                <p className="text-sm text-ink-slate dark:text-slate-200">
                   Active section: <strong>{processIndexTabs[currentIndex]?.title}</strong>
                 </p>
               </section>
@@ -592,7 +592,7 @@ const DeepDiveView: React.FC = () => {
               )}
               <section id="governance-logs" className="scroll-mt-24">
                 <h2 className="text-2xl font-bold">Governance & Implementation Logs</h2>
-                <p className="mt-2 text-ink-slate dark:text-ink-border">
+                <p className="mt-2 text-ink-slate dark:text-slate-200">
                   Audit logs for the Portfolio 2.0 implementation phases, including automated review
                   summaries, design system alignment reports, and accessibility validation trails.
                 </p>
@@ -725,7 +725,7 @@ const DeepDiveView: React.FC = () => {
                       stock placeholders, and broken links, these layouts failed to convey brand
                       trust or qualify booking intent.
                     </p>
-                    <ul className="space-y-2.5 text-xs text-slate-600 dark:text-slate-400">
+                    <ul className="space-y-2.5 text-xs text-slate-600 dark:text-slate-300">
                       <li className="flex items-start gap-2">
                         <span className="text-red-500 font-bold">✕</span>
                         <span>
@@ -1118,7 +1118,7 @@ const DeepDiveView: React.FC = () => {
                       className={`text-xs font-semibold px-4 py-2 rounded-lg transition-all ${
                         kpiView === 'owner'
                           ? 'bg-rose-500 text-white shadow'
-                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                          : 'text-slate-600 dark:text-slate-300 hover:text-slate-900'
                       }`}
                     >
                       💼 Business Operations
@@ -1128,7 +1128,7 @@ const DeepDiveView: React.FC = () => {
                       className={`text-xs font-semibold px-4 py-2 rounded-lg transition-all ${
                         kpiView === 'telemetry'
                           ? 'bg-rose-500 text-white shadow'
-                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                          : 'text-slate-600 dark:text-slate-300 hover:text-slate-900'
                       }`}
                     >
                       🎛️ System Telemetry
@@ -1278,7 +1278,7 @@ const DeepDiveView: React.FC = () => {
                         photography sessions, and content creation.
                       </p>
                     </div>
-                    <ul className="space-y-1.5 text-[10px] text-slate-600 dark:text-slate-400 border-t border-slate-100 dark:border-white/5 pt-3 font-sans">
+                    <ul className="space-y-1.5 text-[10px] text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-white/5 pt-3 font-sans">
                       <li>• Max Capacity: 30 guests</li>
                       <li>• Renter setup & teardown</li>
                       <li>• Basic sound system hookup</li>
@@ -1303,7 +1303,7 @@ const DeepDiveView: React.FC = () => {
                         family celebrations and mixers.
                       </p>
                     </div>
-                    <ul className="space-y-1.5 text-[10px] text-slate-600 dark:text-slate-400 border-t border-slate-100 dark:border-white/5 pt-3 font-sans">
+                    <ul className="space-y-1.5 text-[10px] text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-white/5 pt-3 font-sans">
                       <li>• Max Capacity: 50 guests</li>
                       <li>• 6-Hour rental window</li>
                       <li>• 1 Dedicated host coordinator</li>
@@ -1356,7 +1356,7 @@ const DeepDiveView: React.FC = () => {
                         decor styling and catering channels.
                       </p>
                     </div>
-                    <ul className="space-y-1.5 text-[10px] text-slate-600 dark:text-slate-400 border-t border-slate-100 dark:border-white/5 pt-3 font-sans">
+                    <ul className="space-y-1.5 text-[10px] text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-white/5 pt-3 font-sans">
                       <li>• Capacity: 100 max boundary</li>
                       <li>• Multi-day full weekend use</li>
                       <li>• Full coordination & concierge</li>

@@ -49,7 +49,7 @@ export const RigorCard: React.FC<{ rigor: CaseStudyRigor; title?: string; classN
         { label: 'Window', val: rigor.window },
       ].map((item, i) => (
         <div key={i} className="p-6 md:p-8">
-          <div className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 flex items-center gap-2">
+          <div className="text-[10px] font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest mb-2 flex items-center gap-2">
             {item.label}
           </div>
           <div className="text-[13px] font-medium text-slate-700 dark:text-slate-300 leading-relaxed break-words">
@@ -114,7 +114,7 @@ export const HtmlPreviewCard: React.FC<{
         </div>
       </div>
       {description && (
-        <div className="p-8 md:p-12 bg-slate-50/50 dark:bg-black/20 text-[11px] text-slate-500 leading-relaxed italic border-t border-black/5">
+        <div className="p-8 md:p-12 bg-slate-50/50 dark:bg-black/20 text-[11px] text-slate-600 leading-relaxed italic border-t border-black/5">
           {description}
         </div>
       )}
@@ -144,7 +144,7 @@ export const TabsArtifact: React.FC<{ artifacts: CaseStudyArtifact[] }> = ({ art
             className={`px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua focus-visible:ring-offset-2 ${
               i === activeIndex
                 ? 'bg-slate-900 text-white'
-                : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-white/5'
+                : 'text-slate-600 hover:bg-slate-100 dark:hover:bg-white/5'
             }`}
           >
             {art.label}
@@ -166,7 +166,7 @@ export const TabsArtifact: React.FC<{ artifacts: CaseStudyArtifact[] }> = ({ art
             </CodeBlock>
           </div>
         ) : (
-          <div className="p-8 md:p-12 text-sm text-slate-500 italic">
+          <div className="p-8 md:p-12 text-sm text-slate-600 italic">
             Preview not available for this tab type.
           </div>
         )}
@@ -181,7 +181,7 @@ export const ArtifactGallery: React.FC<{
   <div className="space-y-8 my-16">
     <div className="flex items-center gap-4">
       <div className="w-2 h-2 rounded-full bg-slate-400" />
-      <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] font-outfit">
+      <h4 className="text-[10px] font-bold text-slate-600 uppercase tracking-[0.3em] font-outfit">
         Project Artifact Library
       </h4>
       <div className="h-px w-full bg-black/5 dark:bg-white/5" />
@@ -225,7 +225,7 @@ export const ArtifactGallery: React.FC<{
                 ) : null}
               </div>
               {art.description && (
-                <div className="p-8 md:p-12 bg-slate-50/50 dark:bg-black/20 text-[11px] text-slate-500 leading-relaxed italic border-t border-black/5">
+                <div className="p-8 md:p-12 bg-slate-50/50 dark:bg-black/20 text-[11px] text-slate-600 leading-relaxed italic border-t border-black/5">
                   {art.description}
                 </div>
               )}

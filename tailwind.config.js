@@ -33,7 +33,9 @@ export default {
         ink: {
           deep: '#07161f',
           navy: '#10242f',
+          body: '#1a2b36',
           slate: '#526a78',
+          subtle: '#8a9ba6',
           mist: '#f5f9fb',
           panel: '#f8fbfd',
           border: '#d8e8ee',
@@ -42,7 +44,7 @@ export default {
       typography: (theme) => ({
         DEFAULT: {
           css: {
-            color: theme('colors.ink.slate'),
+            color: theme('colors.ink.body'),
             fontFamily: theme('fontFamily.sans'),
             'h1, h2, h3, h4': {
               color: theme('colors.ink.navy'),
@@ -63,7 +65,7 @@ export default {
         },
         invert: {
           css: {
-            color: theme('colors.ink.border'),
+            color: '#e2e8f0',
             'h1, h2, h3, h4': {
               color: theme('colors.white'),
             },
@@ -71,7 +73,7 @@ export default {
             blockquote: {
               borderLeft: 'none',
               backgroundColor: 'rgba(96, 187, 212, 0.18)',
-              color: theme('colors.ink.border'),
+              color: '#e2e8f0',
               fontStyle: 'normal',
             },
           },

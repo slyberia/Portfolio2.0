@@ -93,7 +93,7 @@ const SiteIndexView: React.FC = () => {
             A structured map of the portfolio’s role tracks, featured systems, project proof,
             process deep dives, resume, and contact paths.
           </p>
-          <p className="text-sm text-slate-500 dark:text-slate-400 max-w-3xl">
+          <p className="text-sm text-slate-600 dark:text-slate-300 max-w-3xl">
             Use this page if you want to quickly find the most relevant proof for a specific role,
             project, or implementation question.
           </p>
@@ -138,7 +138,7 @@ const SiteIndexView: React.FC = () => {
                 to={track.href}
                 className="rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd] dark:bg-slate-900 p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
               >
-                <span className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                <span className="text-xs font-bold uppercase tracking-widest text-slate-600 dark:text-slate-300">
                   {track.role}
                 </span>
                 <div className={`h-1 w-14 ${track.accent} rounded mt-2 mb-3`} aria-hidden="true" />
@@ -215,7 +215,7 @@ const SiteIndexView: React.FC = () => {
                 <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
                   {project.shortSummary}
                 </p>
-                <p className="mt-3 text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                <p className="mt-3 text-xs uppercase tracking-widest text-slate-600 dark:text-slate-300">
                   Proof Type: {project.proofType}
                 </p>
                 <span className="mt-4 inline-block text-sm font-semibold text-[#237f86] dark:text-tide-softBlue">
@@ -388,7 +388,7 @@ const SiteIndexView: React.FC = () => {
           </div>
         </section>
 
-        <p className="text-xs text-slate-500 dark:text-slate-400">
+        <p className="text-xs text-slate-600 dark:text-slate-300">
           Need another entry point? Return to the{' '}
           <a href="#site-index-top" className="underline">
             Site Index top

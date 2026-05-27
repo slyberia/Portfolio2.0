@@ -35,7 +35,7 @@ const ProjectsIndexView: React.FC = () => {
             Scannable project proof across technical implementation, QA, GIS, AI systems, and
             workflow design.
           </p>
-          <p className="text-sm text-slate-600 dark:text-slate-400">
+          <p className="text-sm text-slate-600 dark:text-slate-300">
             Start with Guynode and the Digital Twin for the strongest system-level proof, then use
             the project library to inspect supporting workflows, validation methods, and
             implementation decisions.

@@ -14,7 +14,9 @@ export const colorTokens = {
   ink: {
     deep: '#07161f',
     navy: '#10242f',
+    body: '#1a2b36',
     slate: '#526a78',
+    subtle: '#8a9ba6',
     mist: '#f5f9fb',
     panel: '#f8fbfd',
     border: '#d8e8ee',
@@ -23,16 +25,16 @@ export const colorTokens = {
 
 export const semanticTokens = {
   text: {
-    heading: 'text-ink-navy dark:text-ink-mist',
-    body: 'text-ink-slate dark:text-ink-border',
-    muted: 'text-ink-slate/80 dark:text-ink-border/90',
+    heading: 'text-ink-navy dark:text-white',
+    body: 'text-ink-body dark:text-slate-200',
+    muted: 'text-ink-slate dark:text-slate-300',
   },
   surface: {
     app: 'bg-ink-mist dark:bg-ink-deep',
     panel: 'bg-ink-panel dark:bg-ink-deep/70',
   },
   border: {
-    default: 'border-ink-border dark:border-white/10',
+    default: 'border-ink-border dark:border-slate-800',
     emphasis: 'border-tide-softBlue/50 dark:border-tide-cyan/50',
   },
   action: {
@@ -46,7 +48,7 @@ export const semanticTokens = {
 export const darkModeTokens = {
   text: {
     critical: 'text-ink-mist',
-    regular: 'text-ink-border',
+    regular: 'text-slate-200',
   },
   surface: {
     base: 'bg-ink-deep',

@@ -51,7 +51,7 @@ const SkillDiscoveryModal: React.FC<SkillDiscoveryModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 text-slate-400 hover:text-ink-navy dark:hover:text-white transition-colors"
+            className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 text-slate-600 hover:text-ink-navy dark:hover:text-white transition-colors"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -109,7 +109,7 @@ const SkillDiscoveryModal: React.FC<SkillDiscoveryModalProps> = ({
                       </span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="w-4 h-4 text-slate-400 group-hover:text-tide-aqua dark:group-hover:text-tide-sky transition-colors"
+                        className="w-4 h-4 text-slate-600 group-hover:text-tide-aqua dark:group-hover:text-tide-sky transition-colors"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
@@ -124,7 +124,7 @@ const SkillDiscoveryModal: React.FC<SkillDiscoveryModalProps> = ({
                     <h3 className="text-lg font-outfit font-bold text-ink-navy dark:text-white group-hover:text-tide-aqua dark:group-hover:text-tide-sky transition-colors">
                       {study.title}
                     </h3>
-                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+                    <p className="text-sm text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
                       {study.rationale}
                     </p>
                   </button>
@@ -133,7 +133,7 @@ const SkillDiscoveryModal: React.FC<SkillDiscoveryModalProps> = ({
             </>
           ) : (
             <div className="text-center py-12 space-y-4">
-              <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto text-slate-400">
+              <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto text-slate-600">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-8 h-8"
@@ -149,7 +149,7 @@ const SkillDiscoveryModal: React.FC<SkillDiscoveryModalProps> = ({
                   <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
                 </svg>
               </div>
-              <p className="text-slate-500 dark:text-slate-400">
+              <p className="text-slate-600 dark:text-slate-300">
                 No specific case study found for this skill yet. Reach out to learn more!
               </p>
             </div>
@@ -157,7 +157,7 @@ const SkillDiscoveryModal: React.FC<SkillDiscoveryModalProps> = ({
         </div>
 
         <div className="p-8 bg-slate-50 dark:bg-white/5 border-t border-black/5 dark:border-white/5 text-center">
-          <p className="text-xs text-slate-400 dark:text-slate-500">
+          <p className="text-xs text-slate-600 dark:text-slate-300">
             Mapping the architecture of operational success.
           </p>
         </div>
