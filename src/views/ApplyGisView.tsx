@@ -118,7 +118,7 @@ const ApplyGisView: React.FC = () => {
                       source: 'gis',
                       modeLabel: 'GIS Track',
                       starterPrompt:
-                        'Help this visitor evaluate Kyle for a GIS / Spatial Systems role.',
+                        'Help this visitor evaluate Kyle for a Spatial Systems Architect role.',
                     },
                   }),
                 )
@@ -127,7 +127,7 @@ const ApplyGisView: React.FC = () => {
             >
               Ask Digital Twin
             </button>
-            <Link to="/tracks/gis" className={componentRecipes.button.primary}>
+            <Link to="/tracks/spatial-systems" className={componentRecipes.button.primary}>
               Full Track Overview
             </Link>
           </div>

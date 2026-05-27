@@ -1,6 +1,12 @@
 import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { EXPERIENCE, SKILL_GROUPS, CERTIFICATIONS, SKILL_CHIP_CONFIG } from '../constants';
+import {
+  EXPERIENCE,
+  SKILL_GROUPS,
+  CERTIFICATIONS,
+  SKILL_CHIP_CONFIG,
+  PROJECT_REGISTRY,
+} from '../constants';
 import FlagshipSystemSection from '../components/home/FlagshipSystemSection';
 import SupportingEvidenceSection from '../components/home/SupportingEvidenceSection';
 import { GUYNODE_SYSTEM_HREF } from '../lib/routes';
@@ -118,6 +124,76 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
     return null;
   }, [activeSkillName]);
 
+  const chipConfig = useMemo(() => {
+    if (!activeSkill) return null;
+    return SKILL_CHIP_CONFIG[activeSkill.name] || null;
+  }, [activeSkill]);
+
+  const activeSkillProvenProjects = useMemo(() => {
+    if (!activeSkill) return [];
+
+    const projects: { id: string; title: string; href: string }[] = [];
+    const addedIds = new Set<string>();
+
+    // 1. Search in PROJECT_REGISTRY tags matching activeSkill.name
+    PROJECT_REGISTRY.forEach((project) => {
+      if (project.tags.includes(activeSkill.name)) {
+        if (!addedIds.has(project.id)) {
+          addedIds.add(project.id);
+          projects.push({
+            id: project.id,
+            title: project.title,
+            href: `/projects/${project.id}`,
+          });
+        }
+      }
+    });
+
+    // 2. Look up SKILL_CHIP_CONFIG linkedSlugs
+    if (chipConfig && chipConfig.linkedSlugs) {
+      chipConfig.linkedSlugs.forEach((slug) => {
+        if (!addedIds.has(slug)) {
+          const matchedProj = PROJECT_REGISTRY.find((p) => p.id === slug);
+          if (matchedProj) {
+            addedIds.add(slug);
+            projects.push({
+              id: slug,
+              title: matchedProj.title,
+              href: `/projects/${slug}`,
+            });
+          } else if (slug === 'project-aegis') {
+            addedIds.add(slug);
+            projects.push({
+              id: slug,
+              title: 'Project Aegis',
+              href: '/projects/project-aegis',
+            });
+          }
+        }
+      });
+    }
+
+    // 3. Fallback to activeSkill.proofHref if not already in the list
+    if (activeSkill.proofHref) {
+      const slug = activeSkill.proofHref.replace('/projects/', '');
+      if (!addedIds.has(slug)) {
+        const matchedProj = PROJECT_REGISTRY.find((p) => p.id === slug);
+        addedIds.add(slug);
+        projects.push({
+          id: slug,
+          title: matchedProj
+            ? matchedProj.title
+            : slug === 'project-aegis'
+              ? 'Project Aegis'
+              : slug,
+          href: activeSkill.proofHref,
+        });
+      }
+    }
+
+    return projects;
+  }, [activeSkill, chipConfig]);
+
   const getCategoryColorClass = (category: string) => {
     if (category.includes('Technical')) {
       return 'hover:border-tide-aqua/60 hover:bg-tide-aqua/10 dark:hover:bg-tide-aqua/10 hover:text-[#237f86] dark:hover:text-tide-aqua focus-visible:ring-tide-aqua';
@@ -131,13 +207,13 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
   const roleTrackCards = [
     {
       systemLabel: 'IMPLEMENTATION_TRACK',
-      title: 'Technical Implementation Specialist',
+      title: 'Forward Deployed Engineer',
       subcopy:
         'Customer-facing technical delivery, workflow setup, onboarding support, and implementation-focused problem solving.',
       chips: ['Onboarding', 'Workflow Design', 'Documentation'],
       stream: 'STREAM 01',
       path: 'SYS_PATH: 01.00',
-      href: '/tracks/implementation',
+      href: '/tracks/forward-deployed',
       railClass: 'bg-tide-aqua',
       iconTileClass: 'bg-tide-aqua/10 text-[#237f86] dark:bg-tide-aqua/15 dark:text-tide-sky',
       labelClass: 'text-[#237f86] dark:text-tide-sky',
@@ -170,13 +246,13 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
     },
     {
       systemLabel: 'QA_TRACK',
-      title: 'Quality Assurance Analyst',
+      title: 'Solutions Architect',
       subcopy:
         'Structured testing, issue triage, root-cause analysis, and decision-ready quality reporting.',
       chips: ['QA Protocols', 'Test Plans', 'Root Cause Analysis'],
       stream: 'STREAM 02',
       path: 'SYS_PATH: 02.00',
-      href: '/tracks/ops-analytics',
+      href: '/tracks/solutions-architect',
       railClass: 'bg-tide-blue',
       iconTileClass: 'bg-tide-blue/10 text-tide-blue dark:bg-tide-blue/15 dark:text-tide-softBlue',
       labelClass: 'text-tide-blue dark:text-tide-softBlue',
@@ -202,13 +278,13 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
     },
     {
       systemLabel: 'GIS_TRACK',
-      title: 'GIS Analyst',
+      title: 'Spatial Systems Architect',
       subcopy:
         'Spatial data operations, mapping workflows, dataset governance, and GIS-focused system delivery.',
       chips: ['ArcGIS', 'Leaflet', 'Spatial Data'],
       stream: 'STREAM 03',
       path: 'SYS_PATH: 03.00',
-      href: '/tracks/gis',
+      href: '/tracks/spatial-systems',
       railClass: 'bg-tide-cyan',
       iconTileClass: 'bg-tide-cyan/10 text-tide-cyan dark:bg-tide-cyan/15 dark:text-tide-cyan',
       labelClass: 'text-tide-cyan dark:text-tide-cyan',
@@ -271,9 +347,9 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                 aria-hidden="true"
               />
               <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl">
-                A portfolio built around three target roles: technical implementation, quality
-                assurance, and GIS systems. Each path connects to tangible systems, workflows, and
-                operational proof.
+                A portfolio built around three target roles: forward deployed engineering, solutions
+                architecture, and spatial systems architecture. Each path connects to tangible
+                systems, workflows, and operational proof.
               </p>
             </div>
 
@@ -437,8 +513,8 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             </h2>
             <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
               I&apos;m a systems-minded technical operator who likes turning ambiguity into
-              structure. My work connects technical implementation, QA reasoning, GIS workflows,
-              customer support, and AI-assisted development.
+              structure. My work connects forward deployed engineering, solutions architecture,
+              spatial systems, customer support, and AI-assisted development.
             </p>
             <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
               I&apos;m especially interested in the moments where tools, users, and processes stop
@@ -495,8 +571,8 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               </h3>
             </div>
             <p className="text-slate-700 dark:text-slate-300 max-w-md leading-relaxed">
-              Relevant experience across technical implementation, GIS operations, workflow
-              delivery, customer support, and validation-heavy production environments.
+              Relevant experience across forward deployed engineering, spatial systems operations,
+              workflow delivery, customer support, and validation-heavy production environments.
             </p>
           </div>
 
@@ -570,7 +646,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             <div
               id="skills-inspector"
               aria-live="polite"
-              className="lg:col-span-5 lg:order-2 h-fit lg:sticky lg:top-24 rounded-2xl border border-[#d8e8ee] dark:border-white/10 bg-white/90 dark:bg-slate-900/70 p-6 space-y-4 shadow-sm"
+              className="lg:col-span-5 lg:order-2 h-fit lg:sticky lg:top-24 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 space-y-4 shadow-sm"
             >
               <p className="text-xs font-mono uppercase tracking-[0.2em] text-slate-600 dark:text-slate-300">
                 Inspector Panel
@@ -588,18 +664,57 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                   ? activeSkill.description
                   : 'Select a skill from the matrix to view its operational definition and portfolio use case.'}
               </p>
-              {activeSkill?.proof && (
-                <p className="text-sm text-slate-700 dark:text-slate-200">
-                  Proof: {activeSkill.proof}
-                  {activeSkill.proofHref && (
-                    <Link
-                      to={activeSkill.proofHref}
-                      className="ml-2 underline underline-offset-2 text-[#237f86] dark:text-tide-sky hover:text-[#1d6970] dark:hover:text-tide-softBlue focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua rounded-sm"
-                    >
-                      View project
-                    </Link>
+              {activeSkill && (
+                <div className="space-y-4 pt-2 border-t border-slate-100 dark:border-slate-800">
+                  {activeSkillProvenProjects.length > 0 && (
+                    <div className="space-y-2">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                        Proven In:
+                      </p>
+                      <ul className="space-y-1.5">
+                        {activeSkillProvenProjects.map((proj) => (
+                          <li key={proj.id} className="flex items-center text-sm">
+                            <span className="w-1.5 h-1.5 rounded-full bg-tide-aqua mr-2 shrink-0"></span>
+                            <Link
+                              to={proj.href}
+                              className="font-medium text-[#237f86] dark:text-tide-sky hover:underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua rounded-sm"
+                            >
+                              {proj.title}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   )}
-                </p>
+
+                  {!activeSkillProvenProjects.length && activeSkill.proof && (
+                    <div className="space-y-1">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                        Proof:
+                      </p>
+                      <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                        {activeSkill.proof}
+                        {activeSkill.proofHref && (
+                          <Link
+                            to={activeSkill.proofHref}
+                            className="ml-2 underline underline-offset-2 text-[#237f86] dark:text-tide-sky hover:text-[#1d6970] dark:hover:text-tide-softBlue focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua rounded-sm font-medium"
+                          >
+                            View project
+                          </Link>
+                        )}
+                      </p>
+                    </div>
+                  )}
+
+                  {chipConfig?.evidenceNote && (
+                    <div className="bg-slate-50 dark:bg-slate-950/40 rounded-xl p-3.5 border border-slate-200/50 dark:border-slate-800 text-xs leading-relaxed text-slate-600 dark:text-slate-400">
+                      <span className="font-semibold block text-slate-700 dark:text-slate-300 mb-1">
+                        Operational Context &amp; Evidence:
+                      </span>
+                      {chipConfig.evidenceNote}
+                    </div>
+                  )}
+                </div>
               )}
             </div>
 
@@ -607,7 +722,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               {SKILL_GROUPS.map((group, idx) => (
                 <div
                   key={idx}
-                  className="rounded-2xl border border-[#d8e8ee] dark:border-white/10 bg-white/80 dark:bg-slate-900/60 p-6 space-y-4"
+                  className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 space-y-4"
                 >
                   <h4 className="text-base font-outfit font-semibold text-ink-navy dark:text-white border-b border-[#e5e0d6] dark:border-white/10 pb-3">
                     {group.category}

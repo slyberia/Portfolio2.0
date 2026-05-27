@@ -79,7 +79,7 @@ export const releaseLadder: TimelineEntry[] = [
     phase: 'Phase 6',
     title: 'Recruiter proof / observability layer',
     description:
-      'Restructured the portfolio into explicit recruiter-native role tracks (Technical Implementation Specialist, Quality Assurance Analyst, and GIS Analyst). Added track pages with structured proof blocks and built this deep-dive page as the second-layer evidence destination so all track-page links resolve to real content.',
+      'Restructured the portfolio into explicit recruiter-native role tracks (Forward Deployed Engineer, Solutions Architect, and Spatial Systems Architect). Added track pages with structured proof blocks and built this deep-dive page as the second-layer evidence destination so all track-page links resolve to real content.',
     tags: ['Track Pages', 'Proof Architecture', 'Stakeholder Design'],
   },
 ];
@@ -94,7 +94,7 @@ export const decisionBlocks: DecisionBlock[] = [
       'Portfolio proof was blended across implementation, QA, and GIS work. Reviewers had to infer which evidence applied to which role.',
     risk: 'Reviewers disengage before finding relevant proof, or apply the wrong framing to the strongest evidence.',
     decision:
-      'Restructured into three explicit role tracks — Technical Implementation Specialist, Quality Assurance Analyst, and GIS Analyst — each with dedicated proof blocks, artifacts, and CTAs.',
+      'Restructured into three explicit role tracks — Forward Deployed Engineer, Solutions Architect, and Spatial Systems Architect — each with dedicated proof blocks, artifacts, and CTAs.',
     tradeoff:
       'More maintenance overhead: three track pages instead of one. Accepted because reviewer clarity outweighs authoring cost.',
     validation:
@@ -359,7 +359,8 @@ export const appendixLinks = [
   { label: 'Validation trail', href: '/portfolio2/deep-dive#validation-trail' },
   { label: 'Revision Trail', href: '/portfolio2/deep-dive#forensic-archive' },
   { label: 'How Proof Is Structured', href: '/portfolio2/deep-dive#proof-hierarchy' },
-  { label: 'Implementation track', href: '/tracks/implementation' },
-  { label: 'Ops Analytics track', href: '/tracks/ops-analytics' },
+  { label: 'Forward Deployed Engineer track', href: '/tracks/forward-deployed' },
+  { label: 'Solutions Architect track', href: '/tracks/solutions-architect' },
+  { label: 'Spatial Systems Architect track', href: '/tracks/spatial-systems' },
   { label: 'Resume', href: '/resume' },
 ];

@@ -118,7 +118,7 @@ const ApplyOpsAnalyticsView: React.FC = () => {
                       source: 'qa',
                       modeLabel: 'QA Track',
                       starterPrompt:
-                        'Help this visitor evaluate Kyle for an Ops Analytics / QA role.',
+                        'Help this visitor evaluate Kyle for a Solutions Architect role.',
                     },
                   }),
                 )
@@ -127,7 +127,7 @@ const ApplyOpsAnalyticsView: React.FC = () => {
             >
               Ask Digital Twin
             </button>
-            <Link to="/tracks/ops-analytics" className={componentRecipes.button.primary}>
+            <Link to="/tracks/solutions-architect" className={componentRecipes.button.primary}>
               Full Track Overview
             </Link>
           </div>

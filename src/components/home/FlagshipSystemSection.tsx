@@ -11,9 +11,9 @@ import {
   getProjectAccentRecipe,
 } from '../../lib/design-system';
 const roleToLane = {
-  'Technical Implementation Specialist': 'Implementation',
-  'Quality Assurance Analyst': 'QA',
-  'GIS Analyst': 'GIS',
+  'Forward Deployed Engineer': 'Implementation',
+  'Solutions Architect': 'QA',
+  'Spatial Systems Architect': 'GIS',
 } as const;
 
 type RoleTrack = keyof typeof roleToLane;
@@ -23,41 +23,65 @@ const PROOF_ARTIFACTS: Array<{ title: string; description: string; roles: RoleTr
     title: 'Dataset Registry',
     description:
       'Structured dataset records with titles, categories, tags, formats, download paths, and viewer metadata.',
-    roles: ['GIS Analyst', 'Technical Implementation Specialist'],
+    roles: ['Spatial Systems Architect', 'Forward Deployed Engineer'],
   },
   {
     title: 'Map Viewer',
     description:
       'Interactive GIS viewing layer for previewing spatial data and making the catalog more usable.',
-    roles: ['GIS Analyst', 'Technical Implementation Specialist'],
+    roles: ['Spatial Systems Architect', 'Forward Deployed Engineer'],
   },
   {
     title: 'Metadata Schema',
     description:
       'Standardized fields for dataset descriptions, formats, provenance, tags, and viewer behavior.',
-    roles: ['GIS Analyst', 'Quality Assurance Analyst'],
+    roles: ['Spatial Systems Architect', 'Solutions Architect'],
   },
   {
     title: 'Migration Workflow',
     description:
       'Process for converting legacy file-hosted content into a structured, searchable data platform.',
-    roles: ['Technical Implementation Specialist', 'GIS Analyst'],
+    roles: ['Forward Deployed Engineer', 'Spatial Systems Architect'],
   },
   {
     title: 'Launch Readiness',
     description:
       'Readiness checks for content accuracy, navigation clarity, broken links, deployment readiness, and reviewer trust.',
-    roles: ['Quality Assurance Analyst', 'Technical Implementation Specialist'],
+    roles: ['Solutions Architect', 'Forward Deployed Engineer'],
   },
   {
     title: 'AI-Assisted Build Governance',
     description:
       'Use of structured prompts, implementation protocols, audits, and human review to guide AI-assisted development.',
-    roles: ['Technical Implementation Specialist', 'Quality Assurance Analyst'],
+    roles: ['Forward Deployed Engineer', 'Solutions Architect'],
   },
 ];
 
 const FlagshipSystemSection: React.FC<FlagshipSystemSectionProps> = ({ guynodeHref }) => {
+  const handleArtifactClick = (artifact: (typeof PROOF_ARTIFACTS)[number]) => {
+    // Map rebranded roles to digital twin mode source
+    let source: 'general' | 'implementation' | 'qa' | 'gis' = 'general';
+    if (artifact.roles.includes('Spatial Systems Architect')) {
+      source = 'gis';
+    } else if (artifact.roles.includes('Solutions Architect')) {
+      source = 'qa';
+    } else if (artifact.roles.includes('Forward Deployed Engineer')) {
+      source = 'implementation';
+    }
+
+    const prompt = `Tell me about the "${artifact.title}" in the Guynode flagship spatial platform. What does this demonstrate regarding systems delivery?`;
+
+    window.dispatchEvent(
+      new CustomEvent('open-digital-twin', {
+        detail: {
+          source,
+          starterPrompt: prompt,
+          modeLabel: 'Guynode Flagship',
+        },
+      }),
+    );
+  };
+
   return (
     <section
       aria-labelledby="flagship-system-heading"
@@ -166,12 +190,26 @@ const FlagshipSystemSection: React.FC<FlagshipSystemSectionProps> = ({ guynodeHr
             {PROOF_ARTIFACTS.map((artifact, index) => (
               <article
                 key={artifact.title}
-                className="flagship-sheen-card animate-fade-in-up rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-white/95 dark:bg-slate-900/70 p-4 md:p-5 shadow-[0_8px_24px_rgba(15,23,42,0.06)]"
+                role="button"
+                tabIndex={0}
+                onClick={() => handleArtifactClick(artifact)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleArtifactClick(artifact);
+                  }
+                }}
+                className="flagship-sheen-card animate-fade-in-up cursor-pointer rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-white/95 dark:bg-slate-900/70 p-4 md:p-5 shadow-[0_8px_24px_rgba(15,23,42,0.06)] hover:border-amber-500/40 dark:hover:border-amber-500/30 hover:scale-[1.01] transition-all duration-300 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
                 style={{ animationDelay: `${index * 80 + 100}ms` }}
               >
-                <h3 className="text-base font-semibold text-ink-navy dark:text-white">
-                  {artifact.title}
-                </h3>
+                <div className="flex justify-between items-start">
+                  <h3 className="text-base font-semibold text-ink-navy dark:text-white group-hover:text-tide-aqua dark:group-hover:text-tide-softBlue transition-colors">
+                    {artifact.title}
+                  </h3>
+                  <span className="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 group-hover:text-amber-500 dark:group-hover:text-amber-400 transition-colors uppercase tracking-wider flex items-center gap-1 shrink-0 ml-2">
+                    Ask AI <span>→</span>
+                  </span>
+                </div>
                 <p className="mt-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                   {artifact.description}
                 </p>

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { GUYNODE_SYSTEM_HREF } from '../../lib/routes';
 import { TrackPageContent } from '../../data/trackContent';
 import { componentRecipes, getRoleAccentRecipe } from '../../lib/design-system';
@@ -9,6 +9,7 @@ import { mapEvidenceToProofCard } from '../../utils/mapEvidenceToProofCard';
 import { RecruiterRoleLane, VALID_RECRUITER_LANES } from '../../types';
 import MediaProofGrid from '../media/MediaProofGrid';
 import { getPublicMediaByRole } from '../../data/mediaRegistry';
+import SkillDiscoveryModal from '../SkillDiscoveryModal';
 
 interface RoleTrackPageProps {
   content: TrackPageContent;
@@ -17,6 +18,53 @@ interface RoleTrackPageProps {
 const INITIAL_DISPLAY_COUNT = 4;
 
 const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
+  const navigate = useNavigate();
+  const [inspectorSkill, setInspectorSkill] = useState<string | null>(null);
+
+  // Maps high-level track proves statements to canonical operational skill names
+  const CANONICAL_SKILL_MAP: Record<string, string> = {
+    // Forward Deployed Engineer
+    'Workflow setup': 'Workflow Design',
+    'Workflow design': 'Workflow Design',
+    'Technical discovery': 'Technical Troubleshooting',
+    Documentation: 'Documentation',
+    'Implementation planning': 'Implementation Planning',
+    'Support handoff': 'Support Handoff',
+    'Customer-facing problem solving': 'Customer Success Support',
+    'Technical support': 'Technical Troubleshooting',
+    'Frontend systems': 'React',
+    'AI-assisted build workflows': 'AI-Assisted Development',
+    'Stakeholder translation': 'Stakeholder Communication',
+
+    // Solutions Architect
+    'Test planning': 'QA Protocols',
+    'QA protocols': 'QA Protocols',
+    'Test matrices': 'QA Protocols',
+    'Defect taxonomy': 'Issue Triage',
+    Reproducibility: 'QA Protocols',
+    'Validation workflows': 'Data QA / Validation',
+    'Issue triage': 'Issue Triage',
+    'Root-cause analysis': 'Root-Cause Analysis',
+    'Validation logic': 'Data QA / Validation',
+    'Reproducible testing': 'QA Protocols',
+    'Launch-readiness review': 'Launch Readiness',
+    'Decision-ready reporting': 'Dashboards & Reporting',
+
+    // Spatial Systems Architect
+    'Spatial data organization': 'Spatial Data',
+    'GIS workflow understanding': 'ArcGIS',
+    'Map viewer logic': 'Leaflet',
+    'Dataset governance': 'Dataset Cataloging',
+    'Metadata schema design': 'Metadata',
+    'Public spatial data access': 'Dataset Cataloging',
+    'Utility and spatial operations awareness': 'ESRI ArcMap',
+  };
+
+  const handleSkillClick = (skillName: string) => {
+    const canonicalName = CANONICAL_SKILL_MAP[skillName] || skillName;
+    setInspectorSkill(canonicalName);
+  };
+
   const roleLane =
     content.accent === 'implementation' ? 'Implementation' : content.accent === 'qa' ? 'QA' : 'GIS';
   const accent = getRoleAccentRecipe(roleLane);
@@ -98,11 +146,17 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
           </h2>
           <ul className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-3">
             {content.proves.map((item) => (
-              <li
-                key={item}
-                className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed border border-black/5 dark:border-white/10 rounded-lg px-3 py-2 bg-white/80 dark:bg-slate-900/40"
-              >
-                {item}
+              <li key={item}>
+                <button
+                  type="button"
+                  onClick={() => handleSkillClick(item)}
+                  className="text-sm text-left w-full font-medium text-slate-800 dark:text-slate-200 leading-relaxed border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 bg-white dark:bg-slate-900 hover:border-gild/40 dark:hover:border-gild/30 hover:scale-[1.01] transition-all duration-200 cursor-pointer flex justify-between items-center group focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
+                >
+                  <span>{item}</span>
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 group-hover:text-gild dark:group-hover:text-gild-soft transition-colors flex items-center gap-1">
+                    Inspect <span>→</span>
+                  </span>
+                </button>
               </li>
             ))}
           </ul>
@@ -287,12 +341,14 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
           </h2>
           <div className="flex flex-wrap gap-2">
             {content.skillsTools.map((skill) => (
-              <span
+              <button
                 key={skill}
-                className={`text-xs font-medium px-3 py-1.5 rounded-full border ${accent.chipClass}`}
+                type="button"
+                onClick={() => handleSkillClick(skill)}
+                className={`text-xs font-medium px-3 py-1.5 rounded-full border transition-all duration-200 hover:scale-[1.02] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua ${accent.chipClass}`}
               >
                 {skill}
-              </span>
+              </button>
             ))}
           </div>
         </div>
@@ -369,6 +425,13 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
           </div>
         </div>
       </section>
+
+      <SkillDiscoveryModal
+        skill={inspectorSkill || ''}
+        isOpen={!!inspectorSkill}
+        onClose={() => setInspectorSkill(null)}
+        onNavigateToStudy={(id) => navigate(`/projects/${id}`)}
+      />
     </div>
   );
 };

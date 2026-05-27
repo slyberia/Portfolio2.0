@@ -24,32 +24,32 @@ describe('ChatWidget contextual open event', () => {
       }),
     );
 
-    expect(await screen.findByText('Implementation Track')).toBeInTheDocument();
-    expect(screen.getByText('Show me Kyle’s implementation proof.')).toBeInTheDocument();
+    expect(await screen.findByText('Forward Deployed Track')).toBeInTheDocument();
+    expect(screen.getByText('Show me Kyle’s forward deployed proof.')).toBeInTheDocument();
     expect(sendMessageStreamMock).not.toHaveBeenCalled();
   });
 
   it('opens with QA context suggestions', async () => {
     render(<ChatWidget />);
     window.dispatchEvent(new CustomEvent('open-digital-twin', { detail: { source: 'qa' } }));
-    expect(await screen.findByText('QA Track')).toBeInTheDocument();
-    expect(screen.getByText('Show me Kyle’s QA proof.')).toBeInTheDocument();
+    expect(await screen.findByText('Solutions Architect Track')).toBeInTheDocument();
+    expect(screen.getByText('Show me Kyle’s Solutions Architect proof.')).toBeInTheDocument();
   });
 
   it('opens with GIS context suggestions', async () => {
     render(<ChatWidget />);
     window.dispatchEvent(new CustomEvent('open-digital-twin', { detail: { source: 'gis' } }));
-    expect(await screen.findByText('GIS Track')).toBeInTheDocument();
-    expect(screen.getByText('Show me Kyle’s GIS proof.')).toBeInTheDocument();
+    expect(await screen.findByText('Spatial Systems Track')).toBeInTheDocument();
+    expect(screen.getByText('Show me Kyle’s Spatial Systems Architect proof.')).toBeInTheDocument();
   });
 
   it('supports modeLabel override from event payload', async () => {
     render(<ChatWidget />);
     window.dispatchEvent(
       new CustomEvent('open-digital-twin', {
-        detail: { source: 'implementation', modeLabel: 'Implementation Track' },
+        detail: { source: 'implementation', modeLabel: 'Forward Deployed Track' },
       }),
     );
-    expect(await screen.findByText('Implementation Track')).toBeInTheDocument();
+    expect(await screen.findByText('Forward Deployed Track')).toBeInTheDocument();
   });
 });

@@ -1,8 +1,8 @@
 # title: Home Overview
 
 - **purpose:** Summary of portfolio positioning and major entry points.
-- **role relevance:** Introduces three role tracks: Technical Implementation Specialist, QA/Operations, GIS Analyst.
-- **key evidence links:** [/tracks/implementation](/tracks/implementation), [/tracks/ops-analytics](/tracks/ops-analytics), [/tracks/gis](/tracks/gis), [/projects](/projects).
+- **role relevance:** Introduces three role tracks: Forward Deployed Engineer, Solutions Architect, Spatial Systems Architect.
+- **key evidence links:** [/tracks/forward-deployed](/tracks/forward-deployed), [/tracks/solutions-architect](/tracks/solutions-architect), [/tracks/spatial-systems](/tracks/spatial-systems), [/projects](/projects).
 - **canonical app route:** /
 - **last updated:** 2026-05-02
 

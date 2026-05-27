@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { PROJECTS_DEFAULT_HREF } from '../lib/routes';
+import {
+  PROJECTS_DEFAULT_HREF,
+  IMPLEMENTATION_TRACK_HREF,
+  QA_TRACK_HREF,
+  GIS_TRACK_HREF,
+} from '../lib/routes';
 
 interface SidebarNavProps {
   theme: 'light' | 'dark';
@@ -8,13 +13,59 @@ interface SidebarNavProps {
   onOpenContact: () => void;
 }
 
+const TRACK_ITEMS = [
+  {
+    label: 'Forward Deployed Engineer',
+    href: IMPLEMENTATION_TRACK_HREF,
+    accentClass: 'bg-tide-aqua',
+  },
+  {
+    label: 'Solutions Architect',
+    href: QA_TRACK_HREF,
+    accentClass: 'bg-tide-blue',
+  },
+  {
+    label: 'Spatial Systems Architect',
+    href: GIS_TRACK_HREF,
+    accentClass: 'bg-tide-cyan',
+  },
+] as const;
+
 const SidebarNav: React.FC<SidebarNavProps> = ({ theme, toggleTheme, onOpenContact }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const isHome = location.pathname === '/';
   const isCases = location.pathname.startsWith('/projects');
   const isResume = location.pathname === '/resume';
+  const isTrackActive =
+    location.pathname === IMPLEMENTATION_TRACK_HREF ||
+    location.pathname === QA_TRACK_HREF ||
+    location.pathname === GIS_TRACK_HREF;
+
+  // Close dropdown on click outside or escape key
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   const scrollToExperience = () => {
     if (location.pathname !== '/') {
@@ -50,8 +101,32 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ theme, toggleTheme, onOpenConta
       ),
     },
     {
+      id: 'roles',
+      label: 'Roles',
+      active: isTrackActive,
+      onClick: () => setIsDropdownOpen((prev) => !prev),
+      icon: (
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+      ),
+    },
+    {
       id: 'cases',
-      label: 'Supporting Evidence',
+      label: 'Evidence',
       active: isCases,
       onClick: () => navigate(PROJECTS_DEFAULT_HREF),
       icon: (
@@ -147,39 +222,107 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ theme, toggleTheme, onOpenConta
 
   return (
     <aside
-      className="fixed left-0 top-0 bottom-0 w-20 hidden md:flex flex-col z-40 bg-[#f5f3ee] dark:bg-[#07161f] border-r border-black/10 dark:border-white/5"
+      className="fixed left-0 top-0 bottom-0 w-20 hidden md:flex flex-col z-40 bg-[#f5f3ee] dark:bg-[#07161f] border-r border-black/10 dark:border-white/5 transition-colors duration-500"
       aria-label="Section Navigation"
     >
       {/* Monogram */}
-      <div className="flex items-center justify-center h-14 border-b border-black/5 dark:border-white/5 shrink-0">
+      <div className="flex items-center justify-center h-14 border-b border-black/5 dark:border-white/5 shrink-0 select-none">
         <span className="font-mono text-[9px] uppercase tracking-widest text-navy-900/40 dark:text-white/30">
           KS_01
         </span>
       </div>
 
-      {/* Primary nav: Home · Supporting Evidence · Experience · Resume · Contact */}
+      {/* Primary nav */}
       <nav className="flex flex-col flex-1 py-3 gap-0.5" aria-label="Page sections">
-        {items.map((item) => (
-          <button
-            key={item.id}
-            onClick={item.onClick}
-            aria-label={item.label}
-            aria-current={item.active ? 'page' : undefined}
-            className={`flex flex-col items-center justify-center py-3.5 gap-1.5 w-full transition-colors duration-150 cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-tide-aqua ${
-              item.active
-                ? 'bg-tide-aqua/10 text-tide-aqua'
-                : 'text-navy-900/40 dark:text-white/30 hover:text-navy-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
-            }`}
-          >
-            {item.icon}
-            <span className="font-mono text-[9px] uppercase tracking-wider leading-tight text-center">
-              {item.label}
-            </span>
-          </button>
-        ))}
+        {items.map((item) => {
+          if (item.id === 'roles') {
+            return (
+              <div
+                key={item.id}
+                ref={dropdownRef}
+                className="relative"
+                onMouseEnter={() => setIsDropdownOpen(true)}
+                onMouseLeave={() => setIsDropdownOpen(false)}
+              >
+                <button
+                  onClick={item.onClick}
+                  aria-label={item.label}
+                  aria-expanded={isDropdownOpen}
+                  aria-haspopup="true"
+                  className={`flex flex-col items-center justify-center py-3.5 gap-1.5 w-full transition-colors duration-150 cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-tide-aqua ${
+                    item.active
+                      ? 'bg-tide-aqua/10 text-tide-aqua'
+                      : 'text-navy-900/40 dark:text-white/30 hover:text-navy-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
+                  }`}
+                >
+                  {item.icon}
+                  <span className="font-mono text-[9px] uppercase tracking-wider leading-tight text-center">
+                    {item.label}
+                  </span>
+                </button>
+
+                {/* Popover Flyout Menu (extending to the right) */}
+                {isDropdownOpen && (
+                  <div
+                    className="absolute left-full top-0 ml-1 w-64 rounded-xl border bg-white dark:bg-[#0B0F19] border-slate-200 dark:border-slate-800 shadow-xl py-2 z-50 flex flex-col text-left animate-in fade-in slide-in-from-left-1 duration-200"
+                    role="menu"
+                  >
+                    <div className="px-4 py-2 border-b border-slate-100 dark:border-slate-800 mb-1 select-none">
+                      <span className="text-[10px] font-mono tracking-wider text-slate-400 dark:text-slate-500 uppercase block">
+                        Targeted Roles
+                      </span>
+                    </div>
+                    {TRACK_ITEMS.map((track) => {
+                      const isItemActive = location.pathname === track.href;
+                      return (
+                        <button
+                          key={track.label}
+                          onClick={() => {
+                            navigate(track.href);
+                            setIsDropdownOpen(false);
+                          }}
+                          role="menuitem"
+                          className={`flex items-center gap-3 px-4 py-3 text-xs font-semibold border-l-2 transition-all cursor-pointer ${
+                            isItemActive
+                              ? 'border-tide-aqua bg-slate-50 dark:bg-slate-900 text-tide-aqua dark:text-tide-softBlue'
+                              : 'border-transparent text-slate-700 dark:text-slate-300 hover:text-tide-aqua dark:hover:text-tide-softBlue hover:bg-slate-50 dark:hover:bg-slate-900/60'
+                          }`}
+                        >
+                          <span
+                            className={`w-2.5 h-2.5 rounded-full ${track.accentClass} shrink-0`}
+                          />
+                          <span className="text-left leading-normal">{track.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            );
+          }
+
+          return (
+            <button
+              key={item.id}
+              onClick={item.onClick}
+              aria-label={item.label}
+              aria-current={item.active ? 'page' : undefined}
+              className={`flex flex-col items-center justify-center py-3.5 gap-1.5 w-full transition-colors duration-150 cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-tide-aqua ${
+                item.active
+                  ? 'bg-tide-aqua/10 text-tide-aqua'
+                  : 'text-navy-900/40 dark:text-white/30 hover:text-navy-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
+              }`}
+            >
+              {item.icon}
+              <span className="font-mono text-[9px] uppercase tracking-wider leading-tight text-center">
+                {item.label}
+              </span>
+            </button>
+          );
+        })}
       </nav>
 
-      {/* Zone 2: Social/external — GitHub · LinkedIn */}
+      {/* Zone 2: Social/external */}
       <div className="flex flex-col items-center gap-1 shrink-0 border-t border-black/5 dark:border-white/5 pt-3">
         {/* GitHub */}
         <a
@@ -205,7 +348,7 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ theme, toggleTheme, onOpenConta
           </svg>
         </a>
 
-        {/* LinkedIn — branded #0A66C2 */}
+        {/* LinkedIn */}
         <a
           href="https://www.linkedin.com/in/kyle-semple-522537165/"
           target="_blank"
@@ -231,7 +374,7 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ theme, toggleTheme, onOpenConta
         </a>
       </div>
 
-      {/* Zone 3: Utility — theme toggle · status */}
+      {/* Zone 3: Utility */}
       <div className="flex flex-col items-center pb-4 gap-1 shrink-0 border-t border-black/5 dark:border-white/5 pt-3">
         {/* Theme toggle */}
         <button

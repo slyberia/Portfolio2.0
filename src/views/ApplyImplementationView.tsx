@@ -119,7 +119,7 @@ const ApplyImplementationView: React.FC = () => {
                       source: 'implementation',
                       modeLabel: 'Implementation Track',
                       starterPrompt:
-                        'Help this visitor evaluate Kyle for an Implementation / CSE-lite role.',
+                        'Help this visitor evaluate Kyle for a Forward Deployed Engineer role.',
                     },
                   }),
                 )
@@ -128,7 +128,7 @@ const ApplyImplementationView: React.FC = () => {
             >
               Ask Digital Twin
             </button>
-            <Link to="/tracks/implementation" className={componentRecipes.button.primary}>
+            <Link to="/tracks/forward-deployed" className={componentRecipes.button.primary}>
               Full Track Overview
             </Link>
           </div>

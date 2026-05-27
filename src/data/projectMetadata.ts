@@ -33,9 +33,9 @@ export type ProjectMetadata = {
 };
 
 export const CANONICAL_ROLE_ACCENT: Record<RecruiterRoleLane, RoleLane> = {
-  'Implementation / CSE-lite': 'Implementation',
-  'Ops Analytics / QA': 'QA',
-  'GIS / Spatial Systems': 'GIS',
+  'Forward Deployed Engineer': 'Implementation',
+  'Solutions Architect': 'QA',
+  'Spatial Systems Architect': 'GIS',
   'AI Workflow / Portfolio Governance': 'Implementation',
 };
 
@@ -67,9 +67,9 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     statusLabel: 'Featured System',
     roleLanes: ['GIS', 'Implementation', 'QA'],
     canonicalRoleLanes: [
-      'GIS / Spatial Systems',
-      'Implementation / CSE-lite',
-      'Ops Analytics / QA',
+      'Spatial Systems Architect',
+      'Forward Deployed Engineer',
+      'Solutions Architect',
     ],
     filters: ['GIS', 'Implementation', 'QA', 'Process'],
     proofType: 'System',
@@ -95,8 +95,8 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     roleLanes: ['Implementation', 'QA'],
     canonicalRoleLanes: [
       'AI Workflow / Portfolio Governance',
-      'Implementation / CSE-lite',
-      'Ops Analytics / QA',
+      'Forward Deployed Engineer',
+      'Solutions Architect',
     ],
     filters: ['Implementation', 'QA', 'AI Systems', 'Process'],
     proofType: 'System',
@@ -118,7 +118,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     hierarchy: 'supporting',
     statusLabel: 'QA / Operations',
     roleLanes: ['Implementation', 'QA', 'GIS'],
-    canonicalRoleLanes: ['Ops Analytics / QA', 'GIS / Spatial Systems'],
+    canonicalRoleLanes: ['Solutions Architect', 'Spatial Systems Architect'],
     filters: ['Implementation', 'QA', 'GIS', 'Process'],
     proofType: 'Workflow',
     accent: 'blue',
@@ -136,7 +136,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     hierarchy: 'supporting',
     statusLabel: 'Workflow Prototype',
     roleLanes: ['Implementation'],
-    canonicalRoleLanes: ['Implementation / CSE-lite'],
+    canonicalRoleLanes: ['Forward Deployed Engineer'],
     filters: ['Implementation', 'Process'],
     proofType: 'Workflow',
     accent: 'slate',

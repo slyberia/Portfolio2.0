@@ -36,9 +36,9 @@ export interface Certification {
 export type ProjectCategory = 'ai-ops' | 'qa-data' | 'success-strategy' | 'creative';
 export type CaseStudyCategory = ProjectCategory;
 export type RecruiterRoleLane =
-  | 'Implementation / CSE-lite'
-  | 'Ops Analytics / QA'
-  | 'GIS / Spatial Systems'
+  | 'Forward Deployed Engineer'
+  | 'Solutions Architect'
+  | 'Spatial Systems Architect'
   | 'AI Workflow / Portfolio Governance';
 
 export type EvidenceType =
@@ -209,7 +209,7 @@ export interface MediaAsset {
 
 export const VALID_RECRUITER_LANES = [
   'AI Workflow / Portfolio Governance',
-  'Implementation / CSE-lite',
-  'Ops Analytics / QA',
-  'GIS / Spatial Systems',
+  'Forward Deployed Engineer',
+  'Solutions Architect',
+  'Spatial Systems Architect',
 ];

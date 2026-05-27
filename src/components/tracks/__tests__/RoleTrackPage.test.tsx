@@ -17,7 +17,7 @@ vi.mock('../../../utils/evidenceBlocks', () => ({
         context: 'Context 1',
         technicalDetail: 'Detail 1',
         businessValue: 'Value 1',
-        roleLanes: ['Implementation / CSE-lite'],
+        roleLanes: ['Forward Deployed Engineer'],
       },
       {
         id: 'proof-2',
@@ -25,7 +25,7 @@ vi.mock('../../../utils/evidenceBlocks', () => ({
         context: 'Context 2',
         technicalDetail: 'Detail 2',
         businessValue: 'Value 2',
-        roleLanes: ['Implementation / CSE-lite'],
+        roleLanes: ['Forward Deployed Engineer'],
       },
       {
         id: 'proof-3',
@@ -33,7 +33,7 @@ vi.mock('../../../utils/evidenceBlocks', () => ({
         context: 'Context 3',
         technicalDetail: 'Detail 3',
         businessValue: 'Value 3',
-        roleLanes: ['Implementation / CSE-lite'],
+        roleLanes: ['Forward Deployed Engineer'],
       },
       {
         id: 'proof-4',
@@ -41,7 +41,7 @@ vi.mock('../../../utils/evidenceBlocks', () => ({
         context: 'Context 4',
         technicalDetail: 'Detail 4',
         businessValue: 'Value 4',
-        roleLanes: ['Implementation / CSE-lite'],
+        roleLanes: ['Forward Deployed Engineer'],
       },
       {
         id: 'proof-5',
@@ -49,7 +49,7 @@ vi.mock('../../../utils/evidenceBlocks', () => ({
         context: 'Context 5',
         technicalDetail: 'Detail 5',
         businessValue: 'Value 5',
-        roleLanes: ['Implementation / CSE-lite'],
+        roleLanes: ['Forward Deployed Engineer'],
       },
     ],
   },

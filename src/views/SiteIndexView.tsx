@@ -15,28 +15,28 @@ import ScrollToTopButton from '../components/ScrollToTopButton';
 
 const roleTracks = [
   {
-    title: 'Technical Implementation Specialist',
+    title: 'Forward Deployed Engineer',
     description:
       'Customer-facing technical delivery, workflow setup, onboarding support, documentation, and implementation planning.',
     href: IMPLEMENTATION_TRACK_HREF,
     accent: 'bg-tide-aqua',
-    role: 'Implementation',
+    role: 'Forward Deployed Engineer',
   },
   {
-    title: 'Quality Assurance Analyst',
+    title: 'Solutions Architect',
     description:
       'Structured testing, issue triage, validation workflows, root-cause analysis, and launch-readiness review.',
     href: QA_TRACK_HREF,
     accent: 'bg-blue-500',
-    role: 'Quality Assurance',
+    role: 'Solutions Architect',
   },
   {
-    title: 'GIS Analyst',
+    title: 'Spatial Systems Architect',
     description:
       'Spatial data operations, map-based workflows, dataset governance, and GIS system delivery.',
     href: GIS_TRACK_HREF,
     accent: 'bg-tide-cyan',
-    role: 'GIS',
+    role: 'Spatial Systems Architect',
   },
 ];
 
@@ -303,11 +303,11 @@ const SiteIndexView: React.FC = () => {
           <div className="grid md:grid-cols-2 gap-4 text-sm">
             <div className="rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd] dark:bg-slate-900 p-5">
               <h3 className="font-semibold text-navy-900 dark:text-white">
-                I’m hiring for implementation
+                I’m hiring for Forward Deployed Engineering
               </h3>
               <p className="mt-2">
                 <Link to={IMPLEMENTATION_TRACK_HREF} className="underline">
-                  Implementation Track
+                  Forward Deployed Track
                 </Link>{' '}
                 →{' '}
                 <Link to={GUYNODE_SYSTEM_HREF} className="underline">
@@ -324,10 +324,12 @@ const SiteIndexView: React.FC = () => {
               </p>
             </div>
             <div className="rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd] dark:bg-slate-900 p-5">
-              <h3 className="font-semibold text-navy-900 dark:text-white">I’m hiring for QA</h3>
+              <h3 className="font-semibold text-navy-900 dark:text-white">
+                I’m hiring for Solutions Architecture
+              </h3>
               <p className="mt-2">
                 <Link to={QA_TRACK_HREF} className="underline">
-                  QA Track
+                  Solutions Architect Track
                 </Link>{' '}
                 →{' '}
                 <Link to={buildProjectHref('digital-twin')} className="underline">
@@ -344,10 +346,12 @@ const SiteIndexView: React.FC = () => {
               </p>
             </div>
             <div className="rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd] dark:bg-slate-900 p-5">
-              <h3 className="font-semibold text-navy-900 dark:text-white">I’m hiring for GIS</h3>
+              <h3 className="font-semibold text-navy-900 dark:text-white">
+                I’m hiring for Spatial Systems Architecture
+              </h3>
               <p className="mt-2">
                 <Link to={GIS_TRACK_HREF} className="underline">
-                  GIS Track
+                  Spatial Systems Track
                 </Link>{' '}
                 →{' '}
                 <Link to={GUYNODE_SYSTEM_HREF} className="underline">

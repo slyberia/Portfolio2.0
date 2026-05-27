@@ -1,6 +1,6 @@
 import React from 'react';
 import { describe, expect, it, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import TopNav from '../components/TopNav';
 
@@ -13,34 +13,47 @@ function renderTopNav(pathname: string) {
 }
 
 describe('TopNav active states', () => {
-  it('marks Home active on homepage and not Implementation', () => {
+  it('marks Home active on homepage and not tracks', () => {
     renderTopNav('/');
 
     expect(screen.getByRole('link', { name: 'Home' })).toHaveAttribute('aria-current', 'page');
-    expect(screen.getByRole('link', { name: 'Implementation' })).not.toHaveAttribute(
-      'aria-current',
-    );
+    expect(screen.queryByRole('menuitem', { name: 'Forward Deployed Engineer' })).toBeNull();
   });
 
-  it('marks Implementation active on implementation track', () => {
-    renderTopNav('/tracks/implementation');
+  it('marks Forward Deployed Engineer active on its track', () => {
+    renderTopNav('/tracks/forward-deployed');
 
-    expect(screen.getByRole('link', { name: 'Implementation' })).toHaveAttribute(
-      'aria-current',
-      'page',
-    );
+    // Open the dropdown
+    const button = screen.getByRole('button', { name: 'Targeted Roles' });
+    fireEvent.click(button);
+
+    const menuItem = screen.getByRole('menuitem', { name: 'Forward Deployed Engineer' });
+    expect(menuItem).toBeInTheDocument();
+    expect(menuItem.className).toContain('border-tide-aqua');
   });
 
-  it('marks QA active on QA track', () => {
-    renderTopNav('/tracks/ops-analytics');
+  it('marks Solutions Architect active on its track', () => {
+    renderTopNav('/tracks/solutions-architect');
 
-    expect(screen.getByRole('link', { name: 'QA' })).toHaveAttribute('aria-current', 'page');
+    // Open the dropdown
+    const button = screen.getByRole('button', { name: 'Targeted Roles' });
+    fireEvent.click(button);
+
+    const menuItem = screen.getByRole('menuitem', { name: 'Solutions Architect' });
+    expect(menuItem).toBeInTheDocument();
+    expect(menuItem.className).toContain('border-tide-aqua');
   });
 
-  it('marks GIS active on GIS track', () => {
-    renderTopNav('/tracks/gis');
+  it('marks Spatial Systems Architect active on its track', () => {
+    renderTopNav('/tracks/spatial-systems');
 
-    expect(screen.getByRole('link', { name: 'GIS' })).toHaveAttribute('aria-current', 'page');
+    // Open the dropdown
+    const button = screen.getByRole('button', { name: 'Targeted Roles' });
+    fireEvent.click(button);
+
+    const menuItem = screen.getByRole('menuitem', { name: 'Spatial Systems Architect' });
+    expect(menuItem).toBeInTheDocument();
+    expect(menuItem.className).toContain('border-tide-aqua');
   });
 
   it('marks Projects active on projects routes', () => {

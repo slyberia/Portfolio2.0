@@ -26,7 +26,7 @@ export const MEDIA_REGISTRY: MediaAsset[] = [
   {
     id: 'portfolio-v2-site-index-desktop-v1',
     projectId: 'portfolio-v2',
-    roleLanes: ['Ops Analytics / QA'],
+    roleLanes: ['Solutions Architect'],
     mediaType: 'screenshot',
     src: '/media/portfolio-v2/screenshots/portfolio-v2-site-index-desktop-v1.png',
     alt: 'Site Index and Connectivity Map',
@@ -43,7 +43,7 @@ export const MEDIA_REGISTRY: MediaAsset[] = [
   {
     id: 'portfolio-v2-impl-overview-desktop-v1',
     projectId: 'portfolio-v2',
-    roleLanes: ['Implementation / CSE-lite'],
+    roleLanes: ['Forward Deployed Engineer'],
     mediaType: 'screenshot',
     src: '/media/portfolio-v2/screenshots/portfolio-v2-impl-overview-desktop-v1.png',
     alt: 'Implementation Track Overview',
@@ -58,7 +58,7 @@ export const MEDIA_REGISTRY: MediaAsset[] = [
   {
     id: 'portfolio-v2-ops-overview-desktop-v1',
     projectId: 'portfolio-v2',
-    roleLanes: ['Ops Analytics / QA'],
+    roleLanes: ['Solutions Architect'],
     mediaType: 'screenshot',
     src: '/media/portfolio-v2/screenshots/portfolio-v2-ops-overview-desktop-v1.png',
     alt: 'Ops & Analytics Track Overview',
@@ -73,7 +73,7 @@ export const MEDIA_REGISTRY: MediaAsset[] = [
   {
     id: 'portfolio-v2-gis-overview-desktop-v1',
     projectId: 'portfolio-v2',
-    roleLanes: ['GIS / Spatial Systems'],
+    roleLanes: ['Spatial Systems Architect'],
     mediaType: 'screenshot',
     src: '/media/portfolio-v2/screenshots/portfolio-v2-gis-overview-desktop-v1.png',
     alt: 'GIS Track Overview',
@@ -105,7 +105,7 @@ export const MEDIA_REGISTRY: MediaAsset[] = [
   {
     id: 'codex-technical-tide-codex-detail-desktop-v1',
     projectId: 'codex-technical-tide',
-    roleLanes: ['Implementation / CSE-lite', 'AI Workflow / Portfolio Governance'],
+    roleLanes: ['Forward Deployed Engineer', 'AI Workflow / Portfolio Governance'],
     mediaType: 'screenshot',
     src: '/media/codex-technical-tide/screenshots/codex-technical-tide-codex-detail-desktop-v1.png',
     alt: 'Codex Project Architecture Deep Dive',
@@ -120,7 +120,7 @@ export const MEDIA_REGISTRY: MediaAsset[] = [
   {
     id: 'spatial-intel-ops-spatial-intel-detail-desktop-v1',
     projectId: 'spatial-intel-ops',
-    roleLanes: ['GIS / Spatial Systems'],
+    roleLanes: ['Spatial Systems Architect'],
     mediaType: 'screenshot',
     src: '/media/spatial-intel-ops/screenshots/spatial-intel-ops-spatial-intel-detail-desktop-v1.png',
     alt: 'Spatial Intelligence Project Detail',
@@ -137,7 +137,7 @@ export const MEDIA_REGISTRY: MediaAsset[] = [
   {
     id: 'portfolio-v2-home-mobile-mobile-v1',
     projectId: 'portfolio-v2',
-    roleLanes: ['Implementation / CSE-lite'],
+    roleLanes: ['Forward Deployed Engineer'],
     mediaType: 'screenshot',
     src: '/media/portfolio-v2/screenshots/portfolio-v2-home-mobile-mobile-v1.png',
     alt: 'Mobile Responsive Landing Page',

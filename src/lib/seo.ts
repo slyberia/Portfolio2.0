@@ -54,9 +54,10 @@ const sharedProjectJsonLd = PROJECT_METADATA.map((project) => ({
 
 export const getSeoForPath = (pathname: string): RouteSeo => {
   const defaults: RouteSeo = {
-    title: 'Kyle Semple Portfolio — Technical Implementation, QA/Ops, GIS',
+    title:
+      'Kyle Semple Portfolio — Forward Deployed Engineer, Solutions Architect, Spatial Systems Architect',
     description:
-      'Portfolio overview for Kyle Semple across technical implementation, QA/operations analytics, GIS systems, and AI governance evidence.',
+      'Portfolio overview for Kyle Semple across forward deployed engineering, solutions architecture, spatial systems, and AI governance evidence.',
     canonicalPath: pathname,
     jsonLd: [],
   };
@@ -68,41 +69,47 @@ export const getSeoForPath = (pathname: string): RouteSeo => {
       markdownPath: '/markdown/home.md',
       jsonLd: [person, website, profilePage('/', 'Kyle Semple Portfolio', defaults.description)],
     },
-    '/tracks/implementation': {
-      title: 'Track: Technical Implementation Specialist',
+    '/tracks/forward-deployed': {
+      title: 'Track: Forward Deployed Engineer',
       description:
         'Role track focused on implementation delivery, system integration, release reliability, and structured project execution.',
-      canonicalPath: '/tracks/implementation',
-      markdownPath: '/markdown/tracks/implementation.md',
+      canonicalPath: '/tracks/forward-deployed',
+      markdownPath: '/markdown/tracks/forward-deployed.md',
       jsonLd: [
         trackCollection(
-          '/tracks/implementation',
-          'Technical Implementation Specialist Track',
-          'Technical Implementation Specialist',
+          '/tracks/forward-deployed',
+          'Forward Deployed Engineer Track',
+          'Forward Deployed Engineer',
         ),
       ],
     },
-    '/tracks/ops-analytics': {
-      title: 'Track: QA and Operations Analytics',
+    '/tracks/solutions-architect': {
+      title: 'Track: Solutions Architect',
       description:
         'Role track focused on quality assurance, operations triage, incident handling, and analytics-backed workflow improvement.',
-      canonicalPath: '/tracks/ops-analytics',
-      markdownPath: '/markdown/tracks/ops-analytics.md',
+      canonicalPath: '/tracks/solutions-architect',
+      markdownPath: '/markdown/tracks/solutions-architect.md',
       jsonLd: [
         trackCollection(
-          '/tracks/ops-analytics',
-          'QA and Operations Analytics Track',
-          'Quality Assurance Analyst / QA and Operations',
+          '/tracks/solutions-architect',
+          'Solutions Architect Track',
+          'Solutions Architect',
         ),
       ],
     },
-    '/tracks/gis': {
-      title: 'Track: GIS Analyst Systems',
+    '/tracks/spatial-systems': {
+      title: 'Track: Spatial Systems Architect',
       description:
         'Role track for GIS analysis, spatial data operations, and map-enabled system delivery in production-style workflows.',
-      canonicalPath: '/tracks/gis',
-      markdownPath: '/markdown/tracks/gis.md',
-      jsonLd: [trackCollection('/tracks/gis', 'GIS Analyst Track', 'GIS Analyst')],
+      canonicalPath: '/tracks/spatial-systems',
+      markdownPath: '/markdown/tracks/spatial-systems.md',
+      jsonLd: [
+        trackCollection(
+          '/tracks/spatial-systems',
+          'Spatial Systems Architect Track',
+          'Spatial Systems Architect',
+        ),
+      ],
     },
     '/projects': {
       title: 'Projects Portfolio Index',

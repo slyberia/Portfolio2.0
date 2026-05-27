@@ -130,9 +130,9 @@ describe('canonical role lane UI', () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getAllByText('Implementation / CSE-lite')[0]).toHaveClass('text-tide-aqua');
-    expect(screen.getAllByText('Ops Analytics / QA')[0]).toHaveClass('text-tide-blue');
-    expect(screen.getAllByText('GIS / Spatial Systems')[0]).toHaveClass('text-tide-cyan');
+    expect(screen.getAllByText('Forward Deployed Engineer')[0]).toHaveClass('text-tide-aqua');
+    expect(screen.getAllByText('Solutions Architect')[0]).toHaveClass('text-tide-blue');
+    expect(screen.getAllByText('Spatial Systems Architect')[0]).toHaveClass('text-tide-cyan');
   });
 
   it('renders canonical role lanes with shared accent styling in ProjectsIndexView', () => {
@@ -142,9 +142,9 @@ describe('canonical role lane UI', () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getAllByText('Implementation / CSE-lite')[0]).toHaveClass('text-tide-aqua');
-    expect(screen.getAllByText('Ops Analytics / QA')[0]).toHaveClass('text-tide-blue');
-    expect(screen.getAllByText('GIS / Spatial Systems')[0]).toHaveClass('text-tide-cyan');
+    expect(screen.getAllByText('Forward Deployed Engineer')[0]).toHaveClass('text-tide-aqua');
+    expect(screen.getAllByText('Solutions Architect')[0]).toHaveClass('text-tide-blue');
+    expect(screen.getAllByText('Spatial Systems Architect')[0]).toHaveClass('text-tide-cyan');
   });
 
   it('renders canonical role lanes with shared accent styling in ProjectDetailView', async () => {
@@ -177,7 +177,7 @@ describe('canonical role lane UI', () => {
     });
 
     expect(screen.getByText('AI Workflow / Portfolio Governance')).toHaveClass('text-tide-aqua');
-    expect(screen.getByText('Implementation / CSE-lite')).toHaveClass('text-tide-aqua');
-    expect(screen.getByText('Ops Analytics / QA')).toHaveClass('text-tide-blue');
+    expect(screen.getByText('Forward Deployed Engineer')).toHaveClass('text-tide-aqua');
+    expect(screen.getByText('Solutions Architect')).toHaveClass('text-tide-blue');
   });
 });
