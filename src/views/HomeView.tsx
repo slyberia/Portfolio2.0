@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { EXPERIENCE, SKILL_GROUPS, CERTIFICATIONS, SKILL_CHIP_CONFIG } from '../constants';
+import { EXPERIENCE, SKILL_GROUPS, CERTIFICATIONS, SKILL_CHIP_CONFIG, PROJECT_REGISTRY } from '../constants';
 import FlagshipSystemSection from '../components/home/FlagshipSystemSection';
 import SupportingEvidenceSection from '../components/home/SupportingEvidenceSection';
 import { GUYNODE_SYSTEM_HREF } from '../lib/routes';
@@ -117,6 +117,72 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
     }
     return null;
   }, [activeSkillName]);
+
+  const chipConfig = useMemo(() => {
+    if (!activeSkill) return null;
+    return SKILL_CHIP_CONFIG[activeSkill.name] || null;
+  }, [activeSkill]);
+
+  const activeSkillProvenProjects = useMemo(() => {
+    if (!activeSkill) return [];
+    
+    const projects: { id: string; title: string; href: string }[] = [];
+    const addedIds = new Set<string>();
+
+    // 1. Search in PROJECT_REGISTRY tags matching activeSkill.name
+    PROJECT_REGISTRY.forEach((project) => {
+      if (project.tags.includes(activeSkill.name)) {
+        if (!addedIds.has(project.id)) {
+          addedIds.add(project.id);
+          projects.push({
+            id: project.id,
+            title: project.title,
+            href: `/projects/${project.id}`,
+          });
+        }
+      }
+    });
+
+    // 2. Look up SKILL_CHIP_CONFIG linkedSlugs
+    if (chipConfig && chipConfig.linkedSlugs) {
+      chipConfig.linkedSlugs.forEach((slug) => {
+        if (!addedIds.has(slug)) {
+          const matchedProj = PROJECT_REGISTRY.find((p) => p.id === slug);
+          if (matchedProj) {
+            addedIds.add(slug);
+            projects.push({
+              id: slug,
+              title: matchedProj.title,
+              href: `/projects/${slug}`,
+            });
+          } else if (slug === 'project-aegis') {
+            addedIds.add(slug);
+            projects.push({
+              id: slug,
+              title: 'Project Aegis',
+              href: '/projects/project-aegis',
+            });
+          }
+        }
+      });
+    }
+
+    // 3. Fallback to activeSkill.proofHref if not already in the list
+    if (activeSkill.proofHref) {
+      const slug = activeSkill.proofHref.replace('/projects/', '');
+      if (!addedIds.has(slug)) {
+        const matchedProj = PROJECT_REGISTRY.find((p) => p.id === slug);
+        addedIds.add(slug);
+        projects.push({
+          id: slug,
+          title: matchedProj ? matchedProj.title : (slug === 'project-aegis' ? 'Project Aegis' : slug),
+          href: activeSkill.proofHref,
+        });
+      }
+    }
+
+    return projects;
+  }, [activeSkill, chipConfig]);
 
   const getCategoryColorClass = (category: string) => {
     if (category.includes('Technical')) {
@@ -570,7 +636,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             <div
               id="skills-inspector"
               aria-live="polite"
-              className="lg:col-span-5 lg:order-2 h-fit lg:sticky lg:top-24 rounded-2xl border border-[#d8e8ee] dark:border-white/10 bg-white/90 dark:bg-slate-900/70 p-6 space-y-4 shadow-sm"
+              className="lg:col-span-5 lg:order-2 h-fit lg:sticky lg:top-24 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 space-y-4 shadow-sm"
             >
               <p className="text-xs font-mono uppercase tracking-[0.2em] text-slate-600 dark:text-slate-300">
                 Inspector Panel
@@ -588,18 +654,57 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                   ? activeSkill.description
                   : 'Select a skill from the matrix to view its operational definition and portfolio use case.'}
               </p>
-              {activeSkill?.proof && (
-                <p className="text-sm text-slate-700 dark:text-slate-200">
-                  Proof: {activeSkill.proof}
-                  {activeSkill.proofHref && (
-                    <Link
-                      to={activeSkill.proofHref}
-                      className="ml-2 underline underline-offset-2 text-[#237f86] dark:text-tide-sky hover:text-[#1d6970] dark:hover:text-tide-softBlue focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua rounded-sm"
-                    >
-                      View project
-                    </Link>
+              {activeSkill && (
+                <div className="space-y-4 pt-2 border-t border-slate-100 dark:border-slate-800">
+                  {activeSkillProvenProjects.length > 0 && (
+                    <div className="space-y-2">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                        Proven In:
+                      </p>
+                      <ul className="space-y-1.5">
+                        {activeSkillProvenProjects.map((proj) => (
+                          <li key={proj.id} className="flex items-center text-sm">
+                            <span className="w-1.5 h-1.5 rounded-full bg-tide-aqua mr-2 shrink-0"></span>
+                            <Link
+                              to={proj.href}
+                              className="font-medium text-[#237f86] dark:text-tide-sky hover:underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua rounded-sm"
+                            >
+                              {proj.title}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   )}
-                </p>
+
+                  {!activeSkillProvenProjects.length && activeSkill.proof && (
+                    <div className="space-y-1">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                        Proof:
+                      </p>
+                      <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                        {activeSkill.proof}
+                        {activeSkill.proofHref && (
+                          <Link
+                            to={activeSkill.proofHref}
+                            className="ml-2 underline underline-offset-2 text-[#237f86] dark:text-tide-sky hover:text-[#1d6970] dark:hover:text-tide-softBlue focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua rounded-sm font-medium"
+                          >
+                            View project
+                          </Link>
+                        )}
+                      </p>
+                    </div>
+                  )}
+
+                  {chipConfig?.evidenceNote && (
+                    <div className="bg-slate-50 dark:bg-slate-950/40 rounded-xl p-3.5 border border-slate-200/50 dark:border-slate-800 text-xs leading-relaxed text-slate-600 dark:text-slate-400">
+                      <span className="font-semibold block text-slate-700 dark:text-slate-300 mb-1">
+                        Operational Context &amp; Evidence:
+                      </span>
+                      {chipConfig.evidenceNote}
+                    </div>
+                  )}
+                </div>
               )}
             </div>
 
@@ -607,7 +712,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               {SKILL_GROUPS.map((group, idx) => (
                 <div
                   key={idx}
-                  className="rounded-2xl border border-[#d8e8ee] dark:border-white/10 bg-white/80 dark:bg-slate-900/60 p-6 space-y-4"
+                  className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 space-y-4"
                 >
                   <h4 className="text-base font-outfit font-semibold text-ink-navy dark:text-white border-b border-[#e5e0d6] dark:border-white/10 pb-3">
                     {group.category}
