@@ -96,14 +96,6 @@ export const implementationTrackContent: TrackPageContent = {
       roleChips: ['Forward Deployed Engineer'],
     },
     {
-      title: 'Project Aegis Protocol',
-      relevance:
-        'AI governance and implementation control system for safer execution and maintainable workflows.',
-      proofType: 'Proof Artifact',
-      href: '/projects/project-aegis',
-      roleChips: ['Forward Deployed Engineer', 'Solutions Architect'],
-    },
-    {
       title: 'Portfolio2.0 Role-Lane Conversion System',
       relevance:
         'Information architecture proof showing role-lane alignment and recruiter-facing delivery clarity.',
@@ -174,14 +166,6 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
       roleChips: ['Solutions Architect', 'Spatial Systems Architect'],
     },
     {
-      title: 'NBA 2K Systems Analysis',
-      relevance:
-        'Controlled testing case showing reproducibility logic, variable isolation, and decision-ready reporting.',
-      proofType: 'Validation',
-      href: '/projects/nba-systems-qa',
-      roleChips: ['Solutions Architect'],
-    },
-    {
       title: 'Systems at Scale: Triage & QA',
       relevance: 'Issue triage and QA workflow evidence for high-volume operational scenarios.',
       proofType: 'Workflow',
@@ -194,14 +178,6 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
         'Validation proof for route integrity, content alignment, and reviewer-ready information architecture.',
       proofType: 'Documentation QA',
       href: '/portfolio2/deep-dive#proof-hierarchy',
-      roleChips: ['Solutions Architect'],
-    },
-    {
-      title: 'Project Aegis Protocol',
-      relevance:
-        'AI governance evidence showing quality controls, protocol boundaries, and root-cause prevention logic.',
-      proofType: 'Governance',
-      href: '/projects/project-aegis',
       roleChips: ['Solutions Architect'],
     },
   ],
