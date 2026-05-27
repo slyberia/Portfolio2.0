@@ -12,18 +12,18 @@ This file is a crawler-readable companion to the React app. It highlights stable
 - /markdown/index.md
 - /markdown/home.md
 - /markdown/resume.md
-- /markdown/tracks/implementation.md
-- /markdown/tracks/ops-analytics.md
-- /markdown/tracks/gis.md
+- /markdown/tracks/forward-deployed.md
+- /markdown/tracks/solutions-architect.md
+- /markdown/tracks/spatial-systems.md
 - /markdown/projects/guynode.md
 - /markdown/projects/digital-twin.md
 - /markdown/process.md
 
 ## Canonical React routes
 - /
-- /tracks/implementation
-- /tracks/ops-analytics
-- /tracks/gis
+- /tracks/forward-deployed
+- /tracks/solutions-architect
+- /tracks/spatial-systems
 - /projects
 - /projects/guynode
 - /projects/digital-twin
@@ -39,9 +39,9 @@ This file is a crawler-readable companion to the React app. It highlights stable
 
 ## Static crawler mirrors (alternate, non-canonical)
 - /crawler/
-- /crawler/tracks/implementation
-- /crawler/tracks/ops-analytics
-- /crawler/tracks/gis
+- /crawler/tracks/forward-deployed
+- /crawler/tracks/solutions-architect
+- /crawler/tracks/spatial-systems
 - /crawler/projects
 - /crawler/projects/guynode
 - /crawler/projects/digital-twin

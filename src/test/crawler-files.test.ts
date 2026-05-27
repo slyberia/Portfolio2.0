@@ -9,9 +9,9 @@ describe('crawler static assets', () => {
   it('sitemap includes current track/project routes and excludes case-studies', () => {
     const sitemap = readFileSync(join(publicDir, 'sitemap.xml'), 'utf8');
 
-    expect(sitemap).toContain('/tracks/implementation');
-    expect(sitemap).toContain('/tracks/ops-analytics');
-    expect(sitemap).toContain('/tracks/gis');
+    expect(sitemap).toContain('/tracks/forward-deployed');
+    expect(sitemap).toContain('/tracks/solutions-architect');
+    expect(sitemap).toContain('/tracks/spatial-systems');
     expect(sitemap).toContain('/projects/guynode');
     expect(sitemap).toContain('/projects/digital-twin');
     expect(sitemap).not.toContain('/case-studies/');

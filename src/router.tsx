@@ -466,7 +466,7 @@ export const routeDefinitions = [
         element: <CaseStudyRedirect />,
       },
       {
-        path: 'tracks/implementation',
+        path: 'tracks/forward-deployed',
         element: (
           <ErrorBoundary location="ImplementationTrackView">
             <ImplementationTrackView />
@@ -474,7 +474,7 @@ export const routeDefinitions = [
         ),
       },
       {
-        path: 'tracks/ops-analytics',
+        path: 'tracks/solutions-architect',
         element: (
           <ErrorBoundary location="OpsAnalyticsTrackView">
             <OpsAnalyticsTrackView />
@@ -482,7 +482,7 @@ export const routeDefinitions = [
         ),
       },
       {
-        path: 'tracks/gis',
+        path: 'tracks/spatial-systems',
         element: (
           <ErrorBoundary location="GisTrackView">
             <GisTrackView />
@@ -490,7 +490,7 @@ export const routeDefinitions = [
         ),
       },
       {
-        path: 'apply/implementation',
+        path: 'apply/forward-deployed',
         element: (
           <ErrorBoundary location="ApplyImplementationView">
             <ApplyImplementationView />
@@ -498,7 +498,7 @@ export const routeDefinitions = [
         ),
       },
       {
-        path: 'apply/ops-analytics',
+        path: 'apply/solutions-architect',
         element: (
           <ErrorBoundary location="ApplyOpsAnalyticsView">
             <ApplyOpsAnalyticsView />
@@ -506,7 +506,7 @@ export const routeDefinitions = [
         ),
       },
       {
-        path: 'apply/gis',
+        path: 'apply/spatial-systems',
         element: (
           <ErrorBoundary location="ApplyGisView">
             <ApplyGisView />

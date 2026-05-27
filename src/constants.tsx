@@ -384,7 +384,7 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
     rationale: 'Blueprint for unified digital systems and automated conversion paths.',
     category: 'success-strategy',
     tags: ['Stakeholder Communication', 'Process Improvement', 'Notion'],
-    roleLanes: ['Implementation / CSE-lite'],
+    roleLanes: ['Forward Deployed Engineer'],
     content: CASE_STUDY_CONTENT['luxe-lofts'],
     heroArtifact: {
       type: 'html',
@@ -406,7 +406,7 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
     rationale: 'Operationalizing the gap between training theory and production reality.',
     category: 'qa-data',
     tags: ['Data QA / Validation', 'Operational Throughput', 'Issue Triage', 'ESRI ArcMap'],
-    roleLanes: ['Ops Analytics / QA', 'GIS / Spatial Systems'],
+    roleLanes: ['Solutions Architect', 'Spatial Systems Architect'],
     content: CASE_STUDY_CONTENT['ops-triage'],
     heroArtifact: {
       type: 'html',
@@ -440,7 +440,7 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
       'Technical Implementation',
       'Documentation',
     ],
-    roleLanes: ['GIS / Spatial Systems', 'Implementation / CSE-lite', 'Ops Analytics / QA'],
+    roleLanes: ['Spatial Systems Architect', 'Forward Deployed Engineer', 'Solutions Architect'],
     content: CASE_STUDY_CONTENT.guynode,
     heroArtifact: {
       type: 'html',
@@ -513,8 +513,8 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
     ],
     roleLanes: [
       'AI Workflow / Portfolio Governance',
-      'Implementation / CSE-lite',
-      'Ops Analytics / QA',
+      'Forward Deployed Engineer',
+      'Solutions Architect',
     ],
     content: CASE_STUDY_CONTENT['digital-twin'],
     heroArtifact: {

@@ -131,13 +131,13 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
   const roleTrackCards = [
     {
       systemLabel: 'IMPLEMENTATION_TRACK',
-      title: 'Technical Implementation Specialist',
+      title: 'Forward Deployed Engineer',
       subcopy:
         'Customer-facing technical delivery, workflow setup, onboarding support, and implementation-focused problem solving.',
       chips: ['Onboarding', 'Workflow Design', 'Documentation'],
       stream: 'STREAM 01',
       path: 'SYS_PATH: 01.00',
-      href: '/tracks/implementation',
+      href: '/tracks/forward-deployed',
       railClass: 'bg-tide-aqua',
       iconTileClass: 'bg-tide-aqua/10 text-[#237f86] dark:bg-tide-aqua/15 dark:text-tide-sky',
       labelClass: 'text-[#237f86] dark:text-tide-sky',
@@ -170,13 +170,13 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
     },
     {
       systemLabel: 'QA_TRACK',
-      title: 'Quality Assurance Analyst',
+      title: 'Solutions Architect',
       subcopy:
         'Structured testing, issue triage, root-cause analysis, and decision-ready quality reporting.',
       chips: ['QA Protocols', 'Test Plans', 'Root Cause Analysis'],
       stream: 'STREAM 02',
       path: 'SYS_PATH: 02.00',
-      href: '/tracks/ops-analytics',
+      href: '/tracks/solutions-architect',
       railClass: 'bg-tide-blue',
       iconTileClass: 'bg-tide-blue/10 text-tide-blue dark:bg-tide-blue/15 dark:text-tide-softBlue',
       labelClass: 'text-tide-blue dark:text-tide-softBlue',
@@ -202,13 +202,13 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
     },
     {
       systemLabel: 'GIS_TRACK',
-      title: 'GIS Analyst',
+      title: 'Spatial Systems Architect',
       subcopy:
         'Spatial data operations, mapping workflows, dataset governance, and GIS-focused system delivery.',
       chips: ['ArcGIS', 'Leaflet', 'Spatial Data'],
       stream: 'STREAM 03',
       path: 'SYS_PATH: 03.00',
-      href: '/tracks/gis',
+      href: '/tracks/spatial-systems',
       railClass: 'bg-tide-cyan',
       iconTileClass: 'bg-tide-cyan/10 text-tide-cyan dark:bg-tide-cyan/15 dark:text-tide-cyan',
       labelClass: 'text-tide-cyan dark:text-tide-cyan',
@@ -271,9 +271,9 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                 aria-hidden="true"
               />
               <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl">
-                A portfolio built around three target roles: technical implementation, quality
-                assurance, and GIS systems. Each path connects to tangible systems, workflows, and
-                operational proof.
+                A portfolio built around three target roles: forward deployed engineering, solutions
+                architecture, and spatial systems architecture. Each path connects to tangible systems,
+                workflows, and operational proof.
               </p>
             </div>
 
@@ -437,8 +437,8 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             </h2>
             <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
               I&apos;m a systems-minded technical operator who likes turning ambiguity into
-              structure. My work connects technical implementation, QA reasoning, GIS workflows,
-              customer support, and AI-assisted development.
+              structure. My work connects forward deployed engineering, solutions architecture,
+              spatial systems, customer support, and AI-assisted development.
             </p>
             <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
               I&apos;m especially interested in the moments where tools, users, and processes stop
@@ -495,8 +495,8 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               </h3>
             </div>
             <p className="text-slate-700 dark:text-slate-300 max-w-md leading-relaxed">
-              Relevant experience across technical implementation, GIS operations, workflow
-              delivery, customer support, and validation-heavy production environments.
+              Relevant experience across forward deployed engineering, spatial systems operations,
+              workflow delivery, customer support, and validation-heavy production environments.
             </p>
           </div>
 

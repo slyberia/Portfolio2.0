@@ -11,9 +11,9 @@ import {
   getProjectAccentRecipe,
 } from '../../lib/design-system';
 const roleToLane = {
-  'Technical Implementation Specialist': 'Implementation',
-  'Quality Assurance Analyst': 'QA',
-  'GIS Analyst': 'GIS',
+  'Forward Deployed Engineer': 'Implementation',
+  'Solutions Architect': 'QA',
+  'Spatial Systems Architect': 'GIS',
 } as const;
 
 type RoleTrack = keyof typeof roleToLane;
@@ -23,37 +23,37 @@ const PROOF_ARTIFACTS: Array<{ title: string; description: string; roles: RoleTr
     title: 'Dataset Registry',
     description:
       'Structured dataset records with titles, categories, tags, formats, download paths, and viewer metadata.',
-    roles: ['GIS Analyst', 'Technical Implementation Specialist'],
+    roles: ['Spatial Systems Architect', 'Forward Deployed Engineer'],
   },
   {
     title: 'Map Viewer',
     description:
       'Interactive GIS viewing layer for previewing spatial data and making the catalog more usable.',
-    roles: ['GIS Analyst', 'Technical Implementation Specialist'],
+    roles: ['Spatial Systems Architect', 'Forward Deployed Engineer'],
   },
   {
     title: 'Metadata Schema',
     description:
       'Standardized fields for dataset descriptions, formats, provenance, tags, and viewer behavior.',
-    roles: ['GIS Analyst', 'Quality Assurance Analyst'],
+    roles: ['Spatial Systems Architect', 'Solutions Architect'],
   },
   {
     title: 'Migration Workflow',
     description:
       'Process for converting legacy file-hosted content into a structured, searchable data platform.',
-    roles: ['Technical Implementation Specialist', 'GIS Analyst'],
+    roles: ['Forward Deployed Engineer', 'Spatial Systems Architect'],
   },
   {
     title: 'Launch Readiness',
     description:
       'Readiness checks for content accuracy, navigation clarity, broken links, deployment readiness, and reviewer trust.',
-    roles: ['Quality Assurance Analyst', 'Technical Implementation Specialist'],
+    roles: ['Solutions Architect', 'Forward Deployed Engineer'],
   },
   {
     title: 'AI-Assisted Build Governance',
     description:
       'Use of structured prompts, implementation protocols, audits, and human review to guide AI-assisted development.',
-    roles: ['Technical Implementation Specialist', 'Quality Assurance Analyst'],
+    roles: ['Forward Deployed Engineer', 'Solutions Architect'],
   },
 ];
 
