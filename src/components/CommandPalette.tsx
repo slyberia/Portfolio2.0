@@ -88,7 +88,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({ onNavigate, onAction })
       >
         <div className="flex items-center px-4 border-b border-white/5 bg-white/5">
           <svg
-            className="w-5 h-5 text-slate-500 mr-3"
+            className="w-5 h-5 text-slate-600 mr-3"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

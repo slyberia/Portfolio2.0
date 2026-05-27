@@ -23,6 +23,7 @@ import ApplyOpsAnalyticsView from './views/ApplyOpsAnalyticsView';
 import ApplyGisView from './views/ApplyGisView';
 import DeepDiveView from './views/DeepDiveView';
 import SiteIndexView from './views/SiteIndexView';
+import GalleryView from './views/GalleryView';
 import ContactModal from './components/ContactModal';
 import CommandPalette from './components/CommandPalette';
 import ChatWidget from './components/ChatWidget';
@@ -441,6 +442,14 @@ export const routeDefinitions = [
         element: (
           <ErrorBoundary location="ProjectsIndexView">
             <ProjectsIndexView />
+          </ErrorBoundary>
+        ),
+      },
+      {
+        path: 'gallery',
+        element: (
+          <ErrorBoundary location="GalleryView">
+            <GalleryView />
           </ErrorBoundary>
         ),
       },

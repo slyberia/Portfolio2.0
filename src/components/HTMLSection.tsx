@@ -32,7 +32,7 @@ const HTMLSection: React.FC<HTMLSectionProps> = ({ content, isLoading = false })
       {/* Container */}
       <div className="relative">
         <div className="absolute top-0 right-0 p-4 z-10">
-          <span className="text-[10px] uppercase tracking-widest text-slate-400 font-bold bg-slate-900/10 border border-slate-900/10 px-2 py-1 rounded">
+          <span className="text-[10px] uppercase tracking-widest text-slate-600 font-bold bg-slate-900/10 border border-slate-900/10 px-2 py-1 rounded">
             Provisioned via HTML
           </span>
         </div>

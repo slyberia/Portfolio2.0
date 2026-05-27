@@ -260,7 +260,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
         <div className="relative max-w-7xl mx-auto px-6 py-8 md:py-12 lg:py-14 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           <div className="lg:col-span-5 space-y-8 lg:pr-6 lg:self-center">
             <div className="space-y-5">
-              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400">
+              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-slate-600 dark:text-slate-300">
                 SYSTEM_ARCHITECT_V3.1
               </p>
               <h1 className="text-5xl md:text-6xl font-outfit font-bold tracking-tight text-ink-navy dark:text-white">
@@ -285,7 +285,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               >
                 {/* TODO: update this href to the dedicated Guynode case-study route when it exists. */}
                 <div>
-                  <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+                  <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-600 dark:text-slate-300">
                     <span
                       className="h-1.5 w-1.5 rounded-full shrink-0 bg-tide-aqua"
                       aria-hidden="true"
@@ -319,7 +319,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               >
                 {/* TODO: replace /resume with a direct resume PDF asset link when available. */}
                 <div>
-                  <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+                  <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-600 dark:text-slate-300">
                     <span
                       className="h-1.5 w-1.5 rounded-full shrink-0 bg-slate-500"
                       aria-hidden="true"
@@ -383,7 +383,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                         </span>
                       </div>
 
-                      <div className="shrink-0 text-right text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                      <div className="shrink-0 text-right text-xs font-mono uppercase tracking-wider text-slate-600 dark:text-slate-300">
                         <div>{track.stream}</div>
                         <div className="mt-1">{track.path}</div>
                       </div>
@@ -429,7 +429,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
       >
         <div className="max-w-7xl mx-auto grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
           <div className="space-y-5">
-            <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
+            <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-600 dark:text-slate-300">
               WORKING_PROFILE
             </p>
             <h2 className="text-3xl md:text-4xl font-outfit font-semibold text-ink-navy dark:text-white">
@@ -453,7 +453,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
           </div>
 
           <article className="rounded-2xl border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd]/95 dark:bg-slate-900/70 p-6 shadow-[0_6px_20px_rgba(15,23,42,0.06)] space-y-5">
-            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-slate-600 dark:text-slate-300">
               PROFILE_SIGNAL
             </p>
             <div className="mx-auto w-full max-w-[320px] rounded-full border border-[#d8e8ee] bg-[#f8fbfd] p-2 shadow-sm">
@@ -472,7 +472,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               <li>QA-minded operator</li>
             </ul>
             <div className="h-px w-full bg-[#e5e0d6] dark:bg-white/10" />
-            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
               <span className="font-semibold uppercase tracking-[0.16em]">Working style:</span>{' '}
               Structured · Curious · Practical · Documentation-first
             </p>
@@ -494,7 +494,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                 Career Experience
               </h3>
             </div>
-            <p className="text-slate-500 dark:text-slate-400 max-w-md leading-relaxed">
+            <p className="text-slate-700 dark:text-slate-300 max-w-md leading-relaxed">
               Relevant experience across technical implementation, GIS operations, workflow
               delivery, customer support, and validation-heavy production environments.
             </p>
@@ -527,7 +527,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                       </p>
                     )}
                   </div>
-                  <span className="px-4 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-sm font-medium shrink-0 border border-black/5 dark:border-white/5">
+                  <span className="px-4 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-sm font-medium shrink-0 border border-black/5 dark:border-white/5">
                     {exp.period}
                   </span>
                 </div>
@@ -535,7 +535,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                   {exp.bullets.map((bullet, i) => (
                     <li
                       key={i}
-                      className="flex gap-3 text-slate-500 dark:text-slate-400 text-sm leading-relaxed"
+                      className="flex gap-3 text-slate-700 dark:text-slate-300 text-sm leading-relaxed"
                     >
                       <span className="mt-2 w-1.5 h-1.5 bg-tide-aqua/50 dark:bg-tide-aqua/50 rounded-full shrink-0"></span>
                       {bullet}
@@ -555,7 +555,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
       >
         <div className="max-w-7xl mx-auto">
           <div className="mb-12 space-y-3">
-            <h2 className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
+            <h2 className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-600 dark:text-slate-300">
               CAPABILITY_MATRIX
             </h2>
             <h3 className="text-3xl md:text-4xl font-outfit font-semibold text-ink-navy dark:text-white">
@@ -572,7 +572,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               aria-live="polite"
               className="lg:col-span-5 lg:order-2 h-fit lg:sticky lg:top-24 rounded-2xl border border-[#d8e8ee] dark:border-white/10 bg-white/90 dark:bg-slate-900/70 p-6 space-y-4 shadow-sm"
             >
-              <p className="text-xs font-mono uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+              <p className="text-xs font-mono uppercase tracking-[0.2em] text-slate-600 dark:text-slate-300">
                 Inspector Panel
               </p>
               <h4 className="text-xl font-outfit font-semibold text-ink-navy dark:text-white">
@@ -656,7 +656,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
           <div className="mb-14 space-y-3 animate-fade-in-up">
-            <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
+            <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-600 dark:text-slate-300">
               Academic & Professional Foundation
             </p>
             <h2 className="text-3xl md:text-4xl font-outfit font-bold text-ink-navy dark:text-white">
@@ -707,7 +707,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                   <p className="text-lg font-outfit font-medium text-[#237f86] dark:text-tide-sky">
                     Queen&#39;s University
                   </p>
-                  <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                     A rigorous academic foundation analyzing spatial patterns, data correlations,
                     and regional systems dynamics.
                   </p>
@@ -715,7 +715,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               </div>
 
               <div className="mt-8 pt-6 border-t border-slate-100 dark:border-white/5 space-y-3">
-                <p className="text-xs font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                <p className="text-xs font-mono uppercase tracking-wider text-slate-600 dark:text-slate-300">
                   Relevant Focus Areas
                 </p>
                 <div className="flex flex-wrap gap-2">
@@ -752,16 +752,16 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                         <h4 className="font-outfit font-bold text-ink-navy dark:text-white text-sm md:text-base leading-snug line-clamp-2">
                           {cert.name}
                         </h4>
-                        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                        <p className="text-xs text-slate-600 dark:text-slate-300 font-medium">
                           {cert.issuer}
                         </p>
                       </div>
                     </div>
                     <div className="mt-4 pt-4 border-t border-slate-100 dark:border-white/5 flex items-center justify-between">
-                      <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-slate-600 dark:text-slate-300">
                         Verified Credential
                       </span>
-                      <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
+                      <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
                         Active
                       </span>
                     </div>
