@@ -7,4 +7,3 @@
 - **last updated:** 2026-05-02
 
 Guynode is presented as a flagship proof of system architecture, workflow design, and implementation discipline.
-

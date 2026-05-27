@@ -1,6 +1,12 @@
 import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { EXPERIENCE, SKILL_GROUPS, CERTIFICATIONS, SKILL_CHIP_CONFIG, PROJECT_REGISTRY } from '../constants';
+import {
+  EXPERIENCE,
+  SKILL_GROUPS,
+  CERTIFICATIONS,
+  SKILL_CHIP_CONFIG,
+  PROJECT_REGISTRY,
+} from '../constants';
 import FlagshipSystemSection from '../components/home/FlagshipSystemSection';
 import SupportingEvidenceSection from '../components/home/SupportingEvidenceSection';
 import { GUYNODE_SYSTEM_HREF } from '../lib/routes';
@@ -125,7 +131,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
   const activeSkillProvenProjects = useMemo(() => {
     if (!activeSkill) return [];
-    
+
     const projects: { id: string; title: string; href: string }[] = [];
     const addedIds = new Set<string>();
 
@@ -175,7 +181,11 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
         addedIds.add(slug);
         projects.push({
           id: slug,
-          title: matchedProj ? matchedProj.title : (slug === 'project-aegis' ? 'Project Aegis' : slug),
+          title: matchedProj
+            ? matchedProj.title
+            : slug === 'project-aegis'
+              ? 'Project Aegis'
+              : slug,
           href: activeSkill.proofHref,
         });
       }
@@ -338,8 +348,8 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               />
               <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl">
                 A portfolio built around three target roles: forward deployed engineering, solutions
-                architecture, and spatial systems architecture. Each path connects to tangible systems,
-                workflows, and operational proof.
+                architecture, and spatial systems architecture. Each path connects to tangible
+                systems, workflows, and operational proof.
               </p>
             </div>
 

@@ -7,4 +7,3 @@
 - **last updated:** 2026-05-02
 
 This portfolio presents systems-oriented project evidence with an emphasis on AI-assisted workflow governance and operational reliability.
-

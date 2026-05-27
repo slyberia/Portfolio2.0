@@ -7,4 +7,3 @@
 - **last updated:** 2026-05-02
 
 Focus areas include end-to-end system building, AI-enabled workflows, and implementation governance practices.
-

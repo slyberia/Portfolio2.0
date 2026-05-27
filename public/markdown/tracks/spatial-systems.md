@@ -7,4 +7,3 @@
 - **last updated:** 2026-05-02
 
 Focus areas include geospatial data quality, operational reporting, and practical GIS workflows integrated with QA practices.
-

@@ -177,7 +177,9 @@ const MediaProofGrid: React.FC<MediaProofGridProps> = ({
                   {selectedAsset.caption}
                 </p>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
-                  Surface Viewport: <span className="font-semibold uppercase">{selectedAsset.viewport}</span> · Target: <span className="font-semibold">{selectedAsset.projectId}</span>
+                  Surface Viewport:{' '}
+                  <span className="font-semibold uppercase">{selectedAsset.viewport}</span> ·
+                  Target: <span className="font-semibold">{selectedAsset.projectId}</span>
                 </p>
               </div>
             </div>

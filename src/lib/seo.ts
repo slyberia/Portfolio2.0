@@ -54,7 +54,8 @@ const sharedProjectJsonLd = PROJECT_METADATA.map((project) => ({
 
 export const getSeoForPath = (pathname: string): RouteSeo => {
   const defaults: RouteSeo = {
-    title: 'Kyle Semple Portfolio — Forward Deployed Engineer, Solutions Architect, Spatial Systems Architect',
+    title:
+      'Kyle Semple Portfolio — Forward Deployed Engineer, Solutions Architect, Spatial Systems Architect',
     description:
       'Portfolio overview for Kyle Semple across forward deployed engineering, solutions architecture, spatial systems, and AI governance evidence.',
     canonicalPath: pathname,

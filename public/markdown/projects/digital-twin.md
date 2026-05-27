@@ -7,4 +7,3 @@
 - **last updated:** 2026-05-02
 
 Digital Twin is featured as an implementation proof connecting model-assisted workflows with practical system operations.
-

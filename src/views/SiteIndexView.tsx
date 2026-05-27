@@ -324,7 +324,9 @@ const SiteIndexView: React.FC = () => {
               </p>
             </div>
             <div className="rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd] dark:bg-slate-900 p-5">
-              <h3 className="font-semibold text-navy-900 dark:text-white">I’m hiring for Solutions Architecture</h3>
+              <h3 className="font-semibold text-navy-900 dark:text-white">
+                I’m hiring for Solutions Architecture
+              </h3>
               <p className="mt-2">
                 <Link to={QA_TRACK_HREF} className="underline">
                   Solutions Architect Track
@@ -344,7 +346,9 @@ const SiteIndexView: React.FC = () => {
               </p>
             </div>
             <div className="rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd] dark:bg-slate-900 p-5">
-              <h3 className="font-semibold text-navy-900 dark:text-white">I’m hiring for Spatial Systems Architecture</h3>
+              <h3 className="font-semibold text-navy-900 dark:text-white">
+                I’m hiring for Spatial Systems Architecture
+              </h3>
               <p className="mt-2">
                 <Link to={GIS_TRACK_HREF} className="underline">
                   Spatial Systems Track

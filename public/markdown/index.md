@@ -20,4 +20,3 @@
 ## Static crawler mirrors (alternate)
 
 Canonical routes above remain primary for users. Alternate static crawler mirrors are available under `/crawler/...` including `/crawler/`, `/crawler/projects/guynode`, and `/crawler/tracks/forward-deployed`.
-

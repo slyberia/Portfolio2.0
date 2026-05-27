@@ -7,4 +7,3 @@
 - **last updated:** 2026-05-02
 
 Focus areas include high-volume triage patterns, quality loops, reliability controls, and systems-level QA reasoning.
-

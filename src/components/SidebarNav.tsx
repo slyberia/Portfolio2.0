@@ -288,7 +288,9 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ theme, toggleTheme, onOpenConta
                               : 'border-transparent text-slate-700 dark:text-slate-300 hover:text-tide-aqua dark:hover:text-tide-softBlue hover:bg-slate-50 dark:hover:bg-slate-900/60'
                           }`}
                         >
-                          <span className={`w-2.5 h-2.5 rounded-full ${track.accentClass} shrink-0`} />
+                          <span
+                            className={`w-2.5 h-2.5 rounded-full ${track.accentClass} shrink-0`}
+                          />
                           <span className="text-left leading-normal">{track.label}</span>
                         </button>
                       );

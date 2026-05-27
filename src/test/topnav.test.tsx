@@ -72,4 +72,3 @@ describe('TopNav active states', () => {
     expect(screen.getByRole('link', { name: 'Process' })).toHaveAttribute('aria-current', 'page');
   });
 });
-
