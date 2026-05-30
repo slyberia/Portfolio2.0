@@ -98,11 +98,19 @@ const SupportingEvidenceSection: React.FC = () => {
           {filteredItems.map((item) => (
             <article
               key={item.id}
-              className={`rounded-xl border px-4 py-4 md:px-5 shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-colors duration-300 ${
+              className={`rounded-xl border px-4 py-4 md:px-5 transition-all duration-300 ${
                 item.flagship
-                  ? 'border-gild/40 bg-gild/5 dark:bg-gild-deep/10'
-                  : `${getProjectAccentRecipe(item.accent).borderClass} bg-white/95 dark:bg-slate-900/70`
+                  ? 'border-[#d8a84f]/40 dark:border-[#f1c878]/30 backdrop-blur-md shadow-[0_8px_32px_rgba(216,168,79,0.08)] hover:border-[#d8a84f]/80 dark:hover:border-[#f1c878]/60 hover:shadow-[0_12px_40px_rgba(216,168,79,0.18)]'
+                  : `${getProjectAccentRecipe(item.accent).borderClass} bg-white/95 dark:bg-slate-900/70 shadow-[0_4px_12px_rgba(15,23,42,0.05)]`
               }`}
+              style={
+                item.flagship
+                  ? {
+                      background:
+                        'linear-gradient(90deg, rgba(156, 122, 60, 0.15) 0%, rgba(255, 229, 150, 0.3) 20%, rgba(184, 149, 72, 0.15) 50%, rgba(255, 229, 150, 0.3) 80%, rgba(162, 126, 61, 0.2) 100%)',
+                    }
+                  : undefined
+              }
             >
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="text-[10px] font-mono uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
@@ -113,8 +121,8 @@ const SupportingEvidenceSection: React.FC = () => {
                 </span>
               </div>
               <div className="mt-3 flex justify-between items-start group">
-                <h3 className="text-base font-semibold text-ink-navy dark:text-white group-hover:text-tide-aqua dark:group-hover:text-tide-softBlue transition-colors">
-                  {item.displayTitle}
+                <h3 className="text-base font-semibold text-ink-navy dark:text-white group-hover:text-tide-aqua dark:group-hover:text-tide-softBlue hover:underline transition-colors">
+                  <Link to={item.href}>{item.displayTitle}</Link>
                 </h3>
                 <button
                   onClick={(e) => handleAskAI(e, item)}

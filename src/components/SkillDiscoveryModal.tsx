@@ -1,5 +1,5 @@
 import React from 'react';
-import { PROJECT_REGISTRY, SKILL_CHIP_CONFIG } from '../constants';
+import { PROJECT_REGISTRY, SKILL_CHIP_CONFIG, SKILL_GROUPS } from '../constants';
 import { ProjectCategory } from '../types';
 
 interface SkillDiscoveryModalProps {
@@ -27,8 +27,18 @@ const SkillDiscoveryModal: React.FC<SkillDiscoveryModalProps> = ({
   const relevantStudies = chipConfig
     ? PROJECT_REGISTRY.filter((study) => chipConfig.linkedSlugs.includes(study.id))
     : PROJECT_REGISTRY.filter((study) => study.tags.includes(skill));
-  const isSecondary = chipConfig?.linkMode === 'secondary';
   const evidenceNote = chipConfig?.evidenceNote;
+
+  // Sourced from SKILL_GROUPS description as fallback
+  const skillDescription = React.useMemo(() => {
+    for (const group of SKILL_GROUPS) {
+      const found = group.items.find((item) => item.name === skill);
+      if (found) return found.description;
+    }
+    return '';
+  }, [skill]);
+
+  const blurbText = evidenceNote || skillDescription;
 
   if (!isOpen) return null;
 
@@ -64,33 +74,38 @@ const SkillDiscoveryModal: React.FC<SkillDiscoveryModalProps> = ({
               strokeLinejoin="round"
             >
               <path d="M18 6 6 18" />
-              <path d="m6 6 18 18" />
+              <path d="m6 6 12 12" />
             </svg>
           </button>
         </div>
 
         <div className="p-8 max-h-[60vh] overflow-y-auto chat-scroll space-y-6">
+          {blurbText && (
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 p-6 space-y-4">
+              <div className="space-y-2">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold block">
+                  Hiring &amp; Operational Evidence
+                </span>
+                <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
+                  {blurbText}
+                </p>
+              </div>
+              {relevantStudies.length > 0 && (
+                <button
+                  onClick={() => {
+                    onNavigateToStudy(relevantStudies[0].id);
+                    onClose();
+                  }}
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#237f86] dark:text-tide-sky hover:underline"
+                >
+                  Read Full Documentation <span>→</span>
+                </button>
+              )}
+            </div>
+          )}
+
           {relevantStudies.length > 0 ? (
             <>
-              {isSecondary && evidenceNote && (
-                <div className="flex gap-3 rounded-xl border border-tide-blue/30 bg-tide-blue/10 p-4 text-tide-blue dark:text-tide-sky">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-4 h-4 mt-0.5 shrink-0"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M12 9v4" />
-                    <path d="M12 17h.01" />
-                    <circle cx="12" cy="12" r="10" />
-                  </svg>
-                  <p className="text-xs leading-relaxed">{evidenceNote}</p>
-                </div>
-              )}
               <div className="grid gap-4">
                 {relevantStudies.map((study) => (
                   <button
