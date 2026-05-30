@@ -1,7 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { ExperienceItem, SkillGroup, Certification, ProjectEntry, SkillChipConfig } from './types';
 import { CASE_STUDY_CONTENT } from './data/caseStudyData';
-import { LUXE_LOFTS_MOCKUP_HTML, OPS_TRIAGE_MOCKUP_HTML } from './mockups';
 
 export const EXPERIENCE: ExperienceItem[] = [
   {
@@ -390,7 +389,8 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
       type: 'html',
       label: 'Luxe Lofts: Operational Hub',
       description: 'Functional Rate Engine, AI Planning ingress, and CRM path orchestration.',
-      content: LUXE_LOFTS_MOCKUP_HTML,
+      content: '',
+      iframeUrl: 'https://luxe-lofts-roadmap-repo-786228485832.us-central1.run.app/',
     },
     rigor: {
       statement: 'Fragmentation is the friction that kills conversion paths.',
@@ -408,12 +408,7 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
     tags: ['Data QA / Validation', 'Operational Throughput', 'Issue Triage', 'ESRI ArcMap'],
     roleLanes: ['Solutions Architect', 'Spatial Systems Architect'],
     content: CASE_STUDY_CONTENT['ops-triage'],
-    heroArtifact: {
-      type: 'html',
-      label: 'Operational Triage Dashboard',
-      description: 'Synthetic dashboard demonstrating throughput tracking and error visibility.',
-      content: OPS_TRIAGE_MOCKUP_HTML,
-    },
+    heroArtifact: undefined,
     rigor: {
       statement: 'The system defines the result. Optimize for flow AND trust.',
       baseline: 'Legacy workflows applied a single pace to disparate data risks.',
@@ -445,24 +440,9 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
     heroArtifact: {
       type: 'html',
       label: 'Guynode Data Access Flow',
-      description:
-        'High-level architecture flow for public spatial data access and dataset governance.',
-      content: `<div style="font-family:Inter,system-ui,sans-serif;background:#faf8f5;border:1px solid #e5e7eb;border-radius:14px;padding:16px;max-width:640px;color:#0f172a;">
-  <h4 style="margin:0 0 12px;font-size:14px;letter-spacing:.04em;text-transform:uppercase;color:#475569;">Guynode Data Access Flow</h4>
-  <div style="display:grid;gap:8px;">
-    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">Legacy files</div>
-    <div style="text-align:center;color:#14b8a6;">↓</div>
-    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">Dataset registry</div>
-    <div style="text-align:center;color:#14b8a6;">↓</div>
-    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">Metadata and category structure</div>
-    <div style="text-align:center;color:#14b8a6;">↓</div>
-    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">Catalog / search / filter</div>
-    <div style="text-align:center;color:#14b8a6;">↓</div>
-    <div style="padding:10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">Map preview or download path</div>
-    <div style="text-align:center;color:#14b8a6;">↓</div>
-    <div style="padding:10px;border:1px solid #99f6e4;border-radius:10px;background:#f0fdfa;">Public user access</div>
-  </div>
-</div>`,
+      description: 'Live interactive spatial data hub redesign mockup.',
+      content: '',
+      iframeUrl: 'https://guynode-spatial-data-hub-786228485832.us-central1.run.app/',
     },
     rigor: {
       statement:
@@ -566,6 +546,11 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
         problem: 'Generated navigation commands could create unsafe or broken behavior.',
         tradeoff:
           'Only approved route/action commands are supported, and unknown commands are ignored.',
+      },
+      {
+        problem: 'Session state drift and hallucination risk in long conversations.',
+        tradeoff:
+          'Strict token caps and session history trimming to enforce safe context boundaries.',
       },
     ],
   },

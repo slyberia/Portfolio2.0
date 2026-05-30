@@ -69,7 +69,7 @@ const FlagshipSystemSection: React.FC<FlagshipSystemSectionProps> = ({ guynodeHr
       source = 'implementation';
     }
 
-    const prompt = `Tell me about the "${artifact.title}" in the Guynode flagship spatial platform. What does this demonstrate regarding systems delivery?`;
+    const prompt = `I see you are reviewing the **${artifact.title}**. I can summarize its business value for you, or break down the technical implementation. What would you like to know?`;
 
     window.dispatchEvent(
       new CustomEvent('open-digital-twin', {
@@ -77,6 +77,7 @@ const FlagshipSystemSection: React.FC<FlagshipSystemSectionProps> = ({ guynodeHr
           source,
           starterPrompt: prompt,
           modeLabel: 'Guynode Flagship',
+          suggestions: ['Explain the technical implementation', 'What was the business impact?'],
         },
       }),
     );
@@ -173,7 +174,7 @@ const FlagshipSystemSection: React.FC<FlagshipSystemSectionProps> = ({ guynodeHr
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-xs font-semibold rounded-lg px-3.5 py-2 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] border border-teal-500/20 bg-teal-500/5 hover:bg-teal-500/10 text-teal-600 dark:text-teal-400 shadow-sm"
                 >
-                  Redesigned Mockup Hub
+                  Redesigned Portal Preview
                   <span aria-hidden="true">↗</span>
                 </a>
               </div>
@@ -190,25 +191,24 @@ const FlagshipSystemSection: React.FC<FlagshipSystemSectionProps> = ({ guynodeHr
             {PROOF_ARTIFACTS.map((artifact, index) => (
               <article
                 key={artifact.title}
-                role="button"
-                tabIndex={0}
-                onClick={() => handleArtifactClick(artifact)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    handleArtifactClick(artifact);
-                  }
-                }}
-                className="flagship-sheen-card animate-fade-in-up cursor-pointer rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-white/95 dark:bg-slate-900/70 p-4 md:p-5 shadow-[0_8px_24px_rgba(15,23,42,0.06)] hover:border-amber-500/40 dark:hover:border-amber-500/30 hover:scale-[1.01] transition-all duration-300 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
+                className="flagship-sheen-card animate-fade-in-up rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-white/95 dark:bg-slate-900/70 p-4 md:p-5 shadow-[0_8px_24px_rgba(15,23,42,0.06)] hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-300 group"
                 style={{ animationDelay: `${index * 80 + 100}ms` }}
               >
                 <div className="flex justify-between items-start">
                   <h3 className="text-base font-semibold text-ink-navy dark:text-white group-hover:text-tide-aqua dark:group-hover:text-tide-softBlue transition-colors">
                     {artifact.title}
                   </h3>
-                  <span className="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 group-hover:text-amber-500 dark:group-hover:text-amber-400 transition-colors uppercase tracking-wider flex items-center gap-1 shrink-0 ml-2">
-                    Ask AI <span>→</span>
-                  </span>
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      handleArtifactClick(artifact);
+                    }}
+                    aria-label={`Ask AI about ${artifact.title}`}
+                    className="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 hover:text-amber-500 dark:hover:text-amber-400 transition-colors uppercase tracking-wider flex items-center gap-1 shrink-0 ml-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded px-1 -mr-1 py-1"
+                  >
+                    Ask AI <span aria-hidden="true">→</span>
+                  </button>
                 </div>
                 <p className="mt-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                   {artifact.description}

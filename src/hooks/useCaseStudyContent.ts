@@ -12,7 +12,9 @@ const looksLikeAppShellHtml = (contentType: string | null, text: string) => {
   const normalizedText = text.trim().toLowerCase();
   const isHtmlByType = (contentType ?? '').toLowerCase().includes('text/html');
   const startsAsHtml =
-    normalizedText.startsWith('<!doctype html') || normalizedText.startsWith('<html');
+    normalizedText.startsWith('<!doctype html') ||
+    normalizedText.startsWith('<html') ||
+    normalizedText.startsWith('<div');
   const containsAppShellMarker = APP_SHELL_MARKERS.some((marker) =>
     normalizedText.includes(marker.toLowerCase()),
   );
@@ -32,7 +34,12 @@ export function useCaseStudyContent(studyId: string): CaseStudyContentState {
 
     setState({ content: '', isLoading: true, error: null });
 
-    fetch(`/projects/${studyId}.md`)
+    const fetchPath =
+      studyId === 'guynode' || studyId === 'digital-twin'
+        ? `/markdown/projects/${studyId}.md`
+        : `/case-studies/${studyId}.md`;
+
+    fetch(fetchPath)
       .then(async (res) => {
         if (!res.ok) {
           setState({ content: '', isLoading: false, error: null });

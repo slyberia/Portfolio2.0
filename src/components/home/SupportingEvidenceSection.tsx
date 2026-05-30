@@ -22,6 +22,34 @@ const SupportingEvidenceSection: React.FC = () => {
     return [...featured, ...supporting].filter((item) => item.filters.includes(activeFilter));
   }, [activeFilter, featured, supporting]);
 
+  const handleAskAI = (e: React.MouseEvent, item: (typeof featured)[0]) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    let source = 'general';
+    if (item.canonicalRoleLanes.includes('Spatial Systems Architect')) source = 'gis';
+    else if (item.canonicalRoleLanes.includes('Solutions Architect')) source = 'qa';
+    else if (
+      item.canonicalRoleLanes.includes('Forward Deployed Engineer') ||
+      item.canonicalRoleLanes.includes('AI Workflow / Portfolio Governance')
+    ) {
+      source = 'implementation';
+    }
+
+    const prompt = `I see you are reviewing **${item.displayTitle}**. I can summarize its business value for you, or break down the technical implementation. What would you like to know?`;
+
+    window.dispatchEvent(
+      new CustomEvent('open-digital-twin', {
+        detail: {
+          source,
+          starterPrompt: prompt,
+          modeLabel: 'Project Library',
+          suggestions: ['Explain the technical implementation', 'What was the business impact?'],
+        },
+      }),
+    );
+  };
+
   return (
     <section className="border-b border-[#d8e8ee] dark:border-white/5 bg-[#f5f9fb]/70 dark:bg-slate-950/60 py-20 px-6">
       <div className="max-w-7xl mx-auto space-y-8">
@@ -70,7 +98,11 @@ const SupportingEvidenceSection: React.FC = () => {
           {filteredItems.map((item) => (
             <article
               key={item.id}
-              className={`rounded-xl border px-4 py-4 md:px-5 shadow-[0_4px_12px_rgba(15,23,42,0.05)] ${getProjectAccentRecipe(item.accent).borderClass} bg-white/95 dark:bg-slate-900/70`}
+              className={`rounded-xl border px-4 py-4 md:px-5 shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-colors duration-300 ${
+                item.flagship
+                  ? 'border-gild/40 bg-gild/5 dark:bg-gild-deep/10'
+                  : `${getProjectAccentRecipe(item.accent).borderClass} bg-white/95 dark:bg-slate-900/70`
+              }`}
             >
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="text-[10px] font-mono uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
@@ -80,9 +112,18 @@ const SupportingEvidenceSection: React.FC = () => {
                   {item.proofType}
                 </span>
               </div>
-              <h3 className="mt-3 text-base font-semibold text-ink-navy dark:text-white">
-                {item.displayTitle}
-              </h3>
+              <div className="mt-3 flex justify-between items-start group">
+                <h3 className="text-base font-semibold text-ink-navy dark:text-white group-hover:text-tide-aqua dark:group-hover:text-tide-softBlue transition-colors">
+                  {item.displayTitle}
+                </h3>
+                <button
+                  onClick={(e) => handleAskAI(e, item)}
+                  aria-label={`Ask AI about ${item.displayTitle}`}
+                  className="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 hover:text-amber-500 dark:hover:text-amber-400 transition-colors uppercase tracking-wider flex items-center gap-1 shrink-0 ml-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded px-1 -mr-1 py-1"
+                >
+                  Ask AI <span aria-hidden="true">→</span>
+                </button>
+              </div>
               <p className="mt-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                 {item.shortSummary}
               </p>

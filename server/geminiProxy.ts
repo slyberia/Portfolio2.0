@@ -85,6 +85,9 @@ const ALLOWED_TOPICS = [
   'ai-assisted development',
   'prompt governance',
   'contact',
+  'technical',
+  'explain',
+  'business',
 ];
 const ALLOWED_GREETINGS = new Set(['hi', 'hello', 'hey', 'help', 'what can you do?']);
 const EXPENSIVE_PATTERNS = [
@@ -142,6 +145,10 @@ Only append approved commands at the end when relevant:
 <<NAVIGATE:project:ops-triage>>
 <<ACTION:contact>>
 <<ACTION:resume>>
+
+Tone and Audience:
+When asked to explain a project or artifact, ALWAYS default to simple, accessible business language (focusing on value, impact, and "what" it does) suited for a non-technical recruiter. 
+IF the user explicitly asks for "technical" details, switch entirely to deep engineering terminology (focusing on architecture, code, and "how" it was built) suited for a Staff Engineer.
 `;
 
 type ChatOutcome = 'allowed' | 'blocked' | 'rate_limited' | 'validation_error' | 'error';

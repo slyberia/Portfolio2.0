@@ -67,10 +67,15 @@ export const HtmlPreviewCard: React.FC<{
   description?: string;
   isHero?: boolean;
   accentColor?: string;
-}> = ({ content, label, description, isHero = false, accentColor = 'indigo' }) => {
+  iframeUrl?: string;
+}> = ({ content, label, description, isHero = false, accentColor = 'indigo', iframeUrl }) => {
   const handleLaunch = () => {
-    const blob = new Blob([content], { type: 'text/html' });
-    window.open(URL.createObjectURL(blob), '_blank');
+    if (iframeUrl) {
+      window.open(iframeUrl, '_blank');
+    } else {
+      const blob = new Blob([content], { type: 'text/html' });
+      window.open(URL.createObjectURL(blob), '_blank');
+    }
   };
   const isRed = accentColor === 'red';
   return (
@@ -101,7 +106,8 @@ export const HtmlPreviewCard: React.FC<{
         aria-label={`Launch interactive prototype for ${label}`}
       >
         <iframe
-          srcDoc={content}
+          src={iframeUrl}
+          srcDoc={iframeUrl ? undefined : content}
           title={label}
           className="w-[200%] h-[200%] transform scale-50 origin-top-left pointer-events-none opacity-60 transition-all duration-500 group-hover/preview:opacity-100 group-hover/preview:scale-[0.51]"
           tabIndex={-1}
@@ -194,6 +200,7 @@ export const ArtifactGallery: React.FC<{
               content={art.content as string}
               label={art.label}
               description={art.description}
+              iframeUrl={art.iframeUrl}
             />
           ) : art.type === 'insight' && art.data ? (
             <div className="space-y-2">
