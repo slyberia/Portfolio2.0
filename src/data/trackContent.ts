@@ -100,7 +100,7 @@ export const implementationTrackContent: TrackPageContent = {
       relevance:
         'Information architecture proof showing role-lane alignment and recruiter-facing delivery clarity.',
       proofType: 'Documentation',
-      href: '/portfolio2/deep-dive#proof-hierarchy',
+      href: '/deep-dives#proof-hierarchy',
       roleChips: ['Forward Deployed Engineer'],
     },
   ],
@@ -177,7 +177,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
       relevance:
         'Validation proof for route integrity, content alignment, and reviewer-ready information architecture.',
       proofType: 'Documentation QA',
-      href: '/portfolio2/deep-dive#proof-hierarchy',
+      href: '/deep-dives#proof-hierarchy',
       roleChips: ['Solutions Architect'],
     },
   ],
@@ -194,7 +194,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
   ctaCopy: 'Inspect validation proof artifacts or continue to resume and contact.',
   ctaActions: [
     { label: 'Download Resume', href: '/resume' },
-    { label: 'View Supporting Evidence', href: '/portfolio2/deep-dive#ci-and-tests' },
+    { label: 'View Supporting Evidence', href: '/deep-dives#ci-and-tests' },
     {
       label: 'Ask the Digital Twin about QA proof',
       type: 'link',
@@ -263,7 +263,7 @@ export const gisTrackContent: TrackPageContent = {
       relevance:
         'Spatial portfolio delivery proof showing how GIS evidence is organized for recruiter retrieval.',
       proofType: 'Documentation',
-      href: '/portfolio2/deep-dive#proof-hierarchy',
+      href: '/deep-dives#proof-hierarchy',
       roleChips: ['Spatial Systems Architect'],
     },
   ],

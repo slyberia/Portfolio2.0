@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { PORTFOLIO_PROCESS_HREF } from '../../lib/routes';
+import { DEEP_DIVES_HREF } from '../../lib/routes';
 import {
   CANONICAL_ROLE_ACCENT,
   ProjectFilter,
@@ -66,7 +66,7 @@ const SupportingEvidenceSection: React.FC = () => {
         </div>
 
         <a
-          href={PORTFOLIO_PROCESS_HREF}
+          href={DEEP_DIVES_HREF}
           className="inline-flex text-xs font-semibold uppercase tracking-wider text-slate-500 hover:text-[#237f86] dark:text-slate-300 dark:hover:text-tide-softBlue"
         >
           View process deep dives →

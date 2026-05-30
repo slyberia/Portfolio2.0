@@ -33,7 +33,7 @@ const routes = [
     'Role track focused on implementation delivery, system integration, release reliability, and structured project execution.',
     'Technical Implementation Specialist Track',
     'Evidence of implementation planning, scoped execution, reliability controls, and system-delivery ownership across portfolio projects.',
-    ['/projects/guynode', '/projects/project-aegis', '/portfolio2/deep-dive'],
+    ['/projects/guynode', '/projects/project-aegis', '/deep-dives'],
     '/markdown/tracks/implementation.md',
   ],
   [
@@ -98,7 +98,7 @@ const routes = [
     'Flagship systems page showing metadata-driven architecture, GIS-oriented data operations, and implementation governance practices.',
     'Guynode (Flagship System)',
     'Flagship project demonstrating structured system architecture, spatial content organization, and implementation governance discipline.',
-    ['/tracks/implementation', '/tracks/gis', '/portfolio2/deep-dive'],
+    ['/tracks/implementation', '/tracks/gis', '/deep-dives'],
     '/markdown/projects/guynode.md',
   ],
   [
@@ -107,7 +107,7 @@ const routes = [
     'Featured AI implementation page covering constrained assistant design, workflow support, and production safety boundaries.',
     'Digital Twin (Featured AI Implementation)',
     'Featured AI implementation demonstrating scoped automation, safe prompt-routing boundaries, and measurable workflow support goals.',
-    ['/tracks/implementation', '/projects/prompter-hub', '/portfolio2/deep-dive'],
+    ['/tracks/implementation', '/projects/prompter-hub', '/deep-dives'],
     '/markdown/projects/digital-twin.md',
   ],
   [
@@ -124,7 +124,7 @@ const routes = [
     'Prompt workflow project focused on reusable prompt governance, quality controls, and operational AI support structure.',
     'Prompter Hub',
     'Project focused on practical prompt governance, reusable patterns, and low-risk AI workflow enablement for teams.',
-    ['/tracks/ops-analytics', '/projects/digital-twin', '/portfolio2/deep-dive'],
+    ['/tracks/ops-analytics', '/projects/digital-twin', '/deep-dives'],
   ],
   [
     '/projects/project-aegis',
@@ -132,7 +132,7 @@ const routes = [
     'Project Aegis implementation page covering quality controls, system hardening priorities, and delivery governance evidence.',
     'Project Aegis',
     'Implementation-focused project showing hardening strategy, reliability controls, and governance-aware execution patterns.',
-    ['/tracks/implementation', '/projects/ops-triage', '/portfolio2/deep-dive'],
+    ['/tracks/implementation', '/projects/ops-triage', '/deep-dives'],
   ],
   [
     '/projects/nba-systems-qa',
@@ -151,7 +151,7 @@ const routes = [
     ['/tracks/gis', '/projects/guynode'],
   ],
   [
-    '/portfolio2/deep-dive',
+    '/deep-dives',
     'Portfolio2.0 Deep Dive — Process and Governance',
     'Deep dive into Portfolio2.0 process, delivery timeline, governance decisions, testing evidence, and AI safety controls.',
     'Portfolio2.0 Deep Dive',
@@ -174,7 +174,7 @@ const routes = [
     'Route-level site index for crawler and no-JS navigation across primary portfolio sections and supporting resources.',
     'Site Index',
     'Human-readable site index for quick navigation across track pages, project pages, process documentation, and resume.',
-    ['/ai-index', '/projects', '/portfolio2/deep-dive'],
+    ['/ai-index', '/projects', '/deep-dives'],
     '/markdown/index.md',
   ],
   [

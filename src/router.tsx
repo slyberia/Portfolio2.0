@@ -514,12 +514,17 @@ export const routeDefinitions = [
         ),
       },
       {
-        path: 'portfolio2/deep-dive',
+        path: 'deep-dives',
         element: (
           <ErrorBoundary location="DeepDiveView">
             <DeepDiveView />
           </ErrorBoundary>
         ),
+      },
+      // Legacy routes to prevent 404s
+      {
+        path: 'portfolio2/deep-dive',
+        element: <Navigate to="/deep-dives" replace />,
       },
       {
         path: 'site-index',

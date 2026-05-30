@@ -249,6 +249,37 @@ const DeepDiveView: React.FC = () => {
     return () => window.removeEventListener('hashchange', syncSectionToHash);
   }, []);
 
+  const [activePhase, setActivePhase] = React.useState<string>('phase-1');
+  
+  React.useEffect(() => {
+    if (activeMainTab !== 'luxe-lofts') return;
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActivePhase(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: '-20% 0px -60% 0px' }
+    );
+    
+    ['phase-1', 'phase-2', 'phase-3', 'phase-4', 'phase-5', 'phase-6'].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    
+    return () => observer.disconnect();
+  }, [activeMainTab]);
+
+  const scrollToPhase = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const handleTabKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
     if (
       event.key !== 'ArrowRight' &&
@@ -270,7 +301,7 @@ const DeepDiveView: React.FC = () => {
     <div id="deep-dive-top" className="min-h-screen pt-20 pb-20 px-6">
       <ErrorBoundary location="Deep Dive View">
         <div className="max-w-6xl mx-auto space-y-12">
-          <div className="flex flex-wrap gap-4 border-b border-slate-200 dark:border-white/10 pb-4">
+          <div className="flex flex-wrap gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
             <button
               onClick={() => handleMainTabChange('process')}
               className={`text-lg font-bold px-4 py-2 rounded-t-lg transition ${activeMainTab === 'process' ? 'bg-slate-100 dark:bg-slate-800 text-navy-900 dark:text-white border-b-2 border-tide-aqua' : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'}`}
@@ -287,33 +318,51 @@ const DeepDiveView: React.FC = () => {
 
           {activeMainTab === 'process' ? (
             <div className="space-y-12">
-              <section className="space-y-4">
-                <p className="text-xs font-bold uppercase tracking-[0.3em] text-tide-aqua">
-                  Process
-                </p>
-                <h1 className="text-4xl font-outfit font-extrabold text-navy-900 dark:text-white">
-                  Portfolio 2.0 Process Deep Dive
-                </h1>
-                <p className={`${semanticTokens.text.body} max-w-4xl`}>
-                  This page documents how Portfolio 2.0 evolved from an AI-assisted prototype into a
-                  role-track portfolio system with dedicated project architecture, Digital Twin
-                  guardrails, site-wide navigation, and validation-backed implementation phases.
-                </p>
-                <p className={`${semanticTokens.text.body} max-w-4xl`}>
-                  Projects show what was built. Process shows how the portfolio was planned,
-                  governed, implemented, validated, and iterated.
-                </p>
-                <p className={`${semanticTokens.text.body} max-w-4xl`}>
-                  Use this page to inspect the planning logic, AI-assisted workflow, route
-                  migrations, project taxonomy, validation passes, and remaining cleanup work behind
-                  the portfolio.
-                </p>
-                <div className="flex flex-wrap gap-4 text-sm font-semibold text-[#237f86]">
-                  <Link to={PROJECTS_HREF}>View Projects Library</Link>
-                  <Link to={SITE_INDEX_HREF}>Open Site Index</Link>
-                  <Link to={DIGITAL_TWIN_PROJECT_HREF}>View Digital Twin Project</Link>
-                  <Link to={GUYNODE_SYSTEM_HREF}>View Guynode Project</Link>
-                  <Link to={RESUME_HREF}>View Resume</Link>
+              <section className="space-y-6">
+                <div className="space-y-4">
+                  <p className="text-xs font-bold uppercase tracking-[0.3em] text-tide-aqua">
+                    Process
+                  </p>
+                  <h1 className="text-4xl font-outfit font-extrabold text-slate-950 dark:text-white">
+                    Portfolio 2.0 Process Deep Dive
+                  </h1>
+                </div>
+
+                <div className={`p-6 md:p-8 rounded-2xl border space-y-6 ${componentRecipes.card.surface}`}>
+                  <div className="space-y-4 max-w-4xl">
+                    <p className="text-slate-600 dark:text-slate-200 text-lg leading-relaxed">
+                      This page documents how Portfolio 2.0 evolved from an AI-assisted prototype into a
+                      role-track portfolio system with dedicated project architecture, Digital Twin
+                      guardrails, site-wide navigation, and validation-backed implementation phases.
+                    </p>
+                    <p className="text-slate-600 dark:text-slate-200 leading-relaxed">
+                      Projects show what was built. Process shows how the portfolio was planned,
+                      governed, implemented, validated, and iterated.
+                    </p>
+                    <p className="text-slate-600 dark:text-slate-200 leading-relaxed">
+                      Use this page to inspect the planning logic, AI-assisted workflow, route
+                      migrations, project taxonomy, validation passes, and remaining cleanup work behind
+                      the portfolio.
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+                    <Link to={PROJECTS_HREF} className={componentRecipes.button.primary}>
+                      View Projects Library
+                    </Link>
+                    <Link to={SITE_INDEX_HREF} className={componentRecipes.button.secondary}>
+                      Open Site Index
+                    </Link>
+                    <Link to={DIGITAL_TWIN_PROJECT_HREF} className={componentRecipes.button.secondary}>
+                      Digital Twin Project
+                    </Link>
+                    <Link to={GUYNODE_SYSTEM_HREF} className={componentRecipes.button.secondary}>
+                      Guynode Project
+                    </Link>
+                    <Link to={RESUME_HREF} className={componentRecipes.button.secondary}>
+                      View Resume
+                    </Link>
+                  </div>
                 </div>
               </section>
 
@@ -363,7 +412,7 @@ const DeepDiveView: React.FC = () => {
                     This table captures phased implementation changes, why each shift mattered, and
                     the validation trail used to verify delivery outcomes.
                   </p>
-                  <div className="max-h-[36rem] overflow-y-auto overflow-x-auto rounded-xl border border-black/10 dark:border-white/10">
+                  <div className="max-h-[36rem] overflow-y-auto overflow-x-auto rounded-xl border border-black/10 dark:border-slate-800">
                     <table className="min-w-full text-sm">
                       <thead className="sticky top-0 bg-slate-100 dark:bg-slate-900 z-10">
                         <tr>
@@ -378,7 +427,7 @@ const DeepDiveView: React.FC = () => {
                         {buildTimeline.map((row) => (
                           <tr
                             key={row.phase}
-                            className="border-t border-black/10 dark:border-white/10 align-top"
+                            className="border-t border-black/10 dark:border-slate-800 align-top"
                           >
                             <td className="p-4 font-semibold">{row.phase}</td>
                             <td className="p-4">{row.changed}</td>
@@ -519,7 +568,7 @@ const DeepDiveView: React.FC = () => {
                   className={`scroll-mt-24 space-y-3 rounded-2xl border p-6 ${componentRecipes.card.surface}`}
                 >
                   <h2 className="text-2xl font-bold">Validation Trail</h2>
-                  <table className="min-w-full text-sm border border-black/10 dark:border-white/10">
+                  <table className="min-w-full text-sm border border-black/10 dark:border-slate-800">
                     <thead>
                       <tr className="bg-slate-100 dark:bg-slate-900/70">
                         <th className="text-left p-2">Area</th>
@@ -529,7 +578,7 @@ const DeepDiveView: React.FC = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="border-t border-black/10 dark:border-white/10">
+                      <tr className="border-t border-black/10 dark:border-slate-800">
                         <td className="p-2">Repo checks</td>
                         <td className="p-2">npm run typecheck / lint / test / build</td>
                         <td className="p-2">Passing in ledger trail</td>
@@ -537,13 +586,13 @@ const DeepDiveView: React.FC = () => {
                           Build includes non-blocking Vite chunk-size advisory.
                         </td>
                       </tr>
-                      <tr className="border-t border-black/10 dark:border-white/10">
+                      <tr className="border-t border-black/10 dark:border-slate-800">
                         <td className="p-2">Routing</td>
                         <td className="p-2">routing.test.tsx updates</td>
                         <td className="p-2">Validated</td>
                         <td className="p-2">Covers canonical and compatibility behavior.</td>
                       </tr>
-                      <tr className="border-t border-black/10 dark:border-white/10">
+                      <tr className="border-t border-black/10 dark:border-slate-800">
                         <td className="p-2">Project detail bugfix</td>
                         <td className="p-2">route param + loader fallback tests</td>
                         <td className="p-2">Validated</td>
@@ -551,7 +600,7 @@ const DeepDiveView: React.FC = () => {
                           Addresses projectId compatibility and app-shell fallback hardening.
                         </td>
                       </tr>
-                      <tr className="border-t border-black/10 dark:border-white/10">
+                      <tr className="border-t border-black/10 dark:border-slate-800">
                         <td className="p-2">Manual browser QA</td>
                         <td className="p-2">Interactive page checks</td>
                         <td className="p-2">Partial / iterative</td>
@@ -610,7 +659,47 @@ const DeepDiveView: React.FC = () => {
               </section>
             </div>
           ) : (
-            <div className="space-y-12">
+            <div className="flex flex-col md:flex-row gap-8">
+              {/* Left Sidebar Timeline */}
+              <aside className="hidden md:block w-48 shrink-0 relative">
+                <div className="sticky top-28 space-y-4 border-l-2 border-slate-200 dark:border-slate-800 py-4">
+                  {[
+                    { id: 'phase-1', label: 'Strategic Context' },
+                    { id: 'phase-2', label: 'Audit Diagnostics' },
+                    { id: 'phase-3', label: 'Solution Architecture' },
+                    { id: 'phase-4', label: 'KPI Dashboard' },
+                    { id: 'phase-5', label: 'Commercial Offering' },
+                    { id: 'phase-6', label: 'Prototype Bounding' },
+                  ].map((phase) => (
+                    <div key={phase.id} className="relative -ml-[9px] flex items-center">
+                      <button
+                        onClick={() => scrollToPhase(phase.id)}
+                        className="flex items-center gap-4 group w-full text-left focus:outline-none"
+                      >
+                        <span
+                          className={`w-4 h-4 rounded-full border-2 transition-colors duration-300 ${
+                            activePhase === phase.id
+                              ? 'bg-rose-500 border-rose-500 ring-4 ring-rose-500/20'
+                              : 'bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 group-hover:border-rose-400'
+                          }`}
+                        />
+                        <span
+                          className={`text-sm font-semibold transition-colors duration-300 ${
+                            activePhase === phase.id
+                              ? 'text-rose-600 dark:text-rose-400'
+                              : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'
+                          }`}
+                        >
+                          {phase.label}
+                        </span>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </aside>
+
+              {/* Main Content */}
+              <div className="flex-1 space-y-12 min-w-0">
               {/* Header and Context */}
               <section className="space-y-4">
                 <div className="flex items-center gap-2">
@@ -699,7 +788,7 @@ const DeepDiveView: React.FC = () => {
               </section>
 
               {/* Section 1: Visual vs. Operational Dichotomy */}
-              <section className="space-y-6">
+              <section id="phase-1" className="space-y-6 scroll-mt-24">
                 <div className="space-y-2">
                   <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
                     1. Strategic Context & "Visual vs. Operational" Dichotomy
@@ -713,7 +802,7 @@ const DeepDiveView: React.FC = () => {
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {/* Left Column: Brochure-Ware */}
-                  <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-white/10 dark:bg-slate-900/40 space-y-4">
+                  <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-[#0B0F19] space-y-4">
                     <div className="flex items-center gap-2 text-amber-600 dark:text-amber-500">
                       <span className="text-lg">📉</span>
                       <h3 className="font-bold text-lg">
@@ -805,7 +894,7 @@ const DeepDiveView: React.FC = () => {
               </section>
 
               {/* Section 2: Interactive Audit Diagnostics Panel */}
-              <section className="space-y-6">
+              <section id="phase-2" className="space-y-6 scroll-mt-24">
                 <div className="space-y-2">
                   <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
                     2. Interactive Audit Diagnostics Panel
@@ -818,7 +907,7 @@ const DeepDiveView: React.FC = () => {
                 </div>
 
                 {/* Sub-tab selection */}
-                <div className="flex flex-wrap gap-2 border-b border-slate-200 dark:border-white/10 pb-3">
+                <div className="flex flex-wrap gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
                   {(['visuals', 'ux', 'technical', 'content'] as const).map((tab) => (
                     <button
                       key={tab}
@@ -826,7 +915,7 @@ const DeepDiveView: React.FC = () => {
                       className={`text-sm font-semibold px-4 py-2 rounded-lg transition-all ${
                         activeDiagTab === tab
                           ? 'bg-rose-500 text-white shadow'
-                          : 'bg-white hover:bg-slate-50 text-slate-600 border border-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-300 dark:border-white/10'
+                          : 'bg-white hover:bg-slate-50 text-slate-600 border border-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-300 dark:border-slate-800'
                       }`}
                     >
                       {tab === 'visuals' && '🎨 Brand & Visuals'}
@@ -838,7 +927,7 @@ const DeepDiveView: React.FC = () => {
                 </div>
 
                 {/* Tab content panel */}
-                <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-white/10 dark:bg-slate-900/40 space-y-6">
+                <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-[#0B0F19] space-y-6">
                   {activeDiagTab === 'visuals' && (
                     <div className="space-y-4">
                       <div className="border-l-4 border-rose-500 pl-4 space-y-1">
@@ -1030,7 +1119,7 @@ const DeepDiveView: React.FC = () => {
               </section>
 
               {/* Section 3: Structured Solution Architecture & "4 Pillars" */}
-              <section className="space-y-6">
+              <section id="phase-3" className="space-y-6 scroll-mt-24">
                 <div className="space-y-2">
                   <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
                     3. Structured Solution Architecture & "4 Pillars"
@@ -1044,7 +1133,7 @@ const DeepDiveView: React.FC = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Pillar 1 */}
-                  <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-white/10 dark:bg-slate-900/40 space-y-2">
+                  <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
                     <span className="text-2xl">🖼️</span>
                     <h3 className="font-bold text-navy-900 dark:text-white text-base">
                       Pillar 1: High-Conversion Brand Showcase
@@ -1058,7 +1147,7 @@ const DeepDiveView: React.FC = () => {
                   </div>
 
                   {/* Pillar 2 */}
-                  <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-white/10 dark:bg-slate-900/40 space-y-2">
+                  <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
                     <span className="text-2xl">🎯</span>
                     <h3 className="font-bold text-navy-900 dark:text-white text-base">
                       Pillar 2: Guided Intent Intake Engine
@@ -1071,7 +1160,7 @@ const DeepDiveView: React.FC = () => {
                   </div>
 
                   {/* Pillar 3 */}
-                  <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-white/10 dark:bg-slate-900/40 space-y-2">
+                  <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
                     <span className="text-2xl">🔑</span>
                     <h3 className="font-bold text-navy-900 dark:text-white text-base">
                       Pillar 3: Unified Client Planning Portal
@@ -1085,7 +1174,7 @@ const DeepDiveView: React.FC = () => {
                   </div>
 
                   {/* Pillar 4 */}
-                  <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-white/10 dark:bg-slate-900/40 space-y-2">
+                  <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
                     <span className="text-2xl">📊</span>
                     <h3 className="font-bold text-navy-900 dark:text-white text-base">
                       Pillar 4: Unified Admin Triage Dashboard
@@ -1100,7 +1189,7 @@ const DeepDiveView: React.FC = () => {
               </section>
 
               {/* Section 4: Dual-Perspective KPI Dashboard */}
-              <section className="space-y-6">
+              <section id="phase-4" className="space-y-6 scroll-mt-24">
                 <div className="space-y-4 md:flex md:items-center md:justify-between">
                   <div className="space-y-2">
                     <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
@@ -1112,7 +1201,7 @@ const DeepDiveView: React.FC = () => {
                     </p>
                   </div>
                   {/* View switcher */}
-                  <div className="flex bg-slate-100 dark:bg-slate-900 p-1 rounded-xl shrink-0 border border-slate-200 dark:border-white/10">
+                  <div className="flex bg-slate-100 dark:bg-slate-900 p-1 rounded-xl shrink-0 border border-slate-200 dark:border-slate-800">
                     <button
                       onClick={() => setKpiView('owner')}
                       className={`text-xs font-semibold px-4 py-2 rounded-lg transition-all ${
@@ -1141,7 +1230,7 @@ const DeepDiveView: React.FC = () => {
                   {kpiView === 'owner' ? (
                     <>
                       {/* Metric 1 */}
-                      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-2">
+                      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
                         <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
                           Lead Qualification Accuracy
                         </span>
@@ -1153,7 +1242,7 @@ const DeepDiveView: React.FC = () => {
                         </p>
                       </div>
                       {/* Metric 2 */}
-                      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-2">
+                      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
                         <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
                           Administrative Overhead
                         </span>
@@ -1165,7 +1254,7 @@ const DeepDiveView: React.FC = () => {
                         </p>
                       </div>
                       {/* Metric 3 */}
-                      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-2">
+                      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
                         <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
                           Average Contract Value
                         </span>
@@ -1177,7 +1266,7 @@ const DeepDiveView: React.FC = () => {
                         </p>
                       </div>
                       {/* Metric 4 */}
-                      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-2">
+                      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
                         <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
                           Booking Funnel Conversion
                         </span>
@@ -1193,7 +1282,7 @@ const DeepDiveView: React.FC = () => {
                   ) : (
                     <>
                       {/* Metric 1 */}
-                      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-2">
+                      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
                         <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
                           Pipeline First-Pass Yield (FPY)
                         </span>
@@ -1206,7 +1295,7 @@ const DeepDiveView: React.FC = () => {
                         </p>
                       </div>
                       {/* Metric 2 */}
-                      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-2">
+                      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
                         <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
                           System Backlog SLA Risk
                         </span>
@@ -1218,7 +1307,7 @@ const DeepDiveView: React.FC = () => {
                         </p>
                       </div>
                       {/* Metric 3 */}
-                      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-2">
+                      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
                         <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
                           Microservices Latency
                         </span>
@@ -1231,7 +1320,7 @@ const DeepDiveView: React.FC = () => {
                         </p>
                       </div>
                       {/* Metric 4 */}
-                      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-2">
+                      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
                         <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
                           Incident Defect Leakage
                         </span>
@@ -1248,7 +1337,7 @@ const DeepDiveView: React.FC = () => {
               </section>
 
               {/* Section 5: Commercial Offering / Pricing Tiers */}
-              <section className="space-y-6">
+              <section id="phase-5" className="space-y-6 scroll-mt-24">
                 <div className="space-y-2">
                   <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
                     5. Commercial Offering & Pricing Menu
@@ -1262,7 +1351,7 @@ const DeepDiveView: React.FC = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {/* Package 1 */}
-                  <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-4 flex flex-col justify-between">
+                  <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-4 flex flex-col justify-between">
                     <div className="space-y-2">
                       <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">
                         Tier 1
@@ -1287,7 +1376,7 @@ const DeepDiveView: React.FC = () => {
                   </div>
 
                   {/* Package 2 */}
-                  <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-4 flex flex-col justify-between">
+                  <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-4 flex flex-col justify-between">
                     <div className="space-y-2">
                       <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">
                         Tier 2
@@ -1340,7 +1429,7 @@ const DeepDiveView: React.FC = () => {
                   </div>
 
                   {/* Package 4 */}
-                  <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-4 flex flex-col justify-between">
+                  <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-4 flex flex-col justify-between">
                     <div className="space-y-2">
                       <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">
                         Tier 4
@@ -1367,7 +1456,7 @@ const DeepDiveView: React.FC = () => {
               </section>
 
               {/* Section 6: Prototype Bounding & Production Roadmap */}
-              <section className="space-y-6 pt-6 border-t border-slate-100 dark:border-white/5">
+              <section id="phase-6" className="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-800 scroll-mt-24">
                 <div className="space-y-2">
                   <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
                     6. Prototype Bounding & Production Roadmap
@@ -1382,7 +1471,7 @@ const DeepDiveView: React.FC = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {/* Item 1 */}
-                  <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-3 flex flex-col justify-between">
+                  <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-3 flex flex-col justify-between">
                     <div className="space-y-2">
                       <div className="flex items-center gap-2 text-rose-500 font-bold text-sm">
                         <span>🔒</span>
@@ -1408,7 +1497,7 @@ const DeepDiveView: React.FC = () => {
                   </div>
 
                   {/* Item 2 */}
-                  <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-3 flex flex-col justify-between">
+                  <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-3 flex flex-col justify-between">
                     <div className="space-y-2">
                       <div className="flex items-center gap-2 text-rose-500 font-bold text-sm">
                         <span>🤖</span>
@@ -1435,7 +1524,7 @@ const DeepDiveView: React.FC = () => {
                   </div>
 
                   {/* Item 3 */}
-                  <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-3 flex flex-col justify-between">
+                  <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-3 flex flex-col justify-between">
                     <div className="space-y-2">
                       <div className="flex items-center gap-2 text-rose-500 font-bold text-sm">
                         <span>📅</span>
@@ -1490,6 +1579,7 @@ const DeepDiveView: React.FC = () => {
                   </ul>
                 </div>
               </section>
+            </div>
             </div>
           )}
         </div>
