@@ -81,7 +81,7 @@ const SkillDiscoveryModal: React.FC<SkillDiscoveryModalProps> = ({
 
         <div className="p-8 max-h-[60vh] overflow-y-auto chat-scroll space-y-6">
           {blurbText && (
-            <div className="rounded-2xl border border-slate-200 dark:border-slate-850 bg-slate-50 dark:bg-slate-900/60 p-6 space-y-4">
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 p-6 space-y-4">
               <div className="space-y-2">
                 <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold block">
                   Hiring &amp; Operational Evidence
