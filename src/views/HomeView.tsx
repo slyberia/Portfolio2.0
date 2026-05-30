@@ -196,12 +196,12 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
   const getCategoryColorClass = (category: string) => {
     if (category.includes('Technical')) {
-      return 'hover:border-tide-aqua/60 hover:bg-tide-aqua/10 dark:hover:bg-tide-aqua/10 hover:text-[#237f86] dark:hover:text-tide-aqua focus-visible:ring-tide-aqua';
+      return 'border-tide-aqua/30 bg-tide-aqua/5 text-[#1e6b70] dark:text-tide-sky dark:bg-tide-aqua/10 dark:border-tide-aqua/20 hover:border-tide-aqua/60 hover:bg-tide-aqua/15 hover:text-[#18565a] dark:hover:text-white focus-visible:ring-tide-aqua';
     }
     if (category.includes('Operations')) {
-      return 'hover:border-tide-softBlue/60 hover:bg-tide-blue/10 dark:hover:bg-tide-blue/10 hover:text-tide-blue dark:hover:text-tide-softBlue focus-visible:ring-tide-blue';
+      return 'border-tide-blue/30 bg-tide-blue/5 text-tide-blue dark:text-tide-softBlue dark:bg-tide-blue/10 dark:border-tide-blue/20 hover:border-tide-blue/60 hover:bg-tide-blue/15 hover:text-tide-blue dark:hover:text-white focus-visible:ring-tide-blue';
     }
-    return 'hover:border-tide-cyan/60 hover:bg-tide-cyan/10 dark:hover:bg-tide-cyan/10 hover:text-tide-cyan dark:hover:text-tide-cyan focus-visible:ring-tide-cyan';
+    return 'border-tide-cyan/30 bg-tide-cyan/5 text-tide-cyan dark:text-tide-cyan dark:bg-tide-cyan/10 dark:border-tide-cyan/20 hover:border-tide-cyan/60 hover:bg-tide-cyan/15 hover:text-tide-cyan dark:hover:text-white focus-visible:ring-tide-cyan';
   };
 
   const roleTrackCards = [
@@ -558,6 +558,37 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
       <SupportingEvidenceSection />
 
+      {/* Deep Dives Feature Block */}
+      <section className="py-16 px-6 bg-slate-50 dark:bg-slate-900 border-y border-slate-200 dark:border-slate-800">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-8 items-center">
+          <div className="md:col-span-8 space-y-4">
+            <span className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400 font-bold">
+              DEEP_DIVES
+            </span>
+            <h2 className="text-3xl font-outfit font-extrabold text-ink-navy dark:text-white">
+              Process, Governance &amp; Strategy
+            </h2>
+            <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
+              Go beyond the final products to explore the strategic decisions, architectural trade-offs, and automated review systems that shape this portfolio. Learn how advanced AI workflow orchestration and rigorous validation frameworks guarantee system reliability.
+            </p>
+          </div>
+          <div className="md:col-span-4 flex flex-col sm:flex-row md:flex-col gap-3 md:justify-end">
+            <Link
+              to="/deep-dives?tab=process"
+              className="inline-flex justify-center items-center gap-2 px-5 py-3 rounded-xl bg-slate-950 hover:bg-slate-850 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-950 text-sm font-semibold transition-all hover:-translate-y-0.5 shadow-sm hover:shadow-md"
+            >
+              Process &amp; Governance Deep Dive <span>→</span>
+            </Link>
+            <Link
+              to="/deep-dives?tab=luxe-lofts"
+              className="inline-flex justify-center items-center gap-2 px-5 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900 text-sm font-semibold transition-all hover:-translate-y-0.5"
+            >
+              Luxe Lofts Redesign Strategy <span>→</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Experience */}
       <section id="experience" className="py-20 px-6 scroll-mt-24 transition-colors duration-500">
         <div className="max-w-7xl mx-auto">
@@ -736,7 +767,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                       const titleText = chipConfig?.evidenceNote;
                       const isActive = activeSkillName === skill.name;
                       const baseChipClass =
-                        'h-8 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md border border-[#d8d2c7] dark:border-white/10 bg-slate-50 dark:bg-slate-900/80 text-slate-700 dark:text-slate-200';
+                        'h-8 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md border';
 
                       return (
                         <button

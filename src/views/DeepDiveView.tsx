@@ -301,6 +301,19 @@ const DeepDiveView: React.FC = () => {
     <div id="deep-dive-top" className="min-h-screen pt-20 pb-20 px-6">
       <ErrorBoundary location="Deep Dive View">
         <div className="max-w-6xl mx-auto space-y-12">
+          {/* Contextual Landing Header */}
+          <div className="space-y-4 text-center max-w-4xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-[0.3em] text-tide-aqua dark:text-tide-sky">
+              OPERATIONAL_INTELLIGENCE
+            </span>
+            <h1 className="text-4xl md:text-5xl font-outfit font-extrabold text-slate-950 dark:text-white tracking-tight">
+              Process &amp; Strategy Deep Dives
+            </h1>
+            <p className="text-base text-slate-650 dark:text-slate-350 max-w-2xl mx-auto leading-relaxed">
+              Analyze the engineering timelines, multi-LLM workflows, and commercial restructuring strategies behind this portfolio. These deep dives verify the strategic governance and rigorous validation backing every project.
+            </p>
+          </div>
+
           <div className="flex flex-wrap gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
             <button
               onClick={() => handleMainTabChange('process')}
@@ -620,24 +633,28 @@ const DeepDiveView: React.FC = () => {
                 </section>
               )}
 
-              <section id="decision-log" className="scroll-mt-24">
-                <h2 className="text-2xl font-bold">Decision Log</h2>
-                <p className="mt-2">
+              <section
+                id="decision-log"
+                className={`scroll-mt-24 rounded-2xl border p-6 md:p-8 space-y-4 ${componentRecipes.card.surface}`}
+              >
+                <h2 className="text-2xl font-outfit font-bold text-ink-navy dark:text-white">Decision Log</h2>
+                <p className="text-slate-650 dark:text-slate-350 leading-relaxed text-sm">
                   Key decisions: migrate to canonical projects routes, preserve compatibility
                   aliases during transition, promote Guynode and Digital Twin as flagship proof
                   systems, centralize metadata, and keep Process separate from Projects browsing for
                   reviewer clarity.
                 </p>
               </section>
+
               {activeSection === 'evidence-ledger' && (
                 <section
                   id="evidence-ledger"
                   role="tabpanel"
                   aria-labelledby="process-tab-evidence-ledger"
-                  className={`scroll-mt-24 rounded-2xl border p-6 ${componentRecipes.card.surface}`}
+                  className={`scroll-mt-24 rounded-2xl border p-6 md:p-8 space-y-4 ${componentRecipes.card.surface}`}
                 >
-                  <h2 className="text-2xl font-bold">Evidence Ledger</h2>
-                  <p className="mt-2">
+                  <h2 className="text-2xl font-outfit font-bold text-ink-navy dark:text-white">Evidence Ledger</h2>
+                  <p className="text-slate-655 dark:text-slate-355 leading-relaxed text-sm">
                     The public Process page summarizes the build. The evidence ledger records the
                     deeper source trail: files, phases, decisions, Git evidence, validation notes,
                     and remaining risks. In this repo, it is maintained as an internal documentation
@@ -645,16 +662,24 @@ const DeepDiveView: React.FC = () => {
                   </p>
                 </section>
               )}
-              <section id="governance-logs" className="scroll-mt-24">
-                <h2 className="text-2xl font-bold">Governance & Implementation Logs</h2>
-                <p className="mt-2 text-ink-slate dark:text-slate-200">
+
+              <section
+                id="governance-logs"
+                className={`scroll-mt-24 rounded-2xl border p-6 md:p-8 space-y-4 ${componentRecipes.card.surface}`}
+              >
+                <h2 className="text-2xl font-outfit font-bold text-ink-navy dark:text-white">Governance &amp; Implementation Logs</h2>
+                <p className="text-slate-650 dark:text-slate-355 leading-relaxed text-sm">
                   Audit logs for the Portfolio 2.0 implementation phases, including automated review
                   summaries, design system alignment reports, and accessibility validation trails.
                 </p>
               </section>
-              <section id="remaining-release-hardening" className="scroll-mt-24">
-                <h2 className="text-2xl font-bold">Remaining Release-Hardening Items</h2>
-                <ul className="list-disc pl-5 mt-2 space-y-1">
+
+              <section
+                id="remaining-release-hardening"
+                className={`scroll-mt-24 rounded-2xl border p-6 md:p-8 space-y-4 ${componentRecipes.card.surface}`}
+              >
+                <h2 className="text-2xl font-outfit font-bold text-ink-navy dark:text-white">Remaining Release-Hardening Items</h2>
+                <ul className="list-disc pl-5 space-y-2 text-slate-650 dark:text-slate-355 text-sm">
                   <li>Final browser-interactive QA sweep.</li>
                   <li>Scroll-to-top and long-page usability polish.</li>
                   <li>Contextual Digital Twin entry points on track pages.</li>
@@ -665,7 +690,7 @@ const DeepDiveView: React.FC = () => {
               </section>
             </div>
           ) : (
-            <div className="flex flex-col md:flex-row gap-8">
+            <div className="flex flex-col md:flex-row items-start gap-8">
               {/* Left Sidebar Timeline */}
               <aside className="hidden md:block w-48 shrink-0 relative">
                 <div className="sticky top-28 space-y-4 border-l-2 border-slate-200 dark:border-slate-800 py-4">
@@ -749,11 +774,11 @@ const DeepDiveView: React.FC = () => {
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div className="space-y-2">
                       <h3 className="text-lg font-bold text-navy-900 dark:text-white flex items-center gap-2">
-                        <span className="text-xl">🏛️</span> Deployed Luxe Lofts Mockup Website
+                        <span className="text-xl">🏛️</span> Proposed Luxe Lofts Redesign
                       </h3>
                       <p className="text-sm text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
                         Experience the premium frontend showcase deployed on **Google Cloud Run**.
-                        The mockup features client-side navigation, stylized booking package cards,
+                        The prototype features client-side navigation, stylized booking package cards,
                         and a demo AI Event Planner assistant.
                       </p>
                     </div>
@@ -763,7 +788,7 @@ const DeepDiveView: React.FC = () => {
                       rel="noopener noreferrer"
                       className="shrink-0 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white font-semibold text-sm px-5 py-3 transition shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
                     >
-                      Launch Mockup Prototype →
+                      Launch Proposed Redesign →
                     </a>
                   </div>
                 </section>
@@ -771,11 +796,14 @@ const DeepDiveView: React.FC = () => {
                 {/* Backlink to Simulator Callout */}
                 <section className="rounded-2xl border border-rose-500/20 bg-rose-500/5 p-6 dark:border-rose-500/30">
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                       <h3 className="text-lg font-bold text-navy-900 dark:text-white flex items-center gap-2">
                         <span className="text-xl">🎛️</span> Looking for the Operational Triage
                         Simulator?
                       </h3>
+                      <h4 className="text-xs font-mono uppercase tracking-wider text-rose-500 font-bold">
+                        Process Automation &amp; Ticket Telemetry Alignment
+                      </h4>
                       <p className="text-sm text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
                         While Luxe Lofts and the Operational Triage dashboard are distinct project
                         entries (representing local business strategy vs. high-velocity ticket queue

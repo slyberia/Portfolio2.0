@@ -22,18 +22,24 @@ const TRACK_ITEMS = [
     href: IMPLEMENTATION_TRACK_HREF,
     accent: 'aqua',
     accentClass: 'bg-tide-aqua',
+    hoverBgClass: 'hover:bg-tide-aqua/10 dark:hover:bg-tide-aqua/10',
+    hoverTextClass: 'hover:text-tide-aqua dark:hover:text-tide-aqua',
   },
   {
     label: 'Solutions Architect',
     href: QA_TRACK_HREF,
     accent: 'blue',
     accentClass: 'bg-tide-blue',
+    hoverBgClass: 'hover:bg-tide-blue/10 dark:hover:bg-tide-blue/10',
+    hoverTextClass: 'hover:text-tide-blue dark:hover:text-tide-softBlue',
   },
   {
     label: 'Spatial Systems Architect',
     href: GIS_TRACK_HREF,
     accent: 'cyan',
     accentClass: 'bg-tide-cyan',
+    hoverBgClass: 'hover:bg-tide-cyan/10 dark:hover:bg-tide-cyan/10',
+    hoverTextClass: 'hover:text-tide-cyan dark:hover:text-tide-cyan',
   },
 ] as const;
 
@@ -120,7 +126,7 @@ const TopNav: React.FC<TopNavProps> = ({ theme, toggleTheme, onOpenContact }) =>
             {/* Dropdown Panel */}
             {isDropdownOpen && (
               <div
-                className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-64 rounded-xl border bg-white dark:bg-[#0B0F19] border-slate-200 dark:border-slate-800 shadow-xl py-2 z-50 flex flex-col animate-in fade-in slide-in-from-top-1 duration-200"
+                className="absolute top-full left-1/2 -translate-x-1/2 pt-1 w-64 rounded-xl border bg-white dark:bg-[#0B0F19] border-slate-200 dark:border-slate-800 shadow-xl py-2 z-50 flex flex-col animate-in fade-in slide-in-from-top-1 duration-200"
                 role="menu"
               >
                 {TRACK_ITEMS.map((item) => {
@@ -131,10 +137,10 @@ const TopNav: React.FC<TopNavProps> = ({ theme, toggleTheme, onOpenContact }) =>
                       to={item.href}
                       role="menuitem"
                       onClick={() => setIsDropdownOpen(false)}
-                      className={`flex items-center gap-3 px-4 py-3 text-xs font-semibold border-l-2 transition-all ${
+                      className={`flex items-center gap-3 px-4 py-3 text-xs font-semibold border-l-2 transition-all bg-white dark:bg-[#0B0F19] ${
                         isItemActive
                           ? 'border-tide-aqua bg-slate-50 dark:bg-slate-900 text-tide-aqua dark:text-tide-softBlue'
-                          : 'border-transparent text-slate-700 dark:text-slate-300 hover:text-tide-aqua dark:hover:text-tide-softBlue hover:bg-slate-50 dark:hover:bg-slate-900/60'
+                          : `border-transparent text-slate-700 dark:text-slate-300 ${item.hoverBgClass} ${item.hoverTextClass}`
                       }`}
                     >
                       <span className={`w-2 h-2 rounded-full ${item.accentClass} shrink-0`} />

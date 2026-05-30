@@ -7,8 +7,6 @@ import ProofBlockCard from './ProofBlockCard';
 import { executiveEvidenceBlocks } from '../../utils/evidenceBlocks';
 import { mapEvidenceToProofCard } from '../../utils/mapEvidenceToProofCard';
 import { RecruiterRoleLane, VALID_RECRUITER_LANES } from '../../types';
-import MediaProofGrid from '../media/MediaProofGrid';
-import { getPublicMediaByRole } from '../../data/mediaRegistry';
 import SkillDiscoveryModal from '../SkillDiscoveryModal';
 
 interface RoleTrackPageProps {
@@ -322,17 +320,7 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
         </section>
       )}
 
-      {isRecruiterRoleLane(content.title) && getPublicMediaByRole(content.title).length > 0 && (
-        <section className="px-6 py-12">
-          <div className="max-w-5xl mx-auto">
-            <MediaProofGrid
-              title="Visual Proof"
-              description={`Verified screenshots for the ${content.title} role lane.`}
-              assets={getPublicMediaByRole(content.title)}
-            />
-          </div>
-        </section>
-      )}
+
 
       <section className="px-6 py-12 bg-slate-50/60 dark:bg-slate-900/20 border-y border-black/5 dark:border-white/5">
         <div className="max-w-5xl mx-auto space-y-5">
