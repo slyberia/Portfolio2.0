@@ -310,7 +310,9 @@ const DeepDiveView: React.FC = () => {
               Process &amp; Strategy Deep Dives
             </h1>
             <p className="text-base text-slate-650 dark:text-slate-350 max-w-2xl mx-auto leading-relaxed">
-              Analyze the engineering timelines, multi-LLM workflows, and commercial restructuring strategies behind this portfolio. These deep dives verify the strategic governance and rigorous validation backing every project.
+              Analyze the engineering timelines, multi-LLM workflows, and commercial restructuring
+              strategies behind this portfolio. These deep dives verify the strategic governance and
+              rigorous validation backing every project.
             </p>
           </div>
 
@@ -637,7 +639,9 @@ const DeepDiveView: React.FC = () => {
                 id="decision-log"
                 className={`scroll-mt-24 rounded-2xl border p-6 md:p-8 space-y-4 ${componentRecipes.card.surface}`}
               >
-                <h2 className="text-2xl font-outfit font-bold text-ink-navy dark:text-white">Decision Log</h2>
+                <h2 className="text-2xl font-outfit font-bold text-ink-navy dark:text-white">
+                  Decision Log
+                </h2>
                 <p className="text-slate-650 dark:text-slate-350 leading-relaxed text-sm">
                   Key decisions: migrate to canonical projects routes, preserve compatibility
                   aliases during transition, promote Guynode and Digital Twin as flagship proof
@@ -653,7 +657,9 @@ const DeepDiveView: React.FC = () => {
                   aria-labelledby="process-tab-evidence-ledger"
                   className={`scroll-mt-24 rounded-2xl border p-6 md:p-8 space-y-4 ${componentRecipes.card.surface}`}
                 >
-                  <h2 className="text-2xl font-outfit font-bold text-ink-navy dark:text-white">Evidence Ledger</h2>
+                  <h2 className="text-2xl font-outfit font-bold text-ink-navy dark:text-white">
+                    Evidence Ledger
+                  </h2>
                   <p className="text-slate-655 dark:text-slate-355 leading-relaxed text-sm">
                     The public Process page summarizes the build. The evidence ledger records the
                     deeper source trail: files, phases, decisions, Git evidence, validation notes,
@@ -667,7 +673,9 @@ const DeepDiveView: React.FC = () => {
                 id="governance-logs"
                 className={`scroll-mt-24 rounded-2xl border p-6 md:p-8 space-y-4 ${componentRecipes.card.surface}`}
               >
-                <h2 className="text-2xl font-outfit font-bold text-ink-navy dark:text-white">Governance &amp; Implementation Logs</h2>
+                <h2 className="text-2xl font-outfit font-bold text-ink-navy dark:text-white">
+                  Governance &amp; Implementation Logs
+                </h2>
                 <p className="text-slate-650 dark:text-slate-355 leading-relaxed text-sm">
                   Audit logs for the Portfolio 2.0 implementation phases, including automated review
                   summaries, design system alignment reports, and accessibility validation trails.
@@ -678,7 +686,9 @@ const DeepDiveView: React.FC = () => {
                 id="remaining-release-hardening"
                 className={`scroll-mt-24 rounded-2xl border p-6 md:p-8 space-y-4 ${componentRecipes.card.surface}`}
               >
-                <h2 className="text-2xl font-outfit font-bold text-ink-navy dark:text-white">Remaining Release-Hardening Items</h2>
+                <h2 className="text-2xl font-outfit font-bold text-ink-navy dark:text-white">
+                  Remaining Release-Hardening Items
+                </h2>
                 <ul className="list-disc pl-5 space-y-2 text-slate-650 dark:text-slate-355 text-sm">
                   <li>Final browser-interactive QA sweep.</li>
                   <li>Scroll-to-top and long-page usability polish.</li>
@@ -778,8 +788,8 @@ const DeepDiveView: React.FC = () => {
                       </h3>
                       <p className="text-sm text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
                         Experience the premium frontend showcase deployed on **Google Cloud Run**.
-                        The prototype features client-side navigation, stylized booking package cards,
-                        and a demo AI Event Planner assistant.
+                        The prototype features client-side navigation, stylized booking package
+                        cards, and a demo AI Event Planner assistant.
                       </p>
                     </div>
                     <a

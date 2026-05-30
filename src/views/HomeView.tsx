@@ -569,7 +569,10 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               Process, Governance &amp; Strategy
             </h2>
             <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
-              Go beyond the final products to explore the strategic decisions, architectural trade-offs, and automated review systems that shape this portfolio. Learn how advanced AI workflow orchestration and rigorous validation frameworks guarantee system reliability.
+              Go beyond the final products to explore the strategic decisions, architectural
+              trade-offs, and automated review systems that shape this portfolio. Learn how advanced
+              AI workflow orchestration and rigorous validation frameworks guarantee system
+              reliability.
             </p>
           </div>
           <div className="md:col-span-4 flex flex-col sm:flex-row md:flex-col gap-3 md:justify-end">

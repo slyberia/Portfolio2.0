@@ -320,8 +320,6 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
         </section>
       )}
 
-
-
       <section className="px-6 py-12 bg-slate-50/60 dark:bg-slate-900/20 border-y border-black/5 dark:border-white/5">
         <div className="max-w-5xl mx-auto space-y-5">
           <h2 className={componentRecipes.typography.sectionHeading + ' ' + accent.textClass}>

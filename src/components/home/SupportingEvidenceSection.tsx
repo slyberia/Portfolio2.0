@@ -106,7 +106,8 @@ const SupportingEvidenceSection: React.FC = () => {
               style={
                 item.flagship
                   ? {
-                      background: 'linear-gradient(90deg, rgba(156, 122, 60, 0.15) 0%, rgba(255, 229, 150, 0.3) 20%, rgba(184, 149, 72, 0.15) 50%, rgba(255, 229, 150, 0.3) 80%, rgba(162, 126, 61, 0.2) 100%)',
+                      background:
+                        'linear-gradient(90deg, rgba(156, 122, 60, 0.15) 0%, rgba(255, 229, 150, 0.3) 20%, rgba(184, 149, 72, 0.15) 50%, rgba(255, 229, 150, 0.3) 80%, rgba(162, 126, 61, 0.2) 100%)',
                     }
                   : undefined
               }
