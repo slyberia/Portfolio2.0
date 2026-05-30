@@ -161,7 +161,12 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
   useEffect(() => {
     const handleOpenDigitalTwin = (
       event: Event & {
-        detail?: { source?: DigitalTwinMode; starterPrompt?: string; modeLabel?: string; suggestions?: string[] };
+        detail?: {
+          source?: DigitalTwinMode;
+          starterPrompt?: string;
+          modeLabel?: string;
+          suggestions?: string[];
+        };
       },
     ) => {
       const source = event.detail?.source ?? 'general';

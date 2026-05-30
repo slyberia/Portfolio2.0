@@ -173,5 +173,3 @@ export const PROMPTER_HUB_MOCKUP_HTML = `<!doctype html>
   </script>
 </body>
 </html>`;
-
-

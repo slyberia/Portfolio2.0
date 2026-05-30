@@ -211,7 +211,9 @@ const ProjectDetailView: React.FC = () => {
     useCaseStudyContent(activeProjectId);
   const displayContent = fetchedContent || activeProject?.content || '';
 
-  const [activeTab, setActiveTab] = useState<'overview' | 'architecture' | 'tradeoffs' | 'proofs'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'architecture' | 'tradeoffs' | 'proofs'>(
+    'overview',
+  );
 
   React.useEffect(() => {
     setActiveTab('overview');
@@ -265,7 +267,11 @@ const ProjectDetailView: React.FC = () => {
           <ProjectHero activeProjectTags={activeProject.tags} metadata={metadata} />
 
           <div className="border-b border-slate-200 dark:border-slate-800">
-            <div className="flex gap-6 overflow-x-auto" role="tablist" aria-label="Project Details Navigation">
+            <div
+              className="flex gap-6 overflow-x-auto"
+              role="tablist"
+              aria-label="Project Details Navigation"
+            >
               {tabsList.map((tab, idx) => {
                 const isActive = activeTab === tab.id;
                 return (
@@ -381,8 +387,13 @@ const ProjectDetailView: React.FC = () => {
                     </section>
                   ) : (
                     <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-slate-600 dark:border-white/10 dark:bg-slate-900/70">
-                      <p className="font-semibold text-slate-900 dark:text-white mb-2">Decision Journal Empty</p>
-                      <p className="text-sm">This supporting project represents direct systems implementation without active multi-stage trade-off constraints.</p>
+                      <p className="font-semibold text-slate-900 dark:text-white mb-2">
+                        Decision Journal Empty
+                      </p>
+                      <p className="text-sm">
+                        This supporting project represents direct systems implementation without
+                        active multi-stage trade-off constraints.
+                      </p>
                     </div>
                   )}
                 </div>
@@ -406,11 +417,11 @@ const ProjectDetailView: React.FC = () => {
                             Operational Triage Console
                           </h3>
                           <p className="text-sm text-slate-600 dark:text-slate-300 max-w-3xl">
-                            This interactive dashboard models the real-world operational triage controls
-                            built for the system turnaround. Adjust the Policy Slider to explore how the
-                            tradeoff decisions between raw pipeline throughput and quality assurance
-                            affect first-pass yield, incident leakage, unprocessed backlog capacity, and
-                            SLA risk.
+                            This interactive dashboard models the real-world operational triage
+                            controls built for the system turnaround. Adjust the Policy Slider to
+                            explore how the tradeoff decisions between raw pipeline throughput and
+                            quality assurance affect first-pass yield, incident leakage, unprocessed
+                            backlog capacity, and SLA risk.
                           </p>
                         </div>
                         <div className="pt-2 border-t border-slate-100 dark:border-white/5">
@@ -431,10 +442,10 @@ const ProjectDetailView: React.FC = () => {
                             Digital Twin Assistant
                           </h3>
                           <p className="text-sm text-slate-600 dark:text-slate-300 max-w-3xl mb-4">
-                            Engage with the Digital Twin directly. This custom AI assistant leverages
-                            Gemini with strict system instructions and portfolio-specific context. It
-                            demonstrates prompt engineering, context boundary enforcement, and safe
-                            fallback orchestration.
+                            Engage with the Digital Twin directly. This custom AI assistant
+                            leverages Gemini with strict system instructions and portfolio-specific
+                            context. It demonstrates prompt engineering, context boundary
+                            enforcement, and safe fallback orchestration.
                           </p>
                           <button
                             onClick={() => {
@@ -442,15 +453,25 @@ const ProjectDetailView: React.FC = () => {
                                 new CustomEvent('open-digital-twin', {
                                   detail: {
                                     source: 'general',
-                                    starterPrompt: "Hi! I'm Kyle's Digital Twin. Let's discuss my implementation details or test my guardrails.",
-                                    modeLabel: 'Interactive Proof Mode'
+                                    starterPrompt:
+                                      "Hi! I'm Kyle's Digital Twin. Let's discuss my implementation details or test my guardrails.",
+                                    modeLabel: 'Interactive Proof Mode',
                                   },
                                 }),
                               );
                             }}
                             className="inline-flex items-center gap-2 rounded-xl bg-tide-aqua px-6 py-3 text-sm font-bold text-white shadow-md transition-all hover:bg-tide-sky hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-tide-aqua focus:ring-offset-2 dark:focus:ring-offset-slate-900"
                           >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-5 w-5"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
                               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                             </svg>
                             Launch Interactive Proof
