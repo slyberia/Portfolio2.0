@@ -120,6 +120,7 @@ export interface CaseStudyArtifact {
   type: 'image' | 'code' | 'diagram' | 'link' | 'html' | 'tabs' | 'insight' | 'audit-log';
   label: string;
   content: string | CaseStudyArtifact[]; // content can be string or array of artifacts for tabs
+  iframeUrl?: string; // used for live embedded prototype links
   description?: string;
   data?: CaseStudyRigor;
   auditData?: AuditLogData;

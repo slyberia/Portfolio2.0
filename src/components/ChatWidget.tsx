@@ -108,6 +108,7 @@ const FALLBACK_PATTERNS = [
 const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToast }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [shouldPulse, setShouldPulse] = useState(true);
+  const [dynamicSuggestions, setDynamicSuggestions] = useState<string[] | null>(null);
   const [mode, setMode] = useState<DigitalTwinMode>('general');
   const [modeLabelOverride, setModeLabelOverride] = useState<string | null>(null);
 
@@ -160,13 +161,19 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
   useEffect(() => {
     const handleOpenDigitalTwin = (
       event: Event & {
-        detail?: { source?: DigitalTwinMode; starterPrompt?: string; modeLabel?: string };
+        detail?: {
+          source?: DigitalTwinMode;
+          starterPrompt?: string;
+          modeLabel?: string;
+          suggestions?: string[];
+        };
       },
     ) => {
       const source = event.detail?.source ?? 'general';
       const safeMode = MODE_CONFIG[source] ? source : 'general';
       setMode(safeMode);
       setModeLabelOverride(event.detail?.modeLabel?.trim() || null);
+      setDynamicSuggestions(event.detail?.suggestions || null);
       setIsOpen(true);
       setShouldPulse(false);
       const nextIntro = event.detail?.starterPrompt?.trim() || MODE_CONFIG[safeMode].intro;
@@ -381,7 +388,10 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
               </svg>
             </button>
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                setIsOpen(false);
+                setDynamicSuggestions(null);
+              }}
               className="p-1.5 text-slate-600 hover:text-ink-navy dark:hover:text-white transition-colors"
             >
               <svg
@@ -543,7 +553,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
         </div>
 
         <div className="px-4 pt-2 pb-0 flex gap-2 overflow-x-auto scrollbar-hide bg-slate-50 dark:bg-slate-950/50">
-          {MODE_CONFIG[mode].suggestions.map((q, i) => (
+          {(dynamicSuggestions || MODE_CONFIG[mode].suggestions).map((q, i) => (
             <button
               key={i}
               onClick={() => handleSend(q)}

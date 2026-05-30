@@ -173,7 +173,7 @@ describe('canonical role lane UI', () => {
     render(<RouterProvider router={router} />);
 
     await waitFor(() => {
-      expect(screen.getByRole('heading', { name: 'Digital Twin AI Agent' })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { name: /Digital Twin AI Agent/ })).toBeInTheDocument();
     });
 
     expect(screen.getByText('AI Workflow / Portfolio Governance')).toHaveClass('text-tide-aqua');

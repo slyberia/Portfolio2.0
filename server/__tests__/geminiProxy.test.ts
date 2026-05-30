@@ -200,4 +200,24 @@ describe('geminiProxy', () => {
     expect(res.status).toBe(200);
     expect(mockSendMessageStream).toHaveBeenCalledOnce();
   });
+
+  it('passes dual-language technical and business explanation prompts through to Gemini', async () => {
+    // Test the "Explain the technical implementation" suggestion
+    const res1 = await request(app)
+      .post('/api/chat')
+      .set('x-forwarded-for', '10.0.1.12')
+      .send({ message: 'Explain the technical implementation' });
+
+    expect(res1.status).toBe(200);
+    expect(mockSendMessageStream).toHaveBeenCalledTimes(1);
+
+    // Test the "What was the business impact?" suggestion
+    const res2 = await request(app)
+      .post('/api/chat')
+      .set('x-forwarded-for', '10.0.1.13')
+      .send({ message: 'What was the business impact?' });
+
+    expect(res2.status).toBe(200);
+    expect(mockSendMessageStream).toHaveBeenCalledTimes(2);
+  });
 });

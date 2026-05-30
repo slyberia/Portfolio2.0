@@ -21,6 +21,37 @@ const ProjectsIndexView: React.FC = () => {
     return supporting.filter((project) => project.filters.includes(activeFilter));
   }, [activeFilter, supporting]);
 
+  const handleAskAI = (
+    e: React.MouseEvent,
+    item: (typeof featured)[0] | (typeof supporting)[0],
+  ) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    let source = 'general';
+    if (item.canonicalRoleLanes.includes('Spatial Systems Architect')) source = 'gis';
+    else if (item.canonicalRoleLanes.includes('Solutions Architect')) source = 'qa';
+    else if (
+      item.canonicalRoleLanes.includes('Forward Deployed Engineer') ||
+      item.canonicalRoleLanes.includes('AI Workflow / Portfolio Governance')
+    ) {
+      source = 'implementation';
+    }
+
+    const prompt = `I see you are reviewing **${item.displayTitle}**. I can summarize its business value for you, or break down the technical implementation. What would you like to know?`;
+
+    window.dispatchEvent(
+      new CustomEvent('open-digital-twin', {
+        detail: {
+          source,
+          starterPrompt: prompt,
+          modeLabel: 'Project Library',
+          suggestions: ['Explain the technical implementation', 'What was the business impact?'],
+        },
+      }),
+    );
+  };
+
   return (
     <div className="min-h-screen pt-20 pb-20 px-6 bg-[#f5f9fb] dark:bg-slate-950">
       <div className="max-w-7xl mx-auto space-y-12">
@@ -54,7 +85,11 @@ const ProjectsIndexView: React.FC = () => {
               <Link
                 key={project.id}
                 to={project.href}
-                className="rounded-xl border border-[#d8e8ee] bg-white dark:bg-slate-900 p-6 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
+                className={`rounded-xl border p-6 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua transition-colors duration-300 ${
+                  project.flagship
+                    ? 'border-gild/40 bg-gild/5 dark:bg-gild-deep/10'
+                    : 'border-[#d8e8ee] bg-white dark:bg-slate-900'
+                }`}
               >
                 <div
                   className={`h-1 w-20 rounded ${project.accent === 'cyan' ? 'bg-tide-cyan' : 'bg-tide-aqua'}`}
@@ -63,9 +98,18 @@ const ProjectsIndexView: React.FC = () => {
                 <p className="mt-3 text-xs uppercase tracking-[0.18em] text-slate-500">
                   {project.featuredLabel}
                 </p>
-                <h3 className="mt-2 text-xl font-semibold text-ink-navy dark:text-white">
-                  {project.displayTitle}
-                </h3>
+                <div className="mt-2 flex justify-between items-start group">
+                  <h3 className="text-xl font-semibold text-ink-navy dark:text-white group-hover:text-tide-aqua dark:group-hover:text-tide-softBlue transition-colors">
+                    {project.displayTitle}
+                  </h3>
+                  <button
+                    onClick={(e) => handleAskAI(e, project)}
+                    aria-label={`Ask AI about ${project.displayTitle}`}
+                    className="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 hover:text-amber-500 dark:hover:text-amber-400 transition-colors uppercase tracking-wider flex items-center gap-1 shrink-0 ml-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded px-1 -mr-1 py-1"
+                  >
+                    Ask AI <span aria-hidden="true">→</span>
+                  </button>
+                </div>
                 <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
                   {project.shortSummary}
                 </p>
@@ -130,9 +174,18 @@ const ProjectsIndexView: React.FC = () => {
                     {project.proofType}
                   </span>
                 </div>
-                <h3 className="mt-3 text-base font-semibold text-ink-navy dark:text-white">
-                  {project.displayTitle}
-                </h3>
+                <div className="mt-3 flex justify-between items-start group">
+                  <h3 className="text-base font-semibold text-ink-navy dark:text-white group-hover:text-tide-aqua dark:group-hover:text-tide-softBlue transition-colors">
+                    {project.displayTitle}
+                  </h3>
+                  <button
+                    onClick={(e) => handleAskAI(e, project)}
+                    aria-label={`Ask AI about ${project.displayTitle}`}
+                    className="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 hover:text-amber-500 dark:hover:text-amber-400 transition-colors uppercase tracking-wider flex items-center gap-1 shrink-0 ml-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded px-1 -mr-1 py-1"
+                  >
+                    Ask AI <span aria-hidden="true">→</span>
+                  </button>
+                </div>
                 <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
                   {project.shortSummary}
                 </p>

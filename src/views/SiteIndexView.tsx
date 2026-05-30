@@ -167,7 +167,11 @@ const SiteIndexView: React.FC = () => {
               <Link
                 key={system.id}
                 to={system.href}
-                className="rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd] dark:bg-slate-900 p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
+                className={`rounded-xl border p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua transition-colors duration-300 ${
+                  system.flagship
+                    ? 'border-gild/40 bg-gild/5 dark:bg-gild-deep/10'
+                    : 'border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd] dark:bg-slate-900'
+                }`}
               >
                 <h3 className="font-semibold text-navy-900 dark:text-white">
                   {system.displayTitle}

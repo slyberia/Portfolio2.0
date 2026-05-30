@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import MarkdownSection from '../components/MarkdownSection';
 import ErrorBoundary from '../components/ErrorBoundary';
@@ -151,8 +151,8 @@ const ProjectHero: React.FC<{
           >
             {metadata.featuredLabel ?? metadata.statusLabel}
           </span>
-          <h1 className={`text-3xl font-bold ${semanticTokens.text.heading}`}>
-            {metadata.displayTitle}
+          <h1 className={`text-3xl font-bold italic ${semanticTokens.text.heading}`}>
+            “{metadata.displayTitle}”
           </h1>
           <p className="max-w-3xl text-slate-700 dark:text-slate-200">{metadata.shortSummary}</p>
           <div className="flex flex-wrap gap-2">
@@ -211,6 +211,14 @@ const ProjectDetailView: React.FC = () => {
     useCaseStudyContent(activeProjectId);
   const displayContent = fetchedContent || activeProject?.content || '';
 
+  const [activeTab, setActiveTab] = useState<'overview' | 'architecture' | 'tradeoffs' | 'proofs'>(
+    'overview',
+  );
+
+  React.useEffect(() => {
+    setActiveTab('overview');
+  }, [activeProjectId]);
+
   const cleanContent = React.useMemo(() => {
     if (!displayContent || !metadata) return displayContent;
     const escaped = metadata.displayTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -228,6 +236,29 @@ const ProjectDetailView: React.FC = () => {
     );
   }
 
+  const tabsList: { id: 'overview' | 'architecture' | 'tradeoffs' | 'proofs'; label: string }[] = [
+    { id: 'overview', label: 'Overview' },
+    { id: 'architecture', label: 'Architecture & Strategy' },
+    { id: 'tradeoffs', label: 'Decisions & Trade-offs' },
+    { id: 'proofs', label: 'Interactive Proofs' },
+  ];
+
+  const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+    let nextIndex = index;
+    if (e.key === 'ArrowRight') {
+      nextIndex = (index + 1) % tabsList.length;
+    } else if (e.key === 'ArrowLeft') {
+      nextIndex = (index - 1 + tabsList.length) % tabsList.length;
+    } else {
+      return;
+    }
+    e.preventDefault();
+    const nextTab = tabsList[nextIndex].id;
+    setActiveTab(nextTab);
+    const button = document.getElementById(`tab-${nextTab}`);
+    if (button) button.focus();
+  };
+
   return (
     <section className="pt-28 pb-24 px-4 sm:px-6">
       <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[260px_minmax(0,1fr)]">
@@ -235,89 +266,227 @@ const ProjectDetailView: React.FC = () => {
         <div className="space-y-6">
           <ProjectHero activeProjectTags={activeProject.tags} metadata={metadata} />
 
+          <div className="border-b border-slate-200 dark:border-slate-800">
+            <div
+              className="flex gap-6 overflow-x-auto"
+              role="tablist"
+              aria-label="Project Details Navigation"
+            >
+              {tabsList.map((tab, idx) => {
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    id={`tab-${tab.id}`}
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-controls={`panel-${tab.id}`}
+                    tabIndex={isActive ? 0 : -1}
+                    onClick={() => setActiveTab(tab.id)}
+                    onKeyDown={(e) => handleKeyDown(e, idx)}
+                    className={`py-3 border-b-2 text-sm font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua whitespace-nowrap ${
+                      isActive
+                        ? 'border-gild text-gild font-semibold'
+                        : 'border-transparent text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 hover:border-slate-300 dark:hover:border-slate-700'
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           <ErrorBoundary location="Project Detail">
             <div className="space-y-8">
-              {activeProject.rigor && (
-                <section>
-                  <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
-                    Project Proof Summary
-                  </p>
-                  <RigorCard rigor={activeProject.rigor} className="mb-0" />
-                </section>
+              {activeTab === 'overview' && (
+                <div
+                  role="tabpanel"
+                  id="panel-overview"
+                  aria-labelledby="tab-overview"
+                  className="space-y-8 focus:outline-none"
+                >
+                  {activeProject.rigor && (
+                    <section>
+                      <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+                        Project Proof Summary
+                      </p>
+                      <RigorCard rigor={activeProject.rigor} className="mb-0" />
+                    </section>
+                  )}
+
+                  <section>
+                    <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+                      Project Detail
+                    </p>
+                    <ErrorBoundary
+                      location="Project Detail Markdown"
+                      rawContent={isRecruiterMode ? recruiterSummary(activeProject) : cleanContent}
+                    >
+                      <MarkdownSection
+                        content={isRecruiterMode ? recruiterSummary(activeProject) : cleanContent}
+                        isLoading={contentLoading}
+                      />
+                    </ErrorBoundary>
+                  </section>
+                </div>
               )}
 
-              <section>
-                <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
-                  Project Detail
-                </p>
-                <ErrorBoundary
-                  location="Project Detail Markdown"
-                  rawContent={isRecruiterMode ? recruiterSummary(activeProject) : cleanContent}
+              {activeTab === 'architecture' && (
+                <div
+                  role="tabpanel"
+                  id="panel-architecture"
+                  aria-labelledby="tab-architecture"
+                  className="space-y-8 focus:outline-none"
                 >
-                  <MarkdownSection
-                    content={isRecruiterMode ? recruiterSummary(activeProject) : cleanContent}
-                    isLoading={contentLoading}
-                  />
-                </ErrorBoundary>
-              </section>
+                  {activeProject.heroArtifact && (
+                    <section>
+                      <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+                        Primary Architecture Artifact
+                      </p>
+                      <HtmlPreviewCard
+                        content={activeProject.heroArtifact.content as string}
+                        label={activeProject.heroArtifact.label}
+                        description={activeProject.heroArtifact.description}
+                        isHero={true}
+                        accentColor={activeProject.id === 'luxe-lofts' ? 'red' : 'indigo'}
+                        iframeUrl={activeProject.heroArtifact.iframeUrl}
+                      />
+                    </section>
+                  )}
+                  {activeProject.artifacts && activeProject.artifacts.length > 0 ? (
+                    <section>
+                      <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+                        Supporting Deliverables
+                      </p>
+                      <ArtifactGallery artifacts={activeProject.artifacts} />
+                    </section>
+                  ) : (
+                    !activeProject.heroArtifact && (
+                      <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-slate-600 dark:border-white/10 dark:bg-slate-900/70">
+                        No architectural diagrams or mockups logged for this project.
+                      </div>
+                    )
+                  )}
+                </div>
+              )}
 
-              {activeProjectId === 'ops-triage' && (
-                <section className="space-y-4">
-                  <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
-                    Live Operational Simulator
-                  </p>
-                  <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-white/10 dark:bg-slate-900/70 space-y-6">
-                    <div>
-                      <h3 className="text-xl font-bold text-ink-navy dark:text-white mb-2">
-                        Operational Triage Console
-                      </h3>
-                      <p className="text-sm text-slate-600 dark:text-slate-300 max-w-3xl">
-                        This interactive dashboard models the real-world operational triage controls
-                        built for the system turnaround. Adjust the Policy Slider to explore how the
-                        tradeoff decisions between raw pipeline throughput and quality assurance
-                        affect first-pass yield, incident leakage, unprocessed backlog capacity, and
-                        SLA risk.
+              {activeTab === 'tradeoffs' && (
+                <div
+                  role="tabpanel"
+                  id="panel-tradeoffs"
+                  aria-labelledby="tab-tradeoffs"
+                  className="space-y-8 focus:outline-none"
+                >
+                  {activeProject.constraints && activeProject.constraints.length > 0 ? (
+                    <section>
+                      <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+                        Decision Journal
+                      </p>
+                      <TradeoffLog constraints={activeProject.constraints} />
+                    </section>
+                  ) : (
+                    <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-slate-600 dark:border-white/10 dark:bg-slate-900/70">
+                      <p className="font-semibold text-slate-900 dark:text-white mb-2">
+                        Decision Journal Empty
+                      </p>
+                      <p className="text-sm">
+                        This supporting project represents direct systems implementation without
+                        active multi-stage trade-off constraints.
                       </p>
                     </div>
-                    <div className="pt-2 border-t border-slate-100 dark:border-white/5">
-                      <OperationalTriageSimulator />
-                    </div>
-                  </div>
-                </section>
+                  )}
+                </div>
               )}
 
-              <MediaProofGrid
-                title="Visual Proof"
-                description={`Visual evidence of implementation for ${metadata.displayTitle}.`}
-                assets={getPublicMediaByProject(activeProjectId)}
-              />
+              {activeTab === 'proofs' && (
+                <div
+                  role="tabpanel"
+                  id="panel-proofs"
+                  aria-labelledby="tab-proofs"
+                  className="space-y-8 focus:outline-none"
+                >
+                  {activeProjectId === 'ops-triage' && (
+                    <section className="space-y-4">
+                      <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+                        Live Operational Simulator
+                      </p>
+                      <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-white/10 dark:bg-slate-900/70 space-y-6">
+                        <div>
+                          <h3 className="text-xl font-bold text-ink-navy dark:text-white mb-2">
+                            Operational Triage Console
+                          </h3>
+                          <p className="text-sm text-slate-600 dark:text-slate-300 max-w-3xl">
+                            This interactive dashboard models the real-world operational triage
+                            controls built for the system turnaround. Adjust the Policy Slider to
+                            explore how the tradeoff decisions between raw pipeline throughput and
+                            quality assurance affect first-pass yield, incident leakage, unprocessed
+                            backlog capacity, and SLA risk.
+                          </p>
+                        </div>
+                        <div className="pt-2 border-t border-slate-100 dark:border-white/5">
+                          <OperationalTriageSimulator />
+                        </div>
+                      </div>
+                    </section>
+                  )}
 
-              {activeProject.heroArtifact && (
-                <section>
-                  <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
-                    Project Artifacts
-                  </p>
-                  <HtmlPreviewCard
-                    content={activeProject.heroArtifact.content as string}
-                    label={activeProject.heroArtifact.label}
-                    description={activeProject.heroArtifact.description}
-                    isHero={true}
-                    accentColor={activeProject.id === 'luxe-lofts' ? 'red' : 'indigo'}
+                  {activeProjectId === 'digital-twin' && (
+                    <section className="space-y-4">
+                      <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-tide-aqua">
+                        Interactive Live Agent
+                      </p>
+                      <div className="rounded-2xl border border-tide-aqua/20 bg-tide-aqua/5 p-6 dark:border-tide-aqua/30 dark:bg-tide-aqua/10 space-y-6">
+                        <div>
+                          <h3 className="text-xl font-bold text-ink-navy dark:text-white mb-2">
+                            Digital Twin Assistant
+                          </h3>
+                          <p className="text-sm text-slate-600 dark:text-slate-300 max-w-3xl mb-4">
+                            Engage with the Digital Twin directly. This custom AI assistant
+                            leverages Gemini with strict system instructions and portfolio-specific
+                            context. It demonstrates prompt engineering, context boundary
+                            enforcement, and safe fallback orchestration.
+                          </p>
+                          <button
+                            onClick={() => {
+                              window.dispatchEvent(
+                                new CustomEvent('open-digital-twin', {
+                                  detail: {
+                                    source: 'general',
+                                    starterPrompt:
+                                      "Hi! I'm Kyle's Digital Twin. Let's discuss my implementation details or test my guardrails.",
+                                    modeLabel: 'Interactive Proof Mode',
+                                  },
+                                }),
+                              );
+                            }}
+                            className="inline-flex items-center gap-2 rounded-xl bg-tide-aqua px-6 py-3 text-sm font-bold text-white shadow-md transition-all hover:bg-tide-sky hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-tide-aqua focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-5 w-5"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            Launch Interactive Proof
+                          </button>
+                        </div>
+                      </div>
+                    </section>
+                  )}
+
+                  <MediaProofGrid
+                    title="Visual Proof"
+                    description={`Visual evidence of implementation for ${metadata.displayTitle}.`}
+                    assets={getPublicMediaByProject(activeProjectId)}
                   />
-                </section>
-              )}
-              {activeProject.artifacts && activeProject.artifacts.length > 0 && (
-                <section>
-                  <ArtifactGallery artifacts={activeProject.artifacts} />
-                </section>
-              )}
-              {activeProject.constraints && activeProject.constraints.length > 0 && (
-                <section>
-                  <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
-                    Decision Journal
-                  </p>
-                  <TradeoffLog constraints={activeProject.constraints} />
-                </section>
+                </div>
               )}
             </div>
           </ErrorBoundary>
