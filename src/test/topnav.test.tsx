@@ -69,6 +69,9 @@ describe('TopNav active states', () => {
   it('marks Deep Dives active on deep-dives route', () => {
     renderTopNav('/deep-dives');
 
-    expect(screen.getByRole('link', { name: 'Deep Dives' })).toHaveAttribute('aria-current', 'page');
+    expect(screen.getByRole('link', { name: 'Deep Dives' })).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
   });
 });
