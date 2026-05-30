@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { PORTFOLIO_PROCESS_HREF, SITE_INDEX_HREF } from '../lib/routes';
+import { DEEP_DIVES_HREF, SITE_INDEX_HREF } from '../lib/routes';
 import {
   CANONICAL_ROLE_ACCENT,
   PROJECT_FILTERS,
@@ -216,7 +216,7 @@ const ProjectsIndexView: React.FC = () => {
             hardened, and validated.
           </p>
           <a
-            href={PORTFOLIO_PROCESS_HREF}
+            href={DEEP_DIVES_HREF}
             className="mt-4 inline-flex text-sm font-semibold text-[#237f86]"
           >
             View Process Deep Dives

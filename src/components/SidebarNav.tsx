@@ -5,6 +5,7 @@ import {
   IMPLEMENTATION_TRACK_HREF,
   QA_TRACK_HREF,
   GIS_TRACK_HREF,
+  DEEP_DIVES_HREF,
 } from '../lib/routes';
 
 interface SidebarNavProps {
@@ -40,6 +41,7 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ theme, toggleTheme, onOpenConta
   const isHome = location.pathname === '/';
   const isCases = location.pathname.startsWith('/projects');
   const isResume = location.pathname === '/resume';
+  const isProcess = location.pathname.startsWith(DEEP_DIVES_HREF);
   const isTrackActive =
     location.pathname === IMPLEMENTATION_TRACK_HREF ||
     location.pathname === QA_TRACK_HREF ||
@@ -145,6 +147,27 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ theme, toggleTheme, onOpenConta
           <rect width="7" height="7" x="14" y="3" />
           <rect width="7" height="7" x="14" y="14" />
           <rect width="7" height="7" x="3" y="14" />
+        </svg>
+      ),
+    },
+    {
+      id: 'process',
+      label: 'Deep Dives',
+      active: isProcess,
+      onClick: () => navigate(DEEP_DIVES_HREF),
+      icon: (
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
         </svg>
       ),
     },

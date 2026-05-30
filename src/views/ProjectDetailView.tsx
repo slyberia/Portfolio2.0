@@ -12,7 +12,7 @@ import {
 import { useCaseStudyContent } from '../hooks/useCaseStudyContent';
 import { useRecruiterMode } from '../context/RecruiterModeContext';
 import { recruiterSummary } from '../utils/recruiterSummary';
-import { PROJECT_FALLBACK_ID, PORTFOLIO_PROCESS_HREF } from '../lib/routes';
+import { PROJECT_FALLBACK_ID, DEEP_DIVES_HREF } from '../lib/routes';
 import {
   CANONICAL_ROLE_ACCENT,
   getProjectMetadata,
@@ -126,18 +126,18 @@ const ProjectHero: React.FC<{
   const deepDiveInfo = React.useMemo(() => {
     if (metadata.id === 'luxe-lofts') {
       return {
-        href: `${PORTFOLIO_PROCESS_HREF}?tab=luxe-lofts`,
+        href: `${DEEP_DIVES_HREF}?tab=luxe-lofts`,
         label: 'View Strategic Deep Dive',
       };
     }
     if (metadata.id === 'ops-triage') {
       return {
-        href: `${PORTFOLIO_PROCESS_HREF}?tab=process`,
+        href: `${DEEP_DIVES_HREF}?tab=process`,
         label: 'View Process Deep Dive',
       };
     }
     return {
-      href: `${PORTFOLIO_PROCESS_HREF}?tab=process`,
+      href: `${DEEP_DIVES_HREF}?tab=process`,
       label: 'View Process Deep Dive',
     };
   }, [metadata.id]);

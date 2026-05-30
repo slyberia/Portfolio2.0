@@ -66,9 +66,12 @@ describe('TopNav active states', () => {
     expect(screen.getByRole('link', { name: 'Projects' })).toHaveAttribute('aria-current', 'page');
   });
 
-  it('marks Process active on process route', () => {
-    renderTopNav('/portfolio2/deep-dive');
+  it('marks Deep Dives active on deep-dives route', () => {
+    renderTopNav('/deep-dives');
 
-    expect(screen.getByRole('link', { name: 'Process' })).toHaveAttribute('aria-current', 'page');
+    expect(screen.getByRole('link', { name: 'Deep Dives' })).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
   });
 });

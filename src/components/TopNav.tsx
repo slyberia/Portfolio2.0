@@ -4,7 +4,7 @@ import {
   GIS_TRACK_HREF,
   HOME_HREF,
   IMPLEMENTATION_TRACK_HREF,
-  PORTFOLIO_PROCESS_HREF,
+  DEEP_DIVES_HREF,
   QA_TRACK_HREF,
   PROJECTS_HREF,
 } from '../lib/routes';
@@ -156,12 +156,12 @@ const TopNav: React.FC<TopNavProps> = ({ theme, toggleTheme, onOpenContact }) =>
           </NavLink>
 
           <NavLink
-            to={PORTFOLIO_PROCESS_HREF}
+            to={DEEP_DIVES_HREF}
             className={({ isActive }) =>
               `relative pb-1 text-sm font-medium ${navStyles.item} ${navStyles.itemFocus} ${isActive ? navStyles.itemActive : ''}`
             }
           >
-            Process
+            Deep Dives
           </NavLink>
         </nav>
 

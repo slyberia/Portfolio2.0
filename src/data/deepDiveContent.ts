@@ -352,13 +352,13 @@ export const forensicEntries: ArchiveEntry[] = [
 // ── Appendix Links ─────────────────────────────────────────────────────────
 
 export const appendixLinks = [
-  { label: 'Release ladder', href: '/portfolio2/deep-dive#release-ladder' },
-  { label: 'Decision-impact blocks', href: '/portfolio2/deep-dive#decision-blocks' },
-  { label: 'LLM governance summary', href: '/portfolio2/deep-dive#multi-llm-governance' },
-  { label: 'Architecture boundary', href: '/portfolio2/deep-dive#architecture-boundary' },
-  { label: 'Validation trail', href: '/portfolio2/deep-dive#validation-trail' },
-  { label: 'Revision Trail', href: '/portfolio2/deep-dive#forensic-archive' },
-  { label: 'How Proof Is Structured', href: '/portfolio2/deep-dive#proof-hierarchy' },
+  { label: 'Release ladder', href: '/deep-dives#release-ladder' },
+  { label: 'Decision-impact blocks', href: '/deep-dives#decision-blocks' },
+  { label: 'LLM governance summary', href: '/deep-dives#multi-llm-governance' },
+  { label: 'Architecture boundary', href: '/deep-dives#architecture-boundary' },
+  { label: 'Validation trail', href: '/deep-dives#validation-trail' },
+  { label: 'Revision Trail', href: '/deep-dives#forensic-archive' },
+  { label: 'How Proof Is Structured', href: '/deep-dives#proof-hierarchy' },
   { label: 'Forward Deployed Engineer track', href: '/tracks/forward-deployed' },
   { label: 'Solutions Architect track', href: '/tracks/solutions-architect' },
   { label: 'Spatial Systems Architect track', href: '/tracks/spatial-systems' },

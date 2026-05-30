@@ -119,19 +119,18 @@ export const getSeoForPath = (pathname: string): RouteSeo => {
       markdownPath: '/markdown/index.md',
       jsonLd: sharedProjectJsonLd,
     },
-
-    '/portfolio2/deep-dive': {
-      title: 'Portfolio2.0 Deep Dive — Process and Governance',
+    '/deep-dives': {
+      title: 'Deep Dives | Portfolio 3.0',
       description:
-        'Deep dive into Portfolio2.0 process, delivery timeline, governance decisions, testing evidence, and AI safety controls.',
-      canonicalPath: '/portfolio2/deep-dive',
+        'A comprehensive look at the process, governance, and strategy behind Portfolio 3.0.',
+      canonicalPath: '/deep-dives',
       markdownPath: '/markdown/process.md',
       jsonLd: [
         {
           '@context': 'https://schema.org',
           '@type': 'AboutPage',
-          name: 'Portfolio2.0 Deep Dive',
-          url: `${SITE_BASE_URL}/portfolio2/deep-dive`,
+          name: 'Deep Dives',
+          url: `${SITE_BASE_URL}/deep-dives`,
         },
       ],
     },

@@ -11,7 +11,7 @@ export const HOME_HREF = '/';
 export const IMPLEMENTATION_TRACK_HREF = '/tracks/forward-deployed';
 export const QA_TRACK_HREF = '/tracks/solutions-architect';
 export const GIS_TRACK_HREF = '/tracks/spatial-systems';
-export const PORTFOLIO_PROCESS_HREF = '/portfolio2/deep-dive';
+export const DEEP_DIVES_HREF = '/deep-dives';
 export const RESUME_HREF = '/resume';
 export const SITE_INDEX_HREF = '/site-index';
 export const PROJECTS_HREF = '/projects';
@@ -30,4 +30,4 @@ export const DIGITAL_TWIN_PROJECT_HREF = buildProjectHref('digital-twin');
 // TODO: remove case-study route aliases after all internal references are migrated.
 export const buildCaseStudyHref = buildProjectHref;
 export const SUPPORTING_EVIDENCE_DEFAULT_HREF = PROJECTS_DEFAULT_HREF;
-export const GOVERNANCE_LOGS_HREF = `${PORTFOLIO_PROCESS_HREF}#governance-logs`;
+export const GOVERNANCE_LOGS_HREF = `${DEEP_DIVES_HREF}#governance-logs`;

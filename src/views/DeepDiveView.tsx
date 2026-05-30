@@ -249,6 +249,37 @@ const DeepDiveView: React.FC = () => {
     return () => window.removeEventListener('hashchange', syncSectionToHash);
   }, []);
 
+  const [activePhase, setActivePhase] = React.useState<string>('phase-1');
+
+  React.useEffect(() => {
+    if (activeMainTab !== 'luxe-lofts') return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActivePhase(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: '-20% 0px -60% 0px' },
+    );
+
+    ['phase-1', 'phase-2', 'phase-3', 'phase-4', 'phase-5', 'phase-6'].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [activeMainTab]);
+
+  const scrollToPhase = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const handleTabKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
     if (
       event.key !== 'ArrowRight' &&
@@ -270,7 +301,7 @@ const DeepDiveView: React.FC = () => {
     <div id="deep-dive-top" className="min-h-screen pt-20 pb-20 px-6">
       <ErrorBoundary location="Deep Dive View">
         <div className="max-w-6xl mx-auto space-y-12">
-          <div className="flex flex-wrap gap-4 border-b border-slate-200 dark:border-white/10 pb-4">
+          <div className="flex flex-wrap gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
             <button
               onClick={() => handleMainTabChange('process')}
               className={`text-lg font-bold px-4 py-2 rounded-t-lg transition ${activeMainTab === 'process' ? 'bg-slate-100 dark:bg-slate-800 text-navy-900 dark:text-white border-b-2 border-tide-aqua' : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'}`}
@@ -287,33 +318,57 @@ const DeepDiveView: React.FC = () => {
 
           {activeMainTab === 'process' ? (
             <div className="space-y-12">
-              <section className="space-y-4">
-                <p className="text-xs font-bold uppercase tracking-[0.3em] text-tide-aqua">
-                  Process
-                </p>
-                <h1 className="text-4xl font-outfit font-extrabold text-navy-900 dark:text-white">
-                  Portfolio 2.0 Process Deep Dive
-                </h1>
-                <p className={`${semanticTokens.text.body} max-w-4xl`}>
-                  This page documents how Portfolio 2.0 evolved from an AI-assisted prototype into a
-                  role-track portfolio system with dedicated project architecture, Digital Twin
-                  guardrails, site-wide navigation, and validation-backed implementation phases.
-                </p>
-                <p className={`${semanticTokens.text.body} max-w-4xl`}>
-                  Projects show what was built. Process shows how the portfolio was planned,
-                  governed, implemented, validated, and iterated.
-                </p>
-                <p className={`${semanticTokens.text.body} max-w-4xl`}>
-                  Use this page to inspect the planning logic, AI-assisted workflow, route
-                  migrations, project taxonomy, validation passes, and remaining cleanup work behind
-                  the portfolio.
-                </p>
-                <div className="flex flex-wrap gap-4 text-sm font-semibold text-[#237f86]">
-                  <Link to={PROJECTS_HREF}>View Projects Library</Link>
-                  <Link to={SITE_INDEX_HREF}>Open Site Index</Link>
-                  <Link to={DIGITAL_TWIN_PROJECT_HREF}>View Digital Twin Project</Link>
-                  <Link to={GUYNODE_SYSTEM_HREF}>View Guynode Project</Link>
-                  <Link to={RESUME_HREF}>View Resume</Link>
+              <section className="space-y-6">
+                <div className="space-y-4">
+                  <p className="text-xs font-bold uppercase tracking-[0.3em] text-tide-aqua">
+                    Process
+                  </p>
+                  <h1 className="text-4xl font-outfit font-extrabold text-slate-950 dark:text-white">
+                    Portfolio 2.0 Process Deep Dive
+                  </h1>
+                </div>
+
+                <div
+                  className={`p-6 md:p-8 rounded-2xl border space-y-6 ${componentRecipes.card.surface}`}
+                >
+                  <div className="space-y-4 max-w-4xl">
+                    <p className="text-slate-600 dark:text-slate-200 text-lg leading-relaxed">
+                      This page documents how Portfolio 2.0 evolved from an AI-assisted prototype
+                      into a role-track portfolio system with dedicated project architecture,
+                      Digital Twin guardrails, site-wide navigation, and validation-backed
+                      implementation phases.
+                    </p>
+                    <p className="text-slate-600 dark:text-slate-200 leading-relaxed">
+                      Projects show what was built. Process shows how the portfolio was planned,
+                      governed, implemented, validated, and iterated.
+                    </p>
+                    <p className="text-slate-600 dark:text-slate-200 leading-relaxed">
+                      Use this page to inspect the planning logic, AI-assisted workflow, route
+                      migrations, project taxonomy, validation passes, and remaining cleanup work
+                      behind the portfolio.
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+                    <Link to={PROJECTS_HREF} className={componentRecipes.button.primary}>
+                      View Projects Library
+                    </Link>
+                    <Link to={SITE_INDEX_HREF} className={componentRecipes.button.secondary}>
+                      Open Site Index
+                    </Link>
+                    <Link
+                      to={DIGITAL_TWIN_PROJECT_HREF}
+                      className={componentRecipes.button.secondary}
+                    >
+                      Digital Twin Project
+                    </Link>
+                    <Link to={GUYNODE_SYSTEM_HREF} className={componentRecipes.button.secondary}>
+                      Guynode Project
+                    </Link>
+                    <Link to={RESUME_HREF} className={componentRecipes.button.secondary}>
+                      View Resume
+                    </Link>
+                  </div>
                 </div>
               </section>
 
@@ -363,7 +418,7 @@ const DeepDiveView: React.FC = () => {
                     This table captures phased implementation changes, why each shift mattered, and
                     the validation trail used to verify delivery outcomes.
                   </p>
-                  <div className="max-h-[36rem] overflow-y-auto overflow-x-auto rounded-xl border border-black/10 dark:border-white/10">
+                  <div className="max-h-[36rem] overflow-y-auto overflow-x-auto rounded-xl border border-black/10 dark:border-slate-800">
                     <table className="min-w-full text-sm">
                       <thead className="sticky top-0 bg-slate-100 dark:bg-slate-900 z-10">
                         <tr>
@@ -378,7 +433,7 @@ const DeepDiveView: React.FC = () => {
                         {buildTimeline.map((row) => (
                           <tr
                             key={row.phase}
-                            className="border-t border-black/10 dark:border-white/10 align-top"
+                            className="border-t border-black/10 dark:border-slate-800 align-top"
                           >
                             <td className="p-4 font-semibold">{row.phase}</td>
                             <td className="p-4">{row.changed}</td>
@@ -519,7 +574,7 @@ const DeepDiveView: React.FC = () => {
                   className={`scroll-mt-24 space-y-3 rounded-2xl border p-6 ${componentRecipes.card.surface}`}
                 >
                   <h2 className="text-2xl font-bold">Validation Trail</h2>
-                  <table className="min-w-full text-sm border border-black/10 dark:border-white/10">
+                  <table className="min-w-full text-sm border border-black/10 dark:border-slate-800">
                     <thead>
                       <tr className="bg-slate-100 dark:bg-slate-900/70">
                         <th className="text-left p-2">Area</th>
@@ -529,7 +584,7 @@ const DeepDiveView: React.FC = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="border-t border-black/10 dark:border-white/10">
+                      <tr className="border-t border-black/10 dark:border-slate-800">
                         <td className="p-2">Repo checks</td>
                         <td className="p-2">npm run typecheck / lint / test / build</td>
                         <td className="p-2">Passing in ledger trail</td>
@@ -537,13 +592,13 @@ const DeepDiveView: React.FC = () => {
                           Build includes non-blocking Vite chunk-size advisory.
                         </td>
                       </tr>
-                      <tr className="border-t border-black/10 dark:border-white/10">
+                      <tr className="border-t border-black/10 dark:border-slate-800">
                         <td className="p-2">Routing</td>
                         <td className="p-2">routing.test.tsx updates</td>
                         <td className="p-2">Validated</td>
                         <td className="p-2">Covers canonical and compatibility behavior.</td>
                       </tr>
-                      <tr className="border-t border-black/10 dark:border-white/10">
+                      <tr className="border-t border-black/10 dark:border-slate-800">
                         <td className="p-2">Project detail bugfix</td>
                         <td className="p-2">route param + loader fallback tests</td>
                         <td className="p-2">Validated</td>
@@ -551,7 +606,7 @@ const DeepDiveView: React.FC = () => {
                           Addresses projectId compatibility and app-shell fallback hardening.
                         </td>
                       </tr>
-                      <tr className="border-t border-black/10 dark:border-white/10">
+                      <tr className="border-t border-black/10 dark:border-slate-800">
                         <td className="p-2">Manual browser QA</td>
                         <td className="p-2">Interactive page checks</td>
                         <td className="p-2">Partial / iterative</td>
@@ -610,886 +665,934 @@ const DeepDiveView: React.FC = () => {
               </section>
             </div>
           ) : (
-            <div className="space-y-12">
-              {/* Header and Context */}
-              <section className="space-y-4">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold uppercase tracking-[0.3em] text-rose-500">
-                    Restructuring Strategy
-                  </span>
-                  <span className="rounded-full border border-rose-500/25 bg-rose-500/10 px-2.5 py-0.5 text-[10px] font-semibold text-rose-500 uppercase tracking-wider">
-                    Audit-Driven Case Study
-                  </span>
-                </div>
-                <h1 className="text-4xl font-outfit font-extrabold text-navy-900 dark:text-white">
-                  Luxe Lofts: Digital Restructuring Strategy
-                </h1>
-                <p className={`${semanticTokens.text.body} max-w-4xl text-lg leading-relaxed`}>
-                  A complete strategic deep dive into the Luxe Lofts digital ecosystem. This page
-                  details how our comprehensive audits of the legacy, contractor-delivered, and
-                  vibecoded web systems drove a transition from an inefficient, superficial
-                  "brochure" site to a highly polished, conversion-oriented operational engine.
-                </p>
-                <div className="flex flex-wrap gap-4 text-sm font-semibold text-rose-600 dark:text-rose-400">
-                  <Link
-                    to="/projects/luxe-lofts"
-                    className="hover:underline flex items-center gap-1"
-                  >
-                    ← Back to Luxe Lofts Case Study
-                  </Link>
-                  <Link
-                    to="/projects/ops-triage"
-                    className="hover:underline flex items-center gap-1"
-                  >
-                    ← Back to Ops Triage Case Study
-                  </Link>
-                  <Link to={PROJECTS_HREF} className="hover:underline">
-                    View Projects Library
-                  </Link>
-                </div>
-              </section>
-
-              {/* Deployed Mockup Call-to-Action */}
-              <section className="rounded-2xl border border-rose-500/20 bg-rose-500/5 p-6 dark:border-rose-500/30">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                  <div className="space-y-2">
-                    <h3 className="text-lg font-bold text-navy-900 dark:text-white flex items-center gap-2">
-                      <span className="text-xl">🏛️</span> Deployed Luxe Lofts Mockup Website
-                    </h3>
-                    <p className="text-sm text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
-                      Experience the premium frontend showcase deployed on **Google Cloud Run**. The
-                      mockup features client-side navigation, stylized booking package cards, and a
-                      demo AI Event Planner assistant.
-                    </p>
-                  </div>
-                  <a
-                    href="https://luxe-lofts-roadmap-repo-786228485832.us-central1.run.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="shrink-0 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white font-semibold text-sm px-5 py-3 transition shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
-                  >
-                    Launch Mockup Prototype →
-                  </a>
-                </div>
-              </section>
-
-              {/* Backlink to Simulator Callout */}
-              <section className="rounded-2xl border border-rose-500/20 bg-rose-500/5 p-6 dark:border-rose-500/30">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                  <div className="space-y-2">
-                    <h3 className="text-lg font-bold text-navy-900 dark:text-white flex items-center gap-2">
-                      <span className="text-xl">🎛️</span> Looking for the Operational Triage
-                      Simulator?
-                    </h3>
-                    <p className="text-sm text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
-                      While Luxe Lofts and the Operational Triage dashboard are distinct project
-                      entries (representing local business strategy vs. high-velocity ticket queue
-                      telemetry), their backend process automation algorithms are conceptually
-                      aligned. You can interact with the live telemetry engine directly on the
-                      dedicated Ops Triage case study page.
-                    </p>
-                  </div>
-                  <Link
-                    to="/projects/ops-triage"
-                    className="shrink-0 inline-flex items-center justify-center rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-sm px-5 py-3 transition shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
-                  >
-                    Open Live Triage Console →
-                  </Link>
-                </div>
-              </section>
-
-              {/* Section 1: Visual vs. Operational Dichotomy */}
-              <section className="space-y-6">
-                <div className="space-y-2">
-                  <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
-                    1. Strategic Context & "Visual vs. Operational" Dichotomy
-                  </h2>
-                  <p className={`${semanticTokens.text.body} max-w-4xl`}>
-                    Commercial local venues suffer when websites act merely as static catalogs. A
-                    true digital turnaround requires bridging the gap between elegant first
-                    impressions and frictionless business execution.
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {/* Left Column: Brochure-Ware */}
-                  <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-white/10 dark:bg-slate-900/40 space-y-4">
-                    <div className="flex items-center gap-2 text-amber-600 dark:text-amber-500">
-                      <span className="text-lg">📉</span>
-                      <h3 className="font-bold text-lg">
-                        Brochure-Ware (Contractor & Legacy Audits)
-                      </h3>
+            <div className="flex flex-col md:flex-row gap-8">
+              {/* Left Sidebar Timeline */}
+              <aside className="hidden md:block w-48 shrink-0 relative">
+                <div className="sticky top-28 space-y-4 border-l-2 border-slate-200 dark:border-slate-800 py-4">
+                  {[
+                    { id: 'phase-1', label: 'Strategic Context' },
+                    { id: 'phase-2', label: 'Audit Diagnostics' },
+                    { id: 'phase-3', label: 'Solution Architecture' },
+                    { id: 'phase-4', label: 'KPI Dashboard' },
+                    { id: 'phase-5', label: 'Commercial Offering' },
+                    { id: 'phase-6', label: 'Prototype Bounding' },
+                  ].map((phase) => (
+                    <div key={phase.id} className="relative -ml-[9px] flex items-center">
+                      <button
+                        onClick={() => scrollToPhase(phase.id)}
+                        className="flex items-center gap-4 group w-full text-left focus:outline-none"
+                      >
+                        <span
+                          className={`w-4 h-4 rounded-full border-2 transition-colors duration-300 ${
+                            activePhase === phase.id
+                              ? 'bg-rose-500 border-rose-500 ring-4 ring-rose-500/20'
+                              : 'bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 group-hover:border-rose-400'
+                          }`}
+                        />
+                        <span
+                          className={`text-sm font-semibold transition-colors duration-300 ${
+                            activePhase === phase.id
+                              ? 'text-rose-600 dark:text-rose-400'
+                              : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'
+                          }`}
+                        >
+                          {phase.label}
+                        </span>
+                      </button>
                     </div>
-                    <p className="text-sm text-slate-600 dark:text-slate-300">
-                      "Visually passable but strategically shallow." Relying on generic templates,
-                      stock placeholders, and broken links, these layouts failed to convey brand
-                      trust or qualify booking intent.
-                    </p>
-                    <ul className="space-y-2.5 text-xs text-slate-600 dark:text-slate-300">
-                      <li className="flex items-start gap-2">
-                        <span className="text-red-500 font-bold">✕</span>
-                        <span>
-                          <strong>Placeholder Price Dilution:</strong> Unresolved pricing markers
-                          (like "$ -") created evasive messaging and customer friction.
-                        </span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-red-500 font-bold">✕</span>
-                        <span>
-                          <strong>Stock Image Dependency:</strong> Non-authenticated photography
-                          failed to demonstrate actual layout capabilities or lighting setups.
-                        </span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-red-500 font-bold">✕</span>
-                        <span>
-                          <strong>Static "Dead End" CTAs:</strong> Generic tour buttons opening
-                          unformatted email drafts, creating extensive manual follow-up loops.
-                        </span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-red-500 font-bold">✕</span>
-                        <span>
-                          <strong>Heavy Technical Overhead:</strong> Brittle Google Maps API
-                          dependencies and unoptimized media slowing mobile search crawling.
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
-
-                  {/* Right Column: Dynamic Ecosystem */}
-                  <div className="rounded-2xl border border-rose-500/20 bg-rose-500/5 p-6 dark:border-rose-500/10 dark:bg-rose-500/5 space-y-4">
-                    <div className="flex items-center gap-2 text-rose-600 dark:text-rose-400">
-                      <span className="text-lg">📈</span>
-                      <h3 className="font-bold text-lg">
-                        Ecosystem Architecture (Redesigned Mockup)
-                      </h3>
-                    </div>
-                    <p className="text-sm text-slate-600 dark:text-slate-300">
-                      A single-page-of-truth conversion journey. Consolidating visual proof,
-                      structural qualifiers, dynamic pricing, and direct administrative routes into
-                      a unified, high-performing lead generation engine.
-                    </p>
-                    <ul className="space-y-2.5 text-xs text-slate-600 dark:text-slate-300">
-                      <li className="flex items-start gap-2">
-                        <span className="text-emerald-500 font-bold">✓</span>
-                        <span>
-                          <strong>Curated Offer Menus:</strong> Upfront pricing tiers that qualify
-                          customer budgets and filter unviable bookings instantly.
-                        </span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-emerald-500 font-bold">✓</span>
-                        <span>
-                          <strong>Real Venue Asset Plan:</strong> Gallery layouts emphasizing layout
-                          boundaries, event types (showers, weddings), and spatial flow.
-                        </span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-emerald-500 font-bold">✓</span>
-                        <span>
-                          <strong>Guided Triage Funnel:</strong> Booking inquires capture backup
-                          dates, guest counts, and caterer requirements with strict guardrails.
-                        </span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-emerald-500 font-bold">✓</span>
-                        <span>
-                          <strong>Modern Serverless Tech Stack:</strong> Local Leaflet integrations,
-                          LocalBusiness JSON-LD structure, and Cloud Run backend APIs.
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </section>
-
-              {/* Section 2: Interactive Audit Diagnostics Panel */}
-              <section className="space-y-6">
-                <div className="space-y-2">
-                  <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
-                    2. Interactive Audit Diagnostics Panel
-                  </h2>
-                  <p className={`${semanticTokens.text.body} max-w-4xl`}>
-                    Browse our detailed findings across four core operational domains. Explore the
-                    gaps uncovered in prior audits and see the concrete design translations
-                    implemented within our high-conversion mockup system.
-                  </p>
-                </div>
-
-                {/* Sub-tab selection */}
-                <div className="flex flex-wrap gap-2 border-b border-slate-200 dark:border-white/10 pb-3">
-                  {(['visuals', 'ux', 'technical', 'content'] as const).map((tab) => (
-                    <button
-                      key={tab}
-                      onClick={() => setActiveDiagTab(tab)}
-                      className={`text-sm font-semibold px-4 py-2 rounded-lg transition-all ${
-                        activeDiagTab === tab
-                          ? 'bg-rose-500 text-white shadow'
-                          : 'bg-white hover:bg-slate-50 text-slate-600 border border-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-300 dark:border-white/10'
-                      }`}
-                    >
-                      {tab === 'visuals' && '🎨 Brand & Visuals'}
-                      {tab === 'ux' && '🧭 UX & Navigation'}
-                      {tab === 'technical' && '⚡ Technical & SEO'}
-                      {tab === 'content' && '📝 Content & Offer'}
-                    </button>
                   ))}
                 </div>
+              </aside>
 
-                {/* Tab content panel */}
-                <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-white/10 dark:bg-slate-900/40 space-y-6">
-                  {activeDiagTab === 'visuals' && (
-                    <div className="space-y-4">
-                      <div className="border-l-4 border-rose-500 pl-4 space-y-1">
-                        <h3 className="text-lg font-bold text-navy-900 dark:text-white">
-                          🎨 Brand & Visual Consistency
-                        </h3>
-                        <p className="text-xs text-slate-500">
-                          How typography, styling, and visual proof dictate price perception.
-                        </p>
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
-                        <div className="space-y-2">
-                          <h4 className="text-sm font-bold text-rose-500">Uncovered Gap</h4>
-                          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                            The contractor-delivered site looked visually passable but lacked
-                            strategic depth. Re-used template blocks, generic dark and gold accents,
-                            and stock image placeholders diluted brand credibility, while
-                            spell-check misses like <strong>"OCCASSIONS"</strong> eroded visual
-                            polish.
-                          </p>
-                        </div>
-                        <div className="space-y-2">
-                          <h4 className="text-sm font-bold text-rose-500">
-                            Strategic Business Impact
-                          </h4>
-                          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                            For a premium venue, visual polish is directly tied to pricing power.
-                            When typography is generic or images feel fake, visitors assume the
-                            physical space is equally generic, driving them to lower their spending
-                            limits or doubt the venue's operational capabilities.
-                          </p>
-                        </div>
-                        <div className="space-y-2">
-                          <h4 className="text-sm font-bold text-emerald-500">
-                            Mockup Implementation
-                          </h4>
-                          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                            We introduced an intentional brand system: <strong>Spectral</strong>{' '}
-                            (elegant, warm editorial display) paired with <strong>Jost</strong>{' '}
-                            (clean modern geometric body). Replaced generic stock files with a
-                            highly targeted real-asset loading plan mapping high-atmosphere venue
-                            photos directly to use cases.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {activeDiagTab === 'ux' && (
-                    <div className="space-y-4">
-                      <div className="border-l-4 border-rose-500 pl-4 space-y-1">
-                        <h3 className="text-lg font-bold text-navy-900 dark:text-white">
-                          🧭 UX & Navigation Flow
-                        </h3>
-                        <p className="text-xs text-slate-500">
-                          Eliminating friction points to capture high-intent leads.
-                        </p>
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
-                        <div className="space-y-2">
-                          <h4 className="text-sm font-bold text-rose-500">Uncovered Gap</h4>
-                          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                            The contractor site worked like a brochure rather than a booking funnel.
-                            Standard "Book a Tour" triggers opened raw mailto tags with no fields to
-                            capture guest capacity, budgeting range, backup dates, or catering
-                            preferences.
-                          </p>
-                        </div>
-                        <div className="space-y-2">
-                          <h4 className="text-sm font-bold text-rose-500">
-                            Strategic Business Impact
-                          </h4>
-                          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                            Incomplete leads force operations to spend hours chasing basics (guest
-                            count, budget, date alignment). High-intent planners drop off instantly
-                            if they cannot verify spatial layout availability or capacity rules
-                            during their initial search.
-                          </p>
-                        </div>
-                        <div className="space-y-2">
-                          <h4 className="text-sm font-bold text-emerald-500">
-                            Mockup Implementation
-                          </h4>
-                          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                            Designed a single-page conversion pathway. Embedded a structured intake
-                            form capturing essential event attributes with explicit qualifiers
-                            ("Submitting this does not confirm booking"). Created bypass links (
-                            <code>?demo=1</code>) to easily preview client and admin modules.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {activeDiagTab === 'technical' && (
-                    <div className="space-y-4">
-                      <div className="border-l-4 border-rose-500 pl-4 space-y-1">
-                        <h3 className="text-lg font-bold text-navy-900 dark:text-white">
-                          ⚡ Technical & SEO Discovery
-                        </h3>
-                        <p className="text-xs text-slate-500">
-                          Accelerating search crawlers and eliminating external API friction.
-                        </p>
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
-                        <div className="space-y-2">
-                          <h4 className="text-sm font-bold text-rose-500">Uncovered Gap</h4>
-                          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                            Heavy uncompressed images dragging down mobile performance. Brittle
-                            dependency on hardcoded Google Maps API credentials which broke during
-                            sandbox offline testing. Vague text headings that lacked localized
-                            keywords for regional discoverability.
-                          </p>
-                        </div>
-                        <div className="space-y-2">
-                          <h4 className="text-sm font-bold text-rose-500">
-                            Strategic Business Impact
-                          </h4>
-                          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                            Venues rely heavily on local organic queries (e.g., "event space near
-                            me"). When headings lack structure, regional crawler search scores
-                            plummet. Slow performance and Google API credential breakage during
-                            reviews directly block user conversions.
-                          </p>
-                        </div>
-                        <div className="space-y-2">
-                          <h4 className="text-sm font-bold text-emerald-500">
-                            Mockup Implementation
-                          </h4>
-                          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                            Adopted structured React components optimized for rapid layout scaling.
-                            Ported interactive maps to an open-source Leaflet + OpenStreetMap engine
-                            to eliminate API setup blockers. Implemented canonical{' '}
-                            <strong>LocalBusiness JSON-LD schema</strong> and semantic SEO heading
-                            routes.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {activeDiagTab === 'content' && (
-                    <div className="space-y-4">
-                      <div className="border-l-4 border-rose-500 pl-4 space-y-1">
-                        <h3 className="text-lg font-bold text-navy-900 dark:text-white">
-                          📝 Content & Offer Architecture
-                        </h3>
-                        <p className="text-xs text-slate-500">
-                          Structuring pricing, rules, and social proof with commercial clarity.
-                        </p>
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
-                        <div className="space-y-2">
-                          <h4 className="text-sm font-bold text-rose-500">Uncovered Gap</h4>
-                          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                            Pricing cards showing blank placeholders (like <strong>"$ -"</strong>),
-                            leaving users completely in the dark. Testimonials and policy guidelines
-                            lacking capacity bounds, alcohol/bar limits, catering guidelines, or
-                            deposit instructions.
-                          </p>
-                        </div>
-                        <div className="space-y-2">
-                          <h4 className="text-sm font-bold text-rose-500">
-                            Strategic Business Impact
-                          </h4>
-                          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                            Hiding pricing is a massive conversion killer. Planners suspect
-                            custom-quoted venue costs are arbitrarily inflated. Missing basic
-                            logistical rules (cancellations, deposits, cleaning responsibilities)
-                            results in heavy manual client sorting overhead.
-                          </p>
-                        </div>
-                        <div className="space-y-2">
-                          <h4 className="text-sm font-bold text-emerald-500">
-                            Mockup Implementation
-                          </h4>
-                          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                            Established clear commercial packages (Keep It Simple, Starter,
-                            Standard, Premium Tiers) matching guest counts. Outlined a clean
-                            logistical policy FAQ. Labeled mock testimonials transparently as
-                            proposal visual layouts to verify site architecture without misleading
-                            users.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </section>
-
-              {/* Section 3: Structured Solution Architecture & "4 Pillars" */}
-              <section className="space-y-6">
-                <div className="space-y-2">
-                  <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
-                    3. Structured Solution Architecture & "4 Pillars"
-                  </h2>
-                  <p className={`${semanticTokens.text.body} max-w-4xl`}>
-                    Our digital turnaround strategy rests upon four foundational pillars, connecting
-                    front-end conversions directly to backend database operations and customer
-                    scheduling.
+              {/* Main Content */}
+              <div className="flex-1 space-y-12 min-w-0">
+                {/* Header and Context */}
+                <section className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold uppercase tracking-[0.3em] text-rose-500">
+                      Restructuring Strategy
+                    </span>
+                    <span className="rounded-full border border-rose-500/25 bg-rose-500/10 px-2.5 py-0.5 text-[10px] font-semibold text-rose-500 uppercase tracking-wider">
+                      Audit-Driven Case Study
+                    </span>
+                  </div>
+                  <h1 className="text-4xl font-outfit font-extrabold text-navy-900 dark:text-white">
+                    Luxe Lofts: Digital Restructuring Strategy
+                  </h1>
+                  <p className={`${semanticTokens.text.body} max-w-4xl text-lg leading-relaxed`}>
+                    A complete strategic deep dive into the Luxe Lofts digital ecosystem. This page
+                    details how our comprehensive audits of the legacy, contractor-delivered, and
+                    vibecoded web systems drove a transition from an inefficient, superficial
+                    "brochure" site to a highly polished, conversion-oriented operational engine.
                   </p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Pillar 1 */}
-                  <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-white/10 dark:bg-slate-900/40 space-y-2">
-                    <span className="text-2xl">🖼️</span>
-                    <h3 className="font-bold text-navy-900 dark:text-white text-base">
-                      Pillar 1: High-Conversion Brand Showcase
-                    </h3>
-                    <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                      Elegantly designed layouts using <strong>Spectral + Jost</strong> display
-                      typography. Consolidates real venue imagery, event-type capability cards, and
-                      spatial layout planning maps into a single guided decision page that enhances
-                      venue prestige.
-                    </p>
+                  <div className="flex flex-wrap gap-4 text-sm font-semibold text-rose-600 dark:text-rose-400">
+                    <Link
+                      to="/projects/luxe-lofts"
+                      className="hover:underline flex items-center gap-1"
+                    >
+                      ← Back to Luxe Lofts Case Study
+                    </Link>
+                    <Link
+                      to="/projects/ops-triage"
+                      className="hover:underline flex items-center gap-1"
+                    >
+                      ← Back to Ops Triage Case Study
+                    </Link>
+                    <Link to={PROJECTS_HREF} className="hover:underline">
+                      View Projects Library
+                    </Link>
                   </div>
+                </section>
 
-                  {/* Pillar 2 */}
-                  <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-white/10 dark:bg-slate-900/40 space-y-2">
-                    <span className="text-2xl">🎯</span>
-                    <h3 className="font-bold text-navy-900 dark:text-white text-base">
-                      Pillar 2: Guided Intent Intake Engine
-                    </h3>
-                    <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                      An interactive planning helper and structured booking form capturing backup
-                      dates, guest counts, and catering preferences. Integrates campaign UTM source
-                      capture utilities to map marketing traffic directly to CRM lead entries.
-                    </p>
+                {/* Deployed Mockup Call-to-Action */}
+                <section className="rounded-2xl border border-rose-500/20 bg-rose-500/5 p-6 dark:border-rose-500/30">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div className="space-y-2">
+                      <h3 className="text-lg font-bold text-navy-900 dark:text-white flex items-center gap-2">
+                        <span className="text-xl">🏛️</span> Deployed Luxe Lofts Mockup Website
+                      </h3>
+                      <p className="text-sm text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
+                        Experience the premium frontend showcase deployed on **Google Cloud Run**.
+                        The mockup features client-side navigation, stylized booking package cards,
+                        and a demo AI Event Planner assistant.
+                      </p>
+                    </div>
+                    <a
+                      href="https://luxe-lofts-roadmap-repo-786228485832.us-central1.run.app/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="shrink-0 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white font-semibold text-sm px-5 py-3 transition shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+                    >
+                      Launch Mockup Prototype →
+                    </a>
                   </div>
+                </section>
 
-                  {/* Pillar 3 */}
-                  <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-white/10 dark:bg-slate-900/40 space-y-2">
-                    <span className="text-2xl">🔑</span>
-                    <h3 className="font-bold text-navy-900 dark:text-white text-base">
-                      Pillar 3: Unified Client Planning Portal
-                    </h3>
-                    <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                      A frictionless client-facing workspace featuring reviewer bypass modes (
-                      <code>?demo=1</code>). Built to integrate with{' '}
-                      <strong>Firebase Auth & Google Sign-In</strong> for frictionless client
-                      access, secure collaborative seating layouts, and payment tracking.
-                    </p>
+                {/* Backlink to Simulator Callout */}
+                <section className="rounded-2xl border border-rose-500/20 bg-rose-500/5 p-6 dark:border-rose-500/30">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div className="space-y-2">
+                      <h3 className="text-lg font-bold text-navy-900 dark:text-white flex items-center gap-2">
+                        <span className="text-xl">🎛️</span> Looking for the Operational Triage
+                        Simulator?
+                      </h3>
+                      <p className="text-sm text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
+                        While Luxe Lofts and the Operational Triage dashboard are distinct project
+                        entries (representing local business strategy vs. high-velocity ticket queue
+                        telemetry), their backend process automation algorithms are conceptually
+                        aligned. You can interact with the live telemetry engine directly on the
+                        dedicated Ops Triage case study page.
+                      </p>
+                    </div>
+                    <Link
+                      to="/projects/ops-triage"
+                      className="shrink-0 inline-flex items-center justify-center rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-sm px-5 py-3 transition shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+                    >
+                      Open Live Triage Console →
+                    </Link>
                   </div>
+                </section>
 
-                  {/* Pillar 4 */}
-                  <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-white/10 dark:bg-slate-900/40 space-y-2">
-                    <span className="text-2xl">📊</span>
-                    <h3 className="font-bold text-navy-900 dark:text-white text-base">
-                      Pillar 4: Unified Admin Triage Dashboard
-                    </h3>
-                    <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                      A unified operational control panel designed to run as a secure{' '}
-                      <strong>Google Cloud Run</strong> backend service. Streamlines lead
-                      assignment, pipeline queue triage, and automated AI coordination.
-                    </p>
-                  </div>
-                </div>
-              </section>
-
-              {/* Section 4: Dual-Perspective KPI Dashboard */}
-              <section className="space-y-6">
-                <div className="space-y-4 md:flex md:items-center md:justify-between">
+                {/* Section 1: Visual vs. Operational Dichotomy */}
+                <section id="phase-1" className="space-y-6 scroll-mt-24">
                   <div className="space-y-2">
                     <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
-                      4. Dual-Perspective KPI Dashboard
+                      1. Strategic Context & "Visual vs. Operational" Dichotomy
                     </h2>
-                    <p className={`${semanticTokens.text.body} max-w-xl`}>
-                      Track results across two operational planes: Business/Owner operations and
-                      technical system telemetry.
-                    </p>
-                  </div>
-                  {/* View switcher */}
-                  <div className="flex bg-slate-100 dark:bg-slate-900 p-1 rounded-xl shrink-0 border border-slate-200 dark:border-white/10">
-                    <button
-                      onClick={() => setKpiView('owner')}
-                      className={`text-xs font-semibold px-4 py-2 rounded-lg transition-all ${
-                        kpiView === 'owner'
-                          ? 'bg-rose-500 text-white shadow'
-                          : 'text-slate-600 dark:text-slate-300 hover:text-slate-900'
-                      }`}
-                    >
-                      💼 Business Operations
-                    </button>
-                    <button
-                      onClick={() => setKpiView('telemetry')}
-                      className={`text-xs font-semibold px-4 py-2 rounded-lg transition-all ${
-                        kpiView === 'telemetry'
-                          ? 'bg-rose-500 text-white shadow'
-                          : 'text-slate-600 dark:text-slate-300 hover:text-slate-900'
-                      }`}
-                    >
-                      🎛️ System Telemetry
-                    </button>
-                  </div>
-                </div>
-
-                {/* Dashboard stats display */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {kpiView === 'owner' ? (
-                    <>
-                      {/* Metric 1 */}
-                      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-2">
-                        <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
-                          Lead Qualification Accuracy
-                        </span>
-                        <div className="text-3xl font-extrabold text-navy-900 dark:text-white font-outfit">
-                          +40%
-                        </div>
-                        <p className="text-[10px] text-slate-500">
-                          Projected lift from structured, multi-field intake forms vs. raw emails.
-                        </p>
-                      </div>
-                      {/* Metric 2 */}
-                      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-2">
-                        <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
-                          Administrative Overhead
-                        </span>
-                        <div className="text-3xl font-extrabold text-navy-900 dark:text-white font-outfit">
-                          -15 hrs/wk
-                        </div>
-                        <p className="text-[10px] text-slate-500">
-                          Average owner administrative time saved by automated CRM intake pipelines.
-                        </p>
-                      </div>
-                      {/* Metric 3 */}
-                      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-2">
-                        <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
-                          Average Contract Value
-                        </span>
-                        <div className="text-3xl font-extrabold text-navy-900 dark:text-white font-outfit">
-                          +25%
-                        </div>
-                        <p className="text-[10px] text-slate-500">
-                          Projected revenue lift via upfront tiered packages and upsell menus.
-                        </p>
-                      </div>
-                      {/* Metric 4 */}
-                      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-2">
-                        <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
-                          Booking Funnel Conversion
-                        </span>
-                        <div className="text-3xl font-extrabold text-navy-900 dark:text-white font-outfit">
-                          +3.2%
-                        </div>
-                        <p className="text-[10px] text-slate-500">
-                          Estimated increase driven by real proof visuals and immediate policy
-                          clarity.
-                        </p>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      {/* Metric 1 */}
-                      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-2">
-                        <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
-                          Pipeline First-Pass Yield (FPY)
-                        </span>
-                        <div className="text-3xl font-extrabold text-navy-900 dark:text-white font-outfit">
-                          94.2%
-                        </div>
-                        <p className="text-[10px] text-slate-500">
-                          Verified transition accuracy across database updates under simulator
-                          loads.
-                        </p>
-                      </div>
-                      {/* Metric 2 */}
-                      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-2">
-                        <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
-                          System Backlog SLA Risk
-                        </span>
-                        <div className="text-3xl font-extrabold text-navy-900 dark:text-white font-outfit">
-                          &lt; 1.0%
-                        </div>
-                        <p className="text-[10px] text-slate-500">
-                          Risk rating limit managed by automated high-capacity queuing thresholds.
-                        </p>
-                      </div>
-                      {/* Metric 3 */}
-                      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-2">
-                        <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
-                          Microservices Latency
-                        </span>
-                        <div className="text-3xl font-extrabold text-navy-900 dark:text-white font-outfit">
-                          &lt; 200ms
-                        </div>
-                        <p className="text-[10px] text-slate-500">
-                          Average endpoint request time across Cloud Run serverless execution
-                          points.
-                        </p>
-                      </div>
-                      {/* Metric 4 */}
-                      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-2">
-                        <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
-                          Incident Defect Leakage
-                        </span>
-                        <div className="text-3xl font-extrabold text-navy-900 dark:text-white font-outfit">
-                          &lt; 0.5%
-                        </div>
-                        <p className="text-[10px] text-slate-500">
-                          QA triage filter validation rate limiting raw data payload escapes.
-                        </p>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </section>
-
-              {/* Section 5: Commercial Offering / Pricing Tiers */}
-              <section className="space-y-6">
-                <div className="space-y-2">
-                  <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
-                    5. Commercial Offering & Pricing Menu
-                  </h2>
-                  <p className={`${semanticTokens.text.body} max-w-4xl`}>
-                    A transparent offer architecture designed to address legacy pricing ambiguity.
-                    Mapped guest limits, support staffing, and coordination resources to specific
-                    price boundaries to streamline client qualification.
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {/* Package 1 */}
-                  <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-4 flex flex-col justify-between">
-                    <div className="space-y-2">
-                      <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">
-                        Tier 1
-                      </span>
-                      <h3 className="font-bold text-navy-900 dark:text-white text-lg">
-                        Keep It Simple
-                      </h3>
-                      <div className="text-2xl font-extrabold text-navy-900 dark:text-white">
-                        $500
-                      </div>
-                      <p className="text-xs text-slate-500 leading-relaxed font-sans">
-                        Essential space access for quick events. Best-fit for micro-showers,
-                        photography sessions, and content creation.
-                      </p>
-                    </div>
-                    <ul className="space-y-1.5 text-[10px] text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-white/5 pt-3 font-sans">
-                      <li>• Max Capacity: 30 guests</li>
-                      <li>• Renter setup & teardown</li>
-                      <li>• Basic sound system hookup</li>
-                      <li>• Standard policy qualifiers</li>
-                    </ul>
-                  </div>
-
-                  {/* Package 2 */}
-                  <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-4 flex flex-col justify-between">
-                    <div className="space-y-2">
-                      <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">
-                        Tier 2
-                      </span>
-                      <h3 className="font-bold text-navy-900 dark:text-white text-lg">
-                        Starter Package
-                      </h3>
-                      <div className="text-2xl font-extrabold text-navy-900 dark:text-white">
-                        $1,500
-                      </div>
-                      <p className="text-xs text-slate-500 leading-relaxed font-sans">
-                        Extended half-day access with fundamental hosting features. Perfect for
-                        family celebrations and mixers.
-                      </p>
-                    </div>
-                    <ul className="space-y-1.5 text-[10px] text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-white/5 pt-3 font-sans">
-                      <li>• Max Capacity: 50 guests</li>
-                      <li>• 6-Hour rental window</li>
-                      <li>• 1 Dedicated host coordinator</li>
-                      <li>• Cleaning & waste services</li>
-                    </ul>
-                  </div>
-
-                  {/* Package 3 */}
-                  <div className="rounded-2xl border border-rose-500/25 bg-rose-500/5 p-5 dark:border-rose-500/40 dark:bg-rose-500/10 space-y-4 flex flex-col justify-between relative overflow-hidden">
-                    <div className="absolute top-0 right-0 bg-rose-500 text-white text-[8px] font-bold uppercase tracking-widest px-3 py-1 rounded-bl-lg">
-                      Popular
-                    </div>
-                    <div className="space-y-2">
-                      <span className="text-[10px] font-bold text-rose-500 uppercase tracking-widest block">
-                        Tier 3
-                      </span>
-                      <h3 className="font-bold text-navy-900 dark:text-white text-lg">
-                        Standard Experience
-                      </h3>
-                      <div className="text-2xl font-extrabold text-navy-900 dark:text-white">
-                        $2,500
-                      </div>
-                      <p className="text-xs text-slate-500 leading-relaxed font-sans">
-                        Full-day premium venue package. Crafted for weddings, larger formal events,
-                        and upscale corporate workshops.
-                      </p>
-                    </div>
-                    <ul className="space-y-1.5 text-[10px] text-slate-600 dark:text-slate-300 border-t border-rose-500/15 pt-3 font-sans">
-                      <li>• Max Capacity: 75 guests</li>
-                      <li>• 12-Hour full-day access</li>
-                      <li>• Premier coordinator & AV staff</li>
-                      <li>• Pre-event spatial layout helper</li>
-                    </ul>
-                  </div>
-
-                  {/* Package 4 */}
-                  <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-4 flex flex-col justify-between">
-                    <div className="space-y-2">
-                      <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">
-                        Tier 4
-                      </span>
-                      <h3 className="font-bold text-navy-900 dark:text-white text-lg">
-                        Premium Experience
-                      </h3>
-                      <div className="text-2xl font-extrabold text-navy-900 dark:text-white">
-                        $4,000+
-                      </div>
-                      <p className="text-xs text-slate-500 leading-relaxed font-sans">
-                        Full weekend private booking. The ultimate venue bundle featuring curated
-                        decor styling and catering channels.
-                      </p>
-                    </div>
-                    <ul className="space-y-1.5 text-[10px] text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-white/5 pt-3 font-sans">
-                      <li>• Capacity: 100 max boundary</li>
-                      <li>• Multi-day full weekend use</li>
-                      <li>• Full coordination & concierge</li>
-                      <li>• Custom caterer/alcohol options</li>
-                    </ul>
-                  </div>
-                </div>
-              </section>
-
-              {/* Section 6: Prototype Bounding & Production Roadmap */}
-              <section className="space-y-6 pt-6 border-t border-slate-100 dark:border-white/5">
-                <div className="space-y-2">
-                  <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
-                    6. Prototype Bounding & Production Roadmap
-                  </h2>
-                  <p className={`${semanticTokens.text.body} max-w-4xl`}>
-                    To ensure the portfolio mockup remains high-performing, portable, and entirely
-                    secure, certain operational integrations have been strategically bounded. Below
-                    is an explicit translation of what was deferred from the prototype, how it would
-                    be built in production, and the value it delivers.
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {/* Item 1 */}
-                  <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-3 flex flex-col justify-between">
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-rose-500 font-bold text-sm">
-                        <span>🔒</span>
-                        <span>Google Cloud Run & Firebase Auth Integration</span>
-                      </div>
-                      <div className="space-y-1.5 text-[11px] font-sans leading-relaxed">
-                        <p className="text-slate-600 dark:text-slate-300">
-                          <strong>Mockup Strategy:</strong> Kept the frontend UI completely
-                          client-side. The dashboard, client portals, and contact pipelines simulate
-                          operations locally using state variables.
-                        </p>
-                        <p className="text-slate-500">
-                          <strong>Production Build:</strong> Runs behind a secure{' '}
-                          <strong>Google Cloud Run API</strong> backend connected to{' '}
-                          <strong>Firebase Auth / Identity Platform</strong>.
-                        </p>
-                      </div>
-                    </div>
-                    <p className="text-emerald-600 dark:text-emerald-400 font-medium text-[10px] pt-2 border-t border-slate-100 dark:border-white/5">
-                      Value: Direct integration with Google Cloud makes it frictionless to natively
-                      support Google Sign-On/Google OAuth for high-trust auth.
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      Commercial local venues suffer when websites act merely as static catalogs. A
+                      true digital turnaround requires bridging the gap between elegant first
+                      impressions and frictionless business execution.
                     </p>
                   </div>
 
-                  {/* Item 2 */}
-                  <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-3 flex flex-col justify-between">
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-rose-500 font-bold text-sm">
-                        <span>🤖</span>
-                        <span>Bounded AI Chatbot & Event Planner Suite</span>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {/* Left Column: Brochure-Ware */}
+                    <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-[#0B0F19] space-y-4">
+                      <div className="flex items-center gap-2 text-amber-600 dark:text-amber-500">
+                        <span className="text-lg">📉</span>
+                        <h3 className="font-bold text-lg">
+                          Brochure-Ware (Contractor & Legacy Audits)
+                        </h3>
                       </div>
-                      <div className="space-y-1.5 text-[11px] font-sans leading-relaxed">
-                        <p className="text-slate-600 dark:text-slate-300">
-                          <strong>Mockup Strategy:</strong> Houses both the conversational AI Event
-                          Planner and a supportive site assistant chatbot, simulated locally for
-                          zero latency.
-                        </p>
-                        <p className="text-slate-500">
-                          <strong>Rationale & Skills Transfer:</strong> Reinforces the identical
-                          conversational logic and safety state-machine framework deployed in the{' '}
-                          <strong>"Digital Twin"</strong> project, adapted here to guide booking
-                          intent and resolve logistical objections.
-                        </p>
-                      </div>
+                      <p className="text-sm text-slate-600 dark:text-slate-300">
+                        "Visually passable but strategically shallow." Relying on generic templates,
+                        stock placeholders, and broken links, these layouts failed to convey brand
+                        trust or qualify booking intent.
+                      </p>
+                      <ul className="space-y-2.5 text-xs text-slate-600 dark:text-slate-300">
+                        <li className="flex items-start gap-2">
+                          <span className="text-red-500 font-bold">✕</span>
+                          <span>
+                            <strong>Placeholder Price Dilution:</strong> Unresolved pricing markers
+                            (like "$ -") created evasive messaging and customer friction.
+                          </span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-red-500 font-bold">✕</span>
+                          <span>
+                            <strong>Stock Image Dependency:</strong> Non-authenticated photography
+                            failed to demonstrate actual layout capabilities or lighting setups.
+                          </span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-red-500 font-bold">✕</span>
+                          <span>
+                            <strong>Static "Dead End" CTAs:</strong> Generic tour buttons opening
+                            unformatted email drafts, creating extensive manual follow-up loops.
+                          </span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-red-500 font-bold">✕</span>
+                          <span>
+                            <strong>Heavy Technical Overhead:</strong> Brittle Google Maps API
+                            dependencies and unoptimized media slowing mobile search crawling.
+                          </span>
+                        </li>
+                      </ul>
                     </div>
-                    <p className="text-emerald-600 dark:text-emerald-400 font-medium text-[10px] pt-2 border-t border-slate-100 dark:border-white/5">
-                      Value: Demonstrates ability to implement commercial chatbot architectures
-                      while avoiding live LLM billing exploitation.
+
+                    {/* Right Column: Dynamic Ecosystem */}
+                    <div className="rounded-2xl border border-rose-500/20 bg-rose-500/5 p-6 dark:border-rose-500/10 dark:bg-rose-500/5 space-y-4">
+                      <div className="flex items-center gap-2 text-rose-600 dark:text-rose-400">
+                        <span className="text-lg">📈</span>
+                        <h3 className="font-bold text-lg">
+                          Ecosystem Architecture (Redesigned Mockup)
+                        </h3>
+                      </div>
+                      <p className="text-sm text-slate-600 dark:text-slate-300">
+                        A single-page-of-truth conversion journey. Consolidating visual proof,
+                        structural qualifiers, dynamic pricing, and direct administrative routes
+                        into a unified, high-performing lead generation engine.
+                      </p>
+                      <ul className="space-y-2.5 text-xs text-slate-600 dark:text-slate-300">
+                        <li className="flex items-start gap-2">
+                          <span className="text-emerald-500 font-bold">✓</span>
+                          <span>
+                            <strong>Curated Offer Menus:</strong> Upfront pricing tiers that qualify
+                            customer budgets and filter unviable bookings instantly.
+                          </span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-emerald-500 font-bold">✓</span>
+                          <span>
+                            <strong>Real Venue Asset Plan:</strong> Gallery layouts emphasizing
+                            layout boundaries, event types (showers, weddings), and spatial flow.
+                          </span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-emerald-500 font-bold">✓</span>
+                          <span>
+                            <strong>Guided Triage Funnel:</strong> Booking inquires capture backup
+                            dates, guest counts, and caterer requirements with strict guardrails.
+                          </span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-emerald-500 font-bold">✓</span>
+                          <span>
+                            <strong>Modern Serverless Tech Stack:</strong> Local Leaflet
+                            integrations, LocalBusiness JSON-LD structure, and Cloud Run backend
+                            APIs.
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </section>
+
+                {/* Section 2: Interactive Audit Diagnostics Panel */}
+                <section id="phase-2" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
+                      2. Interactive Audit Diagnostics Panel
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      Browse our detailed findings across four core operational domains. Explore the
+                      gaps uncovered in prior audits and see the concrete design translations
+                      implemented within our high-conversion mockup system.
                     </p>
                   </div>
 
-                  {/* Item 3 */}
-                  <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900/40 space-y-3 flex flex-col justify-between">
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-rose-500 font-bold text-sm">
-                        <span>📅</span>
-                        <span>Simulated Calendar vs. Live Google Calendar API</span>
+                  {/* Sub-tab selection */}
+                  <div className="flex flex-wrap gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
+                    {(['visuals', 'ux', 'technical', 'content'] as const).map((tab) => (
+                      <button
+                        key={tab}
+                        onClick={() => setActiveDiagTab(tab)}
+                        className={`text-sm font-semibold px-4 py-2 rounded-lg transition-all ${
+                          activeDiagTab === tab
+                            ? 'bg-rose-500 text-white shadow'
+                            : 'bg-white hover:bg-slate-50 text-slate-600 border border-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-300 dark:border-slate-800'
+                        }`}
+                      >
+                        {tab === 'visuals' && '🎨 Brand & Visuals'}
+                        {tab === 'ux' && '🧭 UX & Navigation'}
+                        {tab === 'technical' && '⚡ Technical & SEO'}
+                        {tab === 'content' && '📝 Content & Offer'}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Tab content panel */}
+                  <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-[#0B0F19] space-y-6">
+                    {activeDiagTab === 'visuals' && (
+                      <div className="space-y-4">
+                        <div className="border-l-4 border-rose-500 pl-4 space-y-1">
+                          <h3 className="text-lg font-bold text-navy-900 dark:text-white">
+                            🎨 Brand & Visual Consistency
+                          </h3>
+                          <p className="text-xs text-slate-500">
+                            How typography, styling, and visual proof dictate price perception.
+                          </p>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+                          <div className="space-y-2">
+                            <h4 className="text-sm font-bold text-rose-500">Uncovered Gap</h4>
+                            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                              The contractor-delivered site looked visually passable but lacked
+                              strategic depth. Re-used template blocks, generic dark and gold
+                              accents, and stock image placeholders diluted brand credibility, while
+                              spell-check misses like <strong>"OCCASSIONS"</strong> eroded visual
+                              polish.
+                            </p>
+                          </div>
+                          <div className="space-y-2">
+                            <h4 className="text-sm font-bold text-rose-500">
+                              Strategic Business Impact
+                            </h4>
+                            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                              For a premium venue, visual polish is directly tied to pricing power.
+                              When typography is generic or images feel fake, visitors assume the
+                              physical space is equally generic, driving them to lower their
+                              spending limits or doubt the venue's operational capabilities.
+                            </p>
+                          </div>
+                          <div className="space-y-2">
+                            <h4 className="text-sm font-bold text-emerald-500">
+                              Mockup Implementation
+                            </h4>
+                            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                              We introduced an intentional brand system: <strong>Spectral</strong>{' '}
+                              (elegant, warm editorial display) paired with <strong>Jost</strong>{' '}
+                              (clean modern geometric body). Replaced generic stock files with a
+                              highly targeted real-asset loading plan mapping high-atmosphere venue
+                              photos directly to use cases.
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                      <div className="space-y-1.5 text-[11px] font-sans leading-relaxed">
-                        <p className="text-slate-600 dark:text-slate-300">
-                          <strong>Mockup Strategy:</strong> Uses interactive date selection
-                          components displaying mock slots to simulate date inquiry conflict
-                          resolution.
-                        </p>
-                        <p className="text-slate-500">
-                          <strong>Production Build:</strong> Integrates Google Calendar OAuth2
-                          client sync, booking schedules directly onto the venue’s master calendar
-                          to automatically lock slots.
-                        </p>
+                    )}
+
+                    {activeDiagTab === 'ux' && (
+                      <div className="space-y-4">
+                        <div className="border-l-4 border-rose-500 pl-4 space-y-1">
+                          <h3 className="text-lg font-bold text-navy-900 dark:text-white">
+                            🧭 UX & Navigation Flow
+                          </h3>
+                          <p className="text-xs text-slate-500">
+                            Eliminating friction points to capture high-intent leads.
+                          </p>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+                          <div className="space-y-2">
+                            <h4 className="text-sm font-bold text-rose-500">Uncovered Gap</h4>
+                            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                              The contractor site worked like a brochure rather than a booking
+                              funnel. Standard "Book a Tour" triggers opened raw mailto tags with no
+                              fields to capture guest capacity, budgeting range, backup dates, or
+                              catering preferences.
+                            </p>
+                          </div>
+                          <div className="space-y-2">
+                            <h4 className="text-sm font-bold text-rose-500">
+                              Strategic Business Impact
+                            </h4>
+                            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                              Incomplete leads force operations to spend hours chasing basics (guest
+                              count, budget, date alignment). High-intent planners drop off
+                              instantly if they cannot verify spatial layout availability or
+                              capacity rules during their initial search.
+                            </p>
+                          </div>
+                          <div className="space-y-2">
+                            <h4 className="text-sm font-bold text-emerald-500">
+                              Mockup Implementation
+                            </h4>
+                            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                              Designed a single-page conversion pathway. Embedded a structured
+                              intake form capturing essential event attributes with explicit
+                              qualifiers ("Submitting this does not confirm booking"). Created
+                              bypass links (<code>?demo=1</code>) to easily preview client and admin
+                              modules.
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <p className="text-emerald-600 dark:text-emerald-400 font-medium text-[10px] pt-2 border-t border-slate-100 dark:border-white/5">
-                      Value: Eliminates manual owner confirmation overhead and booking double-ups,
-                      letting clients lock in dates instantly.
+                    )}
+
+                    {activeDiagTab === 'technical' && (
+                      <div className="space-y-4">
+                        <div className="border-l-4 border-rose-500 pl-4 space-y-1">
+                          <h3 className="text-lg font-bold text-navy-900 dark:text-white">
+                            ⚡ Technical & SEO Discovery
+                          </h3>
+                          <p className="text-xs text-slate-500">
+                            Accelerating search crawlers and eliminating external API friction.
+                          </p>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+                          <div className="space-y-2">
+                            <h4 className="text-sm font-bold text-rose-500">Uncovered Gap</h4>
+                            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                              Heavy uncompressed images dragging down mobile performance. Brittle
+                              dependency on hardcoded Google Maps API credentials which broke during
+                              sandbox offline testing. Vague text headings that lacked localized
+                              keywords for regional discoverability.
+                            </p>
+                          </div>
+                          <div className="space-y-2">
+                            <h4 className="text-sm font-bold text-rose-500">
+                              Strategic Business Impact
+                            </h4>
+                            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                              Venues rely heavily on local organic queries (e.g., "event space near
+                              me"). When headings lack structure, regional crawler search scores
+                              plummet. Slow performance and Google API credential breakage during
+                              reviews directly block user conversions.
+                            </p>
+                          </div>
+                          <div className="space-y-2">
+                            <h4 className="text-sm font-bold text-emerald-500">
+                              Mockup Implementation
+                            </h4>
+                            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                              Adopted structured React components optimized for rapid layout
+                              scaling. Ported interactive maps to an open-source Leaflet +
+                              OpenStreetMap engine to eliminate API setup blockers. Implemented
+                              canonical <strong>LocalBusiness JSON-LD schema</strong> and semantic
+                              SEO heading routes.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {activeDiagTab === 'content' && (
+                      <div className="space-y-4">
+                        <div className="border-l-4 border-rose-500 pl-4 space-y-1">
+                          <h3 className="text-lg font-bold text-navy-900 dark:text-white">
+                            📝 Content & Offer Architecture
+                          </h3>
+                          <p className="text-xs text-slate-500">
+                            Structuring pricing, rules, and social proof with commercial clarity.
+                          </p>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+                          <div className="space-y-2">
+                            <h4 className="text-sm font-bold text-rose-500">Uncovered Gap</h4>
+                            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                              Pricing cards showing blank placeholders (like <strong>"$ -"</strong>
+                              ), leaving users completely in the dark. Testimonials and policy
+                              guidelines lacking capacity bounds, alcohol/bar limits, catering
+                              guidelines, or deposit instructions.
+                            </p>
+                          </div>
+                          <div className="space-y-2">
+                            <h4 className="text-sm font-bold text-rose-500">
+                              Strategic Business Impact
+                            </h4>
+                            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                              Hiding pricing is a massive conversion killer. Planners suspect
+                              custom-quoted venue costs are arbitrarily inflated. Missing basic
+                              logistical rules (cancellations, deposits, cleaning responsibilities)
+                              results in heavy manual client sorting overhead.
+                            </p>
+                          </div>
+                          <div className="space-y-2">
+                            <h4 className="text-sm font-bold text-emerald-500">
+                              Mockup Implementation
+                            </h4>
+                            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                              Established clear commercial packages (Keep It Simple, Starter,
+                              Standard, Premium Tiers) matching guest counts. Outlined a clean
+                              logistical policy FAQ. Labeled mock testimonials transparently as
+                              proposal visual layouts to verify site architecture without misleading
+                              users.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </section>
+
+                {/* Section 3: Structured Solution Architecture & "4 Pillars" */}
+                <section id="phase-3" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
+                      3. Structured Solution Architecture & "4 Pillars"
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      Our digital turnaround strategy rests upon four foundational pillars,
+                      connecting front-end conversions directly to backend database operations and
+                      customer scheduling.
                     </p>
                   </div>
-                </div>
 
-                {/* Footnote on Package Dissonance */}
-                <div className="rounded-2xl border border-amber-500/25 bg-amber-500/5 p-5 dark:border-amber-500/40 dark:bg-amber-500/10 space-y-2">
-                  <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-bold text-sm">
-                    <span>💡</span>
-                    <span>Strategic Package Alignment Rationale</span>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Pillar 1 */}
+                    <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
+                      <span className="text-2xl">🖼️</span>
+                      <h3 className="font-bold text-navy-900 dark:text-white text-base">
+                        Pillar 1: High-Conversion Brand Showcase
+                      </h3>
+                      <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Elegantly designed layouts using <strong>Spectral + Jost</strong> display
+                        typography. Consolidates real venue imagery, event-type capability cards,
+                        and spatial layout planning maps into a single guided decision page that
+                        enhances venue prestige.
+                      </p>
+                    </div>
+
+                    {/* Pillar 2 */}
+                    <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
+                      <span className="text-2xl">🎯</span>
+                      <h3 className="font-bold text-navy-900 dark:text-white text-base">
+                        Pillar 2: Guided Intent Intake Engine
+                      </h3>
+                      <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                        An interactive planning helper and structured booking form capturing backup
+                        dates, guest counts, and catering preferences. Integrates campaign UTM
+                        source capture utilities to map marketing traffic directly to CRM lead
+                        entries.
+                      </p>
+                    </div>
+
+                    {/* Pillar 3 */}
+                    <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
+                      <span className="text-2xl">🔑</span>
+                      <h3 className="font-bold text-navy-900 dark:text-white text-base">
+                        Pillar 3: Unified Client Planning Portal
+                      </h3>
+                      <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                        A frictionless client-facing workspace featuring reviewer bypass modes (
+                        <code>?demo=1</code>). Built to integrate with{' '}
+                        <strong>Firebase Auth & Google Sign-In</strong> for frictionless client
+                        access, secure collaborative seating layouts, and payment tracking.
+                      </p>
+                    </div>
+
+                    {/* Pillar 4 */}
+                    <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
+                      <span className="text-2xl">📊</span>
+                      <h3 className="font-bold text-navy-900 dark:text-white text-base">
+                        Pillar 4: Unified Admin Triage Dashboard
+                      </h3>
+                      <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                        A unified operational control panel designed to run as a secure{' '}
+                        <strong>Google Cloud Run</strong> backend service. Streamlines lead
+                        assignment, pipeline queue triage, and automated AI coordination.
+                      </p>
+                    </div>
                   </div>
-                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
-                    You may observe a strategic variation between the public-facing mockup packages
-                    (which focus on <strong>frictionless value qualification</strong> like{' '}
-                    <em>Simple Rental</em>, <em>Celebration Setup</em>, and{' '}
-                    <em>Premium Experience</em>) and the precise pricing models featured in the deep
-                    dive dashboard (which detail exact financial tiers like{' '}
-                    <strong>$500 to $4,000+</strong>). This is an{' '}
-                    <strong>intentional operations choice</strong>:
-                  </p>
-                  <ul className="space-y-1 text-[11px] text-slate-500 leading-relaxed list-disc list-inside font-sans pl-2">
-                    <li>
-                      <strong>Public-Facing Site:</strong> Focuses on emotional buy-in, spatial
-                      visualization, and conversion. It groups offers conceptually to capture leads
-                      without triggering immediate price-anchoring friction.
-                    </li>
-                    <li>
-                      <strong>Internal Business/Investor View:</strong> Outlines exact capacity
-                      limits, staffing cost boundaries, and margin qualification standards to
-                      support corporate turnaround strategy presentations.
-                    </li>
-                  </ul>
-                </div>
-              </section>
+                </section>
+
+                {/* Section 4: Dual-Perspective KPI Dashboard */}
+                <section id="phase-4" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-4 md:flex md:items-center md:justify-between">
+                    <div className="space-y-2">
+                      <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
+                        4. Dual-Perspective KPI Dashboard
+                      </h2>
+                      <p className={`${semanticTokens.text.body} max-w-xl`}>
+                        Track results across two operational planes: Business/Owner operations and
+                        technical system telemetry.
+                      </p>
+                    </div>
+                    {/* View switcher */}
+                    <div className="flex bg-slate-100 dark:bg-slate-900 p-1 rounded-xl shrink-0 border border-slate-200 dark:border-slate-800">
+                      <button
+                        onClick={() => setKpiView('owner')}
+                        className={`text-xs font-semibold px-4 py-2 rounded-lg transition-all ${
+                          kpiView === 'owner'
+                            ? 'bg-rose-500 text-white shadow'
+                            : 'text-slate-600 dark:text-slate-300 hover:text-slate-900'
+                        }`}
+                      >
+                        💼 Business Operations
+                      </button>
+                      <button
+                        onClick={() => setKpiView('telemetry')}
+                        className={`text-xs font-semibold px-4 py-2 rounded-lg transition-all ${
+                          kpiView === 'telemetry'
+                            ? 'bg-rose-500 text-white shadow'
+                            : 'text-slate-600 dark:text-slate-300 hover:text-slate-900'
+                        }`}
+                      >
+                        🎛️ System Telemetry
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Dashboard stats display */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {kpiView === 'owner' ? (
+                      <>
+                        {/* Metric 1 */}
+                        <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
+                          <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
+                            Lead Qualification Accuracy
+                          </span>
+                          <div className="text-3xl font-extrabold text-navy-900 dark:text-white font-outfit">
+                            +40%
+                          </div>
+                          <p className="text-[10px] text-slate-500">
+                            Projected lift from structured, multi-field intake forms vs. raw emails.
+                          </p>
+                        </div>
+                        {/* Metric 2 */}
+                        <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
+                          <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
+                            Administrative Overhead
+                          </span>
+                          <div className="text-3xl font-extrabold text-navy-900 dark:text-white font-outfit">
+                            -15 hrs/wk
+                          </div>
+                          <p className="text-[10px] text-slate-500">
+                            Average owner administrative time saved by automated CRM intake
+                            pipelines.
+                          </p>
+                        </div>
+                        {/* Metric 3 */}
+                        <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
+                          <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
+                            Average Contract Value
+                          </span>
+                          <div className="text-3xl font-extrabold text-navy-900 dark:text-white font-outfit">
+                            +25%
+                          </div>
+                          <p className="text-[10px] text-slate-500">
+                            Projected revenue lift via upfront tiered packages and upsell menus.
+                          </p>
+                        </div>
+                        {/* Metric 4 */}
+                        <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
+                          <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
+                            Booking Funnel Conversion
+                          </span>
+                          <div className="text-3xl font-extrabold text-navy-900 dark:text-white font-outfit">
+                            +3.2%
+                          </div>
+                          <p className="text-[10px] text-slate-500">
+                            Estimated increase driven by real proof visuals and immediate policy
+                            clarity.
+                          </p>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        {/* Metric 1 */}
+                        <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
+                          <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
+                            Pipeline First-Pass Yield (FPY)
+                          </span>
+                          <div className="text-3xl font-extrabold text-navy-900 dark:text-white font-outfit">
+                            94.2%
+                          </div>
+                          <p className="text-[10px] text-slate-500">
+                            Verified transition accuracy across database updates under simulator
+                            loads.
+                          </p>
+                        </div>
+                        {/* Metric 2 */}
+                        <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
+                          <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
+                            System Backlog SLA Risk
+                          </span>
+                          <div className="text-3xl font-extrabold text-navy-900 dark:text-white font-outfit">
+                            &lt; 1.0%
+                          </div>
+                          <p className="text-[10px] text-slate-500">
+                            Risk rating limit managed by automated high-capacity queuing thresholds.
+                          </p>
+                        </div>
+                        {/* Metric 3 */}
+                        <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
+                          <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
+                            Microservices Latency
+                          </span>
+                          <div className="text-3xl font-extrabold text-navy-900 dark:text-white font-outfit">
+                            &lt; 200ms
+                          </div>
+                          <p className="text-[10px] text-slate-500">
+                            Average endpoint request time across Cloud Run serverless execution
+                            points.
+                          </p>
+                        </div>
+                        {/* Metric 4 */}
+                        <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
+                          <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
+                            Incident Defect Leakage
+                          </span>
+                          <div className="text-3xl font-extrabold text-navy-900 dark:text-white font-outfit">
+                            &lt; 0.5%
+                          </div>
+                          <p className="text-[10px] text-slate-500">
+                            QA triage filter validation rate limiting raw data payload escapes.
+                          </p>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </section>
+
+                {/* Section 5: Commercial Offering / Pricing Tiers */}
+                <section id="phase-5" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
+                      5. Commercial Offering & Pricing Menu
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      A transparent offer architecture designed to address legacy pricing ambiguity.
+                      Mapped guest limits, support staffing, and coordination resources to specific
+                      price boundaries to streamline client qualification.
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {/* Package 1 */}
+                    <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-4 flex flex-col justify-between">
+                      <div className="space-y-2">
+                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">
+                          Tier 1
+                        </span>
+                        <h3 className="font-bold text-navy-900 dark:text-white text-lg">
+                          Keep It Simple
+                        </h3>
+                        <div className="text-2xl font-extrabold text-navy-900 dark:text-white">
+                          $500
+                        </div>
+                        <p className="text-xs text-slate-500 leading-relaxed font-sans">
+                          Essential space access for quick events. Best-fit for micro-showers,
+                          photography sessions, and content creation.
+                        </p>
+                      </div>
+                      <ul className="space-y-1.5 text-[10px] text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-white/5 pt-3 font-sans">
+                        <li>• Max Capacity: 30 guests</li>
+                        <li>• Renter setup & teardown</li>
+                        <li>• Basic sound system hookup</li>
+                        <li>• Standard policy qualifiers</li>
+                      </ul>
+                    </div>
+
+                    {/* Package 2 */}
+                    <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-4 flex flex-col justify-between">
+                      <div className="space-y-2">
+                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">
+                          Tier 2
+                        </span>
+                        <h3 className="font-bold text-navy-900 dark:text-white text-lg">
+                          Starter Package
+                        </h3>
+                        <div className="text-2xl font-extrabold text-navy-900 dark:text-white">
+                          $1,500
+                        </div>
+                        <p className="text-xs text-slate-500 leading-relaxed font-sans">
+                          Extended half-day access with fundamental hosting features. Perfect for
+                          family celebrations and mixers.
+                        </p>
+                      </div>
+                      <ul className="space-y-1.5 text-[10px] text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-white/5 pt-3 font-sans">
+                        <li>• Max Capacity: 50 guests</li>
+                        <li>• 6-Hour rental window</li>
+                        <li>• 1 Dedicated host coordinator</li>
+                        <li>• Cleaning & waste services</li>
+                      </ul>
+                    </div>
+
+                    {/* Package 3 */}
+                    <div className="rounded-2xl border border-rose-500/25 bg-rose-500/5 p-5 dark:border-rose-500/40 dark:bg-rose-500/10 space-y-4 flex flex-col justify-between relative overflow-hidden">
+                      <div className="absolute top-0 right-0 bg-rose-500 text-white text-[8px] font-bold uppercase tracking-widest px-3 py-1 rounded-bl-lg">
+                        Popular
+                      </div>
+                      <div className="space-y-2">
+                        <span className="text-[10px] font-bold text-rose-500 uppercase tracking-widest block">
+                          Tier 3
+                        </span>
+                        <h3 className="font-bold text-navy-900 dark:text-white text-lg">
+                          Standard Experience
+                        </h3>
+                        <div className="text-2xl font-extrabold text-navy-900 dark:text-white">
+                          $2,500
+                        </div>
+                        <p className="text-xs text-slate-500 leading-relaxed font-sans">
+                          Full-day premium venue package. Crafted for weddings, larger formal
+                          events, and upscale corporate workshops.
+                        </p>
+                      </div>
+                      <ul className="space-y-1.5 text-[10px] text-slate-600 dark:text-slate-300 border-t border-rose-500/15 pt-3 font-sans">
+                        <li>• Max Capacity: 75 guests</li>
+                        <li>• 12-Hour full-day access</li>
+                        <li>• Premier coordinator & AV staff</li>
+                        <li>• Pre-event spatial layout helper</li>
+                      </ul>
+                    </div>
+
+                    {/* Package 4 */}
+                    <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-4 flex flex-col justify-between">
+                      <div className="space-y-2">
+                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">
+                          Tier 4
+                        </span>
+                        <h3 className="font-bold text-navy-900 dark:text-white text-lg">
+                          Premium Experience
+                        </h3>
+                        <div className="text-2xl font-extrabold text-navy-900 dark:text-white">
+                          $4,000+
+                        </div>
+                        <p className="text-xs text-slate-500 leading-relaxed font-sans">
+                          Full weekend private booking. The ultimate venue bundle featuring curated
+                          decor styling and catering channels.
+                        </p>
+                      </div>
+                      <ul className="space-y-1.5 text-[10px] text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-white/5 pt-3 font-sans">
+                        <li>• Capacity: 100 max boundary</li>
+                        <li>• Multi-day full weekend use</li>
+                        <li>• Full coordination & concierge</li>
+                        <li>• Custom caterer/alcohol options</li>
+                      </ul>
+                    </div>
+                  </div>
+                </section>
+
+                {/* Section 6: Prototype Bounding & Production Roadmap */}
+                <section
+                  id="phase-6"
+                  className="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-800 scroll-mt-24"
+                >
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
+                      6. Prototype Bounding & Production Roadmap
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      To ensure the portfolio mockup remains high-performing, portable, and entirely
+                      secure, certain operational integrations have been strategically bounded.
+                      Below is an explicit translation of what was deferred from the prototype, how
+                      it would be built in production, and the value it delivers.
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {/* Item 1 */}
+                    <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-3 flex flex-col justify-between">
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2 text-rose-500 font-bold text-sm">
+                          <span>🔒</span>
+                          <span>Google Cloud Run & Firebase Auth Integration</span>
+                        </div>
+                        <div className="space-y-1.5 text-[11px] font-sans leading-relaxed">
+                          <p className="text-slate-600 dark:text-slate-300">
+                            <strong>Mockup Strategy:</strong> Kept the frontend UI completely
+                            client-side. The dashboard, client portals, and contact pipelines
+                            simulate operations locally using state variables.
+                          </p>
+                          <p className="text-slate-500">
+                            <strong>Production Build:</strong> Runs behind a secure{' '}
+                            <strong>Google Cloud Run API</strong> backend connected to{' '}
+                            <strong>Firebase Auth / Identity Platform</strong>.
+                          </p>
+                        </div>
+                      </div>
+                      <p className="text-emerald-600 dark:text-emerald-400 font-medium text-[10px] pt-2 border-t border-slate-100 dark:border-white/5">
+                        Value: Direct integration with Google Cloud makes it frictionless to
+                        natively support Google Sign-On/Google OAuth for high-trust auth.
+                      </p>
+                    </div>
+
+                    {/* Item 2 */}
+                    <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-3 flex flex-col justify-between">
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2 text-rose-500 font-bold text-sm">
+                          <span>🤖</span>
+                          <span>Bounded AI Chatbot & Event Planner Suite</span>
+                        </div>
+                        <div className="space-y-1.5 text-[11px] font-sans leading-relaxed">
+                          <p className="text-slate-600 dark:text-slate-300">
+                            <strong>Mockup Strategy:</strong> Houses both the conversational AI
+                            Event Planner and a supportive site assistant chatbot, simulated locally
+                            for zero latency.
+                          </p>
+                          <p className="text-slate-500">
+                            <strong>Rationale & Skills Transfer:</strong> Reinforces the identical
+                            conversational logic and safety state-machine framework deployed in the{' '}
+                            <strong>"Digital Twin"</strong> project, adapted here to guide booking
+                            intent and resolve logistical objections.
+                          </p>
+                        </div>
+                      </div>
+                      <p className="text-emerald-600 dark:text-emerald-400 font-medium text-[10px] pt-2 border-t border-slate-100 dark:border-white/5">
+                        Value: Demonstrates ability to implement commercial chatbot architectures
+                        while avoiding live LLM billing exploitation.
+                      </p>
+                    </div>
+
+                    {/* Item 3 */}
+                    <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-3 flex flex-col justify-between">
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2 text-rose-500 font-bold text-sm">
+                          <span>📅</span>
+                          <span>Simulated Calendar vs. Live Google Calendar API</span>
+                        </div>
+                        <div className="space-y-1.5 text-[11px] font-sans leading-relaxed">
+                          <p className="text-slate-600 dark:text-slate-300">
+                            <strong>Mockup Strategy:</strong> Uses interactive date selection
+                            components displaying mock slots to simulate date inquiry conflict
+                            resolution.
+                          </p>
+                          <p className="text-slate-500">
+                            <strong>Production Build:</strong> Integrates Google Calendar OAuth2
+                            client sync, booking schedules directly onto the venue’s master calendar
+                            to automatically lock slots.
+                          </p>
+                        </div>
+                      </div>
+                      <p className="text-emerald-600 dark:text-emerald-400 font-medium text-[10px] pt-2 border-t border-slate-100 dark:border-white/5">
+                        Value: Eliminates manual owner confirmation overhead and booking double-ups,
+                        letting clients lock in dates instantly.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Footnote on Package Dissonance */}
+                  <div className="rounded-2xl border border-amber-500/25 bg-amber-500/5 p-5 dark:border-amber-500/40 dark:bg-amber-500/10 space-y-2">
+                    <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-bold text-sm">
+                      <span>💡</span>
+                      <span>Strategic Package Alignment Rationale</span>
+                    </div>
+                    <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
+                      You may observe a strategic variation between the public-facing mockup
+                      packages (which focus on <strong>frictionless value qualification</strong>{' '}
+                      like <em>Simple Rental</em>, <em>Celebration Setup</em>, and{' '}
+                      <em>Premium Experience</em>) and the precise pricing models featured in the
+                      deep dive dashboard (which detail exact financial tiers like{' '}
+                      <strong>$500 to $4,000+</strong>). This is an{' '}
+                      <strong>intentional operations choice</strong>:
+                    </p>
+                    <ul className="space-y-1 text-[11px] text-slate-500 leading-relaxed list-disc list-inside font-sans pl-2">
+                      <li>
+                        <strong>Public-Facing Site:</strong> Focuses on emotional buy-in, spatial
+                        visualization, and conversion. It groups offers conceptually to capture
+                        leads without triggering immediate price-anchoring friction.
+                      </li>
+                      <li>
+                        <strong>Internal Business/Investor View:</strong> Outlines exact capacity
+                        limits, staffing cost boundaries, and margin qualification standards to
+                        support corporate turnaround strategy presentations.
+                      </li>
+                    </ul>
+                  </div>
+                </section>
+              </div>
             </div>
           )}
         </div>

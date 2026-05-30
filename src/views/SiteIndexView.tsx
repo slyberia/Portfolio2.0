@@ -4,7 +4,7 @@ import {
   GIS_TRACK_HREF,
   GUYNODE_SYSTEM_HREF,
   IMPLEMENTATION_TRACK_HREF,
-  PORTFOLIO_PROCESS_HREF,
+  DEEP_DIVES_HREF,
   QA_TRACK_HREF,
   RESUME_HREF,
   PROJECTS_HREF,
@@ -44,32 +44,32 @@ const processDeepDives = [
   {
     title: 'Release Ladder',
     description: 'See the phased evolution and release logic of Portfolio2.0.',
-    href: '/portfolio2/deep-dive#build-timeline',
+    href: '/deep-dives#build-timeline',
   },
   {
     title: 'Decision Blocks',
     description: 'Review architecture and product decisions with tradeoffs and outcomes.',
-    href: '/portfolio2/deep-dive#projects-architecture',
+    href: '/deep-dives#projects-architecture',
   },
   {
     title: 'Architecture & QA',
     description: 'Inspect routing, testing boundaries, and reliability safeguards.',
-    href: '/portfolio2/deep-dive#validation-trail',
+    href: '/deep-dives#validation-trail',
   },
   {
     title: 'LLM Governance',
     description: 'Understand human review loops, constraints, and AI-use guardrails.',
-    href: '/portfolio2/deep-dive#digital-twin-governance',
+    href: '/deep-dives#digital-twin-governance',
   },
   {
     title: 'Revision Trail',
     description: 'Trace major revisions and what ambiguity each change resolved.',
-    href: '/portfolio2/deep-dive#evidence-ledger',
+    href: '/deep-dives#evidence-ledger',
   },
   {
     title: 'Supporting Artifacts',
     description: 'Open supporting documents and linked proof assets.',
-    href: '/portfolio2/deep-dive#remaining-release-hardening',
+    href: '/deep-dives#remaining-release-hardening',
   },
 ];
 
@@ -376,19 +376,19 @@ const SiteIndexView: React.FC = () => {
                 I want to inspect the build process
               </h3>
               <p className="mt-2">
-                <Link to={PORTFOLIO_PROCESS_HREF} className="underline">
+                <Link to={DEEP_DIVES_HREF} className="underline">
                   Process
                 </Link>{' '}
                 →{' '}
-                <a href="/portfolio2/deep-dive#decision-blocks" className="underline">
+                <a href="/deep-dives#decision-blocks" className="underline">
                   Decision Blocks
                 </a>{' '}
                 →{' '}
-                <a href="/portfolio2/deep-dive#architecture-boundary" className="underline">
+                <a href="/deep-dives#architecture-boundary" className="underline">
                   Architecture & QA
                 </a>{' '}
                 →{' '}
-                <a href="/portfolio2/deep-dive#multi-llm-governance" className="underline">
+                <a href="/deep-dives#multi-llm-governance" className="underline">
                   LLM Governance
                 </a>
               </p>

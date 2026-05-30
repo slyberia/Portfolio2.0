@@ -17,7 +17,7 @@ const REQUIRED_ROUTES = [
   '/projects/project-aegis',
   '/projects/nba-systems-qa',
   '/projects/luxe-lofts',
-  '/portfolio2/deep-dive',
+  '/deep-dives',
   '/resume',
   '/site-index',
   '/ai-index',
@@ -93,7 +93,7 @@ function assertNoCanonicalSnapshotWrites() {
     '/tracks/gis',
     '/resume',
     '/site-index',
-    '/portfolio2/deep-dive',
+    '/deep-dives',
     '/ai-index',
   ];
   for (const route of blockedRoutes) {
