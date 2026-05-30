@@ -309,7 +309,7 @@ const DeepDiveView: React.FC = () => {
             <h1 className="text-4xl md:text-5xl font-outfit font-extrabold text-slate-950 dark:text-white tracking-tight">
               Process &amp; Strategy Deep Dives
             </h1>
-            <p className="text-base text-slate-650 dark:text-slate-350 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
               Analyze the engineering timelines, multi-LLM workflows, and commercial restructuring
               strategies behind this portfolio. These deep dives verify the strategic governance and
               rigorous validation backing every project.
@@ -642,7 +642,7 @@ const DeepDiveView: React.FC = () => {
                 <h2 className="text-2xl font-outfit font-bold text-ink-navy dark:text-white">
                   Decision Log
                 </h2>
-                <p className="text-slate-650 dark:text-slate-350 leading-relaxed text-sm">
+                <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
                   Key decisions: migrate to canonical projects routes, preserve compatibility
                   aliases during transition, promote Guynode and Digital Twin as flagship proof
                   systems, centralize metadata, and keep Process separate from Projects browsing for
@@ -660,7 +660,7 @@ const DeepDiveView: React.FC = () => {
                   <h2 className="text-2xl font-outfit font-bold text-ink-navy dark:text-white">
                     Evidence Ledger
                   </h2>
-                  <p className="text-slate-655 dark:text-slate-355 leading-relaxed text-sm">
+                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
                     The public Process page summarizes the build. The evidence ledger records the
                     deeper source trail: files, phases, decisions, Git evidence, validation notes,
                     and remaining risks. In this repo, it is maintained as an internal documentation
@@ -676,7 +676,7 @@ const DeepDiveView: React.FC = () => {
                 <h2 className="text-2xl font-outfit font-bold text-ink-navy dark:text-white">
                   Governance &amp; Implementation Logs
                 </h2>
-                <p className="text-slate-650 dark:text-slate-355 leading-relaxed text-sm">
+                <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
                   Audit logs for the Portfolio 2.0 implementation phases, including automated review
                   summaries, design system alignment reports, and accessibility validation trails.
                 </p>
@@ -689,7 +689,7 @@ const DeepDiveView: React.FC = () => {
                 <h2 className="text-2xl font-outfit font-bold text-ink-navy dark:text-white">
                   Remaining Release-Hardening Items
                 </h2>
-                <ul className="list-disc pl-5 space-y-2 text-slate-650 dark:text-slate-355 text-sm">
+                <ul className="list-disc pl-5 space-y-2 text-slate-600 dark:text-slate-400 text-sm">
                   <li>Final browser-interactive QA sweep.</li>
                   <li>Scroll-to-top and long-page usability polish.</li>
                   <li>Contextual Digital Twin entry points on track pages.</li>
