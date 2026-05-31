@@ -9,9 +9,10 @@ import {
 } from '../lib/routes';
 import ScrollToTopButton from '../components/ScrollToTopButton';
 import ErrorBoundary from '../components/ErrorBoundary';
-import { componentRecipes, proseTheme, semanticTokens } from '../lib/design-system';
+import { componentRecipes, semanticTokens } from '../lib/design-system';
 
-type IndexTab = { key: SectionKey; title: string; description: string; id: string };
+type MainTab = 'landing' | 'process' | 'luxe-lofts';
+
 type TimelineRow = {
   phase: string;
   changed: string;
@@ -20,82 +21,14 @@ type TimelineRow = {
   validation: string;
 };
 
-const sectionOrder = [
-  'build-timeline',
-  'multi-llm-toolchain',
-  'ai-assisted-delivery-model',
-  'project-architecture-migration',
-  'digital-twin-governance',
-  'validation-trail',
-  'evidence-ledger',
+const PROCESS_PHASES = [
+  { id: 'proc-1', label: 'Build Overview' },
+  { id: 'proc-2', label: 'Build Timeline' },
+  { id: 'proc-3', label: 'Multi-LLM Toolchain' },
+  { id: 'proc-4', label: 'Delivery Model' },
+  { id: 'proc-5', label: 'Architecture & Governance' },
+  { id: 'proc-6', label: 'Validation & Evidence' },
 ] as const;
-
-type SectionKey = (typeof sectionOrder)[number];
-
-const processIndexTabs: IndexTab[] = [
-  {
-    key: 'build-timeline',
-    title: 'Build Timeline',
-    description:
-      'Major implementation phases from role-track redesign through Projects migration and Digital Twin hardening.',
-    id: 'build-timeline',
-  },
-  {
-    key: 'multi-llm-toolchain',
-    title: 'Multi-LLM Toolchain',
-    description:
-      'How ChatGPT, Gemini, Claude, Claude Code, Google Jules, Codex, and GitHub contributed to a governed AI-assisted build process.',
-    id: 'multi-llm-toolchain',
-  },
-  {
-    key: 'ai-assisted-delivery-model',
-    title: 'AI-Assisted Delivery Model',
-    description:
-      'Scoped branch-level execution model used to convert architecture decisions into validated implementation cycles.',
-    id: 'ai-assisted-delivery-model',
-  },
-  {
-    key: 'project-architecture-migration',
-    title: 'Project Architecture Migration',
-    description:
-      'Migration from case-study language to canonical Projects routes, shared metadata, and recruiter-friendly proof browsing.',
-    id: 'projects-architecture',
-  },
-  {
-    key: 'digital-twin-governance',
-    title: 'Digital Twin Governance',
-    description:
-      'Scope controls, cost limits, relevance gates, prompt-injection handling, approved commands, and human handoff.',
-    id: 'digital-twin-governance',
-  },
-  {
-    key: 'validation-trail',
-    title: 'Validation Trail',
-    description:
-      'Typecheck, lint, tests, build checks, route validation, bugfixes, and known manual QA gaps.',
-    id: 'validation-trail',
-  },
-  {
-    key: 'evidence-ledger',
-    title: 'Evidence Ledger',
-    description:
-      'Source-of-truth audit documenting files, commits, decisions, toolchain use, and remaining risks.',
-    id: 'evidence-ledger',
-  },
-];
-
-const hashToSectionMap: Partial<Record<string, SectionKey>> = {
-  '#build-timeline': 'build-timeline',
-  '#multi-llm-toolchain': 'multi-llm-toolchain',
-  '#ai-assisted-delivery-model': 'ai-assisted-delivery-model',
-  '#projects-architecture': 'project-architecture-migration',
-  '#projects-architecture-migration': 'project-architecture-migration',
-  '#digital-twin-governance': 'digital-twin-governance',
-  '#validation-trail': 'validation-trail',
-  '#evidence-ledger': 'evidence-ledger',
-  '#decision-log': 'evidence-ledger',
-  '#remaining-release-hardening': 'evidence-ledger',
-};
 
 const buildTimeline: TimelineRow[] = [
   {
@@ -216,92 +149,74 @@ const DeepDiveView: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const tabParam = searchParams.get('tab');
 
-  const [activeMainTab, setActiveMainTab] = React.useState<'process' | 'luxe-lofts'>(
-    tabParam === 'luxe-lofts' ? 'luxe-lofts' : 'process',
-  );
-  const [activeSection, setActiveSection] = React.useState<SectionKey>('build-timeline');
-  const currentIndex = sectionOrder.indexOf(activeSection);
+  const [activeMainTab, setActiveMainTab] = React.useState<MainTab>(() => {
+    if (tabParam === 'luxe-lofts') return 'luxe-lofts';
+    if (tabParam === 'process') return 'process';
+    return 'landing';
+  });
 
+  const [activeProcessPhase, setActiveProcessPhase] = React.useState<string>('proc-1');
+  const [activePhase, setActivePhase] = React.useState<string>('phase-1');
   const [activeDiagTab, setActiveDiagTab] = React.useState<
     'visuals' | 'ux' | 'technical' | 'content'
   >('visuals');
   const [kpiView, setKpiView] = React.useState<'owner' | 'telemetry'>('owner');
 
   React.useEffect(() => {
-    if (tabParam === 'luxe-lofts' || tabParam === 'process') {
-      setActiveMainTab(tabParam);
+    if (tabParam === 'luxe-lofts' || tabParam === 'process' || tabParam === 'landing') {
+      setActiveMainTab(tabParam as MainTab);
     }
   }, [tabParam]);
 
-  const handleMainTabChange = (tab: 'process' | 'luxe-lofts') => {
+  const handleMainTabChange = (tab: MainTab) => {
     setActiveMainTab(tab);
     setSearchParams({ tab });
   };
 
   React.useEffect(() => {
-    const syncSectionToHash = () => {
-      const mappedSection = hashToSectionMap[window.location.hash];
-      if (mappedSection) setActiveSection(mappedSection);
-    };
-
-    syncSectionToHash();
-    window.addEventListener('hashchange', syncSectionToHash);
-    return () => window.removeEventListener('hashchange', syncSectionToHash);
-  }, []);
-
-  const [activePhase, setActivePhase] = React.useState<string>('phase-1');
-
-  React.useEffect(() => {
-    if (activeMainTab !== 'luxe-lofts') return;
-
+    if (activeMainTab !== 'process') return;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActivePhase(entry.target.id);
-          }
+          if (entry.isIntersecting) setActiveProcessPhase(entry.target.id);
         });
       },
       { rootMargin: '-20% 0px -60% 0px' },
     );
+    PROCESS_PHASES.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, [activeMainTab]);
 
+  React.useEffect(() => {
+    if (activeMainTab !== 'luxe-lofts') return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActivePhase(entry.target.id);
+        });
+      },
+      { rootMargin: '-20% 0px -60% 0px' },
+    );
     ['phase-1', 'phase-2', 'phase-3', 'phase-4', 'phase-5', 'phase-6'].forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
-
     return () => observer.disconnect();
   }, [activeMainTab]);
 
-  const scrollToPhase = (id: string) => {
+  const scrollTo = (id: string) => {
     const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const handleTabKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
-    if (
-      event.key !== 'ArrowRight' &&
-      event.key !== 'ArrowLeft' &&
-      event.key !== 'Home' &&
-      event.key !== 'End'
-    ) {
-      return;
-    }
-    event.preventDefault();
-    if (event.key === 'Home') return setActiveSection(sectionOrder[0]);
-    if (event.key === 'End') return setActiveSection(sectionOrder[sectionOrder.length - 1]);
-    const delta = event.key === 'ArrowRight' ? 1 : -1;
-    const nextIndex = (index + delta + sectionOrder.length) % sectionOrder.length;
-    setActiveSection(sectionOrder[nextIndex]);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <div id="deep-dive-top" className="min-h-screen pt-20 pb-20 px-6">
       <ErrorBoundary location="Deep Dive View">
         <div className="max-w-6xl mx-auto space-y-12">
-          {/* Contextual Landing Header */}
+          {/* Header */}
           <div className="space-y-4 text-center max-w-4xl mx-auto">
             <span className="text-xs font-bold uppercase tracking-[0.3em] text-tide-aqua dark:text-tide-sky">
               OPERATIONAL_INTELLIGENCE
@@ -316,391 +231,679 @@ const DeepDiveView: React.FC = () => {
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
+          {/* Tab navigation */}
+          <div className="flex flex-wrap gap-2 border-b border-slate-200 dark:border-slate-800 pb-4">
+            <button
+              onClick={() => handleMainTabChange('landing')}
+              className={`text-base font-bold px-4 py-2 rounded-t-lg transition ${
+                activeMainTab === 'landing'
+                  ? 'bg-slate-100 dark:bg-slate-800 text-slate-950 dark:text-white border-b-2 border-tide-aqua'
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+              }`}
+            >
+              Overview
+            </button>
             <button
               onClick={() => handleMainTabChange('process')}
-              className={`text-lg font-bold px-4 py-2 rounded-t-lg transition ${activeMainTab === 'process' ? 'bg-slate-100 dark:bg-slate-800 text-navy-900 dark:text-white border-b-2 border-tide-aqua' : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'}`}
+              className={`text-base font-bold px-4 py-2 rounded-t-lg transition ${
+                activeMainTab === 'process'
+                  ? 'bg-slate-100 dark:bg-slate-800 text-slate-950 dark:text-white border-b-2 border-tide-aqua'
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+              }`}
             >
-              Portfolio 2.0 Process & Governance
+              Portfolio 2.0 Process &amp; Governance
             </button>
             <button
               onClick={() => handleMainTabChange('luxe-lofts')}
-              className={`text-lg font-bold px-4 py-2 rounded-t-lg transition ${activeMainTab === 'luxe-lofts' ? 'bg-slate-100 dark:bg-slate-800 text-navy-900 dark:text-white border-b-2 border-rose-500' : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'}`}
+              className={`text-base font-bold px-4 py-2 rounded-t-lg transition ${
+                activeMainTab === 'luxe-lofts'
+                  ? 'bg-slate-100 dark:bg-slate-800 text-slate-950 dark:text-white border-b-2 border-rose-500'
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+              }`}
             >
               Luxe Lofts Digital Restructuring Strategy
             </button>
           </div>
 
-          {activeMainTab === 'process' ? (
+          {/* ── Landing Tab ── */}
+          {activeMainTab === 'landing' && (
             <div className="space-y-12">
-              <section className="space-y-6">
-                <div className="space-y-4">
-                  <p className="text-xs font-bold uppercase tracking-[0.3em] text-tide-aqua">
-                    Process
+              <section className="space-y-8">
+                <div className="space-y-3 max-w-2xl">
+                  <h2 className="text-3xl font-outfit font-bold text-slate-950 dark:text-white">
+                    Choose a Deep Dive
+                  </h2>
+                  <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                    These entries go beyond project summaries. Each documents the strategic
+                    decisions, governance models, and implementation processes that turned intent
+                    into working systems.
                   </p>
-                  <h1 className="text-4xl font-outfit font-extrabold text-slate-950 dark:text-white">
-                    Portfolio 2.0 Process Deep Dive
-                  </h1>
                 </div>
 
-                <div
-                  className={`p-6 md:p-8 rounded-2xl border space-y-6 ${componentRecipes.card.surface}`}
-                >
-                  <div className="space-y-4 max-w-4xl">
-                    <p className="text-slate-600 dark:text-slate-200 text-lg leading-relaxed">
-                      This page documents how Portfolio 2.0 evolved from an AI-assisted prototype
-                      into a role-track portfolio system with dedicated project architecture,
-                      Digital Twin guardrails, site-wide navigation, and validation-backed
-                      implementation phases.
-                    </p>
-                    <p className="text-slate-600 dark:text-slate-200 leading-relaxed">
-                      Projects show what was built. Process shows how the portfolio was planned,
-                      governed, implemented, validated, and iterated.
-                    </p>
-                    <p className="text-slate-600 dark:text-slate-200 leading-relaxed">
-                      Use this page to inspect the planning logic, AI-assisted workflow, route
-                      migrations, project taxonomy, validation passes, and remaining cleanup work
-                      behind the portfolio.
-                    </p>
-                  </div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  {/* Portfolio 2.0 Entry Card */}
+                  <button
+                    onClick={() => handleMainTabChange('process')}
+                    className="text-left group rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] hover:border-tide-aqua/40 dark:hover:border-tide-aqua/40 hover:shadow-xl transition-all duration-300 overflow-hidden"
+                  >
+                    <div className="h-2 bg-tide-aqua dark:bg-tide-sky" />
+                    <div className="p-8 space-y-5">
+                      <div className="space-y-3">
+                        <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-tide-aqua dark:text-tide-sky block">
+                          Portfolio Process
+                        </span>
+                        <h3 className="text-2xl font-outfit font-bold text-slate-950 dark:text-white group-hover:text-tide-aqua dark:group-hover:text-tide-sky transition-colors">
+                          Portfolio 2.0 Process &amp; Governance
+                        </h3>
+                        <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                          How this portfolio evolved from an AI-assisted prototype into a role-track
+                          system — documenting the multi-LLM toolchain, delivery model, route
+                          architecture, Digital Twin guardrails, and validation trail.
+                        </p>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {[
+                          'Multi-LLM Workflow',
+                          'AI Delivery Model',
+                          'Digital Twin',
+                          'Validation Trail',
+                        ].map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-tide-aqua/10 text-tide-aqua dark:text-tide-sky border border-tide-aqua/20"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="flex items-center gap-2 text-sm font-bold text-tide-aqua dark:text-tide-sky group-hover:gap-3 transition-all">
+                        <span>Explore Process Deep Dive</span>
+                        <span>→</span>
+                      </div>
+                    </div>
+                  </button>
 
-                  <div className="flex flex-wrap gap-4 pt-4 border-t border-slate-200 dark:border-slate-800">
-                    <Link to={PROJECTS_HREF} className={componentRecipes.button.primary}>
-                      View Projects Library
-                    </Link>
-                    <Link to={SITE_INDEX_HREF} className={componentRecipes.button.secondary}>
-                      Open Site Index
-                    </Link>
-                    <Link
-                      to={DIGITAL_TWIN_PROJECT_HREF}
-                      className={componentRecipes.button.secondary}
-                    >
-                      Digital Twin Project
-                    </Link>
-                    <Link to={GUYNODE_SYSTEM_HREF} className={componentRecipes.button.secondary}>
-                      Guynode Project
-                    </Link>
-                    <Link to={RESUME_HREF} className={componentRecipes.button.secondary}>
-                      View Resume
-                    </Link>
-                  </div>
+                  {/* Luxe Lofts Entry Card */}
+                  <button
+                    onClick={() => handleMainTabChange('luxe-lofts')}
+                    className="text-left group rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] hover:border-rose-500/40 dark:hover:border-rose-500/40 hover:shadow-xl transition-all duration-300 overflow-hidden"
+                  >
+                    <div className="h-2 bg-rose-500" />
+                    <div className="p-8 space-y-5">
+                      <div className="space-y-3">
+                        <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-rose-500 block">
+                          Restructuring Strategy
+                        </span>
+                        <h3 className="text-2xl font-outfit font-bold text-slate-950 dark:text-white group-hover:text-rose-500 transition-colors">
+                          Luxe Lofts Digital Restructuring Strategy
+                        </h3>
+                        <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                          A commercial deep dive into the Luxe Lofts digital ecosystem — from
+                          audit-driven diagnostics to solution architecture, KPI modeling, and
+                          prototype bounding for a live venue booking platform.
+                        </p>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {[
+                          'Audit Diagnostics',
+                          'Solution Architecture',
+                          'KPI Dashboard',
+                          'Commercial Strategy',
+                        ].map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="flex items-center gap-2 text-sm font-bold text-rose-500 group-hover:gap-3 transition-all">
+                        <span>Explore Restructuring Strategy</span>
+                        <span>→</span>
+                      </div>
+                    </div>
+                  </button>
                 </div>
               </section>
+            </div>
+          )}
 
-              <section className="space-y-4" aria-labelledby="process-index-tabs-heading">
-                <h2 className="text-2xl font-bold text-navy-900 dark:text-white">Process Index</h2>
-                <div
-                  role="tablist"
-                  aria-label="Process Deep Dive sections"
-                  className={`rounded-2xl p-3 border ${semanticTokens.border.default} ${semanticTokens.surface.panel}`}
-                >
-                  <div className="flex flex-wrap gap-2">
-                    {processIndexTabs.map((tab, index) => (
+          {/* ── Process Tab ── */}
+          {activeMainTab === 'process' && (
+            <div className="flex flex-col md:flex-row gap-8">
+              {/* Sidebar */}
+              <aside className="hidden md:block w-52 shrink-0 relative">
+                <div className="sticky top-28 space-y-4 border-l-2 border-slate-200 dark:border-slate-800 py-4">
+                  {PROCESS_PHASES.map((phase) => (
+                    <div key={phase.id} className="relative -ml-[9px] flex items-center">
                       <button
-                        key={tab.key}
-                        id={`process-tab-${tab.key}`}
-                        type="button"
-                        role="tab"
-                        aria-selected={activeSection === tab.key}
-                        aria-controls={`process-panel-${tab.key}`}
-                        tabIndex={activeSection === tab.key ? 0 : -1}
-                        onClick={() => setActiveSection(tab.key)}
-                        onKeyDown={(event) => handleTabKeyDown(event, index)}
-                        className={`rounded-full border px-3 py-2 text-sm font-semibold transition ${activeSection === tab.key ? `${componentRecipes.button.primary} border-transparent shadow-sm ring-2 ring-offset-2 ring-tide-aqua dark:ring-offset-slate-950` : `${componentRecipes.button.secondary} bg-transparent`}`}
+                        onClick={() => scrollTo(phase.id)}
+                        className="flex items-center gap-4 group w-full text-left focus:outline-none"
                       >
-                        {tab.title}
+                        <span
+                          className={`w-4 h-4 rounded-full border-2 transition-colors duration-300 ${
+                            activeProcessPhase === phase.id
+                              ? 'bg-tide-aqua border-tide-aqua ring-4 ring-tide-aqua/20'
+                              : 'bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 group-hover:border-tide-aqua/60'
+                          }`}
+                        />
+                        <span
+                          className={`text-sm font-semibold transition-colors duration-300 ${
+                            activeProcessPhase === phase.id
+                              ? 'text-tide-aqua dark:text-tide-sky'
+                              : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+                          }`}
+                        >
+                          {phase.label}
+                        </span>
                       </button>
+                    </div>
+                  ))}
+                </div>
+              </aside>
+
+              {/* Main Content */}
+              <div className="flex-1 space-y-16 min-w-0">
+                {/* proc-1: Build Overview */}
+                <section id="proc-1" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <p className="text-xs font-bold uppercase tracking-[0.3em] text-tide-aqua dark:text-tide-sky">
+                      Phase 1
+                    </p>
+                    <h2 className="text-3xl font-outfit font-bold text-slate-950 dark:text-white">
+                      Build Overview &amp; Context
+                    </h2>
+                    <p className="text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
+                      Portfolio 2.0 evolved from an AI-assisted prototype into a role-track system
+                      with dedicated project architecture, Digital Twin guardrails, site-wide
+                      navigation, and validation-backed implementation phases.
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    {[
+                      { label: 'PRs Merged', value: '50+', sub: 'Implementation changes' },
+                      { label: 'LLMs Used', value: '6', sub: 'Distinct AI tools' },
+                      { label: 'Build Phases', value: '5+', sub: 'Validated phase cycles' },
+                      { label: 'Routes', value: '10+', sub: 'Canonical project routes' },
+                    ].map((stat) => (
+                      <div
+                        key={stat.label}
+                        className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] p-5 space-y-1"
+                      >
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-tide-aqua dark:text-tide-sky block">
+                          {stat.label}
+                        </span>
+                        <div className="text-3xl font-extrabold font-outfit text-slate-950 dark:text-white">
+                          {stat.value}
+                        </div>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400">{stat.sub}</p>
+                      </div>
                     ))}
                   </div>
-                </div>
-                <p className="text-sm text-ink-slate dark:text-slate-200">
-                  Active section: <strong>{processIndexTabs[currentIndex]?.title}</strong>
-                </p>
-              </section>
 
-              {activeSection === 'build-timeline' && (
-                <section
-                  id="build-timeline"
-                  role="tabpanel"
-                  aria-labelledby="process-tab-build-timeline"
-                  aria-live="polite"
-                  className={`scroll-mt-24 space-y-4 rounded-2xl border p-6 ${componentRecipes.card.surface}`}
-                >
-                  <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
-                    Build Timeline / Phase Ladder
-                  </h2>
-                  <p className={`${proseTheme.paragraph} max-w-4xl`}>
-                    This table captures phased implementation changes, why each shift mattered, and
-                    the validation trail used to verify delivery outcomes.
-                  </p>
-                  <div className="max-h-[36rem] overflow-y-auto overflow-x-auto rounded-xl border border-black/10 dark:border-slate-800">
+                  <div
+                    className={`p-6 md:p-8 rounded-2xl border space-y-4 ${componentRecipes.card.surface}`}
+                  >
+                    <div className="space-y-3 max-w-4xl">
+                      <p className="text-slate-600 dark:text-slate-300 text-lg leading-relaxed">
+                        Projects show what was built. Process shows how the portfolio was planned,
+                        governed, implemented, validated, and iterated.
+                      </p>
+                      <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Use this page to inspect the planning logic, AI-assisted workflow, route
+                        migrations, project taxonomy, validation passes, and remaining cleanup work
+                        behind the portfolio.
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap gap-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+                      <Link to={PROJECTS_HREF} className={componentRecipes.button.primary}>
+                        View Projects Library
+                      </Link>
+                      <Link to={SITE_INDEX_HREF} className={componentRecipes.button.secondary}>
+                        Open Site Index
+                      </Link>
+                      <Link
+                        to={DIGITAL_TWIN_PROJECT_HREF}
+                        className={componentRecipes.button.secondary}
+                      >
+                        Digital Twin Project
+                      </Link>
+                      <Link to={GUYNODE_SYSTEM_HREF} className={componentRecipes.button.secondary}>
+                        Guynode Project
+                      </Link>
+                      <Link to={RESUME_HREF} className={componentRecipes.button.secondary}>
+                        View Resume
+                      </Link>
+                    </div>
+                  </div>
+                </section>
+
+                {/* proc-2: Build Timeline */}
+                <section id="proc-2" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <p className="text-xs font-bold uppercase tracking-[0.3em] text-tide-aqua dark:text-tide-sky">
+                      Phase 2
+                    </p>
+                    <h2 className="text-3xl font-outfit font-bold text-slate-950 dark:text-white">
+                      Build Timeline
+                    </h2>
+                    <p className="text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
+                      Phased implementation changes, why each shift mattered, and the validation
+                      trail used to verify delivery outcomes.
+                    </p>
+                  </div>
+                  <div className="max-h-[36rem] overflow-y-auto overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
                     <table className="min-w-full text-sm">
                       <thead className="sticky top-0 bg-slate-100 dark:bg-slate-900 z-10">
                         <tr>
-                          <th className="text-left p-3">Phase</th>
-                          <th className="text-left p-3">What changed</th>
-                          <th className="text-left p-3">Why it mattered</th>
-                          <th className="text-left p-3">What it proves</th>
-                          <th className="text-left p-3">Validation</th>
+                          <th className="text-left p-3 text-slate-700 dark:text-slate-200 font-bold">
+                            Phase
+                          </th>
+                          <th className="text-left p-3 text-slate-700 dark:text-slate-200 font-bold">
+                            What changed
+                          </th>
+                          <th className="text-left p-3 text-slate-700 dark:text-slate-200 font-bold">
+                            Why it mattered
+                          </th>
+                          <th className="text-left p-3 text-slate-700 dark:text-slate-200 font-bold">
+                            What it proves
+                          </th>
+                          <th className="text-left p-3 text-slate-700 dark:text-slate-200 font-bold">
+                            Validation
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
                         {buildTimeline.map((row) => (
                           <tr
                             key={row.phase}
-                            className="border-t border-black/10 dark:border-slate-800 align-top"
+                            className="border-t border-slate-200 dark:border-slate-800 align-top"
                           >
-                            <td className="p-4 font-semibold">{row.phase}</td>
-                            <td className="p-4">{row.changed}</td>
-                            <td className="p-4">{row.mattered}</td>
-                            <td className="p-4">{row.proves}</td>
-                            <td className="p-4">{row.validation}</td>
+                            <td className="p-4 font-semibold text-slate-800 dark:text-slate-200">
+                              {row.phase}
+                            </td>
+                            <td className="p-4 text-slate-600 dark:text-slate-300">
+                              {row.changed}
+                            </td>
+                            <td className="p-4 text-slate-600 dark:text-slate-300">
+                              {row.mattered}
+                            </td>
+                            <td className="p-4 text-slate-600 dark:text-slate-300">{row.proves}</td>
+                            <td className="p-4 text-slate-500 dark:text-slate-400">
+                              {row.validation}
+                            </td>
                           </tr>
                         ))}
                       </tbody>
                     </table>
                   </div>
                 </section>
-              )}
 
-              {activeSection === 'multi-llm-toolchain' && (
-                <section
-                  id="multi-llm-toolchain"
-                  role="tabpanel"
-                  aria-labelledby="process-tab-multi-llm-toolchain"
-                  className={`scroll-mt-24 space-y-4 rounded-2xl border p-6 ${componentRecipes.card.surface}`}
-                >
-                  <h2 className="text-2xl font-bold">Multi-LLM Toolchain</h2>
-                  <p>
-                    The workflow used scoped tool roles, patch-note review, and validation gates. AI
-                    accelerated delivery; human judgment controlled scope and acceptance.
-                  </p>
-                  <ul className="space-y-2 list-disc pl-5">
-                    <li>
-                      <strong>ChatGPT</strong> — Strategy, critique, prompt design, information
-                      architecture, audit logic, and sequencing (user-reported context in ledger).
-                    </li>
-                    <li>
-                      <strong>Google AI Studio / Gemini</strong> — Early generation, scaffolding, UI
-                      experimentation context; Gemini also powers runtime assistant behavior via
-                      proxy (repo-confirmed for runtime integration).
-                    </li>
-                    <li>
-                      <strong>Claude</strong> — Planning/review and implementation support where
-                      used (repo evidence includes Claude co-author metadata on commits).
-                    </li>
-                    <li>
-                      <strong>Claude Code</strong> — Repo-level edits/refactoring and implementation
-                      support in commit/PR evidence.
-                    </li>
-                    <li>
-                      <strong>Google Jules</strong> — Task orchestration/code support in
-                      user-reported workflow context.
-                    </li>
-                    <li>
-                      <strong>Codex</strong> — Branch-based implementation prompts, targeted
-                      migration fixes, test-repair iteration in git history.
-                    </li>
-                    <li>
-                      <strong>GitHub</strong> — Branch/PR traceability, merges, and validation trail
-                      control plane.
-                    </li>
-                  </ul>
+                {/* proc-3: Multi-LLM Toolchain */}
+                <section id="proc-3" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <p className="text-xs font-bold uppercase tracking-[0.3em] text-tide-aqua dark:text-tide-sky">
+                      Phase 3
+                    </p>
+                    <h2 className="text-3xl font-outfit font-bold text-slate-950 dark:text-white">
+                      Multi-LLM Toolchain
+                    </h2>
+                    <p className="text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
+                      The workflow used scoped tool roles, patch-note review, and validation gates.
+                      AI accelerated delivery; human judgment controlled scope and acceptance.
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {[
+                      {
+                        tool: 'ChatGPT',
+                        role: 'Strategy, critique, prompt design, information architecture, audit logic, and sequencing.',
+                      },
+                      {
+                        tool: 'Gemini / Google AI Studio',
+                        role: 'Early generation, scaffolding, UI experimentation; powers runtime assistant behavior via proxy.',
+                      },
+                      {
+                        tool: 'Claude',
+                        role: 'Planning, review, and implementation support. Co-author metadata visible in commit history.',
+                      },
+                      {
+                        tool: 'Claude Code',
+                        role: 'Repo-level edits, refactoring, and implementation support in commit and PR evidence.',
+                      },
+                      {
+                        tool: 'Google Jules',
+                        role: 'Task orchestration and code support in user-reported workflow context.',
+                      },
+                      {
+                        tool: 'Codex',
+                        role: 'Branch-based implementation prompts, targeted migration fixes, test-repair iteration in git history.',
+                      },
+                      {
+                        tool: 'GitHub',
+                        role: 'Branch and PR traceability, merges, and validation trail control plane.',
+                      },
+                    ].map((item) => (
+                      <div
+                        key={item.tool}
+                        className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] p-5 space-y-2"
+                      >
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full bg-tide-aqua shrink-0" />
+                          <h3 className="font-bold text-slate-950 dark:text-white text-sm">
+                            {item.tool}
+                          </h3>
+                        </div>
+                        <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                          {item.role}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
                 </section>
-              )}
 
-              {activeSection === 'ai-assisted-delivery-model' && (
-                <section
-                  id="ai-assisted-delivery-model"
-                  role="tabpanel"
-                  aria-labelledby="process-tab-ai-assisted-delivery-model"
-                  className={`scroll-mt-24 space-y-3 rounded-2xl border p-6 ${componentRecipes.card.surface}`}
-                >
-                  <h2 className="text-2xl font-bold">AI-Assisted Delivery Model</h2>
-                  <p>
-                    The portfolio was developed through scoped implementation cycles rather than
-                    open-ended generation. Each cycle converted a design or architecture problem
-                    into a branch-level task, reviewed the resulting patch notes, validated the
-                    output, and used follow-up prompts to resolve defects or drift.
-                  </p>
-                  <ol className="list-decimal pl-5 space-y-1">
-                    <li>Strategy and critique.</li>
-                    <li>Scoped implementation prompt.</li>
-                    <li>Branch-based execution.</li>
-                    <li>Patch-note review.</li>
-                    <li>Static validation.</li>
-                    <li>Manual/visual audit where possible.</li>
-                    <li>Bugfix prompt.</li>
-                    <li>Evidence ledger update.</li>
-                  </ol>
+                {/* proc-4: AI-Assisted Delivery Model */}
+                <section id="proc-4" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <p className="text-xs font-bold uppercase tracking-[0.3em] text-tide-aqua dark:text-tide-sky">
+                      Phase 4
+                    </p>
+                    <h2 className="text-3xl font-outfit font-bold text-slate-950 dark:text-white">
+                      AI-Assisted Delivery Model
+                    </h2>
+                    <p className="text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
+                      Each cycle converted a design or architecture problem into a branch-level
+                      task, reviewed the resulting patch notes, validated the output, and used
+                      follow-up prompts to resolve defects or drift.
+                    </p>
+                  </div>
+                  <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] overflow-hidden">
+                    {[
+                      {
+                        step: '1',
+                        title: 'Strategy & Critique',
+                        desc: 'Define the design or architecture problem. Get independent critique before scoping.',
+                      },
+                      {
+                        step: '2',
+                        title: 'Scoped Implementation Prompt',
+                        desc: 'Convert the problem to a precisely bounded task. No open-ended generation.',
+                      },
+                      {
+                        step: '3',
+                        title: 'Branch-Based Execution',
+                        desc: 'Implement in isolation. Each branch addresses a single scoped change.',
+                      },
+                      {
+                        step: '4',
+                        title: 'Patch-Note Review',
+                        desc: 'Review AI-generated changes against the scoped intent. Reject drift.',
+                      },
+                      {
+                        step: '5',
+                        title: 'Static Validation',
+                        desc: 'Run typecheck, lint, tests, and build. Zero-tolerance on failures.',
+                      },
+                      {
+                        step: '6',
+                        title: 'Manual & Visual Audit',
+                        desc: 'Where possible, verify UI outcomes manually in addition to automated checks.',
+                      },
+                      {
+                        step: '7',
+                        title: 'Bugfix Prompt',
+                        desc: 'Targeted follow-up for defects found in review. Document in the ledger.',
+                      },
+                      {
+                        step: '8',
+                        title: 'Evidence Ledger Update',
+                        desc: 'Record the decision, outcome, and remaining risk before closing the cycle.',
+                      },
+                    ].map((item, i) => (
+                      <div
+                        key={item.step}
+                        className={`flex items-start gap-5 p-5 ${i > 0 ? 'border-t border-slate-200 dark:border-slate-800' : ''}`}
+                      >
+                        <span className="shrink-0 w-8 h-8 rounded-full bg-tide-aqua/10 dark:bg-tide-aqua/20 border border-tide-aqua/30 flex items-center justify-center text-xs font-bold text-tide-aqua dark:text-tide-sky">
+                          {item.step}
+                        </span>
+                        <div className="space-y-1">
+                          <h3 className="font-bold text-slate-950 dark:text-white text-sm">
+                            {item.title}
+                          </h3>
+                          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                            {item.desc}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </section>
-              )}
 
-              {activeSection === 'project-architecture-migration' && (
-                <section
-                  id="projects-architecture"
-                  role="tabpanel"
-                  aria-labelledby="process-tab-project-architecture-migration"
-                  className={`scroll-mt-24 space-y-3 rounded-2xl border p-6 ${componentRecipes.card.surface}`}
-                >
-                  <div id="projects-architecture-migration" />
-                  <h2 className="text-2xl font-bold">Projects Architecture Migration</h2>
-                  <p>
-                    Legacy <code>/case-studies</code> naming became technical debt as project
-                    taxonomy expanded. The canonical model moved to <code>/projects</code> and{' '}
-                    <code>/projects/:projectId</code>, while compatibility redirects were preserved
-                    to avoid breakage during migration. Shared metadata in{' '}
-                    <code>projectMetadata.ts</code> now powers featured/supporting taxonomy, role
-                    filters, and consistent links across Home, Projects Index, Site Index, and
-                    Project Detail. Guynode and Digital Twin are featured systems; Ops Triage moved
-                    into supporting project status.
-                  </p>
+                {/* proc-5: Architecture & Governance */}
+                <section id="proc-5" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <p className="text-xs font-bold uppercase tracking-[0.3em] text-tide-aqua dark:text-tide-sky">
+                      Phase 5
+                    </p>
+                    <h2 className="text-3xl font-outfit font-bold text-slate-950 dark:text-white">
+                      Architecture Migration &amp; Digital Twin Governance
+                    </h2>
+                  </div>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] p-6 space-y-4">
+                      <h3 className="font-bold text-slate-950 dark:text-white">
+                        Projects Architecture Migration
+                      </h3>
+                      <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Legacy{' '}
+                        <code className="text-xs bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">
+                          /case-studies
+                        </code>{' '}
+                        naming became technical debt as project taxonomy expanded. The canonical
+                        model moved to{' '}
+                        <code className="text-xs bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">
+                          /projects
+                        </code>{' '}
+                        and{' '}
+                        <code className="text-xs bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">
+                          /projects/:projectId
+                        </code>
+                        , while compatibility redirects were preserved during migration.
+                      </p>
+                      <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Shared metadata in{' '}
+                        <code className="text-xs bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">
+                          projectMetadata.ts
+                        </code>{' '}
+                        now powers featured/supporting taxonomy, role filters, and consistent links
+                        across Home, Projects Index, Site Index, and Project Detail.
+                      </p>
+                    </div>
+
+                    <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] p-6 space-y-4">
+                      <h3 className="font-bold text-slate-950 dark:text-white">
+                        Digital Twin Governance
+                      </h3>
+                      <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Designed as a scoped AI support system, not a general chatbot. Its value
+                        comes from how it handles relevance, cost, routing, failure states, and
+                        human escalation.
+                      </p>
+                      <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
+                        {[
+                          'Portfolio-only scope gate',
+                          'Response budget & rate limits',
+                          'Relevance and expensive-query gates',
+                          'Prompt-injection deflection',
+                          'Approved navigation commands',
+                          'Human handoff on confidence failure',
+                        ].map((item) => (
+                          <li key={item} className="flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-tide-aqua shrink-0" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
                 </section>
-              )}
 
-              {activeSection === 'digital-twin-governance' && (
-                <section
-                  id="digital-twin-governance"
-                  role="tabpanel"
-                  aria-labelledby="process-tab-digital-twin-governance"
-                  className={`scroll-mt-24 space-y-3 rounded-2xl border p-6 ${componentRecipes.card.surface}`}
-                >
-                  <h2 className="text-2xl font-bold">Digital Twin Governance + Failure Planning</h2>
-                  <p>
-                    The Digital Twin is designed as a scoped AI support system, not a general
-                    chatbot. Its value comes from how it handles relevance, cost, routing, failure
-                    states, and human escalation.
-                  </p>
-                  <p>
-                    Governance includes portfolio-only scope, response budget, rate limits,
-                    message-length controls, relevance and expensive-query gates, prompt-injection
-                    deflection, approved navigation/action commands, command validation, fallback
-                    behaviors, and human handoff when confidence or relevance fails. QA scenarios
-                    and tests focus on these constraints, not open-ended chat performance.
-                  </p>
+                {/* proc-6: Validation & Evidence */}
+                <section id="proc-6" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <p className="text-xs font-bold uppercase tracking-[0.3em] text-tide-aqua dark:text-tide-sky">
+                      Phase 6
+                    </p>
+                    <h2 className="text-3xl font-outfit font-bold text-slate-950 dark:text-white">
+                      Validation Trail &amp; Evidence
+                    </h2>
+                  </div>
+
+                  <div className="rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+                    <table className="min-w-full text-sm">
+                      <thead className="bg-slate-100 dark:bg-slate-900">
+                        <tr>
+                          <th className="text-left p-3 text-slate-700 dark:text-slate-200 font-bold">
+                            Area
+                          </th>
+                          <th className="text-left p-3 text-slate-700 dark:text-slate-200 font-bold">
+                            Validation
+                          </th>
+                          <th className="text-left p-3 text-slate-700 dark:text-slate-200 font-bold">
+                            Result
+                          </th>
+                          <th className="text-left p-3 text-slate-700 dark:text-slate-200 font-bold">
+                            Notes
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[
+                          {
+                            area: 'Repo checks',
+                            validation: 'npm run typecheck / lint / test / build',
+                            result: 'Passing',
+                            badge: 'green' as const,
+                            notes: 'Build includes non-blocking Vite chunk-size advisory.',
+                          },
+                          {
+                            area: 'Routing',
+                            validation: 'routing.test.tsx updates',
+                            result: 'Validated',
+                            badge: 'green' as const,
+                            notes: 'Covers canonical and compatibility behavior.',
+                          },
+                          {
+                            area: 'Project detail bugfix',
+                            validation: 'Route param + loader fallback tests',
+                            result: 'Validated',
+                            badge: 'green' as const,
+                            notes:
+                              'Addresses projectId compatibility and app-shell fallback hardening.',
+                          },
+                          {
+                            area: 'Manual browser QA',
+                            validation: 'Interactive page checks',
+                            result: 'Partial',
+                            badge: 'amber' as const,
+                            notes:
+                              'Ledger distinguishes automated evidence from full browser sweeps.',
+                          },
+                        ].map((row, i) => (
+                          <tr
+                            key={row.area}
+                            className={`align-top ${i > 0 ? 'border-t border-slate-200 dark:border-slate-800' : ''}`}
+                          >
+                            <td className="p-3 font-semibold text-slate-800 dark:text-slate-200">
+                              {row.area}
+                            </td>
+                            <td className="p-3 text-slate-600 dark:text-slate-300">
+                              {row.validation}
+                            </td>
+                            <td className="p-3">
+                              <span
+                                className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                                  row.badge === 'green'
+                                    ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'
+                                    : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20'
+                                }`}
+                              >
+                                {row.result}
+                              </span>
+                            </td>
+                            <td className="p-3 text-slate-500 dark:text-slate-400 text-xs">
+                              {row.notes}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div
+                      className={`rounded-2xl border p-6 space-y-3 ${componentRecipes.card.surface}`}
+                    >
+                      <h3 className="font-bold text-slate-950 dark:text-white">Decision Log</h3>
+                      <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Key decisions: migrate to canonical projects routes, preserve compatibility
+                        aliases during transition, promote Guynode and Digital Twin as flagship
+                        proof systems, centralize metadata, and keep Process separate from Projects
+                        browsing for reviewer clarity.
+                      </p>
+                    </div>
+                    <div
+                      className={`rounded-2xl border p-6 space-y-3 ${componentRecipes.card.surface}`}
+                    >
+                      <h3 className="font-bold text-slate-950 dark:text-white">
+                        Remaining Release Hardening
+                      </h3>
+                      <ul className="space-y-1.5 text-sm text-slate-600 dark:text-slate-300">
+                        {[
+                          'Final browser-interactive QA sweep.',
+                          'Scroll-to-top and long-page usability polish.',
+                          'Contextual Digital Twin entry points on track pages.',
+                          'Final accessibility and mobile audit.',
+                          'Legacy case-study alias cleanup after dependency checks.',
+                          'Final public copy audit for concise consistency.',
+                        ].map((item) => (
+                          <li key={item} className="flex items-start gap-2">
+                            <span className="text-slate-400 dark:text-slate-500 mt-0.5 shrink-0">
+                              —
+                            </span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div
+                    className={`rounded-2xl border p-6 space-y-3 ${componentRecipes.card.surface}`}
+                  >
+                    <h3 className="font-bold text-slate-950 dark:text-white">Evidence Ledger</h3>
+                    <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                      The public Process page summarizes the build. The evidence ledger records the
+                      deeper source trail: files, phases, decisions, Git evidence, validation notes,
+                      and remaining risks. Maintained as an internal documentation artifact at{' '}
+                      <code className="text-xs bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">
+                        docs/portfolio2-evidence-audit-ledger.md
+                      </code>
+                      .
+                    </p>
+                  </div>
                 </section>
-              )}
-
-              {activeSection === 'validation-trail' && (
-                <section
-                  id="validation-trail"
-                  role="tabpanel"
-                  aria-labelledby="process-tab-validation-trail"
-                  className={`scroll-mt-24 space-y-3 rounded-2xl border p-6 ${componentRecipes.card.surface}`}
-                >
-                  <h2 className="text-2xl font-bold">Validation Trail</h2>
-                  <table className="min-w-full text-sm border border-black/10 dark:border-slate-800">
-                    <thead>
-                      <tr className="bg-slate-100 dark:bg-slate-900/70">
-                        <th className="text-left p-2">Area</th>
-                        <th className="text-left p-2">Validation</th>
-                        <th className="text-left p-2">Result</th>
-                        <th className="text-left p-2">Notes</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="border-t border-black/10 dark:border-slate-800">
-                        <td className="p-2">Repo checks</td>
-                        <td className="p-2">npm run typecheck / lint / test / build</td>
-                        <td className="p-2">Passing in ledger trail</td>
-                        <td className="p-2">
-                          Build includes non-blocking Vite chunk-size advisory.
-                        </td>
-                      </tr>
-                      <tr className="border-t border-black/10 dark:border-slate-800">
-                        <td className="p-2">Routing</td>
-                        <td className="p-2">routing.test.tsx updates</td>
-                        <td className="p-2">Validated</td>
-                        <td className="p-2">Covers canonical and compatibility behavior.</td>
-                      </tr>
-                      <tr className="border-t border-black/10 dark:border-slate-800">
-                        <td className="p-2">Project detail bugfix</td>
-                        <td className="p-2">route param + loader fallback tests</td>
-                        <td className="p-2">Validated</td>
-                        <td className="p-2">
-                          Addresses projectId compatibility and app-shell fallback hardening.
-                        </td>
-                      </tr>
-                      <tr className="border-t border-black/10 dark:border-slate-800">
-                        <td className="p-2">Manual browser QA</td>
-                        <td className="p-2">Interactive page checks</td>
-                        <td className="p-2">Partial / iterative</td>
-                        <td className="p-2">
-                          Ledger distinguishes automated evidence from full browser-interactive
-                          sweeps.
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </section>
-              )}
-
-              <section
-                id="decision-log"
-                className={`scroll-mt-24 rounded-2xl border p-6 md:p-8 space-y-4 ${componentRecipes.card.surface}`}
-              >
-                <h2 className="text-2xl font-outfit font-bold text-ink-navy dark:text-white">
-                  Decision Log
-                </h2>
-                <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
-                  Key decisions: migrate to canonical projects routes, preserve compatibility
-                  aliases during transition, promote Guynode and Digital Twin as flagship proof
-                  systems, centralize metadata, and keep Process separate from Projects browsing for
-                  reviewer clarity.
-                </p>
-              </section>
-
-              {activeSection === 'evidence-ledger' && (
-                <section
-                  id="evidence-ledger"
-                  role="tabpanel"
-                  aria-labelledby="process-tab-evidence-ledger"
-                  className={`scroll-mt-24 rounded-2xl border p-6 md:p-8 space-y-4 ${componentRecipes.card.surface}`}
-                >
-                  <h2 className="text-2xl font-outfit font-bold text-ink-navy dark:text-white">
-                    Evidence Ledger
-                  </h2>
-                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
-                    The public Process page summarizes the build. The evidence ledger records the
-                    deeper source trail: files, phases, decisions, Git evidence, validation notes,
-                    and remaining risks. In this repo, it is maintained as an internal documentation
-                    artifact at <code>docs/portfolio2-evidence-audit-ledger.md</code>.
-                  </p>
-                </section>
-              )}
-
-              <section
-                id="governance-logs"
-                className={`scroll-mt-24 rounded-2xl border p-6 md:p-8 space-y-4 ${componentRecipes.card.surface}`}
-              >
-                <h2 className="text-2xl font-outfit font-bold text-ink-navy dark:text-white">
-                  Governance &amp; Implementation Logs
-                </h2>
-                <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
-                  Audit logs for the Portfolio 2.0 implementation phases, including automated review
-                  summaries, design system alignment reports, and accessibility validation trails.
-                </p>
-              </section>
-
-              <section
-                id="remaining-release-hardening"
-                className={`scroll-mt-24 rounded-2xl border p-6 md:p-8 space-y-4 ${componentRecipes.card.surface}`}
-              >
-                <h2 className="text-2xl font-outfit font-bold text-ink-navy dark:text-white">
-                  Remaining Release-Hardening Items
-                </h2>
-                <ul className="list-disc pl-5 space-y-2 text-slate-600 dark:text-slate-400 text-sm">
-                  <li>Final browser-interactive QA sweep.</li>
-                  <li>Scroll-to-top and long-page usability polish.</li>
-                  <li>Contextual Digital Twin entry points on track pages.</li>
-                  <li>Final accessibility and mobile audit.</li>
-                  <li>Legacy case-study alias/naming cleanup after dependency checks.</li>
-                  <li>Final public copy audit for concise consistency.</li>
-                </ul>
-              </section>
+              </div>
             </div>
-          ) : (
-            <div className="flex flex-col md:flex-row items-start gap-8">
+          )}
+
+          {/* ── Luxe Lofts Tab ── */}
+          {activeMainTab === 'luxe-lofts' && (
+            <div className="flex flex-col md:flex-row gap-8">
               {/* Left Sidebar Timeline */}
               <aside className="hidden md:block w-48 shrink-0 relative">
                 <div className="sticky top-28 space-y-4 border-l-2 border-slate-200 dark:border-slate-800 py-4">
@@ -714,7 +917,7 @@ const DeepDiveView: React.FC = () => {
                   ].map((phase) => (
                     <div key={phase.id} className="relative -ml-[9px] flex items-center">
                       <button
-                        onClick={() => scrollToPhase(phase.id)}
+                        onClick={() => scrollTo(phase.id)}
                         className="flex items-center gap-4 group w-full text-left focus:outline-none"
                       >
                         <span
@@ -728,7 +931,7 @@ const DeepDiveView: React.FC = () => {
                           className={`text-sm font-semibold transition-colors duration-300 ${
                             activePhase === phase.id
                               ? 'text-rose-600 dark:text-rose-400'
-                              : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'
+                              : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
                           }`}
                         >
                           {phase.label}
@@ -751,7 +954,7 @@ const DeepDiveView: React.FC = () => {
                       Audit-Driven Case Study
                     </span>
                   </div>
-                  <h1 className="text-4xl font-outfit font-extrabold text-navy-900 dark:text-white">
+                  <h1 className="text-4xl font-outfit font-extrabold text-slate-950 dark:text-white">
                     Luxe Lofts: Digital Restructuring Strategy
                   </h1>
                   <p className={`${semanticTokens.text.body} max-w-4xl text-lg leading-relaxed`}>
@@ -783,13 +986,13 @@ const DeepDiveView: React.FC = () => {
                 <section className="rounded-2xl border border-rose-500/20 bg-rose-500/5 p-6 dark:border-rose-500/30">
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div className="space-y-2">
-                      <h3 className="text-lg font-bold text-navy-900 dark:text-white flex items-center gap-2">
+                      <h3 className="text-lg font-bold text-slate-950 dark:text-white flex items-center gap-2">
                         <span className="text-xl">🏛️</span> Proposed Luxe Lofts Redesign
                       </h3>
                       <p className="text-sm text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
-                        Experience the premium frontend showcase deployed on **Google Cloud Run**.
-                        The prototype features client-side navigation, stylized booking package
-                        cards, and a demo AI Event Planner assistant.
+                        Experience the premium frontend showcase deployed on Google Cloud Run. The
+                        prototype features client-side navigation, stylized booking package cards,
+                        and a demo AI Event Planner assistant.
                       </p>
                     </div>
                     <a
@@ -807,7 +1010,7 @@ const DeepDiveView: React.FC = () => {
                 <section className="rounded-2xl border border-rose-500/20 bg-rose-500/5 p-6 dark:border-rose-500/30">
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div className="space-y-3">
-                      <h3 className="text-lg font-bold text-navy-900 dark:text-white flex items-center gap-2">
+                      <h3 className="text-lg font-bold text-slate-950 dark:text-white flex items-center gap-2">
                         <span className="text-xl">🎛️</span> Looking for the Operational Triage
                         Simulator?
                       </h3>
@@ -834,8 +1037,8 @@ const DeepDiveView: React.FC = () => {
                 {/* Section 1: Visual vs. Operational Dichotomy */}
                 <section id="phase-1" className="space-y-6 scroll-mt-24">
                   <div className="space-y-2">
-                    <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
-                      1. Strategic Context & "Visual vs. Operational" Dichotomy
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      1. Strategic Context &amp; "Visual vs. Operational" Dichotomy
                     </h2>
                     <p className={`${semanticTokens.text.body} max-w-4xl`}>
                       Commercial local venues suffer when websites act merely as static catalogs. A
@@ -850,7 +1053,7 @@ const DeepDiveView: React.FC = () => {
                       <div className="flex items-center gap-2 text-amber-600 dark:text-amber-500">
                         <span className="text-lg">📉</span>
                         <h3 className="font-bold text-lg">
-                          Brochure-Ware (Contractor & Legacy Audits)
+                          Brochure-Ware (Contractor &amp; Legacy Audits)
                         </h3>
                       </div>
                       <p className="text-sm text-slate-600 dark:text-slate-300">
@@ -921,7 +1124,7 @@ const DeepDiveView: React.FC = () => {
                         <li className="flex items-start gap-2">
                           <span className="text-emerald-500 font-bold">✓</span>
                           <span>
-                            <strong>Guided Triage Funnel:</strong> Booking inquires capture backup
+                            <strong>Guided Triage Funnel:</strong> Booking inquiries capture backup
                             dates, guest counts, and caterer requirements with strict guardrails.
                           </span>
                         </li>
@@ -941,7 +1144,7 @@ const DeepDiveView: React.FC = () => {
                 {/* Section 2: Interactive Audit Diagnostics Panel */}
                 <section id="phase-2" className="space-y-6 scroll-mt-24">
                   <div className="space-y-2">
-                    <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
                       2. Interactive Audit Diagnostics Panel
                     </h2>
                     <p className={`${semanticTokens.text.body} max-w-4xl`}>
@@ -976,10 +1179,10 @@ const DeepDiveView: React.FC = () => {
                     {activeDiagTab === 'visuals' && (
                       <div className="space-y-4">
                         <div className="border-l-4 border-rose-500 pl-4 space-y-1">
-                          <h3 className="text-lg font-bold text-navy-900 dark:text-white">
-                            🎨 Brand & Visual Consistency
+                          <h3 className="text-lg font-bold text-slate-950 dark:text-white">
+                            🎨 Brand &amp; Visual Consistency
                           </h3>
-                          <p className="text-xs text-slate-500">
+                          <p className="text-xs text-slate-500 dark:text-slate-400">
                             How typography, styling, and visual proof dictate price perception.
                           </p>
                         </div>
@@ -1024,10 +1227,10 @@ const DeepDiveView: React.FC = () => {
                     {activeDiagTab === 'ux' && (
                       <div className="space-y-4">
                         <div className="border-l-4 border-rose-500 pl-4 space-y-1">
-                          <h3 className="text-lg font-bold text-navy-900 dark:text-white">
-                            🧭 UX & Navigation Flow
+                          <h3 className="text-lg font-bold text-slate-950 dark:text-white">
+                            🧭 UX &amp; Navigation Flow
                           </h3>
-                          <p className="text-xs text-slate-500">
+                          <p className="text-xs text-slate-500 dark:text-slate-400">
                             Eliminating friction points to capture high-intent leads.
                           </p>
                         </div>
@@ -1071,10 +1274,10 @@ const DeepDiveView: React.FC = () => {
                     {activeDiagTab === 'technical' && (
                       <div className="space-y-4">
                         <div className="border-l-4 border-rose-500 pl-4 space-y-1">
-                          <h3 className="text-lg font-bold text-navy-900 dark:text-white">
-                            ⚡ Technical & SEO Discovery
+                          <h3 className="text-lg font-bold text-slate-950 dark:text-white">
+                            ⚡ Technical &amp; SEO Discovery
                           </h3>
-                          <p className="text-xs text-slate-500">
+                          <p className="text-xs text-slate-500 dark:text-slate-400">
                             Accelerating search crawlers and eliminating external API friction.
                           </p>
                         </div>
@@ -1118,10 +1321,10 @@ const DeepDiveView: React.FC = () => {
                     {activeDiagTab === 'content' && (
                       <div className="space-y-4">
                         <div className="border-l-4 border-rose-500 pl-4 space-y-1">
-                          <h3 className="text-lg font-bold text-navy-900 dark:text-white">
-                            📝 Content & Offer Architecture
+                          <h3 className="text-lg font-bold text-slate-950 dark:text-white">
+                            📝 Content &amp; Offer Architecture
                           </h3>
-                          <p className="text-xs text-slate-500">
+                          <p className="text-xs text-slate-500 dark:text-slate-400">
                             Structuring pricing, rules, and social proof with commercial clarity.
                           </p>
                         </div>
@@ -1167,8 +1370,8 @@ const DeepDiveView: React.FC = () => {
                 {/* Section 3: Structured Solution Architecture & "4 Pillars" */}
                 <section id="phase-3" className="space-y-6 scroll-mt-24">
                   <div className="space-y-2">
-                    <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
-                      3. Structured Solution Architecture & "4 Pillars"
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      3. Structured Solution Architecture &amp; "4 Pillars"
                     </h2>
                     <p className={`${semanticTokens.text.body} max-w-4xl`}>
                       Our digital turnaround strategy rests upon four foundational pillars,
@@ -1178,10 +1381,9 @@ const DeepDiveView: React.FC = () => {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* Pillar 1 */}
                     <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
                       <span className="text-2xl">🖼️</span>
-                      <h3 className="font-bold text-navy-900 dark:text-white text-base">
+                      <h3 className="font-bold text-slate-950 dark:text-white text-base">
                         Pillar 1: High-Conversion Brand Showcase
                       </h3>
                       <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -1192,10 +1394,9 @@ const DeepDiveView: React.FC = () => {
                       </p>
                     </div>
 
-                    {/* Pillar 2 */}
                     <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
                       <span className="text-2xl">🎯</span>
-                      <h3 className="font-bold text-navy-900 dark:text-white text-base">
+                      <h3 className="font-bold text-slate-950 dark:text-white text-base">
                         Pillar 2: Guided Intent Intake Engine
                       </h3>
                       <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -1206,24 +1407,22 @@ const DeepDiveView: React.FC = () => {
                       </p>
                     </div>
 
-                    {/* Pillar 3 */}
                     <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
                       <span className="text-2xl">🔑</span>
-                      <h3 className="font-bold text-navy-900 dark:text-white text-base">
+                      <h3 className="font-bold text-slate-950 dark:text-white text-base">
                         Pillar 3: Unified Client Planning Portal
                       </h3>
                       <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                         A frictionless client-facing workspace featuring reviewer bypass modes (
                         <code>?demo=1</code>). Built to integrate with{' '}
-                        <strong>Firebase Auth & Google Sign-In</strong> for frictionless client
+                        <strong>Firebase Auth &amp; Google Sign-In</strong> for frictionless client
                         access, secure collaborative seating layouts, and payment tracking.
                       </p>
                     </div>
 
-                    {/* Pillar 4 */}
                     <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
                       <span className="text-2xl">📊</span>
-                      <h3 className="font-bold text-navy-900 dark:text-white text-base">
+                      <h3 className="font-bold text-slate-950 dark:text-white text-base">
                         Pillar 4: Unified Admin Triage Dashboard
                       </h3>
                       <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -1239,7 +1438,7 @@ const DeepDiveView: React.FC = () => {
                 <section id="phase-4" className="space-y-6 scroll-mt-24">
                   <div className="space-y-4 md:flex md:items-center md:justify-between">
                     <div className="space-y-2">
-                      <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
+                      <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
                         4. Dual-Perspective KPI Dashboard
                       </h2>
                       <p className={`${semanticTokens.text.body} max-w-xl`}>
@@ -1276,52 +1475,48 @@ const DeepDiveView: React.FC = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {kpiView === 'owner' ? (
                       <>
-                        {/* Metric 1 */}
                         <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
                           <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
                             Lead Qualification Accuracy
                           </span>
-                          <div className="text-3xl font-extrabold text-navy-900 dark:text-white font-outfit">
+                          <div className="text-3xl font-extrabold text-slate-950 dark:text-white font-outfit">
                             +40%
                           </div>
-                          <p className="text-[10px] text-slate-500">
+                          <p className="text-[10px] text-slate-500 dark:text-slate-400">
                             Projected lift from structured, multi-field intake forms vs. raw emails.
                           </p>
                         </div>
-                        {/* Metric 2 */}
                         <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
                           <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
                             Administrative Overhead
                           </span>
-                          <div className="text-3xl font-extrabold text-navy-900 dark:text-white font-outfit">
+                          <div className="text-3xl font-extrabold text-slate-950 dark:text-white font-outfit">
                             -15 hrs/wk
                           </div>
-                          <p className="text-[10px] text-slate-500">
+                          <p className="text-[10px] text-slate-500 dark:text-slate-400">
                             Average owner administrative time saved by automated CRM intake
                             pipelines.
                           </p>
                         </div>
-                        {/* Metric 3 */}
                         <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
                           <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
                             Average Contract Value
                           </span>
-                          <div className="text-3xl font-extrabold text-navy-900 dark:text-white font-outfit">
+                          <div className="text-3xl font-extrabold text-slate-950 dark:text-white font-outfit">
                             +25%
                           </div>
-                          <p className="text-[10px] text-slate-500">
+                          <p className="text-[10px] text-slate-500 dark:text-slate-400">
                             Projected revenue lift via upfront tiered packages and upsell menus.
                           </p>
                         </div>
-                        {/* Metric 4 */}
                         <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
                           <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
                             Booking Funnel Conversion
                           </span>
-                          <div className="text-3xl font-extrabold text-navy-900 dark:text-white font-outfit">
+                          <div className="text-3xl font-extrabold text-slate-950 dark:text-white font-outfit">
                             +3.2%
                           </div>
-                          <p className="text-[10px] text-slate-500">
+                          <p className="text-[10px] text-slate-500 dark:text-slate-400">
                             Estimated increase driven by real proof visuals and immediate policy
                             clarity.
                           </p>
@@ -1329,53 +1524,49 @@ const DeepDiveView: React.FC = () => {
                       </>
                     ) : (
                       <>
-                        {/* Metric 1 */}
                         <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
                           <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
                             Pipeline First-Pass Yield (FPY)
                           </span>
-                          <div className="text-3xl font-extrabold text-navy-900 dark:text-white font-outfit">
+                          <div className="text-3xl font-extrabold text-slate-950 dark:text-white font-outfit">
                             94.2%
                           </div>
-                          <p className="text-[10px] text-slate-500">
+                          <p className="text-[10px] text-slate-500 dark:text-slate-400">
                             Verified transition accuracy across database updates under simulator
                             loads.
                           </p>
                         </div>
-                        {/* Metric 2 */}
                         <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
                           <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
                             System Backlog SLA Risk
                           </span>
-                          <div className="text-3xl font-extrabold text-navy-900 dark:text-white font-outfit">
+                          <div className="text-3xl font-extrabold text-slate-950 dark:text-white font-outfit">
                             &lt; 1.0%
                           </div>
-                          <p className="text-[10px] text-slate-500">
+                          <p className="text-[10px] text-slate-500 dark:text-slate-400">
                             Risk rating limit managed by automated high-capacity queuing thresholds.
                           </p>
                         </div>
-                        {/* Metric 3 */}
                         <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
                           <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
                             Microservices Latency
                           </span>
-                          <div className="text-3xl font-extrabold text-navy-900 dark:text-white font-outfit">
+                          <div className="text-3xl font-extrabold text-slate-950 dark:text-white font-outfit">
                             &lt; 200ms
                           </div>
-                          <p className="text-[10px] text-slate-500">
+                          <p className="text-[10px] text-slate-500 dark:text-slate-400">
                             Average endpoint request time across Cloud Run serverless execution
                             points.
                           </p>
                         </div>
-                        {/* Metric 4 */}
                         <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
                           <span className="text-xs font-bold text-rose-500 uppercase tracking-wider block">
                             Incident Defect Leakage
                           </span>
-                          <div className="text-3xl font-extrabold text-navy-900 dark:text-white font-outfit">
+                          <div className="text-3xl font-extrabold text-slate-950 dark:text-white font-outfit">
                             &lt; 0.5%
                           </div>
-                          <p className="text-[10px] text-slate-500">
+                          <p className="text-[10px] text-slate-500 dark:text-slate-400">
                             QA triage filter validation rate limiting raw data payload escapes.
                           </p>
                         </div>
@@ -1387,8 +1578,8 @@ const DeepDiveView: React.FC = () => {
                 {/* Section 5: Commercial Offering / Pricing Tiers */}
                 <section id="phase-5" className="space-y-6 scroll-mt-24">
                   <div className="space-y-2">
-                    <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
-                      5. Commercial Offering & Pricing Menu
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      5. Commercial Offering &amp; Pricing Menu
                     </h2>
                     <p className={`${semanticTokens.text.body} max-w-4xl`}>
                       A transparent offer architecture designed to address legacy pricing ambiguity.
@@ -1398,44 +1589,42 @@ const DeepDiveView: React.FC = () => {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {/* Package 1 */}
                     <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-4 flex flex-col justify-between">
                       <div className="space-y-2">
-                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">
+                        <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest block">
                           Tier 1
                         </span>
-                        <h3 className="font-bold text-navy-900 dark:text-white text-lg">
+                        <h3 className="font-bold text-slate-950 dark:text-white text-lg">
                           Keep It Simple
                         </h3>
-                        <div className="text-2xl font-extrabold text-navy-900 dark:text-white">
+                        <div className="text-2xl font-extrabold text-slate-950 dark:text-white">
                           $500
                         </div>
-                        <p className="text-xs text-slate-500 leading-relaxed font-sans">
+                        <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-sans">
                           Essential space access for quick events. Best-fit for micro-showers,
                           photography sessions, and content creation.
                         </p>
                       </div>
                       <ul className="space-y-1.5 text-[10px] text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-white/5 pt-3 font-sans">
                         <li>• Max Capacity: 30 guests</li>
-                        <li>• Renter setup & teardown</li>
+                        <li>• Renter setup &amp; teardown</li>
                         <li>• Basic sound system hookup</li>
                         <li>• Standard policy qualifiers</li>
                       </ul>
                     </div>
 
-                    {/* Package 2 */}
                     <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-4 flex flex-col justify-between">
                       <div className="space-y-2">
-                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">
+                        <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest block">
                           Tier 2
                         </span>
-                        <h3 className="font-bold text-navy-900 dark:text-white text-lg">
+                        <h3 className="font-bold text-slate-950 dark:text-white text-lg">
                           Starter Package
                         </h3>
-                        <div className="text-2xl font-extrabold text-navy-900 dark:text-white">
+                        <div className="text-2xl font-extrabold text-slate-950 dark:text-white">
                           $1,500
                         </div>
-                        <p className="text-xs text-slate-500 leading-relaxed font-sans">
+                        <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-sans">
                           Extended half-day access with fundamental hosting features. Perfect for
                           family celebrations and mixers.
                         </p>
@@ -1444,11 +1633,10 @@ const DeepDiveView: React.FC = () => {
                         <li>• Max Capacity: 50 guests</li>
                         <li>• 6-Hour rental window</li>
                         <li>• 1 Dedicated host coordinator</li>
-                        <li>• Cleaning & waste services</li>
+                        <li>• Cleaning &amp; waste services</li>
                       </ul>
                     </div>
 
-                    {/* Package 3 */}
                     <div className="rounded-2xl border border-rose-500/25 bg-rose-500/5 p-5 dark:border-rose-500/40 dark:bg-rose-500/10 space-y-4 flex flex-col justify-between relative overflow-hidden">
                       <div className="absolute top-0 right-0 bg-rose-500 text-white text-[8px] font-bold uppercase tracking-widest px-3 py-1 rounded-bl-lg">
                         Popular
@@ -1457,13 +1645,13 @@ const DeepDiveView: React.FC = () => {
                         <span className="text-[10px] font-bold text-rose-500 uppercase tracking-widest block">
                           Tier 3
                         </span>
-                        <h3 className="font-bold text-navy-900 dark:text-white text-lg">
+                        <h3 className="font-bold text-slate-950 dark:text-white text-lg">
                           Standard Experience
                         </h3>
-                        <div className="text-2xl font-extrabold text-navy-900 dark:text-white">
+                        <div className="text-2xl font-extrabold text-slate-950 dark:text-white">
                           $2,500
                         </div>
-                        <p className="text-xs text-slate-500 leading-relaxed font-sans">
+                        <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-sans">
                           Full-day premium venue package. Crafted for weddings, larger formal
                           events, and upscale corporate workshops.
                         </p>
@@ -1471,24 +1659,23 @@ const DeepDiveView: React.FC = () => {
                       <ul className="space-y-1.5 text-[10px] text-slate-600 dark:text-slate-300 border-t border-rose-500/15 pt-3 font-sans">
                         <li>• Max Capacity: 75 guests</li>
                         <li>• 12-Hour full-day access</li>
-                        <li>• Premier coordinator & AV staff</li>
+                        <li>• Premier coordinator &amp; AV staff</li>
                         <li>• Pre-event spatial layout helper</li>
                       </ul>
                     </div>
 
-                    {/* Package 4 */}
                     <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-4 flex flex-col justify-between">
                       <div className="space-y-2">
-                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">
+                        <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest block">
                           Tier 4
                         </span>
-                        <h3 className="font-bold text-navy-900 dark:text-white text-lg">
+                        <h3 className="font-bold text-slate-950 dark:text-white text-lg">
                           Premium Experience
                         </h3>
-                        <div className="text-2xl font-extrabold text-navy-900 dark:text-white">
+                        <div className="text-2xl font-extrabold text-slate-950 dark:text-white">
                           $4,000+
                         </div>
-                        <p className="text-xs text-slate-500 leading-relaxed font-sans">
+                        <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-sans">
                           Full weekend private booking. The ultimate venue bundle featuring curated
                           decor styling and catering channels.
                         </p>
@@ -1496,7 +1683,7 @@ const DeepDiveView: React.FC = () => {
                       <ul className="space-y-1.5 text-[10px] text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-white/5 pt-3 font-sans">
                         <li>• Capacity: 100 max boundary</li>
                         <li>• Multi-day full weekend use</li>
-                        <li>• Full coordination & concierge</li>
+                        <li>• Full coordination &amp; concierge</li>
                         <li>• Custom caterer/alcohol options</li>
                       </ul>
                     </div>
@@ -1509,8 +1696,8 @@ const DeepDiveView: React.FC = () => {
                   className="space-y-6 pt-6 border-t border-slate-100 dark:border-slate-800 scroll-mt-24"
                 >
                   <div className="space-y-2">
-                    <h2 className="text-2xl font-bold text-navy-900 dark:text-white">
-                      6. Prototype Bounding & Production Roadmap
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      6. Prototype Bounding &amp; Production Roadmap
                     </h2>
                     <p className={`${semanticTokens.text.body} max-w-4xl`}>
                       To ensure the portfolio mockup remains high-performing, portable, and entirely
@@ -1521,12 +1708,11 @@ const DeepDiveView: React.FC = () => {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {/* Item 1 */}
                     <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-3 flex flex-col justify-between">
                       <div className="space-y-2">
                         <div className="flex items-center gap-2 text-rose-500 font-bold text-sm">
                           <span>🔒</span>
-                          <span>Google Cloud Run & Firebase Auth Integration</span>
+                          <span>Google Cloud Run &amp; Firebase Auth Integration</span>
                         </div>
                         <div className="space-y-1.5 text-[11px] font-sans leading-relaxed">
                           <p className="text-slate-600 dark:text-slate-300">
@@ -1534,7 +1720,7 @@ const DeepDiveView: React.FC = () => {
                             client-side. The dashboard, client portals, and contact pipelines
                             simulate operations locally using state variables.
                           </p>
-                          <p className="text-slate-500">
+                          <p className="text-slate-500 dark:text-slate-400">
                             <strong>Production Build:</strong> Runs behind a secure{' '}
                             <strong>Google Cloud Run API</strong> backend connected to{' '}
                             <strong>Firebase Auth / Identity Platform</strong>.
@@ -1547,12 +1733,11 @@ const DeepDiveView: React.FC = () => {
                       </p>
                     </div>
 
-                    {/* Item 2 */}
                     <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-3 flex flex-col justify-between">
                       <div className="space-y-2">
                         <div className="flex items-center gap-2 text-rose-500 font-bold text-sm">
                           <span>🤖</span>
-                          <span>Bounded AI Chatbot & Event Planner Suite</span>
+                          <span>Bounded AI Chatbot &amp; Event Planner Suite</span>
                         </div>
                         <div className="space-y-1.5 text-[11px] font-sans leading-relaxed">
                           <p className="text-slate-600 dark:text-slate-300">
@@ -1560,11 +1745,11 @@ const DeepDiveView: React.FC = () => {
                             Event Planner and a supportive site assistant chatbot, simulated locally
                             for zero latency.
                           </p>
-                          <p className="text-slate-500">
-                            <strong>Rationale & Skills Transfer:</strong> Reinforces the identical
-                            conversational logic and safety state-machine framework deployed in the{' '}
-                            <strong>"Digital Twin"</strong> project, adapted here to guide booking
-                            intent and resolve logistical objections.
+                          <p className="text-slate-500 dark:text-slate-400">
+                            <strong>Rationale &amp; Skills Transfer:</strong> Reinforces the
+                            identical conversational logic and safety state-machine framework
+                            deployed in the <strong>"Digital Twin"</strong> project, adapted here to
+                            guide booking intent and resolve logistical objections.
                           </p>
                         </div>
                       </div>
@@ -1574,7 +1759,6 @@ const DeepDiveView: React.FC = () => {
                       </p>
                     </div>
 
-                    {/* Item 3 */}
                     <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-3 flex flex-col justify-between">
                       <div className="space-y-2">
                         <div className="flex items-center gap-2 text-rose-500 font-bold text-sm">
@@ -1587,9 +1771,9 @@ const DeepDiveView: React.FC = () => {
                             components displaying mock slots to simulate date inquiry conflict
                             resolution.
                           </p>
-                          <p className="text-slate-500">
+                          <p className="text-slate-500 dark:text-slate-400">
                             <strong>Production Build:</strong> Integrates Google Calendar OAuth2
-                            client sync, booking schedules directly onto the venue’s master calendar
+                            client sync, booking schedules directly onto the venue's master calendar
                             to automatically lock slots.
                           </p>
                         </div>
@@ -1616,7 +1800,7 @@ const DeepDiveView: React.FC = () => {
                       <strong>$500 to $4,000+</strong>). This is an{' '}
                       <strong>intentional operations choice</strong>:
                     </p>
-                    <ul className="space-y-1 text-[11px] text-slate-500 leading-relaxed list-disc list-inside font-sans pl-2">
+                    <ul className="space-y-1 text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed list-disc list-inside font-sans pl-2">
                       <li>
                         <strong>Public-Facing Site:</strong> Focuses on emotional buy-in, spatial
                         visualization, and conversion. It groups offers conceptually to capture
