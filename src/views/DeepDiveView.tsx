@@ -145,6 +145,118 @@ const buildTimeline: TimelineRow[] = [
   },
 ];
 
+const PROCESS_CARD_DETAILS: Record<string, { headline: string; body: string }> = {
+  'PRs Merged': {
+    headline: '50+ pull requests — one per validated decision',
+    body: 'Every implementation cycle opened a dedicated branch and closed with a reviewed PR. This created a complete audit trail: each PR captures what changed, why it was scoped that way, and what validation it passed before merging. The PR history is the primary evidence source backing every claim on this page.',
+  },
+  'LLMs Used': {
+    headline: 'Six tools, each with a defined role',
+    body: 'The multi-LLM workflow was explicit: ChatGPT handled strategy and critique, Gemini powered the runtime assistant, Claude Code handled repo-level implementation cycles, Codex ran targeted branch fixes, Jules provided task orchestration, and GitHub was the validation control plane. No tool had overlapping authority — each operated within its lane.',
+  },
+  'Build Phases': {
+    headline: 'Five-plus phases, each validated before advancing',
+    body: 'No phase began until the previous one passed typecheck, lint, build, and a manual review gate. This sequential discipline prevented accumulated drift — a common failure mode in AI-assisted builds where unreviewed changes compound. Phase completion = zero validation errors + committed evidence ledger entry.',
+  },
+  Routes: {
+    headline: 'Ten-plus canonical routes, zero naming drift',
+    body: 'The migration from legacy /case-studies to /projects/:projectId was systematic: canonical routes were established first, compatibility aliases were wired to preserve existing links, then shared metadata centralized every label, href, and taxonomy reference. The result is a routing architecture that scales without fragmentation.',
+  },
+};
+
+type LlmTool = {
+  tool: string;
+  role: string;
+  tasks: string[];
+  contribution: string;
+};
+
+const LLM_TOOLS: LlmTool[] = [
+  {
+    tool: 'ChatGPT',
+    role: 'Strategy, critique, prompt design, information architecture, audit logic, and sequencing.',
+    tasks: [
+      'Portfolio information architecture design',
+      'Role-track framing and recruiter-scanning critique',
+      'Audit logic for evidence ledger structure',
+      'Sequencing of build phases and dependency ordering',
+      'Prompt design for implementation cycles',
+    ],
+    contribution:
+      'Primary strategy and independent critique partner throughout the build. Used before every major implementation cycle to stress-test scope and identify gaps.',
+  },
+  {
+    tool: 'Gemini / Google AI Studio',
+    role: 'Early generation, scaffolding, UI experimentation; powers runtime assistant behavior via proxy.',
+    tasks: [
+      'Early UI scaffolding and layout experimentation',
+      'Initial component generation passes',
+      'Runtime Digital Twin assistant via Gemini proxy API',
+      'Prompt-response behavior calibration for the chatbot',
+    ],
+    contribution:
+      'Provided early-stage generation speed and now runs the live Digital Twin assistant in production. Gemini Flash handles all runtime portfolio assistant queries.',
+  },
+  {
+    tool: 'Claude',
+    role: 'Planning, review, and implementation support. Co-author metadata visible in commit history.',
+    tasks: [
+      'Implementation planning and scoping',
+      'Code review and patch-note audit',
+      'Architecture decision documentation',
+      'Cross-file consistency checks',
+    ],
+    contribution:
+      'Handled planning-heavy cycles and code review passes where broad context was needed before scoped execution.',
+  },
+  {
+    tool: 'Claude Code',
+    role: 'Repo-level edits, refactoring, and implementation support in commit and PR evidence.',
+    tasks: [
+      'Full-file rewrites and refactoring cycles',
+      'Design system token corrections',
+      'Route migration and compatibility alias wiring',
+      'Validation trail — typecheck/lint/build execution',
+    ],
+    contribution:
+      'Primary implementation engine for repo-level changes. Each session operated on a dedicated branch with a specific scoped prompt, producing reviewable patch output.',
+  },
+  {
+    tool: 'Google Jules',
+    role: 'Task orchestration and code support in user-reported workflow context.',
+    tasks: [
+      'Task orchestration across parallel workstreams',
+      'Code support for targeted feature branches',
+    ],
+    contribution:
+      'Used for workstream coordination where parallel task execution was beneficial. Contributed to the multi-tool governance model.',
+  },
+  {
+    tool: 'Codex',
+    role: 'Branch-based implementation prompts, targeted migration fixes, test-repair iteration.',
+    tasks: [
+      'Branch-based implementation from scoped prompts',
+      'Targeted migration fixes (route param, loader fallback)',
+      'Test-repair iteration on failing Vitest suites',
+      'Compatibility alias wiring',
+    ],
+    contribution:
+      'Handled targeted, scope-bounded fixes where precision mattered more than breadth. Strong on test repair and compatibility edge cases.',
+  },
+  {
+    tool: 'GitHub',
+    role: 'Branch and PR traceability, merges, and validation trail control plane.',
+    tasks: [
+      'Branch isolation for every implementation cycle',
+      'PR review and merge gate enforcement',
+      'CI validation trail (typecheck, lint, build)',
+      'Evidence ledger through commit and PR history',
+    ],
+    contribution:
+      'The control plane that made the multi-LLM workflow auditable. Every AI-generated change was traceable through a PR, not applied directly to main.',
+  },
+];
+
 const DeepDiveView: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const tabParam = searchParams.get('tab');
@@ -161,6 +273,12 @@ const DeepDiveView: React.FC = () => {
     'visuals' | 'ux' | 'technical' | 'content'
   >('visuals');
   const [kpiView, setKpiView] = React.useState<'owner' | 'telemetry'>('owner');
+
+  const [activeProcessCard, setActiveProcessCard] = React.useState<number | null>(null);
+  const [activeTimelineEntry, setActiveTimelineEntry] = React.useState<TimelineRow>(
+    buildTimeline[0],
+  );
+  const [activeLlmTool, setActiveLlmTool] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     if (tabParam === 'luxe-lofts' || tabParam === 'process' || tabParam === 'landing') {
@@ -427,10 +545,15 @@ const DeepDiveView: React.FC = () => {
                       { label: 'LLMs Used', value: '6', sub: 'Distinct AI tools' },
                       { label: 'Build Phases', value: '5+', sub: 'Validated phase cycles' },
                       { label: 'Routes', value: '10+', sub: 'Canonical project routes' },
-                    ].map((stat) => (
-                      <div
+                    ].map((stat, i) => (
+                      <button
                         key={stat.label}
-                        className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] p-5 space-y-1"
+                        onClick={() => setActiveProcessCard(activeProcessCard === i ? null : i)}
+                        className={`rounded-2xl border p-5 space-y-1 text-left transition-all duration-200 ${
+                          activeProcessCard === i
+                            ? 'border-tide-aqua/40 bg-tide-aqua/5 dark:bg-tide-aqua/10 ring-2 ring-tide-aqua shadow-sm'
+                            : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] hover:border-slate-300 dark:hover:border-slate-700'
+                        }`}
                       >
                         <span className="text-[10px] font-bold uppercase tracking-wider text-tide-aqua dark:text-tide-sky block">
                           {stat.label}
@@ -439,9 +562,30 @@ const DeepDiveView: React.FC = () => {
                           {stat.value}
                         </div>
                         <p className="text-[11px] text-slate-500 dark:text-slate-400">{stat.sub}</p>
-                      </div>
+                      </button>
                     ))}
                   </div>
+
+                  {activeProcessCard !== null &&
+                    (() => {
+                      const stat = [
+                        { label: 'PRs Merged' },
+                        { label: 'LLMs Used' },
+                        { label: 'Build Phases' },
+                        { label: 'Routes' },
+                      ][activeProcessCard];
+                      const detail = PROCESS_CARD_DETAILS[stat.label];
+                      return (
+                        <div className="rounded-2xl border border-tide-aqua/30 bg-tide-aqua/5 dark:bg-tide-aqua/10 p-6 space-y-2 animate-in fade-in duration-200">
+                          <h4 className="font-bold text-slate-950 dark:text-white text-base">
+                            {detail.headline}
+                          </h4>
+                          <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                            {detail.body}
+                          </p>
+                        </div>
+                      );
+                    })()}
 
                   <div
                     className={`p-6 md:p-8 rounded-2xl border space-y-4 ${componentRecipes.card.surface}`}
@@ -458,22 +602,34 @@ const DeepDiveView: React.FC = () => {
                       </p>
                     </div>
                     <div className="flex flex-wrap gap-4 pt-4 border-t border-slate-200 dark:border-slate-800">
-                      <Link to={PROJECTS_HREF} className={componentRecipes.button.primary}>
+                      <Link
+                        to={PROJECTS_HREF}
+                        className={`inline-flex items-center gap-2 text-sm font-semibold rounded-xl px-5 py-2.5 transition-all ${componentRecipes.button.primary}`}
+                      >
                         View Projects Library
                       </Link>
-                      <Link to={SITE_INDEX_HREF} className={componentRecipes.button.secondary}>
+                      <Link
+                        to={SITE_INDEX_HREF}
+                        className={`inline-flex items-center gap-2 text-sm font-semibold rounded-xl px-5 py-2.5 transition-all ${componentRecipes.button.secondary}`}
+                      >
                         Open Site Index
                       </Link>
                       <Link
                         to={DIGITAL_TWIN_PROJECT_HREF}
-                        className={componentRecipes.button.secondary}
+                        className={`inline-flex items-center gap-2 text-sm font-semibold rounded-xl px-5 py-2.5 transition-all ${componentRecipes.button.secondary}`}
                       >
                         Digital Twin Project
                       </Link>
-                      <Link to={GUYNODE_SYSTEM_HREF} className={componentRecipes.button.secondary}>
+                      <Link
+                        to={GUYNODE_SYSTEM_HREF}
+                        className={`inline-flex items-center gap-2 text-sm font-semibold rounded-xl px-5 py-2.5 transition-all ${componentRecipes.button.secondary}`}
+                      >
                         Guynode Project
                       </Link>
-                      <Link to={RESUME_HREF} className={componentRecipes.button.secondary}>
+                      <Link
+                        to={RESUME_HREF}
+                        className={`inline-flex items-center gap-2 text-sm font-semibold rounded-xl px-5 py-2.5 transition-all ${componentRecipes.button.secondary}`}
+                      >
                         View Resume
                       </Link>
                     </div>
@@ -494,50 +650,104 @@ const DeepDiveView: React.FC = () => {
                       trail used to verify delivery outcomes.
                     </p>
                   </div>
-                  <div className="max-h-[36rem] overflow-y-auto overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
-                    <table className="min-w-full text-sm">
-                      <thead className="sticky top-0 bg-slate-100 dark:bg-slate-900 z-10">
-                        <tr>
-                          <th className="text-left p-3 text-slate-700 dark:text-slate-200 font-bold">
-                            Phase
-                          </th>
-                          <th className="text-left p-3 text-slate-700 dark:text-slate-200 font-bold">
-                            What changed
-                          </th>
-                          <th className="text-left p-3 text-slate-700 dark:text-slate-200 font-bold">
-                            Why it mattered
-                          </th>
-                          <th className="text-left p-3 text-slate-700 dark:text-slate-200 font-bold">
-                            What it proves
-                          </th>
-                          <th className="text-left p-3 text-slate-700 dark:text-slate-200 font-bold">
-                            Validation
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {buildTimeline.map((row) => (
-                          <tr
-                            key={row.phase}
-                            className="border-t border-slate-200 dark:border-slate-800 align-top"
-                          >
-                            <td className="p-4 font-semibold text-slate-800 dark:text-slate-200">
-                              {row.phase}
-                            </td>
-                            <td className="p-4 text-slate-600 dark:text-slate-300">
-                              {row.changed}
-                            </td>
-                            <td className="p-4 text-slate-600 dark:text-slate-300">
-                              {row.mattered}
-                            </td>
-                            <td className="p-4 text-slate-600 dark:text-slate-300">{row.proves}</td>
-                            <td className="p-4 text-slate-500 dark:text-slate-400">
-                              {row.validation}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    {/* Left: Card ladder */}
+                    <div className="lg:col-span-7 space-y-3">
+                      {buildTimeline.map((row, i) => (
+                        <button
+                          key={row.phase}
+                          onClick={() => setActiveTimelineEntry(row)}
+                          className={`w-full text-left rounded-2xl border p-4 transition-all duration-200 ${
+                            activeTimelineEntry.phase === row.phase
+                              ? 'border-tide-aqua/40 bg-tide-aqua/5 dark:bg-tide-aqua/10 shadow-sm'
+                              : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] hover:border-slate-300 dark:hover:border-slate-700'
+                          }`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <span
+                              className={`shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                                activeTimelineEntry.phase === row.phase
+                                  ? 'bg-tide-aqua text-white'
+                                  : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
+                              }`}
+                            >
+                              {i + 1}
+                            </span>
+                            <div className="min-w-0">
+                              <p
+                                className={`font-semibold text-sm ${activeTimelineEntry.phase === row.phase ? 'text-tide-aqua dark:text-tide-sky' : 'text-slate-800 dark:text-slate-200'}`}
+                              >
+                                {row.phase}
+                              </p>
+                              <p className="text-xs text-slate-500 dark:text-slate-400 truncate mt-0.5">
+                                {row.changed}
+                              </p>
+                            </div>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className={`shrink-0 w-4 h-4 ml-auto transition-colors ${activeTimelineEntry.phase === row.phase ? 'text-tide-aqua dark:text-tide-sky' : 'text-slate-400'}`}
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="m9 18 6-6-6-6" />
+                            </svg>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Right: Sticky Inspector */}
+                    <div className="lg:col-span-5">
+                      <div className="sticky top-28 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] overflow-hidden">
+                        <div className="border-b border-slate-200 dark:border-slate-800 px-6 py-4 bg-slate-50 dark:bg-slate-900/60">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-tide-aqua dark:text-tide-sky block mb-1">
+                            Phase Rigor Inspector
+                          </span>
+                          <h3 className="font-bold text-slate-950 dark:text-white">
+                            {activeTimelineEntry.phase}
+                          </h3>
+                        </div>
+                        <div className="p-6 space-y-5">
+                          <div className="space-y-1.5">
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                              What changed
+                            </span>
+                            <p className="text-sm text-slate-700 dark:text-slate-200 leading-relaxed">
+                              {activeTimelineEntry.changed}
+                            </p>
+                          </div>
+                          <div className="space-y-1.5">
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-rose-500">
+                              Strategic Impact
+                            </span>
+                            <p className="text-sm text-slate-700 dark:text-slate-200 leading-relaxed">
+                              {activeTimelineEntry.mattered}
+                            </p>
+                          </div>
+                          <div className="space-y-1.5">
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                              Technical Proof
+                            </span>
+                            <p className="text-sm text-slate-700 dark:text-slate-200 leading-relaxed">
+                              {activeTimelineEntry.proves}
+                            </p>
+                          </div>
+                          <div className="space-y-1.5 pt-4 border-t border-slate-200 dark:border-slate-800">
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                              Commit Evidence
+                            </span>
+                            <p className="text-sm font-mono text-slate-600 dark:text-slate-300">
+                              {activeTimelineEntry.validation}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </section>
 
@@ -556,51 +766,76 @@ const DeepDiveView: React.FC = () => {
                     </p>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {[
-                      {
-                        tool: 'ChatGPT',
-                        role: 'Strategy, critique, prompt design, information architecture, audit logic, and sequencing.',
-                      },
-                      {
-                        tool: 'Gemini / Google AI Studio',
-                        role: 'Early generation, scaffolding, UI experimentation; powers runtime assistant behavior via proxy.',
-                      },
-                      {
-                        tool: 'Claude',
-                        role: 'Planning, review, and implementation support. Co-author metadata visible in commit history.',
-                      },
-                      {
-                        tool: 'Claude Code',
-                        role: 'Repo-level edits, refactoring, and implementation support in commit and PR evidence.',
-                      },
-                      {
-                        tool: 'Google Jules',
-                        role: 'Task orchestration and code support in user-reported workflow context.',
-                      },
-                      {
-                        tool: 'Codex',
-                        role: 'Branch-based implementation prompts, targeted migration fixes, test-repair iteration in git history.',
-                      },
-                      {
-                        tool: 'GitHub',
-                        role: 'Branch and PR traceability, merges, and validation trail control plane.',
-                      },
-                    ].map((item) => (
-                      <div
-                        key={item.tool}
-                        className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] p-5 space-y-2"
-                      >
-                        <div className="flex items-center gap-2">
-                          <div className="w-2 h-2 rounded-full bg-tide-aqua shrink-0" />
-                          <h3 className="font-bold text-slate-950 dark:text-white text-sm">
-                            {item.tool}
-                          </h3>
+                    {LLM_TOOLS.map((tool) => {
+                      const isActive = activeLlmTool === tool.tool;
+                      return (
+                        <div
+                          key={tool.tool}
+                          className={`rounded-2xl border transition-all duration-200 overflow-hidden ${isActive ? 'border-tide-aqua/40 dark:border-tide-aqua/40' : 'border-slate-200 dark:border-slate-800'}`}
+                        >
+                          <button
+                            onClick={() => setActiveLlmTool(isActive ? null : tool.tool)}
+                            className="w-full text-left p-5 space-y-2 bg-white dark:bg-[#0B0F19] hover:bg-slate-50 dark:hover:bg-slate-900/60 transition-colors"
+                          >
+                            <div className="flex items-center justify-between gap-3">
+                              <div className="flex items-center gap-2">
+                                <div
+                                  className={`w-2 h-2 rounded-full shrink-0 ${isActive ? 'bg-tide-aqua' : 'bg-slate-300 dark:bg-slate-600'}`}
+                                />
+                                <h3
+                                  className={`font-bold text-sm ${isActive ? 'text-tide-aqua dark:text-tide-sky' : 'text-slate-950 dark:text-white'}`}
+                                >
+                                  {tool.tool}
+                                </h3>
+                              </div>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className={`shrink-0 w-4 h-4 transition-transform duration-200 text-slate-400 ${isActive ? 'rotate-180' : ''}`}
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <path d="m6 9 6 6 6-6" />
+                              </svg>
+                            </div>
+                            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                              {tool.role}
+                            </p>
+                          </button>
+                          {isActive && (
+                            <div className="px-5 pb-5 bg-tide-aqua/5 dark:bg-tide-aqua/10 border-t border-tide-aqua/20 space-y-4 animate-in fade-in duration-150">
+                              <div className="pt-4 space-y-2">
+                                <span className="text-[10px] font-bold uppercase tracking-wider text-tide-aqua dark:text-tide-sky block">
+                                  Key Tasks
+                                </span>
+                                <ul className="space-y-1.5">
+                                  {tool.tasks.map((task) => (
+                                    <li
+                                      key={task}
+                                      className="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-200"
+                                    >
+                                      <span className="w-1 h-1 rounded-full bg-tide-aqua mt-1.5 shrink-0" />
+                                      {task}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                              <div className="space-y-2">
+                                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">
+                                  Contribution Context
+                                </span>
+                                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                                  {tool.contribution}
+                                </p>
+                              </div>
+                            </div>
+                          )}
                         </div>
-                        <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                          {item.role}
-                        </p>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </section>
 
@@ -722,6 +957,45 @@ const DeepDiveView: React.FC = () => {
                         now powers featured/supporting taxonomy, role filters, and consistent links
                         across Home, Projects Index, Site Index, and Project Detail.
                       </p>
+
+                      <div className="space-y-2 pt-2">
+                        <h4 className="font-semibold text-slate-950 dark:text-white text-sm">
+                          Branch Isolation Model
+                        </h4>
+                        <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                          Every implementation cycle ran on a dedicated branch:{' '}
+                          <code className="text-xs bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">
+                            main
+                          </code>{' '}
+                          = stable production,{' '}
+                          <code className="text-xs bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">
+                            feat/phase-5.3-deep-dive-overhaul
+                          </code>{' '}
+                          = scoped feature work,{' '}
+                          <code className="text-xs bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">
+                            archive/phase-3-baseline
+                          </code>{' '}
+                          = frozen evidence snapshot. No AI-generated change was applied directly to
+                          main — every change passed through a reviewed PR.
+                        </p>
+                      </div>
+
+                      <div className="space-y-2 pt-2">
+                        <h4 className="font-semibold text-slate-950 dark:text-white text-sm">
+                          Shared Metadata Structure
+                        </h4>
+                        <pre className="text-xs bg-slate-100 dark:bg-slate-800 rounded-xl p-4 overflow-x-auto text-slate-700 dark:text-slate-300 font-mono leading-relaxed">
+                          {`// src/constants/projectMetadata.ts (simplified)
+{
+  id: 'guynode',
+  title: 'Guynode GIS System',
+  href: '/projects/guynode',
+  category: 'featured',
+  roles: ['gis', 'implementation'],
+  tags: ['GIS', 'TypeScript', 'React'],
+}`}
+                        </pre>
+                      </div>
                     </div>
 
                     <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] p-6 space-y-4">
