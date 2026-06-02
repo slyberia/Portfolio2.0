@@ -151,8 +151,8 @@ const ProjectHero: React.FC<{
           >
             {metadata.featuredLabel ?? metadata.statusLabel}
           </span>
-          <h1 className={`text-3xl font-bold italic ${semanticTokens.text.heading}`}>
-            “{metadata.displayTitle}”
+          <h1 className={`text-3xl font-bold ${semanticTokens.text.heading}`}>
+            {metadata.displayTitle}
           </h1>
           <p className="max-w-3xl text-slate-700 dark:text-slate-200">{metadata.shortSummary}</p>
           <div className="flex flex-wrap gap-2">

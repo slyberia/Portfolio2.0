@@ -126,11 +126,7 @@ Identify where the current code fails Aegis standards regarding System Invariant
 > **Scope:** Digital Restructuring, Ecosystem Unification, Conversational UI
 > **Tools:** Next.js, Cloud Run, Firebase, Gemini Genkit
 
-<div className="my-8">
-  <a href="https://luxe-lofts-roadmap-repo-786228485832.us-central1.run.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-8 py-2">
-    View the Cloud Run Mockup Prototype →
-  </a>
-</div>
+[View the Cloud Run Mockup Prototype →](https://luxe-lofts-roadmap-repo-786228485832.us-central1.run.app/)
 
 ## 1) Strategic Narrative
 
@@ -226,22 +222,12 @@ The interactive simulator below demonstrates how these opposing forces are balan
 
 > **"Spatial data is only as valuable as it is accessible. Guynode transforms fragmented legacy data into a governed, high-fidelity public resource."**
 
-<div className="my-8 p-6 rounded-2xl border border-teal-500/20 bg-teal-500/5 dark:border-teal-500/30 shadow-sm">
-  <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-2 flex items-center gap-2">
-    <span className="text-xl">🗺️</span> Launch Guynode Environments
-  </h3>
-  <p className="text-sm text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
-    Experience the live GIS solutions. Compare the current legacy stable production version with the modern, high-fidelity Redesigned Spatial Data Hub mockup.
-  </p>
-  <div className="flex flex-wrap gap-4">
-    <a href="https://guynode.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white font-semibold text-sm px-5 py-3 transition shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500">
-      Launch Live Production Site →
-    </a>
-    <a href="https://guynode-spatial-data-hub-786228485832.us-central1.run.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-xl border border-teal-500/30 bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800/80 text-teal-600 dark:text-teal-400 font-semibold text-sm px-5 py-3 transition shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500">
-      Launch Redesigned Mockup →
-    </a>
-  </div>
-</div>
+### 🗺️ Launch Guynode Environments
+
+Experience the live GIS solutions. Compare the current legacy stable production version with the modern, high-fidelity Redesigned Spatial Data Hub mockup.
+
+- [Launch Live Production Site →](https://guynode.com/)
+- [Launch Redesigned Mockup →](https://guynode-spatial-data-hub-786228485832.us-central1.run.app/)
 
 ---
 

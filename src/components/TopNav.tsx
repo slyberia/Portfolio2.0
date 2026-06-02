@@ -83,7 +83,8 @@ const TopNav: React.FC<TopNavProps> = ({ theme, toggleTheme, onOpenContact }) =>
           to={HOME_HREF}
           className={`text-xl font-outfit font-bold tracking-tight text-ink-navy dark:text-white ${navStyles.itemFocus}`}
         >
-          ARCHITECT.SYS
+          KYLE SEMPLE
+          <span className="font-medium text-slate-500 dark:text-slate-400"> / ARCHITECT.SYS</span>
         </Link>
 
         <nav aria-label="Primary navigation" className="hidden md:flex items-center gap-8">
