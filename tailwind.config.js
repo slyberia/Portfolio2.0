@@ -22,9 +22,9 @@ export default {
           softBlue: '#a99ae6',
         },
         gild: {
-          DEFAULT: '#d8a84f',
-          soft: '#f1c878',
-          deep: '#a8782a',
+          DEFAULT: '#e6b422',
+          soft: '#f6cf5b',
+          deep: '#b8860b',
         },
         // Temporary compatibility alias for legacy text-navy-900 usages. Remove in Prompt 1B.
         navy: {

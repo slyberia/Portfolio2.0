@@ -100,17 +100,9 @@ const SupportingEvidenceSection: React.FC = () => {
               key={item.id}
               className={`rounded-xl border px-4 py-4 md:px-5 transition-all duration-300 ${
                 item.flagship
-                  ? 'border-[#d8a84f]/40 dark:border-[#f1c878]/30 backdrop-blur-md shadow-[0_8px_32px_rgba(216,168,79,0.08)] hover:border-[#d8a84f]/80 dark:hover:border-[#f1c878]/60 hover:shadow-[0_12px_40px_rgba(216,168,79,0.18)]'
+                  ? 'border-gild/40 bg-gild/5 dark:bg-gild-deep/10 shadow-[0_4px_12px_rgba(15,23,42,0.05)] hover:border-gild/80'
                   : `${getProjectAccentRecipe(item.accent).borderClass} bg-white/95 dark:bg-slate-900/70 shadow-[0_4px_12px_rgba(15,23,42,0.05)]`
               }`}
-              style={
-                item.flagship
-                  ? {
-                      background:
-                        'linear-gradient(90deg, rgba(156, 122, 60, 0.15) 0%, rgba(255, 229, 150, 0.3) 20%, rgba(184, 149, 72, 0.15) 50%, rgba(255, 229, 150, 0.3) 80%, rgba(162, 126, 61, 0.2) 100%)',
-                    }
-                  : undefined
-              }
             >
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="text-[10px] font-mono uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">

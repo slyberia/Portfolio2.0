@@ -102,12 +102,7 @@ const MarkdownSection: React.FC<MarkdownSectionProps> = ({
 
   return (
     <div className="relative group">
-      <div
-        className="absolute -inset-1 bg-gradient-to-r from-tide-aqua/5 to-tide-aqua/5 blur-xl opacity-75 rounded-3xl dark:opacity-75"
-        aria-hidden="true"
-      ></div>
-
-      <div className="relative glass-card p-8 md:p-12 rounded-3xl border border-black/5 dark:border-white/10 transition-colors duration-500">
+      <div className="rounded-3xl border border-slate-200 bg-white p-8 md:p-12 dark:border-slate-800 dark:bg-[#0B0F19] transition-colors duration-500">
         <div className={proseTheme.container}>
           <ReactMarkdown
             urlTransform={transformUrl}
