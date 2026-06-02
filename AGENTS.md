@@ -20,9 +20,10 @@ detailed in `docs/positioning-refactor-plan.md`.
 
 - **Customer Success is an evidence layer, not the identity.** No CSM seniority, managed book
   of business, or ARR/NRR/renewal/expansion claims anywhere.
-- **Do not invent** projects, metrics, or customers. Real inventory: `luxe-lofts`,
-  `ops-triage`, `guynode`, `digital-twin` (registry) + `prompter-hub`, `project-aegis`,
-  `nba-systems-qa` (case studies). There is **no** "Northern Grind" and **no** "MOH."
+- **Do not invent** metrics or customers. On-site inventory: `luxe-lofts`, `ops-triage`,
+  `guynode`, `digital-twin` (registry) + `prompter-hub`, `project-aegis`, `nba-systems-qa`
+  (case studies). **Northern Grind** and **MOH (Ministry of Health)** are real projects not yet
+  on the site — add them only via the gated subphase 6.11, with Kyle-provided source material.
 - **Design system is non-negotiable** (see `CLAUDE.md`): no glassmorphism, solid 1px borders,
   the documented light/dark contrast tiers. No generic SaaS-template aesthetics.
 - **Preserve routes.** Repurpose role-track pages; never break links without redirects and

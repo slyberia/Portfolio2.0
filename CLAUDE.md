@@ -21,9 +21,11 @@ Messaging guardrails:
   a managed book of business, or ARR/NRR/renewal/expansion ownership anywhere.
 - **Role tracks are supporting metadata**, surfaced as role-relevance tags and lower-priority
   lenses — never the primary homepage framing.
-- **Do not invent** projects, metrics, or customers. The real project inventory is
-  `luxe-lofts`, `ops-triage`, `guynode`, `digital-twin` (registry) plus `prompter-hub`,
-  `project-aegis`, `nba-systems-qa` (case studies). There is no "Northern Grind" or "MOH."
+- **Do not invent** metrics or customers. The on-site project inventory is `luxe-lofts`,
+  `ops-triage`, `guynode`, `digital-twin` (registry) plus `prompter-hub`, `project-aegis`,
+  `nba-systems-qa` (case studies). **Northern Grind** and **MOH (Ministry of Health)** are real
+  projects not yet implemented on the site — add them only via the gated subphase 6.11 in
+  `docs/positioning-refactor-plan.md`, using Kyle-provided source material, never fabricated copy.
 
 The active positioning workstream is **Phase 6 — Positioning Refactor**, documented in
 `docs/positioning-refactor-plan.md`. See also `AGENTS.md` for the cross-tool summary.

@@ -57,8 +57,11 @@ The Codex brief contained errors that MUST NOT propagate into the site:
    only as the supporting thesis sentence, never as the job-title anchor.
 2. **Name.** The brief wrote "Kyle Genesis." The correct name is **Kyle Semple**. The string
    "Kyle Genesis" must appear nowhere.
-3. **Invented projects.** The brief referenced **"Northern Grind"** and **"MOH"** projects.
-   Neither exists in this repository. Do not create them. Use only the real inventory (§5).
+3. **Projects not in the repo.** The brief supplied ready-made card/case-study copy for
+   **Northern Grind** and **MOH (Ministry of Health)** as if they were already on the site.
+   They are real projects of Kyle's but are **not yet implemented** in this iteration. Do not
+   author their content from the brief's copy; add them only via the gated subphase 6.11 using
+   Kyle-provided source material. Phase 6 work uses the real on-site inventory (§5).
 4. **Customer Success scope.** CS is an **evidence layer only**. Kyle has support/triage
    experience but no managed book of business. Never claim CSM seniority, ARR/NRR, renewals,
    or expansion ownership in the headline, resume summary, or machine summaries.
@@ -126,9 +129,12 @@ Registry projects (`src/constants.tsx`): `luxe-lofts`, `ops-triage`, `guynode`, 
 Additional case-study bodies (`src/data/caseStudyData.ts`): `prompter-hub`, `project-aegis`,
 `nba-systems-qa`.
 
-There is **no** Northern Grind and **no** MOH. The "local customer-facing business" angle the
-brief assigned to Northern Grind is already partly covered by `luxe-lofts`; do not fabricate a
-new project to fill it.
+**Real projects not yet implemented on the site:** **Northern Grind** (a local-business systems
+case study — brand identity, menu experience, POS/loyalty, customer experience) and **MOH —
+Ministry of Health** (a GIS / spatial-data project). These are genuine projects of Kyle's; they
+simply have not been added to this iteration. They are **out of scope for Phase 6** and must be
+added only via subphase 6.11 (gated), using Kyle-provided source material. Do not fabricate
+their content or metrics, and do not silently drop them as if they were never real.
 
 ---
 
@@ -252,6 +258,29 @@ Consistent role labels: `Forward-Deployed Engineering`, `Technical Implementatio
 - **Acceptance:** Docs reflect the new positioning; full suite green; no overstated claims.
 - **Commit:** `docs: subphase 6.10 — positioning refactor notes & final validation`
 
+### 6.11 — Integrate Northern Grind & MOH (GATED — do not start without confirmation)
+
+> **Hold.** This subphase is on hold until Kyle reviews these projects and explicitly confirms,
+> AND provides real source material. Do not begin, and do not fabricate any content/metrics from
+> the Codex brief's placeholder copy.
+
+- **Scope:** Add the two real-but-unimplemented projects to the site:
+  - **Northern Grind** — local-business systems case study (brand identity, menu experience,
+    POS/loyalty thinking, customer experience). Likely role relevance: Customer Experience ·
+    Operations Design · Service Design · Small Business Systems.
+  - **MOH (Ministry of Health)** — GIS / spatial-data project. Likely role relevance:
+    GIS / Spatial Systems · Public-Sector Implementation · Data Governance. Slots into the
+    Digital Twin's GIS routing alongside Guynode.
+- **Files (when unblocked):** `src/constants.tsx` (`PROJECT_REGISTRY`), `src/data/projectMetadata.ts`,
+  `src/data/caseStudyData.ts`, project assets under `public/`, plus crawler/SEO updates
+  (`scripts/generate-crawler-html.mjs`, `src/lib/seo.ts`, `public/llms.txt`) and Digital Twin
+  routing (`server/geminiProxy.ts`).
+- **Inputs required from Kyle (before starting):** project summary, scope/role, stakeholders,
+  real outcomes (no invented metrics), any links/screenshots, and which role-relevance tags apply.
+- **Acceptance:** Both projects appear with the §6.4 card pattern and §6.5 stakeholder-value
+  section, content sourced only from Kyle's material; crawler validates; routes resolve.
+- **Commit:** `feat: subphase 6.11 — integrate Northern Grind & MOH projects`
+
 ---
 
 ## 7. Acceptance criteria (phase complete)
@@ -277,7 +306,9 @@ without a green suite; route naming and crawler sitemap do not drift.
 ## 8. Guardrails
 
 - Do not remove major projects or delete role-track routes without safe redirects + reference updates.
-- Do not invent metrics, customers, or projects (no Northern Grind, no MOH).
+- Do not invent metrics or customers. Northern Grind and MOH (Ministry of Health) are real but
+  not yet on the site — add them only via the gated subphase 6.11 with real source material,
+  never fabricated from the brief's placeholder copy.
 - Do not overstate CSM relevance; CS is an evidence layer, not the identity.
 - Name is **Kyle Semple**; title is **Forward Deployed Engineer**; never "Kyle Genesis," never
   "Solutions Architect" as the lead title.
