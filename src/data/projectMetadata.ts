@@ -1,7 +1,7 @@
 import { PROJECT_REGISTRY } from '../constants';
 import { buildProjectHref } from '../lib/routes';
 import type { RoleLane } from '../lib/design-system';
-import type { RecruiterRoleLane } from '../types';
+import type { RecruiterRoleLane, Visibility } from '../types';
 
 export type ProjectRoleLane = 'Implementation' | 'QA' | 'GIS';
 export type ProjectFilter = 'Implementation' | 'QA' | 'GIS' | 'AI Systems' | 'Process';
@@ -24,6 +24,13 @@ export type ProjectMetadata = {
   sortOrder: number;
   href: string;
   evidenceTier?: EvidenceTier;
+  /**
+   * Controls whether the project is surfaced to visitors. Defaults to 'public' when omitted.
+   * Non-public projects (e.g. 'draft', 'hidden') are excluded from every list, the project
+   * switcher, structured data, and crawler output, but remain reachable by direct URL so they
+   * can be previewed before publishing. Flip to 'public' to publish everywhere at once.
+   */
+  visibility?: Visibility;
   flagship?: boolean;
   showInSwitcher?: boolean;
   switcherRank?: number;
@@ -146,24 +153,74 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     showInSwitcher: true,
     switcherRank: 7,
   },
+  {
+    id: 'northern-grind',
+    displayTitle: 'Northern Grind',
+    shortSummary:
+      'Café digital rebrand & systems strategy — brand identity, menu UX, and break-even POS/loyalty modeling unified into one operational loop. Hidden until published.',
+    hierarchy: 'supporting',
+    statusLabel: 'Hidden Draft',
+    roleLanes: ['Implementation'],
+    canonicalRoleLanes: ['Forward Deployed Engineer'],
+    filters: ['Implementation', 'Process'],
+    proofType: 'Case Study',
+    accent: 'cyan',
+    sortOrder: 8,
+    href: buildProjectHref('northern-grind'),
+    evidenceTier: 'supporting',
+    visibility: 'draft',
+    showInSwitcher: false,
+  },
+  {
+    id: 'moh',
+    displayTitle: 'MOH — Ministry of Health',
+    shortSummary:
+      'GIS / spatial-data project for the Ministry of Health. Hidden draft — full case study pending source material.',
+    hierarchy: 'supporting',
+    statusLabel: 'Hidden Draft',
+    roleLanes: ['GIS'],
+    canonicalRoleLanes: ['Spatial Systems Architect', 'Forward Deployed Engineer'],
+    filters: ['GIS', 'Implementation'],
+    proofType: 'System',
+    accent: 'blue',
+    sortOrder: 9,
+    href: buildProjectHref('moh'),
+    evidenceTier: 'supporting',
+    visibility: 'draft',
+    showInSwitcher: false,
+  },
 ];
 
 const sorted = (projects: ProjectMetadata[]) =>
   [...projects].sort((a, b) => a.sortOrder - b.sortOrder);
 
+/** A project is publicly listed when visibility is omitted or explicitly 'public'. */
+const isPublic = (project: ProjectMetadata) => (project.visibility ?? 'public') === 'public';
+
+/** Public-only base list, used by every visitor-facing helper below. */
+const publicProjects = () => PROJECT_METADATA.filter(isPublic);
+
+/** True when the project with this id is visible to visitors (unknown ids default to public). */
+export const isProjectPublic = (id: string) => {
+  const project = getProjectMetadata(id);
+  return project ? isPublic(project) : true;
+};
+
+// Single-id lookup is intentionally NOT visibility-filtered so draft/hidden projects remain
+// reachable by their direct URL for preview before publishing.
 export const getProjectMetadata = (id: string) =>
   PROJECT_METADATA.find((project) => project.id === id);
 export const getProjectHref = (id: string) => getProjectMetadata(id)?.href ?? buildProjectHref(id);
 export const getFeaturedProjects = () =>
-  sorted(PROJECT_METADATA.filter((project) => project.hierarchy === 'featured'));
+  sorted(publicProjects().filter((project) => project.hierarchy === 'featured'));
 export const getSupportingProjects = () =>
-  sorted(PROJECT_METADATA.filter((project) => project.hierarchy === 'supporting'));
+  sorted(publicProjects().filter((project) => project.hierarchy === 'supporting'));
 export const getProjectsByFilter = (filter: ProjectFilter | 'All') =>
   filter === 'All'
-    ? sorted(PROJECT_METADATA)
-    : sorted(PROJECT_METADATA.filter((project) => project.filters.includes(filter)));
+    ? sorted(publicProjects())
+    : sorted(publicProjects().filter((project) => project.filters.includes(filter)));
 export const getProjectsByRoleLane = (roleLane: ProjectRoleLane) =>
-  sorted(PROJECT_METADATA.filter((project) => project.roleLanes.includes(roleLane)));
+  sorted(publicProjects().filter((project) => project.roleLanes.includes(roleLane)));
 
 export const validateProjectMetadataIds = () => {
   const registryIds = new Set(PROJECT_REGISTRY.map((project) => project.id));

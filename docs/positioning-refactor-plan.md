@@ -258,11 +258,21 @@ Consistent role labels: `Forward-Deployed Engineering`, `Technical Implementatio
 - **Acceptance:** Docs reflect the new positioning; full suite green; no overstated claims.
 - **Commit:** `docs: subphase 6.10 — positioning refactor notes & final validation`
 
-### 6.11 — Integrate Northern Grind & MOH (GATED — do not start without confirmation)
+### 6.11 — Integrate Northern Grind & MOH (PARTIALLY DONE — both staged as hidden drafts)
 
-> **Hold.** This subphase is on hold until Kyle reviews these projects and explicitly confirms,
-> AND provides real source material. Do not begin, and do not fabricate any content/metrics from
-> the Codex brief's placeholder copy.
+> **Status.** A project/deep-dive `visibility` flag now exists (`ProjectMetadata.visibility`,
+> default `'public'`; non-public entries are filtered from every list, the switcher, structured
+> data, and crawler output, but stay reachable by direct URL for preview). Both projects are added
+> as `visibility: 'draft'` entries:
+>
+> - **Northern Grind** — full real case study already staged at
+>   `public/case-studies/northern-grind.md`; the draft detail page renders it on direct-URL
+>   preview. Effectively ready to publish (flip `visibility` to `'public'`) once Kyle confirms.
+> - **MOH (Ministry of Health)** — no staged content yet; carries an honest placeholder body.
+>   Still needs real source material before publishing.
+>
+> **Remaining (gated on Kyle):** supply MOH source material; review both; then publish by flipping
+> `visibility`. Do not fabricate MOH content.
 
 - **Scope:** Add the two real-but-unimplemented projects to the site:
   - **Northern Grind** — local-business systems case study (brand identity, menu experience,

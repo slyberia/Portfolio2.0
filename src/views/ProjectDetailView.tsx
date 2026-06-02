@@ -30,7 +30,9 @@ import MediaProofGrid from '../components/media/MediaProofGrid';
 import { getPublicMediaByProject } from '../data/mediaRegistry';
 
 const ProjectSwitcher: React.FC<{ activeId: string }> = ({ activeId }) => {
-  const orderedProjects = [...PROJECT_METADATA].sort((a, b) => a.sortOrder - b.sortOrder);
+  const orderedProjects = [...PROJECT_METADATA]
+    .filter((project) => (project.visibility ?? 'public') === 'public')
+    .sort((a, b) => a.sortOrder - b.sortOrder);
   const featured = orderedProjects.filter((project) => project.hierarchy === 'featured');
   const supporting = orderedProjects.filter((project) => project.hierarchy === 'supporting');
 
