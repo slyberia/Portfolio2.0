@@ -334,8 +334,33 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
         />
 
         <div className="relative max-w-7xl mx-auto px-6 py-8 md:py-12 lg:py-14 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
-          <div className="lg:col-span-5 space-y-8 lg:pr-6 lg:self-center">
+          <div className="lg:col-span-5 space-y-8 lg:pr-6">
             <div className="space-y-5">
+              <div className="space-y-2">
+                <Link
+                  to="/gallery"
+                  aria-label="View the AI art gallery"
+                  className="group inline-block rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f5f9fb] dark:focus-visible:ring-offset-slate-950 focus-visible:ring-tide-aqua"
+                >
+                  <span className="block w-28 md:w-32 rounded-full border border-[#d8e8ee] dark:border-white/15 bg-[#f8fbfd] dark:bg-slate-900 p-1.5 shadow-sm transition-all group-hover:-translate-y-0.5 group-hover:shadow-md">
+                    <img
+                      src="/images/about-profile-medallion.png"
+                      alt="Stylized circular portrait medallion of Kyle Semple with systems, code, game, and GIS motifs."
+                      className="w-full h-auto rounded-full"
+                      loading="lazy"
+                    />
+                  </span>
+                </Link>
+                <p className="text-xs text-slate-600 dark:text-slate-300">
+                  AI-generated portrait — a deliberate piece.{' '}
+                  <Link
+                    to="/gallery"
+                    className="font-medium text-tide-aqua hover:underline dark:text-tide-sky"
+                  >
+                    Explore the gallery →
+                  </Link>
+                </p>
+              </div>
               <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-slate-600 dark:text-slate-300">
                 SYSTEM_ARCHITECT_V3.1
               </p>
@@ -532,15 +557,6 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
             <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-slate-600 dark:text-slate-300">
               PROFILE_SIGNAL
             </p>
-            <div className="mx-auto w-full max-w-[320px] rounded-full border border-[#d8e8ee] bg-[#f8fbfd] p-2 shadow-sm">
-              {/* TODO: Add public/images/about-profile-medallion.png manually because Codex PR creation does not support binary image assets. */}
-              <img
-                src="/images/about-profile-medallion.png"
-                alt="Stylized circular portrait medallion of Kyle Semple with systems, code, game, and GIS motifs."
-                className="w-full h-auto rounded-full"
-                loading="lazy"
-              />
-            </div>
             <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-200">
               <li>Systems thinker</li>
               <li>Technical translator</li>
