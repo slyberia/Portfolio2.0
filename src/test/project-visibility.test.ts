@@ -10,7 +10,7 @@ import {
   isProjectPublic,
 } from '../data/projectMetadata';
 
-const DRAFT_IDS = ['northern-grind', 'moh'];
+const DRAFT_IDS = ['moh'];
 
 describe('project visibility', () => {
   it('draft projects exist in the registry but are marked non-public', () => {
@@ -25,6 +25,11 @@ describe('project visibility', () => {
   it('public projects default to visible', () => {
     expect(isProjectPublic('guynode')).toBe(true);
     expect(isProjectPublic('digital-twin')).toBe(true);
+  });
+
+  it('published Northern Grind is public and appears in supporting projects', () => {
+    expect(isProjectPublic('northern-grind')).toBe(true);
+    expect(getSupportingProjects().some((project) => project.id === 'northern-grind')).toBe(true);
   });
 
   it('draft projects are excluded from every visitor-facing list helper', () => {

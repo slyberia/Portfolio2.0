@@ -265,14 +265,13 @@ Consistent role labels: `Forward-Deployed Engineering`, `Technical Implementatio
 > data, and crawler output, but stay reachable by direct URL for preview). Both projects are added
 > as `visibility: 'draft'` entries:
 >
-> - **Northern Grind** — full real case study already staged at
->   `public/case-studies/northern-grind.md`; the draft detail page renders it on direct-URL
->   preview. Effectively ready to publish (flip `visibility` to `'public'`) once Kyle confirms.
-> - **MOH (Ministry of Health)** — no staged content yet; carries an honest placeholder body.
->   Still needs real source material before publishing.
+> - **Northern Grind** — **PUBLISHED** (`visibility: 'public'`, in switcher + sitemap). Renders the
+>   real staged case study at `public/case-studies/northern-grind.md`.
+> - **MOH (Ministry of Health)** — still `visibility: 'draft'`; no staged content yet, carries an
+>   honest placeholder body. Use `docs/moh-intake-questionnaire.md` to collect source material.
 >
-> **Remaining (gated on Kyle):** supply MOH source material; review both; then publish by flipping
-> `visibility`. Do not fabricate MOH content.
+> **Remaining (gated on Kyle):** supply MOH source material (via the intake questionnaire); then
+> publish by flipping `visibility`. Do not fabricate MOH content.
 
 - **Scope:** Add the two real-but-unimplemented projects to the site:
   - **Northern Grind** — local-business systems case study (brand identity, menu experience,

@@ -558,7 +558,7 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
     id: 'northern-grind',
     title: 'Northern Grind',
     rationale:
-      'Reframed a café rebrand as a full system redesign — connecting brand identity, high-speed menu UX, and break-even-modeled POS/loyalty recommendations into one operational loop. Hidden draft, ready to publish.',
+      'Reframed a café rebrand as a full system redesign — connecting brand identity, high-speed menu UX, and break-even-modeled POS/loyalty recommendations into one operational loop.',
     category: 'success-strategy',
     tags: [
       'Customer Experience',
@@ -570,8 +570,6 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
     roleLanes: ['Forward Deployed Engineer'],
     // Full case study is served at runtime from /case-studies/northern-grind.md; this is the fallback.
     content: `# Northern Grind — Digital Rebrand & Systems Strategy
-
-> **Hidden draft.** This case study is staged and visible only by direct URL until published.
 
 A café rebrand reframed as a system redesign — connecting brand identity, menu hierarchy/UX, and POS/loyalty modeling into one coherent operational loop.`,
   },

@@ -157,9 +157,9 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     id: 'northern-grind',
     displayTitle: 'Northern Grind',
     shortSummary:
-      'Café digital rebrand & systems strategy — brand identity, menu UX, and break-even POS/loyalty modeling unified into one operational loop. Hidden until published.',
+      'Café digital rebrand & systems strategy — brand identity, menu UX, and break-even POS/loyalty modeling unified into one operational loop.',
     hierarchy: 'supporting',
-    statusLabel: 'Hidden Draft',
+    statusLabel: 'Implementation Ready',
     roleLanes: ['Implementation'],
     canonicalRoleLanes: ['Forward Deployed Engineer'],
     filters: ['Implementation', 'Process'],
@@ -168,8 +168,8 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     sortOrder: 8,
     href: buildProjectHref('northern-grind'),
     evidenceTier: 'supporting',
-    visibility: 'draft',
-    showInSwitcher: false,
+    showInSwitcher: true,
+    switcherRank: 8,
   },
   {
     id: 'moh',
