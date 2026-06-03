@@ -290,6 +290,39 @@ Consistent role labels: `Forward-Deployed Engineering`, `Technical Implementatio
   section, content sourced only from Kyle's material; crawler validates; routes resolve.
 - **Commit:** `feat: subphase 6.11 — integrate Northern Grind & MOH projects`
 
+### 6.12 — Consolidate case-study content to a single markdown source of truth
+
+> **Context (found during 6.5).** Case-study bodies live in **two parallel stores** that have
+> already diverged: `public/case-studies/*.md` (fetched at runtime by `useCaseStudyContent`, and
+> the version that actually renders) and `CASE_STUDY_CONTENT` in `src/data/caseStudyData.ts`
+> (imported into `src/constants.tsx` as the `activeProject.content` fallback). For example
+> `ops-triage` has different copy in each. Only `guynode` and `digital-twin` render from the TS
+> store today (they have no `public/case-studies/*.md` file, so the fetch 404s and falls back).
+> This subphase removes the duplication. **Chosen direction: markdown files are canonical
+> (fetch-only); retire `CASE_STUDY_CONTENT`.**
+
+- **Scope:** Make `public/case-studies/*.md` the single source of truth and remove the TS body store.
+  - Port the two TS-only bodies into new `public/case-studies/guynode.md` and
+    `public/case-studies/digital-twin.md`, carrying over the 6.5 "Customer / Stakeholder Value"
+    sections verbatim. Pick the most current body where the two stores diverge (do not silently
+    drop richer copy; reconcile deliberately).
+  - Delete `CASE_STUDY_CONTENT` and its `src/constants.tsx` references; collapse the render path
+    in `useCaseStudyContent.ts` / `ProjectDetailView.tsx` to the single fetch (drop the
+    `activeProject.content` fallback that 6.5 relied on).
+  - Add a graceful empty/error state for when a body fails to load, with a test covering it.
+  - Add a drift/coverage guard test: every routed case study has a matching
+    `public/case-studies/<id>.md`, so the two stores can never silently diverge again.
+  - **Leave the crawler stubs under `public/markdown/projects/` intact** — they are a separate
+    SEO concern, not the case-study render source.
+- **Files:** `public/case-studies/*.md` (+ `guynode.md`, `digital-twin.md`),
+  `src/data/caseStudyData.ts` (remove bodies), `src/constants.tsx`,
+  `src/hooks/useCaseStudyContent.ts`, `src/views/ProjectDetailView.tsx`, tests under `src/test/`.
+- **Acceptance:** One content store; `CASE_STUDY_CONTENT` gone; every case study renders from its
+  `.md`; `guynode`/`digital-twin` still show full bodies including the stakeholder-value section;
+  empty/error state handled; drift guard passes; full validation suite green (the pre-existing
+  crawler route failure remains 6.8's unless already landed).
+- **Commit:** `refactor: subphase 6.12 — consolidate case-study content to markdown source of truth`
+
 ---
 
 ## 7. Acceptance criteria (phase complete)
@@ -302,6 +335,8 @@ Consistent role labels: `Forward-Deployed Engineering`, `Technical Implementatio
 - Project cards include stakeholder/customer value.
 - Major case studies include a tailored "Customer / Stakeholder Value" section.
 - Guynode and Digital Twin detail pages render full content (loader bug fixed).
+- Case-study content has a single source of truth (markdown); the duplicate `CASE_STUDY_CONTENT`
+  store is retired (6.12).
 - Digital Twin explains Kyle via the FDE thesis and routes by need.
 - Deep dives reinforce translation/adoption with specific copy.
 
