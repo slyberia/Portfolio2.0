@@ -246,11 +246,11 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
       ),
     },
     {
-      systemLabel: 'QA_TRACK',
+      systemLabel: 'SOLUTIONS_TRACK',
       title: 'Solutions Architect',
       subcopy:
-        'Structured testing, issue triage, root-cause analysis, and decision-ready quality reporting.',
-      chips: ['QA Protocols', 'Test Plans', 'Root Cause Analysis'],
+        'System and solution design backed by structured testing, root-cause analysis, and reliability review — architecture you can trust in production.',
+      chips: ['Solution Design', 'Reliability', 'Root-Cause Analysis'],
       stream: 'STREAM 02',
       path: 'SYS_PATH: 02.00',
       href: '/tracks/solutions-architect',
@@ -334,8 +334,8 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
           }}
         />
 
-        <div className="relative max-w-7xl mx-auto px-6 py-8 md:py-12 lg:py-14 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
-          <div className="lg:col-span-5 space-y-8 lg:pr-6">
+        <div className="relative max-w-3xl mx-auto px-6 py-12 md:py-16 lg:py-20">
+          <div className="space-y-8">
             <div className="space-y-5">
               <div className="space-y-2">
                 <Link
@@ -457,76 +457,6 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               </Link>
             </div>
           </div>
-
-          <div className="lg:col-span-7 space-y-5">
-            <div className="space-y-2">
-              <h2 className="text-2xl font-outfit font-semibold text-ink-navy dark:text-white">
-                Choose your hiring lens
-              </h2>
-              <p className="text-sm md:text-base text-slate-600 dark:text-slate-300">
-                Select the path that matches how you evaluate my work.
-              </p>
-            </div>
-
-            {roleTrackCards.map((track) => (
-              <Link
-                key={track.href}
-                to={track.href}
-                aria-label={`Open ${track.title} track`}
-                className={`group block w-full focus:outline-none focus-visible:ring-2 ${track.focusClass}`}
-              >
-                <article className="relative overflow-hidden rounded-2xl border border-[#d8e8ee] dark:border-white/10 bg-white/95 dark:bg-slate-900/75 p-5 md:p-6 pl-7 md:pl-8 shadow-sm transition-all group-hover:-translate-y-0.5 group-hover:shadow-[0_12px_35px_rgba(15,23,42,0.12)]">
-                  <div className={`absolute left-0 top-0 h-full w-1.5 ${track.railClass}`} />
-                  <div className="flex flex-col gap-5">
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex items-center gap-3 min-w-0">
-                        <div
-                          className={`h-11 w-11 shrink-0 rounded-xl flex items-center justify-center ${track.iconTileClass}`}
-                        >
-                          {track.icon}
-                        </div>
-                        <span
-                          className={`font-mono text-[10px] uppercase tracking-[0.18em] ${track.labelClass}`}
-                        >
-                          {track.systemLabel}
-                        </span>
-                      </div>
-
-                      <div className="shrink-0 text-right text-xs font-mono uppercase tracking-wider text-slate-600 dark:text-slate-300">
-                        <div>{track.stream}</div>
-                        <div className="mt-1">{track.path}</div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <h2 className="text-xl md:text-2xl font-outfit font-semibold text-ink-navy dark:text-white">
-                        {track.title}
-                      </h2>
-                      <div
-                        className={`mt-3 h-0.5 w-16 rounded ${track.railClass}`}
-                        aria-hidden="true"
-                      />
-                    </div>
-
-                    <p className="text-sm md:text-[15px] text-slate-600 dark:text-slate-300 leading-relaxed">
-                      {track.subcopy}
-                    </p>
-
-                    <div className="flex flex-wrap gap-2">
-                      {track.chips.map((chip, index) => (
-                        <span
-                          key={chip}
-                          className={`text-xs px-2.5 py-1 rounded-md border ${index === 0 ? track.primaryChipClass : 'bg-slate-100 text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-white/10'}`}
-                        >
-                          {chip}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </article>
-              </Link>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -583,6 +513,78 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
       </section>
 
       <SupportingEvidenceSection />
+
+      <section className="py-16 px-6 bg-[#f5f9fb] dark:bg-slate-950 border-y border-[#d8e8ee] dark:border-slate-800">
+        <div className="max-w-7xl mx-auto">
+          <div className="max-w-2xl mb-8">
+            <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-600 dark:text-slate-300 font-bold">
+              ROLE_LENSES
+            </p>
+            <h2 className="mt-3 text-2xl md:text-3xl font-outfit font-semibold text-ink-navy dark:text-white">
+              Explore by role lens
+            </h2>
+            <p className="mt-3 text-sm md:text-base text-slate-600 dark:text-slate-300">
+              Optional — the same work, filtered to how a specific role evaluates it.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-5">
+            {roleTrackCards.map((track) => (
+              <Link
+                key={track.href}
+                to={track.href}
+                aria-label={`Open ${track.title} track`}
+                className={`group block w-full focus:outline-none focus-visible:ring-2 ${track.focusClass}`}
+              >
+                <article className="relative h-full overflow-hidden rounded-2xl border border-[#d8e8ee] dark:border-white/10 bg-white/95 dark:bg-slate-900/75 p-5 md:p-6 pl-7 md:pl-8 shadow-sm transition-all group-hover:-translate-y-0.5 group-hover:shadow-[0_12px_35px_rgba(15,23,42,0.12)]">
+                  <div className={`absolute left-0 top-0 h-full w-1.5 ${track.railClass}`} />
+                  <div className="flex flex-col gap-5">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div
+                          className={`h-11 w-11 shrink-0 rounded-xl flex items-center justify-center ${track.iconTileClass}`}
+                        >
+                          {track.icon}
+                        </div>
+                        <span
+                          className={`font-mono text-[10px] uppercase tracking-[0.18em] ${track.labelClass}`}
+                        >
+                          {track.systemLabel}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h3 className="text-xl md:text-2xl font-outfit font-semibold text-ink-navy dark:text-white">
+                        {track.title}
+                      </h3>
+                      <div
+                        className={`mt-3 h-0.5 w-16 rounded ${track.railClass}`}
+                        aria-hidden="true"
+                      />
+                    </div>
+
+                    <p className="text-sm md:text-[15px] text-slate-600 dark:text-slate-300 leading-relaxed">
+                      {track.subcopy}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2">
+                      {track.chips.map((chip, index) => (
+                        <span
+                          key={chip}
+                          className={`text-xs px-2.5 py-1 rounded-md border ${index === 0 ? track.primaryChipClass : 'bg-slate-100 text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-white/10'}`}
+                        >
+                          {chip}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Deep Dives Feature Block */}
       <section className="py-16 px-6 bg-slate-50 dark:bg-slate-900 border-y border-slate-200 dark:border-slate-800">
