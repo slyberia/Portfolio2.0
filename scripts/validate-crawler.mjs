@@ -6,9 +6,9 @@ const DIST = resolve(ROOT, 'dist');
 const CRAWLER_DIST = resolve(DIST, 'crawler');
 const REQUIRED_ROUTES = [
   '/',
-  '/tracks/implementation',
-  '/tracks/ops-analytics',
-  '/tracks/gis',
+  '/tracks/forward-deployed',
+  '/tracks/solutions-architect',
+  '/tracks/spatial-systems',
   '/projects',
   '/projects/guynode',
   '/projects/digital-twin',
@@ -88,9 +88,9 @@ function assertSnapshotHtml(route) {
 function assertNoCanonicalSnapshotWrites() {
   const blockedRoutes = [
     '/projects',
-    '/tracks/implementation',
-    '/tracks/ops-analytics',
-    '/tracks/gis',
+    '/tracks/forward-deployed',
+    '/tracks/solutions-architect',
+    '/tracks/spatial-systems',
     '/resume',
     '/site-index',
     '/deep-dives',
