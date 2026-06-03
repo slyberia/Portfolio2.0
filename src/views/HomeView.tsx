@@ -9,6 +9,7 @@ import {
 } from '../constants';
 import FlagshipSystemSection from '../components/home/FlagshipSystemSection';
 import SupportingEvidenceSection from '../components/home/SupportingEvidenceSection';
+import WhatIHelpTeamsDoSection from '../components/home/WhatIHelpTeamsDoSection';
 import { GUYNODE_SYSTEM_HREF } from '../lib/routes';
 
 const getCertConfig = (issuer: string, name: string) => {
@@ -528,6 +529,8 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
           </div>
         </div>
       </section>
+
+      <WhatIHelpTeamsDoSection />
 
       <FlagshipSystemSection guynodeHref={GUYNODE_SYSTEM_HREF} />
 
