@@ -283,6 +283,87 @@ const LLM_TOOLS: LlmTool[] = [
   },
 ];
 
+// Deep-dive-specific "bridge" copy. Each ties one deep dive back to the central thesis —
+// turning complex technical/operational/spatial problems into systems people can understand,
+// adopt, and use — across three facets: translation, adoption, and implementation maturity.
+// Intentionally distinct per deep dive (no shared boilerplate).
+type BridgeFacet = { title: string; body: string };
+type DeepDiveBridgeContent = { label: string; statement: string; facets: BridgeFacet[] };
+
+const DEEP_DIVE_BRIDGES: Record<'process' | 'luxe-lofts', DeepDiveBridgeContent> = {
+  process: {
+    label: 'Why this deep dive matters',
+    statement:
+      'This build is the thesis in practice: a complex, AI-assisted process turned into a governed system a reviewer can actually understand, trust, and audit — not a black box.',
+    facets: [
+      {
+        title: 'Translation',
+        body: 'Turns an opaque "AI built my site" story into a legible trail of scoped decisions, defined tool roles, and validation gates.',
+      },
+      {
+        title: 'Adoption',
+        body: 'Structured so a recruiter or engineer can follow the evidence in minutes instead of reverse-engineering the history.',
+      },
+      {
+        title: 'Implementation maturity',
+        body: 'Branch isolation, reviewed PRs, and zero-tolerance typecheck/lint/test/build gates — production discipline applied to an AI workflow.',
+      },
+    ],
+  },
+  'luxe-lofts': {
+    label: 'Why this deep dive matters',
+    statement:
+      "A spatial and operational problem — a venue whose site couldn't convert — translated into a system the owner can run and a customer can navigate with confidence.",
+    facets: [
+      {
+        title: 'Translation',
+        body: 'Audit findings become one clear conversion journey: pricing, policies, and spatial proof made visible instead of hidden behind "request a quote."',
+      },
+      {
+        title: 'Adoption',
+        body: 'Designed around the people who use it — a triage dashboard for the owner, a guided intake for planners — so the workflow gets adopted, not worked around.',
+      },
+      {
+        title: 'Implementation maturity',
+        body: "Explicitly bounds what's prototyped versus how it ships in production, and is framed honestly as an audit-driven proposal — no overstated claims.",
+      },
+    ],
+  },
+};
+
+const DeepDiveBridge: React.FC<{ bridge: DeepDiveBridgeContent; accent: 'aqua' | 'rose' }> = ({
+  bridge,
+  accent,
+}) => {
+  const accentText =
+    accent === 'aqua' ? 'text-tide-aqua dark:text-tide-sky' : 'text-rose-600 dark:text-rose-400';
+  const accentBorder = accent === 'aqua' ? 'border-tide-aqua' : 'border-rose-500';
+  return (
+    <section className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] p-6 md:p-8 space-y-5">
+      <div className={`border-l-2 ${accentBorder} pl-4 space-y-2`}>
+        <span className={`block text-[10px] font-bold uppercase tracking-[0.25em] ${accentText}`}>
+          {bridge.label}
+        </span>
+        <p className="max-w-3xl text-base md:text-lg text-slate-700 dark:text-slate-200 leading-relaxed">
+          {bridge.statement}
+        </p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {bridge.facets.map((facet) => (
+          <div key={facet.title} className="space-y-1.5">
+            <h3 className={`text-xs font-bold uppercase tracking-wider ${accentText}`}>
+              {facet.title}
+            </h3>
+            <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+              {facet.body}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
 const DeepDiveView: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const tabParam = searchParams.get('tab');
@@ -534,6 +615,8 @@ const DeepDiveView: React.FC = () => {
 
               {/* Main Content */}
               <div className="flex-1 space-y-16 min-w-0">
+                <DeepDiveBridge bridge={DEEP_DIVE_BRIDGES.process} accent="aqua" />
+
                 {/* proc-1: Build Overview */}
                 <section id="proc-1" className="space-y-6 scroll-mt-24">
                   <div className="space-y-2">
@@ -1266,6 +1349,8 @@ const DeepDiveView: React.FC = () => {
                     </Link>
                   </div>
                 </section>
+
+                <DeepDiveBridge bridge={DEEP_DIVE_BRIDGES['luxe-lofts']} accent="rose" />
 
                 {/* Deployed Mockup Call-to-Action */}
                 <section className="rounded-2xl border border-rose-500/20 bg-rose-500/5 p-6 dark:border-rose-500/30">

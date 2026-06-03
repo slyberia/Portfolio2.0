@@ -59,6 +59,16 @@ By standardizing the interface between the developer and the AI, the Hub transfo
 
 ---
 
+## 🤝 Customer / Stakeholder Value
+
+**Who it helps:** Developers building Firebase/LLM apps who lose time converting messy intent and raw data into strict, typed schemas.
+
+**What got easier:** Going from a loose idea or a raw sample to a Firestore-ready, version-controlled schema — the translation step becomes a reusable asset instead of repeated boilerplate.
+
+**Why it matters:** Treating prompts and schemas as durable engineering assets removes a recurring failure point — schema mismatch — from every project that adopts the hub.
+
+---
+
 ## 📂 Key Artifact: The "Schema Builder" Logic
 
 _The core value of the Hub is converting loose samples into strict structure. Below is the logic flow for the Schema Builder:_

@@ -97,3 +97,13 @@ The architecture was redesigned to ensure all roads lead to a unified conversion
 ### 🔮 Strategic AI Roadmap
 
 Implementing an AI-driven "Lead Concierge" chatbot for 24/7 basic Q&A (parking, pet policies) is the next logical step to reduce support friction and maintain the premium experience established in Phase 2.
+
+---
+
+## 🤝 Customer / Stakeholder Value
+
+**Who it helps:** The Luxe Lofts business deciding whether and how to invest, and the event clients who will eventually book through the system.
+
+**What got easier:** A non-technical owner can see exactly how an audit's findings map to a phased, modular build — and weigh the cost — before committing budget.
+
+**Why it matters:** Framing the work as a proposal grounded in real audits, not a finished claim, lets the client make a confident, evidence-based investment decision rather than buying on faith.

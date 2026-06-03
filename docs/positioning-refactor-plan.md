@@ -290,6 +290,39 @@ Consistent role labels: `Forward-Deployed Engineering`, `Technical Implementatio
   section, content sourced only from Kyle's material; crawler validates; routes resolve.
 - **Commit:** `feat: subphase 6.11 — integrate Northern Grind & MOH projects`
 
+### 6.12 — Consolidate case-study content to a single markdown source of truth
+
+> **Context (found during 6.5).** Case-study bodies live in **two parallel stores** that have
+> already diverged: `public/case-studies/*.md` (fetched at runtime by `useCaseStudyContent`, and
+> the version that actually renders) and `CASE_STUDY_CONTENT` in `src/data/caseStudyData.ts`
+> (imported into `src/constants.tsx` as the `activeProject.content` fallback). For example
+> `ops-triage` has different copy in each. Only `guynode` and `digital-twin` render from the TS
+> store today (they have no `public/case-studies/*.md` file, so the fetch 404s and falls back).
+> This subphase removes the duplication. **Chosen direction: markdown files are canonical
+> (fetch-only); retire `CASE_STUDY_CONTENT`.**
+
+- **Scope:** Make `public/case-studies/*.md` the single source of truth and remove the TS body store.
+  - Port the two TS-only bodies into new `public/case-studies/guynode.md` and
+    `public/case-studies/digital-twin.md`, carrying over the 6.5 "Customer / Stakeholder Value"
+    sections verbatim. Pick the most current body where the two stores diverge (do not silently
+    drop richer copy; reconcile deliberately).
+  - Delete `CASE_STUDY_CONTENT` and its `src/constants.tsx` references; collapse the render path
+    in `useCaseStudyContent.ts` / `ProjectDetailView.tsx` to the single fetch (drop the
+    `activeProject.content` fallback that 6.5 relied on).
+  - Add a graceful empty/error state for when a body fails to load, with a test covering it.
+  - Add a drift/coverage guard test: every routed case study has a matching
+    `public/case-studies/<id>.md`, so the two stores can never silently diverge again.
+  - **Leave the crawler stubs under `public/markdown/projects/` intact** — they are a separate
+    SEO concern, not the case-study render source.
+- **Files:** `public/case-studies/*.md` (+ `guynode.md`, `digital-twin.md`),
+  `src/data/caseStudyData.ts` (remove bodies), `src/constants.tsx`,
+  `src/hooks/useCaseStudyContent.ts`, `src/views/ProjectDetailView.tsx`, tests under `src/test/`.
+- **Acceptance:** One content store; `CASE_STUDY_CONTENT` gone; every case study renders from its
+  `.md`; `guynode`/`digital-twin` still show full bodies including the stakeholder-value section;
+  empty/error state handled; drift guard passes; full validation suite green (the pre-existing
+  crawler route failure remains 6.8's unless already landed).
+- **Commit:** `refactor: subphase 6.12 — consolidate case-study content to markdown source of truth`
+
 ---
 
 ## 7. Acceptance criteria (phase complete)
@@ -302,6 +335,8 @@ Consistent role labels: `Forward-Deployed Engineering`, `Technical Implementatio
 - Project cards include stakeholder/customer value.
 - Major case studies include a tailored "Customer / Stakeholder Value" section.
 - Guynode and Digital Twin detail pages render full content (loader bug fixed).
+- Case-study content has a single source of truth (markdown); the duplicate `CASE_STUDY_CONTENT`
+  store is retired (6.12).
 - Digital Twin explains Kyle via the FDE thesis and routes by need.
 - Deep dives reinforce translation/adoption with specific copy.
 
@@ -323,3 +358,107 @@ without a green suite; route naming and crawler sitemap do not drift.
   "Solutions Architect" as the lead title.
 - Preserve the Design System Rules in `CLAUDE.md` (no glassmorphism; solid 1px borders; contrast tiers).
 - Keep copy concise and recruiter-readable; keep the positioning technical, strategic, and customer-aware.
+
+---
+
+## 9. Phase 7 — Cleanup & Polish (post-positioning)
+
+> **Why a separate phase.** Phase 6 is the positioning/IA refactor. The items below surfaced
+> during Phase 6 review (Kyle, after 6.8) and are **design, depth, and cleanup** work that builds
+> on the new positioning rather than defining it. They are tracked as **Phase 7** to keep Phase 6
+> coherent. (Document section numbering continues at §9; the _work phase_ is "Phase 7.")
+> Same Sequential Execution Protocol applies: one subphase at a time, validate, commit, STOP.
+>
+> **Note:** Adding the existing **Gallery** route to the primary nav is already owned by
+> **subphase 6.9** (Navigation & route preservation) — it is not duplicated here.
+
+### 7.1 — Role-lens depth: value bridges, embedded evidence, per-track flagship
+
+- **Scope:**
+  - **Business/consumer value bridges.** Every role lens must answer _why/how Kyle adds value in
+    that context_. The **Solutions Architect** lens is the weakest today (`trackContent.ts` summary
+    reads as generic "deliver stable, high-quality systems" with no stakeholder/outcome bridge);
+    Forward Deployed and Spatial Systems are stronger but still diffuse. Write specific, non-generic
+    value copy per lens (no invented metrics).
+  - **Embedded interactive evidence.** Add **1–2 interactive artifacts per lens**, reusing existing
+    components — `OperationalTriageSimulator`, the `HtmlPreviewCard` iframes (Guynode / Luxe Lofts),
+    the Digital Twin inline diagram. Track pages currently have text/links only.
+  - **"What This Track Proves" cleanup.** Skills are interactive (`SkillDiscoveryModal` via
+    `CANONICAL_SKILL_MAP`), but several "proves" items resolve to thin/no evidence, so the section
+    _feels_ disconnected. Prune to claims that map to a concrete artifact/project; prefer surfacing
+    evidence inline over modal-only.
+  - **Distinct per-track flagship.** Guynode is currently the flagship on all three lenses
+    (`trackContent.ts:65,151,228`). Give each lens its own flagship (cross-references allowed):
+    Forward Deployed → Ops Triage or Luxe Lofts; Solutions Architect → Digital Twin or Ops Triage;
+    Spatial Systems → Guynode.
+- **Files:** `src/data/trackContent.ts`, `src/components/tracks/RoleTrackPage.tsx` (+ supporting
+  components), reuse of `OperationalTriageSimulator`, `HtmlPreviewCard`, `MediaProofGrid`.
+- **Acceptance:** Each lens states business + consumer value specifically; carries ≥1 working
+  interactive artifact; every "proves" claim resolves to real evidence; each lens has a distinct
+  flagship. Full validation suite green.
+- **Commit:** `feat: subphase 7.1 — role-lens value bridges, embedded evidence & per-track flagship`
+
+### 7.2 — Hero proportions & color-palette punch
+
+- **Scope:**
+  - **Hero proportions.** The portrait is undersized (`HomeView.tsx` `w-28 md:w-32`, ~112–128px)
+    against a `text-5xl/6xl` name in a `max-w-3xl` column, creating dead whitespace. Rebalance:
+    larger portrait (~160–200px), tighten column proportions so the hero reads as a deliberate
+    focal composition.
+  - **Palette punch (contrast, not re-saturation).** The "soft" feel comes from the cool light
+    neutral foundation, not the accent. Increase perceived energy via: deeper aqua for CTAs/links,
+    deliberate use of **gild/amber** as a secondary emphasis accent (currently underused), and the
+    hero focal weight above — **without** re-saturating the whole palette (avoid the banned generic-
+    SaaS look). Preserve all Design System Rules (contrast tiers, 1px borders, no glassmorphism).
+- **Files:** `src/views/HomeView.tsx` (hero), possibly `tailwind.config.js` / `src/index.css`
+  (accent tuning), home subcomponents.
+- **Acceptance:** Hero is balanced with no large dead space; portrait is a real visual anchor;
+  emphasis moments use a confident secondary accent; WCAG AAA dark-mode contrast preserved.
+- **Commit:** `style: subphase 7.2 — hero proportions & palette emphasis`
+
+### 7.3 — Gallery interactive-artifacts expansion
+
+- **Scope:** The Gallery already has a **"Live Evidence & Sandboxes"** tab (`GalleryView.tsx`), but
+  it doesn't surface all real interactive artifacts. Promote/expand it to first-class embedded
+  interactivity: the **Ops Triage simulator** (`OperationalTriageSimulator`) and the **Guynode live
+  map**, alongside the existing Luxe Lofts prototype and Digital Twin chat sandbox. Decide and apply
+  a consistent pattern for _embedded_ interactivity vs _launch-out_ links.
+- **Files:** `src/views/GalleryView.tsx`, reuse of `OperationalTriageSimulator`, `HtmlPreviewCard`.
+- **Acceptance:** Gallery has a clear interactive-artifacts section surfacing the real demos;
+  consistent embed-vs-launch treatment; nav entry handled by 6.9.
+- **Commit:** `feat: subphase 7.3 — gallery interactive-artifacts section`
+
+### 7.4 — Positioning cleanup: "Solutions Architect" vs Customer Success framing (DECISION-GATED)
+
+- **Status:** **Blocked pending Kyle's decision.** Do not change lane labels until resolved.
+- **Problem:** "Solutions Architect" and "Customer Success Manager" do **not** convey the same
+  message (SA = technical/system design & validation; CSM = ongoing account ownership, adoption,
+  renewals/expansion/ARR). Two tensions: (1) a CSM label would violate the north-star guardrail
+  (CS is an **evidence layer only** — no CSM seniority/book-of-business/ARR/NRR); (2) the current
+  "Solutions Architect" lens is wired to QA/reliability content (the 6.3 resolution), so it conveys
+  neither enterprise-architect seniority nor the customer-facing value Kyle wants surfaced.
+- **Options to decide between:**
+  - **(A, default/recommended)** Keep CS as evidence-only under the **Forward Deployed Engineer**
+    umbrella; express customer-facing value through stakeholder copy, not a new lane. No relabel.
+  - **(B)** Rename the lens to better capture customer-facing technical translation (e.g.
+    "Solutions / Customer Engineering"), keeping CS as evidence — an **amendment to 6.3**, documented.
+  - **(C)** Something else Kyle specifies.
+- **Files (if a label changes):** `src/types.ts` (`RecruiterRoleLane`), `src/data/projectMetadata.ts`
+  (`CANONICAL_ROLE_ACCENT`, canonical lanes), `src/data/trackContent.ts`, track views, `seo.ts`,
+  crawler generator, `CLAUDE.md` / this plan (record the decision).
+- **Acceptance:** Lane labels and content agree; CS never overstated; decision recorded; no stale
+  "Solutions Architect"-as-lead-title drift; crawler/LLM summaries consistent.
+- **Commit:** `feat: subphase 7.4 — positioning cleanup: customer-facing lane decision`
+
+### 7.5 — Chat transcript export (BACKLOG / optional, post-phase)
+
+- **Status:** **Backlog.** Nice-to-have Kyle flagged for "later, if at all" — not yet scheduled.
+- **Scope:** Let a visitor leave with a copy of the Digital Twin conversation. Recommended first
+  cut: a "Download transcript" control in `ChatWidget.tsx` that serializes the `messages` array to
+  **Markdown / plain text** (one-click copy + file download) — zero backend, offline-safe, paste-
+  ready. **Stretch:** client-side PDF render; emailing a transcript (requires backend/email service
+  - deliverability handling).
+- **Files:** `src/components/ChatWidget.tsx` (+ a small serialize helper).
+- **Acceptance:** Visitor can export a clean, readable transcript; no new backend for the first cut;
+  no PII/security regressions.
+- **Commit:** `feat: subphase 7.5 — Digital Twin transcript export`

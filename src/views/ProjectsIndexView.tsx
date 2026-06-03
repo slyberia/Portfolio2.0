@@ -9,6 +9,7 @@ import {
   getSupportingProjects,
 } from '../data/projectMetadata';
 import { getRoleAccentRecipe } from '../lib/design-system';
+import ProjectValueLayer from '../components/ProjectValueLayer';
 
 const ProjectsIndexView: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<'All' | ProjectFilter>('All');
@@ -95,9 +96,14 @@ const ProjectsIndexView: React.FC = () => {
                   className={`h-1 w-20 rounded ${project.accent === 'cyan' ? 'bg-tide-cyan' : 'bg-tide-aqua'}`}
                   aria-hidden="true"
                 />
-                <p className="mt-3 text-xs uppercase tracking-[0.18em] text-slate-500">
-                  {project.featuredLabel}
-                </p>
+                <div className="mt-3 flex items-center justify-between gap-2">
+                  <p className="text-xs uppercase tracking-[0.18em] text-slate-500">
+                    {project.featuredLabel}
+                  </p>
+                  <span className="text-[10px] uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400 border border-[#d8e8ee] dark:border-white/10 rounded-full px-2 py-0.5">
+                    {project.proofType}
+                  </span>
+                </div>
                 <div className="mt-2 flex justify-between items-start group">
                   <h3 className="text-xl font-semibold text-ink-navy dark:text-white group-hover:text-tide-aqua dark:group-hover:text-tide-softBlue transition-colors">
                     {project.displayTitle}
@@ -113,15 +119,21 @@ const ProjectsIndexView: React.FC = () => {
                 <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
                   {project.shortSummary}
                 </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {project.canonicalRoleLanes.map((role) => (
-                    <span
-                      key={role}
-                      className={`text-[11px] px-2 py-0.5 rounded border ${getRoleAccentRecipe(CANONICAL_ROLE_ACCENT[role]).chipClass}`}
-                    >
-                      {role}
-                    </span>
-                  ))}
+                <ProjectValueLayer project={project} />
+                <div className="mt-4">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+                    Role Relevance
+                  </p>
+                  <div className="mt-1.5 flex flex-wrap gap-2">
+                    {project.canonicalRoleLanes.map((role) => (
+                      <span
+                        key={role}
+                        className={`text-[11px] px-2 py-0.5 rounded border ${getRoleAccentRecipe(CANONICAL_ROLE_ACCENT[role]).chipClass}`}
+                      >
+                        {role}
+                      </span>
+                    ))}
+                  </div>
                 </div>
                 <span className="mt-4 inline-block text-sm font-semibold text-[#237f86] dark:text-tide-softBlue">
                   View Project →
@@ -189,15 +201,21 @@ const ProjectsIndexView: React.FC = () => {
                 <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
                   {project.shortSummary}
                 </p>
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {project.canonicalRoleLanes.map((role) => (
-                    <span
-                      key={role}
-                      className={`text-[11px] px-2 py-0.5 rounded border ${getRoleAccentRecipe(CANONICAL_ROLE_ACCENT[role]).chipClass}`}
-                    >
-                      {role}
-                    </span>
-                  ))}
+                <ProjectValueLayer project={project} />
+                <div className="mt-3">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+                    Role Relevance
+                  </p>
+                  <div className="mt-1.5 flex flex-wrap gap-1.5">
+                    {project.canonicalRoleLanes.map((role) => (
+                      <span
+                        key={role}
+                        className={`text-[11px] px-2 py-0.5 rounded border ${getRoleAccentRecipe(CANONICAL_ROLE_ACCENT[role]).chipClass}`}
+                      >
+                        {role}
+                      </span>
+                    ))}
+                  </div>
                 </div>
                 <span className="mt-4 inline-block text-sm font-semibold text-[#237f86] dark:text-tide-softBlue">
                   View Project →

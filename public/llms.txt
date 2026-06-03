@@ -2,6 +2,11 @@
 
 This file is a crawler-readable companion to the React app. It highlights stable non-JS discovery paths and markdown mirrors.
 
+## About Kyle Semple
+Kyle Semple is a **Forward Deployed Engineer**. He helps teams turn complex technical, operational, and spatial problems into systems people can understand, adopt, and use. His work connects forward-deployed engineering, technical implementation, customer success (as an evidence layer, not a managed book of business), solutions/systems architecture, GIS/spatial systems, operations, and AI workflow design.
+
+Role-relevance lenses (forward-deployed engineering, solutions/systems architecture, GIS/spatial systems) are supporting metadata on a single thesis — not separate identities.
+
 ## Static discovery pages
 - /ai-index
 - /ai-index.html
@@ -32,7 +37,7 @@ This file is a crawler-readable companion to the React app. It highlights stable
 - /projects/project-aegis
 - /projects/nba-systems-qa
 - /projects/luxe-lofts
-- /portfolio2/deep-dive
+- /deep-dives
 - /resume
 - /site-index
 
@@ -50,7 +55,7 @@ This file is a crawler-readable companion to the React app. It highlights stable
 - /crawler/projects/project-aegis
 - /crawler/projects/nba-systems-qa
 - /crawler/projects/luxe-lofts
-- /crawler/portfolio2/deep-dive
+- /crawler/deep-dives
 - /crawler/resume
 - /crawler/site-index
 - /crawler/ai-index

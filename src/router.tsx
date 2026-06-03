@@ -30,7 +30,12 @@ import ChatWidget from './components/ChatWidget';
 import Toast from './components/Toast';
 import ErrorBoundary from './components/ErrorBoundary';
 import RouteSeo from './components/RouteSeo';
-import { SITE_INDEX_HREF, buildProjectHref, PROJECTS_DEFAULT_HREF } from './lib/routes';
+import {
+  SITE_INDEX_HREF,
+  buildProjectHref,
+  PROJECTS_DEFAULT_HREF,
+  DEEP_DIVES_HREF,
+} from './lib/routes';
 import { useRecruiterMode } from './context/RecruiterModeContext';
 
 type LayoutContext = {
@@ -146,6 +151,8 @@ export const AppLayout: React.FC = () => {
   const handleCommandNavigation = (path: string) => {
     if (path === 'home') {
       navigate('/');
+    } else if (path === 'deep-dives') {
+      navigate(DEEP_DIVES_HREF);
     } else if (path === 'project') {
       navigateToProject();
     } else if (path === 'resume') {

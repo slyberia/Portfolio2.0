@@ -72,3 +72,13 @@ The harness standardizes the "attempt environment" so that observed differences 
 >
 > **Why this matters for implementation and QA systems work:**
 > AI tools are probabilistic systems. Just like a sports engine, an LLM's output is affected by "modifiers" (prompts, temperature, top-p). The same rigor required to debunk a "Dimer Myth" is required to validate that an AI system is operating within its intended safety boundaries.
+
+---
+
+## 🤝 Customer / Stakeholder Value
+
+**Who it helps:** Teams that need to separate real system behavior from "folk theories" — whether in a game engine or a probabilistic AI system.
+
+**What got easier:** Community claims become testable: controlled conditions isolate what _can_ be isolated and honestly label what stays coupled, so conclusions are defensible.
+
+**Why it matters:** The same discipline that debunks a gameplay myth validates that a probabilistic system, like an LLM, operates within its intended boundaries.

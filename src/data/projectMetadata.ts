@@ -20,6 +20,16 @@ export type ProjectMetadata = {
   canonicalRoleLanes: RecruiterRoleLane[];
   filters: ProjectFilter[];
   proofType: string;
+  /**
+   * Why the system exists / the problem it addresses, framed for a non-technical reader.
+   * Part of the stakeholder-value layer (Purpose · Stakeholder Value · Role Relevance · Proof Type).
+   */
+  purpose?: string;
+  /**
+   * Who it helped and what got easier — the stakeholder/customer value, not just what was built.
+   * Must be specific to the project; never generic copy or invented metrics.
+   */
+  stakeholderValue?: string;
   accent: ProjectAccent;
   sortOrder: number;
   href: string;
@@ -80,6 +90,10 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     ],
     filters: ['GIS', 'Implementation', 'QA', 'Process'],
     proofType: 'System',
+    purpose:
+      'Make a large, fragmented spatial dataset trustworthy enough to publish and query without manual cleanup first.',
+    stakeholderValue:
+      'Analysts and public users get governed, metadata-complete layers they can rely on — integrity checks happen upstream, not in every downstream decision.',
     accent: 'gold',
     sortOrder: 1,
     href: buildProjectHref('guynode'),
@@ -107,6 +121,10 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     ],
     filters: ['Implementation', 'QA', 'AI Systems', 'Process'],
     proofType: 'System',
+    purpose:
+      'Let recruiters and visitors interrogate the portfolio conversationally without the assistant overstepping its scope.',
+    stakeholderValue:
+      "Visitors get fast, grounded answers about Kyle's work; guardrails keep responses scoped and hand off to a human when a question runs past them.",
     accent: 'aqua',
     sortOrder: 2,
     href: buildProjectHref('digital-twin'),
@@ -128,6 +146,10 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     canonicalRoleLanes: ['Solutions Architect', 'Spatial Systems Architect'],
     filters: ['Implementation', 'QA', 'GIS', 'Process'],
     proofType: 'Workflow',
+    purpose:
+      'Keep a high-volume operations queue moving without losing escalation rigor under pressure.',
+    stakeholderValue:
+      'Support leads and downstream teams get predictable triage, clear escalation paths, and an audit trail they can actually review.',
     accent: 'blue',
     sortOrder: 3,
     href: buildProjectHref('ops-triage'),
@@ -146,6 +168,10 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     canonicalRoleLanes: ['Forward Deployed Engineer'],
     filters: ['Implementation', 'Process'],
     proofType: 'Workflow',
+    purpose:
+      "Turn a prospective client's loose requirements into a scoped, modular build plan before any code is written.",
+    stakeholderValue:
+      'A non-technical client can see how their requirements and constraints map to delivery phases — and price the work — before committing budget.',
     accent: 'slate',
     sortOrder: 7,
     href: buildProjectHref('luxe-lofts'),
@@ -164,6 +190,10 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     canonicalRoleLanes: ['Forward Deployed Engineer'],
     filters: ['Implementation', 'Process'],
     proofType: 'Case Study',
+    purpose:
+      "Unify a café's brand, menu experience, and POS/loyalty economics into a single operating loop.",
+    stakeholderValue:
+      'The owner gets a break-even-aware system where brand, menu, and loyalty decisions reinforce each other instead of pulling in different directions.',
     accent: 'cyan',
     sortOrder: 8,
     href: buildProjectHref('northern-grind'),
@@ -182,6 +212,9 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     canonicalRoleLanes: ['Spatial Systems Architect', 'Forward Deployed Engineer'],
     filters: ['GIS', 'Implementation'],
     proofType: 'System',
+    purpose: 'GIS / spatial-data system for the Ministry of Health.',
+    stakeholderValue:
+      "Pending — stakeholder value will be documented from Kyle's source material before this case study is published.",
     accent: 'blue',
     sortOrder: 9,
     href: buildProjectHref('moh'),

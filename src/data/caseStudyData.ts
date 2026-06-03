@@ -258,6 +258,16 @@ To bridge the gap between "Raw Data" and "User Comprehension," I integrated a **
 
 ---
 
+## 🤝 Customer / Stakeholder Value
+
+**Who it helps:** The agencies that publish Guyana's spatial data, and the analysts and citizens who depend on those datasets being correct.
+
+**What got easier:** Finding, previewing, and trusting a dataset *before* downloading it — provenance and metadata are verified up front instead of discovered after a bad analysis.
+
+**Why it matters:** Decisions built on geospatial data — infrastructure, environment, social planning — are only as sound as the data's integrity. Governing that integrity at the source protects every downstream decision instead of pushing verification onto each user.
+
+---
+
 ## 📂 Key Artifact: The Dataset Governance Schema
 *The core of the system is the strict metadata contract for every spatial node.*
 
@@ -302,6 +312,16 @@ The agent is not just a "chatbot"; it is an **Operational Orchestrator**. It can
 * **Zero-Hallucination Scope:** System instructions force the model to refuse off-topic prompts, ensuring 100% focus on portfolio evidence.
 * **Escalation Path:** Integrated a **Human Handoff** flow that captures the conversation state and routes it to a contact form if the AI cannot resolve the query.
 * **Cost Governance:** Implemented rate-limiting and token-caps to ensure the system remains sustainable for public use.
+
+---
+
+## 🤝 Customer / Stakeholder Value
+
+**Who it helps:** Recruiters and hiring managers evaluating Kyle under time pressure — and Kyle himself, when a conversation needs a human.
+
+**What got easier:** Getting a grounded, specific answer about Kyle's work in seconds, without wading through pages, while staying confident the assistant won't invent experience it can't back up.
+
+**Why it matters:** A scoped, guardrailed assistant turns a six-second skim into a guided evaluation and hands off cleanly when a question exceeds it — protecting the visitor's trust and the cost of running the system in public.
 
 ---
 
