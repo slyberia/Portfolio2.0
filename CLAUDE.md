@@ -4,6 +4,32 @@
 
 This is Kyle Semple's professional portfolio site. It is a React + TypeScript + Vite application with a Tailwind CSS design system, an Express server backend, and a Gemini-powered Digital Twin chatbot. It deploys via Docker multi-stage build to Google Cloud Run.
 
+## Positioning & Messaging (north star)
+
+The portfolio leads with **one** professional argument, not a menu of role tracks. All
+copy — hero, About, project cards, case studies, deep dives, Digital Twin prompt, and
+machine-readable crawler/LLM summaries — must stay consistent with this.
+
+- **Name:** Kyle Semple (never "Kyle Genesis" or any other variant).
+- **Primary title:** Forward Deployed Engineer.
+- **Central thesis:** _I help teams turn complex technical, operational, and spatial problems into systems people can understand, adopt, and use._
+- **Supporting bridge:** _My work connects forward-deployed engineering, technical implementation, customer success, solutions/systems architecture, GIS, operations, and AI workflow design._
+
+Messaging guardrails:
+
+- **Customer Success is an evidence layer, not the identity.** Do not claim CSM seniority,
+  a managed book of business, or ARR/NRR/renewal/expansion ownership anywhere.
+- **Role tracks are supporting metadata**, surfaced as role-relevance tags and lower-priority
+  lenses — never the primary homepage framing.
+- **Do not invent** metrics or customers. The on-site project inventory is `luxe-lofts`,
+  `ops-triage`, `guynode`, `digital-twin` (registry) plus `prompter-hub`, `project-aegis`,
+  `nba-systems-qa` (case studies). **Northern Grind** and **MOH (Ministry of Health)** are real
+  projects not yet implemented on the site — add them only via the gated subphase 6.11 in
+  `docs/positioning-refactor-plan.md`, using Kyle-provided source material, never fabricated copy.
+
+The active positioning workstream is **Phase 6 — Positioning Refactor**, documented in
+`docs/positioning-refactor-plan.md`. See also `AGENTS.md` for the cross-tool summary.
+
 ## Quick Reference Commands
 
 ```bash
@@ -21,6 +47,7 @@ npm run format:check     # Prettier formatting check
 
 # Specialized
 npm run generate:crawler-html   # Generate static crawler HTML
+npm run validate:crawler        # Validate crawler/LLM output (run after content/SEO edits)
 npm run build:crawler           # Build + generate crawler HTML
 npm run defense:codex           # Run appellate defense script
 ```
@@ -107,13 +134,14 @@ style: subphase 1.1 — dark mode border contrast boost
 
 ## Sequential Execution Protocol
 
-This project uses a phased execution plan. See the master execution plan document for the full sequence. The critical rule is:
+This project uses a phased execution plan. The current master execution document is
+`docs/positioning-refactor-plan.md` (Phase 6 — Positioning Refactor). The critical rule is:
 
 **ONE SUBPHASE AT A TIME.**
 
 After completing a subphase:
 
-1. Run the full validation suite: `npm run typecheck && npm run lint && npm run build`
+1. Run the full validation suite: `npm run typecheck && npm run lint && npm run format:check && npm test -- --run && npm run build`. For any subphase that touches content, SEO, or crawler files, also run `npm run generate:crawler-html && npm run validate:crawler`.
 2. Commit with the subphase identifier
 3. STOP and report what was done
 4. Wait for explicit approval before starting the next subphase

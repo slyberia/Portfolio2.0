@@ -10,8 +10,34 @@ import {
 import ScrollToTopButton from '../components/ScrollToTopButton';
 import ErrorBoundary from '../components/ErrorBoundary';
 import { componentRecipes, semanticTokens } from '../lib/design-system';
+import type { Visibility } from '../types';
 
 type MainTab = 'landing' | 'process' | 'luxe-lofts';
+
+// Deep-dive tabs are config-driven so any tab can be shown/hidden via `visibility`.
+// A hidden tab's button is not rendered, but its content remains reachable by `?tab=<id>`
+// for preview before publishing (mirrors the project visibility rule). 'landing' should
+// stay public so the page always has a default tab.
+const DEEP_DIVE_TABS: {
+  id: MainTab;
+  label: string;
+  activeBorder: string;
+  visibility: Visibility;
+}[] = [
+  { id: 'landing', label: 'Overview', activeBorder: 'border-tide-aqua', visibility: 'public' },
+  {
+    id: 'process',
+    label: 'Portfolio 2.0 Process & Governance',
+    activeBorder: 'border-tide-aqua',
+    visibility: 'public',
+  },
+  {
+    id: 'luxe-lofts',
+    label: 'Luxe Lofts Digital Restructuring Strategy',
+    activeBorder: 'border-rose-500',
+    visibility: 'public',
+  },
+];
 
 type TimelineRow = {
   phase: string;
@@ -351,36 +377,21 @@ const DeepDiveView: React.FC = () => {
 
           {/* Tab navigation */}
           <div className="flex flex-wrap gap-2 border-b border-slate-200 dark:border-slate-800 pb-4">
-            <button
-              onClick={() => handleMainTabChange('landing')}
-              className={`text-base font-bold px-4 py-2 rounded-t-lg transition ${
-                activeMainTab === 'landing'
-                  ? 'bg-slate-100 dark:bg-slate-800 text-slate-950 dark:text-white border-b-2 border-tide-aqua'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
-              }`}
-            >
-              Overview
-            </button>
-            <button
-              onClick={() => handleMainTabChange('process')}
-              className={`text-base font-bold px-4 py-2 rounded-t-lg transition ${
-                activeMainTab === 'process'
-                  ? 'bg-slate-100 dark:bg-slate-800 text-slate-950 dark:text-white border-b-2 border-tide-aqua'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
-              }`}
-            >
-              Portfolio 2.0 Process &amp; Governance
-            </button>
-            <button
-              onClick={() => handleMainTabChange('luxe-lofts')}
-              className={`text-base font-bold px-4 py-2 rounded-t-lg transition ${
-                activeMainTab === 'luxe-lofts'
-                  ? 'bg-slate-100 dark:bg-slate-800 text-slate-950 dark:text-white border-b-2 border-rose-500'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
-              }`}
-            >
-              Luxe Lofts Digital Restructuring Strategy
-            </button>
+            {DEEP_DIVE_TABS.filter((tab) => (tab.visibility ?? 'public') === 'public').map(
+              (tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => handleMainTabChange(tab.id)}
+                  className={`text-base font-bold px-4 py-2 rounded-t-lg transition ${
+                    activeMainTab === tab.id
+                      ? `bg-slate-100 dark:bg-slate-800 text-slate-950 dark:text-white border-b-2 ${tab.activeBorder}`
+                      : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ),
+            )}
           </div>
 
           {/* ── Landing Tab ── */}

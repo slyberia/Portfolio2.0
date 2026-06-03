@@ -554,6 +554,39 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
       },
     ],
   },
+  {
+    id: 'northern-grind',
+    title: 'Northern Grind',
+    rationale:
+      'Reframed a café rebrand as a full system redesign — connecting brand identity, high-speed menu UX, and break-even-modeled POS/loyalty recommendations into one operational loop.',
+    category: 'success-strategy',
+    tags: [
+      'Customer Experience',
+      'Operations Design',
+      'Service Design',
+      'Small Business Systems',
+      'Brand Strategy',
+    ],
+    roleLanes: ['Forward Deployed Engineer'],
+    // Full case study is served at runtime from /case-studies/northern-grind.md; this is the fallback.
+    content: `# Northern Grind — Digital Rebrand & Systems Strategy
+
+A café rebrand reframed as a system redesign — connecting brand identity, menu hierarchy/UX, and POS/loyalty modeling into one coherent operational loop.`,
+  },
+  {
+    id: 'moh',
+    title: 'MOH — Ministry of Health',
+    rationale:
+      'A Ministry of Health GIS / spatial-data project. Draft — full case study pending source material.',
+    category: 'qa-data',
+    tags: ['GIS', 'Spatial Data', 'Public Sector', 'Data Governance', 'Draft'],
+    roleLanes: ['Spatial Systems Architect', 'Forward Deployed Engineer'],
+    content: `# MOH — Ministry of Health
+
+> **Draft — hidden from visitors.** This case study is pending source material and will be published once complete.
+
+A GIS / spatial-data project for the Ministry of Health. The full write-up will follow once source material is provided.`,
+  },
 ];
 
 // TODO: remove case-study registry alias after all internal references are migrated.

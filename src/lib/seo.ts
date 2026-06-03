@@ -43,7 +43,9 @@ const trackCollection = (path: string, name: string, roleTrack: string): JsonLd 
   about: { '@type': 'DefinedTerm', name: roleTrack, inDefinedTermSet: 'Role Tracks' },
 });
 
-const sharedProjectJsonLd = PROJECT_METADATA.map((project) => ({
+const sharedProjectJsonLd = PROJECT_METADATA.filter(
+  (project) => (project.visibility ?? 'public') === 'public',
+).map((project) => ({
   '@context': 'https://schema.org',
   '@type': 'CreativeWork',
   name: project.displayTitle,

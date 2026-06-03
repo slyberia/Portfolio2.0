@@ -1,5 +1,6 @@
 import React from 'react';
 import { PROJECT_REGISTRY, SKILL_CHIP_CONFIG, SKILL_GROUPS } from '../constants';
+import { isProjectPublic } from '../data/projectMetadata';
 import { ProjectCategory } from '../types';
 
 interface SkillDiscoveryModalProps {
@@ -24,9 +25,11 @@ const SkillDiscoveryModal: React.FC<SkillDiscoveryModalProps> = ({
   onNavigateToStudy,
 }) => {
   const chipConfig = SKILL_CHIP_CONFIG[skill];
-  const relevantStudies = chipConfig
-    ? PROJECT_REGISTRY.filter((study) => chipConfig.linkedSlugs.includes(study.id))
-    : PROJECT_REGISTRY.filter((study) => study.tags.includes(skill));
+  const relevantStudies = (
+    chipConfig
+      ? PROJECT_REGISTRY.filter((study) => chipConfig.linkedSlugs.includes(study.id))
+      : PROJECT_REGISTRY.filter((study) => study.tags.includes(skill))
+  ).filter((study) => isProjectPublic(study.id));
   const evidenceNote = chipConfig?.evidenceNote;
 
   // Sourced from SKILL_GROUPS description as fallback
