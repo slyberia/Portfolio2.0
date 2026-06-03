@@ -362,19 +362,26 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                 </p>
               </div>
               <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-slate-600 dark:text-slate-300">
-                SYSTEM_ARCHITECT_V3.1
+                SYSTEMS · ADOPTION · PROOF
               </p>
               <h1 className="text-5xl md:text-6xl font-outfit font-bold tracking-tight text-ink-navy dark:text-white">
                 Kyle Semple
               </h1>
+              <p className="text-xl md:text-2xl font-outfit font-semibold text-tide-aqua dark:text-tide-sky">
+                Forward Deployed Engineer
+              </p>
               <div
                 className="h-px w-full max-w-md bg-slate-300 dark:bg-white/15"
                 aria-hidden="true"
               />
-              <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl">
-                A portfolio built around three target roles: forward deployed engineering, solutions
-                architecture, and spatial systems architecture. Each path connects to tangible
-                systems, workflows, and operational proof.
+              <p className="text-lg md:text-xl text-slate-700 dark:text-slate-200 leading-relaxed max-w-xl">
+                I help teams turn complex technical, operational, and spatial problems into systems
+                people can understand, adopt, and use.
+              </p>
+              <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl">
+                My work connects forward-deployed engineering, technical implementation, customer
+                success, solutions and systems architecture, GIS, operations, and AI workflow
+                design.
               </p>
             </div>
 

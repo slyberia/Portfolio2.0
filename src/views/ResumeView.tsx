@@ -7,7 +7,8 @@ const ResumeView: React.FC = () => {
     <div className="min-h-screen bg-ink-panel dark:bg-ink-deep text-ink-navy dark:text-slate-200 selection:bg-tide-aqua selection:text-white font-sans px-8 pt-24 pb-8 md:p-16 max-w-[8.5in] mx-auto shadow-2xl print:shadow-none print:p-0">
       {/* Header */}
       <header className="mb-10 text-center sm:text-left">
-        <h1 className="text-4xl font-bold mb-2">Kyle Semple</h1>
+        <h1 className="text-4xl font-bold mb-1">Kyle Semple</h1>
+        <p className="text-base font-semibold text-slate-700 mb-2">Forward Deployed Engineer</p>
         <div className="text-sm text-slate-600 flex flex-wrap gap-x-3 gap-y-1 justify-center sm:justify-start">
           <span>Washtenaw County, MI</span>
           <span className="hidden sm:inline">•</span>
@@ -29,11 +30,12 @@ const ResumeView: React.FC = () => {
           Professional Summary
         </h2>
         <p className="text-sm leading-relaxed text-slate-800">
-          Customer-facing operator with experience spanning technical support, stakeholder-facing
-          dashboards, and high-volume operational triage. Skilled in troubleshooting across tooling
-          and workflows, coordinating cross-functional solutions, and producing documentation and
-          enablement assets that improve clarity and execution. Targeting Customer Success,
-          Implementation, and Enablement roles in AI-adjacent products.
+          Forward deployed engineer and customer-facing technical operator. I build and ship
+          AI-assisted web systems, turn ambiguous goals into structured delivery, and bring real
+          technical-support and data-operations rigor to customer-facing work — translating complex
+          technical, operational, and spatial problems into systems people can understand, adopt,
+          and use. Targeting Forward Deployed Engineer, Implementation Engineer, and Technical
+          Customer Success roles in AI-adjacent products.
         </p>
       </section>
 
