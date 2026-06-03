@@ -9,6 +9,7 @@ import {
   getSupportingProjects,
 } from '../../data/projectMetadata';
 import { getRoleAccentRecipe, getProjectAccentRecipe } from '../../lib/design-system';
+import ProjectValueLayer from '../ProjectValueLayer';
 
 type FilterKey = 'All' | ProjectFilter;
 
@@ -127,18 +128,24 @@ const SupportingEvidenceSection: React.FC = () => {
               <p className="mt-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                 {item.shortSummary}
               </p>
-              <div className="mt-3 flex flex-wrap gap-1.5">
-                {item.canonicalRoleLanes.map((role) => {
-                  const roleAccent = getRoleAccentRecipe(CANONICAL_ROLE_ACCENT[role]);
-                  return (
-                    <span
-                      key={`${item.id}-${role}`}
-                      className={`text-[11px] px-2 py-0.5 rounded-md border ${roleAccent.chipClass}`}
-                    >
-                      {role}
-                    </span>
-                  );
-                })}
+              <ProjectValueLayer project={item} />
+              <div className="mt-3">
+                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+                  Role Relevance
+                </p>
+                <div className="mt-1.5 flex flex-wrap gap-1.5">
+                  {item.canonicalRoleLanes.map((role) => {
+                    const roleAccent = getRoleAccentRecipe(CANONICAL_ROLE_ACCENT[role]);
+                    return (
+                      <span
+                        key={`${item.id}-${role}`}
+                        className={`text-[11px] px-2 py-0.5 rounded-md border ${roleAccent.chipClass}`}
+                      >
+                        {role}
+                      </span>
+                    );
+                  })}
+                </div>
               </div>
               <Link
                 to={item.href}
