@@ -34,10 +34,11 @@ export function useCaseStudyContent(studyId: string): CaseStudyContentState {
 
     setState({ content: '', isLoading: true, error: null });
 
-    const fetchPath =
-      studyId === 'guynode' || studyId === 'digital-twin'
-        ? `/markdown/projects/${studyId}.md`
-        : `/case-studies/${studyId}.md`;
+    // All case studies fetch their full body from /case-studies/<id>.md. When no such file
+    // exists (e.g. guynode and digital-twin, whose full bodies live in CASE_STUDY_CONTENT via
+    // the registry), the fetch 404s and ProjectDetailView falls back to activeProject.content.
+    // The crawler stubs under /markdown/projects/ stay for SEO and are not fetched here.
+    const fetchPath = `/case-studies/${studyId}.md`;
 
     fetch(fetchPath)
       .then(async (res) => {
