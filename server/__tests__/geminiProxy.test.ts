@@ -191,6 +191,36 @@ describe('geminiProxy', () => {
     expect(payload.history[0].parts[0].text.length).toBeLessThanOrEqual(1200);
   });
 
+  it('uses an FDE thesis-first system prompt with only valid navigation targets', async () => {
+    await request(app)
+      .post('/api/chat')
+      .set('x-forwarded-for', '10.0.2.1')
+      .send({ message: "what is Kyle's background?" });
+
+    const createCall = MockGoogleGenAI.mock.results[0].value.chats.create;
+    const prompt = createCall.mock.calls[0][0].config.systemInstruction as string;
+
+    // Positioning: FDE thesis-first, correct name
+    expect(prompt).toContain('Forward Deployed Engineer');
+    expect(prompt).toContain('understand, adopt, and use');
+    expect(prompt).toContain('Route by need');
+
+    // No stale role-track navigation routes
+    expect(prompt).not.toContain('tracks/implementation');
+    expect(prompt).not.toContain('tracks/ops-analytics');
+    expect(prompt).not.toContain('tracks/gis');
+
+    // No dead project targets (not in PROJECT_REGISTRY)
+    expect(prompt).not.toContain('project:prompter-hub');
+    expect(prompt).not.toContain('project:project-aegis');
+    expect(prompt).not.toContain('project:nba-systems-qa');
+
+    // Routes to real, working targets
+    expect(prompt).toContain('<<NAVIGATE:project:guynode>>');
+    expect(prompt).toContain('<<NAVIGATE:project:digital-twin>>');
+    expect(prompt).toContain('<<NAVIGATE:deep-dives>>');
+  });
+
   it('passes a normal on-topic message through to Gemini', async () => {
     const res = await request(app)
       .post('/api/chat')

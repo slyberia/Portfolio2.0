@@ -17,27 +17,27 @@ interface ChatWidgetProps {
 
 const STORAGE_KEY = 'kyle_twin_history';
 
+// Navigation targets the Digital Twin may emit. Every entry must resolve to a real route via
+// handleCommandNavigation in router.tsx — no role-track slugs (demoted, and routed through a
+// broken hash-scroll) and no project ids missing from PROJECT_REGISTRY (they 404 as
+// "Project not found"). Routing is need-based: projects, deep dives, resume, contact.
 const ALLOWED_NAV_TARGETS = new Set([
   'home',
   'experience',
   'skills',
-  'tracks/forward-deployed',
-  'tracks/solutions-architect',
-  'tracks/spatial-systems',
-  'project:prompter-hub',
-  'project:project-aegis',
-  'project:nba-systems-qa',
-  'project:luxe-lofts',
-  'project:ops-triage',
+  'deep-dives',
   'project:guynode',
   'project:digital-twin',
-  'case-study:prompter-hub',
-  'case-study:project-aegis',
-  'case-study:nba-systems-qa',
-  'case-study:luxe-lofts',
-  'case-study:ops-triage',
+  'project:ops-triage',
+  'project:luxe-lofts',
+  'case-study:guynode',
   'case-study:digital-twin',
+  'case-study:ops-triage',
+  'case-study:luxe-lofts',
 ]);
+
+// Targets that navigate to a route (passed through raw) rather than scroll to a section anchor.
+const ROUTE_NAV_TARGETS = new Set(['home', 'deep-dives']);
 
 const ALLOWED_ACTIONS = new Set(['contact', 'resume']);
 
@@ -48,12 +48,12 @@ const MODE_CONFIG: Record<
   general: {
     label: 'General Recruiter Mode',
     intro:
-      "Hi! I'm Kyle's Digital Twin. I can answer questions about his work or navigate the site for you.\n\n*(Note: I'm an AI agent based on Kyle's documentation and may occasionally miss details.)*",
+      "Hi! I'm Kyle's Digital Twin. Kyle is a Forward Deployed Engineer — he turns complex technical, operational, and spatial problems into systems people can understand, adopt, and use. Tell me what you're evaluating and I'll point you to the right proof.\n\n*(Note: I'm an AI agent based on Kyle's documentation and may occasionally miss details.)*",
     suggestions: [
-      'Which role track fits Kyle best?',
-      'Show forward deployed proof.',
-      'Show solutions architect proof.',
-      'Show spatial systems proof.',
+      'What does Kyle do?',
+      'Show me AI workflow proof.',
+      'Show me GIS / spatial proof.',
+      'Show customer-facing implementation proof.',
       'Explain Guynode.',
       'Explain the Digital Twin.',
     ],
@@ -222,7 +222,11 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
       const target = navMatch[1].trim();
       if (ALLOWED_NAV_TARGETS.has(target)) {
         if (onShowToast) onShowToast(`AI Twin: Navigating to ${target}...`);
-        if (target.startsWith('case-study:') || target.startsWith('project:')) {
+        if (
+          target.startsWith('case-study:') ||
+          target.startsWith('project:') ||
+          ROUTE_NAV_TARGETS.has(target)
+        ) {
           onNavigate(target);
         } else {
           onNavigate(`#${target}`);
