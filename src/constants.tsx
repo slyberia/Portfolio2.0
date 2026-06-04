@@ -630,6 +630,14 @@ Advisory and documentation support for a national Ministry of Health contact-tra
   .rail b { color:#0f172a; display:block; margin-bottom:6px; font-size:10px; text-transform:uppercase; letter-spacing:.12em; }
   .detail { margin-top:14px; padding:14px 16px; border:1px solid #e2e8f0; border-left:3px solid #0ea5e9; border-radius:10px; background:#f8fafc; font-size:13px; line-height:1.6; color:#334155; min-height:60px; }
   .detail b { color:#0f172a; }
+  .what { font-size:13px; line-height:1.6; color:#334155; }
+  .why { margin-top:12px; padding-top:11px; border-top:1px dashed #cbd5e1; }
+  .why-h { font-size:10px; text-transform:uppercase; letter-spacing:.12em; color:#0369a1; font-weight:700; margin-bottom:9px; }
+  .why-row { display:flex; gap:9px; align-items:flex-start; font-size:12.5px; line-height:1.55; color:#475569; margin-bottom:8px; }
+  .why-row:last-child { margin-bottom:0; }
+  .tag { flex:none; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; padding:3px 0; border-radius:6px; margin-top:1px; width:74px; text-align:center; }
+  .tag-biz { background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd; }
+  .tag-user { background:#ecfdf5; color:#047857; border:1px solid #a7f3d0; }
   .foot { margin-top:16px; font-size:11px; color:#94a3b8; font-style:italic; line-height:1.5; }
 </style>
 </head>
@@ -688,18 +696,58 @@ Advisory and documentation support for a national Ministry of Health contact-tra
   <div class="foot">Sanitized reconstruction for portfolio use. No confidential health-system materials, real screenshots, patient data, or operational records are shown.</div>
 </div>
 <script>
+  function block(what, biz, user){
+    return '<div class="what">' + what + '</div>'
+      + '<div class="why"><div class="why-h">Why this matters</div>'
+      + '<div class="why-row"><span class="tag tag-biz">Business</span><span>' + biz + '</span></div>'
+      + '<div class="why-row"><span class="tag tag-user">For people</span><span>' + user + '</span></div>'
+      + '</div>';
+  }
   var details = {
-    'a-intake': '<b>Intake forms (Survey123).</b> Standardized field capture so contact-tracing information entered the system consistently, rather than as free-form notes that are hard to map or validate.',
-    'a-gis': '<b>ArcGIS Enterprise / ArcGIS Online.</b> The secure GIS backbone hosting layers and services — the system of record for spatial data, requiring technical administration.',
-    'a-data': '<b>Feature layers / database.</b> Where each record is stored, related, and made queryable, so a single submission can drive maps, dashboards, and reports at once.',
-    'a-dash': '<b>Dashboards &amp; maps.</b> Turn records into operational visibility supervisors can read at a glance — prioritized as role-specific views so they inform rather than overwhelm.',
-    'a-portal': '<b>Stakeholder portal / reporting.</b> Role-appropriate views and reporting so stakeholders can see status and act without touching raw GIS tooling.',
-    'f-submit': '<b>Step 1 — Submit.</b> Health staff capture contact-tracing information through a standardized intake form.',
-    'f-store': '<b>Step 2 — Store.</b> The submission becomes a governed record in the GIS / database layer, related to the right people, places, and follow-up state.',
-    'f-review': '<b>Step 3 — Review.</b> The record is checked for completeness and accuracy before it drives downstream reporting.',
-    'f-update': '<b>Step 4 — Update.</b> Dashboards and maps refresh to reflect the new or changed record.',
-    'f-act': '<b>Step 5 — Act.</b> Supervisors and stakeholders read the views and identify who needs follow-up.',
-    'f-doc': '<b>Step 6 — Document.</b> Plain-language documentation keeps usage consistent across technical and non-technical staff.'
+    'a-intake': block(
+      '<b>Intake forms (Survey123).</b> Standardized field capture so contact-tracing information enters the system the same way every time, instead of free-form notes that are hard to map or validate.',
+      'Clean, consistent input at the source means less cleanup later and fewer errors flowing downstream.',
+      'Health staff get a simple, guided form instead of guessing what to record — faster to fill and harder to get wrong.'),
+    'a-gis': block(
+      '<b>ArcGIS Enterprise / ArcGIS Online.</b> The secure GIS backbone hosting the layers and services — the single system of record for spatial data.',
+      'One trusted source of truth keeps the whole program consistent and auditable, instead of scattered spreadsheets.',
+      'Everyone is looking at the same up-to-date map, so teams are not working from conflicting copies.'),
+    'a-data': block(
+      '<b>Feature layers / database.</b> Where each record is stored, related, and made queryable, so a single submission can feed maps, dashboards, and reports at once.',
+      'Structured data is reusable — capture once, use it across every report without re-entering it.',
+      'Staff do not re-type the same information into multiple tools; the system connects it for them.'),
+    'a-dash': block(
+      '<b>Dashboards &amp; maps.</b> Turn records into operational visibility supervisors can read at a glance — built as role-specific views so they inform rather than overwhelm.',
+      'Leaders can see status and direct resources quickly, instead of waiting on manual reports.',
+      'Non-technical users get a clear picture of what is happening without needing GIS skills.'),
+    'a-portal': block(
+      '<b>Stakeholder portal / reporting.</b> Role-appropriate views and reporting so stakeholders can see status and act without touching raw GIS tooling.',
+      'Decision-makers stay informed and accountable with less hand-holding from technical staff.',
+      'Each audience sees only what is relevant to them — no clutter and little training overhead.'),
+    'f-submit': block(
+      '<b>Step 1 — Submit.</b> Health staff capture contact-tracing information through a standardized intake form, in the field or at a desk.',
+      'Reliable, structured intake is the foundation — everything downstream is only as good as what is captured here.',
+      'A guided form makes reporting quick and low-stress for busy frontline staff.'),
+    'f-store': block(
+      '<b>Step 2 — Store.</b> The submission becomes a governed record in the GIS / database layer, linked to the right people, places, and follow-up state.',
+      'Centralized, connected records let the program answer questions across the whole dataset, not one form at a time.',
+      'Staff can trust that what they submitted is safely captured and will not be lost or duplicated.'),
+    'f-review': block(
+      '<b>Step 3 — Review.</b> The record is checked for completeness and accuracy before it drives maps, dashboards, and reporting downstream.',
+      'Catching gaps here keeps every downstream decision trustworthy, instead of propagating bad data across the system.',
+      'Supervisors and field staff can act on confirmed information rather than second-guessing it.'),
+    'f-update': block(
+      '<b>Step 4 — Update.</b> Dashboards and maps refresh to reflect the new or changed record, keeping the operational picture current.',
+      'A current picture means the response adapts to what is actually happening on the ground.',
+      'Users always see the latest status without asking someone to pull a fresh report.'),
+    'f-act': block(
+      '<b>Step 5 — Act.</b> Supervisors and stakeholders read the views and identify who needs follow-up, and where to focus next.',
+      'Data turns into action — better, faster decisions are the entire point of the system.',
+      'The public and patients benefit when follow-up reaches the right people sooner.'),
+    'f-doc': block(
+      '<b>Step 6 — Document.</b> Plain-language documentation keeps usage consistent across technical and non-technical staff as people and tools change.',
+      'Good documentation protects the investment — the system keeps working through staff turnover and handoffs.',
+      'New users get up to speed quickly instead of relying on tribal knowledge.')
   };
   function setDetail(panel, key){ document.getElementById(panel + '-detail').innerHTML = details[key]; }
   function showTab(t){
