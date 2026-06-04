@@ -575,17 +575,187 @@ A café rebrand reframed as a system redesign — connecting brand identity, men
   },
   {
     id: 'moh',
-    title: 'MOH — Ministry of Health',
+    title: 'Public Health GIS Workflow Support',
     rationale:
-      'A Ministry of Health GIS / spatial-data project. Draft — full case study pending source material.',
+      'Supported a national Ministry of Health contact-tracing initiative through GIS workflow planning, dashboard mockups, UI/UX review, documentation, and implementation guidance — translating a complex spatial system into something non-technical stakeholders could understand and adopt.',
     category: 'qa-data',
-    tags: ['GIS', 'Spatial Data', 'Public Sector', 'Data Governance', 'Draft'],
-    roleLanes: ['Spatial Systems Architect', 'Forward Deployed Engineer'],
-    content: `# MOH — Ministry of Health
+    tags: [
+      'GIS',
+      'Public Health',
+      'ArcGIS Enterprise',
+      'Survey123',
+      'ArcGIS Online',
+      'Dashboard Planning',
+      'UI/UX Audit',
+      'Technical Documentation',
+    ],
+    roleLanes: ['Spatial Systems Architect', 'Solutions Architect', 'Forward Deployed Engineer'],
+    // Full case study is served at runtime from /case-studies/moh.md; this is the fallback.
+    content: `# Public Health GIS Workflow Support
 
-> **Draft — hidden from visitors.** This case study is pending source material and will be published once complete.
+Advisory and documentation support for a national Ministry of Health contact-tracing GIS workflow — dashboard planning, UI/UX review, tool evaluation, and plain-language implementation guidance, presented through sanitized diagrams rather than confidential health-system materials.`,
+    heroArtifact: {
+      type: 'html',
+      label: 'Public Health GIS — System Explorer',
+      description:
+        'Sanitized, interactive reconstruction of the contact-tracing architecture and workflow. No confidential materials, real screenshots, or patient data are shown.',
+      content: `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Public Health GIS Workflow Support — System Explorer</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: Inter, system-ui, -apple-system, sans-serif; background:#faf8f5; color:#0f172a; }
+  .wrap { max-width: 880px; margin:0 auto; padding: 22px; }
+  .head { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:18px; }
+  .sub { font-size:11px; color:#64748b; text-transform:uppercase; letter-spacing:.16em; margin-bottom:4px; }
+  .title { font-size:16px; font-weight:700; letter-spacing:.01em; }
+  .badge { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:#0369a1; background:#e0f2fe; border:1px solid #bae6fd; border-radius:8px; padding:5px 9px; }
+  .tabs { display:flex; gap:8px; margin-bottom:16px; }
+  .tab { font-size:12px; font-weight:600; padding:8px 15px; border-radius:9px; border:1px solid #cbd5e1; background:#fff; color:#334155; cursor:pointer; }
+  .tab.active { background:#0f172a; color:#fff; border-color:#0f172a; }
+  .panel { display:none; }
+  .panel.active { display:block; }
+  .cols { display:grid; grid-template-columns: 1fr; gap:16px; }
+  @media (min-width:600px){ .cols { grid-template-columns: 1.15fr .85fr; } }
+  .grid { display:grid; gap:9px; }
+  .node { text-align:left; width:100%; padding:12px 14px; border:1px solid #cbd5e1; border-radius:11px; background:#fff; cursor:pointer; font-size:13px; font-weight:600; color:#0f172a; transition:all .15s; display:flex; align-items:center; gap:10px; }
+  .node:hover { border-color:#0ea5e9; }
+  .node.active { border-color:#0ea5e9; background:#f0f9ff; box-shadow:0 0 0 1px #0ea5e9; }
+  .dot { width:9px; height:9px; border-radius:50%; background:#0ea5e9; flex:none; }
+  .arrow { text-align:center; color:#94a3b8; font-size:13px; line-height:1; }
+  .rail { padding:13px 15px; border:1px dashed #cbd5e1; border-radius:11px; background:#fff; font-size:12px; color:#475569; line-height:1.55; }
+  .rail b { color:#0f172a; display:block; margin-bottom:6px; font-size:10px; text-transform:uppercase; letter-spacing:.12em; }
+  .detail { margin-top:14px; padding:14px 16px; border:1px solid #e2e8f0; border-left:3px solid #0ea5e9; border-radius:10px; background:#f8fafc; font-size:13px; line-height:1.6; color:#334155; min-height:60px; }
+  .detail b { color:#0f172a; }
+  .foot { margin-top:16px; font-size:11px; color:#94a3b8; font-style:italic; line-height:1.5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div>
+      <div class="sub">Sanitized System Explorer</div>
+      <div class="title">Public Health GIS Workflow Support</div>
+    </div>
+    <span class="badge">Conceptual · No real data</span>
+  </div>
+  <div class="tabs">
+    <button class="tab active" data-tab="arch" onclick="showTab('arch')">Architecture</button>
+    <button class="tab" data-tab="flow" onclick="showTab('flow')">Workflow</button>
+  </div>
 
-A GIS / spatial-data project for the Ministry of Health. The full write-up will follow once source material is provided.`,
+  <div class="panel active" id="arch">
+    <div class="cols">
+      <div class="grid">
+        <button class="node" onclick="pick('arch', this, 'a-intake')"><span class="dot"></span>Intake forms (Survey123)</button>
+        <div class="arrow">&#9660;</div>
+        <button class="node" onclick="pick('arch', this, 'a-gis')"><span class="dot"></span>ArcGIS Enterprise / ArcGIS Online</button>
+        <div class="arrow">&#9660;</div>
+        <button class="node" onclick="pick('arch', this, 'a-data')"><span class="dot"></span>Feature layers / database</button>
+        <div class="arrow">&#9660;</div>
+        <button class="node" onclick="pick('arch', this, 'a-dash')"><span class="dot"></span>Dashboards &amp; maps</button>
+        <div class="arrow">&#9660;</div>
+        <button class="node" onclick="pick('arch', this, 'a-portal')"><span class="dot"></span>Stakeholder portal / reporting</button>
+      </div>
+      <div class="rail">
+        <b>Cross-cutting support</b>
+        Documentation, plain-language explanations, UI/UX audit notes, and AI-assisted troubleshooting (Codex, Claude Code) ran alongside every layer to keep non-technical users oriented.
+      </div>
+    </div>
+    <div class="detail" id="arch-detail">Select a layer to see what it did and why it mattered.</div>
+  </div>
+
+  <div class="panel" id="flow">
+    <div class="grid">
+      <button class="node" onclick="pick('flow', this, 'f-submit')"><span class="dot"></span>1 · Health staff submits contact-tracing information</button>
+      <div class="arrow">&#9660;</div>
+      <button class="node" onclick="pick('flow', this, 'f-store')"><span class="dot"></span>2 · Data enters the structured GIS / database layer</button>
+      <div class="arrow">&#9660;</div>
+      <button class="node" onclick="pick('flow', this, 'f-review')"><span class="dot"></span>3 · Record is reviewed or validated</button>
+      <div class="arrow">&#9660;</div>
+      <button class="node" onclick="pick('flow', this, 'f-update')"><span class="dot"></span>4 · Dashboard / map views update</button>
+      <div class="arrow">&#9660;</div>
+      <button class="node" onclick="pick('flow', this, 'f-act')"><span class="dot"></span>5 · Stakeholders identify follow-up needs</button>
+      <div class="arrow">&#9660;</div>
+      <button class="node" onclick="pick('flow', this, 'f-doc')"><span class="dot"></span>6 · Documentation keeps usage consistent</button>
+    </div>
+    <div class="detail" id="flow-detail">Select a step to trace how contact-tracing information moved through the workflow.</div>
+  </div>
+
+  <div class="foot">Sanitized reconstruction for portfolio use. No confidential health-system materials, real screenshots, patient data, or operational records are shown.</div>
+</div>
+<script>
+  var details = {
+    'a-intake': '<b>Intake forms (Survey123).</b> Standardized field capture so contact-tracing information entered the system consistently, rather than as free-form notes that are hard to map or validate.',
+    'a-gis': '<b>ArcGIS Enterprise / ArcGIS Online.</b> The secure GIS backbone hosting layers and services — the system of record for spatial data, requiring technical administration.',
+    'a-data': '<b>Feature layers / database.</b> Where each record is stored, related, and made queryable, so a single submission can drive maps, dashboards, and reports at once.',
+    'a-dash': '<b>Dashboards &amp; maps.</b> Turn records into operational visibility supervisors can read at a glance — prioritized as role-specific views so they inform rather than overwhelm.',
+    'a-portal': '<b>Stakeholder portal / reporting.</b> Role-appropriate views and reporting so stakeholders can see status and act without touching raw GIS tooling.',
+    'f-submit': '<b>Step 1 — Submit.</b> Health staff capture contact-tracing information through a standardized intake form.',
+    'f-store': '<b>Step 2 — Store.</b> The submission becomes a governed record in the GIS / database layer, related to the right people, places, and follow-up state.',
+    'f-review': '<b>Step 3 — Review.</b> The record is checked for completeness and accuracy before it drives downstream reporting.',
+    'f-update': '<b>Step 4 — Update.</b> Dashboards and maps refresh to reflect the new or changed record.',
+    'f-act': '<b>Step 5 — Act.</b> Supervisors and stakeholders read the views and identify who needs follow-up.',
+    'f-doc': '<b>Step 6 — Document.</b> Plain-language documentation keeps usage consistent across technical and non-technical staff.'
+  };
+  function setDetail(panel, key){ document.getElementById(panel + '-detail').innerHTML = details[key]; }
+  function showTab(t){
+    var tabs = document.querySelectorAll('.tab');
+    for (var i=0;i<tabs.length;i++){ tabs[i].classList.toggle('active', tabs[i].getAttribute('data-tab') === t); }
+    var panels = document.querySelectorAll('.panel');
+    for (var j=0;j<panels.length;j++){ panels[j].classList.toggle('active', panels[j].id === t); }
+  }
+  function pick(panel, el, key){
+    var sib = el.parentNode.querySelectorAll('.node');
+    for (var i=0;i<sib.length;i++){ sib[i].classList.remove('active'); }
+    el.classList.add('active');
+    setDetail(panel, key);
+  }
+</script>
+</body>
+</html>`,
+    },
+    rigor: {
+      statement:
+        'Public-health GIS workflows succeed when data collection, reporting, interface design, and stakeholder documentation are treated as one connected operating system.',
+      baseline:
+        'A contact-tracing workflow had to track and communicate cases across GIS tools, dashboards, and database-backed processes — while staying understandable for users without deep GIS, database, or software-development experience.',
+      definition:
+        '"Good" meant the system was explainable, usable, implementation-aware, and safe to present publicly — without exposing confidential health-system details or overstating personal ownership.',
+      method:
+        'Reviewed the project as a GIS-enabled workflow rather than a single tool; produced pitch material, dashboard mockups, and UI/UX audit feedback; translated ArcGIS Enterprise, Survey123, database, and AI-assisted development concepts into plain language; evaluated a low-code option and recommended pivoting away from it.',
+      window:
+        'Advisory and documentation support during an active public-health GIS / contact-tracing initiative.',
+    },
+    constraints: [
+      {
+        problem:
+          'Real screenshots, sensitive workflows, and health-system materials could not be used freely in a public portfolio.',
+        tradeoff:
+          'Use sanitized conceptual artifacts — architecture and workflow diagrams and an implementation audit matrix — instead of operational records.',
+      },
+      {
+        problem:
+          'The work involved meaningful contributions but not sole ownership of the full system architecture or production deployment.',
+        tradeoff:
+          'Frame the role as geospatial systems support, documentation, UI/UX review, dashboard planning, and implementation advisory — not full system ownership.',
+      },
+      {
+        problem:
+          'A low-code interface layer was explored, but operational constraints and client aversion made it a poor final fit.',
+        tradeoff:
+          'Pivot away from it and treat the evaluation itself as evidence of implementation judgment, not failed adoption.',
+      },
+      {
+        problem:
+          'ArcGIS Enterprise, Survey123, dashboards, and database workflows can overwhelm non-technical stakeholders.',
+        tradeoff:
+          'Emphasize plain-language documentation, workflow diagrams, audit reports, and role-based explanations to reduce confusion.',
+      },
+    ],
   },
 ];
 

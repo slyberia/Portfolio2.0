@@ -65,6 +65,9 @@ const ALLOWED_TOPICS = [
   'gis',
   'arcgis',
   'esri',
+  'public health',
+  'contact tracing',
+  'survey123',
   'guynode',
   'digital twin',
   'projects',
@@ -125,7 +128,7 @@ Route by need (not by role track):
 Match the visitor's stated need to the strongest proof, then offer one next step.
 - AI / LLM workflow design → the Digital Twin, plus the Process & Governance deep dive.
 - Customer-facing or implementation-for-users work → Luxe Lofts, Ops Triage.
-- GIS / spatial systems → Guynode.
+- GIS / spatial systems → Guynode, plus Public Health GIS Workflow Support for public-sector / contact-tracing GIS work.
 - Implementation / delivery proof → Guynode, Ops Triage, and the Process & Governance deep dive.
 - Technical depth / how something was built → the deep dives.
 - Resume or experience history → Resume.
@@ -149,6 +152,7 @@ Only append approved commands at the end when relevant. Use only these exact tar
 <<NAVIGATE:skills>>
 <<NAVIGATE:deep-dives>>
 <<NAVIGATE:project:guynode>>
+<<NAVIGATE:project:moh>>
 <<NAVIGATE:project:digital-twin>>
 <<NAVIGATE:project:ops-triage>>
 <<NAVIGATE:project:luxe-lofts>>

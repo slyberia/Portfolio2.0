@@ -203,24 +203,29 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
   },
   {
     id: 'moh',
-    displayTitle: 'MOH — Ministry of Health',
+    displayTitle: 'Public Health GIS Workflow Support',
     shortSummary:
-      'GIS / spatial-data project for the Ministry of Health. Hidden draft — full case study pending source material.',
+      'Supported public-health contact-tracing workflows through GIS documentation, dashboard planning, UI/UX review, and implementation guidance for a national Ministry of Health.',
     hierarchy: 'supporting',
-    statusLabel: 'Hidden Draft',
-    roleLanes: ['GIS'],
-    canonicalRoleLanes: ['Spatial Systems Architect', 'Forward Deployed Engineer'],
-    filters: ['GIS', 'Implementation'],
-    proofType: 'System',
-    purpose: 'GIS / spatial-data system for the Ministry of Health.',
+    statusLabel: 'Implementation Support',
+    roleLanes: ['GIS', 'Implementation'],
+    canonicalRoleLanes: [
+      'Spatial Systems Architect',
+      'Solutions Architect',
+      'Forward Deployed Engineer',
+    ],
+    filters: ['GIS', 'Implementation', 'AI Systems', 'Process'],
+    proofType: 'Workflow',
+    purpose:
+      'Help a public-health team see how contact-tracing information could move from intake forms into GIS layers, dashboards, and reports as one connected workflow — and choose tools their staff could actually adopt.',
     stakeholderValue:
-      "Pending — stakeholder value will be documented from Kyle's source material before this case study is published.",
+      'Non-technical stakeholders could discuss platform and workflow decisions in plain language — what each tool was for, where it fit, and what would be easy or hard to adopt — instead of getting stuck on technical detail.',
     accent: 'blue',
     sortOrder: 9,
     href: buildProjectHref('moh'),
     evidenceTier: 'supporting',
-    visibility: 'draft',
-    showInSwitcher: false,
+    showInSwitcher: true,
+    switcherRank: 9,
   },
 ];
 
