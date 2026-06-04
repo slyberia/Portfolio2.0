@@ -24,7 +24,7 @@ describe('TopNav active states', () => {
     renderTopNav('/tracks/forward-deployed');
 
     // Open the dropdown
-    const button = screen.getByRole('button', { name: 'Targeted Roles' });
+    const button = screen.getByRole('button', { name: 'Role Lens' });
     fireEvent.click(button);
 
     const menuItem = screen.getByRole('menuitem', { name: 'Forward Deployed Engineer' });
@@ -36,7 +36,7 @@ describe('TopNav active states', () => {
     renderTopNav('/tracks/solutions-architect');
 
     // Open the dropdown
-    const button = screen.getByRole('button', { name: 'Targeted Roles' });
+    const button = screen.getByRole('button', { name: 'Role Lens' });
     fireEvent.click(button);
 
     const menuItem = screen.getByRole('menuitem', { name: 'Solutions Architect' });
@@ -48,7 +48,7 @@ describe('TopNav active states', () => {
     renderTopNav('/tracks/spatial-systems');
 
     // Open the dropdown
-    const button = screen.getByRole('button', { name: 'Targeted Roles' });
+    const button = screen.getByRole('button', { name: 'Role Lens' });
     fireEvent.click(button);
 
     const menuItem = screen.getByRole('menuitem', { name: 'Spatial Systems Architect' });
@@ -73,5 +73,24 @@ describe('TopNav active states', () => {
       'aria-current',
       'page',
     );
+  });
+
+  it('exposes a Gallery link pointing at the gallery route', () => {
+    renderTopNav('/');
+    expect(screen.getByRole('link', { name: 'Gallery' })).toHaveAttribute('href', '/gallery');
+  });
+
+  it('marks Gallery active on the gallery route', () => {
+    renderTopNav('/gallery');
+    expect(screen.getByRole('link', { name: 'Gallery' })).toHaveAttribute('aria-current', 'page');
+  });
+
+  it('keeps the role lens dropdown collapsed by default so it does not lead the nav', () => {
+    renderTopNav('/');
+    expect(screen.getByRole('button', { name: 'Role Lens' })).toHaveAttribute(
+      'aria-expanded',
+      'false',
+    );
+    expect(screen.queryByRole('menuitem', { name: 'Forward Deployed Engineer' })).toBeNull();
   });
 });

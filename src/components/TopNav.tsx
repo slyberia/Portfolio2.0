@@ -7,6 +7,7 @@ import {
   DEEP_DIVES_HREF,
   QA_TRACK_HREF,
   PROJECTS_HREF,
+  GALLERY_HREF,
 } from '../lib/routes';
 import { navStyles, interactionStyles, componentRecipes } from '../lib/design-system';
 
@@ -97,7 +98,34 @@ const TopNav: React.FC<TopNavProps> = ({ theme, toggleTheme, onOpenContact }) =>
             Home
           </NavLink>
 
-          {/* Targeted Roles Dropdown */}
+          <NavLink
+            to={PROJECTS_HREF}
+            className={({ isActive }) =>
+              `relative pb-1 text-sm font-medium ${navStyles.item} ${navStyles.itemFocus} ${isActive ? navStyles.itemActive : ''}`
+            }
+          >
+            Projects
+          </NavLink>
+
+          <NavLink
+            to={DEEP_DIVES_HREF}
+            className={({ isActive }) =>
+              `relative pb-1 text-sm font-medium ${navStyles.item} ${navStyles.itemFocus} ${isActive ? navStyles.itemActive : ''}`
+            }
+          >
+            Deep Dives
+          </NavLink>
+
+          <NavLink
+            to={GALLERY_HREF}
+            className={({ isActive }) =>
+              `relative pb-1 text-sm font-medium ${navStyles.item} ${navStyles.itemFocus} ${isActive ? navStyles.itemActive : ''}`
+            }
+          >
+            Gallery
+          </NavLink>
+
+          {/* Role lens dropdown — supporting metadata, kept last so it does not lead the nav */}
           <div
             ref={dropdownRef}
             className="relative"
@@ -112,7 +140,7 @@ const TopNav: React.FC<TopNavProps> = ({ theme, toggleTheme, onOpenContact }) =>
                 isTrackActive ? 'text-tide-aqua font-bold' : ''
               }`}
             >
-              <span>Targeted Roles</span>
+              <span>Role Lens</span>
               <svg
                 className={`w-3 h-3 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`}
                 fill="none"
@@ -130,6 +158,11 @@ const TopNav: React.FC<TopNavProps> = ({ theme, toggleTheme, onOpenContact }) =>
                 className="absolute top-full left-1/2 -translate-x-1/2 pt-1 w-64 rounded-xl border bg-white dark:bg-[#0B0F19] border-slate-200 dark:border-slate-800 shadow-xl py-2 z-50 flex flex-col animate-in fade-in slide-in-from-top-1 duration-200"
                 role="menu"
               >
+                <div className="px-4 py-2 border-b border-slate-100 dark:border-slate-800 mb-1 select-none">
+                  <span className="text-[10px] font-mono tracking-wider text-slate-400 dark:text-slate-500 uppercase block">
+                    Explore by role lens
+                  </span>
+                </div>
                 {TRACK_ITEMS.map((item) => {
                   const isItemActive = location.pathname === item.href;
                   return (
@@ -152,24 +185,6 @@ const TopNav: React.FC<TopNavProps> = ({ theme, toggleTheme, onOpenContact }) =>
               </div>
             )}
           </div>
-
-          <NavLink
-            to={PROJECTS_HREF}
-            className={({ isActive }) =>
-              `relative pb-1 text-sm font-medium ${navStyles.item} ${navStyles.itemFocus} ${isActive ? navStyles.itemActive : ''}`
-            }
-          >
-            Projects
-          </NavLink>
-
-          <NavLink
-            to={DEEP_DIVES_HREF}
-            className={({ isActive }) =>
-              `relative pb-1 text-sm font-medium ${navStyles.item} ${navStyles.itemFocus} ${isActive ? navStyles.itemActive : ''}`
-            }
-          >
-            Deep Dives
-          </NavLink>
         </nav>
 
         <div className="flex items-center gap-2">
