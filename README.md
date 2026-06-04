@@ -3,7 +3,7 @@
 
 # Kyle Semple — Professional Portfolio
 
-**Technical Implementation · QA · GIS Systems · Ann Arbor, MI**
+**Forward Deployed Engineer · Ann Arbor, MI**
 
 [Live Site](https://kyle-semple-portfolio-786228485832.us-central1.run.app) · [How It Was Built](HOW_IT_WAS_BUILT.md) · [Architecture Decisions](DECISIONS.md) · [Architecture Overview](ARCHITECTURE.md)
 
@@ -18,16 +18,29 @@
 
 ## Current Portfolio Architecture
 
-Portfolio2.0 is organized around three role-track entry points: Technical Implementation Specialist, Quality Assurance Analyst, and GIS Analyst. Guynode functions as the flagship proof system, while Supporting Evidence cards provide secondary method-level proof across implementation, QA, GIS, and AI-assisted workflow governance.
+Portfolio2.0 leads with a single professional thesis rather than a menu of role tracks:
 
-### Redesign Phase Sequence
+> Kyle Semple is a **Forward Deployed Engineer** who helps teams turn complex technical,
+> operational, and spatial problems into systems people can understand, adopt, and use.
 
-1. Role-track hero
-2. Guynode flagship proof
-3. Supporting evidence archive
-4. Track page alignment
-5. Copy/naming polish
-6. Final QA/release prep
+The homepage opens with that identity and a "What I Help Teams Do" proof-pillar section. The former three role tracks are demoted to supporting **role lenses** (Forward Deployed Engineer, Solutions Architect, Spatial Systems Architect) — surfaced as lower-priority metadata and a secondary navigation dropdown, never the primary framing. Project cards and case studies carry a stakeholder/customer-value layer (purpose · value · role relevance · proof type), deep dives reinforce the translation/adoption thesis, and the Digital Twin assistant explains Kyle via the same thesis and routes visitors by need. Machine-readable crawler/LLM summaries are aligned to the Forward Deployed Engineer positioning.
+
+Customer Success is presented as an **evidence layer**, not a seniority claim — no managed book of business, ARR/NRR, or renewal/expansion ownership is asserted anywhere.
+
+### Positioning Refactor (Phase 6)
+
+The information architecture was refactored from a role-track-led layout to the thesis-led model above. See [`docs/positioning-refactor-plan.md`](docs/positioning-refactor-plan.md) for the full subphase plan and [`AGENTS.md`](AGENTS.md) for the positioning north star.
+
+1. Central FDE positioning & hero thesis
+2. "What I Help Teams Do" proof pillars
+3. Role tracks demoted to role-relevance lenses
+4. Stakeholder-value layer on project cards
+5. Case-study stakeholder-value sections
+6. Deep-dive value bridges
+7. Digital Twin FDE prompt & need-based routing
+8. Crawler / LLM summary alignment
+9. Navigation alignment & route preservation (Gallery surfaced in nav)
+10. Docs, release notes & final validation
 
 ## Stack
 
