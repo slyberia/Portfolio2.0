@@ -211,7 +211,7 @@ const ProjectDetailView: React.FC = () => {
   const metadata = getProjectMetadata(activeProjectId);
   const { content: fetchedContent, isLoading: contentLoading } =
     useCaseStudyContent(activeProjectId);
-  const displayContent = fetchedContent || activeProject?.content || '';
+  const displayContent = fetchedContent;
 
   const [activeTab, setActiveTab] = useState<'overview' | 'architecture' | 'tradeoffs' | 'proofs'>(
     'overview',
@@ -321,15 +321,38 @@ const ProjectDetailView: React.FC = () => {
                     <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
                       Project Detail
                     </p>
-                    <ErrorBoundary
-                      location="Project Detail Markdown"
-                      rawContent={isRecruiterMode ? recruiterSummary(activeProject) : cleanContent}
-                    >
-                      <MarkdownSection
-                        content={isRecruiterMode ? recruiterSummary(activeProject) : cleanContent}
-                        isLoading={contentLoading}
-                      />
-                    </ErrorBoundary>
+                    {!isRecruiterMode && !contentLoading && !cleanContent ? (
+                      <div
+                        data-testid="case-study-empty"
+                        className="rounded-2xl border border-slate-200 bg-white p-8 text-sm text-slate-600 dark:border-white/10 dark:bg-slate-900/70 dark:text-slate-300"
+                      >
+                        <p className="font-medium text-slate-800 dark:text-slate-100">
+                          The full write-up for this project isn’t available right now.
+                        </p>
+                        <p className="mt-2">
+                          Explore the proof summary and architecture artifacts above, or{' '}
+                          <button
+                            onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
+                            className="font-semibold text-tide-aqua hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
+                          >
+                            contact Kyle
+                          </button>{' '}
+                          for the details.
+                        </p>
+                      </div>
+                    ) : (
+                      <ErrorBoundary
+                        location="Project Detail Markdown"
+                        rawContent={
+                          isRecruiterMode ? recruiterSummary(activeProject) : cleanContent
+                        }
+                      >
+                        <MarkdownSection
+                          content={isRecruiterMode ? recruiterSummary(activeProject) : cleanContent}
+                          isLoading={contentLoading}
+                        />
+                      </ErrorBoundary>
+                    )}
                   </section>
                 </div>
               )}

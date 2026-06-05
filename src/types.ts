@@ -134,7 +134,6 @@ export interface CaseStudyConstraint {
 export interface ProjectEntry {
   id: string;
   title: string;
-  content: string;
   rationale: string;
   category: ProjectCategory;
   tags: string[];

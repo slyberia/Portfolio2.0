@@ -1,6 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
 import { ExperienceItem, SkillGroup, Certification, ProjectEntry, SkillChipConfig } from './types';
-import { CASE_STUDY_CONTENT } from './data/caseStudyData';
 import { MOH_SUPERVISOR_DASHBOARD_HTML } from './data/mohSupervisorDashboard';
 
 export const EXPERIENCE: ExperienceItem[] = [
@@ -385,7 +384,6 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
     category: 'success-strategy',
     tags: ['Stakeholder Communication', 'Process Improvement', 'Notion'],
     roleLanes: ['Forward Deployed Engineer'],
-    content: CASE_STUDY_CONTENT['luxe-lofts'],
     heroArtifact: {
       type: 'html',
       label: 'Luxe Lofts: Operational Hub',
@@ -408,7 +406,6 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
     category: 'qa-data',
     tags: ['Data QA / Validation', 'Operational Throughput', 'Issue Triage', 'ESRI ArcMap'],
     roleLanes: ['Solutions Architect', 'Spatial Systems Architect'],
-    content: CASE_STUDY_CONTENT['ops-triage'],
     heroArtifact: undefined,
     rigor: {
       statement: 'The system defines the result. Optimize for flow AND trust.',
@@ -437,7 +434,6 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
       'Documentation',
     ],
     roleLanes: ['Spatial Systems Architect', 'Forward Deployed Engineer', 'Solutions Architect'],
-    content: CASE_STUDY_CONTENT.guynode,
     heroArtifact: {
       type: 'html',
       label: 'Guynode Data Access Flow',
@@ -497,7 +493,6 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
       'Forward Deployed Engineer',
       'Solutions Architect',
     ],
-    content: CASE_STUDY_CONTENT['digital-twin'],
     heroArtifact: {
       type: 'html',
       label: 'Digital Twin: Architecture Flow',
@@ -569,10 +564,6 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
       'Brand Strategy',
     ],
     roleLanes: ['Forward Deployed Engineer'],
-    // Full case study is served at runtime from /case-studies/northern-grind.md; this is the fallback.
-    content: `# Northern Grind — Digital Rebrand & Systems Strategy
-
-A café rebrand reframed as a system redesign — connecting brand identity, menu hierarchy/UX, and POS/loyalty modeling into one coherent operational loop.`,
   },
   {
     id: 'moh',
@@ -591,10 +582,6 @@ A café rebrand reframed as a system redesign — connecting brand identity, men
       'Technical Documentation',
     ],
     roleLanes: ['Spatial Systems Architect', 'Solutions Architect', 'Forward Deployed Engineer'],
-    // Full case study is served at runtime from /case-studies/moh.md; this is the fallback.
-    content: `# Public Health GIS Workflow Support
-
-Advisory and documentation support for a national Ministry of Health contact-tracing GIS workflow — dashboard planning, UI/UX review, tool evaluation, and plain-language implementation guidance, presented through sanitized diagrams rather than confidential health-system materials.`,
     heroArtifact: {
       type: 'html',
       label: 'Public Health GIS — System Explorer',
