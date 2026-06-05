@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { ExperienceItem, SkillGroup, Certification, ProjectEntry, SkillChipConfig } from './types';
 import { CASE_STUDY_CONTENT } from './data/caseStudyData';
+import { MOH_SUPERVISOR_DASHBOARD_HTML } from './data/mohSupervisorDashboard';
 
 export const EXPERIENCE: ExperienceItem[] = [
   {
@@ -766,6 +767,15 @@ Advisory and documentation support for a national Ministry of Health contact-tra
 </body>
 </html>`,
     },
+    artifacts: [
+      {
+        type: 'html',
+        label: 'Contact Tracing — Supervisor View (sample)',
+        description:
+          'Sanitized, interactive supervisor dashboard mockup: KPI tiles, a clickable point map replicating the Survey123-linked datapoints, a status-mix donut, and a filterable follow-up queue. Synthetic data on a generic extent — no real records, locations, or metrics.',
+        content: MOH_SUPERVISOR_DASHBOARD_HTML,
+      },
+    ],
     rigor: {
       statement:
         'Public-health GIS workflows succeed when data collection, reporting, interface design, and stakeholder documentation are treated as one connected operating system.',
