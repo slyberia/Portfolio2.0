@@ -6,6 +6,7 @@ import {
   QA_TRACK_HREF,
   GIS_TRACK_HREF,
   DEEP_DIVES_HREF,
+  GALLERY_HREF,
 } from '../lib/routes';
 
 interface SidebarNavProps {
@@ -40,6 +41,7 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ theme, toggleTheme, onOpenConta
 
   const isHome = location.pathname === '/';
   const isCases = location.pathname.startsWith('/projects');
+  const isGallery = location.pathname.startsWith(GALLERY_HREF);
   const isResume = location.pathname === '/resume';
   const isProcess = location.pathname.startsWith(DEEP_DIVES_HREF);
   const isTrackActive =
@@ -103,30 +105,6 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ theme, toggleTheme, onOpenConta
       ),
     },
     {
-      id: 'roles',
-      label: 'Roles',
-      active: isTrackActive,
-      onClick: () => setIsDropdownOpen((prev) => !prev),
-      icon: (
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-          <circle cx="9" cy="7" r="4" />
-          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-        </svg>
-      ),
-    },
-    {
       id: 'cases',
       label: 'Evidence',
       active: isCases,
@@ -168,6 +146,53 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ theme, toggleTheme, onOpenConta
           aria-hidden="true"
         >
           <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+        </svg>
+      ),
+    },
+    {
+      id: 'gallery',
+      label: 'Gallery',
+      active: isGallery,
+      onClick: () => navigate(GALLERY_HREF),
+      icon: (
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+          <circle cx="9" cy="9" r="2" />
+          <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+        </svg>
+      ),
+    },
+    {
+      id: 'roles',
+      label: 'Role Lens',
+      active: isTrackActive,
+      onClick: () => setIsDropdownOpen((prev) => !prev),
+      icon: (
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
         </svg>
       ),
     },
@@ -292,7 +317,7 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ theme, toggleTheme, onOpenConta
                   >
                     <div className="px-4 py-2 border-b border-slate-100 dark:border-slate-800 mb-1 select-none">
                       <span className="text-[10px] font-mono tracking-wider text-slate-400 dark:text-slate-500 uppercase block">
-                        Targeted Roles
+                        Explore by role lens
                       </span>
                     </div>
                     {TRACK_ITEMS.map((track) => {

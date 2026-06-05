@@ -122,6 +122,12 @@ describe('routing', () => {
     expect(screen.getByTestId('resume-view')).toBeInTheDocument();
   });
 
+  it('/gallery renders the gallery evidence library', async () => {
+    const router = renderRoute('/gallery');
+    await waitFor(() => expect(router.state.location.pathname).toBe('/gallery'));
+    expect(screen.getByRole('heading', { name: 'Evidence Library' })).toBeInTheDocument();
+  });
+
   it('unknown route shows ErrorBoundary fallback', () => {
     renderRoute('/this-route-does-not-exist');
     expect(screen.getByTestId('route-error')).toBeInTheDocument();

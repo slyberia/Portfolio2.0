@@ -15,6 +15,7 @@ export const DEEP_DIVES_HREF = '/deep-dives';
 export const RESUME_HREF = '/resume';
 export const SITE_INDEX_HREF = '/site-index';
 export const PROJECTS_HREF = '/projects';
+export const GALLERY_HREF = '/gallery';
 
 export const buildProjectHref = (id: string) => `${PROJECTS_HREF}/${id}`;
 export const PROJECTS_DEFAULT_HREF = PROJECTS_HREF;

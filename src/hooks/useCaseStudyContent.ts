@@ -34,10 +34,10 @@ export function useCaseStudyContent(studyId: string): CaseStudyContentState {
 
     setState({ content: '', isLoading: true, error: null });
 
-    // All case studies fetch their full body from /case-studies/<id>.md. When no such file
-    // exists (e.g. guynode and digital-twin, whose full bodies live in CASE_STUDY_CONTENT via
-    // the registry), the fetch 404s and ProjectDetailView falls back to activeProject.content.
-    // The crawler stubs under /markdown/projects/ stay for SEO and are not fetched here.
+    // Markdown files under public/case-studies/<id>.md are the single source of truth for every
+    // case-study body (see subphase 6.12). A missing file or app-shell response yields empty
+    // content and ProjectDetailView renders a graceful empty state; a network failure surfaces an
+    // error. The crawler stubs under /markdown/projects/ stay for SEO and are not fetched here.
     const fetchPath = `/case-studies/${studyId}.md`;
 
     fetch(fetchPath)
@@ -58,7 +58,7 @@ export function useCaseStudyContent(studyId: string): CaseStudyContentState {
         setState({ content: text, isLoading: false, error: null });
       })
       .catch(() => {
-        setState({ content: '', isLoading: false, error: null });
+        setState({ content: '', isLoading: false, error: 'Unable to load this case study.' });
       });
   }, [studyId]);
 

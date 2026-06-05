@@ -10,29 +10,29 @@ import {
   isProjectPublic,
 } from '../data/projectMetadata';
 
-const DRAFT_IDS = ['moh'];
+// Derived so the suite stays correct as projects are published or staged as drafts.
+const nonPublicIds = PROJECT_METADATA.filter(
+  (project) => (project.visibility ?? 'public') !== 'public',
+).map((project) => project.id);
 
 describe('project visibility', () => {
-  it('draft projects exist in the registry but are marked non-public', () => {
-    for (const id of DRAFT_IDS) {
-      const meta = getProjectMetadata(id);
-      expect(meta, `expected metadata for ${id}`).toBeDefined();
-      expect(meta?.visibility).toBe('draft');
-      expect(isProjectPublic(id)).toBe(false);
-    }
-  });
-
   it('public projects default to visible', () => {
     expect(isProjectPublic('guynode')).toBe(true);
     expect(isProjectPublic('digital-twin')).toBe(true);
   });
 
-  it('published Northern Grind is public and appears in supporting projects', () => {
-    expect(isProjectPublic('northern-grind')).toBe(true);
-    expect(getSupportingProjects().some((project) => project.id === 'northern-grind')).toBe(true);
+  it('unknown ids default to public', () => {
+    expect(isProjectPublic('does-not-exist')).toBe(true);
   });
 
-  it('draft projects are excluded from every visitor-facing list helper', () => {
+  it('published supporting projects (Northern Grind, MOH) are public and listed', () => {
+    for (const id of ['northern-grind', 'moh'] as const) {
+      expect(isProjectPublic(id)).toBe(true);
+      expect(getSupportingProjects().some((project) => project.id === id)).toBe(true);
+    }
+  });
+
+  it('non-public projects (if any) are excluded from every visitor-facing list helper', () => {
     const listed = new Set<string>(
       [
         ...getFeaturedProjects(),
@@ -44,18 +44,18 @@ describe('project visibility', () => {
       ].map((project) => project.id),
     );
 
-    for (const id of DRAFT_IDS) {
+    for (const id of nonPublicIds) {
       expect(listed.has(id), `${id} should not appear in any public list`).toBe(false);
     }
   });
 
-  it('draft projects remain reachable by direct id lookup (for preview)', () => {
-    for (const id of DRAFT_IDS) {
+  it('non-public projects remain reachable by direct id lookup (for preview)', () => {
+    for (const id of nonPublicIds) {
       expect(getProjectMetadata(id)?.id).toBe(id);
     }
   });
 
-  it('every project still has a unique sortOrder (drafts included)', () => {
+  it('every project still has a unique sortOrder', () => {
     const orders = PROJECT_METADATA.map((project) => project.sortOrder);
     expect(new Set(orders).size).toBe(orders.length);
   });

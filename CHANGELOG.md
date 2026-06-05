@@ -6,6 +6,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.2.0] — 2026-06-04 — Phase 6 — Positioning Refactor (Forward Deployed Engineer)
+
+### Changed
+
+- Reframed the site around a single professional thesis — Kyle Semple as a **Forward Deployed Engineer** who helps teams turn complex technical, operational, and spatial problems into systems people can understand, adopt, and use — replacing the prior role-track-led information architecture.
+- Demoted the three role tracks to supporting **role lenses** (Forward Deployed Engineer, Solutions Architect, Spatial Systems Architect): lower-priority metadata and a secondary navigation dropdown rather than the primary framing. All `/tracks/*` routes are preserved.
+- Added a "What I Help Teams Do" proof-pillar section to the homepage and a stakeholder/customer-value layer (purpose · value · role relevance · proof type) to project cards and major case studies; fixed the `useCaseStudyContent` loader so Guynode and Digital Twin render full bodies.
+- Updated the Digital Twin assistant to explain Kyle via the thesis and route visitors by need, and aligned crawler/LLM machine-readable summaries to the Forward Deployed Engineer positioning.
+- Surfaced the existing `/gallery` route in both the top and sidebar navigation while preserving every prior link; kept Customer Success as an evidence layer only (no CSM seniority, book of business, or ARR/NRR claims).
+
+### Documentation
+
+- Rewrote the README "Current Portfolio Architecture" section and phase sequence to describe the Forward Deployed Engineer model; positioning north star tracked in `AGENTS.md` and the full subphase plan in `docs/positioning-refactor-plan.md`.
+
+### Validation
+
+- Re-ran the local validation suite — `npm run format:check`, `npm run typecheck`, `npm run lint`, `npm test -- --run`, and `npm run build` — plus `npm run generate:crawler-html` and `npm run validate:crawler`; the crawler validator passes.
+
+### Why
+
+This phase moves the portfolio from a "choose your Kyle" role-track menu to one coherent professional argument with role relevance attached as supporting evidence, without removing any existing routes or fabricating projects, customers, or metrics. Northern Grind is published; MOH and case-study content consolidation remain gated follow-ups (subphases 6.11–6.12).
+
+---
+
 ## [2.1.2] — 2026-05-05 — Phase 2E Final QA Hardening
 
 ### Changed

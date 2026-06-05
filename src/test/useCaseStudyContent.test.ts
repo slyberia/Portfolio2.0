@@ -50,6 +50,14 @@ describe('useCaseStudyContent', () => {
     expect(result.current.content).toBe('');
   });
 
+  it('surfaces an error when the fetch rejects (network failure)', async () => {
+    (fetch as ReturnType<typeof vi.fn>).mockRejectedValue(new Error('network down'));
+    const { result } = renderHook(() => useCaseStudyContent('guynode'));
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    expect(result.current.content).toBe('');
+    expect(result.current.error).toBeTruthy();
+  });
+
   it('returns empty content when html app shell markers are returned', async () => {
     (fetch as ReturnType<typeof vi.fn>).mockResolvedValue({
       ok: true,
