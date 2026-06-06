@@ -1,6 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { buildProjectHref } from '../lib/routes';
+import { PROJECT_REGISTRY } from '../constants';
+import { HtmlPreviewCard } from '../components/CaseStudyComponents';
+import { OperationalTriageSimulator } from '../components/ops-triage/OperationalTriageSimulator';
 
 // TS Interfaces
 interface AIVisualAsset {
@@ -29,9 +32,11 @@ interface LiveProof {
   subtitle: string;
   description: string;
   tech: string[];
-  liveUrl?: string;
   caseStudyId: string;
   metrics: string[];
+  // How the artifact is surfaced: `component` = native React widget rendered inline;
+  // `iframe` = live preview embed (launch to interact); `launch` = opens the on-site app.
+  embedMode: 'component' | 'iframe' | 'launch';
 }
 
 const GALLERY_AI_ASSETS: AIVisualAsset[] = [
@@ -102,41 +107,57 @@ const GALLERY_DIAGRAMS: TechnicalDiagram[] = [
 
 const GALLERY_LIVE_PROOFS: LiveProof[] = [
   {
+    id: 'ops-triage-console',
+    title: 'Incident Response & Ops Simulation Console',
+    subtitle: 'Interactive triage sandbox — runs in this page',
+    description:
+      'A fully interactive simulation where you move a policy between throughput and zero-trust validation and watch first-pass yield and backlog respond in real time — the same artifact embedded on the Solutions Architect lens.',
+    tech: ['React State Engine', 'Recharts', 'Tailwind CSS', 'Analytical Logic'],
+    caseStudyId: 'ops-triage',
+    metrics: ['Real-Time Tick Engine', 'Recharts Data Viz', 'Contextual Alert Tooltips'],
+    embedMode: 'component',
+  },
+  {
+    id: 'guynode-hub',
+    title: 'Guynode Spatial Data Hub',
+    subtitle: 'Live public spatial catalog & map viewer',
+    description:
+      'The redesigned, public-facing spatial data platform: a dataset registry with standardized metadata and an interactive Leaflet map viewer. Preview embeds here; launch to explore the live deployment.',
+    tech: ['React', 'Leaflet', 'GeoJSON', 'Cloud Run'],
+    caseStudyId: 'guynode',
+    metrics: ['Interactive Map Viewer', 'Dataset Registry', 'Metadata-Driven Catalog'],
+    embedMode: 'iframe',
+  },
+  {
     id: 'luxe-lofts-redesign',
     title: 'Luxe Lofts Professional Redesign',
     subtitle: 'Customer Journey & High-Conversion Booking Engine',
     description:
-      'A custom developed professional replacement for the legacy Luxe Lofts brochure website, engineered with high contrast typography, optimized conversion pathways, and smooth layout interactions.',
+      'A custom-developed professional replacement for the legacy Luxe Lofts brochure site, engineered with high-contrast typography, optimized conversion pathways, and a rate-engine / planning ingress prototype.',
     tech: ['React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
-    liveUrl: 'https://luxe-lofts-roadmap-repo-786228485832.us-central1.run.app/',
     caseStudyId: 'luxe-lofts',
     metrics: ['AAA Typography Contrast', 'Responsive Mobile Grid', 'Interactive Dynamic Flow'],
-  },
-  {
-    id: 'ops-triage-console',
-    title: 'Incident Response & Ops Simulation Console',
-    subtitle: 'Interactive Game Sandbox Engine',
-    description:
-      'A fully interactive simulation dashboard where candidates and recruiters triage real-time server incidents, demonstrating complex state management, data visualization, and analytical reasoning.',
-    tech: ['React State Engine', 'Recharts', 'Tailwind CSS', 'Analytical Logic'],
-    caseStudyId: 'ops-triage',
-    metrics: ['Real-Time Tick Engine', 'Recharts Data Viz', 'Contextual Alert Tooltips'],
+    embedMode: 'iframe',
   },
   {
     id: 'digital-twin-sandbox',
     title: 'AI Digital Twin Chat Sandbox',
     subtitle: 'Gemini-Powered Professional Persona',
     description:
-      "A custom chatbot interface trained on Kyle Semple's career history, work samples, and professional philosophy, integrated with system-level context triggers and escalation fallback rules.",
-    tech: ['Gemini API', 'Express.js Node Backend', 'Websockets', 'RAG Context Injection'],
+      "A custom chatbot grounded in Kyle Semple's career history, work samples, and professional philosophy, with scoped guardrails, context triggers, and human-handoff fallback. Launches the on-site chat overlay.",
+    tech: ['Gemini API', 'Express.js Node Backend', 'Guardrails', 'Context Injection'],
     caseStudyId: 'digital-twin',
     metrics: [
       'Real-Time Streaming Responses',
       'Custom Bot Guardrails',
       'Context-Triggered Prompts',
     ],
+    embedMode: 'launch',
   },
 ];
+
+const resolveLiveUrl = (caseStudyId: string): string | undefined =>
+  PROJECT_REGISTRY.find((project) => project.id === caseStudyId)?.heroArtifact?.iframeUrl;
 
 export const GalleryView: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'ai' | 'diagrams' | 'live'>('ai');
@@ -202,6 +223,108 @@ export const GalleryView: React.FC = () => {
     }
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedDiagram]);
+
+  const launchDigitalTwin = () => {
+    window.dispatchEvent(
+      new CustomEvent('open-digital-twin', {
+        detail: {
+          source: 'general',
+          modeLabel: 'Gallery Sandbox',
+          starterPrompt:
+            'I found you from the gallery — give me a quick tour of what Kyle can do and where the proof lives.',
+        },
+      }),
+    );
+  };
+
+  // Consistent chrome for every interactive artifact; only the `body` (and the Embedded/Launch
+  // badge) changes between a native component, a live-preview iframe, and a launch-out card.
+  const renderArtifactCard = (proof: LiveProof, body: React.ReactNode) => {
+    const isLaunch = proof.embedMode === 'launch';
+    const liveUrl = resolveLiveUrl(proof.caseStudyId);
+    return (
+      <article
+        key={proof.id}
+        className="flex flex-col rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] overflow-hidden"
+      >
+        <div className="p-6 space-y-4">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <h3 className="text-lg font-bold text-ink-navy dark:text-white">{proof.title}</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-mono mt-0.5">
+                {proof.subtitle}
+              </p>
+            </div>
+            <span
+              className={`shrink-0 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md border ${
+                isLaunch
+                  ? 'border-gild/40 bg-gild/10 text-gild-deep dark:text-gild-soft'
+                  : 'border-tide-aqua/40 bg-tide-aqua/10 text-[#237f86] dark:text-tide-sky'
+              }`}
+            >
+              {isLaunch ? 'Launch' : 'Embedded'}
+            </span>
+          </div>
+          <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+            {proof.description}
+          </p>
+          <div className="flex flex-wrap gap-1.5">
+            {proof.tech.slice(0, 4).map((t) => (
+              <span
+                key={t}
+                className="text-[9px] font-mono tracking-wide px-2 py-0.5 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 rounded"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="px-6">{body}</div>
+
+        <div className="mt-auto p-6 pt-4 space-y-3">
+          <div className="space-y-1.5 border-t border-slate-100 dark:border-slate-800 pt-3">
+            <span className="text-[9px] uppercase tracking-wider text-slate-400 font-bold block">
+              Target Verification Metrics
+            </span>
+            <ul className="space-y-1">
+              {proof.metrics.map((m) => (
+                <li
+                  key={m}
+                  className="flex items-center gap-2 text-[11px] text-slate-600 dark:text-slate-300"
+                >
+                  <span className="w-1 h-1 rounded-full bg-tide-aqua shrink-0"></span>
+                  <span>{m}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Link
+              to={buildProjectHref(proof.caseStudyId)}
+              className="flex-1 text-center text-xs font-semibold py-2.5 rounded border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
+            >
+              Read Technical Case Study
+            </Link>
+            {proof.embedMode === 'iframe' && liveUrl && (
+              <a
+                href={liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 text-center text-xs font-semibold py-2.5 rounded bg-tide-aqua text-white hover:bg-tide-aqua/90 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
+              >
+                Open Full App ↗
+              </a>
+            )}
+          </div>
+        </div>
+      </article>
+    );
+  };
+
+  const simulatorProof = GALLERY_LIVE_PROOFS.find((proof) => proof.embedMode === 'component');
+  const iframeProofs = GALLERY_LIVE_PROOFS.filter((proof) => proof.embedMode === 'iframe');
+  const launchProofs = GALLERY_LIVE_PROOFS.filter((proof) => proof.embedMode === 'launch');
 
   return (
     <div className="min-h-screen pt-20 pb-20 px-6 bg-[#f5f9fb] dark:bg-slate-950 transition-colors duration-500">
@@ -630,82 +753,66 @@ export const GalleryView: React.FC = () => {
 
         {/* TAB C: LIVE EVIDENCE & INTERACTIVE PROOFS */}
         {activeTab === 'live' && (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {GALLERY_LIVE_PROOFS.map((proof) => (
-              <div
-                key={proof.id}
-                className="flex flex-col justify-between rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] p-6 transition-all duration-300 hover:border-amber-500/30"
-              >
-                <div className="space-y-4">
-                  <div className="flex flex-wrap gap-1.5">
-                    {proof.tech.slice(0, 3).map((t) => (
-                      <span
-                        key={t}
-                        className="text-[9px] font-mono tracking-wide px-2 py-0.5 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 rounded"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
+          <div className="space-y-8">
+            {/* Embed-vs-launch legend */}
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-slate-600 dark:text-slate-300">
+              <span className="inline-flex items-center gap-2">
+                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border border-tide-aqua/40 bg-tide-aqua/10 text-[#237f86] dark:text-tide-sky">
+                  Embedded
+                </span>
+                interact in this page (or launch the full deployment)
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border border-gild/40 bg-gild/10 text-gild-deep dark:text-gild-soft">
+                  Launch
+                </span>
+                opens the live on-site experience
+              </span>
+            </div>
 
-                  <div>
-                    <h3 className="text-lg font-bold text-ink-navy dark:text-white">
-                      {proof.title}
-                    </h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 font-mono mt-0.5">
-                      {proof.subtitle}
-                    </p>
-                  </div>
+            {/* Native embedded component — full width */}
+            {simulatorProof &&
+              renderArtifactCard(
+                simulatorProof,
+                <div className="rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
+                  <OperationalTriageSimulator />
+                </div>,
+              )}
 
-                  <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                    {proof.description}
-                  </p>
+            {/* Live-preview iframes — two-up */}
+            <div className="grid lg:grid-cols-2 gap-6">
+              {iframeProofs.map((proof) =>
+                renderArtifactCard(
+                  proof,
+                  <HtmlPreviewCard
+                    content=""
+                    label="Live preview — click to launch"
+                    iframeUrl={resolveLiveUrl(proof.caseStudyId)}
+                    accentColor={proof.caseStudyId === 'luxe-lofts' ? 'red' : 'indigo'}
+                  />,
+                ),
+              )}
+            </div>
 
-                  <div className="space-y-1.5 border-t border-slate-100 dark:border-slate-800 pt-3">
-                    <span className="text-[9px] uppercase tracking-wider text-slate-400 font-bold block">
-                      Target Verification Metrics
-                    </span>
-                    <ul className="space-y-1">
-                      {proof.metrics.map((m) => (
-                        <li
-                          key={m}
-                          className="flex items-center gap-2 text-[11px] text-slate-600 dark:text-slate-300"
-                        >
-                          <span className="w-1 h-1 rounded-full bg-tide-aqua shrink-0"></span>
-                          <span>{m}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-2">
-                  {proof.liveUrl ? (
-                    <a
-                      href={proof.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full text-center text-xs font-semibold py-2.5 rounded bg-tide-aqua text-white hover:bg-tide-aqua/90 transition-colors focus:outline-none"
-                    >
-                      Launch Live Prototype ↗
-                    </a>
-                  ) : (
-                    <Link
-                      to={buildProjectHref(proof.caseStudyId)}
-                      className="w-full text-center text-xs font-semibold py-2.5 rounded bg-tide-aqua text-white hover:bg-tide-aqua/90 transition-colors focus:outline-none"
-                    >
-                      Open Live Sandbox View ↗
-                    </Link>
-                  )}
-                  <Link
-                    to={buildProjectHref(proof.caseStudyId)}
-                    className="w-full text-center text-xs font-semibold py-2.5 rounded border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors focus:outline-none"
-                  >
-                    Read Technical Case Study
-                  </Link>
-                </div>
-              </div>
-            ))}
+            {/* Launch-out experiences */}
+            {launchProofs.map((proof) =>
+              renderArtifactCard(
+                proof,
+                <button
+                  type="button"
+                  onClick={launchDigitalTwin}
+                  className="group w-full rounded-lg border border-dashed border-gild/40 dark:border-gild-soft/30 bg-gild/5 dark:bg-gild-soft/5 p-6 text-left transition-colors hover:bg-gild/10 dark:hover:bg-gild-soft/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
+                >
+                  <span className="block text-sm font-semibold text-ink-navy dark:text-white">
+                    Launch the Digital Twin chat →
+                  </span>
+                  <span className="mt-1 block text-xs text-slate-600 dark:text-slate-300">
+                    Opens the on-site assistant overlay with a gallery-tour prompt; ask it about
+                    Kyle&apos;s work, fit, or where the proof lives.
+                  </span>
+                </button>,
+              ),
+            )}
           </div>
         )}
       </div>
