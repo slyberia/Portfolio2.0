@@ -11,6 +11,28 @@ import FlagshipSystemSection from '../components/home/FlagshipSystemSection';
 import SupportingEvidenceSection from '../components/home/SupportingEvidenceSection';
 import WhatIHelpTeamsDoSection from '../components/home/WhatIHelpTeamsDoSection';
 import { GUYNODE_SYSTEM_HREF } from '../lib/routes';
+import { isProjectPublic } from '../data/projectMetadata';
+import { decisionBlocks, forensicEntries } from '../data/deepDiveContent';
+
+// Friendly labels for the inspector's evidence links. Deep-dive ids → their titles so a
+// skill linked to `/deep-dives#<id>` reads as a named deep dive rather than a raw anchor.
+const DEEP_DIVE_TITLES: Record<string, string> = {
+  ...Object.fromEntries(decisionBlocks.map((block) => [block.id, block.title])),
+  ...Object.fromEntries(forensicEntries.map((entry) => [entry.id, entry.label])),
+};
+
+const resolveEvidenceLabel = (href: string): string => {
+  if (href.startsWith('/projects/')) {
+    const id = href.replace('/projects/', '');
+    return PROJECT_REGISTRY.find((project) => project.id === id)?.title ?? id;
+  }
+  if (href.startsWith('/deep-dives#')) {
+    const id = href.split('#')[1] ?? '';
+    return `Deep Dive — ${DEEP_DIVE_TITLES[id] ?? id}`;
+  }
+  if (href === '/resume') return 'Résumé & credentials';
+  return href;
+};
 
 const getCertConfig = (issuer: string, name: string) => {
   if (issuer.includes('IBM')) {
@@ -116,6 +138,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
   void onNavigateToCaseStudy;
   void onOpenContact;
   const [activeSkillName, setActiveSkillName] = useState<string | null>(null);
+  const [activeGroupIndex, setActiveGroupIndex] = useState(0);
   const activeSkill = useMemo(() => {
     if (!activeSkillName) return null;
     for (const group of SKILL_GROUPS) {
@@ -130,69 +153,35 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
     return SKILL_CHIP_CONFIG[activeSkill.name] || null;
   }, [activeSkill]);
 
-  const activeSkillProvenProjects = useMemo(() => {
+  // Deduped, friendly-labeled evidence links for the active skill. Every skill carries an
+  // explicit curated `proofHref` (a public project, a proven deep-dive anchor, or /resume);
+  // tag-matched and chip-config-linked public projects are surfaced as additional context.
+  const activeSkillEvidence = useMemo(() => {
     if (!activeSkill) return [];
 
-    const projects: { id: string; title: string; href: string }[] = [];
-    const addedIds = new Set<string>();
+    const links: { label: string; href: string }[] = [];
+    const seen = new Set<string>();
+    const add = (href?: string) => {
+      if (!href || seen.has(href)) return;
+      seen.add(href);
+      links.push({ label: resolveEvidenceLabel(href), href });
+    };
+    const addProject = (id: string) => {
+      if (PROJECT_REGISTRY.some((project) => project.id === id) && isProjectPublic(id)) {
+        add(`/projects/${id}`);
+      }
+    };
 
-    // 1. Search in PROJECT_REGISTRY tags matching activeSkill.name
+    // 1. The curated primary evidence link (present on every skill).
+    add(activeSkill.proofHref);
+    // 2. Public projects whose tags name this skill.
     PROJECT_REGISTRY.forEach((project) => {
-      if (project.tags.includes(activeSkill.name)) {
-        if (!addedIds.has(project.id)) {
-          addedIds.add(project.id);
-          projects.push({
-            id: project.id,
-            title: project.title,
-            href: `/projects/${project.id}`,
-          });
-        }
-      }
+      if (project.tags.includes(activeSkill.name)) addProject(project.id);
     });
+    // 3. Public projects linked via SKILL_CHIP_CONFIG.
+    chipConfig?.linkedSlugs?.forEach((slug) => addProject(slug));
 
-    // 2. Look up SKILL_CHIP_CONFIG linkedSlugs
-    if (chipConfig && chipConfig.linkedSlugs) {
-      chipConfig.linkedSlugs.forEach((slug) => {
-        if (!addedIds.has(slug)) {
-          const matchedProj = PROJECT_REGISTRY.find((p) => p.id === slug);
-          if (matchedProj) {
-            addedIds.add(slug);
-            projects.push({
-              id: slug,
-              title: matchedProj.title,
-              href: `/projects/${slug}`,
-            });
-          } else if (slug === 'project-aegis') {
-            addedIds.add(slug);
-            projects.push({
-              id: slug,
-              title: 'Project Aegis',
-              href: '/projects/project-aegis',
-            });
-          }
-        }
-      });
-    }
-
-    // 3. Fallback to activeSkill.proofHref if not already in the list
-    if (activeSkill.proofHref) {
-      const slug = activeSkill.proofHref.replace('/projects/', '');
-      if (!addedIds.has(slug)) {
-        const matchedProj = PROJECT_REGISTRY.find((p) => p.id === slug);
-        addedIds.add(slug);
-        projects.push({
-          id: slug,
-          title: matchedProj
-            ? matchedProj.title
-            : slug === 'project-aegis'
-              ? 'Project Aegis'
-              : slug,
-          href: activeSkill.proofHref,
-        });
-      }
-    }
-
-    return projects;
+    return links;
   }, [activeSkill, chipConfig]);
 
   const getCategoryColorClass = (category: string) => {
@@ -738,43 +727,24 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               </p>
               {activeSkill && (
                 <div className="space-y-4 pt-2 border-t border-slate-100 dark:border-slate-800">
-                  {activeSkillProvenProjects.length > 0 && (
+                  {activeSkillEvidence.length > 0 && (
                     <div className="space-y-2">
                       <p className="text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                        Proven In:
+                        Evidence:
                       </p>
                       <ul className="space-y-1.5">
-                        {activeSkillProvenProjects.map((proj) => (
-                          <li key={proj.id} className="flex items-center text-sm">
+                        {activeSkillEvidence.map((item) => (
+                          <li key={item.href} className="flex items-center text-sm">
                             <span className="w-1.5 h-1.5 rounded-full bg-tide-aqua mr-2 shrink-0"></span>
                             <Link
-                              to={proj.href}
+                              to={item.href}
                               className="font-medium text-[#237f86] dark:text-tide-sky hover:underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua rounded-sm"
                             >
-                              {proj.title}
+                              {item.label}
                             </Link>
                           </li>
                         ))}
                       </ul>
-                    </div>
-                  )}
-
-                  {!activeSkillProvenProjects.length && activeSkill.proof && (
-                    <div className="space-y-1">
-                      <p className="text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                        Proof:
-                      </p>
-                      <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                        {activeSkill.proof}
-                        {activeSkill.proofHref && (
-                          <Link
-                            to={activeSkill.proofHref}
-                            className="ml-2 underline underline-offset-2 text-[#237f86] dark:text-tide-sky hover:text-[#1d6970] dark:hover:text-tide-softBlue focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua rounded-sm font-medium"
-                          >
-                            View project
-                          </Link>
-                        )}
-                      </p>
                     </div>
                   )}
 
@@ -790,46 +760,78 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               )}
             </div>
 
-            <div className="lg:col-span-7 lg:order-1 grid md:grid-cols-2 gap-6">
-              {SKILL_GROUPS.map((group, idx) => (
+            <div className="lg:col-span-7 lg:order-1">
+              <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden">
                 <div
-                  key={idx}
-                  className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 space-y-4"
+                  role="tablist"
+                  aria-label="Skill groups"
+                  className="flex gap-1 overflow-x-auto border-b border-slate-200 dark:border-slate-800 p-2 scrollbar-hide"
                 >
-                  <h4 className="text-base font-outfit font-semibold text-ink-navy dark:text-white border-b border-[#e5e0d6] dark:border-white/10 pb-3">
-                    {group.category}
-                  </h4>
-                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                    {group.description}
-                  </p>
-                  <div className="flex flex-wrap items-start content-start gap-2">
-                    {group.items.map((skill, i) => {
-                      const chipConfig = SKILL_CHIP_CONFIG[skill.name];
-                      const titleText = chipConfig?.evidenceNote;
-                      const isActive = activeSkillName === skill.name;
-                      const baseChipClass =
-                        'h-8 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md border';
-
-                      return (
-                        <button
-                          key={i}
-                          onClick={() => setActiveSkillName(skill.name)}
-                          title={titleText}
-                          aria-pressed={isActive}
-                          aria-controls="skills-inspector"
-                          className={`${baseChipClass} transition-colors active:scale-[0.99] focus:outline-none focus-visible:ring-2 ${getCategoryColorClass(group.category)} ${isActive ? 'border-tide-aqua dark:border-tide-sky ring-1 ring-tide-aqua/60 dark:ring-tide-sky/50 font-semibold' : ''}`}
-                        >
-                          <span className="sr-only">
-                            {isActive ? 'Active skill:' : 'Activate skill:'}
-                          </span>
-                          {isActive && <span aria-hidden="true">✓</span>}
-                          <span>{skill.name}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
+                  {SKILL_GROUPS.map((group, idx) => {
+                    const selected = idx === activeGroupIndex;
+                    return (
+                      <button
+                        key={group.category}
+                        type="button"
+                        role="tab"
+                        id={`skill-tab-${idx}`}
+                        aria-selected={selected}
+                        aria-controls={`skill-panel-${idx}`}
+                        onClick={() => setActiveGroupIndex(idx)}
+                        className={`whitespace-nowrap rounded-lg px-3.5 py-2 text-xs md:text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua ${selected ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
+                      >
+                        {group.category}
+                      </button>
+                    );
+                  })}
                 </div>
-              ))}
+
+                {SKILL_GROUPS.map((group, idx) => (
+                  <div
+                    key={group.category}
+                    role="tabpanel"
+                    id={`skill-panel-${idx}`}
+                    aria-labelledby={`skill-tab-${idx}`}
+                    hidden={idx !== activeGroupIndex}
+                    className="p-6 space-y-4"
+                  >
+                    <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                      {group.description}
+                    </p>
+                    <div className="flex flex-wrap items-start content-start gap-2">
+                      {group.items.map((skill) => {
+                        const skillChip = SKILL_CHIP_CONFIG[skill.name];
+                        const titleText = skillChip?.evidenceNote;
+                        const isActive = activeSkillName === skill.name;
+
+                        return (
+                          <button
+                            key={skill.name}
+                            type="button"
+                            onClick={() => setActiveSkillName(skill.name)}
+                            title={titleText}
+                            aria-pressed={isActive}
+                            aria-controls="skills-inspector"
+                            className={`h-8 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md border transition-colors active:scale-[0.99] focus:outline-none focus-visible:ring-2 ${getCategoryColorClass(group.category)} ${isActive ? 'border-tide-aqua dark:border-tide-sky ring-1 ring-tide-aqua/60 dark:ring-tide-sky/50' : ''}`}
+                          >
+                            {/* Fixed-width slot keeps chip width identical active/inactive (no reflow) */}
+                            <span
+                              aria-hidden="true"
+                              className={`grid w-3 place-items-center text-[10px] leading-none ${isActive ? 'opacity-100' : 'opacity-0'}`}
+                            >
+                              ✓
+                            </span>
+                            <span className="sr-only">
+                              {isActive ? 'Active skill:' : 'Activate skill:'}
+                            </span>
+                            <span>{skill.name}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

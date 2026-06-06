@@ -53,6 +53,7 @@ export const SKILL_GROUPS: SkillGroup[] = [
         lane: 'Implementation',
         description:
           'Used to map requirements into step-by-step delivery flows so onboarding and implementation work can move without guesswork.',
+        proofHref: '/projects/luxe-lofts',
       },
       {
         name: 'Technical Troubleshooting',
@@ -67,30 +68,35 @@ export const SKILL_GROUPS: SkillGroup[] = [
         lane: 'Implementation',
         description:
           'Supports phased rollout planning by turning broad goals into scoped tasks, dependencies, and validation checkpoints.',
+        proofHref: '/projects/luxe-lofts',
       },
       {
         name: 'Onboarding Support',
         lane: 'Implementation',
         description:
           'Used to guide users through setup and early adoption so systems become usable quickly and support load stays controlled.',
+        proofHref: '/projects/ops-triage',
       },
       {
         name: 'Documentation',
         lane: 'Implementation',
         description:
           'Used to produce handoff-ready guides that reduce repeat questions and preserve decision context for future contributors.',
+        proofHref: '/projects/guynode',
       },
       {
         name: 'Stakeholder Communication',
         lane: 'Implementation',
         description:
           'Helps translate technical status into decision-ready updates for cross-functional teams, reviewers, and non-technical partners.',
+        proofHref: '/projects/luxe-lofts',
       },
       {
         name: 'Support Handoff',
         lane: 'Implementation',
         description:
           'Applied when transferring ownership between teams so unresolved issues, context, and next actions remain traceable.',
+        proofHref: '/projects/ops-triage',
       },
     ],
   },
@@ -103,6 +109,7 @@ export const SKILL_GROUPS: SkillGroup[] = [
         lane: 'QA',
         description:
           'Used to run consistent validation passes so defects are surfaced early and release decisions are evidence-based.',
+        proofHref: '/deep-dives#ci-and-tests',
       },
       {
         name: 'Issue Triage',
@@ -117,30 +124,35 @@ export const SKILL_GROUPS: SkillGroup[] = [
         lane: 'QA',
         description:
           'Supports post-issue analysis by tracing failures to process, data, or implementation causes rather than treating symptoms.',
+        proofHref: '/projects/ops-triage',
       },
       {
         name: 'Data QA / Validation',
         lane: 'QA',
         description:
           'Used to verify data quality before downstream use so reports, maps, and operational decisions stay reliable.',
+        proofHref: '/deep-dives#validation-trail',
       },
       {
         name: 'Process Improvement',
         lane: 'QA',
         description:
           'Applied when refining workflows to reduce repeat failure patterns and improve throughput without losing controls.',
+        proofHref: '/projects/luxe-lofts',
       },
       {
         name: 'Operational Throughput',
         lane: 'QA',
         description:
           'Useful for balancing speed and quality in high-volume queues with clear escalation and completion standards.',
+        proofHref: '/projects/ops-triage',
       },
       {
         name: 'Launch Readiness',
         lane: 'QA',
         description:
           'Used to assess whether systems meet baseline reliability, documentation, and support criteria before release.',
+        proofHref: '/projects/guynode',
       },
     ],
   },
@@ -154,12 +166,14 @@ export const SKILL_GROUPS: SkillGroup[] = [
         lane: 'GIS',
         description:
           'Used to manage and validate spatial datasets in structured GIS workflows where data accuracy affects downstream operations.',
+        proofHref: '/projects/moh',
       },
       {
         name: 'ESRI ArcMap',
         lane: 'GIS',
         description:
           'Applied in production data maintenance workflows to execute map edits and utility-related updates with repeatable QA checks.',
+        proofHref: '/projects/ops-triage',
       },
       {
         name: 'Leaflet',
@@ -174,24 +188,28 @@ export const SKILL_GROUPS: SkillGroup[] = [
         lane: 'GIS',
         description:
           'Supports location-based analysis by structuring geospatial information for map display, validation, and operational decision support.',
+        proofHref: '/projects/guynode',
       },
       {
         name: 'Metadata',
         lane: 'GIS',
         description:
           'Used to document dataset context, source quality, and handling constraints so teams can trust and reuse spatial assets.',
+        proofHref: '/projects/guynode',
       },
       {
         name: 'Dataset Cataloging',
         lane: 'GIS',
         description:
           'Applied to organize data inventories and access paths so reviewers can locate relevant spatial assets quickly.',
+        proofHref: '/projects/guynode',
       },
       {
         name: 'Map-Based UX',
         lane: 'GIS',
         description:
           'Used to present complex spatial information through clear interaction patterns that non-specialists can interpret.',
+        proofHref: '/projects/guynode',
       },
     ],
   },
@@ -204,38 +222,43 @@ export const SKILL_GROUPS: SkillGroup[] = [
         lane: 'AI Systems',
         description:
           'Used to enforce prompt standards and review controls so AI outputs remain consistent with project constraints.',
-        proof: 'Applied in Project Aegis governance framework',
-        proofHref: '/projects/project-aegis',
+        proof: 'Applied in the Digital Twin AI Agent guardrail and prompt-governance framework',
+        proofHref: '/projects/digital-twin',
       },
       {
         name: 'AI-Assisted Development',
         lane: 'AI Systems',
         description:
           'Supports faster build iteration by combining AI drafting with human validation, scope checks, and targeted patching.',
+        proofHref: '/projects/digital-twin',
       },
       {
         name: 'LLM Workflow Design',
         lane: 'AI Systems',
         description:
           'Applied when designing multi-step AI workflows that require guardrails, fallback plans, and clear handoff points.',
+        proofHref: '/projects/digital-twin',
       },
       {
         name: 'Documentation Systems',
         lane: 'AI Systems',
         description:
           'Used to maintain structured records of implementation decisions, risks, and validation outcomes across phases.',
+        proofHref: '/projects/guynode',
       },
       {
         name: 'Evidence Architecture',
         lane: 'AI Systems',
         description:
           'Helps organize claims, artifacts, and proof links so portfolio systems can be reviewed quickly and credibly.',
+        proofHref: '/deep-dives#proof-hierarchy',
       },
       {
         name: 'Human Review Loops',
         lane: 'AI Systems',
         description:
           'Used to keep humans in critical checkpoints where judgment, risk acceptance, or external-facing quality must be confirmed.',
+        proofHref: '/projects/digital-twin',
       },
     ],
   },
@@ -249,66 +272,77 @@ export const SKILL_GROUPS: SkillGroup[] = [
         lane: 'Tools',
         description:
           'Used in customer support workflows for ticket triage, escalation tracking, and communication continuity.',
+        proofHref: '/resume',
       },
       {
         name: 'Salesforce & CRM',
         lane: 'Tools',
         description:
           'Supports CRM-oriented workflow planning where lead context, ownership, and follow-up paths need to stay visible.',
+        proofHref: '/projects/luxe-lofts',
       },
       {
         name: 'Notion',
         lane: 'Tools',
         description:
           'Used to centralize project notes, planning artifacts, and implementation references for cross-functional visibility.',
+        proofHref: '/projects/luxe-lofts',
       },
       {
         name: 'Jira',
         lane: 'Tools',
         description:
           'Applied to track issues, implementation tasks, QA follow-up, and delivery progress across teams.',
+        proofHref: '/projects/ops-triage',
       },
       {
         name: 'Asana',
         lane: 'Tools',
         description:
           'Used for task coordination and timeline management when delivery work spans multiple owners and dependencies.',
+        proofHref: '/projects/luxe-lofts',
       },
       {
         name: 'Tableau',
         lane: 'Tools',
         description:
           'Useful for translating operational data into visual summaries that support trend review and stakeholder reporting.',
+        proofHref: '/resume',
       },
       {
         name: 'Power BI',
         lane: 'Tools',
         description:
           'Used to structure dashboards that highlight performance patterns, exceptions, and workflow outcomes over time.',
+        proofHref: '/resume',
       },
       {
         name: 'BigQuery',
         lane: 'Tools',
         description:
           'Supports large-scale data querying and analysis workflows when operational datasets need structured exploration.',
+        proofHref: '/resume',
       },
       {
         name: 'HTML / CSS',
         lane: 'Implementation',
         description:
           'Used to build and refine responsive interface structure, accessibility behavior, and visual hierarchy.',
+        proofHref: '/projects/digital-twin',
       },
       {
         name: 'React',
         lane: 'Implementation',
         description:
           'Used to build modular portfolio interfaces where reusable components can be validated, refined, and extended.',
+        proofHref: '/projects/digital-twin',
       },
       {
         name: 'TypeScript',
         lane: 'Implementation',
         description:
           'Used to enforce safer contracts across components and data models so implementation changes remain predictable.',
+        proofHref: '/projects/digital-twin',
       },
     ],
   },

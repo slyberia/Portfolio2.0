@@ -462,3 +462,39 @@ without a green suite; route naming and crawler sitemap do not drift.
 - **Acceptance:** Visitor can export a clean, readable transcript; no new backend for the first cut;
   no PII/security regressions.
 - **Commit:** `feat: subphase 7.5 — Digital Twin transcript export`
+
+### 7.6 — Skills section: sticky inspector, chip stability & full skill→evidence linkage
+
+- **Why.** Surfaced during Phase 7 review (Kyle). Three concrete defects in the HomeView
+  **Skills & Technologies** section.
+- **Scope:**
+  - **Chip stability.** Selecting a skill widened the active chip (`font-semibold` + an injected
+    inline `✓`), causing `flex flex-wrap` reflow that visibly re-orders chips (most obvious on the
+    _Quality Assurance & Operations_ card, which wraps at a boundary). Make the active state
+    **layout-neutral**: indicate active via ring/border/bg only, keep weight constant, and reserve a
+    fixed-width slot for the `✓` so chip width never changes.
+  - **Sticky inspector.** The inspector panel never sticks because the app layout wrapper
+    (`src/router.tsx`) is `overflow-x-hidden`, which makes `overflow-y` compute to `auto` and turns
+    the wrapper into a scroll container — breaking `position: sticky`. Fix = switch to
+    **`overflow-x-clip`** (contains horizontal overflow without a scroll container). _Additionally_,
+    restructure the five stacked group cards into a **single tabbed card** to cut scroll length.
+  - **Full skill→evidence linkage.** Every skill must resolve to a real, public target. `Prompt
+Governance` pointed at `project-aegis`, which is **not** a listed Library entry (only a markdown
+    file; no registry/metadata) — re-point it to `digital-twin` (already tagged) and drop the
+    `project-aegis` hardcoded fallback in `HomeView`. Add an explicit, verified `proofHref` to
+    **every** `SKILL_GROUPS` item (public project, or a proven deep-dive anchor —
+    `#proof-hierarchy` / `#ci-and-tests` / `#validation-trail`). Tool-breadth skills with no
+    case-study evidence (Zendesk, Tableau, Power BI, BigQuery) point to `/resume` (their genuine
+    cert/role evidence) rather than misrepresenting an unrelated project. Add a **drift-guard test**
+    asserting every skill resolves to a public project, a real deep-dive id, or the `/resume`
+    allowlist.
+- **Files:** `src/constants.tsx` (`SKILL_GROUPS`), `src/views/HomeView.tsx` (tabbed card, chip
+  stability, inspector evidence resolution), `src/router.tsx` (overflow), new
+  `src/test/skill-evidence-coverage.test.ts`.
+- **Acceptance:** No chip reflow on selection; inspector sticks on scroll; skills render as a tabbed
+  card; every skill links to a valid public target; drift-guard test green; full validation suite
+  green. **Do not** change positioning copy or lane labels.
+- **Follow-up (tracked, not in 7.6):** `project-aegis`, `prompter-hub`, `nba-systems-qa` have
+  case-study markdown but no Library wiring — decide later (with Kyle) whether to fully publish or
+  retire them.
+- **Commit:** `feat: subphase 7.6 — skills section: sticky inspector, chip stability & skill→evidence linkage`
