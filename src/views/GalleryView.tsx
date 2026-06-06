@@ -111,7 +111,7 @@ const GALLERY_LIVE_PROOFS: LiveProof[] = [
     title: 'Incident Response & Ops Simulation Console',
     subtitle: 'Interactive triage sandbox — runs in this page',
     description:
-      'A fully interactive simulation where you move a policy between throughput and zero-trust validation and watch first-pass yield and backlog respond in real time — the same artifact embedded on the Solutions Architect lens.',
+      'A fully interactive simulation where you move a policy between throughput and zero-trust validation and watch first-pass yield and backlog respond in real time — the same artifact embedded on the Implementation Consultant lens.',
     tech: ['React State Engine', 'Recharts', 'Tailwind CSS', 'Analytical Logic'],
     caseStudyId: 'ops-triage',
     metrics: ['Real-Time Tick Engine', 'Recharts Data Viz', 'Contextual Alert Tooltips'],

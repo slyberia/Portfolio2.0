@@ -31,7 +31,7 @@ const ProjectsIndexView: React.FC = () => {
 
     let source = 'general';
     if (item.canonicalRoleLanes.includes('Spatial Systems Architect')) source = 'gis';
-    else if (item.canonicalRoleLanes.includes('Solutions Architect')) source = 'qa';
+    else if (item.canonicalRoleLanes.includes('Implementation Consultant')) source = 'qa';
     else if (
       item.canonicalRoleLanes.includes('Forward Deployed Engineer') ||
       item.canonicalRoleLanes.includes('AI Workflow / Portfolio Governance')

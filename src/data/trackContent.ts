@@ -134,7 +134,7 @@ export const implementationTrackContent: TrackPageContent = {
         'Operational triage workflow proof with support-ready process controls and escalation logic.',
       proofType: 'Workflow',
       href: '/projects/ops-triage',
-      roleChips: ['Forward Deployed Engineer', 'Solutions Architect'],
+      roleChips: ['Forward Deployed Engineer', 'Implementation Consultant'],
     },
     {
       title: 'Guynode Spatial Data Hub',
@@ -180,17 +180,17 @@ export const implementationTrackContent: TrackPageContent = {
 export const opsAnalyticsTrackContent: TrackPageContent = {
   route: '/tracks/solutions-architect',
   accent: 'qa',
-  title: 'Solutions Architect',
+  title: 'Implementation Consultant',
   eyebrow: 'Role Track',
   headline:
-    'Driving system reliability through rigorous test design, methodical triage, and evidence-based root-cause analysis.',
+    'Making sure what ships actually works for the customer — through structured validation, launch-readiness review, and clear go/no-go reporting.',
   summary:
-    'This track shows how Kyle de-risks a launch: structured test planning, reproducible triage, and root-cause analysis that produce launch-readiness evidence and decision-ready reporting stakeholders can act on — so quality is demonstrated, not asserted.',
+    'This lens shows how Kyle de-risks adoption: structured test planning, reproducible triage, and root-cause analysis that turn a build into a rollout a customer’s team can trust and run — quality demonstrated, not asserted.',
   valueBridge: {
     business:
-      'Before a system ships, someone has to prove it will hold up. Kyle designs the test plans, triage logic, and launch-readiness checks that turn “it seems to work” into evidence a stakeholder can sign off on — moving defect discovery earlier, where it is cheaper to fix.',
+      'An implementation isn’t done when it’s built — it’s done when the customer can trust and run it. Kyle designs the validation, triage, and launch-readiness checks that turn “it seems to work” into a defensible go/no-go a stakeholder can sign off on, moving problems earlier where they are cheaper to fix.',
     people:
-      'Reviewers and operators get decision-ready signal — what passed, what is risky, and why — instead of raw output they have to interpret under deadline pressure.',
+      'Operators and reviewers get a decision-ready picture — what passed, what is risky, and why — instead of raw output they have to interpret under deadline pressure.',
   },
   proves: [
     'Test Planning',
@@ -217,7 +217,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
       kind: 'ops-triage-simulator',
       label: 'Operational Triage Simulator',
       caption:
-        'The flagship reliability artifact: move the policy slider between throughput and zero-trust validation and watch first-pass yield and backlog respond — the core quality tradeoff a Solutions Architect has to make defensible.',
+        'The flagship readiness artifact: move the policy slider between throughput and zero-trust validation and watch first-pass yield and backlog respond — the throughput-vs-validation tradeoff an implementation consultant has to make defensible before go-live.',
     },
     {
       kind: 'project-preview',
@@ -234,7 +234,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
         'Flagship reliability surface: dual-mode triage, validation logic, and decision-ready telemetry for high-volume operational scenarios.',
       proofType: 'Flagship System',
       href: '/projects/ops-triage',
-      roleChips: ['Solutions Architect'],
+      roleChips: ['Implementation Consultant'],
     },
     {
       title: 'Digital Twin AI Agent',
@@ -242,7 +242,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
         'Validation proof for a shipped system: guardrails, response-budget rules, failure-aware fallback, and human handoff.',
       proofType: 'Validation',
       href: '/projects/digital-twin',
-      roleChips: ['Solutions Architect', 'Forward Deployed Engineer'],
+      roleChips: ['Implementation Consultant', 'Forward Deployed Engineer'],
     },
     {
       title: 'Guynode Spatial Data Hub',
@@ -250,7 +250,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
         'Cross-reference QA surface: metadata controls, public route validation, and launch-readiness checks.',
       proofType: 'Cross-Reference',
       href: GUYNODE_SYSTEM_HREF,
-      roleChips: ['Solutions Architect', 'Spatial Systems Architect'],
+      roleChips: ['Implementation Consultant', 'Spatial Systems Architect'],
     },
     {
       title: 'Portfolio2.0 Role-Lane Conversion System',
@@ -258,7 +258,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
         'Validation proof for route integrity, content alignment, and reviewer-ready information architecture.',
       proofType: 'Documentation QA',
       href: '/deep-dives#proof-hierarchy',
-      roleChips: ['Solutions Architect'],
+      roleChips: ['Implementation Consultant'],
     },
   ],
   skillsTools: [
@@ -276,10 +276,10 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
     { label: 'Download Resume', href: '/resume' },
     { label: 'Explore the Triage Simulator', href: '/projects/ops-triage' },
     {
-      label: 'Ask the Digital Twin about QA proof',
+      label: 'Ask the Digital Twin about implementation & validation proof',
       type: 'link',
       twinSource: 'qa',
-      twinStarterPrompt: 'Help this visitor evaluate Kyle for a Solutions Architect role.',
+      twinStarterPrompt: 'Help this visitor evaluate Kyle for an Implementation Consultant role.',
     },
     { label: 'Contact Me', type: 'contact' },
   ],
@@ -352,7 +352,7 @@ export const gisTrackContent: TrackPageContent = {
         'Secondary spatial proof: GIS workflow planning, dashboard mockups, and stakeholder documentation for a national contact-tracing initiative.',
       proofType: 'Spatial Workflow',
       href: '/projects/moh',
-      roleChips: ['Spatial Systems Architect', 'Solutions Architect'],
+      roleChips: ['Spatial Systems Architect', 'Implementation Consultant'],
     },
     {
       title: 'HPS Geospatial Dashboard & Utility Ops Experience',
@@ -404,7 +404,7 @@ export const trackSelectorCards: TrackSelectorCard[] = [
     href: '/tracks/forward-deployed',
   },
   {
-    title: 'Solutions Architect',
+    title: 'Implementation Consultant',
     subcopy:
       'Structured testing, issue triage, validation workflows, and decision-ready quality reporting.',
     href: '/tracks/solutions-architect',

@@ -235,11 +235,11 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
       ),
     },
     {
-      systemLabel: 'SOLUTIONS_TRACK',
-      title: 'Solutions Architect',
+      systemLabel: 'CONSULTING_TRACK',
+      title: 'Implementation Consultant',
       subcopy:
-        'System and solution design backed by structured testing, root-cause analysis, and reliability review — architecture you can trust in production.',
-      chips: ['Solution Design', 'Reliability', 'Root-Cause Analysis'],
+        'De-risking adoption: structured validation, triage, and launch-readiness review that turn a build into a rollout a customer’s team can trust and run.',
+      chips: ['Validation', 'Launch Readiness', 'Decision-Ready Reporting'],
       stream: 'STREAM 02',
       path: 'SYS_PATH: 02.00',
       href: '/tracks/solutions-architect',

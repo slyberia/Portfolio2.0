@@ -32,14 +32,14 @@ describe('TopNav active states', () => {
     expect(menuItem.className).toContain('border-tide-aqua');
   });
 
-  it('marks Solutions Architect active on its track', () => {
+  it('marks Implementation Consultant active on its track', () => {
     renderTopNav('/tracks/solutions-architect');
 
     // Open the dropdown
     const button = screen.getByRole('button', { name: 'Role Lens' });
     fireEvent.click(button);
 
-    const menuItem = screen.getByRole('menuitem', { name: 'Solutions Architect' });
+    const menuItem = screen.getByRole('menuitem', { name: 'Implementation Consultant' });
     expect(menuItem).toBeInTheDocument();
     expect(menuItem.className).toContain('border-tide-aqua');
   });

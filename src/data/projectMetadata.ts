@@ -51,7 +51,7 @@ export type ProjectMetadata = {
 
 export const CANONICAL_ROLE_ACCENT: Record<RecruiterRoleLane, RoleLane> = {
   'Forward Deployed Engineer': 'Implementation',
-  'Solutions Architect': 'QA',
+  'Implementation Consultant': 'QA',
   'Spatial Systems Architect': 'GIS',
   'AI Workflow / Portfolio Governance': 'Implementation',
 };
@@ -86,7 +86,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     canonicalRoleLanes: [
       'Spatial Systems Architect',
       'Forward Deployed Engineer',
-      'Solutions Architect',
+      'Implementation Consultant',
     ],
     filters: ['GIS', 'Implementation', 'QA', 'Process'],
     proofType: 'System',
@@ -117,7 +117,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     canonicalRoleLanes: [
       'AI Workflow / Portfolio Governance',
       'Forward Deployed Engineer',
-      'Solutions Architect',
+      'Implementation Consultant',
     ],
     filters: ['Implementation', 'QA', 'AI Systems', 'Process'],
     proofType: 'System',
@@ -143,7 +143,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     hierarchy: 'supporting',
     statusLabel: 'QA / Operations',
     roleLanes: ['Implementation', 'QA', 'GIS'],
-    canonicalRoleLanes: ['Solutions Architect', 'Spatial Systems Architect'],
+    canonicalRoleLanes: ['Implementation Consultant', 'Spatial Systems Architect'],
     filters: ['Implementation', 'QA', 'GIS', 'Process'],
     proofType: 'Workflow',
     purpose:
@@ -211,7 +211,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     roleLanes: ['GIS', 'Implementation'],
     canonicalRoleLanes: [
       'Spatial Systems Architect',
-      'Solutions Architect',
+      'Implementation Consultant',
       'Forward Deployed Engineer',
     ],
     filters: ['GIS', 'Implementation', 'AI Systems', 'Process'],

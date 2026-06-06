@@ -72,11 +72,11 @@ const MODE_CONFIG: Record<
     pillClassName: 'bg-tide-aqua/10 text-[#237f86] dark:bg-tide-aqua/20 dark:text-tide-sky',
   },
   qa: {
-    label: 'Solutions Architect Track',
+    label: 'Implementation Consultant Track',
     intro:
-      'You’re viewing Kyle’s Solutions Architect track. I can help you inspect proof around validation, issue triage, failure planning, QA scenarios, Ops Triage, NBA 2K Systems Analysis, and Digital Twin guardrails.',
+      'You’re viewing Kyle’s Implementation Consultant track. I can help you inspect proof around validation, issue triage, failure planning, QA scenarios, Ops Triage, NBA 2K Systems Analysis, and Digital Twin guardrails.',
     suggestions: [
-      'Show me Kyle’s Solutions Architect proof.',
+      'Show me Kyle’s Implementation Consultant proof.',
       'Explain the Digital Twin failure planning.',
       'What does Ops Triage demonstrate?',
       'How does Kyle approach validation and edge cases?',

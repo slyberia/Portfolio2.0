@@ -428,9 +428,19 @@ without a green suite; route naming and crawler sitemap do not drift.
   consistent embed-vs-launch treatment; nav entry handled by 6.9.
 - **Commit:** `feat: subphase 7.3 — gallery interactive-artifacts section`
 
-### 7.4 — Positioning cleanup: "Solutions Architect" vs Customer Success framing (DECISION-GATED)
+### 7.4 — Positioning cleanup: "Solutions Architect" vs Customer Success framing (RESOLVED)
 
-- **Status:** **Blocked pending Kyle's decision.** Do not change lane labels until resolved.
+- **Status:** **RESOLVED (Kyle's decision).** The second lane is renamed **"Solutions Architect" →
+  "Implementation Consultant"** (a variant of Option B). Rationale: it fixes the label↔content
+  mismatch (the lens already carries validation / launch-readiness / triage content, which is
+  genuine implementation-consulting work), surfaces customer-facing value without a CS/CSM lane,
+  and avoids both the "Architect" seniority overclaim and the "Engineer" credential question Kyle
+  flagged (no engineering degree/licence). **"Forward Deployed Engineer" is retained as the primary
+  title.** CS stays evidence-only throughout. The **`/tracks/solutions-architect` route slug is
+  preserved** (label-only change) to avoid breaking links/sitemap; the lane's narrative
+  (hero/summary/value bridge) was reframed from QA-speak to implementation-consultant framing so
+  label and content agree. _Note:_ the Luxe Lofts case study's project-role line ("Creative
+  Solutions Architect") is left as historical project copy, not the canonical lane.
 - **Problem:** "Solutions Architect" and "Customer Success Manager" do **not** convey the same
   message (SA = technical/system design & validation; CSM = ongoing account ownership, adoption,
   renewals/expansion/ARR). Two tensions: (1) a CSM label would violate the north-star guardrail

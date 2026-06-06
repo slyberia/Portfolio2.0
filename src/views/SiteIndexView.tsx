@@ -23,12 +23,12 @@ const roleTracks = [
     role: 'Forward Deployed Engineer',
   },
   {
-    title: 'Solutions Architect',
+    title: 'Implementation Consultant',
     description:
       'Structured testing, issue triage, validation workflows, root-cause analysis, and launch-readiness review.',
     href: QA_TRACK_HREF,
     accent: 'bg-blue-500',
-    role: 'Solutions Architect',
+    role: 'Implementation Consultant',
   },
   {
     title: 'Spatial Systems Architect',
@@ -329,11 +329,11 @@ const SiteIndexView: React.FC = () => {
             </div>
             <div className="rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd] dark:bg-slate-900 p-5">
               <h3 className="font-semibold text-navy-900 dark:text-white">
-                I’m hiring for Solutions Architecture
+                I’m hiring for Implementation &amp; Delivery
               </h3>
               <p className="mt-2">
                 <Link to={QA_TRACK_HREF} className="underline">
-                  Solutions Architect Track
+                  Implementation Consultant Track
                 </Link>{' '}
                 →{' '}
                 <Link to={buildProjectHref('digital-twin')} className="underline">

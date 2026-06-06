@@ -116,9 +116,9 @@ const ApplyOpsAnalyticsView: React.FC = () => {
                   new CustomEvent('open-digital-twin', {
                     detail: {
                       source: 'qa',
-                      modeLabel: 'QA Track',
+                      modeLabel: 'Implementation Consultant Track',
                       starterPrompt:
-                        'Help this visitor evaluate Kyle for a Solutions Architect role.',
+                        'Help this visitor evaluate Kyle for an Implementation Consultant role.',
                     },
                   }),
                 )

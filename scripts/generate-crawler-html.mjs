@@ -60,7 +60,7 @@ const routes = [
     '/apply/solutions-architect',
     'Start Path: Solutions / Systems Architecture',
     'Recruiter start path with curated proof for solutions/systems architecture and QA-backed reliability roles.',
-    'Solutions Architecture Proof Bundle',
+    'Implementation Consulting Proof Bundle',
     'A curated subset of validation, triage, and reliability evidence assembled for hiring teams.',
     ['/tracks/solutions-architect', '/projects/ops-triage', '/projects/digital-twin'],
   ],

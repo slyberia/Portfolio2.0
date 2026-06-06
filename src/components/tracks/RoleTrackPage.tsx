@@ -37,7 +37,7 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
     'AI-assisted build workflows': 'AI-Assisted Development',
     'Stakeholder translation': 'Stakeholder Communication',
 
-    // Solutions Architect
+    // Implementation Consultant
     'Test planning': 'QA Protocols',
     'QA protocols': 'QA Protocols',
     'Test matrices': 'QA Protocols',
@@ -460,9 +460,9 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
                             source: action.twinSource,
                             modeLabel:
                               action.twinSource === 'implementation'
-                                ? 'Implementation Track'
+                                ? 'Forward Deployed Track'
                                 : action.twinSource === 'qa'
-                                  ? 'QA Track'
+                                  ? 'Implementation Consultant Track'
                                   : action.twinSource === 'gis'
                                     ? 'GIS Track'
                                     : 'General Recruiter Mode',

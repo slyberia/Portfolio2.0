@@ -1,7 +1,7 @@
 # title: Portfolio Markdown Index
 
 - **purpose:** Crawler-readable map of the React portfolio and companion markdown mirrors.
-- **role relevance:** Covers Forward Deployed Engineer, Solutions Architect, and Spatial Systems Architect tracks.
+- **role relevance:** Covers Forward Deployed Engineer, Implementation Consultant, and Spatial Systems Architect tracks.
 - **key evidence links:** [/projects/guynode](/projects/guynode), [/projects/digital-twin](/projects/digital-twin), [/portfolio2/deep-dive](/portfolio2/deep-dive).
 - **canonical app route:** /site-index
 - **last updated:** 2026-05-02

@@ -439,7 +439,7 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
     rationale: 'Operationalizing the gap between training theory and production reality.',
     category: 'qa-data',
     tags: ['Data QA / Validation', 'Operational Throughput', 'Issue Triage', 'ESRI ArcMap'],
-    roleLanes: ['Solutions Architect', 'Spatial Systems Architect'],
+    roleLanes: ['Implementation Consultant', 'Spatial Systems Architect'],
     heroArtifact: undefined,
     rigor: {
       statement: 'The system defines the result. Optimize for flow AND trust.',
@@ -467,7 +467,11 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
       'Technical Implementation',
       'Documentation',
     ],
-    roleLanes: ['Spatial Systems Architect', 'Forward Deployed Engineer', 'Solutions Architect'],
+    roleLanes: [
+      'Spatial Systems Architect',
+      'Forward Deployed Engineer',
+      'Implementation Consultant',
+    ],
     heroArtifact: {
       type: 'html',
       label: 'Guynode Data Access Flow',
@@ -525,7 +529,7 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
     roleLanes: [
       'AI Workflow / Portfolio Governance',
       'Forward Deployed Engineer',
-      'Solutions Architect',
+      'Implementation Consultant',
     ],
     heroArtifact: {
       type: 'html',
@@ -615,7 +619,11 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
       'UI/UX Audit',
       'Technical Documentation',
     ],
-    roleLanes: ['Spatial Systems Architect', 'Solutions Architect', 'Forward Deployed Engineer'],
+    roleLanes: [
+      'Spatial Systems Architect',
+      'Implementation Consultant',
+      'Forward Deployed Engineer',
+    ],
     heroArtifact: {
       type: 'html',
       label: 'Public Health GIS — System Explorer',

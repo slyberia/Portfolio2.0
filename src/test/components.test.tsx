@@ -131,7 +131,7 @@ describe('canonical role lane UI', () => {
     );
 
     expect(screen.getAllByText('Forward Deployed Engineer')[0]).toHaveClass('text-tide-aqua');
-    expect(screen.getAllByText('Solutions Architect')[0]).toHaveClass('text-tide-blue');
+    expect(screen.getAllByText('Implementation Consultant')[0]).toHaveClass('text-tide-blue');
     expect(screen.getAllByText('Spatial Systems Architect')[0]).toHaveClass('text-tide-cyan');
   });
 
@@ -143,7 +143,7 @@ describe('canonical role lane UI', () => {
     );
 
     expect(screen.getAllByText('Forward Deployed Engineer')[0]).toHaveClass('text-tide-aqua');
-    expect(screen.getAllByText('Solutions Architect')[0]).toHaveClass('text-tide-blue');
+    expect(screen.getAllByText('Implementation Consultant')[0]).toHaveClass('text-tide-blue');
     expect(screen.getAllByText('Spatial Systems Architect')[0]).toHaveClass('text-tide-cyan');
   });
 
@@ -178,6 +178,6 @@ describe('canonical role lane UI', () => {
 
     expect(screen.getByText('AI Workflow / Portfolio Governance')).toHaveClass('text-tide-aqua');
     expect(screen.getByText('Forward Deployed Engineer')).toHaveClass('text-tide-aqua');
-    expect(screen.getByText('Solutions Architect')).toHaveClass('text-tide-blue');
+    expect(screen.getByText('Implementation Consultant')).toHaveClass('text-tide-blue');
   });
 });

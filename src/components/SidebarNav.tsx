@@ -22,7 +22,7 @@ const TRACK_ITEMS = [
     accentClass: 'bg-tide-aqua',
   },
   {
-    label: 'Solutions Architect',
+    label: 'Implementation Consultant',
     href: QA_TRACK_HREF,
     accentClass: 'bg-tide-blue',
   },

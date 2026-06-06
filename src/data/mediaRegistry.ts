@@ -26,7 +26,7 @@ export const MEDIA_REGISTRY: MediaAsset[] = [
   {
     id: 'portfolio-v2-site-index-desktop-v1',
     projectId: 'portfolio-v2',
-    roleLanes: ['Solutions Architect'],
+    roleLanes: ['Implementation Consultant'],
     mediaType: 'screenshot',
     src: '/media/portfolio-v2/screenshots/portfolio-v2-site-index-desktop-v1.png',
     alt: 'Site Index and Connectivity Map',
@@ -58,7 +58,7 @@ export const MEDIA_REGISTRY: MediaAsset[] = [
   {
     id: 'portfolio-v2-ops-overview-desktop-v1',
     projectId: 'portfolio-v2',
-    roleLanes: ['Solutions Architect'],
+    roleLanes: ['Implementation Consultant'],
     mediaType: 'screenshot',
     src: '/media/portfolio-v2/screenshots/portfolio-v2-ops-overview-desktop-v1.png',
     alt: 'Ops & Analytics Track Overview',
