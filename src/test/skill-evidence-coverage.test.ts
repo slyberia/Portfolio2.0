@@ -7,8 +7,8 @@ import { decisionBlocks, forensicEntries } from '../data/deepDiveContent';
  * Subphase 7.6 drift guard: every Skills & Technologies entry must resolve to a real,
  * publicly visible evidence target — a public project case study, a real deep-dive anchor,
  * or an allowlisted page (the résumé, which backs tool-breadth skills with no case study).
- * This is what keeps a dangling reference like the retired "project-aegis" link from
- * silently returning.
+ * This is what keeps a dangling reference (e.g. the kind that pointed at the then-unpublished
+ * "project-aegis" before 7.7b) from silently returning empty.
  */
 const publicProjectIds = new Set(
   PROJECT_REGISTRY.filter((project) => isProjectPublic(project.id)).map((project) => project.id),
@@ -46,12 +46,5 @@ describe('skill → evidence coverage', () => {
       .filter((skill) => skill.proofHref && !isValidTarget(skill.proofHref))
       .map((skill) => `${skill.name} -> ${skill.proofHref}`);
     expect(broken).toEqual([]);
-  });
-
-  it('no skill references the unpublished project-aegis entry', () => {
-    const offenders = allSkills
-      .filter((skill) => skill.proofHref?.includes('project-aegis'))
-      .map((skill) => skill.name);
-    expect(offenders).toEqual([]);
   });
 });

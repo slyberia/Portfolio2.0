@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { ExperienceItem, SkillGroup, Certification, ProjectEntry, SkillChipConfig } from './types';
 import { MOH_SUPERVISOR_DASHBOARD_HTML } from './data/mohSupervisorDashboard';
+import { AEGIS_STATE_MACHINE_HTML } from './data/aegisStateMachine';
 
 export const EXPERIENCE: ExperienceItem[] = [
   {
@@ -585,6 +586,60 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
         problem: 'Session state drift and hallucination risk in long conversations.',
         tradeoff:
           'Strict token caps and session history trimming to enforce safe context boundaries.',
+      },
+    ],
+  },
+  {
+    id: 'project-aegis',
+    title: 'Automation & Operational Protocols',
+    rationale:
+      'A decoupled AI-automation system — Aegis governance plus emOS execution over a Notion state machine — that evolved from human-in-the-loop review toward autonomous operation.',
+    category: 'ai-ops',
+    tags: [
+      'AI Workflow',
+      'Prompt Governance',
+      'Multi-Agent Systems',
+      'Notion API',
+      'Docker',
+      'Cloud Run',
+      'TypeScript',
+      'Automation',
+    ],
+    roleLanes: ['AI Workflow / Portfolio Governance', 'Forward Deployed Engineer'],
+    heroArtifact: {
+      type: 'html',
+      label: 'Aegis / emOS — Sanitized State Machine',
+      description:
+        'Conceptual reconstruction of the decoupled loop (Notion task → emOS execution → Guardian check → Notion result). Toggle the Guardian seat to compare human-in-the-loop with autonomous operation. No real workspace IDs, keys, or credentials.',
+      content: AEGIS_STATE_MACHINE_HTML,
+    },
+    rigor: {
+      statement:
+        'AI automation scales reliably only when execution is bound to an explicit governance layer — not left to unvalidated generation.',
+      baseline:
+        'Volatile "vibe-coding" cycles that depended on manual validation and were vulnerable to context drift and recursive re-prompting.',
+      definition:
+        'Every automated change passes a structural-integrity check against an explicit ruleset before it resolves — no silent, unvalidated mutations.',
+      method:
+        'Decoupled the judge from the executor: a private Notion database as a headless state machine links containerized emOS runners to Aegis validation — run first with a human Guardian, then with an automated one.',
+      window: 'Q4 2025 – 2026 (HITL iteration tested; autonomous iteration developed).',
+    },
+    constraints: [
+      {
+        problem:
+          'Notion has no outbound webhooks for database changes and enforces a strict ~3 requests/second rate cap.',
+        tradeoff:
+          'A TypeScript daemon polls on a ~15-second loop and batches state queries into grouped update payloads, accepting a short propagation delay to keep Notion as the single source of truth.',
+      },
+      {
+        problem: 'A single agent cannot reliably grade its own output.',
+        tradeoff:
+          'The Executor (emOS) and Guardian (Aegis) are fully decoupled with no shared context, so validation stays independent of generation.',
+      },
+      {
+        problem: 'Running every change through the full Aegis check adds a delay per run.',
+        tradeoff:
+          'Accepted deliberately — a brief validation delay avoids the far larger cost of tracing hallucinated runtime bugs later.',
       },
     ],
   },

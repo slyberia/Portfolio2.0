@@ -523,14 +523,16 @@ Governance` pointed at `project-aegis`, which is **not** a listed Library entry 
   per-track evidence-link stubs, the crawler generator + validator route lists, `SiteIndexView`,
   `ChatWidget`, `ApplyOpsAnalyticsView`, the `CLAUDE.md`/`AGENTS.md` inventory, and two tests
   (repointed to surviving slugs). `project-aegis` left fully intact for 7.7b.
-- **7.7b — Publish "Automation & Operational Protocols" (GATED on intake).** Rework the orphaned
+- **7.7b — Publish "Automation & Operational Protocols" (DONE).** Reworked the orphaned
   `project-aegis` markdown into a first-class Library entry (real `PROJECT_REGISTRY` +
-  `projectMetadata`, like MOH in 6.11), built around **two real automation pipelines** — the
-  portfolio's own build/governance pipeline and a Notion task-board automation — with the existing
-  **unverified metrics removed**. Optional sanitized pipeline-diagram artifact via `HtmlPreviewCard`.
-  Source material gathered via `docs/aegis-automation-intake-questionnaire.md` (MOH-style gated
-  intake). Lanes: AI Workflow / Portfolio Governance → Forward Deployed Engineer. Route slug
-  `project-aegis` preserved.
+  `projectMetadata`, like MOH in 6.11). Scoped per Kyle to the **Aegis (governance) + emOS
+  (execution)** system over a Notion state machine, told as a **human-governed → autonomous
+  evolution** (HITL iteration tested; autonomous iteration developed toward containerization).
+  **All unverified metrics/absolutes dropped.** Sanitized interactive `HtmlPreviewCard` state-machine
+  diagram (`src/data/aegisStateMachine.ts`) with a Human ⇄ Aegis-engine Guardian toggle. Role:
+  "AI Workflow & Automation Designer"; status: "Working Prototype"; lanes: AI Workflow / Portfolio
+  Governance → Forward Deployed Engineer; route slug `project-aegis` preserved. The **portfolio
+  build/governance pipeline is a separate future entry**, and a deep dive can later unify all three.
 - **Files:** `public/case-studies/*`, `src/constants.tsx`, `src/data/projectMetadata.ts`,
   `src/lib/seo.ts`, `scripts/generate-crawler-html.mjs`, `scripts/validate-crawler.mjs`,
   `public/{sitemap.xml,crawler-sitemap.xml,llms.txt,ai-index*.html,site-index.html,markdown/*}`,

@@ -158,6 +158,29 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     switcherRank: 3,
   },
   {
+    id: 'project-aegis',
+    displayTitle: 'Automation & Operational Protocols',
+    shortSummary:
+      'A decoupled AI-automation ecosystem — Aegis governance plus emOS execution over a Notion state machine — built to run with a human or an automated Guardian.',
+    hierarchy: 'featured',
+    featuredLabel: 'FEATURED AUTOMATION SYSTEM',
+    statusLabel: 'Working Prototype',
+    roleLanes: ['Implementation'],
+    canonicalRoleLanes: ['AI Workflow / Portfolio Governance', 'Forward Deployed Engineer'],
+    filters: ['AI Systems', 'Process', 'Implementation'],
+    proofType: 'System Architecture',
+    purpose:
+      'Put AI-generated work under an explicit governance layer before it is trusted — and keep the whole pipeline auditable in a plain Notion workspace.',
+    stakeholderValue:
+      'Anyone running AI agents against a real system gets output that must pass an explicit check, a readable audit trail in Notion, and a safe path from human review toward automation.',
+    accent: 'aqua',
+    sortOrder: 4,
+    href: buildProjectHref('project-aegis'),
+    evidenceTier: 'secondary',
+    showInSwitcher: true,
+    switcherRank: 4,
+  },
+  {
     id: 'luxe-lofts',
     displayTitle: 'Luxe Lofts',
     shortSummary:

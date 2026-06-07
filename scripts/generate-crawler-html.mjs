@@ -109,10 +109,10 @@ const routes = [
   ],
   [
     '/projects/project-aegis',
-    'Project Aegis — LLM Reliability Governance',
-    'A governance layer that keeps long AI-assisted coding sessions preserving architectural intent instead of drifting or destroying working logic.',
-    'Project Aegis',
-    'Case study in AI workflow governance: surgical-edit protocols and immutable-context rules that keep LLM output dependable inside real codebases.',
+    'Automation & Operational Protocols — Aegis & emOS',
+    'A decoupled AI-automation system — Aegis governance plus emOS execution over a Notion state machine — that evolved from human-in-the-loop review toward autonomous operation.',
+    'Automation & Operational Protocols',
+    'Case study in AI workflow governance: a Notion database as a headless state machine links containerized emOS runners to an Aegis validation layer, with the Guardian seat run first by a human, then automated.',
     ['/projects/digital-twin', '/projects/ops-triage', '/deep-dives'],
   ],
   [
