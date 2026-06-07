@@ -33,9 +33,7 @@ Role-relevance lenses (forward-deployed engineering, solutions/systems architect
 - /projects/guynode
 - /projects/digital-twin
 - /projects/ops-triage
-- /projects/prompter-hub
 - /projects/project-aegis
-- /projects/nba-systems-qa
 - /projects/luxe-lofts
 - /deep-dives
 - /resume
@@ -51,9 +49,7 @@ Role-relevance lenses (forward-deployed engineering, solutions/systems architect
 - /crawler/projects/guynode
 - /crawler/projects/digital-twin
 - /crawler/projects/ops-triage
-- /crawler/projects/prompter-hub
 - /crawler/projects/project-aegis
-- /crawler/projects/nba-systems-qa
 - /crawler/projects/luxe-lofts
 - /crawler/deep-dives
 - /crawler/resume

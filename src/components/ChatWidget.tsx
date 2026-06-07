@@ -74,7 +74,7 @@ const MODE_CONFIG: Record<
   qa: {
     label: 'Implementation Consultant Track',
     intro:
-      'You’re viewing Kyle’s Implementation Consultant track. I can help you inspect proof around validation, issue triage, failure planning, QA scenarios, Ops Triage, NBA 2K Systems Analysis, and Digital Twin guardrails.',
+      'You’re viewing Kyle’s Implementation Consultant track. I can help you inspect proof around validation, issue triage, failure planning, QA scenarios, Ops Triage, and Digital Twin guardrails.',
     suggestions: [
       'Show me Kyle’s Implementation Consultant proof.',
       'Explain the Digital Twin failure planning.',

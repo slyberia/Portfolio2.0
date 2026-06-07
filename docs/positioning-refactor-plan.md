@@ -508,3 +508,31 @@ Governance` pointed at `project-aegis`, which is **not** a listed Library entry 
   case-study markdown but no Library wiring — decide later (with Kyle) whether to fully publish or
   retire them.
 - **Commit:** `feat: subphase 7.6 — skills section: sticky inspector, chip stability & skill→evidence linkage`
+
+### 7.7 — Case-study consolidation: retire two, publish "Automation & Operational Protocols"
+
+- **Why.** Resolves the 7.6 follow-up. The three orphaned case studies (`prompter-hub`,
+  `project-aegis`, `nba-systems-qa` — markdown only, no registry/metadata) are inconsistent and
+  uneven in value. Kyle's decision: **retire** the two weakest and **rework** the third.
+- **7.7a — Retire `prompter-hub` + `nba-systems-qa` (DONE).** Off-thesis / low-ownership case
+  studies removed in lockstep: deleted both `public/case-studies/*.md`; stripped every reference
+  from `sitemap.xml`, `crawler-sitemap.xml`, `llms.txt`, `ai-index*.html`, `site-index.html`, the
+  per-track evidence-link stubs, the crawler generator + validator route lists, `SiteIndexView`,
+  `ChatWidget`, `ApplyOpsAnalyticsView`, the `CLAUDE.md`/`AGENTS.md` inventory, and two tests
+  (repointed to surviving slugs). `project-aegis` left fully intact for 7.7b.
+- **7.7b — Publish "Automation & Operational Protocols" (GATED on intake).** Rework the orphaned
+  `project-aegis` markdown into a first-class Library entry (real `PROJECT_REGISTRY` +
+  `projectMetadata`, like MOH in 6.11), built around **two real automation pipelines** — the
+  portfolio's own build/governance pipeline and a Notion task-board automation — with the existing
+  **unverified metrics removed**. Optional sanitized pipeline-diagram artifact via `HtmlPreviewCard`.
+  Source material gathered via `docs/aegis-automation-intake-questionnaire.md` (MOH-style gated
+  intake). Lanes: AI Workflow / Portfolio Governance → Forward Deployed Engineer. Route slug
+  `project-aegis` preserved.
+- **Files:** `public/case-studies/*`, `src/constants.tsx`, `src/data/projectMetadata.ts`,
+  `src/lib/seo.ts`, `scripts/generate-crawler-html.mjs`, `scripts/validate-crawler.mjs`,
+  `public/{sitemap.xml,crawler-sitemap.xml,llms.txt,ai-index*.html,site-index.html,markdown/*}`,
+  `CLAUDE.md`/`AGENTS.md`, affected views/tests.
+- **Acceptance:** Retired studies leave no dangling references; reworked entry is a first-class,
+  honest Library project with no invented metrics; full validation + crawler suite green.
+- **Commits:** `chore: subphase 7.7a — retire prompter-hub & nba-systems-qa case studies`;
+  `feat: subphase 7.7b — publish Automation & Operational Protocols entry`

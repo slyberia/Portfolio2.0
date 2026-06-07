@@ -342,10 +342,6 @@ const SiteIndexView: React.FC = () => {
                 →{' '}
                 <Link to={buildProjectHref('ops-triage')} className="underline">
                   Ops Triage
-                </Link>{' '}
-                →{' '}
-                <Link to={buildProjectHref('nba-systems-qa')} className="underline">
-                  NBA 2K Systems Analysis
                 </Link>
               </p>
             </div>

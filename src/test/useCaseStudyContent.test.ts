@@ -13,7 +13,7 @@ describe('useCaseStudyContent', () => {
 
   it('starts in loading state', () => {
     (fetch as ReturnType<typeof vi.fn>).mockReturnValue(new Promise(() => {}));
-    const { result } = renderHook(() => useCaseStudyContent('prompter-hub'));
+    const { result } = renderHook(() => useCaseStudyContent('project-aegis'));
     expect(result.current.isLoading).toBe(true);
     expect(result.current.content).toBe('');
     expect(result.current.error).toBeNull();
@@ -23,11 +23,11 @@ describe('useCaseStudyContent', () => {
     (fetch as ReturnType<typeof vi.fn>).mockResolvedValue({
       ok: true,
       headers: { get: () => 'text/markdown' },
-      text: async () => '# Prompter Hub\nContent here',
+      text: async () => '# Project Aegis\nContent here',
     });
-    const { result } = renderHook(() => useCaseStudyContent('prompter-hub'));
+    const { result } = renderHook(() => useCaseStudyContent('project-aegis'));
     await waitFor(() => expect(result.current.isLoading).toBe(false));
-    expect(result.current.content).toBe('# Prompter Hub\nContent here');
+    expect(result.current.content).toBe('# Project Aegis\nContent here');
     expect(result.current.error).toBeNull();
   });
 
@@ -45,7 +45,7 @@ describe('useCaseStudyContent', () => {
       headers: { get: () => 'text/html; charset=utf-8' },
       text: async () => '<html><body>App Shell</body></html>',
     });
-    const { result } = renderHook(() => useCaseStudyContent('prompter-hub'));
+    const { result } = renderHook(() => useCaseStudyContent('project-aegis'));
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.content).toBe('');
   });
@@ -65,7 +65,7 @@ describe('useCaseStudyContent', () => {
       text: async () =>
         '<!doctype html><div id="root"></div><script type="module" src="/src/main.tsx"></script>',
     });
-    const { result } = renderHook(() => useCaseStudyContent('prompter-hub'));
+    const { result } = renderHook(() => useCaseStudyContent('project-aegis'));
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.content).toBe('');
   });

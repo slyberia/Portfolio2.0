@@ -23,8 +23,8 @@ const ApplyOpsAnalyticsView: React.FC = () => {
 
   // Specific evidence from bundle schema spec
   const curatedEvidenceTitles = [
-    'NBA 2K Systems Analysis',
     'Systems at Scale: Triage & QA',
+    'Digital Twin AI Agent',
     'Guynode Spatial Data Hub',
   ];
 

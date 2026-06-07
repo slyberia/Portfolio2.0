@@ -108,28 +108,12 @@ const routes = [
     ['/tracks/solutions-architect', '/tracks/forward-deployed', '/deep-dives'],
   ],
   [
-    '/projects/prompter-hub',
-    'Prompter Hub — AI Workflow Tooling',
-    'Middleware that turns messy intent and raw data into strict, Firestore-ready schemas — reusable prompt and schema assets for LLM apps.',
-    'Prompter Hub',
-    'Case study in AI workflow design: a translation layer converting loose intent into version-controlled, typed schemas so LLM app teams stop rewriting boilerplate.',
-    ['/projects/digital-twin', '/deep-dives'],
-  ],
-  [
     '/projects/project-aegis',
     'Project Aegis — LLM Reliability Governance',
     'A governance layer that keeps long AI-assisted coding sessions preserving architectural intent instead of drifting or destroying working logic.',
     'Project Aegis',
     'Case study in AI workflow governance: surgical-edit protocols and immutable-context rules that keep LLM output dependable inside real codebases.',
     ['/projects/digital-twin', '/projects/ops-triage', '/deep-dives'],
-  ],
-  [
-    '/projects/nba-systems-qa',
-    'NBA Systems QA — Probabilistic Systems Testing',
-    'QA methodology applied to a probabilistic game engine: a controlled harness, confound isolation, and honest labeling of coupled variables.',
-    'NBA Systems QA',
-    'Case study in validation rigor: turning community “folk theories” into testable claims — directly transferable to validating probabilistic AI systems.',
-    ['/projects/ops-triage', '/deep-dives'],
   ],
   [
     '/projects/luxe-lofts',
