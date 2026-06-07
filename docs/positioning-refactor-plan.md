@@ -460,9 +460,12 @@ without a green suite; route naming and crawler sitemap do not drift.
   "Solutions Architect"-as-lead-title drift; crawler/LLM summaries consistent.
 - **Commit:** `feat: subphase 7.4 — positioning cleanup: customer-facing lane decision`
 
-### 7.5 — Chat transcript export (BACKLOG / optional, post-phase)
+### 7.5 — Chat transcript export (DONE)
 
-- **Status:** **Backlog.** Nice-to-have Kyle flagged for "later, if at all" — not yet scheduled.
+- **Status:** **DONE.** Implemented as the first-cut Markdown export: copy + download controls in the
+  Digital Twin header, backed by a pure `serializeTranscript` helper (`src/lib/digitalTwinTranscript.ts`)
+  with unit tests. Zero backend, client-side only, no PII leaves the browser. Controls appear once a
+  real conversation exists. (Stretch items — PDF render, emailed transcript — remain optional.)
 - **Scope:** Let a visitor leave with a copy of the Digital Twin conversation. Recommended first
   cut: a "Download transcript" control in `ChatWidget.tsx` that serializes the `messages` array to
   **Markdown / plain text** (one-click copy + file download) — zero backend, offline-safe, paste-

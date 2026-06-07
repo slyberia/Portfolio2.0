@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { sendMessageStream, ChatHistory } from '../geminiService';
 import ReactMarkdown from 'react-markdown';
+import { serializeTranscript, transcriptFilename } from '../lib/digitalTwinTranscript';
 
 interface Message {
   role: 'user' | 'model';
@@ -321,6 +322,35 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
     sessionStorage.removeItem(STORAGE_KEY);
   };
 
+  // Subphase 7.5: client-side transcript export (copy + Markdown download), zero backend.
+  const hasConversation = messages.some((msg) => msg.role === 'user' && msg.text.trim().length > 0);
+
+  const buildTranscript = () =>
+    serializeTranscript(messages, {
+      modeLabel: mode !== 'general' ? modeLabelOverride || MODE_CONFIG[mode].label : undefined,
+    });
+
+  const copyTranscript = async () => {
+    try {
+      await navigator.clipboard.writeText(buildTranscript());
+      onShowToast?.('Transcript copied to clipboard');
+    } catch {
+      onShowToast?.('Could not copy transcript');
+    }
+  };
+
+  const downloadTranscript = () => {
+    const blob = new Blob([buildTranscript()], { type: 'text/markdown;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = transcriptFilename();
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+    URL.revokeObjectURL(url);
+  };
+
   const shouldShowFeedback = (msg: Message, idx: number) => {
     if (msg.role !== 'model' || isTyping || idx === 0 || !msg.text.trim()) return false;
     if (FALLBACK_PATTERNS.some((pattern) => pattern.test(msg.text))) return false;
@@ -371,6 +401,51 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
             </div>
           </div>
           <div className="flex items-center gap-2">
+            {hasConversation && (
+              <>
+                <button
+                  onClick={copyTranscript}
+                  className="p-1.5 text-slate-600 hover:text-ink-navy dark:hover:text-white transition-colors"
+                  title="Copy transcript"
+                  aria-label="Copy conversation transcript to clipboard"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-4 h-4"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                  </svg>
+                </button>
+                <button
+                  onClick={downloadTranscript}
+                  className="p-1.5 text-slate-600 hover:text-ink-navy dark:hover:text-white transition-colors"
+                  title="Download transcript (Markdown)"
+                  aria-label="Download conversation transcript as Markdown"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-4 h-4"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <path d="M7 10l5 5 5-5" />
+                    <path d="M12 15V3" />
+                  </svg>
+                </button>
+              </>
+            )}
             <button
               onClick={clearHistory}
               className="p-1.5 text-slate-600 hover:text-ink-navy dark:hover:text-white transition-colors"
