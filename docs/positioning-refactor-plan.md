@@ -542,7 +542,19 @@ Governance` pointed at `project-aegis`, which is **not** a listed Library entry 
 - **Commits:** `chore: subphase 7.7a — retire prompter-hub & nba-systems-qa case studies`;
   `feat: subphase 7.7b — publish Automation & Operational Protocols entry`
 
-### 7.8 — Portfolio 2.0 Build-Pipeline Library entry (GATED on intake)
+### 7.8 — Portfolio 2.0 Build-Pipeline Library entry (DONE)
+
+- **Status:** **DONE.** Published `portfolio-pipeline` (Portfolio 2.0 — Governed AI Build Pipeline)
+  as a first-class registry + metadata entry from the confirmed intake — Sequential Execution
+  Protocol, the 6-tool multi-LLM toolchain, the CI gate (lint/format/types/tests/build/gitleaks/
+  key-audit, pinned SHAs), drift guards, `AI_ATTRIBUTION.md`, Docker→Cloud Run. Sanitized
+  interactive `HtmlPreviewCard` (`src/data/portfolioPipelineDiagram.ts`: governance flow +
+  multi-LLM side rail). Role "AI Workflow & Automation Designer", status "In Production",
+  `supporting` hierarchy, aqua; real metrics kept (50+ PRs · 6 tools · 7 phases · 10+ routes);
+  links into the Process & Governance deep dive. Crawler/SEO/sitemap/llms/indexes + inventory
+  docs wired; full suite green.
+
+#### Original scope (for reference)
 
 - **Why.** The third leg of the "governed AI automation" story (sibling to Aegis/emOS, per Kyle's
   7.7 decision to keep the portfolio pipeline separate). A first-class entry summarizing the

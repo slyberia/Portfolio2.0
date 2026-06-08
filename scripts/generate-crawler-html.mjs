@@ -116,6 +116,14 @@ const routes = [
     ['/projects/digital-twin', '/projects/ops-triage', '/deep-dives'],
   ],
   [
+    '/projects/portfolio-pipeline',
+    'Portfolio 2.0 — Governed AI Build Pipeline',
+    'The governed, multi-LLM pipeline behind this site: AI-assisted build under a one-subphase protocol, an uncompromising CI gate, drift guards, and a Docker → Cloud Run deploy.',
+    'Governed AI Build Pipeline',
+    'Case study in AI build governance: human design authority plus a multi-LLM toolchain behind a CI gate (lint/types/tests/build/secret-scan), semantic drift guards, and an attribution ledger.',
+    ['/projects/project-aegis', '/deep-dives'],
+  ],
+  [
     '/projects/luxe-lofts',
     'Luxe Lofts — Digital Restructuring',
     'Audit-driven restructuring of a venue’s digital ecosystem into a conversion-oriented system the owner can run and customers can navigate.',

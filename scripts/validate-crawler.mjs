@@ -14,6 +14,7 @@ const REQUIRED_ROUTES = [
   '/projects/digital-twin',
   '/projects/ops-triage',
   '/projects/project-aegis',
+  '/projects/portfolio-pipeline',
   '/projects/luxe-lofts',
   '/deep-dives',
   '/resume',

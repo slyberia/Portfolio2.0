@@ -2,6 +2,7 @@
 import { ExperienceItem, SkillGroup, Certification, ProjectEntry, SkillChipConfig } from './types';
 import { MOH_SUPERVISOR_DASHBOARD_HTML } from './data/mohSupervisorDashboard';
 import { AEGIS_STATE_MACHINE_HTML } from './data/aegisStateMachine';
+import { PORTFOLIO_PIPELINE_HTML } from './data/portfolioPipelineDiagram';
 
 export const EXPERIENCE: ExperienceItem[] = [
   {
@@ -640,6 +641,60 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
         problem: 'Running every change through the full Aegis check adds a delay per run.',
         tradeoff:
           'Accepted deliberately — a brief validation delay avoids the far larger cost of tracing hallucinated runtime bugs later.',
+      },
+    ],
+  },
+  {
+    id: 'portfolio-pipeline',
+    title: 'Portfolio 2.0 — Governed AI Build Pipeline',
+    rationale:
+      'Proves AI-assisted development can reach production-grade reliability when wrapped in human design authority, automated assertion gates, and a transparent attribution ledger.',
+    category: 'ai-ops',
+    tags: [
+      'CI/CD',
+      'Multi-LLM Workflow',
+      'AI Governance',
+      'Vitest',
+      'TypeScript',
+      'Docker',
+      'Cloud Run',
+      'Documentation',
+    ],
+    roleLanes: ['AI Workflow / Portfolio Governance', 'Forward Deployed Engineer'],
+    heroArtifact: {
+      type: 'html',
+      label: 'Governed Build Pipeline — Flow & Toolchain',
+      description:
+        'Sanitized overview of this repo’s build governance: Author → subphase protocol → CI gates → crawler/drift guards → Cloud Run, with the multi-LLM toolchain side rail. No secrets or credentials.',
+      content: PORTFOLIO_PIPELINE_HTML,
+    },
+    rigor: {
+      statement:
+        'AI-assisted development is only trustworthy when it is strictly governed — bounded scope, automated CI gates, and an immutable, auditable trail.',
+      baseline:
+        'Ungoverned "vibe coding" produces fast, localized output that is brittle, hard to review, prone to regression, and impossible to attribute.',
+      definition:
+        'Every change clears typecheck, lint, format, tests, build, secret-scan, and semantic drift guards before merge; each subphase is independently validated and forensically attributed.',
+      method:
+        'A one-subphase sequential execution protocol plus a multi-LLM toolchain operating under human design authority, behind an immutable CI gate and an AI attribution ledger.',
+      window: '2025–2026, across build Phases 1–7.',
+    },
+    constraints: [
+      {
+        problem:
+          'An AI agent can generate massive, unreviewable changes that overwhelm human oversight.',
+        tradeoff:
+          'The one-subphase protocol intentionally bottlenecks velocity, capping the blast radius so every diff stays digestible and reviewable.',
+      },
+      {
+        problem: 'Letting an agent orchestrate the build risks leaking secrets into the bundle.',
+        tradeoff:
+          'API keys are stripped from the client and served only via a server-side proxy, enforced by a CI key-audit and a gitleaks scan that block any leak.',
+      },
+      {
+        problem: 'Third-party CI actions are a supply-chain risk via mutable version tags.',
+        tradeoff:
+          'All actions are pinned to immutable commit SHAs, so an upstream tag repoint cannot compromise the validation environment.',
       },
     ],
   },

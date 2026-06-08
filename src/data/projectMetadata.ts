@@ -181,6 +181,28 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     switcherRank: 4,
   },
   {
+    id: 'portfolio-pipeline',
+    displayTitle: 'Portfolio 2.0 — Governed AI Build Pipeline',
+    shortSummary:
+      'The governed, multi-LLM pipeline behind this site — AI-assisted build under a one-subphase protocol, gated by CI (lint, types, tests, build, secret-scan) and crawler drift-guards, deployed via Docker to Cloud Run.',
+    hierarchy: 'supporting',
+    statusLabel: 'In Production',
+    roleLanes: ['Implementation'],
+    canonicalRoleLanes: ['AI Workflow / Portfolio Governance', 'Forward Deployed Engineer'],
+    filters: ['AI Systems', 'Process', 'Implementation'],
+    proofType: 'System / Process',
+    purpose:
+      'Prove AI-assisted development can reach production-grade reliability when it stays under human design authority, automated CI gates, and a transparent attribution ledger.',
+    stakeholderValue:
+      'A reviewer can trust what shipped: every change clears the same CI gate, semantic drift-guards block silent regressions, and AI_ATTRIBUTION.md demarcates human direction from AI execution.',
+    accent: 'aqua',
+    sortOrder: 5,
+    href: buildProjectHref('portfolio-pipeline'),
+    evidenceTier: 'supporting',
+    showInSwitcher: true,
+    switcherRank: 5,
+  },
+  {
     id: 'luxe-lofts',
     displayTitle: 'Luxe Lofts',
     shortSummary:
