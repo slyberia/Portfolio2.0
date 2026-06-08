@@ -9,6 +9,7 @@
 > **Status:** In Production (Google Cloud Run) · **Role:** AI Workflow & Automation Designer
 > **Scope:** AI build governance, multi-LLM orchestration, CI/CD, attribution
 > **Tools:** TypeScript, Vite, Vitest, Docker, Google Cloud Run, GitHub Actions, multi-LLM toolchain
+> **Links:** [Live site](https://kyle-semple-ai-solutions-portfolio-341805100474.us-east1.run.app) · [GitHub repo](https://github.com/slyberia/Portfolio2.0)
 
 ---
 
@@ -95,5 +96,7 @@ documented, reproducible, auditable trail — production-grade by construction.
 
 ---
 
-> The GitHub repository is public as verifiable proof of this rigor; the live application runs on
+> The [GitHub repository](https://github.com/slyberia/Portfolio2.0) is public as verifiable proof of
+> this rigor; the
+> [live application](https://kyle-semple-ai-solutions-portfolio-341805100474.us-east1.run.app) runs on
 > Google Cloud Run. No secrets or client data appear in any artifact.
