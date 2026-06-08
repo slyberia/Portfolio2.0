@@ -26,8 +26,6 @@ import {
   getRoleAccentRecipe,
   semanticTokens,
 } from '../lib/design-system';
-import MediaProofGrid from '../components/media/MediaProofGrid';
-import { getPublicMediaByProject } from '../data/mediaRegistry';
 
 const ProjectSwitcher: React.FC<{ activeId: string }> = ({ activeId }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -258,12 +256,10 @@ const ProjectDetailView: React.FC = () => {
     );
   }
 
-  // The Interactive Proofs tab only earns a slot when it has something to show: a live
-  // simulator/agent or visual media. Otherwise it renders blank, so we drop it entirely.
+  // The Interactive Proofs tab only earns a slot when it has a live proof to show: the
+  // ops-triage simulator or the digital-twin agent. Otherwise it renders blank, so we drop it.
   const hasInteractiveProofs =
-    activeProjectId === 'ops-triage' ||
-    activeProjectId === 'digital-twin' ||
-    getPublicMediaByProject(activeProjectId).length > 0;
+    activeProjectId === 'ops-triage' || activeProjectId === 'digital-twin';
 
   const tabsList: { id: 'overview' | 'architecture' | 'tradeoffs' | 'proofs'; label: string }[] = [
     { id: 'overview', label: 'Overview' },
@@ -532,12 +528,6 @@ const ProjectDetailView: React.FC = () => {
                       </div>
                     </section>
                   )}
-
-                  <MediaProofGrid
-                    title="Visual Proof"
-                    description={`Visual evidence of implementation for ${metadata.displayTitle}.`}
-                    assets={getPublicMediaByProject(activeProjectId)}
-                  />
                 </div>
               )}
             </div>
