@@ -10,9 +10,20 @@ import {
 import ScrollToTopButton from '../components/ScrollToTopButton';
 import ErrorBoundary from '../components/ErrorBoundary';
 import { componentRecipes, semanticTokens } from '../lib/design-system';
+import { automationSystems, automationThesis, governancePrimitives } from '../data/deepDiveContent';
 import type { Visibility } from '../types';
 
 type MainTab = 'landing' | 'process' | 'luxe-lofts';
+
+// `?tab=automation` is an alias for the umbrella governance tab so existing
+// links and the original deep-dive brief keep resolving after the Option C
+// restructure (the tab itself is the renamed 'process' tab).
+const TAB_ALIASES: Record<string, MainTab> = { automation: 'process' };
+const resolveTabParam = (param: string | null): MainTab | null => {
+  if (param === 'landing' || param === 'process' || param === 'luxe-lofts') return param;
+  if (param && param in TAB_ALIASES) return TAB_ALIASES[param];
+  return null;
+};
 
 // Deep-dive tabs are config-driven so any tab can be shown/hidden via `visibility`.
 // A hidden tab's button is not rendered, but its content remains reachable by `?tab=<id>`
@@ -27,7 +38,7 @@ const DEEP_DIVE_TABS: {
   { id: 'landing', label: 'Overview', activeBorder: 'border-tide-aqua', visibility: 'public' },
   {
     id: 'process',
-    label: 'Portfolio 2.0 Process & Governance',
+    label: 'Automation & Governance Architecture',
     activeBorder: 'border-tide-aqua',
     visibility: 'public',
   },
@@ -48,7 +59,10 @@ type TimelineRow = {
 };
 
 const PROCESS_PHASES = [
-  { id: 'proc-1', label: 'Build Overview' },
+  { id: 'arch-thesis', label: 'Governance Thesis' },
+  { id: 'arch-spectrum', label: 'Autonomy Spectrum' },
+  { id: 'arch-primitives', label: 'Reused Primitives' },
+  { id: 'proc-1', label: 'Pipeline Overview' },
   { id: 'proc-2', label: 'Build Timeline' },
   { id: 'proc-3', label: 'Multi-LLM Toolchain' },
   { id: 'proc-4', label: 'Delivery Model' },
@@ -294,19 +308,19 @@ const DEEP_DIVE_BRIDGES: Record<'process' | 'luxe-lofts', DeepDiveBridgeContent>
   process: {
     label: 'Why this deep dive matters',
     statement:
-      'This build is the thesis in practice: a complex, AI-assisted process turned into a governed system a reviewer can actually understand, trust, and audit — not a black box.',
+      'One governance philosophy across three systems: AI treated as an untrusted worker that must clear an explicit gate before its output is accepted — from human-in-the-loop to autonomous. The Portfolio 2.0 build pipeline is where that philosophy is documented in full; Aegis and emOS are its structural evolution.',
     facets: [
       {
         title: 'Translation',
-        body: 'Turns an opaque "AI built my site" story into a legible trail of scoped decisions, defined tool roles, and validation gates.',
+        body: 'Turns an opaque "AI built and runs my systems" story into a legible model — an explicit ruleset, a reasoning trace, drift checks, and an audit trail — that a reviewer can actually evaluate.',
       },
       {
         title: 'Adoption',
-        body: 'Structured so a recruiter or engineer can follow the evidence in minutes instead of reverse-engineering the history.',
+        body: 'Maps each system to who holds the Guardian seat, so a team can see the same gate scale from a person reviewing every change to an automated judge running between iterations.',
       },
       {
         title: 'Implementation maturity',
-        body: 'Branch isolation, reviewed PRs, and zero-tolerance typecheck/lint/test/build gates — production discipline applied to an AI workflow.',
+        body: 'A decoupled judge-vs-executor pattern reused across a CI pipeline, a human-in-the-loop judge, and an autonomous runtime — the same discipline applied at three autonomy levels.',
       },
     ],
   },
@@ -368,13 +382,11 @@ const DeepDiveView: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const tabParam = searchParams.get('tab');
 
-  const [activeMainTab, setActiveMainTab] = React.useState<MainTab>(() => {
-    if (tabParam === 'luxe-lofts') return 'luxe-lofts';
-    if (tabParam === 'process') return 'process';
-    return 'landing';
-  });
+  const [activeMainTab, setActiveMainTab] = React.useState<MainTab>(
+    () => resolveTabParam(tabParam) ?? 'landing',
+  );
 
-  const [activeProcessPhase, setActiveProcessPhase] = React.useState<string>('proc-1');
+  const [activeProcessPhase, setActiveProcessPhase] = React.useState<string>('arch-thesis');
   const [activePhase, setActivePhase] = React.useState<string>('phase-1');
   const [activeDiagTab, setActiveDiagTab] = React.useState<
     'visuals' | 'ux' | 'technical' | 'content'
@@ -388,9 +400,8 @@ const DeepDiveView: React.FC = () => {
   const [activeLlmTool, setActiveLlmTool] = React.useState<string | null>(null);
 
   React.useEffect(() => {
-    if (tabParam === 'luxe-lofts' || tabParam === 'process' || tabParam === 'landing') {
-      setActiveMainTab(tabParam as MainTab);
-    }
+    const resolved = resolveTabParam(tabParam);
+    if (resolved) setActiveMainTab(resolved);
   }, [tabParam]);
 
   const handleMainTabChange = (tab: MainTab) => {
@@ -491,7 +502,7 @@ const DeepDiveView: React.FC = () => {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  {/* Portfolio 2.0 Entry Card */}
+                  {/* Automation & Governance Architecture Entry Card */}
                   <button
                     onClick={() => handleMainTabChange('process')}
                     className="text-left group rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] hover:border-tide-aqua/40 dark:hover:border-tide-aqua/40 hover:shadow-xl transition-all duration-300 overflow-hidden"
@@ -500,22 +511,23 @@ const DeepDiveView: React.FC = () => {
                     <div className="p-8 space-y-5">
                       <div className="space-y-3">
                         <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-tide-aqua dark:text-tide-sky block">
-                          Portfolio Process
+                          Governed AI Automation
                         </span>
                         <h3 className="text-2xl font-outfit font-bold text-slate-950 dark:text-white group-hover:text-tide-aqua dark:group-hover:text-tide-sky transition-colors">
-                          Portfolio 2.0 Process &amp; Governance
+                          Automation &amp; Governance Architecture
                         </h3>
                         <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                          How this portfolio evolved from an AI-assisted prototype into a role-track
-                          system — documenting the multi-LLM toolchain, delivery model, route
-                          architecture, Digital Twin guardrails, and validation trail.
+                          One philosophy across three systems — AI as an untrusted worker behind an
+                          explicit governance gate, from human-in-the-loop to autonomous. Documents
+                          the Portfolio 2.0 build pipeline in full, then Aegis and emOS as its
+                          structural evolution, with the multi-LLM toolchain and validation trail.
                         </p>
                       </div>
                       <div className="flex flex-wrap gap-2">
                         {[
+                          'Autonomy Spectrum',
+                          'Judge vs. Executor',
                           'Multi-LLM Workflow',
-                          'AI Delivery Model',
-                          'Digital Twin',
                           'Validation Trail',
                         ].map((tag) => (
                           <span
@@ -527,7 +539,7 @@ const DeepDiveView: React.FC = () => {
                         ))}
                       </div>
                       <div className="flex items-center gap-2 text-sm font-bold text-tide-aqua dark:text-tide-sky group-hover:gap-3 transition-all">
-                        <span>Explore Process Deep Dive</span>
+                        <span>Explore Automation &amp; Governance</span>
                         <span>→</span>
                       </div>
                     </div>
@@ -617,11 +629,216 @@ const DeepDiveView: React.FC = () => {
               <div className="flex-1 space-y-16 min-w-0">
                 <DeepDiveBridge bridge={DEEP_DIVE_BRIDGES.process} accent="aqua" />
 
-                {/* proc-1: Build Overview */}
+                {/* arch-thesis: Governance Thesis */}
+                <section id="arch-thesis" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <p className="text-xs font-bold uppercase tracking-[0.3em] text-tide-aqua dark:text-tide-sky">
+                      The Spine
+                    </p>
+                    <h2 className="text-3xl font-outfit font-bold text-slate-950 dark:text-white">
+                      Governance Thesis — One Philosophy, Three Systems
+                    </h2>
+                    <p className="text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
+                      The Portfolio 2.0 build pipeline, Aegis, and emOS are one body of work seen at
+                      three autonomy levels. What unifies them is not the tooling but the
+                      discipline: execution is separated from validation, and no AI-generated output
+                      is accepted until it clears an explicit gate.
+                    </p>
+                  </div>
+
+                  <div
+                    className={`p-6 md:p-8 rounded-2xl border space-y-4 ${componentRecipes.card.surface}`}
+                  >
+                    <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-tide-aqua dark:text-tide-sky block">
+                      Unifying thesis — untrusted-by-default AI execution
+                    </span>
+                    <p className="text-slate-700 dark:text-slate-200 text-lg leading-relaxed max-w-4xl">
+                      {automationThesis}
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                    {automationSystems.map((system) => (
+                      <div
+                        key={`contrib-${system.id}`}
+                        className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] p-5 space-y-2"
+                      >
+                        <h3 className="font-bold text-slate-950 dark:text-white text-sm">
+                          {system.name}
+                        </h3>
+                        <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+                          {system.context}
+                        </p>
+                        <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                          {system.contributes}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+
+                {/* arch-spectrum: Autonomy Spectrum */}
+                <section id="arch-spectrum" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <p className="text-xs font-bold uppercase tracking-[0.3em] text-tide-aqua dark:text-tide-sky">
+                      The Gradient
+                    </p>
+                    <h2 className="text-3xl font-outfit font-bold text-slate-950 dark:text-white">
+                      The Autonomy Spectrum
+                    </h2>
+                    <p className="text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
+                      The same gate at three points on a trust gradient. As confidence in the
+                      ruleset grows, the Guardian seat hands off from a person to automated checks
+                      to an automated judge — but the governance architecture stays the same.
+                    </p>
+                  </div>
+
+                  <div className="rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+                    <table className="min-w-full text-sm">
+                      <thead className="bg-slate-100 dark:bg-slate-900">
+                        <tr>
+                          <th className="text-left p-3 text-slate-700 dark:text-slate-200 font-bold">
+                            System
+                          </th>
+                          <th className="text-left p-3 text-slate-700 dark:text-slate-200 font-bold">
+                            Autonomy
+                          </th>
+                          <th className="text-left p-3 text-slate-700 dark:text-slate-200 font-bold">
+                            Who holds the Guardian seat
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {automationSystems.map((system, i) => (
+                          <tr
+                            key={system.id}
+                            className={`align-top ${i > 0 ? 'border-t border-slate-200 dark:border-slate-800' : ''}`}
+                          >
+                            <td className="p-3 font-semibold text-slate-800 dark:text-slate-200">
+                              {system.name}
+                            </td>
+                            <td className="p-3 text-slate-600 dark:text-slate-300">
+                              {system.autonomy}
+                            </td>
+                            <td className="p-3 text-slate-600 dark:text-slate-300">
+                              {system.guardian}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {automationSystems.map((system) => (
+                      <div
+                        key={system.id}
+                        className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] p-6 space-y-3 flex flex-col"
+                      >
+                        <div className="space-y-1.5">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-tide-aqua dark:text-tide-sky block">
+                            {system.autonomy}
+                          </span>
+                          <h3 className="font-bold text-slate-950 dark:text-white text-lg">
+                            {system.name}
+                          </h3>
+                        </div>
+                        <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                          {system.description}
+                        </p>
+                        <div className="flex flex-wrap gap-2 pt-1">
+                          {system.chips.map((chip) => (
+                            <span
+                              key={chip}
+                              className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-tide-aqua/10 text-tide-aqua dark:text-tide-sky border border-tide-aqua/20"
+                            >
+                              {chip}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="pt-3 mt-auto">
+                          <Link
+                            to={system.href}
+                            className="inline-flex items-center gap-2 text-sm font-bold text-tide-aqua dark:text-tide-sky hover:gap-3 transition-all"
+                          >
+                            <span>View project entry</span>
+                            <span>→</span>
+                          </Link>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-wrap gap-4">
+                    <Link
+                      to="/projects/portfolio-pipeline"
+                      className={`inline-flex items-center gap-2 text-sm font-semibold rounded-xl px-5 py-2.5 transition-all ${componentRecipes.button.primary}`}
+                    >
+                      Portfolio 2.0 Build Pipeline
+                    </Link>
+                    <Link
+                      to="/projects/project-aegis"
+                      className={`inline-flex items-center gap-2 text-sm font-semibold rounded-xl px-5 py-2.5 transition-all ${componentRecipes.button.secondary}`}
+                    >
+                      Aegis &amp; emOS
+                    </Link>
+                    <Link
+                      to={RESUME_HREF}
+                      className={`inline-flex items-center gap-2 text-sm font-semibold rounded-xl px-5 py-2.5 transition-all ${componentRecipes.button.secondary}`}
+                    >
+                      View Resume
+                    </Link>
+                  </div>
+                </section>
+
+                {/* arch-primitives: Reused Governance Primitives */}
+                <section id="arch-primitives" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <p className="text-xs font-bold uppercase tracking-[0.3em] text-tide-aqua dark:text-tide-sky">
+                      The Through-Line
+                    </p>
+                    <h2 className="text-3xl font-outfit font-bold text-slate-950 dark:text-white">
+                      Reused Governance Primitives
+                    </h2>
+                    <p className="text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
+                      The trust gradient scales because the same building blocks recur in all three
+                      systems — only their implementation changes with the autonomy level. These
+                      primitives are the mechanical proof behind the narrative arc.
+                    </p>
+                  </div>
+
+                  <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] overflow-hidden">
+                    {governancePrimitives.map((primitive, i) => (
+                      <div
+                        key={primitive.id}
+                        className={`flex flex-col md:flex-row items-start gap-4 md:gap-6 p-5 ${i > 0 ? 'border-t border-slate-200 dark:border-slate-800' : ''}`}
+                      >
+                        <div className="md:w-64 shrink-0 space-y-1">
+                          <h3 className="font-bold text-slate-950 dark:text-white text-sm">
+                            {primitive.name}
+                          </h3>
+                          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                            {primitive.summary}
+                          </p>
+                        </div>
+                        <div className="min-w-0 space-y-1.5 border-l-2 border-tide-aqua/30 pl-4">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-tide-aqua dark:text-tide-sky">
+                            Across the three systems
+                          </span>
+                          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                            {primitive.acrossSystems}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+
+                {/* proc-1: Pipeline Overview — the human-led, gated anchor of the spectrum */}
                 <section id="proc-1" className="space-y-6 scroll-mt-24">
                   <div className="space-y-2">
                     <p className="text-xs font-bold uppercase tracking-[0.3em] text-tide-aqua dark:text-tide-sky">
-                      Phase 1
+                      Portfolio 2.0 Pipeline · Human-led, gated
                     </p>
                     <h2 className="text-3xl font-outfit font-bold text-slate-950 dark:text-white">
                       Build Overview &amp; Context

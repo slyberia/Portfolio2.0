@@ -349,6 +349,121 @@ export const forensicEntries: ArchiveEntry[] = [
   },
 ];
 
+// ── Automation & Governance Deep Dive ──────────────────────────────────────
+// Unifies the three governed-AI-automation systems under one spine:
+// "AI as an untrusted worker behind an explicit governance gate — across the
+// spectrum from human-in-the-loop to autonomous." Same philosophy, different
+// autonomy levels. Cross-links the two project entries (project-aegis,
+// portfolio-pipeline) rather than restating them. No invented metrics.
+
+export type AutomationSystem = {
+  id: string;
+  name: string;
+  context: string;
+  autonomy: string;
+  guardian: string;
+  contributes: string;
+  description: string;
+  href: string;
+  chips: string[];
+};
+
+export const automationThesis =
+  'I treat AI not as a magic bullet but as an untrusted worker that must pass an explicit assertion check before its output is accepted. Across every system the philosophy is identical: separate the execution from the validation. Whether that check is enforced manually by me, programmatically by a strict CI pipeline, or autonomously by the Aegis judge, the governance architecture is what makes the AI safe to run in production.';
+
+export const automationSystems: AutomationSystem[] = [
+  {
+    id: 'portfolio-pipeline',
+    name: 'Portfolio 2.0 build pipeline',
+    context: 'The governed AI build of this site.',
+    autonomy: 'Human-led, gated',
+    guardian: 'Kyle (design authority) + CI gates',
+    contributes:
+      'Demonstrates how rigorous human design authority and strict CI validation gates can safely harness multi-LLM workflows for production-grade software builds.',
+    description:
+      'AI-assisted development under a one-subphase protocol with human design authority. Every change lands on a branch and clears the same automated gate — lint, types, tests, build, secret-scan, and crawler drift-guards — before merge, with an attribution ledger demarcating human direction from AI execution.',
+    href: '/projects/portfolio-pipeline',
+    chips: ['Human-in-the-loop', 'CI Gates', 'Attribution Ledger'],
+  },
+  {
+    id: 'aegis',
+    name: 'Aegis',
+    context: 'The governance / validation layer — the judge.',
+    autonomy: 'Human-in-the-loop (HITL)',
+    guardian: 'Kyle (algorithmic validation, human approval)',
+    contributes:
+      'Introduces the cognitive "judge" layer — a human-in-the-loop validation framework that measures AI output against the project’s fixed invariants before that output is accepted.',
+    description:
+      'The governance layer that evaluates AI-generated work against an explicit ruleset and emits a reasoning trace and drift signals. Aegis judges; it does not execute. In human-in-the-loop mode the operator approves each decision before it advances.',
+    href: '/projects/project-aegis',
+    chips: ['Explicit Ruleset', 'Reasoning Trace', 'Drift Detection'],
+  },
+  {
+    id: 'emos',
+    name: 'emOS',
+    context: 'The autonomous execution runtime — the workers.',
+    autonomy: 'Autonomous',
+    guardian: 'The Aegis engine (algorithmic judge)',
+    contributes:
+      'Represents the autonomous runtime where the Aegis judge takes the Guardian seat, enabling agentic workflows without requiring direct human review of each step.',
+    description:
+      'The execution runtime that runs containerized workers (Docker / Cloud Run) over a Notion state machine. As confidence in the ruleset grows, the same pipeline shifts from human-governed toward autonomous operation, with the Aegis engine standing in as judge between iterations.',
+    href: '/projects/project-aegis',
+    chips: ['Autonomous', 'Notion State Machine', 'Cloud Run Workers'],
+  },
+];
+
+export type GovernancePrimitive = {
+  id: string;
+  name: string;
+  summary: string;
+  acrossSystems: string;
+};
+
+// The five mechanisms that recur across all three systems — the strongest
+// connective tissue and the mechanical proof behind the autonomy gradient.
+export const governancePrimitives: GovernancePrimitive[] = [
+  {
+    id: 'explicit-ruleset',
+    name: 'Explicit rulesets & invariants',
+    summary:
+      'What "acceptable" means is written down before the worker runs, not inferred after the fact.',
+    acrossSystems:
+      'CLAUDE.md in the portfolio acts as the same kind of invariant contract that Aegis and emOS map for their runs — fixed project invariants the worker is checked against.',
+  },
+  {
+    id: 'judge-vs-executor',
+    name: 'Decoupled judge vs. executor',
+    summary: 'The agent that writes the work is never the agent — or person — that approves it.',
+    acrossSystems:
+      'In the pipeline I am the judge of what the AI executes; in emOS, the Aegis judge is a layer distinct from the workers it governs. Execution and validation never collapse into one actor.',
+  },
+  {
+    id: 'reasoning-trace',
+    name: 'Thinking / pre-computation traces',
+    summary:
+      'The worker maps its intent and blast radius before it acts, so the reasoning can be inspected.',
+    acrossSystems:
+      'Mandatory <thinking> traces in the build cycle surface as patch-note review against scoped intent; Aegis emits a reasoning trace per evaluation; emOS preserves it between autonomous steps.',
+  },
+  {
+    id: 'drift-checks',
+    name: 'Drift & assertion checks',
+    summary:
+      'Output is compared against intent to catch the silent regressions that compound in AI-assisted work.',
+    acrossSystems:
+      'CI tests and crawler drift-guards in the portfolio serve the same function as the invariant validation loops in Aegis/emOS — flagging drift before output is accepted.',
+  },
+  {
+    id: 'audit-trail',
+    name: 'Audit trails',
+    summary:
+      'Every decision leaves a readable record, so the system stays legible to a reviewer who arrives later.',
+    acrossSystems:
+      'The AI_ATTRIBUTION.md ledger and reviewed-PR history in the portfolio mirror the execution logging the emOS runtime keeps in a plain Notion workspace.',
+  },
+];
+
 // ── Appendix Links ─────────────────────────────────────────────────────────
 
 export const appendixLinks = [
