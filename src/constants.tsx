@@ -537,6 +537,7 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
       'Human Handoff',
       'Triage Logic',
       'Prompt Governance',
+      'Appellate Defense',
       'Portfolio Navigation',
       'Technical Implementation',
       'QA Scenarios',

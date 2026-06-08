@@ -25,6 +25,12 @@ I engineered a **Multi-Stage Triage Flow** that intercepts requests before they 
 
 The agent is not just a "chatbot"; it is an **Operational Orchestrator**. It can trigger UI commands (e.g., `TRIGGER_RESUME_DOWNLOAD`) by generating structured JSON hidden from the user, bridging the gap between chat and site action.
 
+### 3. Sibling Agent: The Appellate Defense Node
+
+The same scoped-agent discipline that governs the Digital Twin powers a second AI agent in this portfolio's build pipeline — the **Appellate Defense Node** (`npm run defense:codex`). When an automated peer review flags issues in a change, the Defense Node reads that report and, for **every** critique, returns a deterministic verdict — **Concede** or **Defend** — with a technical rationale: which exact file and line to fix, or which architectural invariant makes the current code the safer choice.
+
+It is a study in the same principle: a narrow purpose, a strict output schema, and hard prohibitions (no rewriting source, no hypothetical implementations, no third classification) that keep an LLM useful and predictable instead of open-ended. The Digital Twin guards a conversation; the Defense Node guards the codebase — both prove that an AI agent earns trust through tight scope and enforced guardrails, not raw capability.
+
 ---
 
 ## 📊 Impact & Failure Mode Resilience

@@ -99,7 +99,7 @@ const SupportingEvidenceSection: React.FC = () => {
           {filteredItems.map((item) => (
             <article
               key={item.id}
-              className={`rounded-xl border px-4 py-4 md:px-5 transition-all duration-300 ${
+              className={`group/card relative rounded-xl border px-4 py-4 md:px-5 transition-all duration-300 hover:shadow-[0_8px_20px_rgba(15,23,42,0.08)] ${
                 item.flagship
                   ? 'border-gild/40 bg-gild/5 dark:bg-gild-deep/10 shadow-[0_4px_12px_rgba(15,23,42,0.05)] hover:border-gild/80'
                   : `${getProjectAccentRecipe(item.accent).borderClass} bg-white/95 dark:bg-slate-900/70 shadow-[0_4px_12px_rgba(15,23,42,0.05)]`
@@ -114,13 +114,18 @@ const SupportingEvidenceSection: React.FC = () => {
                 </span>
               </div>
               <div className="mt-3 flex justify-between items-start group">
-                <h3 className="text-base font-semibold text-ink-navy dark:text-white group-hover:text-tide-aqua dark:group-hover:text-tide-softBlue hover:underline transition-colors">
-                  <Link to={item.href}>{item.displayTitle}</Link>
+                <h3 className="text-base font-semibold text-ink-navy dark:text-white group-hover/card:text-tide-aqua dark:group-hover/card:text-tide-softBlue transition-colors">
+                  <Link
+                    to={item.href}
+                    className="rounded after:absolute after:inset-0 after:content-[''] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua group-hover/card:underline"
+                  >
+                    {item.displayTitle}
+                  </Link>
                 </h3>
                 <button
                   onClick={(e) => handleAskAI(e, item)}
                   aria-label={`Ask AI about ${item.displayTitle}`}
-                  className="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 hover:text-amber-500 dark:hover:text-amber-400 transition-colors uppercase tracking-wider flex items-center gap-1 shrink-0 ml-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded px-1 -mr-1 py-1"
+                  className="relative z-10 text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 hover:text-amber-500 dark:hover:text-amber-400 transition-colors uppercase tracking-wider flex items-center gap-1 shrink-0 ml-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded px-1 -mr-1 py-1"
                 >
                   Ask AI <span aria-hidden="true">→</span>
                 </button>
@@ -149,7 +154,9 @@ const SupportingEvidenceSection: React.FC = () => {
               </div>
               <Link
                 to={item.href}
-                className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#237f86] dark:text-tide-softBlue focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua rounded"
+                tabIndex={-1}
+                aria-hidden="true"
+                className="relative z-10 mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#237f86] dark:text-tide-softBlue focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua rounded"
               >
                 View Project <span aria-hidden="true">→</span>
               </Link>

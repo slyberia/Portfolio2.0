@@ -258,11 +258,18 @@ const ProjectDetailView: React.FC = () => {
     );
   }
 
+  // The Interactive Proofs tab only earns a slot when it has something to show: a live
+  // simulator/agent or visual media. Otherwise it renders blank, so we drop it entirely.
+  const hasInteractiveProofs =
+    activeProjectId === 'ops-triage' ||
+    activeProjectId === 'digital-twin' ||
+    getPublicMediaByProject(activeProjectId).length > 0;
+
   const tabsList: { id: 'overview' | 'architecture' | 'tradeoffs' | 'proofs'; label: string }[] = [
     { id: 'overview', label: 'Overview' },
     { id: 'architecture', label: 'Architecture & Strategy' },
     { id: 'tradeoffs', label: 'Decisions & Trade-offs' },
-    { id: 'proofs', label: 'Interactive Proofs' },
+    ...(hasInteractiveProofs ? [{ id: 'proofs' as const, label: 'Interactive Proofs' }] : []),
   ];
 
   const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
