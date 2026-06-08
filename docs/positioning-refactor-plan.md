@@ -541,3 +541,29 @@ Governance` pointed at `project-aegis`, which is **not** a listed Library entry 
   honest Library project with no invented metrics; full validation + crawler suite green.
 - **Commits:** `chore: subphase 7.7a — retire prompter-hub & nba-systems-qa case studies`;
   `feat: subphase 7.7b — publish Automation & Operational Protocols entry`
+
+### 7.8 — Portfolio 2.0 Build-Pipeline Library entry (GATED on intake)
+
+- **Why.** The third leg of the "governed AI automation" story (sibling to Aegis/emOS, per Kyle's
+  7.7 decision to keep the portfolio pipeline separate). A first-class entry summarizing the
+  governed, multi-LLM pipeline behind this site, linking into the existing deep-dive process tab.
+- **Source:** mostly verifiable from the repo (CI gates, multi-LLM toolchain, Sequential Execution
+  Protocol, `AI_ATTRIBUTION.md`, crawler/drift guards, Docker→Cloud Run). Gathered via
+  `docs/portfolio-pipeline-intake-questionnaire.md` (pre-filled-from-repo intake; Kyle confirms/
+  corrects + supplies the LLM roster, repo-public status, title/role/status, any defensible metrics).
+- **Files:** `public/case-studies/portfolio-pipeline.md`, `src/constants.tsx`,
+  `src/data/projectMetadata.ts`, crawler generator + validator, sitemap/llms/indexes, inventory docs.
+- **Acceptance:** honest first-class entry; no invented metrics; full validation + crawler green.
+- **Commit:** `feat: subphase 7.8 — publish Portfolio 2.0 build-pipeline entry`
+
+### 7.9 — Automation & Governance deep dive (GATED on intake)
+
+- **Why.** Unify the three governed-AI-automation systems (Portfolio pipeline + Aegis + emOS) under
+  one narrative — "AI as an untrusted worker behind an explicit governance gate, across the HITL →
+  autonomous spectrum." A "Portfolio 2.0 Process & Governance" tab already exists, so the first
+  decision is extend-vs-new-tab.
+- **Source:** narrative + structure decisions gathered via `docs/automation-deep-dive-intake.md`.
+- **Files:** `src/data/deepDiveContent.ts`, `src/views/DeepDiveView.tsx`, `seo.ts`/crawler anchors.
+- **Acceptance:** coherent unifying deep dive; real anchor ids resolve; no invented metrics; full
+  validation + crawler green; design-system rules honored.
+- **Commit:** `feat: subphase 7.9 — automation & governance deep dive`
