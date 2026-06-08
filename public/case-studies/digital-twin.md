@@ -1,6 +1,18 @@
+> **Role:** AI Workflow / Forward Deployed Engineer
+> **Outcome:** Built a guardrailed, portfolio-scoped AI assistant that retrieves proof on demand, refuses off-topic prompts, triggers UI actions, and hands off to a human when it can't resolve a query.
+> **Stack/Tools:** Gemini (server-side proxy), React, TypeScript, structured-JSON command parser
+> **Relevance:** Scoped AI implementation — prompt governance, guardrails, and human handoff, not an open-ended chatbot.
+
 # 🤖 Digital Twin AI Agent — Scoped Retrieval & Governance
 
 > **"An AI assistant without guardrails is a liability. The Digital Twin is engineered to provide precise, low-latency proof retrieval with built-in safety and cost controls."**
+
+> **Project Overview**
+>
+> **Status:** Featured AI Implementation
+> **Role:** AI Workflow / Forward Deployed Engineer
+> **Scope:** Scoped retrieval, operational guardrails, command parsing, human handoff
+> **Tools:** Gemini API (server-side proxy), React, TypeScript
 
 ---
 
@@ -33,7 +45,7 @@ It is a study in the same principle: a narrow purpose, a strict output schema, a
 
 ---
 
-## 📊 Impact & Failure Mode Resilience
+## 📊 Impact & Results
 
 - **Zero-Hallucination Scope:** System instructions force the model to refuse off-topic prompts, ensuring 100% focus on portfolio evidence.
 - **Escalation Path:** Integrated a **Human Handoff** flow that captures the conversation state and routes it to a contact form if the AI cannot resolve the query.

@@ -14,7 +14,7 @@
 
 ---
 
-## 🏗️ Executive Summary
+## 📋 Executive Summary
 
 This project reframed "rebranding" as a **system redesign**, connecting brand identity, menu hierarchy, and POS logic into a unified operational loop.
 
@@ -36,7 +36,7 @@ The following diagram illustrates the feedback loop designed to drive higher ret
 
 ---
 
-## 3. Module A: POS & Loyalty Logic
+## ⚙️ Module A: POS & Loyalty Logic
 
 I conducted a structured audit of POS options (Square vs. Stripe vs. Dripos) based on **Margin Preservation** and **Scalability**, not just features.
 
@@ -52,7 +52,7 @@ The existing loyalty setup was a "flat" voucher system. Despite strong repeat cu
 
 ---
 
-## 4. Module B: Menu Redesign (Operational UX)
+## 🎨 Module B: Menu Redesign (Operational UX)
 
 The menu system was fragmented across multiple surfaces (wall, counter, digital), leading to slow line speeds and "What's in this?" questions.
 
@@ -66,7 +66,7 @@ We rebuilt the menu hierarchy around **Customer Scan Behavior** rather than prod
 
 ---
 
-## 5. Metrics & Measurement Model
+## 📊 Metrics & Measurement Model
 
 Because this is a strategy proposal, success is defined by projected operational shifts:
 
@@ -82,7 +82,7 @@ Because this is a strategy proposal, success is defined by projected operational
 
 ---
 
-## 6. Trade-offs (Strategic Decision Log)
+## ⚖️ Trade-offs (Strategic Decision Log)
 
 ### Trade-off 1: Flexibility vs. Cost Certainty (POS)
 
@@ -93,3 +93,13 @@ Because this is a strategy proposal, success is defined by projected operational
 
 - **Decision:** Removed 30% of text descriptions from the main boards.
 - **Why:** Sacrificed descriptive romance copy for speed. Speed is the primary driver of customer satisfaction during morning rush hours.
+
+---
+
+## 🤝 Customer / Stakeholder Value
+
+**Who it helps:** The café owner deciding where to invest, and the customers moving through a faster, clearer ordering experience.
+
+**What got easier:** Brand, menu, and POS/loyalty decisions stop being separate one-off choices — they're presented as one operational loop, with POS options weighed on break-even economics rather than feature lists, so the owner can choose with cost certainty.
+
+**Why it matters:** Treating the rebrand as a system reduces day-to-day friction (line speed, decision fatigue) and margin leakage at the same time — and leaves the owner with something they can run without an engineer.

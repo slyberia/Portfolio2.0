@@ -13,7 +13,7 @@
 
 ---
 
-## Executive Summary
+## 📋 Executive Summary
 
 This entry is about the pipeline that built _this_ site. The thesis is simple: **AI-assisted
 development is only trustworthy when it is governed.** Here, AI is treated not as an autonomous magic

@@ -15,7 +15,7 @@
 
 ---
 
-## Executive Summary
+## 📋 Executive Summary
 
 Aegis is a decoupled automation system that puts AI-generated work under an explicit governance layer before it is ever trusted. It separates two concerns that usually get tangled together:
 
