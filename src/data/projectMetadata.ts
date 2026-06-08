@@ -78,7 +78,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     id: 'guynode',
     displayTitle: 'Guynode Spatial Data Hub',
     shortSummary:
-      'Flagship spatial platform proofing dataset governance, metadata integrity, and high-fidelity public access workflows.',
+      "A redesigned public hub that makes Guyana's geospatial data easy to find, preview, and trust — built on solid dataset governance and clean, consistent metadata.",
     hierarchy: 'featured',
     featuredLabel: 'FLAGSHIP GIS SYSTEM',
     statusLabel: 'Featured System',
@@ -109,7 +109,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     id: 'digital-twin',
     displayTitle: 'Digital Twin AI Agent',
     shortSummary:
-      'Advanced AI implementation featuring scoped interaction protocols, operational guardrails, and seamless human-in-the-loop handoff.',
+      "An AI assistant that answers questions about Kyle's work in seconds, with guardrails that keep it accurate and a clean handoff to a human when a question runs past it.",
     hierarchy: 'featured',
     featuredLabel: 'FEATURED AI IMPLEMENTATION',
     statusLabel: 'Featured System',
@@ -139,7 +139,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     id: 'ops-triage',
     displayTitle: 'Ops Triage',
     shortSummary:
-      'High-pressure operational triage proof showcasing rigorous escalation logic, throughput management, and QA audit trails.',
+      'A system for keeping a busy operations queue moving without dropping quality — clear escalation rules, throughput control, and an audit trail anyone can review.',
     hierarchy: 'supporting',
     statusLabel: 'QA / Operations',
     roleLanes: ['Implementation', 'QA', 'GIS'],
@@ -161,7 +161,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     id: 'project-aegis',
     displayTitle: 'Automation & Operational Protocols',
     shortSummary:
-      'A decoupled AI-automation ecosystem — Aegis governance plus emOS execution over a Notion state machine — built to run with a human or an automated Guardian.',
+      "An AI automation setup that checks its own work before it's trusted — a governance layer (Aegis) plus an execution engine (emOS), all auditable in a plain Notion workspace.",
     hierarchy: 'featured',
     featuredLabel: 'FEATURED AUTOMATION SYSTEM',
     statusLabel: 'Working Prototype',
@@ -184,7 +184,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     id: 'portfolio-pipeline',
     displayTitle: 'Portfolio 2.0 — Governed AI Build Pipeline',
     shortSummary:
-      'The governed, multi-LLM pipeline behind this site — AI-assisted build under a one-subphase protocol, gated by CI (lint, types, tests, build, secret-scan) and crawler drift-guards, deployed via Docker to Cloud Run.',
+      'The governed AI build process behind this site: AI does the work one step at a time, every change has to clear automated checks (lint, types, tests, build, security scan), and an attribution ledger records who did what.',
     hierarchy: 'supporting',
     statusLabel: 'In Production',
     roleLanes: ['Implementation'],
@@ -206,7 +206,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     id: 'luxe-lofts',
     displayTitle: 'Luxe Lofts',
     shortSummary:
-      'Proposal-phase workflow artifact mapping business process constraints into modular implementation planning.',
+      "An early-stage plan that turns a client's rough requirements into a clear, phased build plan they can understand and price before any code is written.",
     hierarchy: 'supporting',
     statusLabel: 'Workflow Prototype',
     roleLanes: ['Implementation'],
@@ -228,7 +228,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     id: 'northern-grind',
     displayTitle: 'Northern Grind',
     shortSummary:
-      'Café digital rebrand & systems strategy — brand identity, menu UX, and break-even POS/loyalty modeling unified into one operational loop.',
+      'A café rebrand and systems plan that ties brand identity, menu experience, and break-even POS/loyalty economics into one coherent operating loop.',
     hierarchy: 'supporting',
     statusLabel: 'Implementation Ready',
     roleLanes: ['Implementation'],
@@ -250,7 +250,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     id: 'moh',
     displayTitle: 'Public Health GIS Workflow Support',
     shortSummary:
-      'Supported public-health contact-tracing workflows through GIS documentation, dashboard planning, UI/UX review, and implementation guidance for a national Ministry of Health.',
+      "Hands-on GIS and implementation support for a national Ministry of Health's contact-tracing work — documentation, dashboard planning, UI/UX review, and tool guidance staff could actually adopt.",
     hierarchy: 'supporting',
     statusLabel: 'Implementation Support',
     roleLanes: ['GIS', 'Implementation'],

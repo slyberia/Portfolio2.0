@@ -152,14 +152,6 @@ export const MEDIA_REGISTRY: MediaAsset[] = [
 ];
 
 /**
- * Helper to get public media by project
- */
-export const getPublicMediaByProject = (projectId: string) =>
-  MEDIA_REGISTRY.filter(
-    (m) => m.projectId === projectId && m.visibility === 'public' && m.captureStatus !== 'rejected',
-  );
-
-/**
  * Helper to get public media for evidence block
  */
 export const getPublicMediaForEvidence = (evidenceId: string) =>

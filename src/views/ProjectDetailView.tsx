@@ -26,10 +26,9 @@ import {
   getRoleAccentRecipe,
   semanticTokens,
 } from '../lib/design-system';
-import MediaProofGrid from '../components/media/MediaProofGrid';
-import { getPublicMediaByProject } from '../data/mediaRegistry';
 
 const ProjectSwitcher: React.FC<{ activeId: string }> = ({ activeId }) => {
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const orderedProjects = [...PROJECT_METADATA]
     .filter((project) => (project.visibility ?? 'public') === 'public')
     .sort((a, b) => a.sortOrder - b.sortOrder);
@@ -97,23 +96,42 @@ const ProjectSwitcher: React.FC<{ activeId: string }> = ({ activeId }) => {
       </section>
 
       <aside className="sticky top-24 hidden self-start rounded-2xl border border-slate-200 bg-white p-4 lg:block dark:border-white/10 dark:bg-slate-900/70">
-        <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-300">
-          Project Navigation
-        </p>
-        <div className="mt-4 space-y-4">
-          <div className="space-y-2">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-600 dark:text-slate-300">
-              Featured
-            </p>
-            <div className="space-y-2">{featured.map(renderProjectLink)}</div>
-          </div>
-          <div className="space-y-2">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-600 dark:text-slate-300">
-              Supporting
-            </p>
-            <div className="space-y-2">{supporting.map(renderProjectLink)}</div>
-          </div>
+        <div className="flex items-center justify-between gap-2">
+          <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-300">
+            Project Navigation
+          </p>
+          <button
+            type="button"
+            onClick={() => setIsCollapsed((prev) => !prev)}
+            aria-expanded={!isCollapsed}
+            aria-controls="project-navigation-list"
+            className="flex items-center gap-1 rounded-md border border-slate-300 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-600 transition hover:border-slate-400 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500 dark:border-white/20 dark:text-slate-300 dark:hover:border-white/30 dark:hover:bg-white/5"
+          >
+            <span
+              aria-hidden="true"
+              className={`transition-transform ${isCollapsed ? '' : 'rotate-180'}`}
+            >
+              ▾
+            </span>
+            {isCollapsed ? 'Show' : 'Hide'}
+          </button>
         </div>
+        {!isCollapsed && (
+          <div id="project-navigation-list" className="mt-4 space-y-4">
+            <div className="space-y-2">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-600 dark:text-slate-300">
+                Featured
+              </p>
+              <div className="space-y-2">{featured.map(renderProjectLink)}</div>
+            </div>
+            <div className="space-y-2">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-600 dark:text-slate-300">
+                Supporting
+              </p>
+              <div className="space-y-2">{supporting.map(renderProjectLink)}</div>
+            </div>
+          </div>
+        )}
       </aside>
     </>
   );
@@ -238,11 +256,16 @@ const ProjectDetailView: React.FC = () => {
     );
   }
 
+  // The Interactive Proofs tab only earns a slot when it has a live proof to show: the
+  // ops-triage simulator or the digital-twin agent. Otherwise it renders blank, so we drop it.
+  const hasInteractiveProofs =
+    activeProjectId === 'ops-triage' || activeProjectId === 'digital-twin';
+
   const tabsList: { id: 'overview' | 'architecture' | 'tradeoffs' | 'proofs'; label: string }[] = [
     { id: 'overview', label: 'Overview' },
     { id: 'architecture', label: 'Architecture & Strategy' },
     { id: 'tradeoffs', label: 'Decisions & Trade-offs' },
-    { id: 'proofs', label: 'Interactive Proofs' },
+    ...(hasInteractiveProofs ? [{ id: 'proofs' as const, label: 'Interactive Proofs' }] : []),
   ];
 
   const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
@@ -505,12 +528,6 @@ const ProjectDetailView: React.FC = () => {
                       </div>
                     </section>
                   )}
-
-                  <MediaProofGrid
-                    title="Visual Proof"
-                    description={`Visual evidence of implementation for ${metadata.displayTitle}.`}
-                    assets={getPublicMediaByProject(activeProjectId)}
-                  />
                 </div>
               )}
             </div>

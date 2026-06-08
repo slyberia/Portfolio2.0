@@ -4,22 +4,22 @@
 
 ### 🗺️ Launch Guynode Environments
 
-Experience the live GIS solutions. Compare the current legacy stable production version with the modern, high-fidelity Redesigned Spatial Data Hub mockup.
+Experience the live GIS solutions. Compare the current legacy stable production version with the modern, high-fidelity Redesigned Portal Preview.
 
 - [Launch Live Production Site →](https://guynode.com/)
-- [Launch Redesigned Mockup →](https://guynode-spatial-data-hub-786228485832.us-central1.run.app/)
+- [Launch Redesigned Portal Preview →](https://guynode-spatial-data-hub-786228485832.us-central1.run.app/)
 
 ---
 
 ## 🏗️ The Challenge: Legacy Fragmentation
 
-Geospatial data for Guyana was historically siloed across fragmented legacy systems, leading to:
+Geospatial data for the country of Guyana is difficult to locate, and typically scattered across fragmented legacy websites, with inconsistent formatting and metadata. Guynode was created as an answer to this issue, but its UI/UX design was in need of updating, as its visual appearance and inconsistencies diminished its value.
 
-- **Information Decay:** Inconsistent metadata making datasets difficult to verify or trust.
+- **Design Decay:** An outdated, inconsistent UI/UX that buried datasets behind visual clutter and undercut the platform's credibility — making the data feel less trustworthy than it actually was.
 - **Access Friction:** Obscure download paths and lack of visual previews for non-technical users.
 - **Maintenance Debt:** Unstructured storage making it difficult to audit or expand the catalog.
 
-**The Goal:** Engineer a unified spatial hub that prioritizes **Dataset Governance**, **Metadata Integrity**, and **User-Centric Discovery**.
+**The Goal:** Overhaul the unified spatial hub by engineering a new iteration that prioritizes **Dataset Governance**, **Metadata Integrity**, and **User-Centric Discovery**.
 
 ---
 
@@ -37,9 +37,19 @@ To bridge the gap between "Raw Data" and "User Comprehension," I integrated a **
 
 ## 📊 Impact & Results
 
-- **Audit-Ready IA:** The new Information Architecture supports 100% metadata coverage across all registered datasets.
-- **Reduced Friction:** Automated route/link validation ensures zero broken paths for public users.
-- **Launch Readiness:** Established a reproducible "Readiness Review" protocol for onboarding new spatial agencies.
+The overhaul reframes Guynode from a hard-to-navigate file repository into a credible, public-facing data product. That shift is the point: the same datasets become dramatically more usable simply because they can now be found, previewed, and trusted — and a platform that _looks_ as authoritative as its data is one that agencies and users will actually adopt.
+
+**How the business is affected**
+
+- **Restored Credibility:** A coherent, modern interface signals that the underlying catalog is maintained and authoritative. First impressions stop working against the data, lowering the barrier for partner agencies to publish through Guynode rather than their own scattered legacy pages.
+- **Audit-Ready IA:** The new Information Architecture supports 100% metadata coverage across all registered datasets, so the catalog can be reviewed, corrected, and expanded without archaeology through unstructured storage.
+- **Scalable Operations:** A type-safe registry plus automated route/link validation turns onboarding into a repeatable "Readiness Review" instead of bespoke cleanup — new agencies and datasets can be added without re-engineering the platform each time.
+
+**How it benefits consumers and visitors**
+
+- **Faster Time-to-Data:** Clear categories, consistent descriptions, and visible download paths let a visitor go from landing on the site to the exact dataset they need — without decoding a file system or guessing at obscure links.
+- **Trust Before Download:** In-browser map previews and verified provenance let users confirm a layer is the _right_ one, and is correct, _before_ committing it to an analysis — catching mistakes up front instead of after a bad decision is already made.
+- **Inclusive of Non-Technical Users:** Visual previews and plain-language metadata open the catalog to planners, researchers, journalists, and citizens — not just GIS specialists — widening who can actually put Guyana's spatial data to work.
 
 ---
 

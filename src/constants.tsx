@@ -477,8 +477,21 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
     heroArtifact: {
       type: 'html',
       label: 'Guynode Data Access Flow',
-      description: 'Live interactive spatial data hub redesign mockup.',
-      content: '',
+      description:
+        'How a visitor moves from discovery to a trusted download in the redesigned portal. Click to launch the live redesign.',
+      content: `<div style="font-family:Inter,system-ui,sans-serif;background:#f8fbfd;border:1px solid #d8e8ee;border-radius:14px;padding:18px;max-width:680px;color:#0f172a;">
+  <h4 style="margin:0 0 14px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#475569;">Guynode · Data Access Flow</h4>
+  <div style="display:grid;gap:8px;">
+    <div style="padding:11px 14px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;"><strong>1 · Discover</strong> — browse the governed dataset registry by category, tag, or search</div>
+    <div style="text-align:center;color:#0d9488;">↓</div>
+    <div style="padding:11px 14px;border:1px solid #99f6e4;border-radius:10px;background:#f0fdfa;"><strong>2 · Preview</strong> — inspect spatial layers on an in-browser Leaflet map before downloading</div>
+    <div style="text-align:center;color:#0d9488;">↓</div>
+    <div style="padding:11px 14px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;"><strong>3 · Verify</strong> — confirm provenance, format, and last-updated metadata up front</div>
+    <div style="text-align:center;color:#0d9488;">↓</div>
+    <div style="padding:11px 14px;border:1px solid #fed7aa;border-radius:10px;background:#fff7ed;"><strong>4 · Download</strong> — pull the dataset in a standard format via a clear, validated path</div>
+  </div>
+  <p style="margin:14px 0 0;font-size:11px;color:#64748b;">Click to launch the live redesigned Spatial Data Hub →</p>
+</div>`,
       iframeUrl: 'https://guynode-spatial-data-hub-786228485832.us-central1.run.app/',
     },
     rigor: {
@@ -524,6 +537,7 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
       'Human Handoff',
       'Triage Logic',
       'Prompt Governance',
+      'Appellate Defense',
       'Portfolio Navigation',
       'Technical Implementation',
       'QA Scenarios',
