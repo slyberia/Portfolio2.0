@@ -78,6 +78,12 @@ export const HtmlPreviewCard: React.FC<{
     }
   };
   const isRed = accentColor === 'red';
+  // Prefer inline HTML as the visible preview when provided, even if an external
+  // iframeUrl is set for the launch target. External live sites frequently refuse
+  // to be framed (X-Frame-Options/CSP), which leaves the preview blank — so a
+  // self-contained diagram gives users an actual preview while the click-through
+  // still opens the live site.
+  const previewSrcDoc = content && content.trim().length > 0 ? content : undefined;
   return (
     <div
       className={`rounded-2xl border border-[#dcd5ca] dark:border-white/10 overflow-hidden bg-[#f8fbfd] dark:bg-slate-900/60 ${isRed ? 'border-gild/35' : 'border-tide-aqua/25'} flex flex-col`}
@@ -106,8 +112,8 @@ export const HtmlPreviewCard: React.FC<{
         aria-label={`Launch interactive prototype for ${label}`}
       >
         <iframe
-          src={iframeUrl}
-          srcDoc={iframeUrl ? undefined : content}
+          src={previewSrcDoc ? undefined : iframeUrl}
+          srcDoc={previewSrcDoc}
           title={label}
           className="w-[200%] h-[200%] transform scale-50 origin-top-left pointer-events-none opacity-60 transition-all duration-500 group-hover/preview:opacity-100 group-hover/preview:scale-[0.51]"
           tabIndex={-1}
