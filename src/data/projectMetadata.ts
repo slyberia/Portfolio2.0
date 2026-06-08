@@ -51,7 +51,7 @@ export type ProjectMetadata = {
 
 export const CANONICAL_ROLE_ACCENT: Record<RecruiterRoleLane, RoleLane> = {
   'Forward Deployed Engineer': 'Implementation',
-  'Solutions Architect': 'QA',
+  'Implementation Consultant': 'QA',
   'Spatial Systems Architect': 'GIS',
   'AI Workflow / Portfolio Governance': 'Implementation',
 };
@@ -86,7 +86,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     canonicalRoleLanes: [
       'Spatial Systems Architect',
       'Forward Deployed Engineer',
-      'Solutions Architect',
+      'Implementation Consultant',
     ],
     filters: ['GIS', 'Implementation', 'QA', 'Process'],
     proofType: 'System',
@@ -117,7 +117,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     canonicalRoleLanes: [
       'AI Workflow / Portfolio Governance',
       'Forward Deployed Engineer',
-      'Solutions Architect',
+      'Implementation Consultant',
     ],
     filters: ['Implementation', 'QA', 'AI Systems', 'Process'],
     proofType: 'System',
@@ -143,7 +143,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     hierarchy: 'supporting',
     statusLabel: 'QA / Operations',
     roleLanes: ['Implementation', 'QA', 'GIS'],
-    canonicalRoleLanes: ['Solutions Architect', 'Spatial Systems Architect'],
+    canonicalRoleLanes: ['Implementation Consultant', 'Spatial Systems Architect'],
     filters: ['Implementation', 'QA', 'GIS', 'Process'],
     proofType: 'Workflow',
     purpose:
@@ -156,6 +156,51 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     evidenceTier: 'supporting',
     showInSwitcher: true,
     switcherRank: 3,
+  },
+  {
+    id: 'project-aegis',
+    displayTitle: 'Automation & Operational Protocols',
+    shortSummary:
+      'A decoupled AI-automation ecosystem — Aegis governance plus emOS execution over a Notion state machine — built to run with a human or an automated Guardian.',
+    hierarchy: 'featured',
+    featuredLabel: 'FEATURED AUTOMATION SYSTEM',
+    statusLabel: 'Working Prototype',
+    roleLanes: ['Implementation'],
+    canonicalRoleLanes: ['AI Workflow / Portfolio Governance', 'Forward Deployed Engineer'],
+    filters: ['AI Systems', 'Process', 'Implementation'],
+    proofType: 'System Architecture',
+    purpose:
+      'Put AI-generated work under an explicit governance layer before it is trusted — and keep the whole pipeline auditable in a plain Notion workspace.',
+    stakeholderValue:
+      'Anyone running AI agents against a real system gets output that must pass an explicit check, a readable audit trail in Notion, and a safe path from human review toward automation.',
+    accent: 'aqua',
+    sortOrder: 4,
+    href: buildProjectHref('project-aegis'),
+    evidenceTier: 'secondary',
+    showInSwitcher: true,
+    switcherRank: 4,
+  },
+  {
+    id: 'portfolio-pipeline',
+    displayTitle: 'Portfolio 2.0 — Governed AI Build Pipeline',
+    shortSummary:
+      'The governed, multi-LLM pipeline behind this site — AI-assisted build under a one-subphase protocol, gated by CI (lint, types, tests, build, secret-scan) and crawler drift-guards, deployed via Docker to Cloud Run.',
+    hierarchy: 'supporting',
+    statusLabel: 'In Production',
+    roleLanes: ['Implementation'],
+    canonicalRoleLanes: ['AI Workflow / Portfolio Governance', 'Forward Deployed Engineer'],
+    filters: ['AI Systems', 'Process', 'Implementation'],
+    proofType: 'System / Process',
+    purpose:
+      'Prove AI-assisted development can reach production-grade reliability when it stays under human design authority, automated CI gates, and a transparent attribution ledger.',
+    stakeholderValue:
+      'A reviewer can trust what shipped: every change clears the same CI gate, semantic drift-guards block silent regressions, and AI_ATTRIBUTION.md demarcates human direction from AI execution.',
+    accent: 'aqua',
+    sortOrder: 5,
+    href: buildProjectHref('portfolio-pipeline'),
+    evidenceTier: 'supporting',
+    showInSwitcher: true,
+    switcherRank: 5,
   },
   {
     id: 'luxe-lofts',
@@ -211,7 +256,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     roleLanes: ['GIS', 'Implementation'],
     canonicalRoleLanes: [
       'Spatial Systems Architect',
-      'Solutions Architect',
+      'Implementation Consultant',
       'Forward Deployed Engineer',
     ],
     filters: ['GIS', 'Implementation', 'AI Systems', 'Process'],

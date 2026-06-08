@@ -21,8 +21,9 @@ detailed in `docs/positioning-refactor-plan.md`.
 - **Customer Success is an evidence layer, not the identity.** No CSM seniority, managed book
   of business, or ARR/NRR/renewal/expansion claims anywhere.
 - **Do not invent** metrics or customers. On-site inventory: `luxe-lofts`, `ops-triage`,
-  `guynode`, `digital-twin` (registry) + `prompter-hub`, `project-aegis`, `nba-systems-qa`
-  (case studies). **Northern Grind** and **MOH (Ministry of Health)** are real projects not yet
+  `guynode`, `digital-twin`, `project-aegis` (Automation & Operational Protocols — Aegis/emOS,
+  published in 7.7b), `portfolio-pipeline` (Portfolio 2.0 — Governed AI Build Pipeline, 7.8),
+  `northern-grind`, `moh` (registry). `prompter-hub` and `nba-systems-qa` were retired in 7.7a. **Northern Grind** and **MOH (Ministry of Health)** are real projects not yet
   on the site — add them only via the gated subphase 6.11, with Kyle-provided source material.
 - **Design system is non-negotiable** (see `CLAUDE.md`): no glassmorphism, solid 1px borders,
   the documented light/dark contrast tiers. No generic SaaS-template aesthetics.

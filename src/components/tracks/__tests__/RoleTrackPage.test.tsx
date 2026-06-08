@@ -2,7 +2,11 @@ import React from 'react';
 import { render, screen, fireEvent, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import RoleTrackPage from '../RoleTrackPage';
-import { implementationTrackContent } from '../../../data/trackContent';
+import {
+  implementationTrackContent,
+  opsAnalyticsTrackContent,
+  gisTrackContent,
+} from '../../../data/trackContent';
 import { vi, describe, it, expect } from 'vitest';
 
 import { EvidenceBlock } from '../../../types';
@@ -134,5 +138,44 @@ describe('RoleTrackPage', () => {
 
     fireEvent.click(viewMoreButton);
     expect(viewMoreButton).toHaveAttribute('aria-expanded', 'true');
+  });
+
+  it('renders the per-lens value bridge (business + people)', () => {
+    render(
+      <MemoryRouter>
+        <RoleTrackPage content={implementationTrackContent} />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByText('Business value')).toBeInTheDocument();
+    expect(screen.getByText('For the people who use it')).toBeInTheDocument();
+    expect(screen.getByText(implementationTrackContent.valueBridge.business)).toBeInTheDocument();
+    expect(screen.getByText(implementationTrackContent.valueBridge.people)).toBeInTheDocument();
+  });
+
+  it('renders the embedded interactive evidence section with each artifact caption', () => {
+    render(
+      <MemoryRouter>
+        <RoleTrackPage content={implementationTrackContent} />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByText('Interactive Evidence')).toBeInTheDocument();
+    implementationTrackContent.embeddedArtifacts.forEach((artifact) => {
+      expect(screen.getByText(`${artifact.label}.`)).toBeInTheDocument();
+    });
+  });
+
+  it('gives each lens a distinct flagship system', () => {
+    expect(implementationTrackContent.flagshipTitle).toContain('Luxe Lofts');
+    expect(opsAnalyticsTrackContent.flagshipTitle).toContain('Ops Triage');
+    expect(gisTrackContent.flagshipTitle).toContain('Guynode');
+
+    const flagshipTitles = [
+      implementationTrackContent.flagshipTitle,
+      opsAnalyticsTrackContent.flagshipTitle,
+      gisTrackContent.flagshipTitle,
+    ];
+    expect(new Set(flagshipTitles).size).toBe(3);
   });
 });

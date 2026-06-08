@@ -32,8 +32,8 @@ describe('ChatWidget contextual open event', () => {
   it('opens with QA context suggestions', async () => {
     render(<ChatWidget />);
     window.dispatchEvent(new CustomEvent('open-digital-twin', { detail: { source: 'qa' } }));
-    expect(await screen.findByText('Solutions Architect Track')).toBeInTheDocument();
-    expect(screen.getByText('Show me Kyle’s Solutions Architect proof.')).toBeInTheDocument();
+    expect(await screen.findByText('Implementation Consultant Track')).toBeInTheDocument();
+    expect(screen.getByText('Show me Kyle’s Implementation Consultant proof.')).toBeInTheDocument();
   });
 
   it('opens with GIS context suggestions', async () => {

@@ -11,7 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 - Reframed the site around a single professional thesis — Kyle Semple as a **Forward Deployed Engineer** who helps teams turn complex technical, operational, and spatial problems into systems people can understand, adopt, and use — replacing the prior role-track-led information architecture.
-- Demoted the three role tracks to supporting **role lenses** (Forward Deployed Engineer, Solutions Architect, Spatial Systems Architect): lower-priority metadata and a secondary navigation dropdown rather than the primary framing. All `/tracks/*` routes are preserved.
+- Demoted the three role tracks to supporting **role lenses** (Forward Deployed Engineer, Implementation Consultant, Spatial Systems Architect): lower-priority metadata and a secondary navigation dropdown rather than the primary framing. All `/tracks/*` routes are preserved.
 - Added a "What I Help Teams Do" proof-pillar section to the homepage and a stakeholder/customer-value layer (purpose · value · role relevance · proof type) to project cards and major case studies; fixed the `useCaseStudyContent` loader so Guynode and Digital Twin render full bodies.
 - Updated the Digital Twin assistant to explain Kyle via the thesis and route visitors by need, and aligned crawler/LLM machine-readable summaries to the Forward Deployed Engineer positioning.
 - Surfaced the existing `/gallery` route in both the top and sidebar navigation while preserving every prior link; kept Customer Success as an evidence layer only (no CSM seniority, book of business, or ARR/NRR claims).

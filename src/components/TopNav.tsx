@@ -27,7 +27,7 @@ const TRACK_ITEMS = [
     hoverTextClass: 'hover:text-tide-aqua dark:hover:text-tide-aqua',
   },
   {
-    label: 'Solutions Architect',
+    label: 'Implementation Consultant',
     href: QA_TRACK_HREF,
     accent: 'blue',
     accentClass: 'bg-tide-blue',

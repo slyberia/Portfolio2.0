@@ -37,7 +37,7 @@ export type ProjectCategory = 'ai-ops' | 'qa-data' | 'success-strategy' | 'creat
 export type CaseStudyCategory = ProjectCategory;
 export type RecruiterRoleLane =
   | 'Forward Deployed Engineer'
-  | 'Solutions Architect'
+  | 'Implementation Consultant'
   | 'Spatial Systems Architect'
   | 'AI Workflow / Portfolio Governance';
 
@@ -210,6 +210,6 @@ export interface MediaAsset {
 export const VALID_RECRUITER_LANES = [
   'AI Workflow / Portfolio Governance',
   'Forward Deployed Engineer',
-  'Solutions Architect',
+  'Implementation Consultant',
   'Spatial Systems Architect',
 ];

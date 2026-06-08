@@ -23,8 +23,8 @@ const ApplyOpsAnalyticsView: React.FC = () => {
 
   // Specific evidence from bundle schema spec
   const curatedEvidenceTitles = [
-    'NBA 2K Systems Analysis',
     'Systems at Scale: Triage & QA',
+    'Digital Twin AI Agent',
     'Guynode Spatial Data Hub',
   ];
 
@@ -116,9 +116,9 @@ const ApplyOpsAnalyticsView: React.FC = () => {
                   new CustomEvent('open-digital-twin', {
                     detail: {
                       source: 'qa',
-                      modeLabel: 'QA Track',
+                      modeLabel: 'Implementation Consultant Track',
                       starterPrompt:
-                        'Help this visitor evaluate Kyle for a Solutions Architect role.',
+                        'Help this visitor evaluate Kyle for an Implementation Consultant role.',
                     },
                   }),
                 )

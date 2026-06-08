@@ -92,10 +92,10 @@ describe('routing', () => {
     );
   });
 
-  it('/projects/nba-systems-qa renders matching project detail route param', () => {
-    renderRoute('/projects/nba-systems-qa');
+  it('/projects/project-aegis renders matching project detail route param', () => {
+    renderRoute('/projects/project-aegis');
     expect(screen.getByTestId('project-detail-view')).toHaveTextContent(
-      'ProjectDetailView:nba-systems-qa',
+      'ProjectDetailView:project-aegis',
     );
   });
 

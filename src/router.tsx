@@ -178,7 +178,9 @@ export const AppLayout: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-x-hidden transition-colors duration-500">
+    // overflow-x-clip (not -hidden) contains horizontal overflow WITHOUT creating a scroll
+    // container, so descendant `position: sticky` (e.g. the skills inspector) works.
+    <div className="min-h-screen relative overflow-x-clip transition-colors duration-500">
       <RouteSeo />
       <TopNav
         theme={theme}

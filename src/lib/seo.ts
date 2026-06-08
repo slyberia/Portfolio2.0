@@ -85,16 +85,16 @@ export const getSeoForPath = (pathname: string): RouteSeo => {
       ],
     },
     '/tracks/solutions-architect': {
-      title: 'Track: Solutions Architect',
+      title: 'Track: Implementation Consultant',
       description:
-        'Role track focused on quality assurance, operations triage, incident handling, and analytics-backed workflow improvement.',
+        'Role lens focused on implementation validation, launch-readiness review, operations triage, and decision-ready reporting that de-risks customer adoption.',
       canonicalPath: '/tracks/solutions-architect',
       markdownPath: '/markdown/tracks/solutions-architect.md',
       jsonLd: [
         trackCollection(
           '/tracks/solutions-architect',
-          'Solutions Architect Track',
-          'Solutions Architect',
+          'Implementation Consultant Track',
+          'Implementation Consultant',
         ),
       ],
     },

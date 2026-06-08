@@ -22,8 +22,10 @@ Messaging guardrails:
 - **Role tracks are supporting metadata**, surfaced as role-relevance tags and lower-priority
   lenses — never the primary homepage framing.
 - **Do not invent** metrics or customers. The on-site project inventory is `luxe-lofts`,
-  `ops-triage`, `guynode`, `digital-twin` (registry) plus `prompter-hub`, `project-aegis`,
-  `nba-systems-qa` (case studies). **Northern Grind** and **MOH (Ministry of Health)** are real
+  `ops-triage`, `guynode`, `digital-twin`, `project-aegis` (Automation & Operational Protocols —
+  Aegis/emOS, published in 7.7b), `portfolio-pipeline` (Portfolio 2.0 — Governed AI Build Pipeline,
+  published in 7.8), `northern-grind`, and `moh` (registry). `prompter-hub` and `nba-systems-qa`
+  were retired in 7.7a. **Northern Grind** and **MOH (Ministry of Health)** are real
   projects not yet implemented on the site — add them only via the gated subphase 6.11 in
   `docs/positioning-refactor-plan.md`, using Kyle-provided source material, never fabricated copy.
 

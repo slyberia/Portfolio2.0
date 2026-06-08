@@ -11,6 +11,28 @@ import FlagshipSystemSection from '../components/home/FlagshipSystemSection';
 import SupportingEvidenceSection from '../components/home/SupportingEvidenceSection';
 import WhatIHelpTeamsDoSection from '../components/home/WhatIHelpTeamsDoSection';
 import { GUYNODE_SYSTEM_HREF } from '../lib/routes';
+import { isProjectPublic } from '../data/projectMetadata';
+import { decisionBlocks, forensicEntries } from '../data/deepDiveContent';
+
+// Friendly labels for the inspector's evidence links. Deep-dive ids → their titles so a
+// skill linked to `/deep-dives#<id>` reads as a named deep dive rather than a raw anchor.
+const DEEP_DIVE_TITLES: Record<string, string> = {
+  ...Object.fromEntries(decisionBlocks.map((block) => [block.id, block.title])),
+  ...Object.fromEntries(forensicEntries.map((entry) => [entry.id, entry.label])),
+};
+
+const resolveEvidenceLabel = (href: string): string => {
+  if (href.startsWith('/projects/')) {
+    const id = href.replace('/projects/', '');
+    return PROJECT_REGISTRY.find((project) => project.id === id)?.title ?? id;
+  }
+  if (href.startsWith('/deep-dives#')) {
+    const id = href.split('#')[1] ?? '';
+    return `Deep Dive — ${DEEP_DIVE_TITLES[id] ?? id}`;
+  }
+  if (href === '/resume') return 'Résumé & credentials';
+  return href;
+};
 
 const getCertConfig = (issuer: string, name: string) => {
   if (issuer.includes('IBM')) {
@@ -116,6 +138,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
   void onNavigateToCaseStudy;
   void onOpenContact;
   const [activeSkillName, setActiveSkillName] = useState<string | null>(null);
+  const [activeGroupIndex, setActiveGroupIndex] = useState(0);
   const activeSkill = useMemo(() => {
     if (!activeSkillName) return null;
     for (const group of SKILL_GROUPS) {
@@ -130,69 +153,35 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
     return SKILL_CHIP_CONFIG[activeSkill.name] || null;
   }, [activeSkill]);
 
-  const activeSkillProvenProjects = useMemo(() => {
+  // Deduped, friendly-labeled evidence links for the active skill. Every skill carries an
+  // explicit curated `proofHref` (a public project, a proven deep-dive anchor, or /resume);
+  // tag-matched and chip-config-linked public projects are surfaced as additional context.
+  const activeSkillEvidence = useMemo(() => {
     if (!activeSkill) return [];
 
-    const projects: { id: string; title: string; href: string }[] = [];
-    const addedIds = new Set<string>();
+    const links: { label: string; href: string }[] = [];
+    const seen = new Set<string>();
+    const add = (href?: string) => {
+      if (!href || seen.has(href)) return;
+      seen.add(href);
+      links.push({ label: resolveEvidenceLabel(href), href });
+    };
+    const addProject = (id: string) => {
+      if (PROJECT_REGISTRY.some((project) => project.id === id) && isProjectPublic(id)) {
+        add(`/projects/${id}`);
+      }
+    };
 
-    // 1. Search in PROJECT_REGISTRY tags matching activeSkill.name
+    // 1. The curated primary evidence link (present on every skill).
+    add(activeSkill.proofHref);
+    // 2. Public projects whose tags name this skill.
     PROJECT_REGISTRY.forEach((project) => {
-      if (project.tags.includes(activeSkill.name)) {
-        if (!addedIds.has(project.id)) {
-          addedIds.add(project.id);
-          projects.push({
-            id: project.id,
-            title: project.title,
-            href: `/projects/${project.id}`,
-          });
-        }
-      }
+      if (project.tags.includes(activeSkill.name)) addProject(project.id);
     });
+    // 3. Public projects linked via SKILL_CHIP_CONFIG.
+    chipConfig?.linkedSlugs?.forEach((slug) => addProject(slug));
 
-    // 2. Look up SKILL_CHIP_CONFIG linkedSlugs
-    if (chipConfig && chipConfig.linkedSlugs) {
-      chipConfig.linkedSlugs.forEach((slug) => {
-        if (!addedIds.has(slug)) {
-          const matchedProj = PROJECT_REGISTRY.find((p) => p.id === slug);
-          if (matchedProj) {
-            addedIds.add(slug);
-            projects.push({
-              id: slug,
-              title: matchedProj.title,
-              href: `/projects/${slug}`,
-            });
-          } else if (slug === 'project-aegis') {
-            addedIds.add(slug);
-            projects.push({
-              id: slug,
-              title: 'Project Aegis',
-              href: '/projects/project-aegis',
-            });
-          }
-        }
-      });
-    }
-
-    // 3. Fallback to activeSkill.proofHref if not already in the list
-    if (activeSkill.proofHref) {
-      const slug = activeSkill.proofHref.replace('/projects/', '');
-      if (!addedIds.has(slug)) {
-        const matchedProj = PROJECT_REGISTRY.find((p) => p.id === slug);
-        addedIds.add(slug);
-        projects.push({
-          id: slug,
-          title: matchedProj
-            ? matchedProj.title
-            : slug === 'project-aegis'
-              ? 'Project Aegis'
-              : slug,
-          href: activeSkill.proofHref,
-        });
-      }
-    }
-
-    return projects;
+    return links;
   }, [activeSkill, chipConfig]);
 
   const getCategoryColorClass = (category: string) => {
@@ -246,11 +235,11 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
       ),
     },
     {
-      systemLabel: 'SOLUTIONS_TRACK',
-      title: 'Solutions Architect',
+      systemLabel: 'CONSULTING_TRACK',
+      title: 'Implementation Consultant',
       subcopy:
-        'System and solution design backed by structured testing, root-cause analysis, and reliability review — architecture you can trust in production.',
-      chips: ['Solution Design', 'Reliability', 'Root-Cause Analysis'],
+        'De-risking adoption: structured validation, triage, and launch-readiness review that turn a build into a rollout a customer’s team can trust and run.',
+      chips: ['Validation', 'Launch Readiness', 'Decision-Ready Reporting'],
       stream: 'STREAM 02',
       path: 'SYS_PATH: 02.00',
       href: '/tracks/solutions-architect',
@@ -334,127 +323,137 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
           }}
         />
 
-        <div className="relative max-w-3xl mx-auto px-6 py-12 md:py-16 lg:py-20">
-          <div className="space-y-8">
-            <div className="space-y-5">
-              <div className="space-y-2">
-                <Link
-                  to="/gallery"
-                  aria-label="View the AI art gallery"
-                  className="group inline-block rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f5f9fb] dark:focus-visible:ring-offset-slate-950 focus-visible:ring-tide-aqua"
-                >
-                  <span className="block w-28 md:w-32 rounded-full border border-[#d8e8ee] dark:border-white/15 bg-[#f8fbfd] dark:bg-slate-900 p-1.5 shadow-sm transition-all group-hover:-translate-y-0.5 group-hover:shadow-md">
-                    <img
-                      src="/images/about-profile-medallion.png"
-                      alt="Stylized circular portrait medallion of Kyle Semple with systems, code, game, and GIS motifs."
-                      className="w-full h-auto rounded-full"
-                      loading="lazy"
-                    />
-                  </span>
-                </Link>
-                <p className="text-xs text-slate-600 dark:text-slate-300">
-                  AI-generated portrait — a deliberate piece.{' '}
-                  <Link
-                    to="/gallery"
-                    className="font-medium text-tide-aqua hover:underline dark:text-tide-sky"
-                  >
-                    Explore the gallery →
-                  </Link>
+        <div className="relative max-w-5xl mx-auto px-6 py-12 md:py-16 lg:py-20">
+          <div className="grid lg:grid-cols-[1.45fr_0.85fr] gap-10 lg:gap-14 items-center">
+            {/* Identity + primary actions */}
+            <div className="order-2 lg:order-1 space-y-8">
+              <div className="space-y-5">
+                <p className="flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.22em] text-slate-600 dark:text-slate-300">
+                  <span
+                    className="h-2.5 w-2.5 rounded-[3px] bg-gild dark:bg-gild-soft shrink-0"
+                    aria-hidden="true"
+                  />
+                  SYSTEMS · ADOPTION · PROOF
+                </p>
+                <h1 className="text-5xl md:text-6xl font-outfit font-bold tracking-tight text-ink-navy dark:text-white">
+                  Kyle Semple
+                </h1>
+                <p className="text-xl md:text-2xl font-outfit font-semibold text-tide-aqua dark:text-tide-sky">
+                  Forward Deployed Engineer
+                </p>
+                {/* Gild-led rule: a deliberate secondary-accent moment */}
+                <div className="flex items-center gap-2 w-full max-w-md" aria-hidden="true">
+                  <span className="h-1 w-12 rounded-full bg-gild dark:bg-gild-soft shrink-0" />
+                  <span className="h-px flex-1 bg-slate-300 dark:bg-white/15" />
+                </div>
+                <p className="text-lg md:text-xl text-slate-700 dark:text-slate-200 leading-relaxed max-w-xl">
+                  I help teams turn complex technical, operational, and spatial problems into
+                  systems people can understand, adopt, and use.
+                </p>
+                <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl">
+                  My work connects forward-deployed engineering, technical implementation, customer
+                  success, solutions and systems architecture, GIS, operations, and AI workflow
+                  design.
                 </p>
               </div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-slate-600 dark:text-slate-300">
-                SYSTEMS · ADOPTION · PROOF
-              </p>
-              <h1 className="text-5xl md:text-6xl font-outfit font-bold tracking-tight text-ink-navy dark:text-white">
-                Kyle Semple
-              </h1>
-              <p className="text-xl md:text-2xl font-outfit font-semibold text-tide-aqua dark:text-tide-sky">
-                Forward Deployed Engineer
-              </p>
-              <div
-                className="h-px w-full max-w-md bg-slate-300 dark:bg-white/15"
-                aria-hidden="true"
-              />
-              <p className="text-lg md:text-xl text-slate-700 dark:text-slate-200 leading-relaxed max-w-xl">
-                I help teams turn complex technical, operational, and spatial problems into systems
-                people can understand, adopt, and use.
-              </p>
-              <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl">
-                My work connects forward-deployed engineering, technical implementation, customer
-                success, solutions and systems architecture, GIS, operations, and AI workflow
-                design.
-              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl w-full">
+                <Link
+                  to={GUYNODE_SYSTEM_HREF}
+                  aria-label="View Flagship Project"
+                  className="group min-h-[80px] border border-[#0d9488] dark:border-tide-sky/60 bg-[#0d9488] dark:bg-tide-sky rounded-md px-5 py-4 flex items-center justify-between gap-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all hover:-translate-y-0.5 hover:shadow-md hover:bg-[#0f766e] dark:hover:bg-tide-sky/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f5f9fb] dark:focus-visible:ring-offset-slate-950 focus-visible:ring-tide-aqua"
+                >
+                  {/* TODO: update this href to the dedicated Guynode case-study route when it exists. */}
+                  <div>
+                    <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-white/90 dark:text-ink-navy/70">
+                      <span
+                        className="h-1.5 w-1.5 rounded-full shrink-0 bg-white/80 dark:bg-ink-navy/60"
+                        aria-hidden="true"
+                      />
+                      PRIMARY ACTION
+                    </p>
+                    <p className="mt-1 text-base md:text-lg font-outfit font-semibold text-white dark:text-ink-navy">
+                      View Flagship Project
+                    </p>
+                  </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-5 h-5 shrink-0 text-white dark:text-ink-navy group-hover:translate-x-0.5 transition-all"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M7 17L17 7" />
+                    <path d="M7 7h10v10" />
+                  </svg>
+                </Link>
+
+                <Link
+                  to="/resume"
+                  aria-label="Download resume"
+                  className="group min-h-[80px] border border-[#c2d6df] dark:border-white/20 bg-white/95 dark:bg-slate-900/75 rounded-md px-5 py-4 flex items-center justify-between gap-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-slate-500/80 dark:hover:border-slate-300/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f5f9fb] dark:focus-visible:ring-offset-slate-950 focus-visible:ring-slate-500"
+                >
+                  {/* TODO: replace /resume with a direct resume PDF asset link when available. */}
+                  <div>
+                    <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-600 dark:text-slate-300">
+                      <span
+                        className="h-1.5 w-1.5 rounded-full shrink-0 bg-gild dark:bg-gild-soft"
+                        aria-hidden="true"
+                      />
+                      SECONDARY ACTION
+                    </p>
+                    <p className="mt-1 text-base md:text-lg font-outfit font-semibold text-ink-navy dark:text-white">
+                      Download Resume
+                    </p>
+                  </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-4 h-4 shrink-0 text-slate-700 dark:text-slate-200 group-hover:text-slate-900 dark:group-hover:text-white transition-colors"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M12 3v12" />
+                    <path d="m7 10 5 5 5-5" />
+                    <path d="M5 21h14" />
+                  </svg>
+                </Link>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl w-full">
+            {/* Portrait anchor */}
+            <div className="order-1 lg:order-2 flex flex-col items-center lg:items-end gap-3">
               <Link
-                to={GUYNODE_SYSTEM_HREF}
-                aria-label="View Flagship Project"
-                className="group min-h-[80px] border border-tide-aqua/70 dark:border-tide-sky/60 bg-tide-aqua dark:bg-tide-sky rounded-md px-5 py-4 flex items-center justify-between gap-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all hover:-translate-y-0.5 hover:shadow-md hover:bg-tide-aqua/90 dark:hover:bg-tide-sky/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f5f9fb] dark:focus-visible:ring-offset-slate-950 focus-visible:ring-tide-aqua"
+                to="/gallery"
+                aria-label="View the AI art gallery"
+                className="group inline-block rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f5f9fb] dark:focus-visible:ring-offset-slate-950 focus-visible:ring-tide-aqua"
               >
-                {/* TODO: update this href to the dedicated Guynode case-study route when it exists. */}
-                <div>
-                  <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-600 dark:text-slate-300">
-                    <span
-                      className="h-1.5 w-1.5 rounded-full shrink-0 bg-tide-aqua"
-                      aria-hidden="true"
-                    />
-                    PRIMARY ACTION
-                  </p>
-                  <p className="mt-1 text-base md:text-lg font-outfit font-semibold text-white dark:text-ink-navy">
-                    View Flagship Project
-                  </p>
-                </div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5 shrink-0 text-white dark:text-ink-navy group-hover:translate-x-0.5 transition-all"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d="M7 17L17 7" />
-                  <path d="M7 7h10v10" />
-                </svg>
+                <span className="block w-44 md:w-52 lg:w-56 rounded-full border border-[#d8e8ee] dark:border-white/15 bg-[#f8fbfd] dark:bg-slate-900 p-2 shadow-sm ring-1 ring-transparent transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-lg group-hover:ring-gild/40 dark:group-hover:ring-gild-soft/40">
+                  <img
+                    src="/images/about-profile-medallion.png"
+                    alt="Stylized circular portrait medallion of Kyle Semple with systems, code, game, and GIS motifs."
+                    className="w-full h-auto rounded-full"
+                    loading="lazy"
+                  />
+                </span>
               </Link>
-
-              <Link
-                to="/resume"
-                aria-label="Download resume"
-                className="group min-h-[80px] border border-[#c2d6df] dark:border-white/20 bg-white/95 dark:bg-slate-900/75 rounded-md px-5 py-4 flex items-center justify-between gap-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-slate-500/80 dark:hover:border-slate-300/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f5f9fb] dark:focus-visible:ring-offset-slate-950 focus-visible:ring-slate-500"
-              >
-                {/* TODO: replace /resume with a direct resume PDF asset link when available. */}
-                <div>
-                  <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-600 dark:text-slate-300">
-                    <span
-                      className="h-1.5 w-1.5 rounded-full shrink-0 bg-slate-500"
-                      aria-hidden="true"
-                    />
-                    SECONDARY ACTION
-                  </p>
-                  <p className="mt-1 text-base md:text-lg font-outfit font-semibold text-ink-navy dark:text-white">
-                    Download Resume
-                  </p>
-                </div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-4 h-4 shrink-0 text-slate-700 dark:text-slate-200 group-hover:text-slate-900 dark:group-hover:text-white transition-colors"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
+              <p className="max-w-[14rem] text-xs text-slate-600 dark:text-slate-300 text-center lg:text-right">
+                AI-generated portrait — a deliberate piece.{' '}
+                <Link
+                  to="/gallery"
+                  className="font-medium text-tide-aqua hover:underline dark:text-tide-sky"
                 >
-                  <path d="M12 3v12" />
-                  <path d="m7 10 5 5 5-5" />
-                  <path d="M5 21h14" />
-                </svg>
-              </Link>
+                  Explore the gallery →
+                </Link>
+              </p>
             </div>
           </div>
         </div>
@@ -728,43 +727,24 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               </p>
               {activeSkill && (
                 <div className="space-y-4 pt-2 border-t border-slate-100 dark:border-slate-800">
-                  {activeSkillProvenProjects.length > 0 && (
+                  {activeSkillEvidence.length > 0 && (
                     <div className="space-y-2">
                       <p className="text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                        Proven In:
+                        Evidence:
                       </p>
                       <ul className="space-y-1.5">
-                        {activeSkillProvenProjects.map((proj) => (
-                          <li key={proj.id} className="flex items-center text-sm">
+                        {activeSkillEvidence.map((item) => (
+                          <li key={item.href} className="flex items-center text-sm">
                             <span className="w-1.5 h-1.5 rounded-full bg-tide-aqua mr-2 shrink-0"></span>
                             <Link
-                              to={proj.href}
+                              to={item.href}
                               className="font-medium text-[#237f86] dark:text-tide-sky hover:underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua rounded-sm"
                             >
-                              {proj.title}
+                              {item.label}
                             </Link>
                           </li>
                         ))}
                       </ul>
-                    </div>
-                  )}
-
-                  {!activeSkillProvenProjects.length && activeSkill.proof && (
-                    <div className="space-y-1">
-                      <p className="text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                        Proof:
-                      </p>
-                      <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                        {activeSkill.proof}
-                        {activeSkill.proofHref && (
-                          <Link
-                            to={activeSkill.proofHref}
-                            className="ml-2 underline underline-offset-2 text-[#237f86] dark:text-tide-sky hover:text-[#1d6970] dark:hover:text-tide-softBlue focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua rounded-sm font-medium"
-                          >
-                            View project
-                          </Link>
-                        )}
-                      </p>
                     </div>
                   )}
 
@@ -780,46 +760,78 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               )}
             </div>
 
-            <div className="lg:col-span-7 lg:order-1 grid md:grid-cols-2 gap-6">
-              {SKILL_GROUPS.map((group, idx) => (
+            <div className="lg:col-span-7 lg:order-1">
+              <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden">
                 <div
-                  key={idx}
-                  className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 space-y-4"
+                  role="tablist"
+                  aria-label="Skill groups"
+                  className="flex gap-1 overflow-x-auto border-b border-slate-200 dark:border-slate-800 p-2 scrollbar-hide"
                 >
-                  <h4 className="text-base font-outfit font-semibold text-ink-navy dark:text-white border-b border-[#e5e0d6] dark:border-white/10 pb-3">
-                    {group.category}
-                  </h4>
-                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                    {group.description}
-                  </p>
-                  <div className="flex flex-wrap items-start content-start gap-2">
-                    {group.items.map((skill, i) => {
-                      const chipConfig = SKILL_CHIP_CONFIG[skill.name];
-                      const titleText = chipConfig?.evidenceNote;
-                      const isActive = activeSkillName === skill.name;
-                      const baseChipClass =
-                        'h-8 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md border';
-
-                      return (
-                        <button
-                          key={i}
-                          onClick={() => setActiveSkillName(skill.name)}
-                          title={titleText}
-                          aria-pressed={isActive}
-                          aria-controls="skills-inspector"
-                          className={`${baseChipClass} transition-colors active:scale-[0.99] focus:outline-none focus-visible:ring-2 ${getCategoryColorClass(group.category)} ${isActive ? 'border-tide-aqua dark:border-tide-sky ring-1 ring-tide-aqua/60 dark:ring-tide-sky/50 font-semibold' : ''}`}
-                        >
-                          <span className="sr-only">
-                            {isActive ? 'Active skill:' : 'Activate skill:'}
-                          </span>
-                          {isActive && <span aria-hidden="true">✓</span>}
-                          <span>{skill.name}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
+                  {SKILL_GROUPS.map((group, idx) => {
+                    const selected = idx === activeGroupIndex;
+                    return (
+                      <button
+                        key={group.category}
+                        type="button"
+                        role="tab"
+                        id={`skill-tab-${idx}`}
+                        aria-selected={selected}
+                        aria-controls={`skill-panel-${idx}`}
+                        onClick={() => setActiveGroupIndex(idx)}
+                        className={`whitespace-nowrap rounded-lg px-3.5 py-2 text-xs md:text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua ${selected ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
+                      >
+                        {group.category}
+                      </button>
+                    );
+                  })}
                 </div>
-              ))}
+
+                {SKILL_GROUPS.map((group, idx) => (
+                  <div
+                    key={group.category}
+                    role="tabpanel"
+                    id={`skill-panel-${idx}`}
+                    aria-labelledby={`skill-tab-${idx}`}
+                    hidden={idx !== activeGroupIndex}
+                    className="p-6 space-y-4"
+                  >
+                    <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                      {group.description}
+                    </p>
+                    <div className="flex flex-wrap items-start content-start gap-2">
+                      {group.items.map((skill) => {
+                        const skillChip = SKILL_CHIP_CONFIG[skill.name];
+                        const titleText = skillChip?.evidenceNote;
+                        const isActive = activeSkillName === skill.name;
+
+                        return (
+                          <button
+                            key={skill.name}
+                            type="button"
+                            onClick={() => setActiveSkillName(skill.name)}
+                            title={titleText}
+                            aria-pressed={isActive}
+                            aria-controls="skills-inspector"
+                            className={`h-8 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md border transition-colors active:scale-[0.99] focus:outline-none focus-visible:ring-2 ${getCategoryColorClass(group.category)} ${isActive ? 'border-tide-aqua dark:border-tide-sky ring-1 ring-tide-aqua/60 dark:ring-tide-sky/50' : ''}`}
+                          >
+                            {/* Fixed-width slot keeps chip width identical active/inactive (no reflow) */}
+                            <span
+                              aria-hidden="true"
+                              className={`grid w-3 place-items-center text-[10px] leading-none ${isActive ? 'opacity-100' : 'opacity-0'}`}
+                            >
+                              ✓
+                            </span>
+                            <span className="sr-only">
+                              {isActive ? 'Active skill:' : 'Activate skill:'}
+                            </span>
+                            <span>{skill.name}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

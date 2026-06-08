@@ -428,9 +428,19 @@ without a green suite; route naming and crawler sitemap do not drift.
   consistent embed-vs-launch treatment; nav entry handled by 6.9.
 - **Commit:** `feat: subphase 7.3 — gallery interactive-artifacts section`
 
-### 7.4 — Positioning cleanup: "Solutions Architect" vs Customer Success framing (DECISION-GATED)
+### 7.4 — Positioning cleanup: "Solutions Architect" vs Customer Success framing (RESOLVED)
 
-- **Status:** **Blocked pending Kyle's decision.** Do not change lane labels until resolved.
+- **Status:** **RESOLVED (Kyle's decision).** The second lane is renamed **"Solutions Architect" →
+  "Implementation Consultant"** (a variant of Option B). Rationale: it fixes the label↔content
+  mismatch (the lens already carries validation / launch-readiness / triage content, which is
+  genuine implementation-consulting work), surfaces customer-facing value without a CS/CSM lane,
+  and avoids both the "Architect" seniority overclaim and the "Engineer" credential question Kyle
+  flagged (no engineering degree/licence). **"Forward Deployed Engineer" is retained as the primary
+  title.** CS stays evidence-only throughout. The **`/tracks/solutions-architect` route slug is
+  preserved** (label-only change) to avoid breaking links/sitemap; the lane's narrative
+  (hero/summary/value bridge) was reframed from QA-speak to implementation-consultant framing so
+  label and content agree. _Note:_ the Luxe Lofts case study's project-role line ("Creative
+  Solutions Architect") is left as historical project copy, not the canonical lane.
 - **Problem:** "Solutions Architect" and "Customer Success Manager" do **not** convey the same
   message (SA = technical/system design & validation; CSM = ongoing account ownership, adoption,
   renewals/expansion/ARR). Two tensions: (1) a CSM label would violate the north-star guardrail
@@ -450,9 +460,12 @@ without a green suite; route naming and crawler sitemap do not drift.
   "Solutions Architect"-as-lead-title drift; crawler/LLM summaries consistent.
 - **Commit:** `feat: subphase 7.4 — positioning cleanup: customer-facing lane decision`
 
-### 7.5 — Chat transcript export (BACKLOG / optional, post-phase)
+### 7.5 — Chat transcript export (DONE)
 
-- **Status:** **Backlog.** Nice-to-have Kyle flagged for "later, if at all" — not yet scheduled.
+- **Status:** **DONE.** Implemented as the first-cut Markdown export: copy + download controls in the
+  Digital Twin header, backed by a pure `serializeTranscript` helper (`src/lib/digitalTwinTranscript.ts`)
+  with unit tests. Zero backend, client-side only, no PII leaves the browser. Controls appear once a
+  real conversation exists. (Stretch items — PDF render, emailed transcript — remain optional.)
 - **Scope:** Let a visitor leave with a copy of the Digital Twin conversation. Recommended first
   cut: a "Download transcript" control in `ChatWidget.tsx` that serializes the `messages` array to
   **Markdown / plain text** (one-click copy + file download) — zero backend, offline-safe, paste-
@@ -462,3 +475,107 @@ without a green suite; route naming and crawler sitemap do not drift.
 - **Acceptance:** Visitor can export a clean, readable transcript; no new backend for the first cut;
   no PII/security regressions.
 - **Commit:** `feat: subphase 7.5 — Digital Twin transcript export`
+
+### 7.6 — Skills section: sticky inspector, chip stability & full skill→evidence linkage
+
+- **Why.** Surfaced during Phase 7 review (Kyle). Three concrete defects in the HomeView
+  **Skills & Technologies** section.
+- **Scope:**
+  - **Chip stability.** Selecting a skill widened the active chip (`font-semibold` + an injected
+    inline `✓`), causing `flex flex-wrap` reflow that visibly re-orders chips (most obvious on the
+    _Quality Assurance & Operations_ card, which wraps at a boundary). Make the active state
+    **layout-neutral**: indicate active via ring/border/bg only, keep weight constant, and reserve a
+    fixed-width slot for the `✓` so chip width never changes.
+  - **Sticky inspector.** The inspector panel never sticks because the app layout wrapper
+    (`src/router.tsx`) is `overflow-x-hidden`, which makes `overflow-y` compute to `auto` and turns
+    the wrapper into a scroll container — breaking `position: sticky`. Fix = switch to
+    **`overflow-x-clip`** (contains horizontal overflow without a scroll container). _Additionally_,
+    restructure the five stacked group cards into a **single tabbed card** to cut scroll length.
+  - **Full skill→evidence linkage.** Every skill must resolve to a real, public target. `Prompt
+Governance` pointed at `project-aegis`, which is **not** a listed Library entry (only a markdown
+    file; no registry/metadata) — re-point it to `digital-twin` (already tagged) and drop the
+    `project-aegis` hardcoded fallback in `HomeView`. Add an explicit, verified `proofHref` to
+    **every** `SKILL_GROUPS` item (public project, or a proven deep-dive anchor —
+    `#proof-hierarchy` / `#ci-and-tests` / `#validation-trail`). Tool-breadth skills with no
+    case-study evidence (Zendesk, Tableau, Power BI, BigQuery) point to `/resume` (their genuine
+    cert/role evidence) rather than misrepresenting an unrelated project. Add a **drift-guard test**
+    asserting every skill resolves to a public project, a real deep-dive id, or the `/resume`
+    allowlist.
+- **Files:** `src/constants.tsx` (`SKILL_GROUPS`), `src/views/HomeView.tsx` (tabbed card, chip
+  stability, inspector evidence resolution), `src/router.tsx` (overflow), new
+  `src/test/skill-evidence-coverage.test.ts`.
+- **Acceptance:** No chip reflow on selection; inspector sticks on scroll; skills render as a tabbed
+  card; every skill links to a valid public target; drift-guard test green; full validation suite
+  green. **Do not** change positioning copy or lane labels.
+- **Follow-up (tracked, not in 7.6):** `project-aegis`, `prompter-hub`, `nba-systems-qa` have
+  case-study markdown but no Library wiring — decide later (with Kyle) whether to fully publish or
+  retire them.
+- **Commit:** `feat: subphase 7.6 — skills section: sticky inspector, chip stability & skill→evidence linkage`
+
+### 7.7 — Case-study consolidation: retire two, publish "Automation & Operational Protocols"
+
+- **Why.** Resolves the 7.6 follow-up. The three orphaned case studies (`prompter-hub`,
+  `project-aegis`, `nba-systems-qa` — markdown only, no registry/metadata) are inconsistent and
+  uneven in value. Kyle's decision: **retire** the two weakest and **rework** the third.
+- **7.7a — Retire `prompter-hub` + `nba-systems-qa` (DONE).** Off-thesis / low-ownership case
+  studies removed in lockstep: deleted both `public/case-studies/*.md`; stripped every reference
+  from `sitemap.xml`, `crawler-sitemap.xml`, `llms.txt`, `ai-index*.html`, `site-index.html`, the
+  per-track evidence-link stubs, the crawler generator + validator route lists, `SiteIndexView`,
+  `ChatWidget`, `ApplyOpsAnalyticsView`, the `CLAUDE.md`/`AGENTS.md` inventory, and two tests
+  (repointed to surviving slugs). `project-aegis` left fully intact for 7.7b.
+- **7.7b — Publish "Automation & Operational Protocols" (DONE).** Reworked the orphaned
+  `project-aegis` markdown into a first-class Library entry (real `PROJECT_REGISTRY` +
+  `projectMetadata`, like MOH in 6.11). Scoped per Kyle to the **Aegis (governance) + emOS
+  (execution)** system over a Notion state machine, told as a **human-governed → autonomous
+  evolution** (HITL iteration tested; autonomous iteration developed toward containerization).
+  **All unverified metrics/absolutes dropped.** Sanitized interactive `HtmlPreviewCard` state-machine
+  diagram (`src/data/aegisStateMachine.ts`) with a Human ⇄ Aegis-engine Guardian toggle. Role:
+  "AI Workflow & Automation Designer"; status: "Working Prototype"; lanes: AI Workflow / Portfolio
+  Governance → Forward Deployed Engineer; route slug `project-aegis` preserved. The **portfolio
+  build/governance pipeline is a separate future entry**, and a deep dive can later unify all three.
+- **Files:** `public/case-studies/*`, `src/constants.tsx`, `src/data/projectMetadata.ts`,
+  `src/lib/seo.ts`, `scripts/generate-crawler-html.mjs`, `scripts/validate-crawler.mjs`,
+  `public/{sitemap.xml,crawler-sitemap.xml,llms.txt,ai-index*.html,site-index.html,markdown/*}`,
+  `CLAUDE.md`/`AGENTS.md`, affected views/tests.
+- **Acceptance:** Retired studies leave no dangling references; reworked entry is a first-class,
+  honest Library project with no invented metrics; full validation + crawler suite green.
+- **Commits:** `chore: subphase 7.7a — retire prompter-hub & nba-systems-qa case studies`;
+  `feat: subphase 7.7b — publish Automation & Operational Protocols entry`
+
+### 7.8 — Portfolio 2.0 Build-Pipeline Library entry (DONE)
+
+- **Status:** **DONE.** Published `portfolio-pipeline` (Portfolio 2.0 — Governed AI Build Pipeline)
+  as a first-class registry + metadata entry from the confirmed intake — Sequential Execution
+  Protocol, the 6-tool multi-LLM toolchain, the CI gate (lint/format/types/tests/build/gitleaks/
+  key-audit, pinned SHAs), drift guards, `AI_ATTRIBUTION.md`, Docker→Cloud Run. Sanitized
+  interactive `HtmlPreviewCard` (`src/data/portfolioPipelineDiagram.ts`: governance flow +
+  multi-LLM side rail). Role "AI Workflow & Automation Designer", status "In Production",
+  `supporting` hierarchy, aqua; real metrics kept (50+ PRs · 6 tools · 7 phases · 10+ routes);
+  links into the Process & Governance deep dive. Crawler/SEO/sitemap/llms/indexes + inventory
+  docs wired; full suite green.
+
+#### Original scope (for reference)
+
+- **Why.** The third leg of the "governed AI automation" story (sibling to Aegis/emOS, per Kyle's
+  7.7 decision to keep the portfolio pipeline separate). A first-class entry summarizing the
+  governed, multi-LLM pipeline behind this site, linking into the existing deep-dive process tab.
+- **Source:** mostly verifiable from the repo (CI gates, multi-LLM toolchain, Sequential Execution
+  Protocol, `AI_ATTRIBUTION.md`, crawler/drift guards, Docker→Cloud Run). Gathered via
+  `docs/portfolio-pipeline-intake-questionnaire.md` (pre-filled-from-repo intake; Kyle confirms/
+  corrects + supplies the LLM roster, repo-public status, title/role/status, any defensible metrics).
+- **Files:** `public/case-studies/portfolio-pipeline.md`, `src/constants.tsx`,
+  `src/data/projectMetadata.ts`, crawler generator + validator, sitemap/llms/indexes, inventory docs.
+- **Acceptance:** honest first-class entry; no invented metrics; full validation + crawler green.
+- **Commit:** `feat: subphase 7.8 — publish Portfolio 2.0 build-pipeline entry`
+
+### 7.9 — Automation & Governance deep dive (GATED on intake)
+
+- **Why.** Unify the three governed-AI-automation systems (Portfolio pipeline + Aegis + emOS) under
+  one narrative — "AI as an untrusted worker behind an explicit governance gate, across the HITL →
+  autonomous spectrum." A "Portfolio 2.0 Process & Governance" tab already exists, so the first
+  decision is extend-vs-new-tab.
+- **Source:** narrative + structure decisions gathered via `docs/automation-deep-dive-intake.md`.
+- **Files:** `src/data/deepDiveContent.ts`, `src/views/DeepDiveView.tsx`, `seo.ts`/crawler anchors.
+- **Acceptance:** coherent unifying deep dive; real anchor ids resolve; no invented metrics; full
+  validation + crawler green; design-system rules honored.
+- **Commit:** `feat: subphase 7.9 — automation & governance deep dive`

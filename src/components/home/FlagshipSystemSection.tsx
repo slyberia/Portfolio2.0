@@ -12,7 +12,7 @@ import {
 } from '../../lib/design-system';
 const roleToLane = {
   'Forward Deployed Engineer': 'Implementation',
-  'Solutions Architect': 'QA',
+  'Implementation Consultant': 'QA',
   'Spatial Systems Architect': 'GIS',
 } as const;
 
@@ -35,7 +35,7 @@ const PROOF_ARTIFACTS: Array<{ title: string; description: string; roles: RoleTr
     title: 'Metadata Schema',
     description:
       'Standardized fields for dataset descriptions, formats, provenance, tags, and viewer behavior.',
-    roles: ['Spatial Systems Architect', 'Solutions Architect'],
+    roles: ['Spatial Systems Architect', 'Implementation Consultant'],
   },
   {
     title: 'Migration Workflow',
@@ -47,13 +47,13 @@ const PROOF_ARTIFACTS: Array<{ title: string; description: string; roles: RoleTr
     title: 'Launch Readiness',
     description:
       'Readiness checks for content accuracy, navigation clarity, broken links, deployment readiness, and reviewer trust.',
-    roles: ['Solutions Architect', 'Forward Deployed Engineer'],
+    roles: ['Implementation Consultant', 'Forward Deployed Engineer'],
   },
   {
     title: 'AI-Assisted Build Governance',
     description:
       'Use of structured prompts, implementation protocols, audits, and human review to guide AI-assisted development.',
-    roles: ['Forward Deployed Engineer', 'Solutions Architect'],
+    roles: ['Forward Deployed Engineer', 'Implementation Consultant'],
   },
 ];
 
@@ -63,7 +63,7 @@ const FlagshipSystemSection: React.FC<FlagshipSystemSectionProps> = ({ guynodeHr
     let source: 'general' | 'implementation' | 'qa' | 'gis' = 'general';
     if (artifact.roles.includes('Spatial Systems Architect')) {
       source = 'gis';
-    } else if (artifact.roles.includes('Solutions Architect')) {
+    } else if (artifact.roles.includes('Implementation Consultant')) {
       source = 'qa';
     } else if (artifact.roles.includes('Forward Deployed Engineer')) {
       source = 'implementation';

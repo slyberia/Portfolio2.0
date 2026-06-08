@@ -1,99 +1,68 @@
-> **Role:** AI Systems Architect
-> **Outcome:** Eliminated "entropy drift" in multi-turn LLM sessions by engineering a Guardian Layer protocol that enforced architectural constraints, reducing destructive edits and stack violations across development workflows
-> **Stack/Tools:** Google AI Studio (Gemini 1.5 Pro), Markdown, System Prompting
-> **Protocol lineage:** Aegis v3.0 → Guynode Master Instruction File v3 → CLAUDE.md (Guynode_v2)
-> **Relevance:** Shows how to impose engineering discipline on probabilistic AI systems — critical for any team shipping AI-assisted or AI-augmented products
+> **Role:** AI Workflow & Automation Designer
+> **Outcome:** Built a decoupled AI-automation system — Aegis governance + emOS execution over a Notion state machine — that evolved from human-in-the-loop review toward autonomous operation.
+> **Stack/Tools:** TypeScript · Node.js · Docker · Google Cloud Run · Notion API · Google AI Studio SDK
+> **Relevance:** Shows how to put AI-generated work under explicit governance — and the judgment to decide when a human Guardian is required versus when the check can be automated.
 
-# 🛡️ Project Aegis — Engineering Reliability into LLM Workflows
+# 🛡️ Automation & Operational Protocols
+
+### The Aegis Governance Framework & emOS Runtime
 
 > **Project Overview**
->
-> **Role:** AI Systems Architect
-> **Scope:** LLM Governance, Prompt Engineering, Developer Experience (DevEx)
-> **Tools:** Google AI Studio (Gemini 1.5 Pro), Markdown, System Prompting
+> **Status:** Working prototype (HITL iteration tested; autonomous iteration developed)
+> **Role:** AI Workflow & Automation Designer
+> **Scope:** AI workflow governance, multi-agent orchestration, operational protocols
+> **Tools:** TypeScript, Node.js, Docker, Google Cloud Run, Notion API, Google AI Studio SDK
 
 ---
 
-## 🏗️ The Challenge
+## Executive Summary
 
-Standard LLM interactions suffer from "Entropy Drift." As conversation history grows, models tend to lose track of architectural constraints, resulting in:
+Aegis is a decoupled automation system that puts AI-generated work under an explicit governance layer before it is ever trusted. It separates two concerns that usually get tangled together:
 
-- **The "Goldfish" Effect:** Models forgetting the tech stack (e.g., using CSS instead of Tailwind) after 10+ turns.
-- **Destructive Edits:** Small feature requests often causing the model to rewrite entire files, deleting critical existing logic.
-- **Confident Incompetence:** Models generating syntactically correct code that violates business logic or security invariants.
+- **Aegis — the governance layer.** A prompting ruleset and validation protocol (the "judge"). It enforces structural compliance, forces an explicit `<thinking>` reasoning trace, and flags drift from the task spec. It never executes workloads.
+- **emOS — the execution layer.** A multi-agent runtime that routes data, runs scripts, and manipulates files inside isolated Docker containers. It is deliberately "blind" to whether its output is _correct_ until Aegis checks it.
 
-**The Goal:** Engineer a "Guardian Layer" that forces the LLM to reason like a Principal Engineer—prioritizing system stability, preservation of state, and architectural intent over speed.
+The two layers are fully decoupled and communicate asynchronously through a **private Notion database used as a headless, human-readable state machine** — so the whole pipeline's status is visible and auditable in a normal Notion workspace, with no bespoke dashboard to build or maintain.
 
----
+## The Evolution: human-governed → autonomous
 
-## 🔧 Phase 1: The "Guardian Layer" Architecture
+The system was built in two iterations, and that progression is the point.
 
-I developed **Aegis v3.0**, a comprehensive system protocol that acts as a middleware between the user's intent and the LLM's output.
+**Iteration 1 — Human-in-the-loop (built & tested).** The Guardian seat was filled by a human. emOS executed a ticket, and the execution log was reviewed against the Aegis ruleset in Notion before being approved or rejected. This iteration proved the protocol worked and was trustworthy.
 
-## Key Implementations
+**Iteration 2 — Autonomous (developed).** Once the protocol was trusted, the system was expanded so the **Aegis engine itself** fills the Guardian seat — evaluating the execution log automatically and resolving the ticket without a human. This iteration was developed as the next step toward a fully containerized executable, which was the planned future iteration.
 
-- **Cognitive Mode Switching:** Designed distinct modes (**Execution**, **Architect**, **Patch**) triggered by specific user intents. This prevents the model from wasting tokens on philosophy when the user just wants a bug fix.
-- **The "Thinking Block" Mandate:** Enforced a strict pre-computation step (`<thinking>`) where the model must explicitly list:
-  1.  Files it will touch.
-  2.  Logic it will _preserve_ (to prevent destructive edits).
-  3.  The Design Pattern it is applying.
-- **Drift Detection:** Hard-coded "Immutable Invariants" (e.g., "No external libraries without permission"). If a request violates these, the model is instructed to **REFUSE** and propose a compliant alternative.
+The honest framing: **HITL mode is proven; autonomous mode is built and was on the path to containerized deployment.** The interesting engineering isn't "I automated it" — it's designing the governance so the _same_ pipeline can run with either a human or an automated Guardian, and knowing which to use when.
 
----
+## 🔧 How it works (the loop)
 
-## 🎨 Phase 2: Implementation in Google AI Studio
+1. **Task** — a structured page lands in Notion with markdown system instructions, task parameters, and target file specs (status `Pending Execution`).
+2. **Route & execute (emOS)** — a lightweight TypeScript daemon polls Notion, downloads the payload, spins up an isolated Docker container, and runs the target scripts.
+3. **Guard (Aegis)** — the execution log is evaluated against the ruleset: structural compliance, the mandatory `<thinking>` trace, and drift detection against the original task spec. _(In HITL mode a human is the Guardian; in autonomous mode the Aegis engine is.)_
+4. **Resolve** — a detailed markdown audit trail is appended to the Notion page, and the state moves to `Completed` or `Failed: Guardrails Tripped`.
 
-Deploying Aegis required adapting to the specific token economics and context window of Google AI Studio.
+## ⚖️ Constraints & trade-offs
 
-## Optimization Strategy
+- **No Notion webhooks + a ~3 req/sec API cap.** Notion doesn't push database-change events and rate-limits hard. → The sync engine **polls on a ~15-second loop and batches state queries into grouped update payloads**, accepting a short propagation delay in exchange for keeping Notion as the single source of truth.
+- **An agent shouldn't grade its own work.** A single model evaluating its own output is unreliable. → The **Executor and Guardian are decoupled** with no shared context, so validation stays independent of generation.
+- **Validation costs time.** Running every change through the full Aegis check adds a brief delay per run. → Accepted deliberately — it avoids the far larger cost of tracing hallucinated runtime bugs later.
 
-- **Token Efficiency:** Implemented a "Patch Mode" using a strict `<<<< SEARCH / ==== REPLACE` syntax.
-  - _Result:_ Reduced token consumption for minor edits by **~70%**, as the model no longer regenerates 500-line files for 1-line changes.
-- **Context Caching:** Leveraged Gemini's large context window by creating a "Project Context" header that dynamically loads the tech stack (React/Vite, Python/FastAPI) into the system prompt, making the protocol project-agnostic.
+## 🛡️ The Guardian protocol
 
----
+The governance core, stripped to its mechanism:
 
-## 📢 Phase 3: Impact & Results
-
-The protocol was tested across multiple full-stack development lifecycles (React SPAs, Python Microservices).
-
-## Performance Metrics
-
-- **Zero-Drift Sessions:** Achieved 50+ turn conversations without a single tech-stack hallucination (e.g., mixing styling frameworks).
-- **Error Rate Reduction:** The mandatory "Thinking Block" reduced logic errors by **40%** by forcing "Chain of Thought" reasoning before code generation.
-- **Developer Velocity:** "Patch Mode" integration increased iteration speed by **2x**, allowing for "surgical" edits rather than "bulldozer" rewrites.
-
-> **Metric of Success:** Eliminated "Regression Loops" (where fixing bug A creates bug B) in 90% of complex refactoring tasks.
-
----
-
-## 🧠 Retrospective & Learnings
-
-- **What Went Well:** The "Two-Path" Failure Protocol (offering a "Safe" path vs. a "Creative" path) drastically improved the model's utility in ambiguous situations.
-- **Challenges:** Getting the model to consistently adhere to the "Search/Replace" syntax required 15+ iterations of few-shot prompting to perfect.
-
-<!-- Attribution note: performance metrics (50+ turns, 40% error reduction, 2x speed, 90% regression elimination) and the 15+ iteration claim are asserted outcomes — not verified from surviving artifacts. See AI_ATTRIBUTION.md Part 2. -->
-
-- **Future Iteration:** Implementing an automated "Linting Agent" that parses the LLM's output and auto-rejects code that misses the Aegis signature.
-
----
+- **Thinking-block mandate** — endpoints must emit a separate `<thinking>` block that maps logic and assumptions _before_ producing code, so reasoning errors are caught before they become output.
+- **Drift detection** — output is checked against the task layout defined in the originating Notion block; deviation trips the guardrail.
+- **Binary state resolution** — every ticket resolves to a documented pass or fail; nothing mutates silently.
 
 ## 🤝 Customer / Stakeholder Value
 
-**Who it helps:** Engineers using LLMs as coding collaborators, and the long-lived codebases at risk from "destructive edits" and context drift.
+**Who it helps:** anyone running AI agents against a real system who needs the output to be trustworthy, auditable, and safe to automate.
 
-**What got easier:** Long AI-assisted sessions preserve architectural intent — the model edits surgically instead of regenerating files and silently deleting working logic.
+**What got easier:** the whole pipeline's state lives in a readable Notion board — no custom infrastructure to stand up — and every automated action leaves an audit trail.
 
-**Why it matters:** Governing model behavior like a principal engineer turns an unpredictable assistant into a dependable one, so teams can trust AI output inside real codebases.
+**Why it matters:** it treats AI output as an _untrusted worker_ that has to pass an explicit check, not a partner whose word is taken on faith. That's what makes it safe to move a step at a time from human review toward automation.
 
 ---
 
-## 📂 Key Artifact: The "Mid-Flight" Injection Prompt
-
-_One of the core innovations was a prompt designed to recover "failing" projects by injecting the protocol mid-stream._
-
-```text
-"Confirm receipt of the Aegis Protocol v3.0. Please enter PRINCIPAL ARCHITECT MODE.
-Perform a comprehensive End-to-End System Audit of the current codebase.
-Identify where the current code fails Aegis standards regarding System Invariants and Observability."
-```
+> Sanitized for portfolio use: no Notion workspace IDs, page UUIDs, database keys, or credentials are shown. The system is internal tooling; there is no public repository at this time.

@@ -2,7 +2,7 @@
 
 - **purpose:** Track summary for implementation-focused systems work.
 - **role relevance:** Forward Deployed Engineer lane.
-- **key evidence links:** [/projects/guynode](/projects/guynode), [/projects/digital-twin](/projects/digital-twin), [/projects/prompter-hub](/projects/prompter-hub).
+- **key evidence links:** [/projects/guynode](/projects/guynode), [/projects/digital-twin](/projects/digital-twin), [/projects/luxe-lofts](/projects/luxe-lofts).
 - **canonical app route:** /tracks/forward-deployed
 - **last updated:** 2026-05-02
 

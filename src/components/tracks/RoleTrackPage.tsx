@@ -1,13 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { GUYNODE_SYSTEM_HREF } from '../../lib/routes';
-import { TrackPageContent } from '../../data/trackContent';
+import { TrackPageContent, EmbeddedArtifact } from '../../data/trackContent';
 import { componentRecipes, getRoleAccentRecipe } from '../../lib/design-system';
 import ProofBlockCard from './ProofBlockCard';
 import { executiveEvidenceBlocks } from '../../utils/evidenceBlocks';
 import { mapEvidenceToProofCard } from '../../utils/mapEvidenceToProofCard';
 import { RecruiterRoleLane, VALID_RECRUITER_LANES } from '../../types';
 import SkillDiscoveryModal from '../SkillDiscoveryModal';
+import { HtmlPreviewCard } from '../CaseStudyComponents';
+import { OperationalTriageSimulator } from '../ops-triage/OperationalTriageSimulator';
+import { PROJECT_REGISTRY } from '../../constants';
 
 interface RoleTrackPageProps {
   content: TrackPageContent;
@@ -34,7 +37,7 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
     'AI-assisted build workflows': 'AI-Assisted Development',
     'Stakeholder translation': 'Stakeholder Communication',
 
-    // Solutions Architect
+    // Implementation Consultant
     'Test planning': 'QA Protocols',
     'QA protocols': 'QA Protocols',
     'Test matrices': 'QA Protocols',
@@ -58,9 +61,18 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
     'Utility and spatial operations awareness': 'ESRI ArcMap',
   };
 
+  // "What This Track Proves" buttons pass Title Case labels (e.g. "Workflow Setup") while the
+  // map keys are sentence case ("Workflow setup"); resolve case-insensitively so every claim
+  // maps to a canonical skill that SkillDiscoveryModal can back with real evidence.
+  const resolveCanonicalSkill = (skillName: string): string => {
+    if (CANONICAL_SKILL_MAP[skillName]) return CANONICAL_SKILL_MAP[skillName];
+    const lowered = skillName.toLowerCase();
+    const match = Object.keys(CANONICAL_SKILL_MAP).find((key) => key.toLowerCase() === lowered);
+    return match ? CANONICAL_SKILL_MAP[match] : skillName;
+  };
+
   const handleSkillClick = (skillName: string) => {
-    const canonicalName = CANONICAL_SKILL_MAP[skillName] || skillName;
-    setInspectorSkill(canonicalName);
+    setInspectorSkill(resolveCanonicalSkill(skillName));
   };
 
   const roleLane =
@@ -112,6 +124,26 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
     };
   });
 
+  // Renders embedded interactive evidence by reusing existing artifact components.
+  // `project-preview` pulls live content/iframe from PROJECT_REGISTRY so artifact HTML
+  // is never duplicated here.
+  const renderEmbeddedArtifact = (artifact: EmbeddedArtifact) => {
+    if (artifact.kind === 'ops-triage-simulator') {
+      return <OperationalTriageSimulator />;
+    }
+    const project = PROJECT_REGISTRY.find((entry) => entry.id === artifact.projectId);
+    const hero = project?.heroArtifact;
+    if (!hero) return null;
+    return (
+      <HtmlPreviewCard
+        content={(hero.content as string) || ''}
+        label={artifact.label}
+        iframeUrl={hero.iframeUrl}
+        accentColor={artifact.accentColor}
+      />
+    );
+  };
+
   return (
     <div className="min-h-screen">
       <section className="relative pt-32 pb-16 px-6 overflow-hidden">
@@ -134,6 +166,32 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
           <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-4xl">
             {content.summary}
           </p>
+        </div>
+      </section>
+
+      <section className="px-6 pb-4">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="sr-only">Why this lens adds value</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[
+              { tag: 'Business value', body: content.valueBridge.business },
+              { tag: 'For the people who use it', body: content.valueBridge.people },
+            ].map((bridge) => (
+              <article
+                key={bridge.tag}
+                className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6"
+              >
+                <span
+                  className={`inline-flex items-center text-[10px] font-bold uppercase tracking-[0.16em] border px-2.5 py-1 rounded-md ${accent.chipClass}`}
+                >
+                  {bridge.tag}
+                </span>
+                <p className="mt-3 text-sm md:text-base text-slate-700 dark:text-slate-200 leading-relaxed">
+                  {bridge.body}
+                </p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -164,16 +222,16 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
       <section className="px-6 py-12 bg-slate-50/60 dark:bg-slate-900/20 border-y border-black/5 dark:border-white/5">
         <div className="max-w-5xl mx-auto rounded-2xl border border-black/5 dark:border-white/10 bg-white/90 dark:bg-slate-900/60 p-8">
           <p className={componentRecipes.typography.sectionHeading + ' ' + accent.textClass}>
-            {content.guynodeLabel}
+            {content.flagshipLabel}
           </p>
           <h2 className="mt-3 text-2xl font-outfit font-semibold text-ink-navy dark:text-white">
-            {content.guynodeTitle}
+            {content.flagshipTitle}
           </h2>
           <p className="mt-3 text-slate-600 dark:text-slate-300 leading-relaxed">
-            {content.guynodeSummary}
+            {content.flagshipSummary}
           </p>
           <ul className="mt-5 space-y-2">
-            {content.guynodeBullets.map((bullet) => (
+            {content.flagshipBullets.map((bullet) => (
               <li
                 key={bullet}
                 className="text-sm text-slate-700 dark:text-slate-300 flex items-start gap-2"
@@ -187,14 +245,42 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
             ))}
           </ul>
           <Link
-            to={GUYNODE_SYSTEM_HREF}
-            aria-label={`View Guynode system for ${content.title} track`}
+            to={content.flagshipHref}
+            aria-label={`${content.flagshipCtaLabel} for ${content.title} track`}
             className={`mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-lg border font-semibold text-sm transition-colors focus:outline-none focus-visible:ring-2 ${accent.chipClass}`}
           >
-            View Guynode System
+            {content.flagshipCtaLabel}
           </Link>
         </div>
       </section>
+
+      {content.embeddedArtifacts.length > 0 && (
+        <section className="px-6 py-12">
+          <div className="max-w-5xl mx-auto space-y-5">
+            <div className="space-y-2">
+              <h2 className={componentRecipes.typography.sectionHeading + ' ' + accent.textClass}>
+                Interactive Evidence
+              </h2>
+              <p className={componentRecipes.typography.sectionSubheading}>
+                Working artifacts you can open and operate — not screenshots.
+              </p>
+            </div>
+            <div className="space-y-10">
+              {content.embeddedArtifacts.map((artifact) => (
+                <figure key={artifact.label} className="space-y-3">
+                  {renderEmbeddedArtifact(artifact)}
+                  <figcaption className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                    <span className="font-semibold text-ink-navy dark:text-white">
+                      {artifact.label}.
+                    </span>{' '}
+                    {artifact.caption}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="px-6 py-12">
         <div className="max-w-5xl mx-auto space-y-5">
@@ -374,9 +460,9 @@ const RoleTrackPage: React.FC<RoleTrackPageProps> = ({ content }) => {
                             source: action.twinSource,
                             modeLabel:
                               action.twinSource === 'implementation'
-                                ? 'Implementation Track'
+                                ? 'Forward Deployed Track'
                                 : action.twinSource === 'qa'
-                                  ? 'QA Track'
+                                  ? 'Implementation Consultant Track'
                                   : action.twinSource === 'gis'
                                     ? 'GIS Track'
                                     : 'General Recruiter Mode',
