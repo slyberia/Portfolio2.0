@@ -423,8 +423,21 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
     heroArtifact: {
       type: 'html',
       label: 'Luxe Lofts: Operational Hub',
-      description: 'Functional Rate Engine, AI Planning ingress, and CRM path orchestration.',
-      content: '',
+      description:
+        'How a guest inquiry flows through the proposed system — pricing, AI planning, and CRM orchestration in one loop. Click to launch the live prototype.',
+      content: `<div style="font-family:Inter,system-ui,sans-serif;background:#fdf7f5;border:1px solid #ecd9d3;border-radius:14px;padding:18px;max-width:680px;color:#1f2937;">
+  <h4 style="margin:0 0 14px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#9a5b4e;">Luxe Lofts · Operational Hub</h4>
+  <div style="display:grid;gap:8px;">
+    <div style="padding:11px 14px;border:1px solid #e7d2cb;border-radius:10px;background:#fff;"><strong>1 · Inquiry</strong> — a guest request enters one front door instead of scattered channels</div>
+    <div style="text-align:center;color:#c2705f;">↓</div>
+    <div style="padding:11px 14px;border:1px solid #f1d9b8;border-radius:10px;background:#fffaf2;"><strong>2 · Rate Engine</strong> — pricing and availability resolve against defined rules</div>
+    <div style="text-align:center;color:#c2705f;">↓</div>
+    <div style="padding:11px 14px;border:1px solid #e7d2cb;border-radius:10px;background:#fff;"><strong>3 · AI Planning</strong> — event and stay details are captured and structured for follow-up</div>
+    <div style="text-align:center;color:#c2705f;">↓</div>
+    <div style="padding:11px 14px;border:1px solid #e7d2cb;border-radius:10px;background:#fff;"><strong>4 · CRM Orchestration</strong> — the lead is routed to a clear conversion path with nothing dropped</div>
+  </div>
+  <p style="margin:14px 0 0;font-size:11px;color:#9a7d74;">Click to launch the live operational prototype →</p>
+</div>`,
       iframeUrl: 'https://luxe-lofts-roadmap-repo-786228485832.us-central1.run.app/',
     },
     rigor: {
