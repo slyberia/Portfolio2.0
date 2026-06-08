@@ -349,6 +349,120 @@ export const forensicEntries: ArchiveEntry[] = [
   },
 ];
 
+// ── Automation & Governance Deep Dive ──────────────────────────────────────
+// Unifies the three governed-AI-automation systems under one spine:
+// "AI as an untrusted worker behind an explicit governance gate — across the
+// spectrum from human-in-the-loop to autonomous." Same philosophy, different
+// autonomy levels. Cross-links the two project entries (project-aegis,
+// portfolio-pipeline) rather than restating them. No invented metrics.
+
+export type AutomationSystem = {
+  id: string;
+  name: string;
+  context: string;
+  autonomy: string;
+  guardian: string;
+  contributes: string;
+  description: string;
+  href: string;
+  chips: string[];
+};
+
+export const automationThesis =
+  'Across three systems I treat AI as a worker that must clear an explicit check before its output is trusted — whether that check is me, a CI gate, or an automated judge. The same governance philosophy holds at every autonomy level; only who sits in the Guardian seat changes.';
+
+export const automationSystems: AutomationSystem[] = [
+  {
+    id: 'portfolio-pipeline',
+    name: 'Portfolio 2.0 build pipeline',
+    context: 'The governed AI build of this site.',
+    autonomy: 'Human-led, gated',
+    guardian: 'Kyle (design authority) + automated CI gates',
+    contributes:
+      'Shows the gate as a CI pipeline: AI proposes changes on a branch, and lint, types, tests, build, secret-scan, and crawler drift-guards must pass before anything merges.',
+    description:
+      'AI-assisted development under a one-subphase protocol with human design authority. Every change lands on a branch and clears the same automated gate before merge, with an attribution ledger demarcating human direction from AI execution.',
+    href: '/projects/portfolio-pipeline',
+    chips: ['Human-in-the-loop', 'CI Gates', 'Attribution Ledger'],
+  },
+  {
+    id: 'aegis',
+    name: 'Aegis',
+    context: 'The governance / validation layer — the judge.',
+    autonomy: 'Human-in-the-loop',
+    guardian: 'Kyle',
+    contributes:
+      'Shows the gate as an explicit judge: a ruleset plus a reasoning trace decide whether worker output passes, while a human still approves each iteration.',
+    description:
+      'The governance layer that evaluates AI-generated work against an explicit ruleset and emits a reasoning trace and drift signals. Aegis judges; it does not execute. In human-in-the-loop mode the operator reviews each decision before it advances.',
+    href: '/projects/project-aegis',
+    chips: ['Explicit Ruleset', 'Reasoning Trace', 'Drift Detection'],
+  },
+  {
+    id: 'emos',
+    name: 'emOS',
+    context: 'The autonomous execution runtime — the workers.',
+    autonomy: 'Autonomous',
+    guardian: 'The Aegis engine',
+    contributes:
+      'Shows the gate running without a human in the loop: containerized workers act over a Notion state machine, and the Aegis engine holds the Guardian seat between iterations.',
+    description:
+      'The execution runtime that runs containerized workers (Docker / Cloud Run) over a Notion state machine. As confidence in the ruleset grows, the same pipeline shifts from human-governed toward autonomous operation, with the Aegis engine standing in as judge.',
+    href: '/projects/project-aegis',
+    chips: ['Autonomous', 'Notion State Machine', 'Cloud Run Workers'],
+  },
+];
+
+export type GovernancePrimitive = {
+  id: string;
+  name: string;
+  summary: string;
+  acrossSystems: string;
+};
+
+export const governancePrimitives: GovernancePrimitive[] = [
+  {
+    id: 'explicit-ruleset',
+    name: 'Explicit ruleset',
+    summary:
+      'What "acceptable" means is written down before the worker runs, not inferred after the fact.',
+    acrossSystems:
+      'The pipeline encodes it as CLAUDE.md guardrails and CI checks; Aegis encodes it as the judge ruleset; emOS carries the same ruleset into autonomous iterations.',
+  },
+  {
+    id: 'reasoning-trace',
+    name: 'Reasoning / thinking trace',
+    summary:
+      'The judging step shows its work, so a decision can be inspected rather than taken on faith.',
+    acrossSystems:
+      'Aegis emits a reasoning trace per evaluation; the pipeline surfaces it as patch-note review against scoped intent; emOS preserves it between autonomous steps.',
+  },
+  {
+    id: 'drift-checks',
+    name: 'Drift & assertion checks',
+    summary:
+      'Output is compared against intent to catch the silent regressions that compound in AI-assisted work.',
+    acrossSystems:
+      'The pipeline runs crawler and semantic drift-guards in CI; Aegis raises drift signals against its ruleset; emOS halts or escalates when assertions fail.',
+  },
+  {
+    id: 'audit-trail',
+    name: 'Audit trail',
+    summary:
+      'Every decision leaves a readable record, so the system stays legible to a reviewer who arrives later.',
+    acrossSystems:
+      'The pipeline uses branches, reviewed PRs, and an attribution ledger; Aegis and emOS keep the trail in a plain Notion workspace.',
+  },
+  {
+    id: 'judge-vs-executor',
+    name: 'Decoupled judge vs. executor',
+    summary:
+      'The thing that decides whether work is acceptable is kept separate from the thing that produces the work.',
+    acrossSystems:
+      'In the pipeline, CI and human review judge what the AI executes; in Aegis/emOS, the Aegis judge is a distinct layer from the emOS workers it governs.',
+  },
+];
+
 // ── Appendix Links ─────────────────────────────────────────────────────────
 
 export const appendixLinks = [

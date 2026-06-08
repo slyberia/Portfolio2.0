@@ -123,7 +123,7 @@ export const getSeoForPath = (pathname: string): RouteSeo => {
     '/deep-dives': {
       title: 'Deep Dives | Portfolio 3.0',
       description:
-        'A comprehensive look at the process, governance, and strategy behind Portfolio 3.0.',
+        'A comprehensive look at the process, governance, automation, and strategy behind Portfolio 3.0 — including how AI is governed as an untrusted worker behind an explicit gate, from human-in-the-loop to autonomous.',
       canonicalPath: '/deep-dives',
       markdownPath: '/markdown/process.md',
       jsonLd: [
