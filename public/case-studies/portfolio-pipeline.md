@@ -53,9 +53,9 @@ context window via `sync:architect`.)_
 
 On every push and pull request, `.github/workflows/ci.yml` enforces an unbroken chain: `npm ci` →
 **lint (zero warnings) → format check → typecheck → Vitest → production build → gitleaks secret-scan →
-key audit**. The key audit instantly fails the build if `GEMINI_API_KEY` (or other secrets) bleed into
-the `dist/` bundle. To close the supply-chain surface, **all third-party GitHub Actions are pinned to
-full, immutable commit SHAs** rather than mutable version tags.
+key audit**. The key audit instantly fails the build if an API key (such as the Gemini key) or other
+secrets bleed into the `dist/` bundle. To close the supply-chain surface, **all third-party GitHub
+Actions are pinned to full, immutable commit SHAs** rather than mutable version tags.
 
 ## 🛡️ Drift guards — protecting semantic integrity
 
