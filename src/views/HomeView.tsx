@@ -607,13 +607,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               to="/deep-dives?tab=process"
               className="inline-flex justify-center items-center gap-2 px-5 py-3 rounded-xl bg-slate-950 hover:bg-slate-850 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-950 text-sm font-semibold transition-all hover:-translate-y-0.5 shadow-sm hover:shadow-md"
             >
-              Process &amp; Governance Deep Dive <span>→</span>
-            </Link>
-            <Link
-              to="/deep-dives?tab=automation"
-              className="inline-flex justify-center items-center gap-2 px-5 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900 text-sm font-semibold transition-all hover:-translate-y-0.5"
-            >
-              Automation &amp; Governance Deep Dive <span>→</span>
+              Automation &amp; Governance Architecture <span>→</span>
             </Link>
             <Link
               to="/deep-dives?tab=luxe-lofts"

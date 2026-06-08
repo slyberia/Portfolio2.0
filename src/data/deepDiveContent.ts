@@ -369,7 +369,7 @@ export type AutomationSystem = {
 };
 
 export const automationThesis =
-  'Across three systems I treat AI as a worker that must clear an explicit check before its output is trusted — whether that check is me, a CI gate, or an automated judge. The same governance philosophy holds at every autonomy level; only who sits in the Guardian seat changes.';
+  'I treat AI not as a magic bullet but as an untrusted worker that must pass an explicit assertion check before its output is accepted. Across every system the philosophy is identical: separate the execution from the validation. Whether that check is enforced manually by me, programmatically by a strict CI pipeline, or autonomously by the Aegis judge, the governance architecture is what makes the AI safe to run in production.';
 
 export const automationSystems: AutomationSystem[] = [
   {
@@ -377,11 +377,11 @@ export const automationSystems: AutomationSystem[] = [
     name: 'Portfolio 2.0 build pipeline',
     context: 'The governed AI build of this site.',
     autonomy: 'Human-led, gated',
-    guardian: 'Kyle (design authority) + automated CI gates',
+    guardian: 'Kyle (design authority) + CI gates',
     contributes:
-      'Shows the gate as a CI pipeline: AI proposes changes on a branch, and lint, types, tests, build, secret-scan, and crawler drift-guards must pass before anything merges.',
+      'Demonstrates how rigorous human design authority and strict CI validation gates can safely harness multi-LLM workflows for production-grade software builds.',
     description:
-      'AI-assisted development under a one-subphase protocol with human design authority. Every change lands on a branch and clears the same automated gate before merge, with an attribution ledger demarcating human direction from AI execution.',
+      'AI-assisted development under a one-subphase protocol with human design authority. Every change lands on a branch and clears the same automated gate — lint, types, tests, build, secret-scan, and crawler drift-guards — before merge, with an attribution ledger demarcating human direction from AI execution.',
     href: '/projects/portfolio-pipeline',
     chips: ['Human-in-the-loop', 'CI Gates', 'Attribution Ledger'],
   },
@@ -389,12 +389,12 @@ export const automationSystems: AutomationSystem[] = [
     id: 'aegis',
     name: 'Aegis',
     context: 'The governance / validation layer — the judge.',
-    autonomy: 'Human-in-the-loop',
-    guardian: 'Kyle',
+    autonomy: 'Human-in-the-loop (HITL)',
+    guardian: 'Kyle (algorithmic validation, human approval)',
     contributes:
-      'Shows the gate as an explicit judge: a ruleset plus a reasoning trace decide whether worker output passes, while a human still approves each iteration.',
+      'Introduces the cognitive "judge" layer — a human-in-the-loop validation framework that measures AI output against the project’s fixed invariants before that output is accepted.',
     description:
-      'The governance layer that evaluates AI-generated work against an explicit ruleset and emits a reasoning trace and drift signals. Aegis judges; it does not execute. In human-in-the-loop mode the operator reviews each decision before it advances.',
+      'The governance layer that evaluates AI-generated work against an explicit ruleset and emits a reasoning trace and drift signals. Aegis judges; it does not execute. In human-in-the-loop mode the operator approves each decision before it advances.',
     href: '/projects/project-aegis',
     chips: ['Explicit Ruleset', 'Reasoning Trace', 'Drift Detection'],
   },
@@ -403,11 +403,11 @@ export const automationSystems: AutomationSystem[] = [
     name: 'emOS',
     context: 'The autonomous execution runtime — the workers.',
     autonomy: 'Autonomous',
-    guardian: 'The Aegis engine',
+    guardian: 'The Aegis engine (algorithmic judge)',
     contributes:
-      'Shows the gate running without a human in the loop: containerized workers act over a Notion state machine, and the Aegis engine holds the Guardian seat between iterations.',
+      'Represents the autonomous runtime where the Aegis judge takes the Guardian seat, enabling agentic workflows without requiring direct human review of each step.',
     description:
-      'The execution runtime that runs containerized workers (Docker / Cloud Run) over a Notion state machine. As confidence in the ruleset grows, the same pipeline shifts from human-governed toward autonomous operation, with the Aegis engine standing in as judge.',
+      'The execution runtime that runs containerized workers (Docker / Cloud Run) over a Notion state machine. As confidence in the ruleset grows, the same pipeline shifts from human-governed toward autonomous operation, with the Aegis engine standing in as judge between iterations.',
     href: '/projects/project-aegis',
     chips: ['Autonomous', 'Notion State Machine', 'Cloud Run Workers'],
   },
@@ -420,22 +420,31 @@ export type GovernancePrimitive = {
   acrossSystems: string;
 };
 
+// The five mechanisms that recur across all three systems — the strongest
+// connective tissue and the mechanical proof behind the autonomy gradient.
 export const governancePrimitives: GovernancePrimitive[] = [
   {
     id: 'explicit-ruleset',
-    name: 'Explicit ruleset',
+    name: 'Explicit rulesets & invariants',
     summary:
       'What "acceptable" means is written down before the worker runs, not inferred after the fact.',
     acrossSystems:
-      'The pipeline encodes it as CLAUDE.md guardrails and CI checks; Aegis encodes it as the judge ruleset; emOS carries the same ruleset into autonomous iterations.',
+      'CLAUDE.md in the portfolio acts as the same kind of invariant contract that Aegis and emOS map for their runs — fixed project invariants the worker is checked against.',
+  },
+  {
+    id: 'judge-vs-executor',
+    name: 'Decoupled judge vs. executor',
+    summary: 'The agent that writes the work is never the agent — or person — that approves it.',
+    acrossSystems:
+      'In the pipeline I am the judge of what the AI executes; in emOS, the Aegis judge is a layer distinct from the workers it governs. Execution and validation never collapse into one actor.',
   },
   {
     id: 'reasoning-trace',
-    name: 'Reasoning / thinking trace',
+    name: 'Thinking / pre-computation traces',
     summary:
-      'The judging step shows its work, so a decision can be inspected rather than taken on faith.',
+      'The worker maps its intent and blast radius before it acts, so the reasoning can be inspected.',
     acrossSystems:
-      'Aegis emits a reasoning trace per evaluation; the pipeline surfaces it as patch-note review against scoped intent; emOS preserves it between autonomous steps.',
+      'Mandatory <thinking> traces in the build cycle surface as patch-note review against scoped intent; Aegis emits a reasoning trace per evaluation; emOS preserves it between autonomous steps.',
   },
   {
     id: 'drift-checks',
@@ -443,23 +452,15 @@ export const governancePrimitives: GovernancePrimitive[] = [
     summary:
       'Output is compared against intent to catch the silent regressions that compound in AI-assisted work.',
     acrossSystems:
-      'The pipeline runs crawler and semantic drift-guards in CI; Aegis raises drift signals against its ruleset; emOS halts or escalates when assertions fail.',
+      'CI tests and crawler drift-guards in the portfolio serve the same function as the invariant validation loops in Aegis/emOS — flagging drift before output is accepted.',
   },
   {
     id: 'audit-trail',
-    name: 'Audit trail',
+    name: 'Audit trails',
     summary:
       'Every decision leaves a readable record, so the system stays legible to a reviewer who arrives later.',
     acrossSystems:
-      'The pipeline uses branches, reviewed PRs, and an attribution ledger; Aegis and emOS keep the trail in a plain Notion workspace.',
-  },
-  {
-    id: 'judge-vs-executor',
-    name: 'Decoupled judge vs. executor',
-    summary:
-      'The thing that decides whether work is acceptable is kept separate from the thing that produces the work.',
-    acrossSystems:
-      'In the pipeline, CI and human review judge what the AI executes; in Aegis/emOS, the Aegis judge is a distinct layer from the emOS workers it governs.',
+      'The AI_ATTRIBUTION.md ledger and reviewed-PR history in the portfolio mirror the execution logging the emOS runtime keeps in a plain Notion workspace.',
   },
 ];
 

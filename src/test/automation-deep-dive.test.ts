@@ -28,14 +28,14 @@ describe('Automation & Governance deep dive content', () => {
     expect(autonomy).toContain('autonomous');
   });
 
-  it('documents the reused governance primitives that draw the through-line', () => {
+  it('highlights the five reused governance primitives that draw the through-line', () => {
     const ids = governancePrimitives.map((p) => p.id);
     expect(ids).toEqual([
       'explicit-ruleset',
+      'judge-vs-executor',
       'reasoning-trace',
       'drift-checks',
       'audit-trail',
-      'judge-vs-executor',
     ]);
     // Each primitive must explain how it recurs across all three systems.
     for (const primitive of governancePrimitives) {
@@ -43,14 +43,19 @@ describe('Automation & Governance deep dive content', () => {
     }
   });
 
-  it('keeps the thesis free of unverifiable absolutes', () => {
-    expect(automationThesis).not.toMatch(/\b100%|completely|deterministic\b/i);
+  it('keeps the thesis free of CLAUDE.md banned absolutes', () => {
+    expect(automationThesis).not.toMatch(/\b(?:100%|completely|deterministic|immutable)\b/i);
+    expect(automationThesis).not.toMatch(/\bzero[- ]/i);
   });
 
-  it('wires the tab and resolvable anchors into DeepDiveView', () => {
+  it('folds the umbrella into the renamed governance tab with resolvable anchors', () => {
     const view = readFileSync(join(root, 'src/views/DeepDiveView.tsx'), 'utf8');
-    expect(view).toContain("id: 'automation'");
-    for (const anchor of ['auto-1', 'auto-2', 'auto-3', 'auto-4']) {
+    // Option C: the automation story lives in the renamed 'process' tab, and
+    // ?tab=automation resolves to it as an alias (no standalone tab).
+    expect(view).toContain("label: 'Automation & Governance Architecture'");
+    expect(view).not.toContain("activeMainTab === 'automation'");
+    expect(view).toContain("automation: 'process'");
+    for (const anchor of ['arch-thesis', 'arch-spectrum', 'arch-primitives']) {
       expect(view).toContain(`id="${anchor}"`);
     }
   });
