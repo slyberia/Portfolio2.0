@@ -9,7 +9,7 @@
 >
 > **Status:** Rebrand + Operational Audit (Implementation Ready)
 > **Role:** Brand & Systems Strategist
-> **Scope:** Visual Identity, Menu UX, POS & Loyalty Modeling
+> **Scope:** Visual Identity, Menu UX, POS & Loyalty Modeling, Channel Economics
 > **Tools:** Adobe Creative Suite, Cost Modeling, Mermaid Diagrams
 
 ---
@@ -36,13 +36,36 @@ The following diagram illustrates the feedback loop designed to drive higher ret
 
 ---
 
-## ⚙️ Module A: POS & Loyalty Logic
+## 🎨 Module A: Brand Identity System
+
+The original mark read as an afterthought — visually inconsistent, hard to scale, and disconnected from the café's atmosphere (baristas called it "low-effort"). I rebuilt it as a **responsive identity system**, not a single logo.
+
+### Recommendation
+
+- **Primary:** Brown + Gold badge — tradition and warmth (brown) with a premium accent (gold). The strongest performer across print and digital.
+- **Secondary:** EMU Green variant — ties the café to the local university community.
+- **Responsive system:** full badge → simplified icon → one-color version, so the mark holds from storefront signage down to a favicon.
+
+### Palette
+
+| Color | Hex       | Meaning                  |
+| ----- | --------- | ------------------------ |
+| Brown | `#5B3A29` | Tradition, warmth, craft |
+| Cream | `#FFF8E7` | Clean canvas             |
+| Gold  | `#D6B25E` | Premium quality          |
+| Green | `#1E6635` | Community, locality      |
+
+Simpler shapes and reduced text tested best with both staff and customers — direction and curation mattered more than the volume of variants explored.
+
+---
+
+## ⚙️ Module B: POS & Loyalty Logic
 
 I conducted a structured audit of POS options (Square vs. Stripe vs. Dripos) based on **Margin Preservation** and **Scalability**, not just features.
 
 ### Problem Diagnosed
 
-The existing loyalty setup was a "flat" voucher system. Despite strong repeat customer patterns, the rewards were not driving behavior change (e.g., upselling food items).
+The café runs on **Dripos**, but its loyalty is a flat voucher loop: **$5 off after 100 points, at $1 = 1 point**. Despite strong repeat-customer patterns, a ~5%-back coupon does nothing to shift behavior toward higher-margin food or larger sizes.
 
 ### The Recommendation Logic
 
@@ -85,9 +108,17 @@ Cost set the ceiling; feature fit set the floor. I scored each platform across t
 
 **Fit for a single-location café:** Dripos's bundled café tooling is genuinely strong, but it locks operations to a fixed iPad + S700 setup. Stripe + a POS partner unlocks the most scale and customization — at the cost of integration work a one-location owner shouldn't have to manage. **Square sits in the middle on purpose:** flexible across phones and tablets, native-enough inventory and loyalty, and no lock-in. Feature fit and break-even economics point to the same answer.
 
+### Loyalty Redesign
+
+Rather than one flat tier, I scoped three margin-aware models to pilot — then let POS analytics pick the winner instead of guessing:
+
+- **Margin-based rewards** — weight rewards toward high-margin items (specialty drinks, food) instead of flat spend.
+- **Tiered rewards** — escalating perks that pull occasional buyers toward regular-visit behavior.
+- **Hybrid punch-card** — a fast, legible streak mechanic layered on points to reinforce the daily ritual.
+
 ---
 
-## 🎨 Module B: Menu Redesign (Operational UX)
+## 🍽️ Module C: Menu Redesign (Operational UX)
 
 The menu system was fragmented across multiple surfaces (wall, counter, digital), leading to slow line speeds and "What's in this?" questions.
 
@@ -98,6 +129,23 @@ We rebuilt the menu hierarchy around **Customer Scan Behavior** rather than prod
 - **Screen 1 (The Anchor):** Core Drinks. Large type, high contrast.
 - **Screen 2 (The Upsell):** Food + Specialties. High-margin items placed in "Wait Zones."
 - **Screen 3 (The Hook):** Seasonal Promos. Rotates monthly to drive urgency.
+
+---
+
+## 🚚 Module D: External Sales Channels (DoorDash)
+
+Third-party delivery was being treated as an ordinary sales channel. At **15–30% commission**, that's a margin leak that can erase the gains from a better POS. I reframed it as a **customer-acquisition channel**, not a revenue channel.
+
+### The Reframe
+
+- **True cost:** a representative DoorDash order carries ~**30–35%** all-in (base commission + processing + promo fees) — often a net loss on the first order versus a **4–8%** direct-order cost.
+- **So treat commission as CAC.** For a healthy **3:1 LTV:CAC**, a DoorDash-acquired customer needs ~**2–3 profitable direct orders** afterward to pay back the acquisition.
+- **Conversion funnel:** an in-bag card + QR code to the direct Square/Stripe ordering page, offering **$5 off the first direct order**. Avoiding a 25% commission on a $30 order saves **$7.50** — so the $5 win-back pays for itself.
+- **Menu guardrails:** a **15–20% price differential** on third-party menus, biased toward bundles and higher-AOV items that can absorb the commission.
+
+> _Figures are modeled from industry norms and the $6.25 latte / $10 sandwich baseline — to be updated against actual COGS and the live DoorDash agreement._
+
+The full CAC/LTV modeling, loyalty pilots, brand iteration, and the Instagram audit live in the **[Business Systems deep dive](/deep-dives?tab=northern-grind)**.
 
 ---
 
