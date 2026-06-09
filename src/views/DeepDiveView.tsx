@@ -9,6 +9,8 @@ import {
 } from '../lib/routes';
 import ScrollToTopButton from '../components/ScrollToTopButton';
 import ErrorBoundary from '../components/ErrorBoundary';
+import CostBreakEvenChart from '../components/northern-grind/CostBreakEvenChart';
+import BrandGallery from '../components/northern-grind/BrandGallery';
 import { componentRecipes, semanticTokens } from '../lib/design-system';
 import { automationSystems, automationThesis, governancePrimitives } from '../data/deepDiveContent';
 import type { Visibility } from '../types';
@@ -74,6 +76,7 @@ const NG_PHASES = [
   { id: 'ng-3', label: 'POS & Loyalty' },
   { id: 'ng-4', label: 'Channel Economics' },
   { id: 'ng-5', label: 'Digital Marketing' },
+  { id: 'ng-gallery', label: 'Asset Gallery' },
   { id: 'ng-6', label: 'Impact & Reflection' },
 ] as const;
 
@@ -86,7 +89,10 @@ const NG_PALETTE = [
 
 const NG_LOGO_VARIANTS = [
   { variant: 'Brown + Gold', purpose: 'Premium accent; strongest overall performer (primary)' },
-  { variant: 'EMU Green', purpose: 'Community tie-in via local university colors (secondary)' },
+  {
+    variant: 'Community Green',
+    purpose: 'Community tie-in via local university colors (secondary)',
+  },
   { variant: 'Brown Circle', purpose: 'Warm, traditional baseline' },
   { variant: 'Blue + Gold', purpose: 'Prestige experiment; ultimately deprioritized' },
 ];
@@ -161,24 +167,24 @@ const NG_IG_AUDIT = [
   },
   {
     category: 'Authenticity',
-    state: 'Reused imagery; no staff or customers',
-    impact: 'Weak local connection',
+    state: 'Reused imagery; little staff or customer presence',
+    impact: 'Room to strengthen local connection',
   },
   {
     category: 'Storytelling',
     state: 'Mostly product photos',
-    impact: 'No emotional hook or brand voice',
+    impact: 'Room for more brand voice and emotional hook',
   },
-  { category: 'Engagement', state: 'Below 1%; no comments', impact: 'Fails to build dialogue' },
+  { category: 'Engagement', state: 'Below 1%; few comments', impact: 'Limited dialogue' },
   {
     category: 'Aesthetic cohesion',
-    state: 'Mismatched tones and edits',
-    impact: 'Disconnected from new palette',
+    state: 'Mixed tones and edits',
+    impact: 'Room to align with the new palette',
   },
   {
     category: 'Call-to-action',
     state: 'Rare or absent',
-    impact: 'No path to loyalty, pickup, or conversion',
+    impact: 'Few paths to loyalty, pickup, or conversion',
   },
 ];
 
@@ -192,15 +198,23 @@ const NG_KPIS = [
 ];
 
 const NG_BEFORE_AFTER = [
-  { aspect: 'Brand identity', before: 'Generic and inconsistent', after: 'Cohesive and premium' },
-  { aspect: 'POS system', before: 'Rigid and overpriced', after: 'Modular and data-driven' },
-  { aspect: 'Loyalty', before: 'Flat voucher', after: 'Tiered and margin-aware' },
+  {
+    aspect: 'Brand identity',
+    before: 'Inconsistent across surfaces',
+    after: 'Cohesive and premium',
+  },
+  { aspect: 'POS system', before: 'Cost-heavy at low volume', after: 'Modular and data-driven' },
+  { aspect: 'Loyalty', before: 'Flat voucher loop', after: 'Tiered and margin-aware' },
   {
     aspect: 'Menu design',
-    before: 'Cluttered and confusing',
+    before: 'Fragmented across surfaces',
     after: 'Structured and UX-optimized',
   },
-  { aspect: 'Digital presence', before: 'Inactive and recycled', after: 'Authentic and engaging' },
+  {
+    aspect: 'Digital presence',
+    before: 'Infrequent, off-brand posting',
+    after: 'Authentic and engaging',
+  },
 ];
 
 type TimelineRow = {
@@ -2743,10 +2757,10 @@ const DeepDiveView: React.FC = () => {
                       1. Strategic Context — Rebrand as System Redesign
                     </h2>
                     <p className={`${semanticTokens.text.body} max-w-4xl`}>
-                      The brief looked cosmetic: "the logo feels low-effort." The real problem was
-                      friction. Fragmented brand assets and a default loyalty setup were causing
-                      decision fatigue for customers and margin leakage for the business — across
-                      five surfaces that had never been designed as one system.
+                      The brief looked cosmetic — refresh the logo. The real opportunity was
+                      operational: fragmented brand assets and a default loyalty setup were adding
+                      decision friction for customers and leaving margin on the table — across five
+                      surfaces that had never been designed as one system.
                     </p>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -2847,7 +2861,7 @@ const DeepDiveView: React.FC = () => {
                   </div>
                   <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-4xl">
                     <strong className="text-slate-950 dark:text-white">Recommendation:</strong>{' '}
-                    Brown + Gold as the primary mark, EMU Green as the community secondary,
+                    Brown + Gold as the primary mark, Community Green as the local secondary,
                     delivered as a responsive system (full badge → simplified icon → one-color) so
                     the identity holds from storefront signage down to a favicon.
                   </p>
@@ -2930,6 +2944,7 @@ const DeepDiveView: React.FC = () => {
                       Conclusion: Square now, Stripe as volume scales, skip Dripos.
                     </p>
                   </div>
+                  <CostBreakEvenChart />
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {NG_LOYALTY_MODELS.map((m) => (
                       <div
@@ -3009,10 +3024,11 @@ const DeepDiveView: React.FC = () => {
                       5. Digital Marketing Audit
                     </h2>
                     <p className={`${semanticTokens.text.body} max-w-4xl`}>
-                      The Instagram presence (~23 posts in a year, sub-1% engagement, recycled
-                      imagery) functioned as a static product catalog, not a living brand. The
-                      smaller footprint is an advantage: a few authentic, barista-generated posts
-                      can out-engage larger competitors on locality and personality.
+                      The social presence didn't yet match the in-store experience — infrequent
+                      posting and limited engagement meant Instagram read as a static product
+                      catalog rather than a living brand. The smaller footprint is an advantage: a
+                      few authentic, barista-generated posts can out-engage larger competitors on
+                      locality and personality.
                     </p>
                   </div>
                   <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
@@ -3085,6 +3101,21 @@ const DeepDiveView: React.FC = () => {
                     campaign — reviewed against the targets above. Goals are projected, not
                     measured.
                   </p>
+                </section>
+
+                {/* Asset Gallery */}
+                <section id="ng-gallery" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      AI-Built Asset Gallery
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      Selected logo, menu, and social mockups produced for the rebrand — AI used for
+                      generation and ideation, with manual curation and refinement. Direction and
+                      taste did the deciding; the tools accelerated the exploration.
+                    </p>
+                  </div>
+                  <BrandGallery />
                 </section>
 
                 {/* Section 6: Impact & Reflection */}

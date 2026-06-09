@@ -38,12 +38,12 @@ The following diagram illustrates the feedback loop designed to drive higher ret
 
 ## 🎨 Module A: Brand Identity System
 
-The original mark read as an afterthought — visually inconsistent, hard to scale, and disconnected from the café's atmosphere (baristas called it "low-effort"). I rebuilt it as a **responsive identity system**, not a single logo.
+The original mark was visually inconsistent and hard to scale, and didn't yet reflect the café's in-store atmosphere. I rebuilt it as a **responsive identity system**, not a single logo.
 
 ### Recommendation
 
 - **Primary:** Brown + Gold badge — tradition and warmth (brown) with a premium accent (gold). The strongest performer across print and digital.
-- **Secondary:** EMU Green variant — ties the café to the local university community.
+- **Secondary:** Community Green variant — ties the café to the local university community.
 - **Responsive system:** full badge → simplified icon → one-color version, so the mark holds from storefront signage down to a favicon.
 
 ### Palette
@@ -65,7 +65,7 @@ I conducted a structured audit of POS options (Square vs. Stripe vs. Dripos) bas
 
 ### Problem Diagnosed
 
-The café runs on **Dripos**, but its loyalty is a flat voucher loop: **$5 off after 100 points, at $1 = 1 point**. Despite strong repeat-customer patterns, a ~5%-back coupon does nothing to shift behavior toward higher-margin food or larger sizes.
+The café runs on **Dripos**, but its loyalty is a flat voucher loop: **$5 off after 100 points, at $1 = 1 point**. Despite strong repeat-customer patterns, a flat ~5%-back coupon is a missed opportunity — it doesn't yet steer customers toward higher-margin food or larger sizes.
 
 ### The Recommendation Logic
 
