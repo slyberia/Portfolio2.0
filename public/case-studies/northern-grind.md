@@ -67,7 +67,23 @@ Rather than choose on features, I modeled each option on **margin preservation a
 - **Dripos vs Square:** even at its cheapest contract, Dripos only overtakes Square at roughly **1,037 latte** or **1,215 sandwich** transactions/month — beyond a typical single-location volume.
 - **Stripe vs Square:** Stripe stays cheaper overall as long as a third-party loyalty app stays under ≈**$170/mo at 1,000 transactions** (≈$344/mo at 2,500). That headroom is what makes the eventual loyalty build pay for itself.
 
-**Conclusion:** Square now, Stripe as volume scales, skip Dripos — a recommendation grounded in break-even economics rather than feature lists.
+**Conclusion:** Square now, Stripe as volume scales, skip Dripos — a recommendation grounded in break-even economics _and_ operational fit, not feature-sheet preference.
+
+### Decision Rationale (Feature Fit)
+
+Cost set the ceiling; feature fit set the floor. I scored each platform across the operational categories a café actually touches day to day — not a generic feature checklist.
+
+| Criteria            | Dripos                                   | Square                                            | Stripe + POS partner                                              |
+| ------------------- | ---------------------------------------- | ------------------------------------------------- | ----------------------------------------------------------------- |
+| Inventory           | Ingredient-level, but iPad-only + manual | Item-level native; ingredient add-ons; any-device | Varies by partner (Shopify item-sync → Toast/Lightspeed advanced) |
+| Loyalty             | Built-in, café-focused                   | Paid add-on; strong engagement tools              | None native; partner app required                                 |
+| Payments & hardware | Stripe S700 + iPad (fixed setup)         | Widest range; iOS/Android friendly                | Secure payments; hardware set by partner                          |
+| Reporting           | Café-specific; web portal                | Strong mobile reporting + exports                 | Stripe payment data + partner reporting                           |
+| Staff & scheduling  | Built-in scheduling + payroll            | Timecards; payroll add-on                         | Partner-dependent                                                 |
+| Mobility            | iPad + S700 focused                      | Best; phones + tablets                            | Partner-dependent                                                 |
+| Scalability         | Single-location / small chains           | Flexible to multi-location                        | Enterprise-grade with the right partner                           |
+
+**Fit for a single-location café:** Dripos's bundled café tooling is genuinely strong, but it locks operations to a fixed iPad + S700 setup. Stripe + a POS partner unlocks the most scale and customization — at the cost of integration work a one-location owner shouldn't have to manage. **Square sits in the middle on purpose:** flexible across phones and tablets, native-enough inventory and loyalty, and no lock-in. Feature fit and break-even economics point to the same answer.
 
 ---
 
