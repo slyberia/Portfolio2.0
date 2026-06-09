@@ -26,7 +26,7 @@ into specific tabs — gaps below show as empty tabs/sections a visitor will act
 | ------------------ | :-------------------: | :---------------------: | :-------------------------------: | :----------------------------: | :--------------------: |
 | guynode            |          ✅           |           ✅            |          ✅ flow diagram          |               ✅               |           —            |
 | digital-twin       |          ✅           |           ✅            |          ✅ flow diagram          |               ✅               |        ✅ agent        |
-| ops-triage         |          ✅           |           ✅            |        ❌ none → empty tab        |      ❌ none → empty tab       |      ✅ simulator      |
+| ops-triage         |          ✅           |           ✅            |        ✅ dual-lane system        |               ✅               |      ✅ simulator      |
 | project-aegis      |          ✅           |           ✅            |         ✅ state machine          |               ✅               |           —            |
 | portfolio-pipeline |          ✅           |           ✅            |         ✅ pipeline flow          |               ✅               |           —            |
 | luxe-lofts         |          ✅           |           ✅            |        ✅ operational hub         |      ❌ none → empty tab       |           —            |
@@ -40,8 +40,9 @@ into specific tabs — gaps below show as empty tabs/sections a visitor will act
       "Decisions & Trade-offs" tab). It does have trade-off prose in its markdown body, but the
       _tab_ reads from the `constraints` array, so the tab is empty. Decide: add the structured
       fields, or accept the bare presentation for a supporting entry.
-- [ ] ❌ **ops-triage** — no `heroArtifact` (empty Architecture tab) and no `constraints`
-      (empty Trade-offs tab). It does carry the live simulator, so it isn't blank overall.
+- [x] ✅ **ops-triage** — resolved: added a dual-lane Velocity/Precision Architecture diagram
+      (`heroArtifact`) and three `{ problem, tradeoff }` constraints, both drawn from the existing
+      case-study body. Architecture and Trade-offs tabs now populate.
 - [ ] ❌ **luxe-lofts** — no `constraints` (empty Trade-offs tab); trade-off content lives only
       in the markdown body.
 - [ ] Consider: should empty tabs render at all? (We already conditionally hide the Interactive
@@ -117,8 +118,8 @@ skill→evidence mapping, theme regression, crawler namespace isolation, and a s
 ## Known issues backlog (snapshot)
 
 1. ❌ `og-image.svg` won't render on LinkedIn — needs a raster (PNG/JPG) 1200×630 asset.
-2. ❌ Empty tabs: northern-grind (Architecture, Trade-offs, no Proof Summary); ops-triage
-   (Architecture, Trade-offs); luxe-lofts (Trade-offs). See Layer 1.
+2. ❌ Empty tabs: northern-grind (Architecture, Trade-offs, no Proof Summary); luxe-lofts
+   (Trade-offs). See Layer 1. _(ops-triage resolved.)_
 3. ⚠️ OG/Twitter previews are site-wide, not per-page.
 4. ✅ Resolved: Guynode/Luxe Lofts/Gallery blank previews; project-detail "Visual Proof" dead grid;
    orphan case-study files; blank Interactive Proofs tabs.

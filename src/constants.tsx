@@ -455,7 +455,29 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
     category: 'qa-data',
     tags: ['Data QA / Validation', 'Operational Throughput', 'Issue Triage', 'ESRI ArcMap'],
     roleLanes: ['Implementation Consultant', 'Spatial Systems Architect'],
-    heroArtifact: undefined,
+    heroArtifact: {
+      type: 'html',
+      label: 'Triage & QA: Dual-Mode System',
+      description:
+        'One intake, two reconciled lanes — optimizing for throughput (Velocity) and data integrity (Precision) at the same time.',
+      content: `<div style="font-family:Inter,system-ui,sans-serif;background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:18px;max-width:720px;color:#0f172a;">
+  <h4 style="margin:0 0 4px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#475569;">Systems at Scale · Triage & QA</h4>
+  <p style="margin:0 0 14px;font-size:12px;color:#64748b;">Identify the Constraint → Standardize the Input → Enforce the Outcome</p>
+  <div style="padding:10px 14px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;text-align:center;font-weight:600;">Intake · 120+ requests / week</div>
+  <div style="text-align:center;color:#94a3b8;margin:6px 0;">┌──────────────┴──────────────┐</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+    <div style="border:1px solid #fcd9a8;border-radius:10px;background:#fffaf2;padding:12px;">
+      <div style="font-weight:700;color:#b45309;margin-bottom:6px;">Lane 1 · Velocity</div>
+      <div style="font-size:12px;line-height:1.6;color:#334155;">Group by error type<br/>↓<br/>Batch-process<br/>↓<br/><strong>Done</strong> | <strong>Escalated</strong></div>
+    </div>
+    <div style="border:1px solid #bfdbfe;border-radius:10px;background:#f5f9ff;padding:12px;">
+      <div style="font-weight:700;color:#1d4ed8;margin-bottom:6px;">Lane 2 · Precision</div>
+      <div style="font-size:12px;line-height:1.6;color:#334155;">Structural linter<br/>↓<br/>Human contextual check<br/>↓<br/><strong>98% First-Pass Yield</strong></div>
+    </div>
+  </div>
+  <div style="margin-top:12px;padding:10px 14px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;text-align:center;font-size:12px;color:#475569;">Reconciled on one dashboard — <strong>Volume</strong> vs <strong>Quality</strong> tracked together</div>
+</div>`,
+    },
     rigor: {
       statement: 'The system defines the result. Optimize for flow AND trust.',
       baseline: 'Legacy workflows applied a single pace to disparate data risks.',
@@ -463,6 +485,26 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
       method: 'Dual-mode: Batch-processing vs Zero-trust validation.',
       window: 'Daily capacity vs Weekly defect capture.',
     },
+    constraints: [
+      {
+        problem:
+          'Deep review of every item in a high-volume backlog causes decision fatigue and paralysis.',
+        tradeoff:
+          'Batch-process by similar error type and accept that not every item gets bespoke handling — rigid "Done vs Escalated" criteria are the guardrail that keeps the queue moving.',
+      },
+      {
+        problem:
+          'On high-stakes grid data, "close enough" is a safety liability, so raw velocity is worthless without trust.',
+        tradeoff:
+          'Run a Zero-Trust two-layer check (automated linter + human pass) on top of throughput, accepting added time per record to protect data integrity.',
+      },
+      {
+        problem:
+          'A structural linter can confirm fields exist but cannot judge whether the map matches the field notes.',
+        tradeoff:
+          'Keep a human contextual pass for semantic validation, accepting that this part of QA cannot be fully automated.',
+      },
+    ],
   },
   {
     id: 'guynode',
