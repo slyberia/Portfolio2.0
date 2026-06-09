@@ -46,9 +46,28 @@ The existing loyalty setup was a "flat" voucher system. Despite strong repeat cu
 
 ### The Recommendation Logic
 
-- **Short-term:** **Square**. Best for "Speed to Value" with low configuration overhead.
-- **Long-term:** **Stripe**. Lower fees at scale, but requires custom dev (justified only after $X revenue).
-- **The Trap:** Avoided **Dripos** despite its niche features, as the contract terms didn't justify the cost premium for a single-location operation.
+- **Short-term:** **Square**. Best for "Speed to Value" — mature POS, $0 software, and loyalty bundled affordably ($45–$105/mo). The balanced default below ~1,000 transactions/month.
+- **Long-term:** **Stripe**. The _lowest_ per-swipe cost (≈22¢ on a $6.25 latte vs Square's ≈31¢) with no fixed monthly fee — but loyalty has to be sourced or custom-built separately. That build is justified once volume clears ~1,000 transactions/month, where Stripe's per-swipe savings leave room for a loyalty app and still beat Square's all-in cost.
+- **The Trap:** Avoided **Dripos**. Even on its best-case contract (2.9% + 5¢), its $160/mo bundle only overtakes Square at ~1,000+ transactions/month — too high a fixed cost for a single-location operation unless its bundled tools replace $55–$115+/mo in other software.
+
+### Cost–Benefit Analysis (Break-Even Model)
+
+Rather than choose on features, I modeled each option on **margin preservation at small-ticket volume** using published U.S. rates. (Dripos's pricing pages were inconsistent — 2.6% + 15¢ vs 2.9% + 5¢ — so both are carried through as a range.)
+
+| Factor              |                    Square |                              Stripe Terminal |                                                     Dripos |
+| ------------------- | ------------------------: | -------------------------------------------: | ---------------------------------------------------------: |
+| In-person rate      |                2.6% + 15¢ |                                    2.7% + 5¢ |                                     2.9% + 5¢ – 2.6% + 15¢ |
+| Fixed monthly       |        $45–$105 (loyalty) |                   $0 (loyalty via 3rd-party) |                      $160 (loyalty/team/marketing bundled) |
+| Fee on $6.25 latte  |                      ≈31¢ |                                         ≈22¢ |                                                    ≈23–31¢ |
+| Fee on $10 sandwich |                      ≈41¢ |                                         ≈32¢ |                                                    ≈34–41¢ |
+| Best fit            | Default below ~1k txns/mo | Lowest per-swipe if loyalty stays affordable | Only above ~1k txns/mo, or if bundle replaces $55–$115+/mo |
+
+**Break-even findings:**
+
+- **Dripos vs Square:** even at its cheapest contract, Dripos only overtakes Square at roughly **1,037 latte** or **1,215 sandwich** transactions/month — beyond a typical single-location volume.
+- **Stripe vs Square:** Stripe stays cheaper overall as long as a third-party loyalty app stays under ≈**$170/mo at 1,000 transactions** (≈$344/mo at 2,500). That headroom is what makes the eventual loyalty build pay for itself.
+
+**Conclusion:** Square now, Stripe as volume scales, skip Dripos — a recommendation grounded in break-even economics rather than feature lists.
 
 ---
 
