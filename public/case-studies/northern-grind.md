@@ -9,6 +9,7 @@
 >
 > **Status:** Rebrand + Operational Audit (Implementation Ready)
 > **Role:** Brand & Systems Strategist
+> **Location:** Ypsilanti, MI
 > **Scope:** Visual Identity, Menu UX, POS & Loyalty Modeling, Channel Economics
 > **Tools:** Adobe Creative Suite, Cost Modeling, Mermaid Diagrams
 
@@ -43,7 +44,7 @@ The original mark was visually inconsistent and hard to scale, and didn't yet re
 ### Recommendation
 
 - **Primary:** Brown + Gold badge — tradition and warmth (brown) with a premium accent (gold). The strongest performer across print and digital.
-- **Secondary:** Community Green variant — ties the café to the local university community.
+- **Secondary:** EMU Green variant — ties the café to the local Eastern Michigan University community.
 - **Responsive system:** full badge → simplified icon → one-color version, so the mark holds from storefront signage down to a favicon.
 
 ### Palette

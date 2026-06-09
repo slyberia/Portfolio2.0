@@ -90,8 +90,8 @@ const NG_PALETTE = [
 const NG_LOGO_VARIANTS = [
   { variant: 'Brown + Gold', purpose: 'Premium accent; strongest overall performer (primary)' },
   {
-    variant: 'Community Green',
-    purpose: 'Community tie-in via local university colors (secondary)',
+    variant: 'EMU Green',
+    purpose: 'Community tie-in via Eastern Michigan University colors (secondary)',
   },
   { variant: 'Brown Circle', purpose: 'Warm, traditional baseline' },
   { variant: 'Blue + Gold', purpose: 'Prestige experiment; ultimately deprioritized' },
@@ -2714,11 +2714,11 @@ const DeepDiveView: React.FC = () => {
                     Northern Grind: Business Systems Deep Dive
                   </h1>
                   <p className={`${semanticTokens.text.body} max-w-4xl text-lg leading-relaxed`}>
-                    The long-form modeling behind the Northern Grind case study — where a café
-                    rebrand was reframed as a system redesign. This page documents the brand
-                    iteration, the break-even POS math, a margin-aware loyalty redesign, the
-                    economics of treating delivery as customer acquisition, and a social-media
-                    audit.
+                    The long-form modeling behind the Northern Grind case study — where a rebrand
+                    for the Ypsilanti, Michigan café was reframed as a system redesign. This page
+                    documents the brand iteration, the break-even POS math, a margin-aware loyalty
+                    redesign, the economics of treating delivery as customer acquisition, and a
+                    social-media audit.
                   </p>
                   <div className="flex flex-wrap gap-4 text-sm font-semibold text-amber-600 dark:text-amber-400">
                     <Link
@@ -2861,9 +2861,9 @@ const DeepDiveView: React.FC = () => {
                   </div>
                   <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-4xl">
                     <strong className="text-slate-950 dark:text-white">Recommendation:</strong>{' '}
-                    Brown + Gold as the primary mark, Community Green as the local secondary,
-                    delivered as a responsive system (full badge → simplified icon → one-color) so
-                    the identity holds from storefront signage down to a favicon.
+                    Brown + Gold as the primary mark, EMU Green as the local secondary, delivered as
+                    a responsive system (full badge → simplified icon → one-color) so the identity
+                    holds from storefront signage down to a favicon.
                   </p>
                 </section>
 
