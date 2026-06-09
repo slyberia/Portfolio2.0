@@ -447,6 +447,25 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
       method: 'Multi-domain audit scoped against all active client properties.',
       window: 'Pre-deployment proposal phase prototype.',
     },
+    constraints: [
+      {
+        problem:
+          'Each attempt to modernize had added another tool, producing complexity instead of clarity.',
+        tradeoff:
+          'Recommend one unified system over more best-of-breed point tools — trading specialized features for clarity and adoption the team can actually sustain.',
+      },
+      {
+        problem: 'A small, non-technical team would own and run the system after handoff.',
+        tradeoff:
+          'Recommend a WordPress/Elementor + Zapier (low-code) stack over a custom build — trading flexibility and peak performance for a system they can maintain without an engineer.',
+      },
+      {
+        problem:
+          'The client had genuine budget limits and could not commit to a full build up front.',
+        tradeoff:
+          'Structure the engagement as a modular, phased roadmap they could fund incrementally — accepting a slower path to the complete system rather than forcing one large commitment.',
+      },
+    ],
   },
   {
     id: 'ops-triage',

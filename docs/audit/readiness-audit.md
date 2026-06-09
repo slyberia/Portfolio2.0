@@ -29,7 +29,7 @@ into specific tabs — gaps below show as empty tabs/sections a visitor will act
 | ops-triage         |          ✅           |           ✅            |        ✅ dual-lane system        |               ✅               |      ✅ simulator      |
 | project-aegis      |          ✅           |           ✅            |         ✅ state machine          |               ✅               |           —            |
 | portfolio-pipeline |          ✅           |           ✅            |         ✅ pipeline flow          |               ✅               |           —            |
-| luxe-lofts         |          ✅           |           ✅            |        ✅ operational hub         |      ❌ none → empty tab       |           —            |
+| luxe-lofts         |          ✅           |           ✅            |        ✅ operational hub         |       ✅ proposal logic        |           —            |
 | northern-grind     |          ✅           |    ❌ no proof card     |        ❌ none → empty tab        |      ❌ none → empty tab       |           —            |
 | moh                |          ✅           |           ✅            |        ✅ system explorer         |               ✅               |           —            |
 
@@ -43,8 +43,10 @@ into specific tabs — gaps below show as empty tabs/sections a visitor will act
 - [x] ✅ **ops-triage** — resolved: added a dual-lane Velocity/Precision Architecture diagram
       (`heroArtifact`) and three `{ problem, tradeoff }` constraints, both drawn from the existing
       case-study body. Architecture and Trade-offs tabs now populate.
-- [ ] ❌ **luxe-lofts** — no `constraints` (empty Trade-offs tab); trade-off content lives only
-      in the markdown body.
+- [x] ✅ **luxe-lofts** — resolved: added three proposal-logic `constraints` (consolidation vs.
+      capability, client self-sufficiency vs. bespoke control, phased funding vs. all-at-once) and
+      converted the body's five delivered metrics to qualitative intent (proposal framing — the
+      client chose another contractor on budget, so the entry is recommendation logic, not delivery).
 - [ ] Consider: should empty tabs render at all? (We already conditionally hide the Interactive
       Proofs tab when empty — the same pattern could hide Architecture / Trade-offs when a project
       has no `heroArtifact` / `constraints`.)
@@ -118,8 +120,8 @@ skill→evidence mapping, theme regression, crawler namespace isolation, and a s
 ## Known issues backlog (snapshot)
 
 1. ❌ `og-image.svg` won't render on LinkedIn — needs a raster (PNG/JPG) 1200×630 asset.
-2. ❌ Empty tabs: northern-grind (Architecture, Trade-offs, no Proof Summary); luxe-lofts
-   (Trade-offs). See Layer 1. _(ops-triage resolved.)_
+2. ❌ Empty tabs: northern-grind (Architecture, Trade-offs, no Proof Summary). See Layer 1.
+   _(ops-triage and luxe-lofts resolved.)_
 3. ⚠️ OG/Twitter previews are site-wide, not per-page.
 4. ✅ Resolved: Guynode/Luxe Lofts/Gallery blank previews; project-detail "Visual Proof" dead grid;
    orphan case-study files; blank Interactive Proofs tabs.
