@@ -76,17 +76,19 @@ concrete; no invented metrics; no owned-book / ARR / NRR / renewal / expansion c
       is evidence-layer voice (who benefits, what got easier), qualitative and concrete — no edits
       needed. **Exemplars to hold as the bar:** MOH ("No public metrics available… described
       qualitatively") and Project-Aegis (honest "HITL proven, autonomous built" scoping).
-- [ ] ❌ **Placeholder tokens (look unfinished/fabricated):** `ops-triage.md:33`
-      "**X service work orders/day**" and `northern-grind.md:50` "$X revenue". Fill with a real
-      figure or rephrase qualitatively — leaving a literal `X` reads as a TODO to a recruiter.
+- [ ] ❌ **Placeholder token (looks unfinished/fabricated):** `northern-grind.md:50` "$X revenue".
+      Fill with a real figure or rephrase qualitatively — folds into the queued northern-grind pass.
+      _(ops-triage `X service work orders/day` resolved — see below.)_
+- [x] ✅ **ops-triage metrics — resolved.** Confirmed by Kyle as real measured throughput from
+      utility-GIS roles (CenterPoint / Consumers Energy). Reworded the placeholder to a conservative
+      **100+ service work orders/day** floor and reconciled the two stray "120+ requests/week"
+      mentions to the same per-day basis. Softened **"98% First-Pass Yield"** to a qualitative "high
+      first-pass acceptance rate, rework the exception" (the % wasn't formally logged). Added the
+      real Printful live-chat/email volume as a prior-scale throughput example.
 - [ ] ⚠️ **northern-grind repeats the luxe-lofts problem.** It's a strategy proposal
       ("Implementation Ready") but asserts delivered actions/metrics — `:94` "Removed 30% of text
       descriptions", plus delivered-tense menu rebuild. Needs the same qualitative-proposal reframe;
       fold into the queued northern-grind work.
-- [ ] ⚠️ **ops-triage metrics need verification.** "120+ requests/week" and "98% First-Pass Yield"
-      are the strongest quantitative CS-adjacent claims on the site, presented as real delivered
-      results. This is delivered work, so they're legitimate **if accurate** — confirm they're real
-      (not estimated) rather than reframing them.
 - [x] ✅ **digital-twin unsourced stat — resolved.** `:21` reworded from "Recruiters spend an
       average of 6 seconds per portfolio" to "Recruiters skim fast and rarely have time to dig" —
       keeps the framing, drops the unverifiable precise figure.

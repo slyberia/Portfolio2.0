@@ -1,5 +1,5 @@
 > **Role:** Quality Control Specialist / GIS Technician
-> **Outcome:** Converted reactive backlogs into predictable pipelines by implementing batch-processing triage at 120+ requests/week, eliminating decision fatigue and establishing clear escalation criteria
+> **Outcome:** Converted reactive backlogs into predictable pipelines by implementing batch-processing triage at 100+ service work orders/day, eliminating decision fatigue and establishing clear escalation criteria
 > **Stack/Tools:** ESRI ArcMap, Jira, Excel Macros, Custom Dashboards
 > **Relevance:** Proves operational systems thinking — building processes that scale throughput without scaling headcount
 
@@ -17,7 +17,7 @@
 
 I have operationalized data systems at two distinct scales of complexity. While the roles differed, the methodology remains constant: **Identify the Constraint → Standardize the Input → Enforce the Outcome.**
 
-Operational excellence is the gap between **"Training Theory"** and **"Production Reality."** Standard training covers the "Happy Path," but managing 120+ requests/week or securing high-stakes grid data requires systematizing the edge cases.
+Operational excellence is the gap between **"Training Theory"** and **"Production Reality."** Standard training covers the "Happy Path," but managing 100+ service work orders a day or securing high-stakes grid data requires systematizing the edge cases.
 
 ---
 
@@ -30,8 +30,9 @@ Operational excellence is the gap between **"Training Theory"** and **"Productio
 
 I **implemented** a batch-processing workflow that converted a reactive backlog into a predictable pipeline. By grouping similar error types, I bypassed the context-switching costs that slow down standard processing.
 
-- **Target:** Triage completion of **X service work orders/day**.
+- **Target:** Triage completion of **100+ service work orders/day**.
 - **Outcome:** Established rigid criteria for "Done" vs "Escalated," preventing decision fatigue from bottlenecking the queue.
+- **Prior scale (Printful):** The same throughput discipline was built earlier in technical customer support — handling high daily volumes of live chats and email tickets under the same speed-vs-quality pressure.
 
 ---
 
@@ -46,7 +47,7 @@ I **enforced** a "Zero-Trust" validation loop. While the software provides the t
 
 - **The Linter (Structural):** Automated checks for missing fields before human review.
 - **The Human (Contextual):** Validating the "semantics" of the map against field notes.
-- **Result:** Maintained a **98% First-Pass Yield** on complex tickets that typically require multiple rounds of review.
+- **Result:** Sustained a high first-pass acceptance rate — records cleared validation without revision, with rework the exception rather than the norm — even on complex tickets that typically take multiple rounds of review.
 
 ---
 
