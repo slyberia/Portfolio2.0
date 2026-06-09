@@ -64,6 +64,33 @@ into specific tabs — gaps below show as empty tabs/sections a visitor will act
 - [ ] Project `shortSummary` reads in plain language first (jargon allowed, not exclusive).
 - [ ] Every case study's 🤝 Customer / Stakeholder Value uses the Who / What / Why pattern.
 
+### CSM / customer-value consistency pass — findings (2026-06-09)
+
+Standard applied: Customer Success shows up as **evidence, not identity**; qualitative but
+concrete; no invented metrics; no owned-book / ARR / NRR / renewal / expansion claims.
+
+- [x] ✅ **Hard guardrail is clean.** No ARR/NRR/MRR/churn/renewal/retention/expansion/"book of
+      business"/CSM-seniority language in any case study, metadata, or `constants.tsx`. (The only
+      "upsell" hit is Northern Grind menu merchandising — legitimate retail, not a CS-book claim.)
+- [x] ✅ **Metadata layer is consistent.** Every `stakeholderValue` / `purpose` / `shortSummary`
+      is evidence-layer voice (who benefits, what got easier), qualitative and concrete — no edits
+      needed. **Exemplars to hold as the bar:** MOH ("No public metrics available… described
+      qualitatively") and Project-Aegis (honest "HITL proven, autonomous built" scoping).
+- [ ] ❌ **Placeholder tokens (look unfinished/fabricated):** `ops-triage.md:33`
+      "**X service work orders/day**" and `northern-grind.md:50` "$X revenue". Fill with a real
+      figure or rephrase qualitatively — leaving a literal `X` reads as a TODO to a recruiter.
+- [ ] ⚠️ **northern-grind repeats the luxe-lofts problem.** It's a strategy proposal
+      ("Implementation Ready") but asserts delivered actions/metrics — `:94` "Removed 30% of text
+      descriptions", plus delivered-tense menu rebuild. Needs the same qualitative-proposal reframe;
+      fold into the queued northern-grind work.
+- [ ] ⚠️ **ops-triage metrics need verification.** "120+ requests/week" and "98% First-Pass Yield"
+      are the strongest quantitative CS-adjacent claims on the site, presented as real delivered
+      results. This is delivered work, so they're legitimate **if accurate** — confirm they're real
+      (not estimated) rather than reframing them.
+- [ ] ⚠️ **digital-twin unsourced stat.** `:21` "Recruiters spend an average of 6 seconds per
+      portfolio" — a borrowed résumé statistic applied to portfolios, unattributed. Soften
+      ("recruiters skim fast") or attribute.
+
 ## Layer 3 — Functionality (per route)
 
 Walk each route in both light and dark mode, desktop and mobile:
