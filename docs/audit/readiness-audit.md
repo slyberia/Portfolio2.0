@@ -87,9 +87,9 @@ concrete; no invented metrics; no owned-book / ARR / NRR / renewal / expansion c
       are the strongest quantitative CS-adjacent claims on the site, presented as real delivered
       results. This is delivered work, so they're legitimate **if accurate** — confirm they're real
       (not estimated) rather than reframing them.
-- [ ] ⚠️ **digital-twin unsourced stat.** `:21` "Recruiters spend an average of 6 seconds per
-      portfolio" — a borrowed résumé statistic applied to portfolios, unattributed. Soften
-      ("recruiters skim fast") or attribute.
+- [x] ✅ **digital-twin unsourced stat — resolved.** `:21` reworded from "Recruiters spend an
+      average of 6 seconds per portfolio" to "Recruiters skim fast and rarely have time to dig" —
+      keeps the framing, drops the unverifiable precise figure.
 
 ## Layer 3 — Functionality (per route)
 

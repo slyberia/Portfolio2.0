@@ -18,7 +18,7 @@
 
 ## 🏗️ The Challenge: Recruiter Information Friction
 
-Recruiters spend an average of 6 seconds per portfolio. Standard search bars often fail to surface the specific "Proof of Work" needed for a role match.
+Recruiters skim fast and rarely have time to dig. Standard search bars often fail to surface the specific "Proof of Work" needed for a role match.
 
 - **The Gap:** Visitors ask complex questions ("How did Kyle handle the Luxe Lofts audit?") that standard filters cannot answer.
 - **The Risk:** Unrestricted LLMs can hallucinate experience or incur excessive API costs on off-topic requests.
