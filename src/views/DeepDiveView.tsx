@@ -9,18 +9,26 @@ import {
 } from '../lib/routes';
 import ScrollToTopButton from '../components/ScrollToTopButton';
 import ErrorBoundary from '../components/ErrorBoundary';
+import CostBreakEvenChart from '../components/northern-grind/CostBreakEvenChart';
+import BrandGallery from '../components/northern-grind/BrandGallery';
 import { componentRecipes, semanticTokens } from '../lib/design-system';
 import { automationSystems, automationThesis, governancePrimitives } from '../data/deepDiveContent';
 import type { Visibility } from '../types';
 
-type MainTab = 'landing' | 'process' | 'luxe-lofts';
+type MainTab = 'landing' | 'process' | 'luxe-lofts' | 'northern-grind';
 
 // `?tab=automation` is an alias for the umbrella governance tab so existing
 // links and the original deep-dive brief keep resolving after the Option C
 // restructure (the tab itself is the renamed 'process' tab).
 const TAB_ALIASES: Record<string, MainTab> = { automation: 'process' };
 const resolveTabParam = (param: string | null): MainTab | null => {
-  if (param === 'landing' || param === 'process' || param === 'luxe-lofts') return param;
+  if (
+    param === 'landing' ||
+    param === 'process' ||
+    param === 'luxe-lofts' ||
+    param === 'northern-grind'
+  )
+    return param;
   if (param && param in TAB_ALIASES) return TAB_ALIASES[param];
   return null;
 };
@@ -47,6 +55,165 @@ const DEEP_DIVE_TABS: {
     label: 'Luxe Lofts Digital Restructuring Strategy',
     activeBorder: 'border-rose-500',
     visibility: 'public',
+  },
+  {
+    id: 'northern-grind',
+    label: 'Northern Grind Business Systems',
+    activeBorder: 'border-amber-500',
+    visibility: 'public',
+  },
+];
+
+// ── Northern Grind deep dive data ──────────────────────────────────────────
+// Long-form modeling behind the Northern Grind case study: brand iteration,
+// break-even POS math, loyalty redesign, channel economics, and the social
+// audit. Figures are modeled from published rates / industry norms and the
+// $6.25 latte + $10 sandwich baseline — flagged as a proposal, no real metrics.
+
+const NG_PHASES = [
+  { id: 'ng-1', label: 'Strategic Context' },
+  { id: 'ng-2', label: 'Brand Identity' },
+  { id: 'ng-3', label: 'POS & Loyalty' },
+  { id: 'ng-4', label: 'Channel Economics' },
+  { id: 'ng-5', label: 'Digital Marketing' },
+  { id: 'ng-gallery', label: 'Asset Gallery' },
+  { id: 'ng-6', label: 'Impact & Reflection' },
+] as const;
+
+const NG_PALETTE = [
+  { name: 'Brown', hex: '#5B3A29', meaning: 'Tradition, warmth, craft' },
+  { name: 'Cream', hex: '#FFF8E7', meaning: 'Clean canvas' },
+  { name: 'Gold', hex: '#D6B25E', meaning: 'Premium quality' },
+  { name: 'Green', hex: '#1E6635', meaning: 'Community, locality' },
+];
+
+const NG_LOGO_VARIANTS = [
+  { variant: 'Brown + Gold', purpose: 'Premium accent; strongest overall performer (primary)' },
+  {
+    variant: 'EMU Green',
+    purpose: 'Community tie-in via Eastern Michigan University colors (secondary)',
+  },
+  { variant: 'Brown Circle', purpose: 'Warm, traditional baseline' },
+  { variant: 'Blue + Gold', purpose: 'Prestige experiment; ultimately deprioritized' },
+];
+
+const NG_POS_ROWS = [
+  {
+    factor: 'Swipe / in-person',
+    dripos: '2.6% + 15¢ or 2.9% + 5¢',
+    square: '2.6% + 15¢',
+    stripe: '2.7% + 5¢',
+  },
+  { factor: 'Online', dripos: '2.9% + 30¢', square: '2.9% + 30¢', stripe: '2.9% + 30¢' },
+  {
+    factor: 'Monthly',
+    dripos: '$160 (loyalty/team/marketing)',
+    square: '$45–$105 loyalty add-on',
+    stripe: '$0, loyalty extra',
+  },
+  { factor: 'Latte fee ($6.25)', dripos: '23–31¢', square: '31¢', stripe: '22¢' },
+  { factor: 'Sandwich fee ($10)', dripos: '34–41¢', square: '41¢', stripe: '32¢' },
+  {
+    factor: 'Best for',
+    dripos: 'High-volume cafés needing bundled tools',
+    square: 'Simple POS + loyalty under ~1k txns/mo',
+    stripe: 'Lowest per-swipe if loyalty app is affordable',
+  },
+];
+
+const NG_LOYALTY_MODELS = [
+  {
+    name: 'Margin-based rewards',
+    body: 'Weight rewards toward high-margin items (specialty drinks, food) instead of flat spend, so the incentive protects margin rather than eroding it.',
+  },
+  {
+    name: 'Tiered rewards',
+    body: 'Escalating perks that pull occasional buyers toward regular-visit behavior — the structure the flat $5/100pts loop never created.',
+  },
+  {
+    name: 'Hybrid punch-card',
+    body: 'A fast, legible streak mechanic layered on points to reinforce the daily ritual without adding checkout friction.',
+  },
+];
+
+const NG_CHANNEL_MODEL = [
+  {
+    label: 'Direct-order benchmark',
+    value: '4–8%',
+    body: 'In-house POS, processing, packaging, and labor — the preferred transaction-cost floor.',
+  },
+  {
+    label: 'True third-party burden',
+    value: '30–35%',
+    body: 'Base commission (~25%) + processing (~3%) + promo (~2%) on a representative $30 order.',
+  },
+  {
+    label: 'First-order result',
+    value: 'Net loss',
+    body: 'At a 20% pre-commission margin, the first DoorDash order can lose money — so commission is CAC, not a transaction cost.',
+  },
+  {
+    label: 'LTV:CAC target',
+    value: '3:1',
+    body: 'A DoorDash-acquired customer needs ~2–3 profitable direct orders afterward to justify the acquisition.',
+  },
+];
+
+const NG_IG_AUDIT = [
+  {
+    category: 'Consistency',
+    state: 'Infrequent posts (~2/mo)',
+    impact: 'Low visibility, weak algorithm performance',
+  },
+  {
+    category: 'Authenticity',
+    state: 'Reused imagery; little staff or customer presence',
+    impact: 'Room to strengthen local connection',
+  },
+  {
+    category: 'Storytelling',
+    state: 'Mostly product photos',
+    impact: 'Room for more brand voice and emotional hook',
+  },
+  { category: 'Engagement', state: 'Below 1%; few comments', impact: 'Limited dialogue' },
+  {
+    category: 'Aesthetic cohesion',
+    state: 'Mixed tones and edits',
+    impact: 'Room to align with the new palette',
+  },
+  {
+    category: 'Call-to-action',
+    state: 'Rare or absent',
+    impact: 'Few paths to loyalty, pickup, or conversion',
+  },
+];
+
+const NG_KPIS = [
+  { metric: 'Posts / month', baseline: '2', goal: '10–12' },
+  { metric: 'Engagement rate', baseline: '<1%', goal: '≥3%' },
+  { metric: 'Followers', baseline: '~150', goal: '+50%' },
+  { metric: 'Story views', baseline: '<40', goal: '>150' },
+  { metric: 'Loyalty conversions', baseline: 'Not tracked', goal: '≥25/mo' },
+  { metric: 'UGC mentions', baseline: '<5', goal: '30+' },
+];
+
+const NG_BEFORE_AFTER = [
+  {
+    aspect: 'Brand identity',
+    before: 'Inconsistent across surfaces',
+    after: 'Cohesive and premium',
+  },
+  { aspect: 'POS system', before: 'Cost-heavy at low volume', after: 'Modular and data-driven' },
+  { aspect: 'Loyalty', before: 'Flat voucher loop', after: 'Tiered and margin-aware' },
+  {
+    aspect: 'Menu design',
+    before: 'Fragmented across surfaces',
+    after: 'Structured and UX-optimized',
+  },
+  {
+    aspect: 'Digital presence',
+    before: 'Infrequent, off-brand posting',
+    after: 'Authentic and engaging',
   },
 ];
 
@@ -304,7 +471,10 @@ const LLM_TOOLS: LlmTool[] = [
 type BridgeFacet = { title: string; body: string };
 type DeepDiveBridgeContent = { label: string; statement: string; facets: BridgeFacet[] };
 
-const DEEP_DIVE_BRIDGES: Record<'process' | 'luxe-lofts', DeepDiveBridgeContent> = {
+const DEEP_DIVE_BRIDGES: Record<
+  'process' | 'luxe-lofts' | 'northern-grind',
+  DeepDiveBridgeContent
+> = {
   process: {
     label: 'Why this deep dive matters',
     statement:
@@ -343,15 +513,43 @@ const DEEP_DIVE_BRIDGES: Record<'process' | 'luxe-lofts', DeepDiveBridgeContent>
       },
     ],
   },
+  'northern-grind': {
+    label: 'Why this deep dive matters',
+    statement:
+      'A cosmetic rebrand reframed as a system redesign — brand, menu, POS, loyalty, and channel economics treated as one operational loop the owner can actually run, not five separate deliverables.',
+    facets: [
+      {
+        title: 'Translation',
+        body: "Turns 'make the logo nicer' into a legible operating model: break-even POS math, margin-aware loyalty, and delivery reframed as a measurable acquisition cost.",
+      },
+      {
+        title: 'Adoption',
+        body: 'Designed around the people who run it — a responsive mark for any surface, a menu built for scan speed, and a loyalty pilot the POS can actually measure.',
+      },
+      {
+        title: 'Implementation maturity',
+        body: 'Framed honestly as a proposal: every figure is modeled from published rates and industry norms, flagged to be re-grounded against real COGS and the live DoorDash agreement.',
+      },
+    ],
+  },
 };
 
-const DeepDiveBridge: React.FC<{ bridge: DeepDiveBridgeContent; accent: 'aqua' | 'rose' }> = ({
-  bridge,
-  accent,
-}) => {
+const DeepDiveBridge: React.FC<{
+  bridge: DeepDiveBridgeContent;
+  accent: 'aqua' | 'rose' | 'amber';
+}> = ({ bridge, accent }) => {
   const accentText =
-    accent === 'aqua' ? 'text-tide-aqua dark:text-tide-sky' : 'text-rose-600 dark:text-rose-400';
-  const accentBorder = accent === 'aqua' ? 'border-tide-aqua' : 'border-rose-500';
+    accent === 'aqua'
+      ? 'text-tide-aqua dark:text-tide-sky'
+      : accent === 'amber'
+        ? 'text-amber-600 dark:text-amber-400'
+        : 'text-rose-600 dark:text-rose-400';
+  const accentBorder =
+    accent === 'aqua'
+      ? 'border-tide-aqua'
+      : accent === 'amber'
+        ? 'border-amber-500'
+        : 'border-rose-500';
   return (
     <section className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] p-6 md:p-8 space-y-5">
       <div className={`border-l-2 ${accentBorder} pl-4 space-y-2`}>
@@ -388,6 +586,7 @@ const DeepDiveView: React.FC = () => {
 
   const [activeProcessPhase, setActiveProcessPhase] = React.useState<string>('arch-thesis');
   const [activePhase, setActivePhase] = React.useState<string>('phase-1');
+  const [activeNgPhase, setActiveNgPhase] = React.useState<string>('ng-1');
   const [activeDiagTab, setActiveDiagTab] = React.useState<
     'visuals' | 'ux' | 'technical' | 'content'
   >('visuals');
@@ -437,6 +636,23 @@ const DeepDiveView: React.FC = () => {
       { rootMargin: '-20% 0px -60% 0px' },
     );
     ['phase-1', 'phase-2', 'phase-3', 'phase-4', 'phase-5', 'phase-6'].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, [activeMainTab]);
+
+  React.useEffect(() => {
+    if (activeMainTab !== 'northern-grind') return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveNgPhase(entry.target.id);
+        });
+      },
+      { rootMargin: '-20% 0px -60% 0px' },
+    );
+    NG_PHASES.forEach(({ id }) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
@@ -582,6 +798,49 @@ const DeepDiveView: React.FC = () => {
                       </div>
                       <div className="flex items-center gap-2 text-sm font-bold text-rose-500 group-hover:gap-3 transition-all">
                         <span>Explore Restructuring Strategy</span>
+                        <span>→</span>
+                      </div>
+                    </div>
+                  </button>
+
+                  {/* Northern Grind Entry Card */}
+                  <button
+                    onClick={() => handleMainTabChange('northern-grind')}
+                    className="text-left group rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] hover:border-amber-500/40 dark:hover:border-amber-500/40 hover:shadow-xl transition-all duration-300 overflow-hidden"
+                  >
+                    <div className="h-2 bg-amber-500" />
+                    <div className="p-8 space-y-5">
+                      <div className="space-y-3">
+                        <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-amber-600 dark:text-amber-400 block">
+                          Brand &amp; Operations
+                        </span>
+                        <h3 className="text-2xl font-outfit font-bold text-slate-950 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                          Northern Grind Business Systems
+                        </h3>
+                        <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                          The modeling behind a café rebrand-as-system-redesign — break-even POS
+                          math, a margin-aware loyalty redesign, DoorDash reframed as a measurable
+                          acquisition cost, and a social audit. Brand, menu, payments, and channels
+                          as one operational loop.
+                        </p>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {[
+                          'Break-Even POS',
+                          'Loyalty Redesign',
+                          'Channel Economics',
+                          'Social Audit',
+                        ].map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="flex items-center gap-2 text-sm font-bold text-amber-600 dark:text-amber-400 group-hover:gap-3 transition-all">
+                        <span>Explore Business Systems</span>
                         <span>→</span>
                       </div>
                     </div>
@@ -2399,6 +2658,520 @@ const DeepDiveView: React.FC = () => {
                         support corporate turnaround strategy presentations.
                       </li>
                     </ul>
+                  </div>
+                </section>
+              </div>
+            </div>
+          )}
+
+          {/* ── Northern Grind Tab ── */}
+          {activeMainTab === 'northern-grind' && (
+            <div className="flex flex-col md:flex-row gap-8">
+              {/* Left Sidebar Timeline */}
+              <aside className="hidden md:block w-48 shrink-0 relative">
+                <div className="sticky top-28 space-y-4 border-l-2 border-slate-200 dark:border-slate-800 py-4">
+                  {NG_PHASES.map((phase) => (
+                    <div key={phase.id} className="relative -ml-[9px] flex items-center">
+                      <button
+                        onClick={() => scrollTo(phase.id)}
+                        className="flex items-center gap-4 group w-full text-left focus:outline-none"
+                      >
+                        <span
+                          className={`w-4 h-4 rounded-full border-2 transition-colors duration-300 ${
+                            activeNgPhase === phase.id
+                              ? 'bg-amber-500 border-amber-500 ring-4 ring-amber-500/20'
+                              : 'bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 group-hover:border-amber-400'
+                          }`}
+                        />
+                        <span
+                          className={`text-sm font-semibold transition-colors duration-300 ${
+                            activeNgPhase === phase.id
+                              ? 'text-amber-600 dark:text-amber-400'
+                              : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+                          }`}
+                        >
+                          {phase.label}
+                        </span>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </aside>
+
+              {/* Main Content */}
+              <div className="flex-1 space-y-12 min-w-0">
+                {/* Header */}
+                <section className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold uppercase tracking-[0.3em] text-amber-600 dark:text-amber-400">
+                      Brand &amp; Operations
+                    </span>
+                    <span className="rounded-full border border-amber-500/25 bg-amber-500/10 px-2.5 py-0.5 text-[10px] font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">
+                      Strategy Proposal
+                    </span>
+                  </div>
+                  <h1 className="text-4xl font-outfit font-extrabold text-slate-950 dark:text-white">
+                    Northern Grind: Business Systems Deep Dive
+                  </h1>
+                  <p className={`${semanticTokens.text.body} max-w-4xl text-lg leading-relaxed`}>
+                    The long-form modeling behind the Northern Grind case study — where a rebrand
+                    for the Ypsilanti, Michigan café was reframed as a system redesign. This page
+                    documents the brand iteration, the break-even POS math, a margin-aware loyalty
+                    redesign, the economics of treating delivery as customer acquisition, and a
+                    social-media audit.
+                  </p>
+                  <div className="flex flex-wrap gap-4 text-sm font-semibold text-amber-600 dark:text-amber-400">
+                    <Link
+                      to="/projects/northern-grind"
+                      className="hover:underline flex items-center gap-1"
+                    >
+                      ← Back to Northern Grind Case Study
+                    </Link>
+                    <Link to={PROJECTS_HREF} className="hover:underline">
+                      View Projects Library
+                    </Link>
+                  </div>
+                </section>
+
+                <DeepDiveBridge bridge={DEEP_DIVE_BRIDGES['northern-grind']} accent="amber" />
+
+                {/* Financial caveat */}
+                <section className="rounded-2xl border border-amber-500/25 bg-amber-500/5 p-5 dark:border-amber-500/40 dark:bg-amber-500/10 space-y-2">
+                  <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-bold text-sm">
+                    <span>💡</span>
+                    <span>Modeling Caveat</span>
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                    Every figure here is modeled from published U.S. processor rates and industry
+                    norms, anchored to a <strong>$6.25 latte</strong> and{' '}
+                    <strong>$10 sandwich</strong> baseline. This is a proposal — the numbers are to
+                    be re-grounded against the café's actual COGS, margins, and live DoorDash
+                    agreement before execution. No real revenue or customer figures are claimed.
+                  </p>
+                </section>
+
+                {/* Section 1: Strategic Context */}
+                <section id="ng-1" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      1. Strategic Context — Rebrand as System Redesign
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      The brief looked cosmetic — refresh the logo. The real opportunity was
+                      operational: fragmented brand assets and a default loyalty setup were adding
+                      decision friction for customers and leaving margin on the table — across five
+                      surfaces that had never been designed as one system.
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {[
+                      {
+                        title: 'The trap',
+                        body: 'Treating brand, menu, POS, loyalty, and delivery as five separate one-off decisions — each locally reasonable, collectively leaking margin.',
+                        tone: 'down',
+                      },
+                      {
+                        title: 'The reframe',
+                        body: 'One operational loop: a cohesive identity drives a faster menu, a margin-aware POS/loyalty layer, and delivery treated as a measurable acquisition channel.',
+                        tone: 'up',
+                      },
+                    ].map((card) => (
+                      <div
+                        key={card.title}
+                        className={`rounded-2xl border p-6 space-y-3 ${
+                          card.tone === 'up'
+                            ? 'border-amber-500/20 bg-amber-500/5 dark:border-amber-500/20'
+                            : 'border-slate-200 bg-white dark:border-slate-800 dark:bg-[#0B0F19]'
+                        }`}
+                      >
+                        <h3 className="font-bold text-lg text-slate-950 dark:text-white">
+                          {card.tone === 'up' ? '📈 ' : '📉 '}
+                          {card.title}
+                        </h3>
+                        <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                          {card.body}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+
+                {/* Section 2: Brand Identity */}
+                <section id="ng-2" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      2. Brand Identity System
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      Six logo variants were explored against palette, symbolism, scalability, and
+                      originality. The lesson held throughout: direction and curation matter more
+                      than volume — simpler shapes and reduced text tested best with both staff and
+                      customers.
+                    </p>
+                  </div>
+                  <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <table className="w-full text-sm">
+                      <thead className="bg-slate-50 dark:bg-slate-900/60 text-left">
+                        <tr>
+                          <th className="px-4 py-3 font-bold text-slate-950 dark:text-white">
+                            Variant
+                          </th>
+                          <th className="px-4 py-3 font-bold text-slate-950 dark:text-white">
+                            Purpose
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                        {NG_LOGO_VARIANTS.map((v) => (
+                          <tr key={v.variant}>
+                            <td className="px-4 py-3 font-semibold text-slate-800 dark:text-slate-100 whitespace-nowrap">
+                              {v.variant}
+                            </td>
+                            <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
+                              {v.purpose}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    {NG_PALETTE.map((c) => (
+                      <div
+                        key={c.name}
+                        className="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2"
+                      >
+                        <span
+                          className="block h-10 w-full rounded-lg border border-black/5"
+                          style={{ backgroundColor: c.hex }}
+                        />
+                        <div className="space-y-0.5">
+                          <p className="text-sm font-bold text-slate-950 dark:text-white">
+                            {c.name}
+                          </p>
+                          <p className="font-mono text-[11px] text-slate-500 dark:text-slate-400">
+                            {c.hex}
+                          </p>
+                          <p className="text-[11px] text-slate-600 dark:text-slate-300">
+                            {c.meaning}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-4xl">
+                    <strong className="text-slate-950 dark:text-white">Recommendation:</strong>{' '}
+                    Brown + Gold as the primary mark, EMU Green as the local secondary, delivered as
+                    a responsive system (full badge → simplified icon → one-color) so the identity
+                    holds from storefront signage down to a favicon.
+                  </p>
+                </section>
+
+                {/* Section 3: POS & Loyalty */}
+                <section id="ng-3" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      3. POS &amp; Loyalty Modeling
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      The café runs on Dripos with a flat loyalty loop ($5 off per 100 points, $1 =
+                      1 point). I modeled three processors on margin preservation at small-ticket
+                      volume — not feature sheets. (Dripos's published rates were inconsistent, so
+                      both are carried as a range.)
+                    </p>
+                  </div>
+                  <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <table className="w-full text-sm">
+                      <thead className="bg-slate-50 dark:bg-slate-900/60 text-left">
+                        <tr>
+                          <th className="px-4 py-3 font-bold text-slate-950 dark:text-white">
+                            Factor
+                          </th>
+                          <th className="px-4 py-3 font-bold text-slate-950 dark:text-white">
+                            Dripos
+                          </th>
+                          <th className="px-4 py-3 font-bold text-amber-600 dark:text-amber-400">
+                            Square
+                          </th>
+                          <th className="px-4 py-3 font-bold text-slate-950 dark:text-white">
+                            Stripe
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                        {NG_POS_ROWS.map((row) => (
+                          <tr key={row.factor}>
+                            <td className="px-4 py-3 font-semibold text-slate-800 dark:text-slate-100 whitespace-nowrap">
+                              {row.factor}
+                            </td>
+                            <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
+                              {row.dripos}
+                            </td>
+                            <td className="px-4 py-3 text-slate-700 dark:text-slate-200 bg-amber-500/5">
+                              {row.square}
+                            </td>
+                            <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
+                              {row.stripe}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
+                    <h3 className="font-bold text-slate-950 dark:text-white">
+                      Break-even findings
+                    </h3>
+                    <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                      <li>
+                        <strong className="text-slate-800 dark:text-slate-100">
+                          Dripos vs Square:
+                        </strong>{' '}
+                        even at its cheapest contract, Dripos only overtakes Square at ~1,037 latte
+                        or ~1,215 sandwich transactions/month — beyond a typical single-location
+                        volume.
+                      </li>
+                      <li>
+                        <strong className="text-slate-800 dark:text-slate-100">
+                          Stripe vs Square:
+                        </strong>{' '}
+                        Stripe stays cheaper overall while a third-party loyalty app stays under
+                        ≈$170/mo at 1,000 transactions (≈$344/mo at 2,500) — the headroom that makes
+                        the eventual loyalty build pay for itself.
+                      </li>
+                    </ul>
+                    <p className="text-sm font-semibold text-amber-600 dark:text-amber-400 pt-1">
+                      Conclusion: Square now, Stripe as volume scales, skip Dripos.
+                    </p>
+                  </div>
+                  <CostBreakEvenChart />
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {NG_LOYALTY_MODELS.map((m) => (
+                      <div
+                        key={m.name}
+                        className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2"
+                      >
+                        <h4 className="font-bold text-sm text-amber-600 dark:text-amber-400">
+                          {m.name}
+                        </h4>
+                        <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                          {m.body}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed max-w-4xl">
+                    The three loyalty models are scoped as pilots — POS analytics pick the winner
+                    rather than a guess locking in one structure.
+                  </p>
+                </section>
+
+                {/* Section 4: Channel Economics */}
+                <section id="ng-4" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      4. Channel Economics — DoorDash as Acquisition Cost
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      High-commission delivery was being treated as an ordinary sales channel. At
+                      15–30% of gross order value, that erodes the gains from a better POS. The
+                      reframe: stop measuring DoorDash as revenue and start measuring it as customer
+                      acquisition.
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {NG_CHANNEL_MODEL.map((stat) => (
+                      <div
+                        key={stat.label}
+                        className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2"
+                      >
+                        <p className="text-2xl font-extrabold text-amber-600 dark:text-amber-400">
+                          {stat.value}
+                        </p>
+                        <p className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-100">
+                          {stat.label}
+                        </p>
+                        <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
+                          {stat.body}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-6 dark:border-amber-500/20 space-y-3">
+                    <h3 className="font-bold text-slate-950 dark:text-white flex items-center gap-2">
+                      <span>🔁</span> The conversion funnel
+                    </h3>
+                    <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-4xl">
+                      An in-bag card with a QR code routes every third-party order to the direct
+                      Square/Stripe ordering page, offering{' '}
+                      <strong>$5 off the first direct order</strong>. Avoiding a 25% commission on a
+                      $30 order saves <strong>$7.50</strong> — so the $5 win-back pays for itself on
+                      the very next order. A <strong>15–20% price differential</strong> on
+                      third-party menus and a bias toward bundles/higher-AOV items absorb the
+                      commission in the meantime.
+                    </p>
+                    <p className="text-sm font-semibold text-amber-600 dark:text-amber-400">
+                      Reclassify aggregators as a ~30% CAC channel — and track conversion rate,
+                      repeat direct orders, and LTV:CAC instead of gross delivery revenue.
+                    </p>
+                  </div>
+                </section>
+
+                {/* Section 5: Digital Marketing */}
+                <section id="ng-5" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      5. Digital Marketing Audit
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      The social presence didn't yet match the in-store experience — infrequent
+                      posting and limited engagement meant Instagram read as a static product
+                      catalog rather than a living brand. The smaller footprint is an advantage: a
+                      few authentic, barista-generated posts can out-engage larger competitors on
+                      locality and personality.
+                    </p>
+                  </div>
+                  <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <table className="w-full text-sm">
+                      <thead className="bg-slate-50 dark:bg-slate-900/60 text-left">
+                        <tr>
+                          <th className="px-4 py-3 font-bold text-slate-950 dark:text-white">
+                            Category
+                          </th>
+                          <th className="px-4 py-3 font-bold text-slate-950 dark:text-white">
+                            Current state
+                          </th>
+                          <th className="px-4 py-3 font-bold text-slate-950 dark:text-white">
+                            Impact
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                        {NG_IG_AUDIT.map((row) => (
+                          <tr key={row.category}>
+                            <td className="px-4 py-3 font-semibold text-slate-800 dark:text-slate-100 whitespace-nowrap">
+                              {row.category}
+                            </td>
+                            <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
+                              {row.state}
+                            </td>
+                            <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
+                              {row.impact}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <table className="w-full text-sm">
+                      <thead className="bg-slate-50 dark:bg-slate-900/60 text-left">
+                        <tr>
+                          <th className="px-4 py-3 font-bold text-slate-950 dark:text-white">
+                            Metric
+                          </th>
+                          <th className="px-4 py-3 font-bold text-slate-950 dark:text-white">
+                            Baseline
+                          </th>
+                          <th className="px-4 py-3 font-bold text-amber-600 dark:text-amber-400">
+                            6-month goal
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                        {NG_KPIS.map((row) => (
+                          <tr key={row.metric}>
+                            <td className="px-4 py-3 font-semibold text-slate-800 dark:text-slate-100 whitespace-nowrap">
+                              {row.metric}
+                            </td>
+                            <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
+                              {row.baseline}
+                            </td>
+                            <td className="px-4 py-3 text-slate-700 dark:text-slate-200 bg-amber-500/5 font-semibold">
+                              {row.goal}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed max-w-4xl">
+                    Execution is built to be staff-sustainable: a shared content calendar, one
+                    barista per week as Content Lead, three feed posts weekly, and one monthly
+                    campaign — reviewed against the targets above. Goals are projected, not
+                    measured.
+                  </p>
+                </section>
+
+                {/* Asset Gallery */}
+                <section id="ng-gallery" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      AI-Built Asset Gallery
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      Selected logo, menu, and social mockups produced for the rebrand — AI used for
+                      generation and ideation, with manual curation and refinement. Direction and
+                      taste did the deciding; the tools accelerated the exploration.
+                    </p>
+                  </div>
+                  <BrandGallery />
+                </section>
+
+                {/* Section 6: Impact & Reflection */}
+                <section id="ng-6" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      6. Impact &amp; Reflection
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      The throughline: small-business design succeeds when every visual and
+                      operational choice tells the same story. Each surface below moves from a
+                      one-off decision to part of one coherent, owner-runnable system.
+                    </p>
+                  </div>
+                  <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <table className="w-full text-sm">
+                      <thead className="bg-slate-50 dark:bg-slate-900/60 text-left">
+                        <tr>
+                          <th className="px-4 py-3 font-bold text-slate-950 dark:text-white">
+                            Aspect
+                          </th>
+                          <th className="px-4 py-3 font-bold text-slate-950 dark:text-white">
+                            Before
+                          </th>
+                          <th className="px-4 py-3 font-bold text-amber-600 dark:text-amber-400">
+                            After (proposed)
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                        {NG_BEFORE_AFTER.map((row) => (
+                          <tr key={row.aspect}>
+                            <td className="px-4 py-3 font-semibold text-slate-800 dark:text-slate-100 whitespace-nowrap">
+                              {row.aspect}
+                            </td>
+                            <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
+                              {row.before}
+                            </td>
+                            <td className="px-4 py-3 text-slate-700 dark:text-slate-200 bg-amber-500/5">
+                              {row.after}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="flex flex-wrap gap-4 text-sm font-semibold text-amber-600 dark:text-amber-400 pt-2">
+                    <Link
+                      to="/projects/northern-grind"
+                      className="hover:underline flex items-center gap-1"
+                    >
+                      ← Back to Northern Grind Case Study
+                    </Link>
+                    <Link to={PROJECTS_HREF} className="hover:underline">
+                      View Projects Library
+                    </Link>
                   </div>
                 </section>
               </div>

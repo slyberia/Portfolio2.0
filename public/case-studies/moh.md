@@ -14,7 +14,7 @@
 
 ---
 
-## Executive Summary
+## 📋 Executive Summary
 
 This project supported a contact-tracing and public-health GIS workflow for **a national Ministry of Health**, delivered within a geospatial services engagement. The contribution spanned dashboard planning, UI/UX review, documentation, pitch materials, and technical implementation guidance.
 
@@ -66,15 +66,17 @@ A sanitized view of how platform options were weighed against usability, maintai
 
 ---
 
-## Customer / Stakeholder Value
+## 🤝 Customer / Stakeholder Value
 
-- Helped non-technical and semi-technical stakeholders understand how contact-tracing data could move from intake forms into GIS layers, dashboards, and reporting workflows.
-- Made complex platform decisions easier to discuss by translating GIS, database, UI/UX, and AI-assisted development concepts into simpler implementation language.
-- Supported clearer planning around tool fit, user adoption, documentation needs, and workflow constraints — especially where platform limitations or client preferences affected implementation decisions.
+**Who it helps:** The public-health team standing up the contact-tracing workflow — and the non-technical and semi-technical stakeholders who had to understand, decide on, and adopt the tools.
+
+**What got easier:** Stakeholders could see how contact-tracing data moves from intake forms into GIS layers, dashboards, and reporting as one connected workflow, and discuss platform decisions in plain language instead of getting stuck on technical detail.
+
+**Why it matters:** Clearer planning around tool fit, user adoption, documentation, and workflow constraints means the system is something staff can actually run — especially where platform limits or client preferences shaped what was realistic to implement.
 
 ---
 
-## Governance & Public-Sector Considerations
+## 🛡️ Governance & Public-Sector Considerations
 
 This work required public-sector caution around confidentiality, data sensitivity, and role boundaries:
 
@@ -87,7 +89,7 @@ Portfolio evidence therefore relies on sanitized diagrams and reconstructed arti
 
 ---
 
-## Outcomes
+## 📊 Outcomes
 
 No public metrics are available, so this entry describes the work **qualitatively**. The contribution produced dashboard planning, documentation, UI/UX review, tool evaluation, stakeholder communication, and implementation guidance that helped clarify how public-health intake, GIS services, dashboards, and stakeholder-facing documentation could operate as a connected system — while respecting confidentiality and implementation constraints.
 

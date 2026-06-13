@@ -37,7 +37,7 @@ Before polishing the visuals, we needed to fix the plumbing. I migrated their co
 ### Key Implementations
 
 - **Lead Capture Automation:** Connected website contact forms directly to Salesforce via **Zapier**.
-  - _Result:_ Eliminated manual data entry errors; response time to new leads dropped from 24 hours to <15 minutes.
+  - _Intent:_ Eliminate manual data-entry errors and collapse lead-response time from hours to minutes.
 - **Pipeline Segmentation:** Created distinct user journeys for "Buyers," "Renters," and "Investors."
   - _Logic:_ A renter looking for a studio needs different automated follow-ups than an investor looking for a multi-unit complex.
 
@@ -51,8 +51,8 @@ The existing website was slow and mobile-incompatible. I redesigned it using **W
 
 - **Visual Hierarchy:** Prioritized high-fidelity photography and 3D virtual tours above the fold.
 - **Neighborhood Guides:** Created SEO-rich pages for specific districts (e.g., "The Warehouse District," "Riverfront").
-  - _Outcome:_ Organic traffic increased by 40% within 3 months due to hyper-local keywords.
-- **Speed Optimization:** Compressed assets and utilized lazy-loading to bring page load speeds under 2 seconds.
+  - _Intent:_ Capture hyper-local organic discovery through district-level keywords.
+- **Speed Optimization:** Compress assets and use lazy-loading for a fast, sub-perception load feel.
 
 ---
 
@@ -68,7 +68,7 @@ The architecture was redesigned to ensure all roads lead to a unified conversion
 
 ---
 
-## 📈 Before vs. After Snapshot
+## 📈 Legacy vs. Proposed System
 
 | Area            | Legacy State                        | Unified System Integration            |
 | :-------------- | :---------------------------------- | :------------------------------------ |
@@ -89,10 +89,10 @@ The architecture was redesigned to ensure all roads lead to a unified conversion
 
 ---
 
-## 🧠 Retrospective & Learnings
+## 🧠 Anticipated Wins & Known Risks
 
-- **What Went Well:** The Zapier integration was a game-changer for the small sales team, freeing up ~10 hours a week previously spent on data entry.
-- **Challenges:** Migrating legacy data (cleaning up duplicate contacts) took 2x longer than anticipated.
+- **Anticipated Win:** The Zapier integration is designed to remove the recurring manual data entry that consumes the small sales team's time.
+- **Known Risk:** Migrating legacy contact data (deduplicating scattered records) is the most labor-intensive step and should be scoped conservatively.
 
 ### 🔮 Strategic AI Roadmap
 

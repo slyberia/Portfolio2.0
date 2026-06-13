@@ -1,6 +1,18 @@
+> **Role:** Spatial Systems Architect / Forward Deployed Engineer
+> **Outcome:** Rebuilt a fragmented legacy geospatial site into a governed, previewable public data hub — dataset governance, consistent metadata, and in-browser map previews replacing obscure file listings.
+> **Stack/Tools:** TypeScript, Leaflet, GeoJSON, metadata-driven registry, Google Cloud Run
+> **Relevance:** Spatial systems thinking and implementation discipline — turning scattered legacy data into a trustworthy, public-facing product.
+
 # 🗺️ Guynode Spatial Data Hub — Modernizing Geospatial Access
 
 > **"Spatial data is only as valuable as it is accessible. Guynode transforms fragmented legacy data into a governed, high-fidelity public resource."**
+
+> **Project Overview**
+>
+> **Status:** Featured System (Redesign Prototype)
+> **Role:** Spatial Systems Architect / Forward Deployed Engineer
+> **Scope:** Dataset governance, metadata schema, map-based preview, launch readiness
+> **Tools:** TypeScript, Leaflet, GeoJSON, metadata-driven registry, Google Cloud Run
 
 ### 🗺️ Launch Guynode Environments
 

@@ -156,6 +156,12 @@ const ProjectHero: React.FC<{
         label: 'View Process Deep Dive',
       };
     }
+    if (metadata.id === 'northern-grind') {
+      return {
+        href: `${DEEP_DIVES_HREF}?tab=northern-grind`,
+        label: 'View Business Systems Deep Dive',
+      };
+    }
     return {
       href: `${DEEP_DIVES_HREF}?tab=process`,
       label: 'View Process Deep Dive',
