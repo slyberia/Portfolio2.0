@@ -109,7 +109,7 @@ const GALLERY_LIVE_PROOFS: LiveProof[] = [
   {
     id: 'ops-triage-console',
     title: 'Incident Response & Ops Simulation Console',
-    subtitle: 'Interactive triage sandbox — runs in this page',
+    subtitle: 'Interactive Triage Sandbox — Runs in This Page',
     description:
       'A fully interactive simulation where you move a policy between throughput and zero-trust validation and watch first-pass yield and backlog respond in real time — the same artifact embedded on the Implementation Consultant lens.',
     tech: ['React State Engine', 'Recharts', 'Tailwind CSS', 'Analytical Logic'],
@@ -120,7 +120,7 @@ const GALLERY_LIVE_PROOFS: LiveProof[] = [
   {
     id: 'guynode-hub',
     title: 'Guynode Spatial Data Hub',
-    subtitle: 'Live public spatial catalog & map viewer',
+    subtitle: 'Live Public Spatial Catalog & Map Viewer',
     description:
       'The redesigned, public-facing spatial data platform: a dataset registry with standardized metadata and an interactive Leaflet map viewer. Preview embeds here; launch to explore the live deployment.',
     tech: ['React', 'Leaflet', 'GeoJSON', 'Cloud Run'],

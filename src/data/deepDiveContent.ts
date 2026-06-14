@@ -42,42 +42,42 @@ export type ArchiveEntry = {
 export const releaseLadder: TimelineEntry[] = [
   {
     phase: 'Phase 1',
-    title: 'Protocol refinement / early AI Studio constraints',
+    title: 'Protocol Refinement / Early AI Studio Constraints',
     description:
       'Established AI workflow protocols in Google AI Studio before any content generation began. Assigned non-overlapping roles to each LLM: ChatGPT for strategy and evidence audit, Gemini for synthesis and proof translation, Google AI Studio for iterative archive and in-flight decision capture. Defined scope constraints, output review checkpoints, and operator approval requirements at each phase boundary. Design authority and all framing decisions remained human-controlled throughout — LLMs supported execution, they did not direct it.',
     tags: ['AI Governance', 'Protocol Design', 'Google AI Studio'],
   },
   {
     phase: 'Phase 2',
-    title: 'Baseline scaffold',
+    title: 'Baseline Scaffold',
     description:
       'Built the initial React application with a typed component structure designed for composability, a content model that could accommodate multiple role lanes, and a routing stub that established the base URL surface. The baseline proved the application could deploy and created the architectural foundation that all subsequent hardening phases would build on.',
     tags: ['React', 'Scaffold', 'Content Model'],
   },
   {
     phase: 'Phase 3',
-    title: 'Hardening and safe rendering',
+    title: 'Hardening and Safe Rendering',
     description:
       'Applied DOMPurify sanitization across all HTML rendering paths. Removed unsafe rendering patterns, tightened component boundaries, and validated the sanitization layer with explicit test cases. Rendering became a trust problem, not just a display problem.',
     tags: ['DOMPurify', 'Security', 'Quality Engineering'],
   },
   {
     phase: 'Phase 4',
-    title: 'Server boundary and routing',
+    title: 'Server Boundary and Routing',
     description:
       'Moved Gemini API calls behind a Cloud Run Express proxy to eliminate credential exposure in the client bundle. Migrated to React Router v6 with createBrowserRouter, enabling multi-route navigation, URL-addressable views, and the layout composition that all subsequent pages depend on.',
     tags: ['Express', 'Cloud Run', 'React Router'],
   },
   {
     phase: 'Phase 5',
-    title: 'Tests / CI / release controls',
+    title: 'Tests / CI / Release Controls',
     description:
       'Added Vitest unit tests for core components and configured a GitHub Actions CI pipeline: Prettier → ESLint → TypeScript → Vitest → Vite build → npm audit. The system moved from manual pre-push verification to automated self-checking on every push and pull request.',
     tags: ['Vitest', 'GitHub Actions', 'CI/CD'],
   },
   {
     phase: 'Phase 6',
-    title: 'Recruiter proof / observability layer',
+    title: 'Recruiter Proof / Observability Layer',
     description:
       'Restructured the portfolio into explicit recruiter-native role tracks (Forward Deployed Engineer, Implementation Consultant, and Spatial Systems Architect). Added track pages with structured proof blocks and built this deep-dive page as the second-layer evidence destination so all track-page links resolve to real content.',
     tags: ['Track Pages', 'Proof Architecture', 'Stakeholder Design'],
@@ -89,7 +89,7 @@ export const releaseLadder: TimelineEntry[] = [
 export const decisionBlocks: DecisionBlock[] = [
   {
     id: 'two-track-framing',
-    title: 'Recruiter-native role-track framing',
+    title: 'Recruiter-Native Role-Track Framing',
     problem:
       'Portfolio proof was blended across implementation, QA, and GIS work. Reviewers had to infer which evidence applied to which role.',
     risk: 'Reviewers disengage before finding relevant proof, or apply the wrong framing to the strongest evidence.',
@@ -105,7 +105,7 @@ export const decisionBlocks: DecisionBlock[] = [
   },
   {
     id: 'server-proxy',
-    title: 'Server-side Express proxy for Gemini',
+    title: 'Server-Side Express Proxy for Gemini',
     problem:
       'Calling the Gemini API directly from React would embed the API key in the client bundle.',
     risk: 'Credential exposure in source maps or the network inspector; key rotation cost if leaked.',
@@ -121,7 +121,7 @@ export const decisionBlocks: DecisionBlock[] = [
   },
   {
     id: 'react-router-migration',
-    title: 'React Router migration',
+    title: 'React Router Migration',
     problem:
       'The single-scroll layout could not support deep-linked pages, URL-addressable sections, or role-specific routes.',
     risk: 'Without routing, the portfolio could not scale to track pages, deep-dive layers, or case study views without degrading UX.',
@@ -137,7 +137,7 @@ export const decisionBlocks: DecisionBlock[] = [
   },
   {
     id: 'dompurify-hardening',
-    title: 'DOMPurify sanitization hardening',
+    title: 'DOMPurify Sanitization Hardening',
     problem:
       'Case study content includes markdown-sourced HTML strings rendered into the DOM. Without sanitization, arbitrary HTML could execute.',
     risk: 'XSS surface in a portfolio viewed by third parties. Undermines trust for any technical reviewer who inspects the rendering layer.',
@@ -153,7 +153,7 @@ export const decisionBlocks: DecisionBlock[] = [
   },
   {
     id: 'ci-and-tests',
-    title: 'Vitest + CI pipeline',
+    title: 'Vitest + CI Pipeline',
     problem:
       'No automated validation existed before release. Changes were verified only by manual inspection before push.',
     risk: 'Formatting drift, type errors, broken builds, and dependency vulnerabilities could ship undetected.',
@@ -169,7 +169,7 @@ export const decisionBlocks: DecisionBlock[] = [
   },
   {
     id: 'multi-llm-workflow',
-    title: 'Governed multi-LLM workflow',
+    title: 'Governed Multi-LLM Workflow',
     problem:
       'Using AI tools without defined roles risks scope drift, inconsistent output quality, and unattributable decisions.',
     risk: 'AI-generated content gets published without review; decisions become unattributable; the portfolio loses credibility as a human-directed artifact.',
@@ -185,7 +185,7 @@ export const decisionBlocks: DecisionBlock[] = [
   },
   {
     id: 'app-modularization',
-    title: 'App.tsx modularization',
+    title: 'App.Tsx Modularization',
     problem:
       'A monolithic App.tsx was handling routing, layout, global state, theme, and content rendering in a single file.',
     risk: 'Any routing, theming, or navigation change required touching the same file as content changes, creating coupling and merge risk.',
@@ -201,7 +201,7 @@ export const decisionBlocks: DecisionBlock[] = [
   },
   {
     id: 'feature-governance',
-    title: 'Client-side mutability / Admin Mode removal',
+    title: 'Client-Side Mutability / Admin Mode Removal',
     problem:
       'A client-side Admin Mode allowed runtime content mutation directly in the browser during development.',
     risk: 'Complex, fragile code path; trust risk for technical reviewers who could trigger unintended state changes while reviewing the live portfolio.',
@@ -217,7 +217,7 @@ export const decisionBlocks: DecisionBlock[] = [
   },
   {
     id: 'sandbox-hardening',
-    title: 'Sandbox and preview environment hardening',
+    title: 'Sandbox and Preview Environment Hardening',
     problem:
       'React Router navigation used browser history APIs that fail inconsistently in preview environments, iframes, and restricted sandboxes.',
     risk: 'Portfolio would silently fail to navigate in the exact environments where recruiters are most likely to view it — LinkedIn previews, email clients, sandboxed iframes.',
@@ -237,31 +237,31 @@ export const decisionBlocks: DecisionBlock[] = [
 
 export const architectureSummaries: ArchitectureSummary[] = [
   {
-    title: 'Server / client boundary',
+    title: 'Server / Client Boundary',
     summary:
       'The React client is intentionally dumb about AI: it sends requests to /api/chat and displays responses. The Express proxy on Cloud Run holds credentials, applies a scoped system prompt with hard role constraints and injection detection, and controls every Gemini call. Credential isolation was verified: no API keys appear in the client bundle, network inspector, or source maps under any request pattern.',
     chips: ['Express', 'Cloud Run', 'Security Boundary'],
   },
   {
-    title: 'Routing upgrade',
+    title: 'Routing Upgrade',
     summary:
       'React Router v6 createBrowserRouter replaced the original single-scroll layout. Routes are nested under a shared AppLayout that handles the nav, footer, theme, and modals. Each view is independently error-bounded and testable.',
     chips: ['React Router v6', 'AppLayout', 'Nested Routes'],
   },
   {
-    title: 'Sanitization and rendering safety',
+    title: 'Sanitization and Rendering Safety',
     summary:
       'All HTML rendered from markdown-sourced case study content passes through DOMPurify with an explicit allowlist before touching the DOM. The sanitization boundary is enforced at the component level, not the call site.',
     chips: ['DOMPurify', 'Allowlist', 'XSS Prevention'],
   },
   {
-    title: 'CI and regression prevention',
+    title: 'CI and Regression Prevention',
     summary:
       'GitHub Actions runs six sequential gates on every push and PR: Prettier format check, ESLint, TypeScript typecheck, Vitest unit tests, Vite production build, and npm security audit. Merge requires all gates to pass.',
     chips: ['GitHub Actions', 'Vitest', 'npm audit'],
   },
   {
-    title: 'Modularization and maintainability',
+    title: 'Modularization and Maintainability',
     summary:
       'App.tsx was decomposed into a router module, view components, data files, and context providers. New routes, views, and content can be added without touching unrelated files. Each concern is independently changeable and testable.',
     chips: ['Separation of Concerns', 'Testability', 'Scalability'],
@@ -321,7 +321,7 @@ export const forensicEntries: ArchiveEntry[] = [
   },
   {
     id: 'validation-trail',
-    label: 'Validation trail excerpts',
+    label: 'Validation Trail Excerpts',
     description:
       'Key validation checkpoints preserved in the governance trail: (1) CI pipeline added and confirmed passing before release branch merges; (2) DOMPurify sanitization boundary validated with explicit test cases before enabling HTML rendering in case study view; (3) Sandbox navigation behavior validated across three deployment environments before marking stable; (4) Server-proxy credential isolation verified — no API keys appear in the client network tab under any request pattern; (5) Each track-page proof block reviewed against actual implementation artifacts before publishing; (6) /resume/implementation redirect added to prevent dead-route 404s from Implementation track supporting-artifact links.',
     chips: ['Validation', 'Traceability', 'Governance Checkpoints'],
@@ -335,14 +335,14 @@ export const forensicEntries: ArchiveEntry[] = [
   },
   {
     id: 'ai-protocol-log',
-    label: 'AI protocol log: role assignments and constraint history',
+    label: 'AI Protocol Log: Role Assignments and Constraint History',
     description:
       'AI workflow protocols were established before any content generation began. ChatGPT was assigned to strategy, evidence architecture, and audit — explicitly excluded from synthesis or content generation to prevent tone inconsistency. Gemini was assigned to synthesis and technical proof translation — explicitly excluded from strategic framing decisions to prevent scope creep. Google AI Studio was assigned to iterative archive and forensics — acting as a capture layer for in-flight decisions, not a content generator. These role boundaries were set before use, maintained throughout the project, and reviewed at each phase transition. No LLM output was published without an operator review checkpoint. The constraint model was the point, not a side effect: if the portfolio claims disciplined AI governance, the process behind it had to demonstrate the same discipline.',
     chips: ['AI Governance', 'Protocol Design', 'Role Constraints'],
   },
   {
     id: 'scope-reduction-log',
-    label: 'Scope reduction log',
+    label: 'Scope Reduction Log',
     description:
       'Two features were removed during Portfolio2.0 development rather than shipped. (1) Admin Mode: a client-side runtime content mutation path built during early scaffolding was removed when review showed it added coupling, trust risk for technical reviewers who might trigger it, and fragility without commensurate value. The code path was confirmed absent from the production bundle before release. (2) Direct Gemini client calls: the initial implementation called the Gemini API from the React client, embedding the API key in the bundle. This was replaced with the server-side Express proxy on Cloud Run before any public deployment. No version with client-side credentials was ever released to a public URL. Both removals were governance decisions: the question was not whether each feature worked, but whether keeping it made the system safer and more trustworthy to operate.',
     chips: ['Governance', 'Risk Reduction', 'Scope Control'],
@@ -467,15 +467,15 @@ export const governancePrimitives: GovernancePrimitive[] = [
 // ── Appendix Links ─────────────────────────────────────────────────────────
 
 export const appendixLinks = [
-  { label: 'Release ladder', href: '/deep-dives#release-ladder' },
-  { label: 'Decision-impact blocks', href: '/deep-dives#decision-blocks' },
-  { label: 'LLM governance summary', href: '/deep-dives#multi-llm-governance' },
-  { label: 'Architecture boundary', href: '/deep-dives#architecture-boundary' },
-  { label: 'Validation trail', href: '/deep-dives#validation-trail' },
+  { label: 'Release Ladder', href: '/deep-dives#release-ladder' },
+  { label: 'Decision-Impact Blocks', href: '/deep-dives#decision-blocks' },
+  { label: 'LLM Governance Summary', href: '/deep-dives#multi-llm-governance' },
+  { label: 'Architecture Boundary', href: '/deep-dives#architecture-boundary' },
+  { label: 'Validation Trail', href: '/deep-dives#validation-trail' },
   { label: 'Revision Trail', href: '/deep-dives#forensic-archive' },
   { label: 'How Proof Is Structured', href: '/deep-dives#proof-hierarchy' },
-  { label: 'Forward Deployed Engineer track', href: '/tracks/forward-deployed' },
-  { label: 'Implementation Consultant track', href: '/tracks/solutions-architect' },
-  { label: 'Spatial Systems Architect track', href: '/tracks/spatial-systems' },
+  { label: 'Forward Deployed Engineer Track', href: '/tracks/forward-deployed' },
+  { label: 'Implementation Consultant Track', href: '/tracks/solutions-architect' },
+  { label: 'Spatial Systems Architect Track', href: '/tracks/spatial-systems' },
   { label: 'Resume', href: '/resume' },
 ];

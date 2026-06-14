@@ -697,7 +697,7 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
     roleLanes: ['AI Workflow / Portfolio Governance', 'Forward Deployed Engineer'],
     heroArtifact: {
       type: 'html',
-      label: 'Aegis / emOS — Sanitized State Machine',
+      label: 'Aegis / EmOS — Sanitized State Machine',
       description:
         'Conceptual reconstruction of the decoupled loop (Notion task → emOS execution → Guardian check → Notion result). Toggle the Guardian seat to compare human-in-the-loop with autonomous operation. No real workspace IDs, keys, or credentials.',
       content: AEGIS_STATE_MACHINE_HTML,
@@ -997,7 +997,7 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
     artifacts: [
       {
         type: 'html',
-        label: 'Contact Tracing — Supervisor View (sample)',
+        label: 'Contact Tracing — Supervisor View (Sample)',
         description:
           'Sanitized, interactive supervisor dashboard mockup: KPI tiles, a clickable point map replicating the Survey123-linked datapoints, a status-mix donut, and a filterable follow-up queue. Synthetic data on a generic extent — no real records, locations, or metrics.',
         content: MOH_SUPERVISOR_DASHBOARD_HTML,

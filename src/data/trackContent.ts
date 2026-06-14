@@ -107,7 +107,7 @@ export const implementationTrackContent: TrackPageContent = {
     {
       kind: 'project-preview',
       projectId: 'luxe-lofts',
-      label: 'Luxe Lofts — Operational Hub (live prototype)',
+      label: 'Luxe Lofts — Operational Hub (Live Prototype)',
       caption:
         'The forward-deployed prototype: rate engine, AI planning ingress, and CRM path orchestration in one hub. Launch it to interact with the proposed system the way a client would.',
       accentColor: 'red',
@@ -168,7 +168,7 @@ export const implementationTrackContent: TrackPageContent = {
     { label: 'Download Resume', href: '/resume' },
     { label: 'View Luxe Lofts Prototype', href: '/projects/luxe-lofts' },
     {
-      label: 'Ask the Digital Twin about Implementation Fit',
+      label: 'Ask the Digital Twin About Implementation Fit',
       type: 'link',
       twinSource: 'implementation',
       twinStarterPrompt: 'Help this visitor evaluate Kyle for a Forward Deployed Engineer role.',
@@ -276,7 +276,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
     { label: 'Download Resume', href: '/resume' },
     { label: 'Explore the Triage Simulator', href: '/projects/ops-triage' },
     {
-      label: 'Ask the Digital Twin about implementation & validation proof',
+      label: 'Ask the Digital Twin About Implementation & Validation Proof',
       type: 'link',
       twinSource: 'qa',
       twinStarterPrompt: 'Help this visitor evaluate Kyle for an Implementation Consultant role.',
@@ -325,7 +325,7 @@ export const gisTrackContent: TrackPageContent = {
     {
       kind: 'project-preview',
       projectId: 'guynode',
-      label: 'Guynode Spatial Data Hub (live)',
+      label: 'Guynode Spatial Data Hub (Live)',
       caption:
         'The flagship spatial system: a public catalog with a map viewer, standardized metadata, and governed dataset access. Launch it to explore the redesigned portal.',
     },
@@ -387,7 +387,7 @@ export const gisTrackContent: TrackPageContent = {
     { label: 'Download Resume', href: '/resume' },
     { label: 'View Guynode System', href: GUYNODE_SYSTEM_HREF },
     {
-      label: 'Ask the Digital Twin about GIS experience',
+      label: 'Ask the Digital Twin About GIS Experience',
       type: 'link',
       twinSource: 'gis',
       twinStarterPrompt: 'Help this visitor evaluate Kyle for a Spatial Systems Architect role.',
