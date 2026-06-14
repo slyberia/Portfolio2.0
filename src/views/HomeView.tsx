@@ -520,7 +520,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               ROLE_LENSES
             </p>
             <h2 className="mt-3 text-2xl md:text-3xl font-outfit font-semibold text-ink-navy dark:text-white">
-              Explore by role lens
+              Explore by Role Lens
             </h2>
             <p className="mt-3 text-sm md:text-base text-slate-600 dark:text-slate-300">
               Optional — the same work, filtered to how a specific role evaluates it.

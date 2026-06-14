@@ -42,7 +42,7 @@ const WhatIHelpTeamsDoSection: React.FC = () => {
             WHAT_I_HELP_TEAMS_DO
           </p>
           <h2 className="mt-3 text-3xl md:text-4xl font-outfit font-bold text-ink-navy dark:text-white">
-            What I help teams do
+            What I Help Teams Do
           </h2>
           <p className="mt-3 text-base text-slate-600 dark:text-slate-300 leading-relaxed">
             Four patterns that show up across every project — the through-line behind

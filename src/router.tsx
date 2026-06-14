@@ -222,8 +222,8 @@ export const AppLayout: React.FC = () => {
             <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
               <div className="space-y-8">
                 <h2 className="text-4xl font-outfit font-extrabold text-navy-900 dark:text-white">
-                  Open to AI-forward{' '}
-                  <span className="text-tide-aqua">Customer Success and Solutions</span> roles
+                  Open to AI-Forward{' '}
+                  <span className="text-tide-aqua">Customer Success and Solutions Roles</span>
                 </h2>
                 <p className="text-slate-500 dark:text-slate-400 max-w-sm">
                   I'm looking for my next challenge in an AI-forward company that values operational

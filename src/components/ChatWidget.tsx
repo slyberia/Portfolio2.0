@@ -68,7 +68,7 @@ const MODE_CONFIG: Record<
       'Show me Kyle’s forward deployed proof.',
       'How does Guynode support this track?',
       'Explain the Digital Twin as forward deployed proof.',
-      'What experience supports forward deployed engineer roles?',
+      'What experience supports Forward Deployed Engineer roles?',
     ],
     pillClassName: 'bg-tide-aqua/10 text-[#237f86] dark:bg-tide-aqua/20 dark:text-tide-sky',
   },

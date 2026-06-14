@@ -30,7 +30,7 @@ const ResumeView: React.FC = () => {
           Professional Summary
         </h2>
         <p className="text-sm leading-relaxed text-slate-800">
-          Forward deployed engineer and customer-facing technical operator. I build and ship
+          Forward Deployed Engineer and customer-facing technical operator. I build and ship
           AI-assisted web systems, turn ambiguous goals into structured delivery, and bring real
           technical-support and data-operations rigor to customer-facing work — translating complex
           technical, operational, and spatial problems into systems people can understand, adopt,

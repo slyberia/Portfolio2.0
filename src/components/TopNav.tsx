@@ -160,7 +160,7 @@ const TopNav: React.FC<TopNavProps> = ({ theme, toggleTheme, onOpenContact }) =>
               >
                 <div className="px-4 py-2 border-b border-slate-100 dark:border-slate-800 mb-1 select-none">
                   <span className="text-[10px] font-mono tracking-wider text-slate-400 dark:text-slate-500 uppercase block">
-                    Explore by role lens
+                    Explore by Role Lens
                   </span>
                 </div>
                 {TRACK_ITEMS.map((item) => {

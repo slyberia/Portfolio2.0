@@ -217,7 +217,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
       kind: 'ops-triage-simulator',
       label: 'Operational Triage Simulator',
       caption:
-        'The flagship readiness artifact: move the policy slider between throughput and zero-trust validation and watch first-pass yield and backlog respond — the throughput-vs-validation tradeoff an implementation consultant has to make defensible before go-live.',
+        'The flagship readiness artifact: move the policy slider between throughput and zero-trust validation and watch first-pass yield and backlog respond — the throughput-vs-validation tradeoff an Implementation Consultant has to make defensible before go-live.',
     },
     {
       kind: 'project-preview',
