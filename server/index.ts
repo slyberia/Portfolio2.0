@@ -19,6 +19,11 @@ export function createApp(distDir = path.resolve(__dirname, '..', 'dist')) {
         directives: {
           ...helmet.contentSecurityPolicy.getDefaultDirectives(),
           'img-src': ["'self'", 'data:', 'https://storage.googleapis.com'],
+          'frame-src': [
+            "'self'",
+            'https://luxe-lofts-roadmap-repo-786228485832.us-central1.run.app',
+            'https://guynode-spatial-data-hub-786228485832.us-central1.run.app',
+          ],
         },
       },
     }),

@@ -48,7 +48,7 @@ export const northernGrindGallery: GalleryImage[] = [
     alt: 'Northern Grind brown circular badge logo with NG coffee cup mark',
     caption: 'Brown One-Color Badge Logo',
     category: 'Brand',
-    tool: 'AI-assisted + Adobe',
+    tool: 'AI-assisted',
   },
   {
     id: 'logo-brown-gold-transparent',
@@ -56,7 +56,7 @@ export const northernGrindGallery: GalleryImage[] = [
     alt: 'Northern Grind brown and gold circular badge logo on transparent background',
     caption: 'Brown + Gold Badge Logo Refinement',
     category: 'Brand',
-    tool: 'AI-assisted + Adobe',
+    tool: 'AI-assisted',
   },
   {
     id: 'logo-emu-green-michigan-cup',
@@ -64,7 +64,7 @@ export const northernGrindGallery: GalleryImage[] = [
     alt: 'Northern Grind green and gold badge logo with coffee cup, coffee bean, and Michigan icon',
     caption: 'EMU Green-Inspired Michigan Cup Concept',
     category: 'Brand',
-    tool: 'AI-assisted + Adobe',
+    tool: 'AI-assisted',
   },
   {
     id: 'logo-navy-gold-alternate',
@@ -72,7 +72,7 @@ export const northernGrindGallery: GalleryImage[] = [
     alt: 'Northern Grind University of Michigan inspired blue and gold circular badge logo with sunrise and coffee cup',
     caption: 'U-M Inspired Blue + Gold Alternate Badge Concept',
     category: 'Brand',
-    tool: 'AI-assisted + Adobe',
+    tool: 'AI-assisted',
   },
   {
     id: 'menu-board-redesign-drinks-overview',
@@ -80,7 +80,7 @@ export const northernGrindGallery: GalleryImage[] = [
     alt: 'Northern Grind redesigned coffee menu board with drink list and illustrated hot and iced coffee',
     caption: 'Redesigned Drinks Board Overview',
     category: 'Menu',
-    tool: 'AI-assisted + Adobe',
+    tool: 'AI-assisted',
   },
   {
     id: 'menu-board-redesign-coffee',
@@ -88,7 +88,7 @@ export const northernGrindGallery: GalleryImage[] = [
     alt: 'Northern Grind redesigned coffee menu board showing latte, cappuccino, flat white, cortado, and cold brew options',
     caption: 'Coffee Menu Board Redesign',
     category: 'Menu',
-    tool: 'AI-assisted + Adobe',
+    tool: 'AI-assisted',
   },
   {
     id: 'menu-board-redesign-tea-specialties',
@@ -96,7 +96,7 @@ export const northernGrindGallery: GalleryImage[] = [
     alt: 'Northern Grind redesigned tea and specialties menu board with chai, matcha, hot chocolate, lemonade, and smoothies',
     caption: 'Tea and Specialties Board Redesign',
     category: 'Menu',
-    tool: 'AI-assisted + Adobe',
+    tool: 'AI-assisted',
   },
   {
     id: 'menu-board-redesign-sandwiches',
@@ -104,7 +104,7 @@ export const northernGrindGallery: GalleryImage[] = [
     alt: 'Northern Grind redesigned sandwiches menu board with bagel sandwich options and illustrated bagel plate',
     caption: 'Sandwiches Board Redesign',
     category: 'Menu',
-    tool: 'AI-assisted + Adobe',
+    tool: 'AI-assisted',
   },
   {
     id: 'menu-board-original-drinks-closeup',
