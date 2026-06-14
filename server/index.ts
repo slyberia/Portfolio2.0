@@ -12,7 +12,17 @@ const __dirname = path.dirname(__filename);
 export function createApp(distDir = path.resolve(__dirname, '..', 'dist')) {
   const app = express();
 
-  app.use(helmet({ frameguard: { action: 'deny' } }));
+  app.use(
+    helmet({
+      frameguard: { action: 'deny' },
+      contentSecurityPolicy: {
+        directives: {
+          ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+          'img-src': ["'self'", 'data:', 'https://storage.googleapis.com'],
+        },
+      },
+    }),
+  );
 
   app.get('/healthz', (_req, res) => {
     res.status(200).json({ ok: true });
