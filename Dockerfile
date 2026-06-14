@@ -10,6 +10,8 @@ COPY . .
 # Build frontend and crawler mirrors
 ARG SITE_URL=https://kyle-semple-portfolio-786228485832.us-central1.run.app
 ENV SITE_URL=$SITE_URL
+ARG VITE_NG_GALLERY_BASE=https://storage.googleapis.com/portfoli02-bucket
+ENV VITE_NG_GALLERY_BASE=$VITE_NG_GALLERY_BASE
 RUN npm run build:crawler
 
 # Compile server TypeScript to JS
