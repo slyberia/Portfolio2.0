@@ -159,15 +159,6 @@ const GALLERY_LIVE_PROOFS: LiveProof[] = [
 const resolveLiveUrl = (caseStudyId: string): string | undefined =>
   PROJECT_REGISTRY.find((project) => project.id === caseStudyId)?.heroArtifact?.iframeUrl;
 
-// External live sites refuse to be framed, so the raw iframe preview shows blank. Use the
-// project's inline heroArtifact content (a self-contained diagram) as the visible preview
-// instead, while the click-through still launches the live URL.
-const resolveLiveContent = (caseStudyId: string): string => {
-  const content = PROJECT_REGISTRY.find((project) => project.id === caseStudyId)?.heroArtifact
-    ?.content;
-  return typeof content === 'string' ? content : '';
-};
-
 export const GalleryView: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'ai' | 'diagrams' | 'live'>('ai');
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -794,7 +785,7 @@ export const GalleryView: React.FC = () => {
                 renderArtifactCard(
                   proof,
                   <HtmlPreviewCard
-                    content={resolveLiveContent(proof.caseStudyId)}
+                    content=""
                     label="Live preview — click to launch"
                     iframeUrl={resolveLiveUrl(proof.caseStudyId)}
                     accentColor={proof.caseStudyId === 'luxe-lofts' ? 'red' : 'indigo'}

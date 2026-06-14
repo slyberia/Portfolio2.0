@@ -102,7 +102,7 @@ export const BrandGallery: React.FC = () => {
             <img
               src={resolveGallerySrc(active.src)}
               alt={active.alt}
-              className="w-full max-h-[80vh] object-contain rounded-xl"
+              className="w-full max-h-[80vh] object-contain rounded-xl bg-white"
             />
             <div className="flex items-center justify-between gap-4">
               <p className="text-sm text-white/90">{active.caption}</p>
