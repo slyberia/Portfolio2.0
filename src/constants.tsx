@@ -800,6 +800,32 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
       'Brand Strategy',
     ],
     roleLanes: ['Forward Deployed Engineer'],
+    constraints: [
+      {
+        problem:
+          'A polished menu could have been built in Adobe tools, but the café needed something it could update and hand off without a designer or Adobe licensing.',
+        tradeoff:
+          'Canva was used as the production layer — trading peak design control for a system the owner can maintain and edit themselves.',
+      },
+      {
+        problem:
+          'Café menus need visual warmth, but too much decoration slows scanning and buries prices.',
+        tradeoff:
+          'The menu prioritized hierarchy, font size, spacing, and price readability over dense descriptive copy and decorative complexity.',
+      },
+      {
+        problem:
+          'AI-generated assets can look polished while still feeling generic or disconnected from the actual business.',
+        tradeoff:
+          "Logo, color, and food/drink graphic directions were curated against Northern Grind's existing physical and digital materials, local feel, and café fit — generic variants were rejected.",
+      },
+      {
+        problem:
+          'AI image generation produces many options quickly, but not every option is safe or appropriate to carry forward.',
+        tradeoff:
+          'Generated assets were filtered for genericness, derivative-risk concerns, scalability, and compatibility with the menu/brand system before anything reached the production layout.',
+      },
+    ],
   },
   {
     id: 'moh',
