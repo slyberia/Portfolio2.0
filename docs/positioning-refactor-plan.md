@@ -62,6 +62,11 @@ The Codex brief contained errors that MUST NOT propagate into the site:
    They are real projects of Kyle's but are **not yet implemented** in this iteration. Do not
    author their content from the brief's copy; add them only via the gated subphase 6.11 using
    Kyle-provided source material. Phase 6 work uses the real on-site inventory (§5).
+
+   > **Status update (Track C, current):** This correction is now historical. Northern Grind and
+   > MOH have since been integrated — see the current-status note in §6.11. The guardrail that
+   > still applies: future edits use Kyle-provided source material and never fabricate content.
+
 4. **Customer Success scope.** CS is an **evidence layer only**. Kyle has support/triage
    experience but no managed book of business. Never claim CSM seniority, ARR/NRR, renewals,
    or expansion ownership in the headline, resume summary, or machine summaries.
@@ -135,6 +140,11 @@ Ministry of Health** (a GIS / spatial-data project). These are genuine projects 
 simply have not been added to this iteration. They are **out of scope for Phase 6** and must be
 added only via subphase 6.11 (gated), using Kyle-provided source material. Do not fabricate
 their content or metrics, and do not silently drop them as if they were never real.
+
+> **Status update (Track C, current):** The "not yet implemented" framing above is historical.
+> Northern Grind (project entry + deep dive) and MOH (public project entry, no deep dive yet) are
+> now on the site. See the current-status note in §6.11. The non-fabrication guardrail still
+> applies to all future edits.
 
 ---
 
@@ -272,6 +282,15 @@ Consistent role labels: `Forward-Deployed Engineering`, `Technical Implementatio
 >
 > **Remaining (gated on Kyle):** supply MOH source material (via the intake questionnaire); then
 > publish by flipping `visibility`. Do not fabricate MOH content.
+>
+> **Current status (Track C, supersedes the staged-draft wording above):**
+>
+> - **Northern Grind** is now implemented as a **public project entry _and_ deep dive**.
+> - **MOH** is now implemented as a **public project entry**.
+> - **MOH does not currently have a deep dive.**
+> - **Track A** corrected the Northern Grind **project entry**.
+> - **Track B** corrected the Northern Grind **deep dive**.
+> - Future edits to either must use **Kyle-provided source material** and avoid invented claims.
 
 - **Scope:** Add the two real-but-unimplemented projects to the site:
   - **Northern Grind** — local-business systems case study (brand identity, menu experience,
@@ -353,6 +372,9 @@ without a green suite; route naming and crawler sitemap do not drift.
 - Do not invent metrics or customers. Northern Grind and MOH (Ministry of Health) are real but
   not yet on the site — add them only via the gated subphase 6.11 with real source material,
   never fabricated from the brief's placeholder copy.
+  > **Status update (Track C, current):** Both are now on the site (Northern Grind = entry +
+  > deep dive; MOH = entry only). The "not yet on the site" clause is historical; the
+  > do-not-invent guardrail remains fully in force for all future edits.
 - Do not overstate CSM relevance; CS is an evidence layer, not the identity.
 - Name is **Kyle Semple**; title is **Forward Deployed Engineer**; never "Kyle Genesis," never
   "Solutions Architect" as the lead title.
@@ -579,3 +601,29 @@ Governance` pointed at `project-aegis`, which is **not** a listed Library entry 
 - **Acceptance:** coherent unifying deep dive; real anchor ids resolve; no invented metrics; full
   validation + crawler green; design-system rules honored.
 - **Commit:** `feat: subphase 7.9 — automation & governance deep dive`
+
+---
+
+## 10. Decision-Evidence Workstream (Tracks A–F)
+
+> **Separate from the Phase/subphase history above.** This is a distinct, lettered workstream —
+> it does **not** renumber or supersede Phases 6–7. The Northern Grind corrections exposed a
+> template gap: entries standardized broad value framing but did not consistently surface the
+> decision-evidence layer. The authoring standard now lives in `CLAUDE.md` → "Authoring
+> Standards — Decision-Evidence Layer" (summarized in `AGENTS.md`).
+
+Run one track at a time under the Sequential Execution Protocol; do not pre-build later tracks.
+
+| Track | Scope                                                                 | Status       |
+| ----- | --------------------------------------------------------------------- | ------------ |
+| **A** | Correct the **Northern Grind project entry** (tooling + evidence)     | ✅ Done      |
+| **B** | Correct the **Northern Grind deep dive** (align with the entry)       | ✅ Done      |
+| **C** | **Template & governance update** — define the decision-evidence layer | ◀ This track |
+| **D** | Apply the decision-evidence layer to **project entries**              | ⏳ Future    |
+| **E** | Apply the decision-evidence layer to **deep dives**                   | ⏳ Future    |
+| **F** | Optional **global positioning cleanup** (FDE vs. systems-translator)  | ⏳ Optional  |
+
+**Track C does not perform D, E, or F.** Applying the new standard to existing entries is
+deliberately deferred so each application is a reviewable, one-track-at-a-time change. Track C is
+documentation only: it must not rewrite project entries, deep dives, homepage copy, footer CTA,
+role taxonomy, or route behavior.
