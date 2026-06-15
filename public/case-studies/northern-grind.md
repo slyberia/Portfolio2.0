@@ -1,7 +1,7 @@
 > **Role:** Brand & Systems Strategist
-> **Outcome:** Reframed a cosmetic rebrand as a system redesign — delivering brand cohesion, high-speed menu UX, and break-even-modeled POS recommendations that reduced operational friction and margin leakage
-> **Stack/Tools:** Adobe Creative Suite, cost modeling, Mermaid diagrams
-> **Relevance:** Systems thinking applied to business operations — shows ability to connect brand, UX, and financial modeling into a single coherent loop rather than treating them as separate deliverables
+> **Outcome:** Reframed a cosmetic rebrand as a connected operating system — pairing a curated brand identity and a scan-first menu interface with break-even-modeled POS/loyalty recommendations, all assembled in handoff-friendly tooling the owner can maintain
+> **Stack/Tools:** Canva, AI-assisted image generation, competitive café menu review, UI/UX layout principles, cost modeling, Mermaid diagrams
+> **Relevance:** Systems thinking applied to business operations — shows ability to connect brand, UX, AI-assisted asset curation, and financial modeling into a single coherent loop rather than treating them as separate deliverables
 
 # ☕ Northern Grind — Digital Rebrand & Systems Strategy
 
@@ -10,22 +10,25 @@
 > **Status:** Rebrand + Operational Audit (Implementation Ready)
 > **Role:** Brand & Systems Strategist
 > **Location:** Ypsilanti, MI
-> **Scope:** Visual Identity, Menu UX, POS & Loyalty Modeling, Channel Economics
-> **Tools:** Adobe Creative Suite, Cost Modeling, Mermaid Diagrams
+> **Scope:** Visual Identity, Menu UX, AI-Assisted Asset Curation, POS & Loyalty Modeling, Channel Economics
+> **Tools:** Canva, AI-Assisted Image Generation, Competitive Café Menu Review, UI/UX Layout Principles, Cost Modeling, Mermaid Diagrams
 
 ---
 
 ## 📋 Executive Summary
 
-This project reframed "rebranding" as a **system redesign**, connecting brand identity, menu hierarchy, and POS logic into a unified operational loop.
+This project reframed a café rebrand as a **connected operating system**, linking brand identity, menu UX, AI-assisted asset curation, and POS logic into a single loop.
 
-The core problem wasn't just aesthetics; it was friction. Fragmented brand assets and a "default" loyalty setup were causing decision fatigue for customers and margin leakage for the business.
+The core problem wasn't just aesthetics; it was friction. Brand and menu surfaces were fragmented across wall, counter, and digital; the menu itself created decision friction at the register; and a "default" loyalty setup raised margin concerns. The work was **designed to reduce** that friction and **intended to improve** how cleanly the system could be run and updated — not to claim measured sales lift.
+
+AI-assisted image generation was used to explore logo and food/drink graphic directions, but every direction was **governed by human curation** before it was carried forward. **Canva** was chosen as a practical production and handoff environment so the owner could maintain the system without a designer or Adobe licensing.
 
 **Primary Value Delivered:**
 
-- **System Cohesion:** Converted scattered assets into a repeatable identity system.
-- **Operational UX:** Designed menu structures specifically for high-speed scanning.
-- **Financial Rigor:** Audited POS options using break-even modeling rather than just feature preference.
+- **System Cohesion:** Converted scattered assets into a repeatable, **implementation-ready** identity system.
+- **Operational UX:** Designed the menu as a customer decision interface, **modeled** for high-speed scanning and price readability.
+- **Governed AI Curation:** Used AI to expand asset options, then **curated** them against café fit, local feel, and derivative-risk control.
+- **Financial Rigor:** Audited POS options using break-even modeling rather than feature preference.
 
 ---
 
@@ -39,7 +42,9 @@ The following diagram illustrates the feedback loop designed to drive higher ret
 
 ## 🎨 Module A: Brand Identity System
 
-The original mark was visually inconsistent and hard to scale, and didn't yet reflect the café's in-store atmosphere. I rebuilt it as a **responsive identity system**, not a single logo.
+The original mark was visually inconsistent and hard to scale, and didn't yet reflect the café's in-store atmosphere. I rebuilt it as a **responsive identity system**, not a single logo — curated for café fit, local feel, legibility, scalability, and cohesion.
+
+AI-assisted image generation was used to **expand** the range of logo and graphic directions quickly. Human curation then decided which directions were actually usable: variants that felt generic, lacked local character, lacked polish, or wouldn't scale cleanly into the menu and signage system were omitted. The goal was a coherent system the café could grow into, not the largest pile of options.
 
 ### Recommendation
 
@@ -56,7 +61,18 @@ The original mark was visually inconsistent and hard to scale, and didn't yet re
 | Gold  | `#D6B25E` | Premium quality          |
 | Green | `#1E6635` | Community, locality      |
 
-Simpler shapes and reduced text tested best with both staff and customers — direction and curation mattered more than the volume of variants explored.
+The palette wasn't selected arbitrarily — it was **derived from colors already present in Northern Grind's existing physical and digital café materials**, so the refreshed identity reads as a continuation of the café rather than a replacement. Simpler shapes and reduced text held up best for both staff and customers across signage and screens; direction and curation mattered more than the volume of variants explored.
+
+### AI-Assisted Asset Pipeline
+
+The brand and graphic assets followed a deliberate, governed workflow rather than ad-hoc generation:
+
+`Existing café context → competitive/reference review → AI-assisted asset generation → Canva assembly → human curation → provenance/risk review → implementation-ready menu/brand system`
+
+- **AI for exploration:** image generation produced a wide set of logo and food/drink graphic directions.
+- **Canva for assembly:** Canva was the handoff-friendly production environment where curated assets were composed into usable layouts.
+- **Human judgment in control:** selection, rejection, layout, and brand fit were decided by a person, not the model.
+- **Provenance awareness:** generated assets were screened for derivative-risk and genericness; the AI tools were treated as a generation aid, **not** a legal authority. The deeper provenance and fair-use reasoning is expanded in the Northern Grind deep dive.
 
 ---
 
@@ -121,15 +137,17 @@ Rather than one flat tier, I scoped three margin-aware models to pilot — then 
 
 ## 🍽️ Module C: Menu Redesign (Operational UX)
 
-The menu system was fragmented across multiple surfaces (wall, counter, digital), leading to slow line speeds and "What's in this?" questions.
+The menu system was fragmented across multiple surfaces (wall, counter, digital), leading to slow line speeds and "What's in this?" questions. I treated the menu as a **customer decision interface** — its job is to help someone scan categories, compare options, see prices, and decide whether to order or ask a question.
 
 ### Implementation Strategy
 
-We rebuilt the menu hierarchy around **Customer Scan Behavior** rather than product categories.
+The menu was **assembled in Canva**. A Canva template provided a production base — a starting structure, not the full design logic. Menus from competing local coffee shops were reviewed for structure and inspiration, AI-generated logo and food/drink graphics were curated into the layout, and **UI/UX principles** guided the rest: font choice, font sizing, spacing, category arrangement, price readability, and overall hierarchy.
 
-- **Screen 1 (The Anchor):** Core Drinks. Large type, high contrast.
-- **Screen 2 (The Upsell):** Food + Specialties. High-margin items placed in "Wait Zones."
-- **Screen 3 (The Hook):** Seasonal Promos. Rotates monthly to drive urgency.
+Rather than speculative "screens," the layout is organized around how customers actually read a café board — grouped so the common path is fast and prices stay legible:
+
+- **Drinks:** the core coffee and espresso lineup, set in the largest, highest-contrast type as the primary anchor.
+- **Specialties & Tea:** specialty drinks and tea, arranged so higher-margin and signature items are easy to notice without crowding the basics.
+- **Food & Sandwiches:** food and sandwich options grouped as a clear secondary decision, with prices aligned for quick comparison.
 
 ---
 
@@ -168,15 +186,25 @@ Because this is a strategy proposal, success is defined by projected operational
 
 ## ⚖️ Trade-offs (Strategic Decision Log)
 
-### Trade-off 1: Flexibility vs. Cost Certainty (POS)
+### Trade-off 1: Canva Handoff vs. Adobe Polish
 
-- **Decision:** Recommended Square over Custom Stripe implementation.
-- **Why:** Sacrificed lower transaction fees (Stripe) for lower technical debt (Square). The client needed a system they could manage without an engineer.
+- **Decision:** Produced the brand and menu system in **Canva** rather than Adobe Creative Suite.
+- **Why:** Sacrificed some peak design control for maintainability. The owner needed a system they could update and hand off without Adobe licensing or a designer on call for every edit.
 
-### Trade-off 2: Clarity vs. "Premium Density" (Menu)
+### Trade-off 2: Menu Clarity vs. Decorative Density
 
-- **Decision:** Removed 30% of text descriptions from the main boards.
-- **Why:** Sacrificed descriptive romance copy for speed. Speed is the primary driver of customer satisfaction during morning rush hours.
+- **Decision:** Prioritized hierarchy, font size, spacing, and price readability over dense descriptive copy and decoration.
+- **Why:** Café menus need warmth, but too much decoration slows scanning and buries prices. Scan speed and legible pricing won during the morning rush.
+
+### Trade-off 3: Local Café Fit vs. Generic AI Polish
+
+- **Decision:** Curated AI-generated logo, color, and food/drink directions against the café's existing materials and local feel.
+- **Why:** AI assets can look polished while feeling generic. Directions that didn't fit Northern Grind's identity, local character, or scale requirements were rejected even when they looked clean.
+
+### Trade-off 4: AI Asset Speed vs. Provenance / Risk Control
+
+- **Decision:** Filtered generated assets for genericness, derivative-risk, and menu/brand compatibility before use.
+- **Why:** AI generation produces many options fast, but not all of them are safe or appropriate to carry forward. Human review — not the model — controlled what reached the production layout.
 
 ---
 

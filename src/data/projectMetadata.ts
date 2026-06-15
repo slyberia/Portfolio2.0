@@ -228,7 +228,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     id: 'northern-grind',
     displayTitle: 'Northern Grind',
     shortSummary:
-      'A café rebrand and systems plan that ties brand identity, menu experience, and break-even POS/loyalty economics into one coherent operating loop.',
+      'A small-business systems redesign for a café — connecting brand identity, menu UX, AI-assisted asset curation, and break-even POS/loyalty economics into one owner-runnable operating loop.',
     hierarchy: 'supporting',
     statusLabel: 'Implementation Ready',
     roleLanes: ['Implementation'],
@@ -236,9 +236,9 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     filters: ['Implementation', 'Process'],
     proofType: 'Case Study',
     purpose:
-      "Unify a café's brand, menu experience, and POS/loyalty economics into a single operating loop.",
+      "Connect a café's brand identity, menu UX, AI-assisted asset curation, and POS/loyalty economics into a single implementation-ready operating loop.",
     stakeholderValue:
-      'The owner gets a break-even-aware system where brand, menu, and loyalty decisions reinforce each other instead of pulling in different directions.',
+      'The owner gets a break-even-aware system — where brand, menu graphics, and loyalty decisions reinforce each other — assembled in tooling (Canva) they can maintain and hand off without a designer or engineer.',
     accent: 'cyan',
     sortOrder: 8,
     href: buildProjectHref('northern-grind'),

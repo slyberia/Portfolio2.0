@@ -19,7 +19,7 @@ export type GalleryImage = {
   /** Short caption shown under the image. */
   caption: string;
   category: GalleryCategory;
-  /** Optional provenance, e.g. 'AI-generated' or 'AI-assisted + Adobe'. */
+  /** Optional provenance, e.g. 'AI-assisted' or 'AI-assisted + Canva'. */
   tool?: string;
 };
 
