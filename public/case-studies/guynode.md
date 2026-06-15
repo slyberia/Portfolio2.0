@@ -54,12 +54,12 @@ The overhaul reframes Guynode from a hard-to-navigate file repository into a cre
 **How the business is affected**
 
 - **Restored Credibility:** A coherent, modern interface signals that the underlying catalog is maintained and authoritative. First impressions stop working against the data, lowering the barrier for partner agencies to publish through Guynode rather than their own scattered legacy pages.
-- **Audit-Ready IA:** The new Information Architecture supports 100% metadata coverage across all registered datasets, so the catalog can be reviewed, corrected, and expanded without archaeology through unstructured storage.
+- **Audit-Ready IA:** The new Information Architecture is built so every registered dataset carries complete metadata, so the catalog can be reviewed, corrected, and expanded without archaeology through unstructured storage.
 - **Scalable Operations:** A type-safe registry plus automated route/link validation turns onboarding into a repeatable "Readiness Review" instead of bespoke cleanup — new agencies and datasets can be added without re-engineering the platform each time.
 
 **How it benefits consumers and visitors**
 
-- **Faster Time-to-Data:** Clear categories, consistent descriptions, and visible download paths let a visitor go from landing on the site to the exact dataset they need — without decoding a file system or guessing at obscure links.
+- **Designed to Shorten Time-to-Data:** Clear categories, consistent descriptions, and visible download paths are structured to let a visitor go from landing on the site to the exact dataset they need — without decoding a file system or guessing at obscure links.
 - **Trust Before Download:** In-browser map previews and verified provenance let users confirm a layer is the _right_ one, and is correct, _before_ committing it to an analysis — catching mistakes up front instead of after a bad decision is already made.
 - **Inclusive of Non-Technical Users:** Visual previews and plain-language metadata open the catalog to planners, researchers, journalists, and citizens — not just GIS specialists — widening who can actually put Guyana's spatial data to work.
 
