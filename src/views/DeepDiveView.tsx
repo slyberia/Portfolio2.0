@@ -76,6 +76,7 @@ const NG_PHASES = [
   { id: 'ng-3', label: 'POS & Loyalty' },
   { id: 'ng-4', label: 'Channel Economics' },
   { id: 'ng-5', label: 'Digital Marketing' },
+  { id: 'ng-menu', label: 'Menu Experience' },
   { id: 'ng-gallery', label: 'Asset Gallery' },
   { id: 'ng-6', label: 'Impact & Reflection' },
 ] as const;
@@ -516,19 +517,19 @@ const DEEP_DIVE_BRIDGES: Record<
   'northern-grind': {
     label: 'Why this deep dive matters',
     statement:
-      'A cosmetic rebrand reframed as a system redesign — brand, menu, POS, loyalty, and channel economics treated as one operational loop the owner can actually run, not five separate deliverables.',
+      'A cosmetic rebrand reframed as a small-business systems redesign — brand identity, café menu UX, an AI-assisted asset pipeline, POS/loyalty economics, delivery strategy, and social presence treated as one operating model the owner can actually run, not separate deliverables.',
     facets: [
       {
         title: 'Translation',
-        body: "Turns 'make the logo nicer' into a legible operating model: break-even POS math, margin-aware loyalty, and delivery reframed as a measurable acquisition cost.",
+        body: "Turns scattered brand, menu, POS, loyalty, delivery, and social decisions into one legible operating model: break-even POS math, margin-aware loyalty, and delivery reframed as a measurable acquisition cost — not 'make the logo nicer.'",
       },
       {
         title: 'Adoption',
-        body: 'Designed around the people who run it — a responsive mark for any surface, a menu built for scan speed, and a loyalty pilot the POS can actually measure.',
+        body: 'Built to be owner-maintainable — a responsive mark for any surface, a Canva-assembled menu the café can edit without a designer, and a loyalty pilot the POS can actually measure — so a small business can run and update it without an engineer.',
       },
       {
         title: 'Implementation maturity',
-        body: 'Framed honestly as a proposal: every figure is modeled from published rates and industry norms, flagged to be re-grounded against real COGS and the live DoorDash agreement.',
+        body: 'Framed honestly as a proposal: POS, CAC/LTV, DoorDash, and loyalty figures are modeled from published rates and must be re-grounded against real COGS and the live agreement. AI-generated assets are treated with provenance and derivative-risk caution — the tools are exploration and issue-spotting aids, not legal authority.',
       },
     ],
   },
@@ -2803,9 +2804,13 @@ const DeepDiveView: React.FC = () => {
                       2. Brand Identity System
                     </h2>
                     <p className={`${semanticTokens.text.body} max-w-4xl`}>
-                      Six logo variants were explored against palette, symbolism, scalability, and
-                      originality. The lesson held throughout: direction and curation matter more
-                      than volume — simpler shapes and reduced text tested best with both staff and
+                      AI-assisted image generation was used to <em>expand</em> the range of logo and
+                      graphic directions quickly; human judgment then decided which were usable.
+                      Variants were curated against legibility, café fit, local feel, cohesion, and
+                      scalability — directions that felt generic, missed the local character, lacked
+                      polish, or wouldn't scale cleanly into the menu and signage system were
+                      omitted. The lesson held throughout: direction and curation matter more than
+                      volume — simpler shapes and reduced text tested best with both staff and
                       customers.
                     </p>
                   </div>
@@ -2860,11 +2865,82 @@ const DeepDiveView: React.FC = () => {
                     ))}
                   </div>
                   <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-4xl">
+                    The palette wasn't picked for aesthetics alone. It was{' '}
+                    <strong className="text-slate-950 dark:text-white">
+                      derived from colors already present in Northern Grind's existing physical and
+                      digital materials
+                    </strong>{' '}
+                    — observed café identity cues refined into a controlled brand system, so the
+                    refresh reads as a continuation of the café and stays cohesive across logos,
+                    menus, food/drink graphics, and supporting assets.
+                  </p>
+                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-4xl">
                     <strong className="text-slate-950 dark:text-white">Recommendation:</strong>{' '}
                     Brown + Gold as the primary mark, EMU Green as the local secondary, delivered as
                     a responsive system (full badge → simplified icon → one-color) so the identity
                     holds from storefront signage down to a favicon.
                   </p>
+
+                  {/* AI-assisted asset pipeline */}
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-[#0B0F19] space-y-4">
+                    <h3 className="text-lg font-bold text-slate-950 dark:text-white">
+                      The AI-Assisted Asset Pipeline
+                    </h3>
+                    <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-4xl">
+                      Brand and graphic assets followed a deliberate, governed workflow rather than
+                      ad-hoc generation. AI accelerated exploration; a person held authority over
+                      everything that shipped.
+                    </p>
+                    <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
+                      {[
+                        'Existing café context',
+                        'Competitive / reference review',
+                        'AI-assisted generation',
+                        'Canva assembly',
+                        'Human curation',
+                        'Provenance / risk review',
+                        'Implementation-ready system',
+                      ].map((step, i, arr) => (
+                        <React.Fragment key={step}>
+                          <span className="rounded-lg border border-amber-500/25 bg-amber-500/10 px-2.5 py-1 text-amber-700 dark:text-amber-300">
+                            {step}
+                          </span>
+                          {i < arr.length - 1 && (
+                            <span className="text-slate-400 dark:text-slate-600">→</span>
+                          )}
+                        </React.Fragment>
+                      ))}
+                    </div>
+                    <ul className="grid gap-2 text-sm text-slate-600 dark:text-slate-300 sm:grid-cols-2">
+                      <li>
+                        <strong className="text-slate-950 dark:text-white">
+                          AI for exploration:
+                        </strong>{' '}
+                        image generation produced a wide set of logo and food/drink directions.
+                      </li>
+                      <li>
+                        <strong className="text-slate-950 dark:text-white">
+                          Canva for assembly:
+                        </strong>{' '}
+                        a handoff-friendly production layer where curated assets became usable
+                        layouts the owner can maintain.
+                      </li>
+                      <li>
+                        <strong className="text-slate-950 dark:text-white">
+                          Human in control:
+                        </strong>{' '}
+                        selection, rejection, layout, and brand fit were decided by a person, not
+                        the model.
+                      </li>
+                      <li>
+                        <strong className="text-slate-950 dark:text-white">
+                          Provenance aware:
+                        </strong>{' '}
+                        assets were screened for derivative-risk and genericness — the tools were a
+                        generation aid, not legal authority.
+                      </li>
+                    </ul>
+                  </div>
                 </section>
 
                 {/* Section 3: POS & Loyalty */}
@@ -3103,6 +3179,72 @@ const DeepDiveView: React.FC = () => {
                   </p>
                 </section>
 
+                {/* Menu Experience */}
+                <section id="ng-menu" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      Menu Experience — Customer Decision Interface
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      The café menu boards were treated as a{' '}
+                      <strong className="text-slate-950 dark:text-white">
+                        customer decision interface
+                      </strong>
+                      , not decoration. Their job is to let someone scan categories, see prices,
+                      compare options, and decide whether to order or ask — structured to reduce
+                      friction at the counter and the need for "what's in this?" clarification
+                      questions.
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-6 space-y-3 dark:border-amber-500/20">
+                      <h3 className="font-bold text-lg text-slate-950 dark:text-white">
+                        What the layout supports
+                      </h3>
+                      <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                        <li>• Quick scanning of clearly grouped categories</li>
+                        <li>• Visible, aligned pricing for fast comparison</li>
+                        <li>• Hierarchy, font size, and spacing that guide the eye</li>
+                        <li>• A path to decide or ask, with fewer register questions</li>
+                        <li>• Compatibility with the wider brand system</li>
+                      </ul>
+                    </div>
+                    <div className="rounded-2xl border border-slate-200 bg-white p-6 space-y-3 dark:border-slate-800 dark:bg-[#0B0F19]">
+                      <h3 className="font-bold text-lg text-slate-950 dark:text-white">
+                        How it was assembled
+                      </h3>
+                      <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                        <li>
+                          • <strong className="text-slate-950 dark:text-white">Canva</strong> as the
+                          production/assembly layer the owner can maintain
+                        </li>
+                        <li>
+                          • A Canva template as a starting production base — not the full design
+                          logic
+                        </li>
+                        <li>• Competing local café menus reviewed for structure and reference</li>
+                        <li>• AI-generated food/drink and logo graphics curated into the layout</li>
+                        <li>
+                          • UI/UX principles guiding font choice, sizing, spacing, hierarchy,
+                          category arrangement, and price readability
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
+                    <p className="text-sm font-bold text-slate-950 dark:text-white">
+                      Why generated variants were cut
+                    </p>
+                    <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-4xl">
+                      The value wasn't "AI produced images" — it was governed selection. Directions
+                      were omitted when they felt too generic, missed the café's local feel, lacked
+                      polish, didn't fit the visual identity, raised provenance or derivative-risk
+                      concerns, hurt menu-board legibility, or wouldn't scale cleanly into the menu
+                      system.
+                    </p>
+                  </div>
+                </section>
+
                 {/* Asset Gallery */}
                 <section id="ng-gallery" className="space-y-6 scroll-mt-24">
                   <div className="space-y-2">
@@ -3113,6 +3255,18 @@ const DeepDiveView: React.FC = () => {
                       Selected logo, menu, and social mockups produced for the rebrand — AI used for
                       generation and ideation, with manual curation and refinement. Direction and
                       taste did the deciding; the tools accelerated the exploration.
+                    </p>
+                    <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-4xl">
+                      Each asset carries a provenance label so origin stays honest —{' '}
+                      <strong className="text-slate-950 dark:text-white">Existing asset</strong>{' '}
+                      (the café's own materials),{' '}
+                      <strong className="text-slate-950 dark:text-white">Reference photo</strong>{' '}
+                      (used to understand business reality, menu structure, and local context), and{' '}
+                      <strong className="text-slate-950 dark:text-white">AI-assisted</strong>{' '}
+                      (generated, then curated). Provenance and derivative-risk were considered
+                      throughout; this process surfaced risk factors to inform human judgment — it
+                      did not clear assets for use or determine fair use, and formal counsel is the
+                      right step before at-scale commercial use.
                     </p>
                   </div>
                   <BrandGallery />
