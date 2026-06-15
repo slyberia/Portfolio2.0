@@ -28,7 +28,7 @@ The two layers are fully decoupled and communicate asynchronously through a **pr
 
 The system was built in two iterations, and that progression is the point.
 
-**Iteration 1 — Human-in-the-loop (built & tested).** The Guardian seat was filled by a human. emOS executed a ticket, and the execution log was reviewed against the Aegis ruleset in Notion before being approved or rejected. This iteration proved the protocol worked and was trustworthy.
+**Iteration 1 — Human-in-the-loop (built & tested).** The Guardian seat was filled by a human. emOS executed a ticket, and the execution log was reviewed against the Aegis ruleset in Notion before being approved or rejected. This iteration demonstrated the protocol held in a human-in-the-loop pass — auditability preserved through human review before approval or rejection.
 
 **Iteration 2 — Autonomous (developed).** Once the protocol was trusted, the system was expanded so the **Aegis engine itself** fills the Guardian seat — evaluating the execution log automatically and resolving the ticket without a human. This iteration was developed as the next step toward a fully containerized executable, which was the planned future iteration.
 
