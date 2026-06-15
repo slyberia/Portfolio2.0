@@ -812,7 +812,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                             title={titleText}
                             aria-pressed={isActive}
                             aria-controls="skills-inspector"
-                            className={`h-8 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md border transition-colors active:scale-[0.99] focus:outline-none focus-visible:ring-2 ${getCategoryColorClass(group.category)} ${isActive ? 'border-tide-aqua dark:border-tide-sky ring-1 ring-tide-aqua/60 dark:ring-tide-sky/50' : ''}`}
+                            className={`inline-flex items-center gap-1.5 whitespace-nowrap max-w-full px-3 py-1.5 text-xs font-medium rounded-md border transition-colors active:scale-[0.99] focus:outline-none focus-visible:ring-2 ${getCategoryColorClass(group.category)} ${isActive ? 'border-tide-aqua dark:border-tide-sky ring-1 ring-tide-aqua/60 dark:ring-tide-sky/50' : ''}`}
                           >
                             {/* Fixed-width slot keeps chip width identical active/inactive (no reflow) */}
                             <span
@@ -824,7 +824,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                             <span className="sr-only">
                               {isActive ? 'Active skill:' : 'Activate skill:'}
                             </span>
-                            <span>{skill.name}</span>
+                            <span className="truncate">{skill.name}</span>
                           </button>
                         );
                       })}
