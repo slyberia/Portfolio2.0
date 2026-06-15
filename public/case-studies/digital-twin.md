@@ -47,7 +47,7 @@ It is a study in the same principle: a narrow purpose, a strict output schema, a
 
 ## 📊 Impact & Results
 
-- **Zero-Hallucination Scope:** System instructions force the model to refuse off-topic prompts, ensuring 100% focus on portfolio evidence.
+- **Scoped Retrieval Guardrails:** Scope guardrails are designed to keep answers grounded in portfolio evidence — the system refuses or redirects off-topic prompts, reducing hallucination risk through scoped retrieval and clear handoff boundaries.
 - **Escalation Path:** Integrated a **Human Handoff** flow that captures the conversation state and routes it to a contact form if the AI cannot resolve the query.
 - **Cost Governance:** Implemented rate-limiting and token-caps to ensure the system remains sustainable for public use.
 

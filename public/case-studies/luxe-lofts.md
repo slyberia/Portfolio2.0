@@ -81,7 +81,7 @@ The architecture was redesigned to ensure all roads lead to a unified conversion
 
 ## 🗓️ Short- & Long-Term Roadmap
 
-| Time Frame      | Deliverable                     | Business Impact                           |
+| Time Frame      | Deliverable                     | Projected Impact (if implemented)         |
 | :-------------- | :------------------------------ | :---------------------------------------- |
 | **0–3 Months**  | Launch hub + unify socials      | Strong first impression, faster bookings  |
 | **3–6 Months**  | Automate FAQs + Review funnel   | Reduced admin time, improved social proof |
