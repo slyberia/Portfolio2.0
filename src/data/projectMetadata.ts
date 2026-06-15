@@ -91,9 +91,9 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     filters: ['GIS', 'Implementation', 'QA', 'Process'],
     proofType: 'System',
     purpose:
-      'Make a large, fragmented spatial dataset trustworthy enough to publish and query without manual cleanup first.',
+      'Make a large, fragmented spatial dataset trustworthy enough to publish and query — governed for metadata completeness and public discoverability — without manual cleanup first.',
     stakeholderValue:
-      'Analysts and public users get governed, metadata-complete layers they can rely on — integrity checks happen upstream, not in every downstream decision.',
+      'Analysts and public users get governed, metadata-complete layers they can rely on — geospatial data governance and public-facing information architecture put integrity checks upstream, not in every downstream decision.',
     accent: 'gold',
     sortOrder: 1,
     href: buildProjectHref('guynode'),
@@ -122,9 +122,9 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     filters: ['Implementation', 'QA', 'AI Systems', 'Process'],
     proofType: 'System',
     purpose:
-      'Let recruiters and visitors interrogate the portfolio conversationally without the assistant overstepping its scope.',
+      'Let recruiters and visitors interrogate the portfolio conversationally — prioritizing scope safety and grounded answers over open-ended coverage — without the assistant overstepping its scope.',
     stakeholderValue:
-      "Visitors get fast, grounded answers about Kyle's work; guardrails keep responses scoped and hand off to a human when a question runs past them.",
+      "Visitors get fast, grounded answers about Kyle's work; scoped retrieval and clear handoff boundaries keep responses on-evidence and route to a human when a question runs past them — scoped-AI implementation with governance built in.",
     accent: 'aqua',
     sortOrder: 2,
     href: buildProjectHref('digital-twin'),
@@ -147,9 +147,9 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     filters: ['Implementation', 'QA', 'GIS', 'Process'],
     proofType: 'Workflow',
     purpose:
-      'Keep a high-volume operations queue moving without losing escalation rigor under pressure.',
+      'Keep a high-volume operations queue moving — balancing throughput against QA precision — without losing escalation rigor under pressure.',
     stakeholderValue:
-      'Support leads and downstream teams get predictable triage, clear escalation paths, and an audit trail they can actually review.',
+      'Support leads and downstream teams get predictable triage, clear escalation paths, and an audit trail they can actually review — operational systems and QA-workflow design that holds quality under production pressure.',
     accent: 'blue',
     sortOrder: 3,
     href: buildProjectHref('ops-triage'),
@@ -192,7 +192,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     filters: ['AI Systems', 'Process', 'Implementation'],
     proofType: 'System / Process',
     purpose:
-      'Prove AI-assisted development can reach production-grade reliability when it stays under human design authority, automated CI gates, and a transparent attribution ledger.',
+      'Demonstrate AI-assisted development can reach production-grade reliability when it stays under human design authority, automated CI gates, and a transparent attribution ledger.',
     stakeholderValue:
       'A reviewer can trust what shipped: every change clears the same CI gate, semantic drift-guards block silent regressions, and AI_ATTRIBUTION.md demarcates human direction from AI execution.',
     accent: 'aqua',
