@@ -25,9 +25,10 @@ Messaging guardrails:
   `ops-triage`, `guynode`, `digital-twin`, `project-aegis` (Automation & Operational Protocols —
   Aegis/emOS, published in 7.7b), `portfolio-pipeline` (Portfolio 2.0 — Governed AI Build Pipeline,
   published in 7.8), `northern-grind`, and `moh` (registry). `prompter-hub` and `nba-systems-qa`
-  were retired in 7.7a. **Northern Grind** and **MOH (Ministry of Health)** are real
-  projects not yet implemented on the site — add them only via the gated subphase 6.11 in
-  `docs/positioning-refactor-plan.md`, using Kyle-provided source material, never fabricated copy.
+  were retired in 7.7a. **Northern Grind** is now implemented as a public project entry and deep
+  dive; **MOH (Ministry of Health)** is now implemented as a public project entry (no deep dive
+  yet). Future edits to either must use **Kyle-provided source material** and never fabricate
+  metrics, customers, or outcomes.
 
 The active positioning workstream is **Phase 6 — Positioning Refactor**, documented in
 `docs/positioning-refactor-plan.md`. See also `AGENTS.md` for the cross-tool summary.
@@ -117,6 +118,81 @@ These rules are non-negotiable. Violating them will result in a failed review.
 3. Distinctly human — signal a real person with taste, not a template
 4. Confident restraint — hierarchy through space and weight, not effects
 5. One clear step ahead — feel designed by someone who knows what's coming
+
+## Authoring Standards — Decision-Evidence Layer
+
+Every project entry and deep dive keeps the existing **stakeholder-value frame** (Purpose ·
+Stakeholder/Customer Value · Role Relevance · Proof Type · Role/Outcome/Stack/Relevance ·
+Overview/Executive Summary · Challenge/Implementation/Impact · Constraints & Trade-offs ·
+Customer/Stakeholder Value). On top of that, each entry must also make a **decision-evidence
+layer** visible so strong work reads as a hiring argument, not a list of outputs. This layer is
+additive and must stay skimmable — no bloated prose.
+
+**The spine (make these legible, not necessarily as literal headings):**
+
+```md
+Context → Decision Criteria → Trade-off → Evidence → Capability Signal
+```
+
+- **Context** — the messy business/technical/operational/stakeholder problem that existed.
+- **Decision Criteria** — the variables that governed the choice (e.g. legibility, scalability,
+  maintainability, adoption, risk, cost, quality, local fit, implementation burden).
+- **Trade-off** — what was gained and what was sacrificed.
+- **Evidence** — the artifact, model, reference input, test, audit, dataset, or workflow that
+  supports the decision.
+- **Capability Signal** — what a recruiter/client should recognize (e.g. implementation
+  judgment, systems translation, UX reasoning, governance discipline, stakeholder adoption,
+  operational rigor).
+
+### Project-library cards (compact)
+
+Card metadata stays compact but must compress the decision-evidence layer into first-read
+clarity. For `shortSummary`, `purpose`, `stakeholderValue`, `proofType`, and
+`canonicalRoleLanes`, the card should answer, at a glance:
+
+- What problem was solved? · Who benefited? · What got easier? · What proof type is this? ·
+  What capability should the reader recognize?
+
+Keep copy **capability-first**; do not job-title-stuff. Role lanes may remain, but they are
+metadata, not the headline.
+
+### Case-study bodies
+
+Each case-study body includes **at least one explicit decision-evidence moment** — a "Decision
+Rationale" subsection, a "Trade-offs" section, a concise evidence block, a before/after
+comparison, an artifact explanation, or a criteria-based selection note.
+
+> **Do not claim unmeasured outcomes.** Use careful language — "designed to reduce", "intended
+> to improve", "modeled", "implementation-ready", "supports". Avoid "increased revenue",
+> "reduced line time", "improved conversion", "proved adoption" unless real measured evidence
+> exists.
+
+### Deep dives
+
+Preserve the bespoke `DeepDiveBridge` pattern — **Translation · Adoption · Implementation
+maturity**. The middle of a deep dive may stay bespoke, but the entry must still make decisions
+and evidence visible:
+
+- What was opaque/complex, and how was it translated into a model, workflow, artifact, or
+  recommendation?
+- What adoption constraint shaped the design?
+- What implementation-maturity boundary is explicit (modeled · prototype-only · validated ·
+  production-ready)?
+
+### AI-assisted work
+
+When AI is used in any entry or deep dive, the write-up must distinguish: **human direction**,
+**AI-assisted generation/drafting/exploration**, **reference/source inputs**, **human
+curation/validation**, **provenance/risk boundaries**, and **what was production-ready vs.
+prototype/model-only**. Never present AI as final legal, strategic, or technical authority.
+
+- **Creative/asset work:** include provenance and derivative-risk caution when relevant.
+- **Code/system work:** include validation, testing, CI, review, or handoff boundaries when
+  relevant.
+
+> Applying this layer to existing entries is **future, separate work** — see the
+> Decision-Evidence Workstream (Tracks A–F) in `docs/positioning-refactor-plan.md`. Do not
+> retrofit existing entries under this guidance task.
 
 ## Formatting
 

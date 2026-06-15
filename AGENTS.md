@@ -23,13 +23,32 @@ detailed in `docs/positioning-refactor-plan.md`.
 - **Do not invent** metrics or customers. On-site inventory: `luxe-lofts`, `ops-triage`,
   `guynode`, `digital-twin`, `project-aegis` (Automation & Operational Protocols — Aegis/emOS,
   published in 7.7b), `portfolio-pipeline` (Portfolio 2.0 — Governed AI Build Pipeline, 7.8),
-  `northern-grind`, `moh` (registry). `prompter-hub` and `nba-systems-qa` were retired in 7.7a. **Northern Grind** and **MOH (Ministry of Health)** are real projects not yet
-  on the site — add them only via the gated subphase 6.11, with Kyle-provided source material.
+  `northern-grind`, `moh` (registry). `prompter-hub` and `nba-systems-qa` were retired in 7.7a.
+  **Northern Grind** is now implemented as a public project entry and deep dive; **MOH (Ministry
+  of Health)** is now implemented as a public project entry (no deep dive yet). Future edits to
+  either must use Kyle-provided source material and never fabricate metrics, customers, or
+  outcomes.
 - **Design system is non-negotiable** (see `CLAUDE.md`): no glassmorphism, solid 1px borders,
   the documented light/dark contrast tiers. No generic SaaS-template aesthetics.
 - **Preserve routes.** Repurpose role-track pages; never break links without redirects and
   reference updates.
 - **No "launch-ready" claims** unless the full validation suite passes.
+
+## Authoring standard (decision-evidence layer)
+
+Project entries and deep dives keep the stakeholder-value frame **and** make a decision-evidence
+layer visible: `Context → Decision Criteria → Trade-off → Evidence → Capability Signal`. Cards
+compress this into first-read clarity (capability-first, no job-title stuffing); case-study
+bodies carry at least one explicit decision-rationale/trade-off/evidence moment; deep dives pair
+the Translation/Adoption/Implementation-maturity bridge with visible decisions and maturity
+boundaries. **Full spec and templates live in `CLAUDE.md` → "Authoring Standards —
+Decision-Evidence Layer."** Do not duplicate it here.
+
+When AI is used in a write-up, distinguish human direction, AI-assisted generation, reference
+inputs, human curation/validation, provenance/risk boundaries, and production-ready vs.
+prototype/model-only. Never present AI as final legal, strategic, or technical authority; add
+provenance/derivative-risk caution for asset work and validation/CI/review boundaries for
+code/system work.
 
 ## Execution protocol
 
