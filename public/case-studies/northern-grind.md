@@ -210,7 +210,7 @@ Because this is a strategy proposal, success is defined by projected operational
 
 ## 🤝 Customer / Stakeholder Value
 
-**Who it helps:** The café owner deciding where to invest, and the customers moving through a faster, clearer ordering experience.
+**Who it helps:** The café owner deciding where to invest, and the customers moving through an ordering experience designed to be clearer and quicker to navigate.
 
 **What got easier:** Brand, menu, and POS/loyalty decisions stop being separate one-off choices — they're presented as one operational loop, with POS options weighed on break-even economics rather than feature lists, so the owner can choose with cost certainty.
 
