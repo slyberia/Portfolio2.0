@@ -152,8 +152,13 @@ const routes = [
     'Deep Dives — Process, Governance & Strategy',
     'Overview of the portfolio deep dives: the automation & governance architecture, the Luxe Lofts restructuring strategy, and the Northern Grind business-systems redesign.',
     'Portfolio Deep Dives',
-    'Index of the long-form deep dives — automation & governance architecture (build pipeline + Aegis/emOS), the Luxe Lofts digital restructuring strategy, and the Northern Grind business-systems redesign. Each opens as a tab under /deep-dives.',
-    ['/deep-dives?tab=process', '/deep-dives?tab=luxe-lofts', '/deep-dives?tab=northern-grind'],
+    'Index of the long-form deep dives — automation & governance architecture (build pipeline + Aegis/emOS), the Luxe Lofts digital restructuring strategy, the Northern Grind business-systems redesign, and the public health GIS workflow support engagement. Each opens as a tab under /deep-dives.',
+    [
+      '/deep-dives?tab=process',
+      '/deep-dives?tab=luxe-lofts',
+      '/deep-dives?tab=northern-grind',
+      '/deep-dives?tab=moh',
+    ],
     '/markdown/process.md',
   ],
   [
@@ -180,6 +185,14 @@ const routes = [
     'Northern Grind Business Systems',
     'Deep dive into Northern Grind as a small-business systems redesign: brand identity, a Canva-assembled menu treated as a customer decision interface, an AI-assisted asset pipeline under human curation, and modeled POS/loyalty/channel economics — framed honestly as a proposal.',
     ['/projects/northern-grind', '/deep-dives'],
+  ],
+  [
+    '/deep-dives?tab=moh',
+    'Deep Dive: Public Health GIS Workflow Support',
+    'The reasoning behind a national Ministry of Health contact-tracing engagement — workflow translation across intake, GIS layers, dashboards, and reporting, tool-fit evaluation, and adoption support. Sanitized; no country named, no metrics.',
+    'Public Health GIS Workflow Support',
+    'Sanitized, advisory-framed deep dive into a national Ministry of Health contact-tracing GIS engagement: translating intake → GIS layers → dashboards → reporting into a legible workflow, evaluating tool fit (including a deliberate low-code pivot), and supporting adoption through plain-language documentation — framed as workflow support, not sole full-system ownership.',
+    ['/projects/moh', '/deep-dives'],
   ],
   [
     '/resume',

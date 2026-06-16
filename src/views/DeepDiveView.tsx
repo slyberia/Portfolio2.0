@@ -11,11 +11,13 @@ import ScrollToTopButton from '../components/ScrollToTopButton';
 import ErrorBoundary from '../components/ErrorBoundary';
 import CostBreakEvenChart from '../components/northern-grind/CostBreakEvenChart';
 import BrandGallery from '../components/northern-grind/BrandGallery';
+import { HtmlPreviewCard } from '../components/CaseStudyComponents';
 import { componentRecipes, semanticTokens } from '../lib/design-system';
 import { automationSystems, automationThesis, governancePrimitives } from '../data/deepDiveContent';
+import { MOH_SUPERVISOR_DASHBOARD_HTML } from '../data/mohSupervisorDashboard';
 import type { Visibility } from '../types';
 
-type MainTab = 'landing' | 'process' | 'luxe-lofts' | 'northern-grind';
+type MainTab = 'landing' | 'process' | 'luxe-lofts' | 'northern-grind' | 'moh';
 
 // `?tab=automation` is an alias for the umbrella governance tab so existing
 // links and the original deep-dive brief keep resolving after the Option C
@@ -26,7 +28,8 @@ const resolveTabParam = (param: string | null): MainTab | null => {
     param === 'landing' ||
     param === 'process' ||
     param === 'luxe-lofts' ||
-    param === 'northern-grind'
+    param === 'northern-grind' ||
+    param === 'moh'
   )
     return param;
   if (param && param in TAB_ALIASES) return TAB_ALIASES[param];
@@ -60,6 +63,12 @@ const DEEP_DIVE_TABS: {
     id: 'northern-grind',
     label: 'Northern Grind Business Systems',
     activeBorder: 'border-amber-500',
+    visibility: 'public',
+  },
+  {
+    id: 'moh',
+    label: 'Public Health GIS Workflow Support',
+    activeBorder: 'border-sky-500',
     visibility: 'public',
   },
 ];
@@ -216,6 +225,128 @@ const NG_BEFORE_AFTER = [
     before: 'Infrequent, off-brand posting',
     after: 'Authentic and engaging',
   },
+];
+
+// ── MOH (Public Health GIS Workflow Support) deep dive data ────────────────
+// Sanitized, advisory-framed deep dive for the `moh` entry. No country is named,
+// no metrics are claimed, and no real records are shown — everything below is
+// reconstructed from the existing project entry, case study, and sanitized
+// artifacts. Frames the work as workflow support, tool-fit judgment, and
+// adoption-oriented documentation rather than sole full-system ownership.
+
+const MOH_PHASES = [
+  { id: 'moh-1', label: 'Strategic Context' },
+  { id: 'moh-2', label: 'Workflow Translation' },
+  { id: 'moh-3', label: 'Tool-Fit Evaluation' },
+  { id: 'moh-4', label: 'Adoption & Documentation' },
+  { id: 'moh-5', label: 'Artifact Gallery' },
+  { id: 'moh-6', label: 'Boundaries & Reflection' },
+] as const;
+
+// The intake → GIS → dashboard → report reasoning chain, mirrored from the
+// sanitized System Explorer on the project entry.
+const MOH_WORKFLOW = [
+  {
+    stage: 'Intake / survey data',
+    body: 'Standardized Survey123 forms capture contact-tracing information the same way every time, so records enter the system structured rather than as free-form notes.',
+    legibility: 'A guided form non-technical staff can fill without GIS or database knowledge.',
+  },
+  {
+    stage: 'GIS layers / spatial records',
+    body: 'Submissions become governed feature layers in ArcGIS Enterprise / ArcGIS Online — one spatial system of record that relates people, places, and follow-up state.',
+    legibility:
+      'One trusted source of truth instead of scattered spreadsheets and conflicting copies.',
+  },
+  {
+    stage: 'Dashboard views',
+    body: 'Records become role-specific dashboards and maps that surface operational status at a glance, scoped so they inform supervisors rather than overwhelm them.',
+    legibility: 'A clear operational picture for users who do not have GIS skills.',
+  },
+  {
+    stage: 'Reporting / supervisor review',
+    body: 'Role-appropriate reporting and portal views let stakeholders read status, validate records, and identify follow-up without touching raw GIS tooling.',
+    legibility: 'Each audience sees only what is relevant, with little training overhead.',
+  },
+];
+
+// Sanitized tool-fit matrix, mirrored from the case study's implementation audit
+// matrix — the low-code pivot is carried as decision evidence, not failed adoption.
+const MOH_TOOL_FIT = [
+  {
+    tool: 'ArcGIS Enterprise',
+    strength: 'Secure GIS infrastructure',
+    constraint: 'Requires technical administration',
+    call: 'Use as the GIS backbone',
+  },
+  {
+    tool: 'Survey123',
+    strength: 'Structured form intake',
+    constraint: 'Styling / customization limits',
+    call: 'Use for standardized data capture',
+  },
+  {
+    tool: 'Dashboards',
+    strength: 'Operational visibility',
+    constraint: 'Can overwhelm users if overloaded',
+    call: 'Prioritize role-specific views',
+  },
+  {
+    tool: 'Low-code layer',
+    strength: 'Flexible interface option',
+    constraint: 'Client aversion and operational-fit concerns',
+    call: 'Pivot away',
+  },
+  {
+    tool: 'AI tools',
+    strength: 'Speeds troubleshooting and documentation',
+    constraint: 'Require strong prompting and review',
+    call: 'Use as guided support, not source of truth',
+  },
+];
+
+// Decision criteria that governed the work — the variables a reviewer should see.
+const MOH_CRITERIA = [
+  {
+    name: 'Staff adoptability',
+    body: 'Tools and views had to work for users without deep GIS, database, or software-development experience.',
+  },
+  {
+    name: 'Privacy / sanitization',
+    body: 'Public-health sensitivity meant sanitized, reconstructed artifacts — never real screenshots, patient data, or operational records.',
+  },
+  {
+    name: 'Workflow legibility',
+    body: 'Intake, GIS, dashboards, and reporting had to read as one connected workflow, not a pile of separate tools.',
+  },
+  {
+    name: 'Dashboard interpretability',
+    body: 'Role-specific views so supervisors could read status at a glance instead of being overwhelmed.',
+  },
+  {
+    name: 'Tool fit',
+    body: 'Each platform weighed against operational constraints — including a low-code layer that was deliberately ruled out.',
+  },
+  {
+    name: 'Maintainability & support burden',
+    body: 'Favoured choices a public-sector team could keep running through staff turnover and handoffs.',
+  },
+  {
+    name: 'Implementation burden',
+    body: 'Honest sequencing of what was realistic to stand up given platform limits and client preferences.',
+  },
+  {
+    name: 'Scope honesty',
+    body: 'A contribution-and-advisory framing — never a claim of sole architecture or production deployment.',
+  },
+];
+
+// Explicit boundaries — what is deliberately not claimed.
+const MOH_BOUNDARIES = [
+  'The country is never named — the engagement is described only as a national Ministry of Health.',
+  'No metrics are claimed; outcomes are described qualitatively because no public figures exist.',
+  'Every artifact is sanitized — no real records, screenshots, locations, or patient data are shown.',
+  'The role is GIS workflow support, documentation, and tool-fit advisory — not sole full-system ownership.',
+  'No production-deployment ownership is implied beyond what the project entry already supports.',
 ];
 
 type TimelineRow = {
@@ -473,7 +604,7 @@ type BridgeFacet = { title: string; body: string };
 type DeepDiveBridgeContent = { label: string; statement: string; facets: BridgeFacet[] };
 
 const DEEP_DIVE_BRIDGES: Record<
-  'process' | 'luxe-lofts' | 'northern-grind',
+  'process' | 'luxe-lofts' | 'northern-grind' | 'moh',
   DeepDiveBridgeContent
 > = {
   process: {
@@ -533,24 +664,47 @@ const DEEP_DIVE_BRIDGES: Record<
       },
     ],
   },
+  moh: {
+    label: 'Why this deep dive matters',
+    statement:
+      'A complex public-sector spatial workflow translated into something a non-technical national-health team could understand, evaluate, and adopt — advisory implementation judgment under strict sanitization and partial-ownership constraints.',
+    facets: [
+      {
+        title: 'Translation',
+        body: 'Turns a complex public health GIS workflow into a legible model across intake, GIS layers, dashboards, reporting, and stakeholder-facing documentation — so data movement is something staff can actually follow.',
+      },
+      {
+        title: 'Adoption',
+        body: 'Prioritizes staff usability, plain-language documentation, dashboard interpretation, tool-fit judgment, and sanitized artifacts that non-technical stakeholders can evaluate safely.',
+      },
+      {
+        title: 'Implementation maturity',
+        body: 'Clearly separates advisory support, sanitized artifacts, workflow diagrams, dashboard samples, and tool-fit recommendations from any claim of sole ownership, measured outcomes, or full-system deployment.',
+      },
+    ],
+  },
 };
 
 const DeepDiveBridge: React.FC<{
   bridge: DeepDiveBridgeContent;
-  accent: 'aqua' | 'rose' | 'amber';
+  accent: 'aqua' | 'rose' | 'amber' | 'sky';
 }> = ({ bridge, accent }) => {
   const accentText =
     accent === 'aqua'
       ? 'text-tide-aqua dark:text-tide-sky'
       : accent === 'amber'
         ? 'text-amber-600 dark:text-amber-400'
-        : 'text-rose-600 dark:text-rose-400';
+        : accent === 'sky'
+          ? 'text-sky-600 dark:text-sky-400'
+          : 'text-rose-600 dark:text-rose-400';
   const accentBorder =
     accent === 'aqua'
       ? 'border-tide-aqua'
       : accent === 'amber'
         ? 'border-amber-500'
-        : 'border-rose-500';
+        : accent === 'sky'
+          ? 'border-sky-500'
+          : 'border-rose-500';
   return (
     <section className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] p-6 md:p-8 space-y-5">
       <div className={`border-l-2 ${accentBorder} pl-4 space-y-2`}>
@@ -588,6 +742,7 @@ const DeepDiveView: React.FC = () => {
   const [activeProcessPhase, setActiveProcessPhase] = React.useState<string>('arch-thesis');
   const [activePhase, setActivePhase] = React.useState<string>('phase-1');
   const [activeNgPhase, setActiveNgPhase] = React.useState<string>('ng-1');
+  const [activeMohPhase, setActiveMohPhase] = React.useState<string>('moh-1');
   const [activeDiagTab, setActiveDiagTab] = React.useState<
     'visuals' | 'ux' | 'technical' | 'content'
   >('visuals');
@@ -654,6 +809,23 @@ const DeepDiveView: React.FC = () => {
       { rootMargin: '-20% 0px -60% 0px' },
     );
     NG_PHASES.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, [activeMainTab]);
+
+  React.useEffect(() => {
+    if (activeMainTab !== 'moh') return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveMohPhase(entry.target.id);
+        });
+      },
+      { rootMargin: '-20% 0px -60% 0px' },
+    );
+    MOH_PHASES.forEach(({ id }) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
@@ -842,6 +1014,49 @@ const DeepDiveView: React.FC = () => {
                       </div>
                       <div className="flex items-center gap-2 text-sm font-bold text-amber-600 dark:text-amber-400 group-hover:gap-3 transition-all">
                         <span>Explore Business Systems</span>
+                        <span>→</span>
+                      </div>
+                    </div>
+                  </button>
+
+                  {/* MOH — Public Health GIS Workflow Support Entry Card */}
+                  <button
+                    onClick={() => handleMainTabChange('moh')}
+                    className="text-left group rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] hover:border-sky-500/40 dark:hover:border-sky-500/40 hover:shadow-xl transition-all duration-300 overflow-hidden"
+                  >
+                    <div className="h-2 bg-sky-500" />
+                    <div className="p-8 space-y-5">
+                      <div className="space-y-3">
+                        <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-sky-600 dark:text-sky-400 block">
+                          Public-Sector GIS Workflow
+                        </span>
+                        <h3 className="text-2xl font-outfit font-bold text-slate-950 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">
+                          Public Health GIS Workflow Support
+                        </h3>
+                        <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                          Advisory support for a national Ministry of Health contact-tracing
+                          workflow — translating intake, GIS layers, dashboards, and reporting into
+                          one legible model, evaluating tool fit (including a deliberate low-code
+                          pivot), and documenting it for non-technical staff. Sanitized throughout.
+                        </p>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {[
+                          'Workflow Translation',
+                          'Tool-Fit Evaluation',
+                          'Adoption Support',
+                          'Sanitized Artifacts',
+                        ].map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="flex items-center gap-2 text-sm font-bold text-sky-600 dark:text-sky-400 group-hover:gap-3 transition-all">
+                        <span>Explore GIS Workflow Support</span>
                         <span>→</span>
                       </div>
                     </div>
@@ -3322,6 +3537,422 @@ const DeepDiveView: React.FC = () => {
                       className="hover:underline flex items-center gap-1"
                     >
                       ← Back to Northern Grind Case Study
+                    </Link>
+                    <Link to={PROJECTS_HREF} className="hover:underline">
+                      View Projects Library
+                    </Link>
+                  </div>
+                </section>
+              </div>
+            </div>
+          )}
+
+          {/* ── MOH (Public Health GIS Workflow Support) Tab ── */}
+          {activeMainTab === 'moh' && (
+            <div className="flex flex-col md:flex-row gap-8">
+              {/* Left Sidebar Timeline */}
+              <aside className="hidden md:block w-48 shrink-0 relative">
+                <div className="sticky top-28 space-y-4 border-l-2 border-slate-200 dark:border-slate-800 py-4">
+                  {MOH_PHASES.map((phase) => (
+                    <div key={phase.id} className="relative -ml-[9px] flex items-center">
+                      <button
+                        onClick={() => scrollTo(phase.id)}
+                        className="flex items-center gap-4 group w-full text-left focus:outline-none"
+                      >
+                        <span
+                          className={`w-4 h-4 rounded-full border-2 transition-colors duration-300 ${
+                            activeMohPhase === phase.id
+                              ? 'bg-sky-500 border-sky-500 ring-4 ring-sky-500/20'
+                              : 'bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 group-hover:border-sky-400'
+                          }`}
+                        />
+                        <span
+                          className={`text-sm font-semibold transition-colors duration-300 ${
+                            activeMohPhase === phase.id
+                              ? 'text-sky-600 dark:text-sky-400'
+                              : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+                          }`}
+                        >
+                          {phase.label}
+                        </span>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </aside>
+
+              {/* Main Content */}
+              <div className="flex-1 space-y-12 min-w-0">
+                {/* Header */}
+                <section className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold uppercase tracking-[0.3em] text-sky-600 dark:text-sky-400">
+                      Public-Sector GIS Workflow
+                    </span>
+                    <span className="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-0.5 text-[10px] font-semibold text-sky-600 dark:text-sky-400 uppercase tracking-wider">
+                      Advisory &amp; Sanitized
+                    </span>
+                  </div>
+                  <h1 className="text-4xl font-outfit font-extrabold text-slate-950 dark:text-white">
+                    Public Health GIS Workflow Support: Deep Dive
+                  </h1>
+                  <p className={`${semanticTokens.text.body} max-w-4xl text-lg leading-relaxed`}>
+                    The reasoning behind a contact-tracing GIS engagement for a national Ministry of
+                    Health — how a complex public-health workflow was translated into intake, GIS
+                    layers, dashboards, and reporting a non-technical team could understand and
+                    adopt. This is advisory implementation judgment under strict sanitization and
+                    partial-ownership constraints: workflow support, not a solo full-system build.
+                  </p>
+                  <div className="flex flex-wrap gap-4 text-sm font-semibold text-sky-600 dark:text-sky-400">
+                    <Link to="/projects/moh" className="hover:underline flex items-center gap-1">
+                      ← Back to the Project Entry
+                    </Link>
+                    <Link to={PROJECTS_HREF} className="hover:underline">
+                      View Projects Library
+                    </Link>
+                  </div>
+                </section>
+
+                <DeepDiveBridge bridge={DEEP_DIVE_BRIDGES.moh} accent="sky" />
+
+                {/* Sanitization caveat */}
+                <section className="rounded-2xl border border-sky-500/25 bg-sky-500/5 p-5 dark:border-sky-500/40 dark:bg-sky-500/10 space-y-2">
+                  <div className="flex items-center gap-2 text-sky-600 dark:text-sky-400 font-bold text-sm">
+                    <span>🛡️</span>
+                    <span>Sanitization Note</span>
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                    This is public-sector, health-adjacent work. The country is never named, no
+                    metrics are claimed, and every artifact here is a sanitized reconstruction — no
+                    real screenshots, locations, patient data, or operational records are shown. The
+                    role is framed as GIS workflow support, documentation, and tool-fit advisory,
+                    not sole system architecture or production-deployment ownership.
+                  </p>
+                </section>
+
+                {/* Section 1: Strategic Context */}
+                <section id="moh-1" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      1. Strategic Context — Public Health GIS Workflow Support
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      The engagement supported a contact-tracing and public-health GIS workflow for
+                      a national Ministry of Health, delivered within a geospatial services
+                      engagement. Patients and persons of interest needed to be tracked, reviewed,
+                      and communicated across GIS tools, dashboards, and database-backed processes.
+                      The challenge was as much about <em>understandability</em> as technology — the
+                      system had to work for users without deep GIS, database, or software
+                      experience.
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {[
+                      {
+                        title: 'The trap',
+                        body: 'Treating intake forms, GIS, dashboards, database workflows, and stakeholder materials as a pile of separate tools — each useful, none legible as a whole.',
+                        tone: 'down',
+                      },
+                      {
+                        title: 'The reframe',
+                        body: 'One connected operating system: data collection, reporting, interface design, and documentation treated as a single workflow non-technical staff could follow and adopt.',
+                        tone: 'up',
+                      },
+                    ].map((card) => (
+                      <div
+                        key={card.title}
+                        className={`rounded-2xl border p-6 space-y-3 ${
+                          card.tone === 'up'
+                            ? 'border-sky-500/20 bg-sky-500/5 dark:border-sky-500/20'
+                            : 'border-slate-200 bg-white dark:border-slate-800 dark:bg-[#0B0F19]'
+                        }`}
+                      >
+                        <h3 className="font-bold text-lg text-slate-950 dark:text-white">
+                          {card.tone === 'up' ? '🧭 ' : '🧩 '}
+                          {card.title}
+                        </h3>
+                        <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                          {card.body}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+
+                {/* Section 2: Workflow Translation */}
+                <section id="moh-2" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      2. Workflow Translation — Intake to GIS to Dashboard
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      The core translation work made one thing legible: how contact-tracing
+                      information moves from a field form all the way to a supervisor decision. Each
+                      stage below is an operating piece a non-technical stakeholder can point to and
+                      reason about — the reasoning chain, not the raw tooling.
+                    </p>
+                  </div>
+                  <div className="space-y-3">
+                    {MOH_WORKFLOW.map((step, i, arr) => (
+                      <React.Fragment key={step.stage}>
+                        <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
+                          <div className="flex items-center gap-3">
+                            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-sky-500/10 text-xs font-bold text-sky-600 dark:text-sky-400 border border-sky-500/20">
+                              {i + 1}
+                            </span>
+                            <h3 className="font-bold text-slate-950 dark:text-white">
+                              {step.stage}
+                            </h3>
+                          </div>
+                          <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                            {step.body}
+                          </p>
+                          <p className="text-xs text-sky-700 dark:text-sky-300 leading-relaxed">
+                            <strong className="font-semibold">Made legible:</strong>{' '}
+                            {step.legibility}
+                          </p>
+                        </div>
+                        {i < arr.length - 1 && (
+                          <div className="flex justify-center text-slate-300 dark:text-slate-600">
+                            ↓
+                          </div>
+                        )}
+                      </React.Fragment>
+                    ))}
+                  </div>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed max-w-4xl">
+                    The interactive, sanitized <strong>System Explorer</strong> on the project entry
+                    walks the same architecture and workflow end to end. It is a conceptual
+                    reconstruction — no confidential health-system materials are shown.
+                  </p>
+                </section>
+
+                {/* Section 3: Tool-Fit Evaluation */}
+                <section id="moh-3" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      3. Tool-Fit Evaluation — GIS Platform vs. Low-Code Layer
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      Platform options were weighed against usability, maintainability, and
+                      stakeholder adoption — consulting judgment, not just interface design. The
+                      most telling decision was a <strong>low-code interface layer</strong>:
+                      explored seriously, then deliberately ruled out. Rejecting a tool on
+                      operational-fit and client-aversion grounds is implementation judgment, not
+                      failed adoption.
+                    </p>
+                  </div>
+                  <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <table className="w-full text-sm">
+                      <thead className="bg-slate-50 dark:bg-slate-900/60 text-left">
+                        <tr>
+                          <th className="px-4 py-3 font-bold text-slate-950 dark:text-white">
+                            Tool / Approach
+                          </th>
+                          <th className="px-4 py-3 font-bold text-slate-950 dark:text-white">
+                            Strength
+                          </th>
+                          <th className="px-4 py-3 font-bold text-slate-950 dark:text-white">
+                            Constraint
+                          </th>
+                          <th className="px-4 py-3 font-bold text-sky-600 dark:text-sky-400">
+                            Recommendation
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                        {MOH_TOOL_FIT.map((row) => (
+                          <tr key={row.tool}>
+                            <td className="px-4 py-3 font-semibold text-slate-800 dark:text-slate-100 whitespace-nowrap">
+                              {row.tool}
+                            </td>
+                            <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
+                              {row.strength}
+                            </td>
+                            <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
+                              {row.constraint}
+                            </td>
+                            <td className="px-4 py-3 text-slate-700 dark:text-slate-200 bg-sky-500/5 font-semibold">
+                              {row.call}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="rounded-2xl border border-sky-500/20 bg-sky-500/5 p-6 dark:border-sky-500/20 space-y-2">
+                    <h3 className="font-bold text-slate-950 dark:text-white flex items-center gap-2">
+                      <span>🔁</span> The low-code pivot as decision evidence
+                    </h3>
+                    <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-4xl">
+                      A low-code layer promised interface flexibility, but operational-fit concerns
+                      and client aversion made it a poor long-term choice — added support burden and
+                      adoption risk outweighed the flexibility. The recommendation was to pivot away
+                      and keep the GIS backbone as the system of record. The point is not that a
+                      tool was rejected; it is that the rejection was reasoned against adoption,
+                      maintainability, staff workflow, data integrity, and support burden.
+                    </p>
+                  </div>
+                </section>
+
+                {/* Section 4: Adoption & Documentation */}
+                <section id="moh-4" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      4. Adoption &amp; Documentation
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      The system needed to survive staff turnover, handoffs, and varying technical
+                      fluency. So a large part of the work was translation and documentation:
+                      turning GIS, database, UI/UX, and AI-assisted development concepts into
+                      language stakeholders could discuss and decide on — reducing the project's
+                      dependence on a single technical translator.
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="rounded-2xl border border-sky-500/20 bg-sky-500/5 p-6 space-y-3 dark:border-sky-500/20">
+                      <h3 className="font-bold text-lg text-slate-950 dark:text-white">
+                        What adoption support looked like
+                      </h3>
+                      <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                        <li>• Plain-language explanations of GIS, database, and AI concepts</li>
+                        <li>• UI/UX audit feedback on navigation, clarity, and confusion points</li>
+                        <li>• Dashboard mockups framed around role-specific interpretation</li>
+                        <li>• Documentation that supports technical ↔ non-technical handoff</li>
+                        <li>
+                          • Pitch material explaining the concept and implementation direction
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="rounded-2xl border border-slate-200 bg-white p-6 space-y-3 dark:border-slate-800 dark:bg-[#0B0F19]">
+                      <h3 className="font-bold text-lg text-slate-950 dark:text-white">
+                        Why it reduces friction
+                      </h3>
+                      <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                        <li>• Stakeholders can decide on tools without getting stuck on jargon</li>
+                        <li>• Supervisors read dashboards without needing GIS skills</li>
+                        <li>• New staff get oriented from documentation, not tribal knowledge</li>
+                        <li>• Less reliance on one person to translate the system each time</li>
+                        <li>• Decisions stay grounded in what staff can actually run</li>
+                      </ul>
+                    </div>
+                  </div>
+                </section>
+
+                {/* Section 5: Sanitized Artifact Gallery */}
+                <section id="moh-5" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      5. Sanitized Artifact Gallery / Evidence
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      Because this is public-sector, health-adjacent work, the evidence is sanitized
+                      and reconstructed — it illustrates layout and spatial-analysis design
+                      judgment, not real operational data. The supervisor view below uses synthetic
+                      records on a generic, schematic extent; the interactive System Explorer and
+                      the implementation audit matrix live on the project entry.
+                    </p>
+                  </div>
+                  <HtmlPreviewCard
+                    content={MOH_SUPERVISOR_DASHBOARD_HTML}
+                    label="Contact Tracing — Supervisor View (Sample)"
+                    description="Sanitized supervisor-dashboard mockup: KPI tiles, a clickable point map, a status-mix donut, and a filterable follow-up queue. Synthetic data on a generic extent — no real records, locations, or metrics."
+                  />
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {[
+                      {
+                        name: 'System Explorer',
+                        body: 'Interactive, sanitized walk-through of the architecture (intake → GIS → feature layers → dashboards → portal) and the operational workflow. On the project entry.',
+                      },
+                      {
+                        name: 'Supervisor View (Sample)',
+                        body: 'The role-specific dashboard mockup shown above — built to demonstrate how follow-up focus and case status read at a glance, with no real data.',
+                      },
+                      {
+                        name: 'Implementation Audit Matrix',
+                        body: 'The sanitized tool-fit table in section 3 — how platform options were weighed against usability, maintainability, and adoption, including the low-code pivot.',
+                      },
+                    ].map((item) => (
+                      <div
+                        key={item.name}
+                        className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2"
+                      >
+                        <h4 className="font-bold text-sm text-sky-600 dark:text-sky-400">
+                          {item.name}
+                        </h4>
+                        <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                          {item.body}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed max-w-4xl">
+                    No artifact here shows real records. Every figure, name, district, and map point
+                    is a fictional sample. For the full interactive System Explorer and audit
+                    matrix, see the{' '}
+                    <Link
+                      to="/projects/moh"
+                      className="font-semibold text-sky-600 dark:text-sky-400 hover:underline"
+                    >
+                      project entry
+                    </Link>
+                    .
+                  </p>
+                </section>
+
+                {/* Section 6: Boundaries & Reflection */}
+                <section id="moh-6" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      6. Boundaries &amp; Reflection
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      What this deep dive demonstrates is public-sector GIS workflow translation,
+                      adoption support, tool-fit reasoning, and implementation maturity — held
+                      honestly within explicit limits.
+                    </p>
+                  </div>
+
+                  {/* Decision criteria → evidence */}
+                  <div className="space-y-3">
+                    <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-sky-600 dark:text-sky-400">
+                      Decision Criteria → Evidence
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {MOH_CRITERIA.map((c) => (
+                        <div
+                          key={c.name}
+                          className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-1.5"
+                        >
+                          <h4 className="font-bold text-sm text-slate-950 dark:text-white">
+                            {c.name}
+                          </h4>
+                          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                            {c.body}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Boundaries */}
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-[#0B0F19] space-y-3">
+                    <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-sky-600 dark:text-sky-400">
+                      Boundaries — what is not claimed
+                    </h3>
+                    <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                      {MOH_BOUNDARIES.map((b) => (
+                        <li key={b} className="flex gap-2">
+                          <span className="text-sky-500">•</span>
+                          <span>{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="flex flex-wrap gap-4 text-sm font-semibold text-sky-600 dark:text-sky-400 pt-2">
+                    <Link to="/projects/moh" className="hover:underline flex items-center gap-1">
+                      ← Back to the Project Entry
                     </Link>
                     <Link to={PROJECTS_HREF} className="hover:underline">
                       View Projects Library

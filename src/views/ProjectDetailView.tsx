@@ -162,6 +162,12 @@ const ProjectHero: React.FC<{
         label: 'View Business Systems Deep Dive',
       };
     }
+    if (metadata.id === 'moh') {
+      return {
+        href: `${DEEP_DIVES_HREF}?tab=moh`,
+        label: 'View GIS Workflow Deep Dive',
+      };
+    }
     return {
       href: `${DEEP_DIVES_HREF}?tab=process`,
       label: 'View Process Deep Dive',

@@ -20,6 +20,7 @@ const REQUIRED_ROUTES = [
   '/deep-dives?tab=process',
   '/deep-dives?tab=luxe-lofts',
   '/deep-dives?tab=northern-grind',
+  '/deep-dives?tab=moh',
   '/resume',
   '/site-index',
   '/ai-index',
