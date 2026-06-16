@@ -11,6 +11,22 @@ const sharedLinks = `<nav aria-label="Related routes"><ul><li><a href="/">Home</
 
 const jsonLd = (obj) => `<script type="application/ld+json">${JSON.stringify(obj)}</script>`;
 
+// Deep-dive tab indexing model (Track E0.5):
+//   - `/deep-dives`                     = landing / overview (canonical indexed URL)
+//   - `/deep-dives?tab=<id>`            = content tab (canonical indexed URL, SPA reads ?tab=)
+// The canonical/indexed URL keeps the `?tab=` query form. The static crawler MIRROR, however,
+// is written to a path-safe nested folder (e.g. `/crawler/deep-dives/process`) because the
+// static file server (`express.static`) resolves by path and cannot disambiguate query strings.
+// Only the on-disk mirror nests the tab id; the indexed URL stays query-param. Future deep-dive
+// tabs (e.g. `moh`, `guynode`) should be added to the `routes` list below with the same
+// `/deep-dives?tab=<id>` form once their tabs exist at runtime.
+const mirrorPathForRoute = (route) => {
+  const [routePath, query] = route.split('?');
+  if (!query) return routePath;
+  const tab = new URLSearchParams(query).get('tab');
+  return tab ? `${routePath}/${tab}` : routePath;
+};
+
 const routes = [
   [
     '/',
@@ -134,11 +150,36 @@ const routes = [
   [
     '/deep-dives',
     'Deep Dives — Process, Governance & Strategy',
-    'Process and governance behind the portfolio: multi-LLM delivery, validation discipline, and the Luxe Lofts restructuring strategy.',
+    'Overview of the portfolio deep dives: the automation & governance architecture, the Luxe Lofts restructuring strategy, and the Northern Grind business-systems redesign.',
     'Portfolio Deep Dives',
-    'Process and governance evidence: how an AI-assisted build was scoped, governed, and validated — plus the Luxe Lofts restructuring strategy.',
-    ['/projects/guynode', '/projects/digital-twin', '/resume'],
+    'Index of the long-form deep dives — automation & governance architecture (build pipeline + Aegis/emOS), the Luxe Lofts digital restructuring strategy, and the Northern Grind business-systems redesign. Each opens as a tab under /deep-dives.',
+    ['/deep-dives?tab=process', '/deep-dives?tab=luxe-lofts', '/deep-dives?tab=northern-grind'],
     '/markdown/process.md',
+  ],
+  [
+    '/deep-dives?tab=process',
+    'Deep Dive: Automation & Governance Architecture',
+    'How AI-assisted work is governed across the build pipeline and the Aegis/emOS operations layer — explicit rulesets, judge-vs-executor separation, CI gates, and an audit trail.',
+    'Automation & Governance Architecture',
+    'Umbrella deep dive unifying the governed AI build pipeline (Portfolio 2.0) with the Aegis governance layer and the emOS execution engine — AI treated as an untrusted worker behind an explicit gate, across the human-in-the-loop to autonomous spectrum.',
+    ['/projects/portfolio-pipeline', '/projects/project-aegis', '/deep-dives'],
+    '/markdown/process.md',
+  ],
+  [
+    '/deep-dives?tab=luxe-lofts',
+    'Deep Dive: Luxe Lofts Digital Restructuring Strategy',
+    'The long-form restructuring strategy behind Luxe Lofts — audit findings translated into one conversion-oriented system the owner can run and customers can navigate.',
+    'Luxe Lofts Digital Restructuring Strategy',
+    'Deep dive into the audit-driven restructuring of a venue’s digital ecosystem: pricing, policies, and spatial proof made legible as a single conversion journey for owner and customer alike.',
+    ['/projects/luxe-lofts', '/deep-dives', '/projects/guynode'],
+  ],
+  [
+    '/deep-dives?tab=northern-grind',
+    'Deep Dive: Northern Grind Business Systems',
+    'The long-form modeling behind Northern Grind — a café rebrand reframed as one operating system across brand, menu UX, AI-assisted assets, and break-even POS/loyalty economics.',
+    'Northern Grind Business Systems',
+    'Deep dive into Northern Grind as a small-business systems redesign: brand identity, a Canva-assembled menu treated as a customer decision interface, an AI-assisted asset pipeline under human curation, and modeled POS/loyalty/channel economics — framed honestly as a proposal.',
+    ['/projects/northern-grind', '/deep-dives'],
   ],
   [
     '/resume',
@@ -171,7 +212,8 @@ const routes = [
 
 for (const [route, title, desc, heading, summary, links, md] of routes) {
   const canonical = `${siteUrl}${route}`;
-  const crawlerMirrorRoute = route === '/' ? '/crawler/' : `/crawler${route}`;
+  const mirrorRoute = mirrorPathForRoute(route);
+  const crawlerMirrorRoute = mirrorRoute === '/' ? '/crawler/' : `/crawler${mirrorRoute}`;
   const routeLinks = links.map((href) => `<li><a href="${href}">${href}</a></li>`).join('');
   const mdLink = md ? `<p>Markdown mirror: <a href="${md}">${md}</a></p>` : '';
   const routeJsonLd = jsonLd({
@@ -183,9 +225,9 @@ for (const [route, title, desc, heading, summary, links, md] of routes) {
   });
   const html = `<!doctype html><html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>${title}</title><meta name="description" content="${desc}" /><meta property="og:title" content="${title}" /><meta property="og:description" content="${desc}" /><meta property="og:url" content="${canonical}" /><meta property="og:type" content="website" /><meta property="og:image" content="${siteUrl}/og-image.svg" /><link rel="canonical" href="${canonical}" /><link rel="alternate" href="/llms.txt" /><link rel="bookmark" href="/ai-index" /></head><body><main><p><strong>Static crawler mirror</strong> for <a href="${route}">${route}</a>. Canonical user route: <a href="${route}">${route}</a>. Mirror route: <a href="${crawlerMirrorRoute}">${crawlerMirrorRoute}</a>.</p><h1>${heading}</h1><p>${summary}</p><section><h2>Related internal routes</h2><ul>${routeLinks}</ul></section>${mdLink}${sharedLinks}</main>${routeJsonLd}</body></html>`;
   const outPath =
-    route === '/'
+    mirrorRoute === '/'
       ? resolve(crawlerDir, 'index.html')
-      : resolve(crawlerDir, route.slice(1), 'index.html');
+      : resolve(crawlerDir, mirrorRoute.slice(1), 'index.html');
   mkdirSync(dirname(outPath), { recursive: true });
   writeFileSync(outPath, html, 'utf8');
 }
