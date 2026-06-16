@@ -449,6 +449,27 @@ const GUYNODE_BOUNDARIES = [
   'No claim is made that real datasets, provenance records, or download counts shown here were independently verified.',
 ];
 
+// ── Process (Automation & Governance) deep-dive boundaries ─────────────────
+// Explicit boundaries for the process tab — production-backed vs. protocol,
+// what AI agents may do vs. what stays human-reviewed, and what the governance
+// architecture proves vs. does not claim. No metrics are introduced.
+const PROCESS_BOUNDARIES = [
+  'The Portfolio 2.0 build pipeline is production-backed — it shipped this site through branch isolation, reviewed PRs, and CI gates. Aegis/emOS is documented as a governance protocol and runtime pattern, not a third-party-audited production platform.',
+  'AI tools draft, scaffold, refactor, and synthesize under scoped prompts; they never approve or merge their own work. Every AI-generated change clears a human review gate or an automated assertion check before it is accepted.',
+  'The architecture proves that execution and validation stay decoupled across autonomy levels. It does not claim the AI is correct by default, nor that autonomous operation removes the need for an explicit gate.',
+  'No productivity, accuracy, or cost-saving metrics are claimed for the multi-LLM workflow — the evidence is the reviewed PR history and validation trail, not measured performance gains.',
+];
+
+// ── Luxe Lofts deep-dive boundaries ────────────────────────────────────────
+// Explicit boundaries for the luxe-lofts tab — keeps the audit-driven proposal
+// and interactive prototype clearly separate from delivered, measured outcomes.
+const LUXE_BOUNDARIES = [
+  'This is an audit-driven proposal and interactive prototype, not a deployed production platform handling live bookings.',
+  'No measured business outcomes — conversion lift, booking volume, or revenue — are claimed; KPI figures are modeled targets, not results.',
+  'Cloud Run / Firebase auth, the booking AI suite, and live calendar sync are bounded as production-roadmap items and are simulated client-side in the prototype.',
+  'The exact pricing tiers shown in the dashboard are an internal modeling view, intentionally distinct from the public-facing package framing.',
+];
+
 type TimelineRow = {
   phase: string;
   changed: string;
@@ -1245,6 +1266,102 @@ const DeepDiveView: React.FC = () => {
                       </div>
                     </div>
                   </button>
+                </div>
+              </section>
+
+              {/* How to read every deep dive — the shared standard + the
+                  project-entry vs. deep-dive distinction. Kept compact. */}
+              <section className="space-y-6">
+                <div className="space-y-3 max-w-2xl">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-tide-aqua dark:text-tide-sky block">
+                    How to use this layer
+                  </span>
+                  <h2 className="text-2xl font-outfit font-bold text-slate-950 dark:text-white">
+                    How to Read Every Deep Dive
+                  </h2>
+                  <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                    A <strong>project entry</strong> answers{' '}
+                    <em>what was built and why it matters</em>. A <strong>deep dive</strong> is the
+                    second evidence layer: it shows{' '}
+                    <em>how each decision was made and what proves it</em> — for a reviewer who
+                    wants the reasoning, not just the outcome. Open the one closest to the role you
+                    are evaluating; each one is built to be skimmed.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] p-6 space-y-2">
+                    <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+                      Project entry
+                    </h3>
+                    <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                      The compact, scannable record in the projects library — purpose, stakeholder
+                      value, role relevance, and proof type. The fastest way to see whether a
+                      project is relevant.
+                    </p>
+                  </div>
+                  <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] p-6 space-y-2">
+                    <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-tide-aqua dark:text-tide-sky">
+                      Deep dive
+                    </h3>
+                    <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                      The long-form reasoning behind one body of work — decision criteria,
+                      trade-offs, the artifacts that support them, and the limits of what is
+                      claimed. Read it when the entry earns a closer look.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0B0F19] p-6 md:p-8 space-y-5">
+                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
+                    However its sections are shaped, every deep dive surfaces the same two arcs so
+                    the reasoning stays legible across very different kinds of work:
+                  </p>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {[
+                      {
+                        arc: 'Translation → Adoption → Implementation maturity',
+                        items: [
+                          ['Translation', 'What complex or opaque thing was made legible.'],
+                          ['Adoption', 'Whose use or constraint shaped the design.'],
+                          [
+                            'Implementation maturity',
+                            'What is prototype, model, recommendation, or production-backed.',
+                          ],
+                        ],
+                      },
+                      {
+                        arc: 'Decision Criteria → Evidence → Boundaries',
+                        items: [
+                          ['Decision Criteria', 'The variables that governed the choices.'],
+                          [
+                            'Evidence',
+                            'The artifact, workflow, or system that supports the claim.',
+                          ],
+                          ['Boundaries', 'What is deliberately not claimed.'],
+                        ],
+                      },
+                    ].map((group) => (
+                      <div key={group.arc} className="space-y-3">
+                        <h3 className="text-xs font-bold uppercase tracking-wider text-tide-aqua dark:text-tide-sky">
+                          {group.arc}
+                        </h3>
+                        <ul className="space-y-2">
+                          {group.items.map(([term, def]) => (
+                            <li
+                              key={term}
+                              className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed"
+                            >
+                              <span className="font-bold text-slate-800 dark:text-slate-100">
+                                {term}
+                              </span>{' '}
+                              — {def}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </section>
             </div>
@@ -2139,6 +2256,21 @@ const DeepDiveView: React.FC = () => {
                       </code>
                       .
                     </p>
+                  </div>
+
+                  {/* Boundaries — what is not claimed */}
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-[#0B0F19] space-y-3">
+                    <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-tide-aqua dark:text-tide-sky">
+                      Boundaries — what is not claimed
+                    </h3>
+                    <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                      {PROCESS_BOUNDARIES.map((b) => (
+                        <li key={b} className="flex gap-2">
+                          <span className="text-tide-aqua dark:text-tide-sky">•</span>
+                          <span>{b}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </section>
               </div>
@@ -3057,6 +3189,21 @@ const DeepDiveView: React.FC = () => {
                         limits, staffing cost boundaries, and margin qualification standards to
                         support corporate turnaround strategy presentations.
                       </li>
+                    </ul>
+                  </div>
+
+                  {/* Boundaries — what is not claimed */}
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-[#0B0F19] space-y-3">
+                    <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-rose-600 dark:text-rose-400">
+                      Boundaries — what is not claimed
+                    </h3>
+                    <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                      {LUXE_BOUNDARIES.map((b) => (
+                        <li key={b} className="flex gap-2">
+                          <span className="text-rose-500">•</span>
+                          <span>{b}</span>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </section>
