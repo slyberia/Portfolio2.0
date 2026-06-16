@@ -17,6 +17,9 @@ const REQUIRED_ROUTES = [
   '/projects/portfolio-pipeline',
   '/projects/luxe-lofts',
   '/deep-dives',
+  '/deep-dives?tab=process',
+  '/deep-dives?tab=luxe-lofts',
+  '/deep-dives?tab=northern-grind',
   '/resume',
   '/site-index',
   '/ai-index',
@@ -29,10 +32,24 @@ const fail = (msg) => {
 };
 const pass = (msg) => console.log(`✓ ${msg}`);
 
+// Deep-dive content tabs are indexed as query-param URLs (e.g. `/deep-dives?tab=process`) but
+// their static crawler mirror is written to a path-safe nested folder (`/crawler/deep-dives/
+// process`) — see scripts/generate-crawler-html.mjs. Map a (possibly query-param) route to its
+// on-disk mirror path so file lookups and the crawler-sitemap check stay in sync.
+function mirrorPathForRoute(route) {
+  const [routePath, query] = route.split('?');
+  if (!query) return routePath;
+  const tab = new URLSearchParams(query).get('tab');
+  return tab ? `${routePath}/${tab}` : routePath;
+}
+
+const escapeRegExp = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
 function crawlerFileForRoute(route) {
-  return route === '/'
+  const mirror = mirrorPathForRoute(route);
+  return mirror === '/'
     ? resolve(CRAWLER_DIST, 'index.html')
-    : resolve(CRAWLER_DIST, route.slice(1), 'index.html');
+    : resolve(CRAWLER_DIST, mirror.slice(1), 'index.html');
 }
 
 function assertDistIndexAppShell() {
@@ -56,7 +73,7 @@ function assertSnapshotHtml(route) {
     fail(`${route}: missing non-empty meta description`);
   if (!/<link\s+rel="canonical"\s+href="https?:\/\/[^\"]+"\s*\/?/i.test(html))
     fail(`${route}: missing canonical URL`);
-  if (!new RegExp(`<a href="${route === '/' ? '/' : route}">`).test(html)) {
+  if (!new RegExp(`<a href="${route === '/' ? '/' : escapeRegExp(route)}">`).test(html)) {
     fail(`${route}: canonical route reference missing in body`);
   }
 
@@ -136,7 +153,7 @@ function validateSitemaps() {
 
   const crawlerSitemap = readFileSync(resolve(ROOT, 'public', 'crawler-sitemap.xml'), 'utf8');
   for (const route of REQUIRED_ROUTES) {
-    const crawlerRoute = route === '/' ? '/crawler/' : `/crawler${route}`;
+    const crawlerRoute = route === '/' ? '/crawler/' : `/crawler${mirrorPathForRoute(route)}`;
     if (!crawlerSitemap.includes(crawlerRoute)) {
       fail(`public/crawler-sitemap.xml missing route: ${crawlerRoute}`);
     }
