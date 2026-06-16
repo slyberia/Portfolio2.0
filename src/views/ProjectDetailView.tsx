@@ -168,6 +168,12 @@ const ProjectHero: React.FC<{
         label: 'View GIS Workflow Deep Dive',
       };
     }
+    if (metadata.id === 'guynode') {
+      return {
+        href: `${DEEP_DIVES_HREF}?tab=guynode`,
+        label: 'View Spatial Data Hub Deep Dive',
+      };
+    }
     return {
       href: `${DEEP_DIVES_HREF}?tab=process`,
       label: 'View Process Deep Dive',

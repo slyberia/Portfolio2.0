@@ -17,7 +17,7 @@ import { automationSystems, automationThesis, governancePrimitives } from '../da
 import { MOH_SUPERVISOR_DASHBOARD_HTML } from '../data/mohSupervisorDashboard';
 import type { Visibility } from '../types';
 
-type MainTab = 'landing' | 'process' | 'luxe-lofts' | 'northern-grind' | 'moh';
+type MainTab = 'landing' | 'process' | 'luxe-lofts' | 'northern-grind' | 'moh' | 'guynode';
 
 // `?tab=automation` is an alias for the umbrella governance tab so existing
 // links and the original deep-dive brief keep resolving after the Option C
@@ -29,7 +29,8 @@ const resolveTabParam = (param: string | null): MainTab | null => {
     param === 'process' ||
     param === 'luxe-lofts' ||
     param === 'northern-grind' ||
-    param === 'moh'
+    param === 'moh' ||
+    param === 'guynode'
   )
     return param;
   if (param && param in TAB_ALIASES) return TAB_ALIASES[param];
@@ -69,6 +70,12 @@ const DEEP_DIVE_TABS: {
     id: 'moh',
     label: 'Public Health GIS Workflow Support',
     activeBorder: 'border-sky-500',
+    visibility: 'public',
+  },
+  {
+    id: 'guynode',
+    label: 'Guynode Spatial Data Hub',
+    activeBorder: 'border-teal-500',
     visibility: 'public',
   },
 ];
@@ -349,6 +356,99 @@ const MOH_BOUNDARIES = [
   'No production-deployment ownership is implied beyond what the project entry already supports.',
 ];
 
+// ── Guynode (Spatial Data Hub) deep dive data ──────────────────────────────
+// GIS data-governance / spatial information-architecture deep dive for the
+// `guynode` entry. Guynode is a public project (guynode.com), so naming Guyana
+// is consistent with the existing case study. Metadata completeness is framed
+// as a scoped design property across registered datasets, and time-to-data as
+// an intended/design effect — never an audited statistic or measured speedup.
+// All content is reconstructed from the existing case study, registry rigor
+// block, hero artifact, and constraints — no usage metrics are invented.
+
+const GUYNODE_PHASES = [
+  { id: 'gn-1', label: 'Strategic Context' },
+  { id: 'gn-2', label: 'Decision Criteria' },
+  { id: 'gn-3', label: 'Registry & Metadata' },
+  { id: 'gn-4', label: 'Preview vs. Download' },
+  { id: 'gn-5', label: 'Readiness Review' },
+  { id: 'gn-6', label: 'Information Architecture' },
+  { id: 'gn-7', label: 'Boundaries & Reflection' },
+] as const;
+
+// The discover → preview → verify → download chain, mirrored from the existing
+// "Guynode Data Access Flow" hero artifact on the project entry.
+const GUYNODE_ACCESS_FLOW = [
+  {
+    stage: 'Discover',
+    body: 'Browse the governed dataset registry by category, tag, or search — instead of decoding an obscure file listing.',
+  },
+  {
+    stage: 'Preview',
+    body: 'Inspect spatial layers on an in-browser Leaflet map before committing to a download.',
+  },
+  {
+    stage: 'Verify',
+    body: 'Confirm provenance, format, and last-updated metadata up front, so the right layer is chosen before analysis begins.',
+  },
+  {
+    stage: 'Download',
+    body: 'Pull the dataset in a standard format via a clear, validated path.',
+  },
+];
+
+// Decision criteria that governed the design — the variables a reviewer should see.
+const GUYNODE_CRITERIA = [
+  {
+    name: 'Trust',
+    body: 'A coherent, maintained-looking catalog signals that the underlying data is authoritative — so first impressions stop working against the data.',
+  },
+  {
+    name: 'Legibility',
+    body: 'Datasets read as understandable products with context, not raw files behind unstructured storage.',
+  },
+  {
+    name: 'Metadata completeness',
+    body: 'Every registered dataset carries complete metadata — a design property of the registry schema, not an independently audited statistic.',
+  },
+  {
+    name: 'Public usability',
+    body: 'Planners, researchers, journalists, and citizens — not just GIS specialists — can put the data to work.',
+  },
+  {
+    name: 'Data governance',
+    body: 'A type-safe registry enforces a strict governance schema so the catalog can be reviewed, corrected, and expanded.',
+  },
+  {
+    name: 'Spatial discoverability',
+    body: 'Categories, tags, and search make scattered legacy datasets findable in one governed place.',
+  },
+  {
+    name: 'Previewability',
+    body: 'Metadata and viewer-type fields distinguish previewable layers from download-only assets.',
+  },
+  {
+    name: 'Technical clarity',
+    body: 'Technical depth for GIS users is preserved while clearer copy and structure keep non-specialists oriented.',
+  },
+  {
+    name: 'Launch / readiness quality',
+    body: 'A repeatable readiness review path defines what makes a dataset ready for public exposure.',
+  },
+  {
+    name: 'Maintainability',
+    body: 'Onboarding becomes a repeatable pattern rather than bespoke cleanup, so the platform scales without re-engineering.',
+  },
+];
+
+// Explicit boundaries — what is deliberately not claimed.
+const GUYNODE_BOUNDARIES = [
+  'No usage, traffic, or public-adoption metrics are claimed — none are measured here.',
+  'Metadata completeness is a scoped design property of the registry schema (every registered dataset carries complete metadata), not an independently audited 100% statistic.',
+  'Time-to-data / faster-discovery language describes an intended design effect of the information architecture, not a baselined, measured speedup.',
+  'The redesign is framed as a prototype/redesign of the catalog architecture and metadata standards, not a proven production rollout with usage evidence.',
+  'No claim is made that real datasets, provenance records, or download counts shown here were independently verified.',
+];
+
 type TimelineRow = {
   phase: string;
   changed: string;
@@ -604,7 +704,7 @@ type BridgeFacet = { title: string; body: string };
 type DeepDiveBridgeContent = { label: string; statement: string; facets: BridgeFacet[] };
 
 const DEEP_DIVE_BRIDGES: Record<
-  'process' | 'luxe-lofts' | 'northern-grind' | 'moh',
+  'process' | 'luxe-lofts' | 'northern-grind' | 'moh' | 'guynode',
   DeepDiveBridgeContent
 > = {
   process: {
@@ -683,11 +783,30 @@ const DEEP_DIVE_BRIDGES: Record<
       },
     ],
   },
+  guynode: {
+    label: 'Why this deep dive matters',
+    statement:
+      'A fragmented legacy geospatial repository turned into a governed, discoverable public data product — where trust, legibility, and metadata completeness are designed in, not cleaned up after.',
+    facets: [
+      {
+        title: 'Translation',
+        body: 'Turns scattered spatial datasets and legacy map/download patterns into a governed data-hub model that makes each dataset discoverable, previewable, and understandable.',
+      },
+      {
+        title: 'Adoption',
+        body: 'Balances technical depth for GIS users with public usability for non-specialists through metadata standards, category structure, in-browser previews, and plain-language dataset context.',
+      },
+      {
+        title: 'Implementation maturity',
+        body: 'Clearly separates the implemented/prototyped catalog architecture and metadata standards from any unmeasured claims about usage, speed, or public adoption — completeness is a design property, time-to-data an intended effect.',
+      },
+    ],
+  },
 };
 
 const DeepDiveBridge: React.FC<{
   bridge: DeepDiveBridgeContent;
-  accent: 'aqua' | 'rose' | 'amber' | 'sky';
+  accent: 'aqua' | 'rose' | 'amber' | 'sky' | 'teal';
 }> = ({ bridge, accent }) => {
   const accentText =
     accent === 'aqua'
@@ -696,7 +815,9 @@ const DeepDiveBridge: React.FC<{
         ? 'text-amber-600 dark:text-amber-400'
         : accent === 'sky'
           ? 'text-sky-600 dark:text-sky-400'
-          : 'text-rose-600 dark:text-rose-400';
+          : accent === 'teal'
+            ? 'text-teal-600 dark:text-teal-400'
+            : 'text-rose-600 dark:text-rose-400';
   const accentBorder =
     accent === 'aqua'
       ? 'border-tide-aqua'
@@ -704,7 +825,9 @@ const DeepDiveBridge: React.FC<{
         ? 'border-amber-500'
         : accent === 'sky'
           ? 'border-sky-500'
-          : 'border-rose-500';
+          : accent === 'teal'
+            ? 'border-teal-500'
+            : 'border-rose-500';
   return (
     <section className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] p-6 md:p-8 space-y-5">
       <div className={`border-l-2 ${accentBorder} pl-4 space-y-2`}>
@@ -743,6 +866,7 @@ const DeepDiveView: React.FC = () => {
   const [activePhase, setActivePhase] = React.useState<string>('phase-1');
   const [activeNgPhase, setActiveNgPhase] = React.useState<string>('ng-1');
   const [activeMohPhase, setActiveMohPhase] = React.useState<string>('moh-1');
+  const [activeGnPhase, setActiveGnPhase] = React.useState<string>('gn-1');
   const [activeDiagTab, setActiveDiagTab] = React.useState<
     'visuals' | 'ux' | 'technical' | 'content'
   >('visuals');
@@ -826,6 +950,23 @@ const DeepDiveView: React.FC = () => {
       { rootMargin: '-20% 0px -60% 0px' },
     );
     MOH_PHASES.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, [activeMainTab]);
+
+  React.useEffect(() => {
+    if (activeMainTab !== 'guynode') return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveGnPhase(entry.target.id);
+        });
+      },
+      { rootMargin: '-20% 0px -60% 0px' },
+    );
+    GUYNODE_PHASES.forEach(({ id }) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
@@ -1057,6 +1198,49 @@ const DeepDiveView: React.FC = () => {
                       </div>
                       <div className="flex items-center gap-2 text-sm font-bold text-sky-600 dark:text-sky-400 group-hover:gap-3 transition-all">
                         <span>Explore GIS Workflow Support</span>
+                        <span>→</span>
+                      </div>
+                    </div>
+                  </button>
+
+                  {/* Guynode — Spatial Data Hub Entry Card */}
+                  <button
+                    onClick={() => handleMainTabChange('guynode')}
+                    className="text-left group rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] hover:border-teal-500/40 dark:hover:border-teal-500/40 hover:shadow-xl transition-all duration-300 overflow-hidden"
+                  >
+                    <div className="h-2 bg-teal-500" />
+                    <div className="p-8 space-y-5">
+                      <div className="space-y-3">
+                        <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-teal-600 dark:text-teal-400 block">
+                          Spatial Data Governance
+                        </span>
+                        <h3 className="text-2xl font-outfit font-bold text-slate-950 dark:text-white group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
+                          Guynode Spatial Data Hub
+                        </h3>
+                        <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                          The GIS data-governance reasoning behind Guynode — turning fragmented
+                          legacy spatial data into a governed registry with complete metadata,
+                          in-browser previews, preview-vs-download logic, and a repeatable readiness
+                          review. Spatial systems architecture, not just a public catalog.
+                        </p>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {[
+                          'Dataset Registry',
+                          'Metadata Standard',
+                          'Preview vs. Download',
+                          'Readiness Review',
+                        ].map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-teal-500/10 text-teal-600 dark:text-teal-400 border border-teal-500/20"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="flex items-center gap-2 text-sm font-bold text-teal-600 dark:text-teal-400 group-hover:gap-3 transition-all">
+                        <span>Explore Spatial Data Hub</span>
                         <span>→</span>
                       </div>
                     </div>
@@ -3952,6 +4136,404 @@ const DeepDiveView: React.FC = () => {
 
                   <div className="flex flex-wrap gap-4 text-sm font-semibold text-sky-600 dark:text-sky-400 pt-2">
                     <Link to="/projects/moh" className="hover:underline flex items-center gap-1">
+                      ← Back to the Project Entry
+                    </Link>
+                    <Link to={PROJECTS_HREF} className="hover:underline">
+                      View Projects Library
+                    </Link>
+                  </div>
+                </section>
+              </div>
+            </div>
+          )}
+
+          {/* ── Guynode (Spatial Data Hub) Tab ── */}
+          {activeMainTab === 'guynode' && (
+            <div className="flex flex-col md:flex-row gap-8">
+              {/* Left Sidebar Timeline */}
+              <aside className="hidden md:block w-48 shrink-0 relative">
+                <div className="sticky top-28 space-y-4 border-l-2 border-slate-200 dark:border-slate-800 py-4">
+                  {GUYNODE_PHASES.map((phase) => (
+                    <div key={phase.id} className="relative -ml-[9px] flex items-center">
+                      <button
+                        onClick={() => scrollTo(phase.id)}
+                        className="flex items-center gap-4 group w-full text-left focus:outline-none"
+                      >
+                        <span
+                          className={`w-4 h-4 rounded-full border-2 transition-colors duration-300 ${
+                            activeGnPhase === phase.id
+                              ? 'bg-teal-500 border-teal-500 ring-4 ring-teal-500/20'
+                              : 'bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 group-hover:border-teal-400'
+                          }`}
+                        />
+                        <span
+                          className={`text-sm font-semibold transition-colors duration-300 ${
+                            activeGnPhase === phase.id
+                              ? 'text-teal-600 dark:text-teal-400'
+                              : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+                          }`}
+                        >
+                          {phase.label}
+                        </span>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </aside>
+
+              {/* Main Content */}
+              <div className="flex-1 space-y-12 min-w-0">
+                {/* Header */}
+                <section className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold uppercase tracking-[0.3em] text-teal-600 dark:text-teal-400">
+                      Spatial Data Governance
+                    </span>
+                    <span className="rounded-full border border-teal-500/25 bg-teal-500/10 px-2.5 py-0.5 text-[10px] font-semibold text-teal-600 dark:text-teal-400 uppercase tracking-wider">
+                      Flagship GIS System
+                    </span>
+                  </div>
+                  <h1 className="text-4xl font-outfit font-extrabold text-slate-950 dark:text-white">
+                    Guynode Spatial Data Hub: Deep Dive
+                  </h1>
+                  <p className={`${semanticTokens.text.body} max-w-4xl text-lg leading-relaxed`}>
+                    The data-governance reasoning behind Guynode — a redesign that turns Guyana's
+                    fragmented legacy geospatial data into a governed, discoverable public data
+                    product. This is spatial systems architecture and information governance: a
+                    dataset registry, a metadata standard, in-browser previews, and a repeatable
+                    readiness review — not just a catalog or a website refresh.
+                  </p>
+                  <div className="flex flex-wrap gap-4 text-sm font-semibold text-teal-600 dark:text-teal-400">
+                    <Link
+                      to="/projects/guynode"
+                      className="hover:underline flex items-center gap-1"
+                    >
+                      ← Back to the Project Entry
+                    </Link>
+                    <a
+                      href="https://guynode-spatial-data-hub-786228485832.us-central1.run.app/"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="hover:underline"
+                    >
+                      Launch Redesigned Portal ↗
+                    </a>
+                    <Link to={PROJECTS_HREF} className="hover:underline">
+                      View Projects Library
+                    </Link>
+                  </div>
+                </section>
+
+                <DeepDiveBridge bridge={DEEP_DIVE_BRIDGES.guynode} accent="teal" />
+
+                {/* Section 1: Strategic Context */}
+                <section id="gn-1" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      1. Strategic Context — Fragmented Spatial Data
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      Geospatial data for Guyana was hard to locate — scattered across fragmented
+                      legacy sites with inconsistent formatting and metadata. Guynode had answered
+                      that problem, but design decay buried datasets behind visual clutter, obscure
+                      download paths offered no previews, and unstructured storage made the catalog
+                      hard to audit or expand. The opportunity was to turn scattered datasets into a
+                      governed spatial data product where trust, access, and reuse are designed in.
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {[
+                      {
+                        title: 'Design decay',
+                        body: 'An inconsistent UI/UX made the data feel less trustworthy than it actually was — first impressions worked against the catalog.',
+                      },
+                      {
+                        title: 'Access friction',
+                        body: 'Obscure download paths and no visual previews left non-technical users guessing at obscure links.',
+                      },
+                      {
+                        title: 'Maintenance debt',
+                        body: 'Unstructured storage made the catalog difficult to audit, correct, or expand without archaeology.',
+                      },
+                    ].map((card) => (
+                      <div
+                        key={card.title}
+                        className="rounded-2xl border border-slate-200 bg-white p-6 space-y-2 dark:border-slate-800 dark:bg-[#0B0F19]"
+                      >
+                        <h3 className="font-bold text-slate-950 dark:text-white">{card.title}</h3>
+                        <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                          {card.body}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-4xl">
+                    <strong className="text-slate-950 dark:text-white">The goal:</strong> overhaul
+                    the unified spatial hub around dataset governance, metadata integrity, and
+                    user-centric discovery — so the same datasets become dramatically more usable
+                    simply because they can be found, previewed, and trusted.
+                  </p>
+                </section>
+
+                {/* Section 2: Decision Criteria */}
+                <section id="gn-2" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      2. Decision Criteria — Trust, Legibility, Governance
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      The redesign was governed by a set of variables, not aesthetics. These are the
+                      criteria a reviewer should see behind every structural choice below.
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {GUYNODE_CRITERIA.map((c) => (
+                      <div
+                        key={c.name}
+                        className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-1.5"
+                      >
+                        <h4 className="font-bold text-sm text-slate-950 dark:text-white">
+                          {c.name}
+                        </h4>
+                        <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                          {c.body}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+
+                {/* Section 3: Registry & Metadata Model */}
+                <section id="gn-3" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      3. Registry &amp; Metadata Model
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      The organizing model is a type-safe dataset registry: every spatial asset
+                      follows a strict governance schema, so each registered dataset carries
+                      complete metadata as a property of the system — not as an after-the-fact
+                      cleanup pass. That is what makes the catalog reviewable, correctable, and
+                      expandable.
+                    </p>
+                  </div>
+                  <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-[#0B0F19] space-y-3">
+                    <h3 className="font-bold text-slate-950 dark:text-white">
+                      Dataset readiness fields
+                    </h3>
+                    <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                      A dataset is &ldquo;ready&rdquo; when it carries a clear title, category,
+                      description, format, provenance / attribution, download behavior, and preview
+                      status where applicable. Each field exists because public users need enough
+                      context to understand a dataset before trusting or downloading it.
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {[
+                        'Title',
+                        'Category',
+                        'Description',
+                        'Format',
+                        'Provenance / attribution',
+                        'Download behavior',
+                        'Preview status',
+                      ].map((field) => (
+                        <span
+                          key={field}
+                          className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-teal-500/10 text-teal-700 dark:text-teal-300 border border-teal-500/20"
+                        >
+                          {field}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-800 dark:bg-[#0B0F19] space-y-2">
+                    <p className="text-xs font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400">
+                      Key artifact — the dataset governance schema
+                    </p>
+                    <pre className="overflow-x-auto rounded-lg bg-slate-900 p-4 text-xs leading-relaxed text-slate-100">
+                      <code>{`interface DatasetNode {
+  id: string;
+  category: 'Infrastructure' | 'Environment' | 'Social';
+  metadata: {
+    provenance: string;
+    lastUpdated: ISOString;
+    format: 'GeoJSON' | 'SHP' | 'KML';
+  };
+}`}</code>
+                    </pre>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                      The strict metadata contract for every spatial node — the schema is the
+                      governance mechanism that makes a dataset publishable.
+                    </p>
+                  </div>
+                </section>
+
+                {/* Section 4: Preview vs. Download */}
+                <section id="gn-4" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      4. Preview vs. Download Decision
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      Spatial datasets vary in format, size, and preview suitability — so the
+                      registry distinguishes previewable layers from download-only assets via
+                      metadata and viewer-type fields. The trade-off: a Leaflet-based preview engine
+                      lets users inspect a layer in-browser before downloading, at the cost of
+                      handling layers that are too large or unsuitable to render. The point of the
+                      preview is trust — confirming a layer is the <em>right</em> one before it
+                      enters an analysis.
+                    </p>
+                  </div>
+                  <div className="space-y-3">
+                    {GUYNODE_ACCESS_FLOW.map((step, i, arr) => (
+                      <React.Fragment key={step.stage}>
+                        <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-[#0B0F19] flex items-start gap-3">
+                          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-teal-500/10 text-xs font-bold text-teal-600 dark:text-teal-400 border border-teal-500/20">
+                            {i + 1}
+                          </span>
+                          <div className="space-y-1">
+                            <h3 className="font-bold text-slate-950 dark:text-white">
+                              {step.stage}
+                            </h3>
+                            <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                              {step.body}
+                            </p>
+                          </div>
+                        </div>
+                        {i < arr.length - 1 && (
+                          <div className="flex justify-center text-slate-300 dark:text-slate-600">
+                            ↓
+                          </div>
+                        )}
+                      </React.Fragment>
+                    ))}
+                  </div>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed max-w-4xl">
+                    This mirrors the sanitized <strong>Guynode Data Access Flow</strong> on the
+                    project entry, which links through to the live redesigned portal.
+                  </p>
+                </section>
+
+                {/* Section 5: Readiness Review */}
+                <section id="gn-5" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      5. Readiness Review / Launch-Readiness Workflow
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      A type-safe registry plus automated route/link validation turns onboarding
+                      into a repeatable readiness review instead of bespoke cleanup. New agencies
+                      and datasets can be added without re-engineering the platform each time — the
+                      review path defines what makes a dataset ready for public exposure.
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="rounded-2xl border border-teal-500/20 bg-teal-500/5 p-6 space-y-3 dark:border-teal-500/20">
+                      <h3 className="font-bold text-lg text-slate-950 dark:text-white">
+                        What makes a dataset &ldquo;ready&rdquo;
+                      </h3>
+                      <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                        <li>• Complete metadata: title, category, description, format</li>
+                        <li>• Verified provenance / attribution</li>
+                        <li>• Defined download behavior and a validated path</li>
+                        <li>• Preview status set where a layer is previewable</li>
+                        <li>• Passing route / link validation</li>
+                      </ul>
+                    </div>
+                    <div className="rounded-2xl border border-slate-200 bg-white p-6 space-y-3 dark:border-slate-800 dark:bg-[#0B0F19]">
+                      <h3 className="font-bold text-lg text-slate-950 dark:text-white">
+                        Why it is governance, not cleanup
+                      </h3>
+                      <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                        <li>• Onboarding becomes a repeatable pattern, not a one-off</li>
+                        <li>• The catalog scales without re-engineering the platform</li>
+                        <li>• Integrity is enforced upstream, at registration</li>
+                        <li>• Partner agencies can publish without bespoke effort</li>
+                        <li>• Reviews can be repeated as the catalog grows</li>
+                      </ul>
+                    </div>
+                  </div>
+                </section>
+
+                {/* Section 6: Information Architecture */}
+                <section id="gn-6" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      6. Information Architecture for Non-Technical Users
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      The redesign keeps technical depth for GIS users while making the catalog
+                      legible to planners, researchers, journalists, and citizens. Categories, tags,
+                      plain-language descriptions, and clear download paths replace raw file-storage
+                      logic — technical material becomes understandable without stripping its value.
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="rounded-2xl border border-slate-200 bg-white p-6 space-y-3 dark:border-slate-800 dark:bg-[#0B0F19]">
+                      <h3 className="font-bold text-lg text-slate-950 dark:text-white">
+                        Depth for GIS users
+                      </h3>
+                      <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                        <li>• Provenance, format, and last-updated metadata up front</li>
+                        <li>• In-browser layer previews for spatial verification</li>
+                        <li>• Standard formats (GeoJSON / SHP / KML) on a validated path</li>
+                        <li>• A type-safe registry that supports audit and expansion</li>
+                      </ul>
+                    </div>
+                    <div className="rounded-2xl border border-teal-500/20 bg-teal-500/5 p-6 space-y-3 dark:border-teal-500/20">
+                      <h3 className="font-bold text-lg text-slate-950 dark:text-white">
+                        Clarity for everyone else
+                      </h3>
+                      <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                        <li>• Browse by category, tag, or search instead of file paths</li>
+                        <li>• Plain-language descriptions and consistent labels</li>
+                        <li>• Visual previews that build trust before download</li>
+                        <li>• Clear, visible download paths — no obscure links</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="rounded-2xl border border-teal-500/20 bg-teal-500/5 p-6 dark:border-teal-500/20 space-y-2">
+                    <h3 className="font-bold text-slate-950 dark:text-white flex items-center gap-2">
+                      <span>🧭</span> Capability signal
+                    </h3>
+                    <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-4xl">
+                      What this demonstrates is spatial systems architecture and public data
+                      governance: designing trust, legibility, and metadata completeness into a
+                      catalog so integrity lives upstream at the source rather than in every
+                      downstream decision.
+                    </p>
+                  </div>
+                </section>
+
+                {/* Section 7: Boundaries & Reflection */}
+                <section id="gn-7" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-bold text-slate-950 dark:text-white">
+                      7. Boundaries &amp; Reflection
+                    </h2>
+                    <p className={`${semanticTokens.text.body} max-w-4xl`}>
+                      The work is held honestly within explicit limits — the claims are about design
+                      and implementation judgment, not measured outcomes.
+                    </p>
+                  </div>
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-[#0B0F19] space-y-3">
+                    <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-teal-600 dark:text-teal-400">
+                      Boundaries — what is not claimed
+                    </h3>
+                    <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                      {GUYNODE_BOUNDARIES.map((b) => (
+                        <li key={b} className="flex gap-2">
+                          <span className="text-teal-500">•</span>
+                          <span>{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="flex flex-wrap gap-4 text-sm font-semibold text-teal-600 dark:text-teal-400 pt-2">
+                    <Link
+                      to="/projects/guynode"
+                      className="hover:underline flex items-center gap-1"
+                    >
                       ← Back to the Project Entry
                     </Link>
                     <Link to={PROJECTS_HREF} className="hover:underline">
