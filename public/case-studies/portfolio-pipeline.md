@@ -23,6 +23,12 @@ in scope, gated by automated CI, and tracked through an auditable attribution le
 > Deeper process detail lives in the **Process & Governance deep dive** ([/deep-dives](/deep-dives)) —
 > this is the summary view.
 
+> **Related system — run-time governance:** this pipeline is the **build-time** delivery side of the
+> governance philosophy — how AI-assisted work gets safely built and shipped.
+> [Automation & Operational Protocols (Aegis / emOS)](/projects/project-aegis) extends the same
+> philosophy into the **workflow-control layer** — judge-vs-executor separation, human-in-the-loop
+> checkpoints, audit trails, and drift control while AI agents operate.
+
 **At a glance:** 50+ PRs merged · 6 AI tools orchestrated · 7 build phases · 10+ canonical routes.
 
 ## 🧭 Governance protocol — the safety brake

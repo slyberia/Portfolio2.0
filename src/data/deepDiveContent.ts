@@ -369,13 +369,13 @@ export type AutomationSystem = {
 };
 
 export const automationThesis =
-  'I treat AI not as a magic bullet but as an untrusted worker that must pass an explicit assertion check before its output is accepted. Across every system the philosophy is identical: separate the execution from the validation. Whether that check is enforced manually by me, programmatically by a strict CI pipeline, or autonomously by the Aegis judge, the governance architecture is what makes the AI safe to run in production.';
+  'I treat AI not as a magic bullet but as an untrusted worker that must pass an explicit assertion check before its output is accepted. Across every system the philosophy is identical: separate the execution from the validation. Whether that check is enforced manually by me, programmatically by a strict CI pipeline, or autonomously by the Aegis judge, the governance architecture is what makes the AI safe to run in production. The umbrella holds two layers of that one philosophy: the Portfolio 2.0 build pipeline is build-time governance — how AI-assisted work gets safely planned, validated, attributed, and shipped — while Aegis/emOS is run-time governance — how AI agents are bounded, judged, escalated, and audited while they operate.';
 
 export const automationSystems: AutomationSystem[] = [
   {
     id: 'portfolio-pipeline',
     name: 'Portfolio 2.0 build pipeline',
-    context: 'The governed AI build of this site.',
+    context: 'Build-time governance — the governed AI build of this site.',
     autonomy: 'Human-led, gated',
     guardian: 'Kyle (design authority) + CI gates',
     contributes:
@@ -388,7 +388,7 @@ export const automationSystems: AutomationSystem[] = [
   {
     id: 'aegis',
     name: 'Aegis',
-    context: 'The governance / validation layer — the judge.',
+    context: 'Run-time governance — the validation layer (the judge).',
     autonomy: 'Human-in-the-loop (HITL)',
     guardian: 'Kyle (algorithmic validation, human approval)',
     contributes:
@@ -401,7 +401,7 @@ export const automationSystems: AutomationSystem[] = [
   {
     id: 'emos',
     name: 'emOS',
-    context: 'The autonomous execution runtime — the workers.',
+    context: 'Run-time governance — the autonomous execution runtime (the workers).',
     autonomy: 'Autonomous',
     guardian: 'The Aegis engine (algorithmic judge)',
     contributes:

@@ -24,6 +24,12 @@ Aegis is a decoupled automation system that puts AI-generated work under an expl
 
 The two layers are fully decoupled and communicate asynchronously through a **private Notion database used as a headless, human-readable state machine** — so the whole pipeline's status is visible and auditable in a normal Notion workspace, with no bespoke dashboard to build or maintain.
 
+> **Related system — build-time governance:** Aegis / emOS is the **run-time / workflow-control** layer
+> — how AI agents are governed while they operate.
+> [Portfolio 2.0 — Governed AI Build Pipeline](/projects/portfolio-pipeline) shows the **build-time**
+> delivery side of the same governance model — PR discipline, attribution, CI gates, crawler
+> validation, and deploy readiness.
+
 ## The Evolution: human-governed → autonomous
 
 The system was built in two iterations, and that progression is the point.
