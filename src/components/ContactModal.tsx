@@ -87,7 +87,8 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, onCopyEmai
               Let's Connect
             </h2>
             <p className="text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
-              Currently accepting new opportunities in AI Operations & Customer Success.
+              Currently accepting new opportunities in forward-deployed engineering, implementation,
+              and AI workflow systems.
             </p>
           </div>
 
