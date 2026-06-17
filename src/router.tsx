@@ -222,12 +222,14 @@ export const AppLayout: React.FC = () => {
             <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
               <div className="space-y-8">
                 <h2 className="text-4xl font-outfit font-extrabold text-navy-900 dark:text-white">
-                  Open to AI-Forward{' '}
-                  <span className="text-tide-aqua">Customer Success and Solutions Roles</span>
+                  Open to{' '}
+                  <span className="text-tide-aqua">
+                    Forward-Deployed Engineering, Implementation &amp; Technical Systems Roles
+                  </span>
                 </h2>
                 <p className="text-slate-500 dark:text-slate-400 max-w-sm">
-                  I'm looking for my next challenge in an AI-forward company that values operational
-                  excellence.
+                  Seeking AI-forward teams that value operational clarity, adoption-ready systems,
+                  and evidence-backed implementation.
                 </p>
 
                 <div className="flex flex-wrap gap-4">
