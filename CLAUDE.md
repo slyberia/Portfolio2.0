@@ -11,16 +11,32 @@ copy — hero, About, project cards, case studies, deep dives, Digital Twin prom
 machine-readable crawler/LLM summaries — must stay consistent with this.
 
 - **Name:** Kyle Semple (never "Kyle Genesis" or any other variant).
-- **Primary title:** Forward Deployed Engineer.
-- **Central thesis:** _I help teams turn complex technical, operational, and spatial problems into systems people can understand, adopt, and use._
+- **Primary positioning (hybrid, FDE-anchored):** **Forward Deployed Engineer · Technical Systems Translator.**
+  - **Forward Deployed Engineer** remains the **searchable role anchor** (the conventional,
+    discoverable job title). It is _not_ being replaced or demoted.
+  - **Technical Systems Translator** is the **capability descriptor** that explains the value at
+    first read. The two appear **together, at the same first-read altitude** on global positioning
+    surfaces (after the F2+ implementation tracks land — see `docs/global-positioning-audit.md`).
+- **Central thesis (unchanged):** _I help teams turn complex technical, operational, and spatial problems into systems people can understand, adopt, and use._
 - **Supporting bridge:** _My work connects forward-deployed engineering, technical implementation, customer success, solutions/systems architecture, GIS, operations, and AI workflow design._
 
 Messaging guardrails:
 
+- **"Technical Systems Translator" is a capability descriptor, not a lead job title on its own,
+  and "Solutions Architect / Architect" is still rejected as the lead title** (overclaim of
+  enterprise-architect seniority — see `docs/positioning-refactor-plan.md` §2 and §7.4). The
+  hybrid model accepts the _descriptor_ "Technical Systems Translator" alongside the FDE anchor; it
+  does **not** promote "Solutions Architect & Technical Systems Translator" to the lead title. Do
+  not erase the descriptor and revert to FDE-only, and do not rename `Implementation Consultant`
+  back to `Solutions Architect`.
 - **Customer Success is an evidence layer, not the identity.** Do not claim CSM seniority,
-  a managed book of business, or ARR/NRR/renewal/expansion ownership anywhere.
-- **Role tracks are supporting metadata**, surfaced as role-relevance tags and lower-priority
-  lenses — never the primary homepage framing.
+  a managed book of business, or ARR/NRR/renewal/expansion ownership anywhere. Never reintroduce
+  "Customer Success" or "CSM" as a primary identity or a target role.
+- **Role tracks / role lenses are supporting metadata**, surfaced as role-relevance tags and
+  lower-priority lenses — never the primary homepage framing. FDE is **both** the anchor **and**
+  one role lens; Implementation, GIS/spatial systems, and AI workflow governance remain supporting
+  lenses. The role-lane taxonomy is fixed: `Forward Deployed Engineer`, `Implementation Consultant`,
+  `Spatial Systems Architect`, `AI Workflow / Portfolio Governance`.
 - **Do not invent** metrics or customers. The on-site project inventory is `luxe-lofts`,
   `ops-triage`, `guynode`, `digital-twin`, `project-aegis` (Automation & Operational Protocols —
   Aegis/emOS, published in 7.7b), `portfolio-pipeline` (Portfolio 2.0 — Governed AI Build Pipeline,

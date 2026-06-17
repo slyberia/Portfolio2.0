@@ -8,18 +8,32 @@ summary plus the current positioning north star.
 ## Positioning north star (keep all copy consistent with this)
 
 - **Name:** Kyle Semple — never "Kyle Genesis" or any other variant.
-- **Primary title:** Forward Deployed Engineer.
-- **Central thesis:** _I help teams turn complex technical, operational, and spatial problems into systems people can understand, adopt, and use._
+- **Primary positioning (hybrid, FDE-anchored):** **Forward Deployed Engineer · Technical Systems Translator.**
+  **Forward Deployed Engineer** is the searchable role anchor (not replaced, not demoted);
+  **Technical Systems Translator** is the co-equal capability descriptor that explains the value at
+  first read. The two appear together, at the same first-read altitude, on global positioning
+  surfaces once the F2+ implementation tracks land.
+- **Central thesis (unchanged):** _I help teams turn complex technical, operational, and spatial problems into systems people can understand, adopt, and use._
 - **Supporting bridge:** _My work connects forward-deployed engineering, technical implementation, customer success, solutions/systems architecture, GIS, operations, and AI workflow design._
 
-The site leads with this one argument. Role tracks are supporting metadata / lower-priority
-lenses, not the primary framing. The active workstream is **Phase 6 — Positioning Refactor**,
-detailed in `docs/positioning-refactor-plan.md`.
+The site leads with this one argument. Role tracks / role lenses are supporting metadata /
+lower-priority lenses, not the primary framing — FDE is **both** the anchor **and** one role lens.
+The role-lane taxonomy is fixed: `Forward Deployed Engineer`, `Implementation Consultant`,
+`Spatial Systems Architect`, `AI Workflow / Portfolio Governance`. The active workstream is
+**Phase 6 — Positioning Refactor**, detailed in `docs/positioning-refactor-plan.md`; the global
+positioning decision is recorded in `docs/global-positioning-audit.md` (Track F0).
 
 ## Hard guardrails
 
+- **Hybrid title, not an Architect promotion.** Accept **Technical Systems Translator** as a
+  capability descriptor alongside the **Forward Deployed Engineer** anchor. "Solutions Architect /
+  Architect" is still **rejected** as the lead title (overclaim of enterprise-architect seniority —
+  see `docs/positioning-refactor-plan.md` §2/§7.4). Do not promote "Solutions Architect & Technical
+  Systems Translator" to the lead title, do not rename `Implementation Consultant` back to
+  `Solutions Architect`, and do not erase the descriptor to revert to FDE-only.
 - **Customer Success is an evidence layer, not the identity.** No CSM seniority, managed book
-  of business, or ARR/NRR/renewal/expansion claims anywhere.
+  of business, or ARR/NRR/renewal/expansion claims anywhere. Never reintroduce "Customer Success"
+  or "CSM" as a primary identity or target role.
 - **Do not invent** metrics or customers. On-site inventory: `luxe-lofts`, `ops-triage`,
   `guynode`, `digital-twin`, `project-aegis` (Automation & Operational Protocols — Aegis/emOS,
   published in 7.7b), `portfolio-pipeline` (Portfolio 2.0 — Governed AI Build Pipeline, 7.8),

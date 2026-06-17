@@ -28,6 +28,21 @@ attached as evidence.
 
 ## 2. Canonical positioning (authoritative — use verbatim)
 
+> **Status update (Track F1, current — supersedes the "Primary title" cell below as the canonical
+> first-read model).** The global positioning audit (`docs/global-positioning-audit.md`, Track F0)
+> selected a **hybrid, FDE-anchored** model. The canonical primary positioning is now:
+>
+> > **Forward Deployed Engineer · Technical Systems Translator**
+>
+> - **Forward Deployed Engineer** remains the searchable role anchor — _not_ replaced, _not_
+>   demoted. The "Primary title" row below and the FDE-first hero copy in §6.1 stay valid for the
+>   anchor; F2+ adds the **Technical Systems Translator** capability descriptor at the same
+>   first-read altitude.
+> - This does **not** reverse the anti-overclaim logic in correction #1 below: "Solutions Architect
+>   / Architect" is still rejected as the lead title; only the _descriptor_ "Technical Systems
+>   Translator" is accepted, paired with the FDE anchor. CS stays evidence-only; the role-lane
+>   taxonomy is unchanged. App/machine surfaces are updated in later tracks (F2–F6), not F1.
+
 | Field             | Value                                                                                                                                                                 |
 | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Name              | **Kyle Semple**                                                                                                                                                       |
@@ -55,6 +70,15 @@ The Codex brief contained errors that MUST NOT propagate into the site:
    The chosen primary title is **Forward Deployed Engineer** (best evidence match, searchable,
    avoids overclaiming enterprise-architect seniority). The "systems translator" line is kept
    only as the supporting thesis sentence, never as the job-title anchor.
+
+   > **Status update (Track F1, current).** The anti-overclaim half of this correction still
+   > stands: **"Solutions Architect / Architect" remains rejected as the lead title.** What
+   > changed is narrower — Track F0 accepts **"Technical Systems Translator"** as a co-equal
+   > **capability descriptor** paired with the FDE anchor (Forward Deployed Engineer · Technical
+   > Systems Translator), surfaced at first-read altitude rather than buried in the thesis
+   > sentence. FDE stays the searchable anchor; the descriptor is _not_ a job-title promotion of
+   > "Solutions Architect."
+
 2. **Name.** The brief wrote "Kyle Genesis." The correct name is **Kyle Semple**. The string
    "Kyle Genesis" must appear nowhere.
 3. **Projects not in the repo.** The brief supplied ready-made card/case-study copy for
@@ -614,16 +638,43 @@ Governance` pointed at `project-aegis`, which is **not** a listed Library entry 
 
 Run one track at a time under the Sequential Execution Protocol; do not pre-build later tracks.
 
-| Track | Scope                                                                 | Status       |
-| ----- | --------------------------------------------------------------------- | ------------ |
-| **A** | Correct the **Northern Grind project entry** (tooling + evidence)     | ✅ Done      |
-| **B** | Correct the **Northern Grind deep dive** (align with the entry)       | ✅ Done      |
-| **C** | **Template & governance update** — define the decision-evidence layer | ◀ This track |
-| **D** | Apply the decision-evidence layer to **project entries**              | ⏳ Future    |
-| **E** | Apply the decision-evidence layer to **deep dives**                   | ⏳ Future    |
-| **F** | Optional **global positioning cleanup** (FDE vs. systems-translator)  | ⏳ Optional  |
+| Track | Scope                                                                   | Status        |
+| ----- | ----------------------------------------------------------------------- | ------------- |
+| **A** | Correct the **Northern Grind project entry** (tooling + evidence)       | ✅ Done       |
+| **B** | Correct the **Northern Grind deep dive** (align with the entry)         | ✅ Done       |
+| **C** | **Template & governance update** — define the decision-evidence layer   | ◀ This track  |
+| **D** | Apply the decision-evidence layer to **project entries**                | ⏳ Future     |
+| **E** | Apply the decision-evidence layer to **deep dives**                     | ⏳ Future     |
+| **F** | **Global positioning cleanup** (hybrid, FDE-anchored) — see F0–F6 below | ◀ In progress |
 
 **Track C does not perform D, E, or F.** Applying the new standard to existing entries is
 deliberately deferred so each application is a reviewable, one-track-at-a-time change. Track C is
 documentation only: it must not rewrite project entries, deep dives, homepage copy, footer CTA,
 role taxonomy, or route behavior.
+
+### Track F — global positioning (hybrid, FDE-anchored)
+
+Track F was promoted from "optional" once the global-layer critique persisted after A–E. It runs as
+a gated F0–F6 sequence under the Sequential Execution Protocol (one sub-track at a time, validate,
+commit, STOP). The canonical decision and full reasoning live in `docs/global-positioning-audit.md`.
+
+| Sub-track | Scope                                                                                       | Status       |
+| --------- | ------------------------------------------------------------------------------------------- | ------------ |
+| **F0**    | Global positioning audit & recommendation (`docs/global-positioning-audit.md`)              | ✅ Done      |
+| **F1**    | Update canonical positioning docs (`CLAUDE.md`, `AGENTS.md`, this plan) to the hybrid model | ◀ This track |
+| **F2**    | Homepage hero / **footer CTA** / role-lens copy                                             | ⏳ Future    |
+| **F3**    | Verify/align project-card labels & capability-first metadata                                | ⏳ Future    |
+| **F4**    | Portfolio 2.0 positioning / product-development evidence (entry + process deep dive)        | ⏳ Future    |
+| **F5**    | Digital Twin / crawler / AI-readable positioning text                                       | ⏳ Future    |
+| **F6**    | Final live-site review & regression check                                                   | ⏳ Future    |
+
+- **The decision (canonical):** `Forward Deployed Engineer · Technical Systems Translator` — FDE is
+  the searchable role anchor; "Technical Systems Translator" is the co-equal capability descriptor.
+  Thesis unchanged; CS evidence-only; "Solutions Architect / Architect" still rejected as lead
+  title; role-lane taxonomy unchanged.
+- **F1 (this track) is docs-only.** It records the decision in the canonical docs so later tracks
+  inherit it. It must **not** edit app copy, footer CTA, role taxonomy, project metadata, project
+  entries, deep dives, SEO, the Digital Twin prompt, crawler scripts, or generated crawler output —
+  those are F2–F6. The known footer-CTA contradiction (`src/router.tsx`, "Customer Success and
+  Solutions Roles") is flagged in F0 and fixed in **F2**, not here.
+- **Do not execute F2–F6 in this track.**
