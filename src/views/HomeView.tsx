@@ -338,8 +338,8 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                 <h1 className="text-5xl md:text-6xl font-outfit font-bold tracking-tight text-ink-navy dark:text-white">
                   Kyle Semple
                 </h1>
-                <p className="text-xl md:text-2xl font-outfit font-semibold text-tide-aqua dark:text-tide-sky">
-                  Forward Deployed Engineer
+                <p className="text-xl md:text-2xl font-outfit font-semibold text-tide-aqua dark:text-tide-sky text-balance">
+                  Forward Deployed Engineer · Technical Systems Translator
                 </p>
                 {/* Gild-led rule: a deliberate secondary-accent moment */}
                 <div className="flex items-center gap-2 w-full max-w-md" aria-hidden="true">
@@ -351,9 +351,8 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                   systems people can understand, adopt, and use.
                 </p>
                 <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl">
-                  My work connects forward-deployed engineering, technical implementation, customer
-                  success, solutions and systems architecture, GIS, operations, and AI workflow
-                  design.
+                  My work connects implementation, GIS and spatial systems, operations, AI workflow
+                  governance, and stakeholder-facing tools into adoption-ready systems.
                 </p>
               </div>
 
@@ -523,7 +522,8 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
               Explore by Role Lens
             </h2>
             <p className="mt-3 text-sm md:text-base text-slate-600 dark:text-slate-300">
-              Optional — the same work, filtered to how a specific role evaluates it.
+              Optional — the same body of work, filtered to how a specific role evaluates it. These
+              are evidence lenses, not separate identities.
             </p>
           </div>
 

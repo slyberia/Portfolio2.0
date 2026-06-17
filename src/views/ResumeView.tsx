@@ -8,7 +8,9 @@ const ResumeView: React.FC = () => {
       {/* Header */}
       <header className="mb-10 text-center sm:text-left">
         <h1 className="text-4xl font-bold mb-1">Kyle Semple</h1>
-        <p className="text-base font-semibold text-slate-700 mb-2">Forward Deployed Engineer</p>
+        <p className="text-base font-semibold text-slate-700 mb-2">
+          Forward Deployed Engineer · Technical Systems Translator
+        </p>
         <div className="text-sm text-slate-600 flex flex-wrap gap-x-3 gap-y-1 justify-center sm:justify-start">
           <span>Washtenaw County, MI</span>
           <span className="hidden sm:inline">•</span>
@@ -34,8 +36,8 @@ const ResumeView: React.FC = () => {
           AI-assisted web systems, turn ambiguous goals into structured delivery, and bring real
           technical-support and data-operations rigor to customer-facing work — translating complex
           technical, operational, and spatial problems into systems people can understand, adopt,
-          and use. Targeting Forward Deployed Engineer, Implementation Engineer, and Technical
-          Customer Success roles in AI-adjacent products.
+          and use. Targeting Forward Deployed Engineer, Implementation Engineer, and technical
+          systems roles in AI-adjacent products.
         </p>
       </section>
 
