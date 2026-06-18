@@ -1,10 +1,13 @@
 import React from 'react';
 import { EXPERIENCE, CERTIFICATIONS } from '../constants';
-import { componentRecipes } from '../lib/design-system';
+import ResumeActions from '../components/ResumeActions';
 
 const ResumeView: React.FC = () => {
   return (
     <div className="min-h-screen bg-ink-panel dark:bg-ink-deep text-ink-navy dark:text-slate-200 selection:bg-tide-aqua selection:text-white font-sans px-8 pt-24 pb-8 md:p-16 max-w-[8.5in] mx-auto shadow-2xl print:shadow-none print:p-0">
+      {/* Download / share actions */}
+      <ResumeActions />
+
       {/* Header */}
       <header className="mb-10 text-center sm:text-left">
         <h1 className="text-4xl font-bold mb-1">Kyle Semple</h1>
@@ -145,30 +148,6 @@ const ResumeView: React.FC = () => {
           </li>
         </ul>
       </section>
-
-      {/* Print Trigger */}
-      <div className="fixed bottom-8 right-8 print:hidden">
-        <button
-          onClick={() => window.print()}
-          className={`px-6 py-3 rounded-xl font-bold shadow-xl transition-all flex items-center gap-2 ${componentRecipes.button.primary}`}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-5 h-5"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polyline points="6 9 6 2 18 2 18 9" />
-            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
-            <rect width="12" height="8" x="6" y="14" />
-          </svg>
-          Print to PDF
-        </button>
-      </div>
     </div>
   );
 };

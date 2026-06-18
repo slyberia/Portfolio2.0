@@ -25,7 +25,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({ onNavigate, onAction })
     { id: 'skills', label: 'Go to Skills', type: 'nav', path: '#skills' },
     { id: 'case-studies', label: 'View Supporting Evidence', type: 'nav', path: 'case-study' },
     { id: 'contact', label: 'Get in Touch', type: 'action', action: 'contact' },
-    { id: 'resume', label: 'Download Resume', type: 'action', action: 'resume' },
+    { id: 'resume', label: 'View Resume', type: 'action', action: 'resume' },
   ];
 
   const filteredActions = actions.filter((action) =>
