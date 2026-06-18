@@ -41,7 +41,7 @@ Legend for where each answer lands:
    _Model (Guynode):_ GIS · Spatial Data · Dataset Cataloging · Metadata · Leaflet · GeoJSON ·
    Data QA / Validation · Documentation. **[REG tags]**
 10. **Role relevance** — which canonical lanes does this prove? Choose from: Forward Deployed
-    Engineer · Spatial Systems Architect · Solutions Architect · AI Workflow / Portfolio
+    Engineer · Implementation Consultant · Spatial Systems Architect · AI Workflow / Portfolio
     Governance. (List in priority order.) **[META canonicalRoleLanes / REG roleLanes]**
 11. **Filters it belongs under** (any of: Implementation · QA · GIS · AI Systems · Process).
     **[META filters]**
