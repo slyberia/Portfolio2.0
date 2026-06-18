@@ -3,9 +3,11 @@
 This file is a crawler-readable companion to the React app. It highlights stable non-JS discovery paths and markdown mirrors.
 
 ## About Kyle Semple
-Kyle Semple is a **Forward Deployed Engineer**. He helps teams turn complex technical, operational, and spatial problems into systems people can understand, adopt, and use. His work connects forward-deployed engineering, technical implementation, customer success (as an evidence layer, not a managed book of business), solutions/systems architecture, GIS/spatial systems, operations, and AI workflow design.
+Kyle Semple is a **Forward Deployed Engineer · Technical Systems Translator**. Forward Deployed Engineer is the searchable role anchor; Technical Systems Translator is the capability descriptor that explains the value at first read. He helps teams turn complex technical, operational, and spatial problems into systems people can understand, adopt, and use. His work connects implementation, GIS/spatial systems, operations, AI workflow governance, and stakeholder-facing systems. Customer success appears only as an evidence layer (support and triage experience), not a managed book of business or a target identity.
 
-Role-relevance lenses (forward-deployed engineering, solutions/systems architecture, GIS/spatial systems) are supporting metadata on a single thesis — not separate identities.
+Role-relevance lenses (Forward Deployed Engineer, Implementation Consultant, Spatial Systems Architect, AI Workflow / Portfolio Governance) are supporting metadata on a single thesis — not separate identities.
+
+Portfolio 2.0 (the governed AI build pipeline behind this site) demonstrates both build governance — AI-assisted delivery under a one-subphase protocol, CI gates, drift-guards, and an attribution ledger — and positioning/evidence architecture: the portfolio's own copy and case-study structure treated as a product system to make capability and judgment easier to recognize.
 
 ## Static discovery pages
 - /ai-index

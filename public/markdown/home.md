@@ -6,4 +6,4 @@
 - **canonical app route:** /
 - **last updated:** 2026-05-02
 
-This portfolio presents systems-oriented project evidence with an emphasis on AI-assisted workflow governance and operational reliability.
+Kyle Semple is a Forward Deployed Engineer · Technical Systems Translator — Forward Deployed Engineer is the searchable role anchor; Technical Systems Translator is the capability descriptor that explains the value at first read. This portfolio presents systems-oriented project evidence with an emphasis on AI-assisted workflow governance and operational reliability.
