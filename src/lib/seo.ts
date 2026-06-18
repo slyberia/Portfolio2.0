@@ -56,9 +56,9 @@ const sharedProjectJsonLd = PROJECT_METADATA.filter(
 
 export const getSeoForPath = (pathname: string): RouteSeo => {
   const defaults: RouteSeo = {
-    title: 'Kyle Semple — Forward Deployed Engineer',
+    title: 'Kyle Semple — Forward Deployed Engineer · Technical Systems Translator',
     description:
-      'Kyle Semple is a Forward Deployed Engineer who turns complex technical, operational, and spatial problems into systems people can understand, adopt, and use — across technical implementation, customer success (as evidence), GIS/spatial systems, operations triage, and AI workflow design.',
+      'Kyle Semple is a Forward Deployed Engineer · Technical Systems Translator who turns complex technical, operational, and spatial problems into systems people can understand, adopt, and use — across technical implementation, customer success (as evidence), GIS/spatial systems, operations triage, and AI workflow design.',
     canonicalPath: pathname,
     jsonLd: [],
   };
@@ -153,7 +153,7 @@ export const getSeoForPath = (pathname: string): RouteSeo => {
     '/resume': {
       title: 'Kyle Semple Resume Summary',
       description:
-        'Resume summary for Kyle Semple, Forward Deployed Engineer: turning complex technical, operational, and spatial problems into adopted systems, with implementation, GIS, operations, and AI workflow evidence.',
+        'Resume summary for Kyle Semple, Forward Deployed Engineer · Technical Systems Translator: turning complex technical, operational, and spatial problems into adopted systems, with implementation, GIS, operations, and AI workflow evidence.',
       canonicalPath: '/resume',
       markdownPath: '/markdown/resume.md',
       jsonLd: [
@@ -161,7 +161,7 @@ export const getSeoForPath = (pathname: string): RouteSeo => {
         profilePage(
           '/resume',
           'Resume Summary',
-          'Forward Deployed Engineer turning complex technical, operational, and spatial problems into adopted systems.',
+          'Forward Deployed Engineer · Technical Systems Translator turning complex technical, operational, and spatial problems into adopted systems.',
         ),
       ],
     },

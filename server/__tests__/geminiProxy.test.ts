@@ -200,8 +200,9 @@ describe('geminiProxy', () => {
     const createCall = MockGoogleGenAI.mock.results[0].value.chats.create;
     const prompt = createCall.mock.calls[0][0].config.systemInstruction as string;
 
-    // Positioning: FDE thesis-first, correct name
+    // Positioning: hybrid FDE-anchored model, thesis-first, correct name
     expect(prompt).toContain('Forward Deployed Engineer');
+    expect(prompt).toContain('Technical Systems Translator');
     expect(prompt).toContain('understand, adopt, and use');
     expect(prompt).toContain('Route by need');
 
