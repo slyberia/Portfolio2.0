@@ -48,9 +48,9 @@ const routes = [
   ],
   [
     '/tracks/solutions-architect',
-    'Role Lens: Solutions / Systems Architecture',
-    'Solutions architecture lens: validation, issue triage, failure planning, and QA-backed reliability that keep delivered systems trustworthy.',
-    'Solutions / Systems Architecture (Role Lens)',
+    'Role Lens: Implementation Consultant',
+    'Implementation Consultant lens: validation, issue triage, launch-readiness review, and QA-backed reliability that de-risk adoption and keep delivered systems trustworthy.',
+    'Implementation Consultant (Role Lens)',
     'A role-relevance lens on Kyle’s work: validation discipline, triage frameworks, failure planning, and QA-backed reliability behind the systems he ships.',
     ['/projects/ops-triage', '/projects/digital-twin', '/deep-dives'],
     '/markdown/tracks/solutions-architect.md',
@@ -74,8 +74,8 @@ const routes = [
   ],
   [
     '/apply/solutions-architect',
-    'Start Path: Solutions / Systems Architecture',
-    'Recruiter start path with curated proof for solutions/systems architecture and QA-backed reliability roles.',
+    'Start Path: Implementation Consultant',
+    'Recruiter start path with curated proof for implementation-consultant work: validation, launch-readiness review, and QA-backed reliability.',
     'Implementation Consulting Proof Bundle',
     'A curated subset of validation, triage, and reliability evidence assembled for hiring teams.',
     ['/tracks/solutions-architect', '/projects/ops-triage', '/projects/digital-twin'],
