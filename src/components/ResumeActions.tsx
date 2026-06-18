@@ -1,17 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { interactionStyles } from '../lib/design-system';
+import { RESUME_CONTENT } from '../data/resumeContent';
 
-// Compact, professional action bar for the resume page. Provides print/save, link
-// copying, native share (when supported), and direct email / LinkedIn share — all
-// without third-party scripts, SDKs, or tracking. No real PDF asset exists in the
-// repo yet, so "Print / Save PDF" honestly maps to the browser print dialog rather
-// than masquerading as a direct file download.
-// TODO: when a real /Kyle-Semple-Resume.pdf asset is added to public/, swap the
-// "Print / Save PDF" button for a direct `<a href download>` labeled "Download PDF".
+// Compact, professional action bar for the résumé page. Primary action is a real PDF
+// download (public/Kyle-Semple-Resume.pdf, generated from the dedicated print template);
+// Print / Save PDF remains as a secondary browser-print fallback. Sharing covers link
+// copy, native share (when supported), email (mailto), Gmail compose, and LinkedIn — all
+// without third-party scripts, SDKs, or tracking.
 
-const POSITIONING_LINE = 'Forward Deployed Engineer · Technical Systems Translator';
+const RESUME_PDF_PATH = '/Kyle-Semple-Resume.pdf';
+const SHARE_SUBJECT = 'Kyle Semple Resume';
+const POSITIONING_LINE = RESUME_CONTENT.title;
 
-const buttonClass = `inline-flex items-center gap-2 rounded-lg border border-ink-border bg-white px-3.5 py-2 text-sm font-semibold text-ink-navy transition-colors hover:bg-ink-mist dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800 ${interactionStyles.focusVisible}`;
+const baseButton = `inline-flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-semibold transition-colors ${interactionStyles.focusVisible}`;
+const primaryButtonClass = `${baseButton} bg-tide-aqua text-white hover:bg-tide-aqua/90`;
+const buttonClass = `${baseButton} border border-ink-border bg-white text-ink-navy hover:bg-ink-mist dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800`;
 
 const iconProps = {
   className: 'w-4 h-4 shrink-0',
@@ -30,7 +33,7 @@ const ResumeActions: React.FC = () => {
   const feedbackTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Feature-detect the Web Share API on mount; desktop browser support varies, so the
-  // explicit Email / LinkedIn / Copy buttons remain the reliable cross-browser path.
+  // explicit Email / Gmail / LinkedIn / Copy buttons remain the reliable cross-browser path.
   useEffect(() => {
     setCanNativeShare(typeof navigator !== 'undefined' && typeof navigator.share === 'function');
     return () => {
@@ -39,6 +42,7 @@ const ResumeActions: React.FC = () => {
   }, []);
 
   const resumeUrl = typeof window !== 'undefined' ? `${window.location.origin}/resume` : '/resume';
+  const shareBody = `${POSITIONING_LINE}\n\nResume: ${resumeUrl}`;
 
   const announce = (message: string) => {
     setFeedback(message);
@@ -65,7 +69,7 @@ const ResumeActions: React.FC = () => {
   const handleShare = async () => {
     try {
       await navigator.share({
-        title: 'Kyle Semple Resume',
+        title: SHARE_SUBJECT,
         text: POSITIONING_LINE,
         url: resumeUrl,
       });
@@ -75,9 +79,13 @@ const ResumeActions: React.FC = () => {
     }
   };
 
-  const mailtoHref = `mailto:?subject=${encodeURIComponent(
-    'Kyle Semple Resume',
-  )}&body=${encodeURIComponent(`${POSITIONING_LINE}\n\nResume: ${resumeUrl}`)}`;
+  const mailtoHref = `mailto:?subject=${encodeURIComponent(SHARE_SUBJECT)}&body=${encodeURIComponent(
+    shareBody,
+  )}`;
+
+  const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&su=${encodeURIComponent(
+    SHARE_SUBJECT,
+  )}&body=${encodeURIComponent(shareBody)}`;
 
   const linkedInHref = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
     resumeUrl,
@@ -86,6 +94,15 @@ const ResumeActions: React.FC = () => {
   return (
     <div className="mb-8 print:hidden">
       <div className="flex flex-wrap items-center gap-2.5">
+        <a href={RESUME_PDF_PATH} download className={primaryButtonClass}>
+          <svg {...iconProps}>
+            <path d="M12 3v12" />
+            <path d="m7 10 5 5 5-5" />
+            <path d="M5 21h14" />
+          </svg>
+          Download PDF
+        </a>
+
         <button type="button" onClick={handlePrint} className={buttonClass}>
           <svg {...iconProps}>
             <polyline points="6 9 6 2 18 2 18 9" />
@@ -122,6 +139,14 @@ const ResumeActions: React.FC = () => {
             <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
           </svg>
           Email
+        </a>
+
+        <a href={gmailHref} target="_blank" rel="noopener noreferrer" className={buttonClass}>
+          <svg {...iconProps}>
+            <rect width="20" height="16" x="2" y="4" rx="2" />
+            <path d="m2 7 10 6 10-6" />
+          </svg>
+          Gmail
         </a>
 
         <a href={linkedInHref} target="_blank" rel="noopener noreferrer" className={buttonClass}>

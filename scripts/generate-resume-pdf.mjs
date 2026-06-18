@@ -1,48 +1,103 @@
 /**
  * SCRIPTS/GENERATE-RESUME-PDF.MJS
  *
- * Renders the on-site /resume route (the positioning-compliant ResumeView) to a PDF
- * using Playwright's print engine. This produces a downloadable asset that matches the
- * live site exactly, rather than a separately-authored document that could drift from it.
+ * Renders the dedicated /resume/print template (ResumePrintTemplate) to a one-page,
+ * print-native PDF using Playwright's print engine. The template and the on-site résumé
+ * share RESUME_CONTENT, so the downloadable asset stays in sync with the site without
+ * inheriting the screen page's cards, shadows, or tinted background.
+ *
+ * The script serves the built `dist/` itself (static server with SPA fallback) so the
+ * whole render runs in a single process — no separate dev/preview server required.
  *
  * Usage:
- *   BASE_URL=http://localhost:4173 OUT=/tmp/Kyle-Semple-Resume.pdf node scripts/generate-resume-pdf.mjs
+ *   npm run build
+ *   OUT=public/Kyle-Semple-Resume.pdf node scripts/generate-resume-pdf.mjs
  */
 
 import { chromium } from 'playwright';
+import http from 'node:http';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const BASE_URL = process.env.BASE_URL || 'http://localhost:4173';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = path.resolve(__dirname, '..');
+const DIST = path.join(ROOT, 'dist');
 const OUT = process.env.OUT || 'public/Kyle-Semple-Resume.pdf';
 // The sandbox ships a pre-installed Chromium that may not match the pinned revision;
 // allow an explicit binary path so generation works without a network download.
 const EXECUTABLE_PATH = process.env.PW_CHROMIUM_PATH || undefined;
 
-async function generate() {
-  console.log(`--- RESUME PDF GENERATION ---`);
-  console.log(`Base URL: ${BASE_URL}`);
-  console.log(`Output:   ${OUT}`);
+const MIME = {
+  '.html': 'text/html',
+  '.js': 'text/javascript',
+  '.css': 'text/css',
+  '.json': 'application/json',
+  '.svg': 'image/svg+xml',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp',
+  '.woff': 'font/woff',
+  '.woff2': 'font/woff2',
+  '.ico': 'image/x-icon',
+};
 
-  const browser = await chromium.launch({
-    headless: true,
-    executablePath: EXECUTABLE_PATH,
+function startStaticServer() {
+  if (!fs.existsSync(DIST)) {
+    throw new Error(`dist/ not found at ${DIST}. Run \`npm run build\` first.`);
+  }
+  const server = http.createServer((req, res) => {
+    const urlPath = decodeURIComponent((req.url || '/').split('?')[0]);
+    let filePath = path.join(DIST, urlPath);
+    // SPA fallback: anything without a file extension serves index.html so client
+    // routing (e.g. /resume/print) resolves.
+    if (!path.extname(filePath) || !fs.existsSync(filePath)) {
+      filePath = path.join(DIST, 'index.html');
+    }
+    fs.readFile(filePath, (err, data) => {
+      if (err) {
+        res.writeHead(404);
+        res.end('Not found');
+        return;
+      }
+      res.writeHead(200, {
+        'Content-Type': MIME[path.extname(filePath)] || 'application/octet-stream',
+      });
+      res.end(data);
+    });
   });
-  // Light scheme keeps the printable resume on a white background with black body copy.
+  return new Promise((resolve) => {
+    server.listen(0, '127.0.0.1', () => resolve(server));
+  });
+}
+
+async function generate() {
+  console.log('--- RESUME PDF GENERATION ---');
+  const server = await startStaticServer();
+  const { port } = server.address();
+  const baseUrl = `http://127.0.0.1:${port}`;
+  console.log(`Serving dist/ at ${baseUrl}`);
+  console.log(`Output: ${OUT}`);
+
+  const browser = await chromium.launch({ headless: true, executablePath: EXECUTABLE_PATH });
+  // Light scheme keeps the printable résumé on a white background with black body copy.
   const context = await browser.newContext({ colorScheme: 'light' });
   const page = await context.newPage();
 
   try {
-    await page.goto(`${BASE_URL}/resume`, { waitUntil: 'networkidle' });
-    // The action bar is print:hidden; force print emulation so page.pdf() matches it.
+    await page.goto(`${baseUrl}/resume/print`, { waitUntil: 'networkidle' });
     await page.emulateMedia({ media: 'print' });
     await page.pdf({
       path: OUT,
-      format: 'Letter',
       printBackground: true,
-      margin: { top: '0.5in', bottom: '0.5in', left: '0.5in', right: '0.5in' },
+      // Honor the template's own `@page { size: letter; margin: ... }` declaration.
+      preferCSSPageSize: true,
     });
     console.log(`✓ Wrote ${OUT}`);
   } finally {
     await browser.close();
+    server.close();
   }
 }
 
