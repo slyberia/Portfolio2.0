@@ -90,6 +90,32 @@ dev dependencies, drops the runtime to a **non-root `appuser`**, and ships the s
   enforced by the CI key-audit + gitleaks.
 - **Supply-chain risk** → all CI actions pinned to immutable commit SHAs.
 
+## 🧩 Positioning & evidence architecture
+
+Portfolio 2.0 also treated the portfolio's own copy and case-study structure as a product system —
+not just a website built with AI. The build governance above decides how AI-assisted work gets
+planned, validated, attributed, and shipped. **Evidence governance** decides how that work gets
+framed, grouped, and explained, so a reader can recognize the capability and judgment behind it.
+
+An initial AI-assisted positioning hypothesis used "Forward Deployed Engineer" as a plausible role
+anchor because the work spans implementation, AI workflow governance, GIS/spatial systems,
+operations, and stakeholder-facing systems. The title was evidence-supported — but later human
+review found it could create first-read friction unless the work was organized around clearer
+decision evidence. The issue was reader recognition, not accuracy.
+
+That review drove a simple corrective chain: **strong underlying work → clear role framing →
+evidence grouped by decision type → reader recognition → stronger hiring signal.** The remediation
+corrected project entries, defined and applied a decision-evidence authoring standard, expanded and
+indexed the deep-dive inventory, and verified project cards as capability-first. The role label
+settled into a hybrid model — **Forward Deployed Engineer · Technical Systems Translator** — where
+FDE remains the searchable anchor and "Technical Systems Translator" clarifies the capability at
+first read. FDE was refined, not abandoned.
+
+Treated this way, the AI-assisted recommendation was an **input**, human product judgment was the
+**evaluation**, and the portfolio restructuring was the **implementation**. The portfolio presents
+itself as a governed product: a system for making technical judgment, implementation maturity, and
+stakeholder value easier to recognize.
+
 ## 🤝 Customer / Stakeholder Value
 
 **Who it helps:** anyone evaluating whether AI-assisted work can be trusted in a real codebase.
