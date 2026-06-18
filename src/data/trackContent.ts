@@ -165,7 +165,7 @@ export const implementationTrackContent: TrackPageContent = {
   ctaTitle: 'Next Step',
   ctaCopy: 'Review implementation-focused proof artifacts or move directly to resume and contact.',
   ctaActions: [
-    { label: 'Download Resume', href: '/resume' },
+    { label: 'View Resume', href: '/resume' },
     { label: 'View Luxe Lofts Prototype', href: '/projects/luxe-lofts' },
     {
       label: 'Ask the Digital Twin About Implementation Fit',
@@ -273,7 +273,7 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
   ctaTitle: 'Next Step',
   ctaCopy: 'Inspect validation proof artifacts or continue to resume and contact.',
   ctaActions: [
-    { label: 'Download Resume', href: '/resume' },
+    { label: 'View Resume', href: '/resume' },
     { label: 'Explore the Triage Simulator', href: '/projects/ops-triage' },
     {
       label: 'Ask the Digital Twin About Implementation & Validation Proof',
@@ -384,7 +384,7 @@ export const gisTrackContent: TrackPageContent = {
   ctaTitle: 'Next Step',
   ctaCopy: 'Review GIS system proof or move directly to resume and contact.',
   ctaActions: [
-    { label: 'Download Resume', href: '/resume' },
+    { label: 'View Resume', href: '/resume' },
     { label: 'View Guynode System', href: GUYNODE_SYSTEM_HREF },
     {
       label: 'Ask the Digital Twin About GIS Experience',

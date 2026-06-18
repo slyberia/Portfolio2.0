@@ -1,26 +1,43 @@
 import React from 'react';
-import { EXPERIENCE, CERTIFICATIONS } from '../constants';
-import { componentRecipes } from '../lib/design-system';
+import ResumeActions from '../components/ResumeActions';
+import { RESUME_CONTENT } from '../data/resumeContent';
 
 const ResumeView: React.FC = () => {
+  const {
+    name,
+    title,
+    location,
+    phone,
+    email,
+    linkedInUrl,
+    summary,
+    experience,
+    coreSkills,
+    tools,
+    education,
+    certifications,
+    additional,
+  } = RESUME_CONTENT;
+
   return (
     <div className="min-h-screen bg-ink-panel dark:bg-ink-deep text-ink-navy dark:text-slate-200 selection:bg-tide-aqua selection:text-white font-sans px-8 pt-24 pb-8 md:p-16 max-w-[8.5in] mx-auto shadow-2xl print:shadow-none print:p-0">
+      {/* Download / share actions */}
+      <ResumeActions />
+
       {/* Header */}
       <header className="mb-10 text-center sm:text-left">
-        <h1 className="text-4xl font-bold mb-1">Kyle Semple</h1>
-        <p className="text-base font-semibold text-slate-700 mb-2">
-          Forward Deployed Engineer · Technical Systems Translator
-        </p>
+        <h1 className="text-4xl font-bold mb-1">{name}</h1>
+        <p className="text-base font-semibold text-slate-700 mb-2">{title}</p>
         <div className="text-sm text-slate-600 flex flex-wrap gap-x-3 gap-y-1 justify-center sm:justify-start">
-          <span>Washtenaw County, MI</span>
+          <span>{location}</span>
           <span className="hidden sm:inline">•</span>
-          <span>734-882-9095</span>
+          <span>{phone}</span>
           <span className="hidden sm:inline">•</span>
-          <a href="mailto:kmsemple26@gmail.com" className="text-tide-aqua">
-            kmsemple26@gmail.com
+          <a href={`mailto:${email}`} className="text-tide-aqua">
+            {email}
           </a>
           <span className="hidden sm:inline">•</span>
-          <a href="https://www.linkedin.com/in/kyle-semple-522537165/" className="text-tide-aqua">
+          <a href={linkedInUrl} className="text-tide-aqua">
             LinkedIn
           </a>
         </div>
@@ -31,14 +48,7 @@ const ResumeView: React.FC = () => {
         <h2 className="text-lg font-bold uppercase tracking-widest border-b-2 border-slate-900 pb-1 mb-4">
           Professional Summary
         </h2>
-        <p className="text-sm leading-relaxed text-slate-800">
-          Forward Deployed Engineer and customer-facing technical operator. I build and ship
-          AI-assisted web systems, turn ambiguous goals into structured delivery, and bring real
-          technical-support and data-operations rigor to customer-facing work — translating complex
-          technical, operational, and spatial problems into systems people can understand, adopt,
-          and use. Targeting Forward Deployed Engineer, Implementation Engineer, and technical
-          systems roles in AI-adjacent products.
-        </p>
+        <p className="text-sm leading-relaxed text-slate-800">{summary}</p>
       </section>
 
       {/* Experience */}
@@ -47,7 +57,7 @@ const ResumeView: React.FC = () => {
           Experience
         </h2>
         <div className="space-y-8">
-          {EXPERIENCE.map((exp, idx) => (
+          {experience.map((exp, idx) => (
             <div key={idx}>
               <div className="flex justify-between items-baseline mb-2">
                 <h3 className="font-bold text-base">
@@ -78,19 +88,11 @@ const ResumeView: React.FC = () => {
           Core Skills
         </h2>
         <ul className="list-disc pl-5 grid grid-cols-1 gap-1">
-          <li className="text-sm text-slate-800">
-            Customer Success Support • Technical Troubleshooting • Issue Triage
-          </li>
-          <li className="text-sm text-slate-800">
-            Implementation/Onboarding Support • Cross-functional Coordination • Stakeholder
-            Communication
-          </li>
-          <li className="text-sm text-slate-800">
-            Documentation & Enablement Assets • Demo Environments • Process Improvement
-          </li>
-          <li className="text-sm text-slate-800">
-            Dashboards & Reporting • Data QA / Validation • Operational Throughput
-          </li>
+          {coreSkills.map((skill, idx) => (
+            <li key={idx} className="text-sm text-slate-800">
+              {skill}
+            </li>
+          ))}
         </ul>
       </section>
 
@@ -100,13 +102,13 @@ const ResumeView: React.FC = () => {
           Education & Certifications
         </h2>
         <div className="mb-4">
-          <h3 className="font-bold text-sm">B.A., Geography — Queen’s University</h3>
-          <p className="text-[13px] text-slate-600 italic">
-            Relevant Coursework: Data Analytics, Geographic Information Science, Project Management
-          </p>
+          <h3 className="font-bold text-sm">
+            {education.degree} — {education.school}
+          </h3>
+          <p className="text-[13px] text-slate-600 italic">{education.coursework}</p>
         </div>
         <ul className="list-disc pl-5 space-y-1">
-          {CERTIFICATIONS.map((cert, idx) => (
+          {certifications.map((cert, idx) => (
             <li key={idx} className="text-sm text-slate-800">
               {cert.name}
             </li>
@@ -120,10 +122,11 @@ const ResumeView: React.FC = () => {
           Tools & Technologies
         </h2>
         <ul className="list-disc pl-5 space-y-1">
-          <li className="text-sm text-slate-800">Zendesk • CRM & customer support platforms</li>
-          <li className="text-sm text-slate-800">Microsoft Office • Google Workspace</li>
-          <li className="text-sm text-slate-800">Tableau • Power BI • BigQuery</li>
-          <li className="text-sm text-slate-800">Notion • Asana • Jira</li>
+          {tools.map((tool, idx) => (
+            <li key={idx} className="text-sm text-slate-800">
+              {tool}
+            </li>
+          ))}
         </ul>
       </section>
 
@@ -133,42 +136,13 @@ const ResumeView: React.FC = () => {
           Additional Information
         </h2>
         <ul className="list-disc pl-5 space-y-1">
-          <li className="text-sm text-slate-800">
-            Fluent in English; formal training in French and Spanish
-          </li>
-          <li className="text-sm text-slate-800">
-            Experience in social impact initiatives; recipient-first / customer-first service
-            approach
-          </li>
-          <li className="text-sm text-slate-800">
-            Familiarity with operational program workflows and stakeholder-facing reporting
-          </li>
+          {additional.map((item, idx) => (
+            <li key={idx} className="text-sm text-slate-800">
+              {item}
+            </li>
+          ))}
         </ul>
       </section>
-
-      {/* Print Trigger */}
-      <div className="fixed bottom-8 right-8 print:hidden">
-        <button
-          onClick={() => window.print()}
-          className={`px-6 py-3 rounded-xl font-bold shadow-xl transition-all flex items-center gap-2 ${componentRecipes.button.primary}`}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-5 h-5"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polyline points="6 9 6 2 18 2 18 9" />
-            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
-            <rect width="12" height="8" x="6" y="14" />
-          </svg>
-          Print to PDF
-        </button>
-      </div>
     </div>
   );
 };

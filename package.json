@@ -20,6 +20,7 @@
     "generate:crawler-html": "node scripts/generate-crawler-html.mjs",
     "validate:crawler": "node scripts/validate-crawler.mjs",
     "build:crawler": "npm run build && npm run generate:crawler-html",
+    "generate:resume-pdf": "npm run build && node scripts/generate-resume-pdf.mjs",
     "validate:phase": "node scripts/validate-phase.mjs",
     "fix:format": "npm run format && npm run format:check",
     "sync:architect": "repomix --config repomix.architect.config.json",

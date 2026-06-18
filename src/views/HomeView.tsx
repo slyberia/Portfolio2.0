@@ -393,10 +393,10 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
                 <Link
                   to="/resume"
-                  aria-label="Download resume"
+                  aria-label="View resume"
                   className="group min-h-[80px] border border-[#c2d6df] dark:border-white/20 bg-white/95 dark:bg-slate-900/75 rounded-md px-5 py-4 flex items-center justify-between gap-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-slate-500/80 dark:hover:border-slate-300/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f5f9fb] dark:focus-visible:ring-offset-slate-950 focus-visible:ring-slate-500"
                 >
-                  {/* TODO: replace /resume with a direct resume PDF asset link when available. */}
+                  {/* Routes to the resume page, where download / share actions live. */}
                   <div>
                     <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-600 dark:text-slate-300">
                       <span
@@ -406,12 +406,12 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                       SECONDARY ACTION
                     </p>
                     <p className="mt-1 text-base md:text-lg font-outfit font-semibold text-ink-navy dark:text-white">
-                      Download Resume
+                      View Resume
                     </p>
                   </div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="w-4 h-4 shrink-0 text-slate-700 dark:text-slate-200 group-hover:text-slate-900 dark:group-hover:text-white transition-colors"
+                    className="w-4 h-4 shrink-0 text-slate-700 dark:text-slate-200 group-hover:text-slate-900 dark:group-hover:text-white group-hover:translate-x-0.5 transition-all"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -420,9 +420,8 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                     strokeLinejoin="round"
                     aria-hidden="true"
                   >
-                    <path d="M12 3v12" />
-                    <path d="m7 10 5 5 5-5" />
-                    <path d="M5 21h14" />
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
                   </svg>
                 </Link>
               </div>

@@ -15,6 +15,7 @@ import TopNav from './components/TopNav';
 import ProjectDetailView from './views/ProjectDetailView';
 import ProjectsIndexView from './views/ProjectsIndexView';
 import ResumeView from './views/ResumeView';
+import ResumePrintTemplate from './components/ResumePrintTemplate';
 import ImplementationTrackView from './views/ImplementationTrackView';
 import OpsAnalyticsTrackView from './views/OpsAnalyticsTrackView';
 import GisTrackView from './views/GisTrackView';
@@ -468,6 +469,17 @@ const HomeWrapper: React.FC = () => {
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const routeDefinitions = [
+  {
+    // Bare route (outside AppLayout) used to render the dedicated print/PDF résumé
+    // template with no site chrome. Source for public/Kyle-Semple-Resume.pdf.
+    path: '/resume/print',
+    element: (
+      <ErrorBoundary location="ResumePrintTemplate">
+        <ResumePrintTemplate />
+      </ErrorBoundary>
+    ),
+    errorElement: <RouteErrorFallback />,
+  },
   {
     path: '/',
     element: <AppLayout />,
