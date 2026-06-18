@@ -13,7 +13,13 @@ import CostBreakEvenChart from '../components/northern-grind/CostBreakEvenChart'
 import BrandGallery from '../components/northern-grind/BrandGallery';
 import { HtmlPreviewCard } from '../components/CaseStudyComponents';
 import { componentRecipes, semanticTokens } from '../lib/design-system';
-import { automationSystems, automationThesis, governancePrimitives } from '../data/deepDiveContent';
+import {
+  automationSystems,
+  automationThesis,
+  governancePrimitives,
+  positioningThesis,
+  positioningChain,
+} from '../data/deepDiveContent';
 import { MOH_SUPERVISOR_DASHBOARD_HTML } from '../data/mohSupervisorDashboard';
 import type { Visibility } from '../types';
 
@@ -480,6 +486,7 @@ type TimelineRow = {
 
 const PROCESS_PHASES = [
   { id: 'arch-thesis', label: 'Governance Thesis' },
+  { id: 'arch-positioning', label: 'Positioning R&D' },
   { id: 'arch-spectrum', label: 'Autonomy Spectrum' },
   { id: 'arch-primitives', label: 'Reused Primitives' },
   { id: 'proc-1', label: 'Pipeline Overview' },
@@ -1451,6 +1458,63 @@ const DeepDiveView: React.FC = () => {
                       </div>
                     ))}
                   </div>
+                </section>
+
+                {/* arch-positioning: Positioning R&D / Evidence Governance */}
+                <section id="arch-positioning" className="space-y-6 scroll-mt-24">
+                  <div className="space-y-2">
+                    <p className="text-xs font-bold uppercase tracking-[0.3em] text-tide-aqua dark:text-tide-sky">
+                      Copy as Product Strategy
+                    </p>
+                    <h2 className="text-3xl font-outfit font-bold text-slate-950 dark:text-white">
+                      Positioning R&amp;D — From Role Label to Evidence Architecture
+                    </h2>
+                    <p className="text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
+                      The same governance discipline was applied to the portfolio&apos;s own copy.
+                      Build governance decides how AI-assisted work gets planned, validated,
+                      attributed, and shipped. Evidence governance decides how that work gets
+                      framed, grouped, and explained — so a reader can recognize the capability and
+                      judgment behind it.
+                    </p>
+                  </div>
+
+                  <div
+                    className={`p-6 md:p-8 rounded-2xl border space-y-4 ${componentRecipes.card.surface}`}
+                  >
+                    <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-tide-aqua dark:text-tide-sky block">
+                      Evidence governance — AI input, human evaluation, portfolio implementation
+                    </span>
+                    <p className="text-slate-700 dark:text-slate-200 text-lg leading-relaxed max-w-4xl">
+                      {positioningThesis}
+                    </p>
+                  </div>
+
+                  <ol className="space-y-3">
+                    {positioningChain.map((step, i) => (
+                      <li
+                        key={step.stage}
+                        className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] p-5 flex gap-4"
+                      >
+                        <span className="shrink-0 h-7 w-7 rounded-full bg-tide-aqua/10 dark:bg-tide-sky/10 text-tide-aqua dark:text-tide-sky font-bold text-sm flex items-center justify-center">
+                          {i + 1}
+                        </span>
+                        <div className="space-y-1 min-w-0">
+                          <h3 className="font-bold text-slate-950 dark:text-white text-sm">
+                            {step.stage}
+                          </h3>
+                          <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                            {step.detail}
+                          </p>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+
+                  <p className="text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed text-sm">
+                    The result is a portfolio that presents itself as a governed product — not just
+                    a website built with AI, but a system for making technical judgment,
+                    implementation maturity, and stakeholder value easier to recognize.
+                  </p>
                 </section>
 
                 {/* arch-spectrum: Autonomy Spectrum */}

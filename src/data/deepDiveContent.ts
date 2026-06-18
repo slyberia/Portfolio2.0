@@ -464,6 +464,49 @@ export const governancePrimitives: GovernancePrimitive[] = [
   },
 ];
 
+// ── Positioning R&D / Evidence Governance ───────────────────────────────────
+// Portfolio 2.0 governed not only how AI-assisted work was built, but how the
+// portfolio's own copy and evidence were framed. The AI/human boundary is the
+// same untrusted-by-default discipline: an AI-assisted positioning hypothesis is
+// an INPUT, human product judgment is the EVALUATION, and the restructuring is
+// the IMPLEMENTATION. No invented metrics, recruiter feedback, or user testing.
+
+export type EvidenceGovernanceStep = {
+  stage: string;
+  detail: string;
+};
+
+export const positioningThesis =
+  'Portfolio 2.0 treated its own copy and case-study structure as a product system, not an afterthought. Build governance decides how AI-assisted work gets planned, validated, attributed, and shipped; evidence governance decides how that work gets framed, grouped, and explained so a reader can recognize the capability and judgment behind it. The same untrusted-by-default discipline holds: an AI-assisted positioning hypothesis is an input for human product judgment to evaluate, never the final authority on how the work is presented.';
+
+export const positioningChain: EvidenceGovernanceStep[] = [
+  {
+    stage: 'Initial hypothesis — AI-assisted input',
+    detail:
+      'An AI-assisted recommendation used "Forward Deployed Engineer" as a plausible role anchor because the work spans implementation, AI workflow governance, GIS/spatial systems, operations, and stakeholder-facing systems. The title was evidence-supported.',
+  },
+  {
+    stage: 'Reader-recognition critique — human evaluation',
+    detail:
+      'Human review found the issue was not that the title was false, but that it was narrow and context-dependent: it could carry first-read friction unless the underlying work was organized around clearer decision evidence. The problem was recognition, not accuracy.',
+  },
+  {
+    stage: 'Decision-evidence gap',
+    detail:
+      'The deeper gap was architectural — strong underlying work → clear role framing → evidence grouped by decision type → reader recognition → stronger hiring signal. The chain was breaking at "evidence grouped by decision type".',
+  },
+  {
+    stage: 'Evidence-architecture remediation — implementation',
+    detail:
+      'Project entries were corrected, a decision-evidence authoring standard was defined and applied, the deep-dive inventory was expanded and indexed, and project cards were verified capability-first — reducing cognitive friction so the work is easier to recognize.',
+  },
+  {
+    stage: 'Hybrid positioning — the decision',
+    detail:
+      'The role label settled into a hybrid model: Forward Deployed Engineer remains the searchable role anchor; Technical Systems Translator clarifies the capability at first read. FDE was refined, not abandoned.',
+  },
+];
+
 // ── Appendix Links ─────────────────────────────────────────────────────────
 
 export const appendixLinks = [
