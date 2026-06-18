@@ -364,7 +364,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
   };
 
   return (
-    <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[90] flex flex-col items-end pointer-events-none transition-colors duration-500">
+    <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[90] flex flex-col items-end pointer-events-none transition-colors duration-500 print:hidden">
       <div
         className={`pointer-events-auto w-[90vw] md:w-[400px] bg-white dark:bg-[#0B0F19] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 origin-bottom-right mb-4 flex flex-col ${
           isOpen

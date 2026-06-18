@@ -78,7 +78,7 @@ const TopNav: React.FC<TopNavProps> = ({ theme, toggleTheme, onOpenContact }) =>
     location.pathname === GIS_TRACK_HREF;
 
   return (
-    <header className="sticky top-0 z-50 h-20 border-b border-ink-border dark:border-slate-800 bg-ink-mist dark:bg-ink-deep transition-colors duration-500">
+    <header className="sticky top-0 z-50 h-20 border-b border-ink-border dark:border-slate-800 bg-ink-mist dark:bg-ink-deep transition-colors duration-500 print:hidden">
       <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between gap-4">
         <Link
           to={HOME_HREF}

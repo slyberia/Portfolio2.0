@@ -38,7 +38,7 @@ const BottomTabBar: React.FC = () => {
   ];
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-40 flex md:hidden bg-ink-mist dark:bg-ink-deep border-t border-ink-border dark:border-white/10"
+      className="fixed bottom-0 left-0 right-0 z-40 flex md:hidden bg-ink-mist dark:bg-ink-deep border-t border-ink-border dark:border-white/10 print:hidden"
       aria-label="Mobile Navigation"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
