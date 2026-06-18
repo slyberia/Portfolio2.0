@@ -13,9 +13,13 @@ const PRINT_CSS = `
     size: letter;
     margin: 0.45in 0.5in;
   }
+  /* The print route renders outside AppLayout, so the hard-coded <html class="dark">
+     in index.html is never cleared and the .dark .bg-mesh rule would otherwise paint the
+     body near-black (#07161f) — showing as a dark bar wherever the résumé doesn't reach
+     the page edge. Force white with !important so the whole printed page stays white. */
   html,
   body {
-    background: #ffffff;
+    background: #ffffff !important;
     margin: 0;
     padding: 0;
   }
