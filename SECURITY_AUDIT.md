@@ -1,12 +1,41 @@
 # Security Audit — Portfolio2.0
 
+## 2026-06-19 — Dependency Remediation & Audit Refresh
+
+This section reflects the **current** state and supersedes the per-finding dependency
+language further down (which was written when the npm audit endpoint was network-blocked
+and is preserved below for history).
+
+**Production runtime tree: `npm audit --omit=dev` → 0 known vulnerabilities.**
+
+A non-breaking `npm audit fix` was applied (lockfile only — no `package.json` semver ranges
+changed). Notable bumps: **`dompurify` 3.4.9 → 3.4.11** (runtime HTML sanitizer; clears
+`GHSA-cmwh-pvxp-8882`, a `setConfig()` pollution bypass that still affected ≤3.4.10) and
+**`protobufjs` 7.5.5 → 7.6.4** (transitive via `@google/genai`).
+
+Current `npm audit` totals: **4 (2 critical, 1 high, 1 moderate) — all dev-only / build
+tooling, none shipped to the Cloud Run image.**
+
+| Category                          | Packages                                                                              | Status                                                 |
+| --------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| Production runtime                | `dompurify`, `protobufjs`, `ws`, `qs`, `undici`, `form-data`, `express-rate-limit`, … | ✅ Remediated via `npm audit fix` — 0 vulnerabilities  |
+| Dev-only — deferred (needs major) | `vitest` + `@vitest/ui` (→ vitest 4); `vite` + `esbuild` (→ vite 8)                   | ⏸ Accepted risk — local dev/CI only, not in the bundle |
+
+The two remaining "critical" advisories (`vitest`/`@vitest/ui` — arbitrary file read/execute
+**only when the Vitest UI server is listening**) require a Vitest v4 major upgrade and affect a
+local test UI that is never deployed; production exposure is none. The `vite`/`esbuild` items are
+the long-standing dev-server advisories, fixable only via a Vite v8 major bump. Both are tracked by
+Dependabot and evaluated separately because they are breaking changes.
+
+---
+
 ## 2026-05-03 Hardening Pass Update
 
 - ✅ `src/mockups.ts` no longer uses `innerHTML = ''` for dynamic UI reset paths; these were switched to `replaceChildren()` to avoid unsafe `innerHTML` patterns in user-influenced flows.
 - ✅ Docker runtime stage is configured to run as non-root (`appuser`/`appgroup`).
 - ✅ GitHub Actions in `.github/workflows/ci.yml` are pinned to immutable full commit SHAs (with version comments).
-- ⚠️ Dependency remediation (`npm audit fix`, `npm install dompurify@latest`, and fresh `npm audit`) could not be completed in this environment because the npm registry/audit endpoints returned HTTP 403.
-- ⚠️ Vite major-upgrade evaluation remains pending until dependency network access is available.
+- ✅ Dependency remediation completed on 2026-06-19 (see the refresh section above): non-breaking `npm audit fix` applied; `dompurify` 3.4.11, `protobufjs` 7.6.4; production tree has 0 known vulnerabilities.
+- ⏸ Vite major-upgrade (v8) evaluation remains deferred — it is a breaking change affecting dev-server tooling only (no production impact).
 
 **Tool:** ship-safe v9.1.1  
 **Date:** 2026-04-23  
@@ -25,16 +54,16 @@ The `.claude/skills/ship-safe/` directory (the scanner tool itself) was present 
 
 ## Overall Security Score
 
-| Metric                               | Value                                                   |
-| ------------------------------------ | ------------------------------------------------------- |
-| Raw score (all dirs)                 | 0 / 100 — F                                             |
-| Raw score (app code only, estimated) | ~65 / 100 — C                                           |
-| Files scanned                        | 468 (includes ship-safe tool)                           |
-| Total findings (all dirs)            | 751                                                     |
-| Portfolio app findings               | ~25                                                     |
-| CVEs (npm audit)                     | 1 critical, 3 moderate                                  |
-| OpenClaw (agent config)              | ✅ Clean                                                |
-| Actively exploitable secrets         | None confirmed (liveness verification requires network) |
+| Metric                               | Value                                                                                      |
+| ------------------------------------ | ------------------------------------------------------------------------------------------ |
+| Raw score (all dirs)                 | 0 / 100 — F                                                                                |
+| Raw score (app code only, estimated) | ~65 / 100 — C                                                                              |
+| Files scanned                        | 468 (includes ship-safe tool)                                                              |
+| Total findings (all dirs)            | 751                                                                                        |
+| Portfolio app findings               | ~25                                                                                        |
+| CVEs (npm audit, 2026-06-19)         | Production tree: **0**. Dev-only: 4 (2 critical, 1 high, 1 moderate) — see refresh section |
+| OpenClaw (agent config)              | ✅ Clean                                                                                   |
+| Actively exploitable secrets         | None confirmed (liveness verification requires network)                                    |
 
 ---
 
@@ -46,6 +75,7 @@ The `.claude/skills/ship-safe/` directory (the scanner tool itself) was present 
 - **Location:** Transitive dependency via `@google/genai`
 - **Description:** Versions of `protobufjs` prior to 7.5.5 allow arbitrary code execution through prototype pollution when processing untrusted `.proto` files.
 - **Remediation:** Run `npm audit fix` — a non-breaking fix is available. Confirm `protobufjs >= 7.5.5` after upgrade.
+- **Status (2026-06-19): ✅ RESOLVED.** `protobufjs` is now `7.6.4` via `npm audit fix`. (Note: this engagement never processes untrusted `.proto` files — the dependency arrives transitively through `@google/genai` — so practical exposure was already low.)
 
 ---
 
@@ -82,6 +112,8 @@ The `.claude/skills/ship-safe/` directory (the scanner tool itself) was present 
   // Line 229
   e.textContent = `[${time}] ${msg}`;
   ```
+
+- **Status (2026-06-19): ✅ Remediated for the flagged file.** `src/mockups.ts` no longer uses `innerHTML`. A separate embedded-dashboard mockup (`src/data/mohSupervisorDashboard.ts`) builds `innerHTML` from **static, hard-coded mockup arrays** (no user/`localStorage`/network input), so it is not a stored-XSS vector; it is a self-contained demo string rendered inside a sandboxed surface. Flagged here for completeness.
 
 ### HIGH-03 — Docker Container Runs as Root
 
@@ -134,6 +166,7 @@ The `.claude/skills/ship-safe/` directory (the scanner tool itself) was present 
 - **Advisories:** GHSA-39q2-94rc-95cp, GHSA-h7mw-gpvr-xq4m, GHSA-crv5-9vww-q3g8, GHSA-v9jr-rg53-9pgp
 - **Description:** All four affect `dompurify <= 3.3.3`. Bypasses require use of advanced configuration options (`ADD_TAGS`, `RETURN_DOM`, `CUSTOM_ELEMENT_HANDLING`). If the app only uses default `DOMPurify.sanitize(str)` calls the practical risk is low, but upgrading eliminates the exposure.
 - **Remediation:** `npm install dompurify@latest`
+- **Status (2026-06-19): ✅ RESOLVED.** `dompurify` is now `3.4.11`. Note: an intermediate version (`3.4.9`) cleared these four but a later advisory (`GHSA-cmwh-pvxp-8882`, `setConfig()` pollution, affecting ≤3.4.10) required the further bump to `3.4.11`. The app uses only the default `DOMPurify.sanitize(content)` call (`src/components/HTMLSection.tsx`), with no advanced config.
 
 ### MED-05 — `vite` Path Traversal in Dev Server (Dev-Only)
 
@@ -176,8 +209,8 @@ The `.claude/skills/ship-safe/` directory (the scanner tool itself) was present 
 
 ### Rate Limiting
 
-- Server-side in-memory rate limit: 50 requests per IP per day (`geminiProxy.ts:10–33`). ✅
-- **Gap:** The in-memory map is reset on server restart and does not survive horizontal scaling. Consider persisting rate-limit state in Redis or similar for production.
+- Server-side in-memory rate limit: default 25 requests per IP per day (`DEFAULT_MAX_DAILY_REQUESTS`), env-configurable via `DIGITAL_TWIN_MAX_DAILY_REQUESTS`. ✅
+- **Gap (accepted risk):** The in-memory map is reset on server restart and does not survive horizontal scaling. For a single-instance portfolio this is acceptable; a Cloud Run / Gemini API quota cap is the recommended backstop, and persistent (e.g. Redis) rate limiting is the production-grade upgrade if traffic ever warrants it.
 
 ### Prompt Injection Defenses
 
@@ -192,12 +225,15 @@ The `.claude/skills/ship-safe/` directory (the scanner tool itself) was present 
 
 ### Dependency Vulnerabilities
 
-| Package      | Severity      | Advisory            | Fix                                 |
-| ------------ | ------------- | ------------------- | ----------------------------------- |
-| `protobufjs` | **Critical**  | GHSA-xq3m-2v4x-88gg | `npm audit fix`                     |
-| `dompurify`  | Moderate (×4) | See MED-04          | `npm install dompurify@latest`      |
-| `esbuild`    | Moderate      | GHSA-67mh-4wv8-2f99 | Dev-only; upgrade vite@8 when ready |
-| `vite`       | Moderate      | GHSA-4w7w-66w2-5vf9 | Dev-only; upgrade vite@8 when ready |
+_Current state as of 2026-06-19 (`npm audit`). Production tree (`--omit=dev`): **0 vulnerabilities**._
+
+| Package                           | Severity       | Scope                            | Status                                            |
+| --------------------------------- | -------------- | -------------------------------- | ------------------------------------------------- |
+| `protobufjs`                      | (was High)     | Production (via `@google/genai`) | ✅ Resolved — now `7.6.4`                         |
+| `dompurify`                       | (was Mod ×N)   | Production (sanitizer)           | ✅ Resolved — now `3.4.11`                        |
+| `ws`, `qs`, `undici`, `form-data` | (was High/Mod) | Production (transitive)          | ✅ Resolved via `npm audit fix`                   |
+| `vitest`, `@vitest/ui`            | Critical       | **Dev-only** (Vitest UI server)  | ⏸ Deferred — needs vitest 4 (major); not deployed |
+| `vite`, `esbuild`                 | High / Mod     | **Dev-only** (dev server)        | ⏸ Deferred — needs vite 8 (major); not deployed   |
 
 ---
 
@@ -217,14 +253,14 @@ The `.claude/skills/ship-safe/` directory (the scanner tool itself) was present 
 
 ## Remediation Status
 
-| ID      | Finding                                                 | Status               | Remediation                                                                                                                   | Commit                         |
-| ------- | ------------------------------------------------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
-| DEP-01  | `protobufjs` critical vulnerability via `@google/genai` | Deferred             | `npm audit fix` attempted, but audit endpoint returned HTTP 403 in this environment; retry in CI/network-enabled environment. | Pending current PR commit hash |
-| HIGH-01 | GitHub Actions not pinned to SHA                        | Remediated           | `actions/checkout` and `actions/setup-node` are pinned to full commit SHAs in CI workflow.                                    | Pending current PR commit hash |
-| HIGH-02 | XSS via unsafe `innerHTML` patterns in mockups          | Remediated           | Dynamic mockup reset patterns switched away from `innerHTML` usage (`replaceChildren`/text-safe patterns).                    | Pending current PR commit hash |
-| HIGH-03 | Docker container runs as root                           | Remediated           | Production stage uses non-root `appuser`/`appgroup`.                                                                          | Pending current PR commit hash |
-| MED-01  | No JSON body size limit on Express                      | False positive       | `express.json({ limit: '10kb' })` already present.                                                                            | Pending current PR commit hash |
-| MED-02  | Missing CSP/HSTS/security header posture                | Partially remediated | Helmet is enabled; production header posture still requires deployed verification.                                            | Pending current PR commit hash |
-| MED-03  | Missing React Error Boundary                            | Remediated           | Root app is wrapped in an Error Boundary with fallback rendering and console error logging.                                   | Pending current PR commit hash |
-| MED-04  | `dompurify` vulnerabilities                             | Deferred             | `npm install dompurify@latest` blocked by npm registry HTTP 403 in this environment; retry with network-enabled install.      | Pending current PR commit hash |
-| MED-05  | Vite dev-server vulnerability                           | Deferred             | Requires Vite major upgrade evaluation; deferred pending compatibility review and dependency update access.                   | Pending current PR commit hash |
+| ID      | Finding                                                 | Status                | Remediation                                                                                                       | Commit                         |
+| ------- | ------------------------------------------------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| DEP-01  | `protobufjs` critical vulnerability via `@google/genai` | ✅ Remediated         | `npm audit fix` applied 2026-06-19; `protobufjs` now `7.6.4`. Production tree audit: 0 vulnerabilities.           | Security polish pass           |
+| HIGH-01 | GitHub Actions not pinned to SHA                        | Remediated            | `actions/checkout` and `actions/setup-node` are pinned to full commit SHAs in CI workflow.                        | Pending current PR commit hash |
+| HIGH-02 | XSS via unsafe `innerHTML` patterns in mockups          | Remediated            | Dynamic mockup reset patterns switched away from `innerHTML` usage (`replaceChildren`/text-safe patterns).        | Pending current PR commit hash |
+| HIGH-03 | Docker container runs as root                           | Remediated            | Production stage uses non-root `appuser`/`appgroup`.                                                              | Pending current PR commit hash |
+| MED-01  | No JSON body size limit on Express                      | False positive        | `express.json({ limit: '10kb' })` already present.                                                                | Pending current PR commit hash |
+| MED-02  | Missing CSP/HSTS/security header posture                | Partially remediated  | Helmet is enabled; production header posture still requires deployed verification.                                | Pending current PR commit hash |
+| MED-03  | Missing React Error Boundary                            | Remediated            | Root app is wrapped in an Error Boundary with fallback rendering and console error logging.                       | Pending current PR commit hash |
+| MED-04  | `dompurify` vulnerabilities                             | ✅ Remediated         | `npm audit fix` applied 2026-06-19; `dompurify` now `3.4.11` (clears later `GHSA-cmwh-pvxp-8882` ≤3.4.10 bypass). | Security polish pass           |
+| MED-05  | Vite dev-server vulnerability                           | ⏸ Deferred (dev-only) | Fix requires Vite v8 (breaking). Dev-server only — no production-bundle impact. Tracked by Dependabot.            | —                              |
