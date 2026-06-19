@@ -6,6 +6,31 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.3.0] — 2026-06-19 — Hybrid Positioning & Evidence Architecture
+
+### Changed
+
+- Evolved the lead identity to the hybrid **Forward Deployed Engineer · Technical Systems Translator** — Forward Deployed Engineer remains the searchable role anchor; Technical Systems Translator is the capability descriptor at first read (Tracks F0–F6).
+- Propagated the hybrid positioning and core thesis across human and machine surfaces: homepage hero/footer/role lenses, résumé page, SEO (`src/lib/seo.ts`), Digital Twin context (`server/geminiProxy.ts`), `public/llms.txt`, `index.html` meta/Open Graph/Twitter, `metadata.json`, and the crawler/markdown mirrors.
+- Restructured project cards and deep dives around a decision-evidence layer (context → decision criteria → trade-off → evidence → capability signal); kept Customer Success as an evidence layer only and rejected "Solutions Architect" as a lead title.
+- Confirmed the canonical role-lane taxonomy: Forward Deployed Engineer, Implementation Consultant, Spatial Systems Architect, AI Workflow / Portfolio Governance (legacy `/tracks/*` slugs preserved).
+
+### Added
+
+- **Résumé download & share flow** — a dedicated, print-native one-page PDF template (`/resume/print`) generated to `public/Kyle-Semple-Resume.pdf`, plus a résumé action bar (Download PDF, Print / Save PDF, Copy Link, Web Share, Email, Gmail, LinkedIn) with no third-party scripts or SDKs.
+- Shared résumé content source (`src/data/resumeContent.ts`) consumed by both the screen résumé and the print template.
+- Repository presentation polish: `LICENSE` (MIT), `SECURITY.md`, corrected `.env.example` (server-only `GEMINI_API_KEY`), accurate stack badges/versions, and CI crawler-validation + pinned actions.
+
+### Documentation
+
+- Updated the README to describe the hybrid positioning and aligned the machine-readable summary language; refreshed the Portfolio 2.0 evidence-architecture framing (build governance + evidence governance).
+
+### Validation
+
+- `npm run format:check`, `npm run typecheck`, `npm run lint`, `npm test -- --run`, `npm run build`, plus `npm run generate:crawler-html` and `npm run validate:crawler` all pass.
+
+---
+
 ## [2.2.0] — 2026-06-04 — Phase 6 — Positioning Refactor (Forward Deployed Engineer)
 
 ### Changed

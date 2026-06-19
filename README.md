@@ -3,12 +3,12 @@
 
 # Kyle Semple — Professional Portfolio
 
-**Forward Deployed Engineer · Ann Arbor, MI**
+**Forward Deployed Engineer · Technical Systems Translator** · Washtenaw County, MI
 
 [Live Site](https://kyle-semple-portfolio-786228485832.us-central1.run.app) · [How It Was Built](HOW_IT_WAS_BUILT.md) · [Architecture Decisions](DECISIONS.md) · [Architecture Overview](ARCHITECTURE.md)
 
 [![CI](https://github.com/slyberia/Portfolio2.0/actions/workflows/ci.yml/badge.svg)](https://github.com/slyberia/Portfolio2.0/actions/workflows/ci.yml)
-![React 19](https://img.shields.io/badge/React-19-61dafb?logo=react&logoColor=white)
+![React 18](https://img.shields.io/badge/React-18-61dafb?logo=react&logoColor=white)
 ![TypeScript strict](https://img.shields.io/badge/TypeScript-strict-3178c6?logo=typescript&logoColor=white)
 ![Vite 5](https://img.shields.io/badge/Vite-5-646cff?logo=vite&logoColor=white)
 
@@ -20,16 +20,17 @@
 
 Portfolio2.0 leads with a single professional thesis rather than a menu of role tracks:
 
-> Kyle Semple is a **Forward Deployed Engineer** who helps teams turn complex technical,
-> operational, and spatial problems into systems people can understand, adopt, and use.
+> Kyle Semple is a **Forward Deployed Engineer · Technical Systems Translator** who helps teams
+> turn complex technical, operational, and spatial problems into systems people can understand,
+> adopt, and use.
 
-The homepage opens with that identity and a "What I Help Teams Do" proof-pillar section. The former three role tracks are demoted to supporting **role lenses** (Forward Deployed Engineer, Implementation Consultant, Spatial Systems Architect) — surfaced as lower-priority metadata and a secondary navigation dropdown, never the primary framing. Project cards and case studies carry a stakeholder/customer-value layer (purpose · value · role relevance · proof type), deep dives reinforce the translation/adoption thesis, and the Digital Twin assistant explains Kyle via the same thesis and routes visitors by need. Machine-readable crawler/LLM summaries are aligned to the Forward Deployed Engineer positioning.
+Forward Deployed Engineer is the searchable role anchor; Technical Systems Translator is the capability descriptor that explains the value at first read. The homepage opens with that identity and a "What I Help Teams Do" proof-pillar section. Role tracks are demoted to supporting **role lenses** (Forward Deployed Engineer, Implementation Consultant, Spatial Systems Architect, AI Workflow / Portfolio Governance) — surfaced as lower-priority metadata and a secondary navigation dropdown, never the primary framing. Project cards and case studies carry a stakeholder/customer-value layer (purpose · value · role relevance · proof type), deep dives reinforce the translation/adoption thesis, and the Digital Twin assistant explains Kyle via the same thesis and routes visitors by need. Machine-readable crawler/LLM summaries are aligned to the hybrid Forward Deployed Engineer · Technical Systems Translator positioning.
 
 Customer Success is presented as an **evidence layer**, not a seniority claim — no managed book of business, ARR/NRR, or renewal/expansion ownership is asserted anywhere.
 
 ### Positioning Refactor (Phase 6)
 
-The information architecture was refactored from a role-track-led layout to the thesis-led model above. See [`docs/positioning-refactor-plan.md`](docs/positioning-refactor-plan.md) for the full subphase plan and [`AGENTS.md`](AGENTS.md) for the positioning north star.
+The information architecture was refactored from a role-track-led layout to the thesis-led model above. A later positioning workstream (Tracks F0–F6) evolved the lead identity to the hybrid **Forward Deployed Engineer · Technical Systems Translator** and propagated it across the homepage, résumé and downloadable PDF, SEO, Digital Twin, `llms.txt`, and crawler/markdown mirrors; it also added a dedicated print/PDF résumé template and a download/share flow. See [`docs/positioning-refactor-plan.md`](docs/positioning-refactor-plan.md) for the full subphase plan and [`AGENTS.md`](AGENTS.md) for the positioning north star.
 
 1. Central FDE positioning & hero thesis
 2. "What I Help Teams Do" proof pillars
@@ -46,8 +47,8 @@ The information architecture was refactored from a role-track-led layout to the 
 
 | Layer    | Technology                                       |
 | -------- | ------------------------------------------------ |
-| Frontend | React 19, TypeScript strict, Vite 5, Tailwind v3 |
-| Routing  | React Router v6                                  |
+| Frontend | React 18, TypeScript strict, Vite 5, Tailwind v3 |
+| Routing  | React Router v7                                  |
 | AI       | Gemini 2.0 Flash via server-side Express proxy   |
 | Server   | Express on Cloud Run                             |
 | Testing  | Vitest + Testing Library                         |
@@ -137,11 +138,11 @@ public/
 - Helmet security headers are enabled on the Express server.
 - CI includes a Gemini bundle leak check and a general secret scan.
 - Dependabot is configured for npm and GitHub Actions updates.
-- Threat modeling is documented in `THREAT_MODEL.md`.
+- Security policy is in [`SECURITY.md`](SECURITY.md); threat modeling is documented in [`THREAT_MODEL.md`](THREAT_MODEL.md).
 - Known limitation: rate limiting is in-memory and resets on container restart/scale events.
 - Manual follow-up: set Gemini API quota cap in Google Cloud Console.
 - Manual follow-up: verify deployed production headers after each release.
 
 ## License
 
-MIT
+[MIT](LICENSE)
