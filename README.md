@@ -101,6 +101,19 @@ The full security review and its resolution trail live in
 - **No known vulnerabilities anywhere — live site or developer tools.** The software the live site depends on has been clean for a while. The only items that used to be open were a few advisories in behind-the-scenes build-and-test tools that never reach visitors; as of June 2026 those were closed too, by updating those tools to their latest versions. The result is a clean bill of health across the board.
 - One known limit: the chat's usage cap is kept in memory and resets if the server restarts — acceptable for a personal portfolio.
 
+### 🛡 What Could Go Wrong — [`THREAT_MODEL.md`](THREAT_MODEL.md)
+
+Good security work names the threats out loud instead of assuming nothing will go wrong. This
+document lists the ways the site could realistically be attacked or misused — someone hammering the
+chat to run up the AI bill, trying to trick the AI into ignoring its instructions, attempting to
+steal the secret key, or sneaking harmful code onto a page — and for each one it states how likely
+it is, how bad it would be, and what's already in place to stop it. Just as importantly, it's honest
+about the limits: it spells out the gaps that are **knowingly accepted** for a personal portfolio
+(for example, the usage cap resetting on restart) and the extra protections that are **deliberately
+left for later** rather than pretending the job is ever fully finished. It's a map of the risks and
+the reasoning behind each call — the kind of thinking you'd want from someone building systems other
+people rely on.
+
 ## Stack
 
 | Layer    | Technology                                       |
