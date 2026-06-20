@@ -28,20 +28,78 @@ Forward Deployed Engineer is the searchable role anchor; Technical Systems Trans
 
 Customer Success is presented as an **evidence layer**, not a seniority claim — no managed book of business, ARR/NRR, or renewal/expansion ownership is asserted anywhere.
 
-### Positioning Refactor (Phase 6)
+## Engineering Evidence
 
-The information architecture was refactored from a role-track-led layout to the thesis-led model above. A later positioning workstream (Tracks F0–F6) evolved the lead identity to the hybrid **Forward Deployed Engineer · Technical Systems Translator** and propagated it across the homepage, résumé and downloadable PDF, SEO, Digital Twin, `llms.txt`, and crawler/markdown mirrors; it also added a dedicated print/PDF résumé template and a download/share flow. See [`docs/positioning-refactor-plan.md`](docs/positioning-refactor-plan.md) for the full subphase plan and [`AGENTS.md`](AGENTS.md) for the positioning north star.
+This repository is itself part of the portfolio. The site is the artifact, but the reasoning
+behind it is documented openly — how it was built, what was decided and why, and where AI helped
+versus where human judgment did the work. If you only read three files, read these.
 
-1. Central FDE positioning & hero thesis
-2. "What I Help Teams Do" proof pillars
-3. Role tracks demoted to role-relevance lenses
-4. Stakeholder-value layer on project cards
-5. Case-study stakeholder-value sections
-6. Deep-dive value bridges
-7. Digital Twin FDE prompt & need-based routing
-8. Crawler / LLM summary alignment
-9. Navigation alignment & route preservation (Gallery surfaced in nav)
-10. Docs, release notes & final validation
+### 🏗 How It Was Built — [`HOW_IT_WAS_BUILT.md`](HOW_IT_WAS_BUILT.md)
+
+The honest build narrative. The portfolio was prototyped in Google AI Studio (Gemini) through
+**directed, opinionated conversation** — not passive acceptance of model output. It documents real
+pushback (the flat skill-tag wall rejected in favor of the `SkillDiscoveryModal` pattern; generic
+"passionate developer" hero copy rewritten against a named audience). It then names the **four
+concrete gaps that surfaced when the prototype was exported to production** and how each was fixed:
+
+- **No strict `tsconfig.json`** — AI Studio's permissive in-browser typing hid real errors; strict
+  mode was authored and the code brought into compliance.
+- **No real build pipeline** — the prototype ran from `esm.sh` CDN imports and an importmap; it was
+  migrated to a proper Vite + npm dependency pipeline.
+- **API key exposed in the client bundle** — `vite.config.ts` polyfilled the Gemini key into the
+  browser build; fixed with a server-side Express proxy on Cloud Run.
+- **Unsanitized `dangerouslySetInnerHTML`** — an XSS vector closed by adding DOMPurify with explicit
+  `FORBID_TAGS` / `FORBID_ATTR`.
+
+It closes with a candid **AI-generated vs. human-directed** breakdown and the **KS_01 design pivot** —
+evaluating the original hero against the project's own `.impeccable.md` anti-patterns, finding it
+non-compliant, and acting on that rather than rationalizing it. Using AI well — knowing when to push
+back, what to verify, and what to fix — is treated as the skill being demonstrated.
+
+### 🧭 Architecture Decisions — [`DECISIONS.md`](DECISIONS.md)
+
+Six Architecture Decision Records, each with full context, the decision, **alternatives explicitly
+rejected**, and the consequences accepted:
+
+1. **Server-side Gemini proxy** over a client-embedded key (rejected Vercel/Netlify functions and the `VITE_`-prefixed env flag).
+2. **React Router v6** over prototype-grade hash routing (rejected Next.js and keeping hash routing).
+3. **Markdown files** over a headless CMS for case-study content (rejected Contentful/Sanity and hardcoded TS strings).
+4. **DOMPurify** over disabling HTML rendering entirely (defense at the render site, not the content pipeline).
+5. **Recruiter Mode as session state**, not a URL parameter or `localStorage` (avoids two-versions-of-truth and stale state).
+6. **Vitest over Jest** (no Babel/`ts-jest` friction; shared config with the Vite build).
+
+The value here is the trade-off reasoning — each ADR shows _why this and not the obvious alternative_.
+
+### 🗺 Architecture Overview — [`ARCHITECTURE.md`](ARCHITECTURE.md)
+
+The system map: stack table, repository layout, the route → component contract, the
+`Browser → /api/chat → Express proxy → Gemini` data flow with its in-memory rate limit, the
+runtime-fetched markdown content model with its `constants.tsx` fallback, and the consolidated
+security summary. Start here for a fast structural read of how the pieces fit.
+
+### 🔍 AI Attribution — [`AI_ATTRIBUTION.md`](AI_ATTRIBUTION.md)
+
+The source-of-truth ledger for every AI-assisted contribution across Portfolio2.0 (and related
+projects). It grades each session **PRIMARY / SUPPORTING / DIRECTIONAL**, distinguishes **Gemini
+from Claude** work explicitly, and — notably — **flags what cannot be attributed** rather than
+papering over gaps. It also traces the Project Aegis prompt-engineering lineage. This is the
+provenance discipline the portfolio's authoring standards require, applied to the portfolio itself.
+
+## Security Posture
+
+The full security review and its resolution trail live in
+[`SECURITY_AUDIT.md`](SECURITY_AUDIT.md) (ship-safe engagement), with policy in
+[`SECURITY.md`](SECURITY.md) and threat modeling in [`THREAT_MODEL.md`](THREAT_MODEL.md).
+
+**Every finding affecting application code or the production runtime has been addressed and
+resolved.** Highlights:
+
+- Gemini calls are proxied server-side; the API key is never in the client bundle (CI fails the build on a leak).
+- `/api/chat` enforces server-side rate limiting, input validation, prompt-injection filtering, and chat-history sanitization.
+- Helmet security headers are enabled, including a restrictive `Permissions-Policy` — **deployed headers verified grade A** (securityheaders.com).
+- All rendered HTML passes through DOMPurify; the Docker production stage runs as a non-root user; CI pins GitHub Actions to commit SHAs.
+- **Production dependency tree (`npm audit --omit=dev`): 0 known vulnerabilities.** The only open advisories are dev-only build tooling (Vite/Vitest major upgrades), never shipped to production and tracked by Dependabot.
+- Known limitation: rate limiting is in-memory and resets on container restart/scale events (accepted at portfolio scale).
 
 ## Stack
 
@@ -54,7 +112,26 @@ The information architecture was refactored from a role-track-led layout to the 
 | Testing  | Vitest + Testing Library                         |
 | CI       | GitHub Actions                                   |
 
+## Documentation Index
+
+| File                                       | Description                                                  |
+| ------------------------------------------ | ------------------------------------------------------------ |
+| [HOW_IT_WAS_BUILT.md](HOW_IT_WAS_BUILT.md) | Build narrative and AI/human contribution breakdown          |
+| [DECISIONS.md](DECISIONS.md)               | Six Architecture Decision Records with rejected alternatives |
+| [ARCHITECTURE.md](ARCHITECTURE.md)         | Stack overview, system map, and security notes               |
+| [AI_ATTRIBUTION.md](AI_ATTRIBUTION.md)     | Source-of-truth ledger for AI-assisted work                  |
+| [SECURITY.md](SECURITY.md)                 | Security policy and reporting                                |
+| [THREAT_MODEL.md](THREAT_MODEL.md)         | Threat table, accepted risks, deferred hardening             |
+| [SECURITY_AUDIT.md](SECURITY_AUDIT.md)     | Full audit findings and resolution status                    |
+| [public/llms.txt](public/llms.txt)         | Machine-readable project context                             |
+
+---
+
 ## Getting Started
+
+> The sections below are for running the project locally. Most visitors will want the
+> [live site](https://kyle-semple-portfolio-786228485832.us-central1.run.app) and the
+> [Engineering Evidence](#engineering-evidence) above.
 
 ### Prerequisites
 
@@ -122,25 +199,23 @@ public/
 └── case-studies/   # Markdown case study content (fetched at runtime)
 ```
 
-## Documentation
+## Positioning Refactor (Phase 6)
 
-| File                                       | Description                                         |
-| ------------------------------------------ | --------------------------------------------------- |
-| [HOW_IT_WAS_BUILT.md](HOW_IT_WAS_BUILT.md) | Build narrative and AI/human contribution breakdown |
-| [DECISIONS.md](DECISIONS.md)               | 6 Architecture Decision Records                     |
-| [ARCHITECTURE.md](ARCHITECTURE.md)         | Stack overview and security notes                   |
-| [public/llms.txt](public/llms.txt)         | Machine-readable project context                    |
+The information architecture was refactored from a role-track-led layout to the thesis-led model above. A later positioning workstream (Tracks F0–F6) evolved the lead identity to the hybrid **Forward Deployed Engineer · Technical Systems Translator** and propagated it across the homepage, résumé and downloadable PDF, SEO, Digital Twin, `llms.txt`, and crawler/markdown mirrors; it also added a dedicated print/PDF résumé template and a download/share flow. See [`docs/positioning-refactor-plan.md`](docs/positioning-refactor-plan.md) for the full subphase plan and [`AGENTS.md`](AGENTS.md) for the positioning north star.
 
-## Security Posture
-
-- Gemini calls are proxied server-side; the Gemini API key is not exposed in client bundles.
-- `/api/chat` includes server-side rate limiting, input validation, topic/prompt-injection filtering, and chat-history sanitization.
-- Helmet security headers are enabled on the Express server.
-- CI includes a Gemini bundle leak check and a general secret scan.
-- Dependabot is configured for npm and GitHub Actions updates.
-- Security policy is in [`SECURITY.md`](SECURITY.md); threat modeling is documented in [`THREAT_MODEL.md`](THREAT_MODEL.md).
-- Known limitation: rate limiting is in-memory and resets on container restart/scale events.
+1. Central FDE positioning & hero thesis
+2. "What I Help Teams Do" proof pillars
+3. Role tracks demoted to role-relevance lenses
+4. Stakeholder-value layer on project cards
+5. Case-study stakeholder-value sections
+6. Deep-dive value bridges
+7. Digital Twin FDE prompt & need-based routing
+8. Crawler / LLM summary alignment
+9. Navigation alignment & route preservation (Gallery surfaced in nav)
+10. Docs, release notes & final validation
 
 ## License
 
 [MIT](LICENSE)
+</content>
+</invoke>

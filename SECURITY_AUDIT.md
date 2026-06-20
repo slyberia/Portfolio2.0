@@ -1,5 +1,31 @@
 # Security Audit — Portfolio2.0
 
+## Resolution Summary (current)
+
+**Every security finding affecting application code or the production runtime has been
+addressed and successfully resolved.** All Critical, High, and Medium findings raised in the
+ship-safe engagement below — `protobufjs` RCE (DEP-01), GitHub Actions SHA pinning (HIGH-01),
+unsafe `innerHTML` / XSS in mockups (HIGH-02), root Docker container (HIGH-03), Express body-size
+limit (MED-01), CSP/HSTS/header posture (MED-02), missing React Error Boundary (MED-03), and the
+`dompurify` sanitizer advisories (MED-04) — are remediated and verified. See the per-finding
+**Remediation Status** table at the bottom of this document for the evidence trail.
+
+Verified outcomes:
+
+- **Production dependency tree (`npm audit --omit=dev`): 0 known vulnerabilities.**
+- **Deployed security headers: grade A** (securityheaders.com, 2026-06-19), including a
+  restrictive `Permissions-Policy`.
+- **No secrets** in the git history or working tree; CI fails the build if the Gemini key ever
+  reaches the client bundle.
+
+The **only** items not closed are two **dev-only / build-tooling** advisories (`vitest` + `@vitest/ui`
+and `vite` + `esbuild`) that require major-version upgrades. They affect local development and CI
+tooling exclusively, are **never shipped in the Cloud Run image**, carry **zero production
+exposure**, and are tracked by Dependabot for a scheduled breaking-change upgrade. They are an
+explicitly accepted risk, not an unresolved application vulnerability.
+
+---
+
 ## 2026-06-19 — Dependency Remediation & Audit Refresh
 
 This section reflects the **current** state and supersedes the per-finding dependency
