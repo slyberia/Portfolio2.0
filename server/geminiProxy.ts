@@ -12,12 +12,24 @@ const MAX_MESSAGE_LENGTH = 800;
 const MAX_HISTORY_MESSAGES = 8;
 const MAX_HISTORY_ENTRY_LENGTH = 1200;
 
-const ALLOWED_CHAT_ORIGINS = new Set([
+// Default allowlist (production origin + local dev ports). Override in production via the
+// ALLOWED_CHAT_ORIGINS env var (comma-separated) so a hostname/custom-domain change does
+// not require a code change + redeploy. When the env var is set it replaces this list.
+const DEFAULT_CHAT_ORIGINS = [
   'https://kyle-semple-portfolio-786228485832.us-central1.run.app',
   'http://localhost:5173',
   'http://localhost:4173',
   'http://localhost:3000',
-]);
+];
+
+const ALLOWED_CHAT_ORIGINS = new Set(
+  (process.env.ALLOWED_CHAT_ORIGINS
+    ? process.env.ALLOWED_CHAT_ORIGINS.split(',')
+    : DEFAULT_CHAT_ORIGINS
+  )
+    .map((origin) => origin.trim())
+    .filter(Boolean),
+);
 
 const DEFLECTION =
   'I’m here to help with Kyle’s work, projects, skills, resume, and portfolio. Try asking about implementation proof, QA work, GIS experience, Guynode, or the Digital Twin.';

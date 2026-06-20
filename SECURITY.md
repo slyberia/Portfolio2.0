@@ -31,6 +31,15 @@ or the AI chat widget.
 More detail lives in [`THREAT_MODEL.md`](THREAT_MODEL.md) and
 [`SECURITY_AUDIT.md`](SECURITY_AUDIT.md).
 
+## Privacy & logging
+
+The chat proxy logs operational metadata for abuse prevention and debugging:
+timestamp, route, request outcome, approximate client IP, and message length. It
+does **not** intentionally log chat message content. There is no analytics,
+advertising, or third-party tracking on the site, and the chat widget does not
+require or collect user accounts. Please don't submit sensitive personal data
+through the contact form or chat widget.
+
 ## Known limitations
 
 - This is a single-maintainer portfolio project; there is no formal bug-bounty
