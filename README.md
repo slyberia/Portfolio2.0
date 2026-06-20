@@ -140,8 +140,6 @@ public/
 - Dependabot is configured for npm and GitHub Actions updates.
 - Security policy is in [`SECURITY.md`](SECURITY.md); threat modeling is documented in [`THREAT_MODEL.md`](THREAT_MODEL.md).
 - Known limitation: rate limiting is in-memory and resets on container restart/scale events.
-- Manual follow-up: set Gemini API quota cap in Google Cloud Console.
-- Manual follow-up: verify deployed production headers after each release.
 
 ## License
 
