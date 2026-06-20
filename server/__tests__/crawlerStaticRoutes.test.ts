@@ -42,4 +42,16 @@ describe('crawler static route serving behavior', () => {
     expect(res.status).toBe(404);
     expect(res.text).not.toContain('SPA shell');
   });
+
+  it('sets hardening headers including a restrictive Permissions-Policy', async () => {
+    const app = createApp(makeFixtureDist());
+    const res = await request(app).get('/healthz');
+    expect(res.status).toBe(200);
+    // Helmet-managed headers
+    expect(res.headers['x-content-type-options']).toBe('nosniff');
+    expect(res.headers['content-security-policy']).toBeTruthy();
+    // Manually added (Helmet does not emit this one)
+    expect(res.headers['permissions-policy']).toContain('camera=()');
+    expect(res.headers['permissions-policy']).toContain('geolocation=()');
+  });
 });

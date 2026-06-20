@@ -8,6 +8,11 @@ and is preserved below for history).
 
 **Production runtime tree: `npm audit --omit=dev` → 0 known vulnerabilities.**
 
+**Deployed security headers verified 2026-06-19 via securityheaders.com: grade A.** The only
+missing header was `Permissions-Policy`, which is now set server-side (restrictive — opts out of
+camera/microphone/geolocation/payment/USB/etc.), so the previously-"partial" MED-02 header posture
+is now complete.
+
 A non-breaking `npm audit fix` was applied (lockfile only — no `package.json` semver ranges
 changed). Notable bumps: **`dompurify` 3.4.9 → 3.4.11** (runtime HTML sanitizer; clears
 `GHSA-cmwh-pvxp-8882`, a `setConfig()` pollution bypass that still affected ≤3.4.10) and
@@ -253,14 +258,14 @@ _Current state as of 2026-06-19 (`npm audit`). Production tree (`--omit=dev`): *
 
 ## Remediation Status
 
-| ID      | Finding                                                 | Status                | Remediation                                                                                                       | Commit                         |
-| ------- | ------------------------------------------------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------ |
-| DEP-01  | `protobufjs` critical vulnerability via `@google/genai` | ✅ Remediated         | `npm audit fix` applied 2026-06-19; `protobufjs` now `7.6.4`. Production tree audit: 0 vulnerabilities.           | Security polish pass           |
-| HIGH-01 | GitHub Actions not pinned to SHA                        | Remediated            | `actions/checkout` and `actions/setup-node` are pinned to full commit SHAs in CI workflow.                        | Pending current PR commit hash |
-| HIGH-02 | XSS via unsafe `innerHTML` patterns in mockups          | Remediated            | Dynamic mockup reset patterns switched away from `innerHTML` usage (`replaceChildren`/text-safe patterns).        | Pending current PR commit hash |
-| HIGH-03 | Docker container runs as root                           | Remediated            | Production stage uses non-root `appuser`/`appgroup`.                                                              | Pending current PR commit hash |
-| MED-01  | No JSON body size limit on Express                      | False positive        | `express.json({ limit: '10kb' })` already present.                                                                | Pending current PR commit hash |
-| MED-02  | Missing CSP/HSTS/security header posture                | Partially remediated  | Helmet is enabled; production header posture still requires deployed verification.                                | Pending current PR commit hash |
-| MED-03  | Missing React Error Boundary                            | Remediated            | Root app is wrapped in an Error Boundary with fallback rendering and console error logging.                       | Pending current PR commit hash |
-| MED-04  | `dompurify` vulnerabilities                             | ✅ Remediated         | `npm audit fix` applied 2026-06-19; `dompurify` now `3.4.11` (clears later `GHSA-cmwh-pvxp-8882` ≤3.4.10 bypass). | Security polish pass           |
-| MED-05  | Vite dev-server vulnerability                           | ⏸ Deferred (dev-only) | Fix requires Vite v8 (breaking). Dev-server only — no production-bundle impact. Tracked by Dependabot.            | —                              |
+| ID      | Finding                                                 | Status                | Remediation                                                                                                                                                               | Commit                         |
+| ------- | ------------------------------------------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| DEP-01  | `protobufjs` critical vulnerability via `@google/genai` | ✅ Remediated         | `npm audit fix` applied 2026-06-19; `protobufjs` now `7.6.4`. Production tree audit: 0 vulnerabilities.                                                                   | Security polish pass           |
+| HIGH-01 | GitHub Actions not pinned to SHA                        | Remediated            | `actions/checkout` and `actions/setup-node` are pinned to full commit SHAs in CI workflow.                                                                                | Pending current PR commit hash |
+| HIGH-02 | XSS via unsafe `innerHTML` patterns in mockups          | Remediated            | Dynamic mockup reset patterns switched away from `innerHTML` usage (`replaceChildren`/text-safe patterns).                                                                | Pending current PR commit hash |
+| HIGH-03 | Docker container runs as root                           | Remediated            | Production stage uses non-root `appuser`/`appgroup`.                                                                                                                      | Pending current PR commit hash |
+| MED-01  | No JSON body size limit on Express                      | False positive        | `express.json({ limit: '10kb' })` already present.                                                                                                                        | Pending current PR commit hash |
+| MED-02  | Missing CSP/HSTS/security header posture                | ✅ Remediated         | Helmet enabled (CSP, frameguard, HSTS, etc.) + restrictive `Permissions-Policy` added server-side. Deployed headers verified 2026-06-19 via securityheaders.com: grade A. | Security polish pass           |
+| MED-03  | Missing React Error Boundary                            | Remediated            | Root app is wrapped in an Error Boundary with fallback rendering and console error logging.                                                                               | Pending current PR commit hash |
+| MED-04  | `dompurify` vulnerabilities                             | ✅ Remediated         | `npm audit fix` applied 2026-06-19; `dompurify` now `3.4.11` (clears later `GHSA-cmwh-pvxp-8882` ≤3.4.10 bypass).                                                         | Security polish pass           |
+| MED-05  | Vite dev-server vulnerability                           | ⏸ Deferred (dev-only) | Fix requires Vite v8 (breaking). Dev-server only — no production-bundle impact. Tracked by Dependabot.                                                                    | —                              |
