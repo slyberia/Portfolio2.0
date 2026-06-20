@@ -30,60 +30,61 @@ Customer Success is presented as an **evidence layer**, not a seniority claim �
 
 ## Engineering Evidence
 
-This repository is itself part of the portfolio. The site is the artifact, but the reasoning
-behind it is documented openly — how it was built, what was decided and why, and where AI helped
-versus where human judgment did the work. If you only read three files, read these.
+This site is part of the portfolio itself. Beyond the finished product, the thinking behind it is
+written down in plain sight: how it was built, the choices that were made and why, and where AI
+helped versus where a person made the call. If you read nothing else here, read these.
 
 ### 🏗 How It Was Built — [`HOW_IT_WAS_BUILT.md`](HOW_IT_WAS_BUILT.md)
 
-The honest build narrative. The portfolio was prototyped in Google AI Studio (Gemini) through
-**directed, opinionated conversation** — not passive acceptance of model output. It documents real
-pushback (the flat skill-tag wall rejected in favor of the `SkillDiscoveryModal` pattern; generic
-"passionate developer" hero copy rewritten against a named audience). It then names the **four
-concrete gaps that surfaced when the prototype was exported to production** and how each was fixed:
+The honest story of building the site with AI. The first version was created in Google AI Studio
+(Google's Gemini AI) by steering the AI with clear instructions and pushing back when its
+suggestions weren't good enough — not by accepting whatever it produced. When that early version was
+turned into a real, live website, **four problems showed up, and the document explains how each was
+fixed in everyday terms**:
 
-- **No strict `tsconfig.json`** — AI Studio's permissive in-browser typing hid real errors; strict
-  mode was authored and the code brought into compliance.
-- **No real build pipeline** — the prototype ran from `esm.sh` CDN imports and an importmap; it was
-  migrated to a proper Vite + npm dependency pipeline.
-- **API key exposed in the client bundle** — `vite.config.ts` polyfilled the Gemini key into the
-  browser build; fixed with a server-side Express proxy on Cloud Run.
-- **Unsanitized `dangerouslySetInnerHTML`** — an XSS vector closed by adding DOMPurify with explicit
-  `FORBID_TAGS` / `FORBID_ATTR`.
+- **The quality checks weren't turned on.** The early setup let mistakes slip through; stricter
+  automatic checking was switched on and the code cleaned up to pass it.
+- **It wasn't packaged to run on its own.** The prototype borrowed its building blocks from the
+  internet at page load; it was rebuilt to bundle everything properly so it runs reliably.
+- **A secret password was visible to visitors.** The key that talks to the AI service was exposed in
+  the page's code; it was moved to a private server so visitors can never see it.
+- **Untrusted content could run harmful code.** Page content wasn't being cleaned before display; a
+  filter was added to strip anything dangerous first.
 
-It closes with a candid **AI-generated vs. human-directed** breakdown and the **KS_01 design pivot** —
-evaluating the original hero against the project's own `.impeccable.md` anti-patterns, finding it
-non-compliant, and acting on that rather than rationalizing it. Using AI well — knowing when to push
-back, what to verify, and what to fix — is treated as the skill being demonstrated.
+It ends with a frank breakdown of what the AI made versus what the human directed, plus the story of
+scrapping the original homepage design after honestly judging it against the project's own standards
+and finding it fell short. The real point: using AI well — knowing when to push back, what to
+double-check, and what to fix — is itself the skill on display.
 
 ### 🧭 Architecture Decisions — [`DECISIONS.md`](DECISIONS.md)
 
-Six Architecture Decision Records, each with full context, the decision, **alternatives explicitly
-rejected**, and the consequences accepted:
+Six write-ups of the big technical choices, each showing the situation, the decision, **the
+alternatives that were considered and rejected**, and the trade-offs accepted. In plain terms:
 
-1. **Server-side Gemini proxy** over a client-embedded key (rejected Vercel/Netlify functions and the `VITE_`-prefixed env flag).
-2. **React Router v6** over prototype-grade hash routing (rejected Next.js and keeping hash routing).
-3. **Markdown files** over a headless CMS for case-study content (rejected Contentful/Sanity and hardcoded TS strings).
-4. **DOMPurify** over disabling HTML rendering entirely (defense at the render site, not the content pipeline).
-5. **Recruiter Mode as session state**, not a URL parameter or `localStorage` (avoids two-versions-of-truth and stale state).
-6. **Vitest over Jest** (no Babel/`ts-jest` friction; shared config with the Vite build).
+1. **Keep the AI's secret key on a private server** instead of in the public webpage.
+2. **Use real, shareable web addresses** for each page instead of fragile prototype-style links.
+3. **Store the project write-ups as simple text files** instead of paying for a content-management service.
+4. **Clean all content before showing it** rather than removing the rich previews entirely.
+5. **Keep "Recruiter Mode" to a single visit** instead of saving it in the address or the browser.
+6. **Pick a testing tool that fits the build** instead of the popular default that needs extra wiring.
 
-The value here is the trade-off reasoning — each ADR shows _why this and not the obvious alternative_.
+The value isn't the choices themselves — it's the reasoning that shows _why this and not the obvious
+alternative_.
 
 ### 🗺 Architecture Overview — [`ARCHITECTURE.md`](ARCHITECTURE.md)
 
-The system map: stack table, repository layout, the route → component contract, the
-`Browser → /api/chat → Express proxy → Gemini` data flow with its in-memory rate limit, the
-runtime-fetched markdown content model with its `constants.tsx` fallback, and the consolidated
-security summary. Start here for a fast structural read of how the pieces fit.
+A simple map of how the site is put together: what technologies it uses, how the files are
+organized, how a visitor's chat message travels to the AI and back (and how overuse is throttled),
+how the written content is loaded, and a short security summary. Start here for a quick picture of
+how the pieces fit.
 
 ### 🔍 AI Attribution — [`AI_ATTRIBUTION.md`](AI_ATTRIBUTION.md)
 
-The source-of-truth ledger for every AI-assisted contribution across Portfolio2.0 (and related
-projects). It grades each session **PRIMARY / SUPPORTING / DIRECTIONAL**, distinguishes **Gemini
-from Claude** work explicitly, and — notably — **flags what cannot be attributed** rather than
-papering over gaps. It also traces the Project Aegis prompt-engineering lineage. This is the
-provenance discipline the portfolio's authoring standards require, applied to the portfolio itself.
+An honest record of exactly where AI was used. Each piece of work is graded by how much the AI did
+versus the person, it clearly separates which AI tool did what (Google's Gemini vs. Anthropic's
+Claude), and — unusually — it **openly flags the work that can't be traced** rather than hiding the
+gaps. This is the same honesty-about-sources standard the portfolio asks of its project write-ups,
+applied to the portfolio itself.
 
 ## Security Posture
 
@@ -91,15 +92,14 @@ The full security review and its resolution trail live in
 [`SECURITY_AUDIT.md`](SECURITY_AUDIT.md) (ship-safe engagement), with policy in
 [`SECURITY.md`](SECURITY.md) and threat modeling in [`THREAT_MODEL.md`](THREAT_MODEL.md).
 
-**Every finding affecting application code or the production runtime has been addressed and
-resolved.** Highlights:
+**Every security issue affecting the live site has been fixed.** In plain terms:
 
-- Gemini calls are proxied server-side; the API key is never in the client bundle (CI fails the build on a leak).
-- `/api/chat` enforces server-side rate limiting, input validation, prompt-injection filtering, and chat-history sanitization.
-- Helmet security headers are enabled, including a restrictive `Permissions-Policy` — **deployed headers verified grade A** (securityheaders.com).
-- All rendered HTML passes through DOMPurify; the Docker production stage runs as a non-root user; CI pins GitHub Actions to commit SHAs.
-- **Production dependency tree (`npm audit --omit=dev`): 0 known vulnerabilities.** The only open advisories are dev-only build tooling (Vite/Vitest major upgrades), never shipped to production and tracked by Dependabot.
-- Known limitation: rate limiting is in-memory and resets on container restart/scale events (accepted at portfolio scale).
+- The secret key for the AI service stays on a private server and never reaches visitors; an automatic check blocks any release that would expose it.
+- The chat feature limits how often it can be used, checks what's sent to it, and blocks attempts to trick the AI.
+- Standard browser protections are switched on — an independent scanner (securityheaders.com) gives the live site an **A grade**.
+- All page content is cleaned before it's shown, and the server runs with limited privileges so a break-in can't do as much damage.
+- **The software the live site depends on has no known vulnerabilities.** The only remaining advisories are in developer-only tools that never reach visitors, and they're tracked for a future update.
+- One known limit: the chat's usage cap is kept in memory and resets if the server restarts — acceptable for a personal portfolio.
 
 ## Stack
 
