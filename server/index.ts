@@ -29,6 +29,17 @@ export function createApp(distDir = path.resolve(__dirname, '..', 'dist')) {
     }),
   );
 
+  // Helmet does not set Permissions-Policy; add a restrictive policy so the site
+  // explicitly opts out of powerful browser features it never uses. Closes the one
+  // gap in the deployed securityheaders.com grade (A → A+ on that header).
+  app.use((_req, res, next) => {
+    res.setHeader(
+      'Permissions-Policy',
+      'accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()',
+    );
+    next();
+  });
+
   app.get('/healthz', (_req, res) => {
     res.status(200).json({ ok: true });
   });
