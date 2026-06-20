@@ -18,11 +18,33 @@ Verified outcomes:
 - **No secrets** in the git history or working tree; CI fails the build if the Gemini key ever
   reaches the client bundle.
 
-The **only** items not closed are two **dev-only / build-tooling** advisories (`vitest` + `@vitest/ui`
-and `vite` + `esbuild`) that require major-version upgrades. They affect local development and CI
-tooling exclusively, are **never shipped in the Cloud Run image**, carry **zero production
-exposure**, and are tracked by Dependabot for a scheduled breaking-change upgrade. They are an
-explicitly accepted risk, not an unresolved application vulnerability.
+The two previously-deferred **dev-only / build-tooling** advisories (`vitest` + `@vitest/ui` and
+`vite` + `esbuild`) have since been **closed** by the major-version upgrades they required — the
+project now runs **vite 8** and **vitest 4**. As of this refresh, `npm audit` reports **0
+vulnerabilities** for both the full tree and the production-only tree (`--omit=dev`). There are no
+remaining accepted-risk advisories.
+
+---
+
+## 2026-06-20 — Dev-Tooling Advisories Closed (vite 8 / vitest 4)
+
+This section supersedes the "deferred / accepted risk" language in the 2026-06-19 section below.
+
+The two dev-only advisories previously deferred because they required breaking major upgrades have
+been resolved by landing those upgrades:
+
+- **`vitest` + `@vitest/ui` → vitest 4** — clears the arbitrary file read/execute advisories that
+  applied only when the local Vitest UI server was listening.
+- **`vite` + `esbuild` → vite 8** — clears the long-standing dev-server advisories.
+
+**Verification:**
+
+- `npm audit` → **0 vulnerabilities** (full tree).
+- `npm audit --omit=dev` → **0 vulnerabilities** (production tree).
+- CI on the upgraded dependency tree (vite 8 / vitest 4) builds and tests **green**.
+
+These packages never shipped in the Cloud Run image, so production exposure was always nil; the
+change closes them in dev/CI as well. No accepted-risk advisories remain.
 
 ---
 
@@ -44,19 +66,19 @@ changed). Notable bumps: **`dompurify` 3.4.9 → 3.4.11** (runtime HTML sanitize
 `GHSA-cmwh-pvxp-8882`, a `setConfig()` pollution bypass that still affected ≤3.4.10) and
 **`protobufjs` 7.5.5 → 7.6.4** (transitive via `@google/genai`).
 
-Current `npm audit` totals: **4 (2 critical, 1 high, 1 moderate) — all dev-only / build
-tooling, none shipped to the Cloud Run image.**
+Current `npm audit` totals: **0 vulnerabilities** (full tree and `--omit=dev`). The dev-only
+vitest/vite advisories below were closed by upgrading to vitest 4 / vite 8 (see the 2026-06-20
+section above).
 
-| Category                          | Packages                                                                              | Status                                                 |
-| --------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------ |
-| Production runtime                | `dompurify`, `protobufjs`, `ws`, `qs`, `undici`, `form-data`, `express-rate-limit`, … | ✅ Remediated via `npm audit fix` — 0 vulnerabilities  |
-| Dev-only — deferred (needs major) | `vitest` + `@vitest/ui` (→ vitest 4); `vite` + `esbuild` (→ vite 8)                   | ⏸ Accepted risk — local dev/CI only, not in the bundle |
+| Category                                   | Packages                                                                              | Status                                                |
+| ------------------------------------------ | ------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| Production runtime                         | `dompurify`, `protobufjs`, `ws`, `qs`, `undici`, `form-data`, `express-rate-limit`, … | ✅ Remediated via `npm audit fix` — 0 vulnerabilities |
+| Dev-only — resolved (major upgrade landed) | `vitest` + `@vitest/ui` (now vitest 4); `vite` + `esbuild` (now vite 8)               | ✅ Resolved — upgraded; `npm audit` now 0             |
 
-The two remaining "critical" advisories (`vitest`/`@vitest/ui` — arbitrary file read/execute
-**only when the Vitest UI server is listening**) require a Vitest v4 major upgrade and affect a
-local test UI that is never deployed; production exposure is none. The `vite`/`esbuild` items are
-the long-standing dev-server advisories, fixable only via a Vite v8 major bump. Both are tracked by
-Dependabot and evaluated separately because they are breaking changes.
+The dev-only advisories that previously needed major upgrades have been resolved: the project moved
+to **vitest 4** (`vitest`/`@vitest/ui`) and **vite 8** (`vite`/`esbuild`), clearing the
+arbitrary-file-access and dev-server advisories. These were always limited to local dev/CI tooling
+with no production exposure; they are now closed rather than deferred.
 
 ---
 
@@ -66,7 +88,7 @@ Dependabot and evaluated separately because they are breaking changes.
 - ✅ Docker runtime stage is configured to run as non-root (`appuser`/`appgroup`).
 - ✅ GitHub Actions in `.github/workflows/ci.yml` are pinned to immutable full commit SHAs (with version comments).
 - ✅ Dependency remediation completed on 2026-06-19 (see the refresh section above): non-breaking `npm audit fix` applied; `dompurify` 3.4.11, `protobufjs` 7.6.4; production tree has 0 known vulnerabilities.
-- ⏸ Vite major-upgrade (v8) evaluation remains deferred — it is a breaking change affecting dev-server tooling only (no production impact).
+- ✅ Vite major-upgrade (v8) and Vitest v4 landed (2026-06-20), closing the remaining dev-only advisories — see the 2026-06-20 section above. `npm audit` (full tree) now reports 0 vulnerabilities.
 
 **Tool:** ship-safe v9.1.1  
 **Date:** 2026-04-23  
@@ -92,7 +114,7 @@ The `.claude/skills/ship-safe/` directory (the scanner tool itself) was present 
 | Files scanned                        | 468 (includes ship-safe tool)                                                              |
 | Total findings (all dirs)            | 751                                                                                        |
 | Portfolio app findings               | ~25                                                                                        |
-| CVEs (npm audit, 2026-06-19)         | Production tree: **0**. Dev-only: 4 (2 critical, 1 high, 1 moderate) — see refresh section |
+| CVEs (npm audit, 2026-06-20)         | Full tree: **0**. Production tree: **0**. Dev-only advisories closed via vite 8 / vitest 4 |
 | OpenClaw (agent config)              | ✅ Clean                                                                                   |
 | Actively exploitable secrets         | None confirmed (liveness verification requires network)                                    |
 
@@ -258,13 +280,13 @@ The `.claude/skills/ship-safe/` directory (the scanner tool itself) was present 
 
 _Current state as of 2026-06-19 (`npm audit`). Production tree (`--omit=dev`): **0 vulnerabilities**._
 
-| Package                           | Severity       | Scope                            | Status                                            |
-| --------------------------------- | -------------- | -------------------------------- | ------------------------------------------------- |
-| `protobufjs`                      | (was High)     | Production (via `@google/genai`) | ✅ Resolved — now `7.6.4`                         |
-| `dompurify`                       | (was Mod ×N)   | Production (sanitizer)           | ✅ Resolved — now `3.4.11`                        |
-| `ws`, `qs`, `undici`, `form-data` | (was High/Mod) | Production (transitive)          | ✅ Resolved via `npm audit fix`                   |
-| `vitest`, `@vitest/ui`            | Critical       | **Dev-only** (Vitest UI server)  | ⏸ Deferred — needs vitest 4 (major); not deployed |
-| `vite`, `esbuild`                 | High / Mod     | **Dev-only** (dev server)        | ⏸ Deferred — needs vite 8 (major); not deployed   |
+| Package                           | Severity       | Scope                            | Status                                                |
+| --------------------------------- | -------------- | -------------------------------- | ----------------------------------------------------- |
+| `protobufjs`                      | (was High)     | Production (via `@google/genai`) | ✅ Resolved — now `7.6.4`                             |
+| `dompurify`                       | (was Mod ×N)   | Production (sanitizer)           | ✅ Resolved — now `3.4.11`                            |
+| `ws`, `qs`, `undici`, `form-data` | (was High/Mod) | Production (transitive)          | ✅ Resolved via `npm audit fix`                       |
+| `vitest`, `@vitest/ui`            | (was Critical) | **Dev-only** (Vitest UI server)  | ✅ Resolved — upgraded to vitest 4; `npm audit` now 0 |
+| `vite`, `esbuild`                 | (was High/Mod) | **Dev-only** (dev server)        | ✅ Resolved — upgraded to vite 8; `npm audit` now 0   |
 
 ---
 
@@ -284,14 +306,14 @@ _Current state as of 2026-06-19 (`npm audit`). Production tree (`--omit=dev`): *
 
 ## Remediation Status
 
-| ID      | Finding                                                 | Status                | Remediation                                                                                                                                                               | Commit                         |
-| ------- | ------------------------------------------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
-| DEP-01  | `protobufjs` critical vulnerability via `@google/genai` | ✅ Remediated         | `npm audit fix` applied 2026-06-19; `protobufjs` now `7.6.4`. Production tree audit: 0 vulnerabilities.                                                                   | Security polish pass           |
-| HIGH-01 | GitHub Actions not pinned to SHA                        | Remediated            | `actions/checkout` and `actions/setup-node` are pinned to full commit SHAs in CI workflow.                                                                                | Pending current PR commit hash |
-| HIGH-02 | XSS via unsafe `innerHTML` patterns in mockups          | Remediated            | Dynamic mockup reset patterns switched away from `innerHTML` usage (`replaceChildren`/text-safe patterns).                                                                | Pending current PR commit hash |
-| HIGH-03 | Docker container runs as root                           | Remediated            | Production stage uses non-root `appuser`/`appgroup`.                                                                                                                      | Pending current PR commit hash |
-| MED-01  | No JSON body size limit on Express                      | False positive        | `express.json({ limit: '10kb' })` already present.                                                                                                                        | Pending current PR commit hash |
-| MED-02  | Missing CSP/HSTS/security header posture                | ✅ Remediated         | Helmet enabled (CSP, frameguard, HSTS, etc.) + restrictive `Permissions-Policy` added server-side. Deployed headers verified 2026-06-19 via securityheaders.com: grade A. | Security polish pass           |
-| MED-03  | Missing React Error Boundary                            | Remediated            | Root app is wrapped in an Error Boundary with fallback rendering and console error logging.                                                                               | Pending current PR commit hash |
-| MED-04  | `dompurify` vulnerabilities                             | ✅ Remediated         | `npm audit fix` applied 2026-06-19; `dompurify` now `3.4.11` (clears later `GHSA-cmwh-pvxp-8882` ≤3.4.10 bypass).                                                         | Security polish pass           |
-| MED-05  | Vite dev-server vulnerability                           | ⏸ Deferred (dev-only) | Fix requires Vite v8 (breaking). Dev-server only — no production-bundle impact. Tracked by Dependabot.                                                                    | —                              |
+| ID      | Finding                                                 | Status         | Remediation                                                                                                                                                               | Commit                         |
+| ------- | ------------------------------------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| DEP-01  | `protobufjs` critical vulnerability via `@google/genai` | ✅ Remediated  | `npm audit fix` applied 2026-06-19; `protobufjs` now `7.6.4`. Production tree audit: 0 vulnerabilities.                                                                   | Security polish pass           |
+| HIGH-01 | GitHub Actions not pinned to SHA                        | Remediated     | `actions/checkout` and `actions/setup-node` are pinned to full commit SHAs in CI workflow.                                                                                | Pending current PR commit hash |
+| HIGH-02 | XSS via unsafe `innerHTML` patterns in mockups          | Remediated     | Dynamic mockup reset patterns switched away from `innerHTML` usage (`replaceChildren`/text-safe patterns).                                                                | Pending current PR commit hash |
+| HIGH-03 | Docker container runs as root                           | Remediated     | Production stage uses non-root `appuser`/`appgroup`.                                                                                                                      | Pending current PR commit hash |
+| MED-01  | No JSON body size limit on Express                      | False positive | `express.json({ limit: '10kb' })` already present.                                                                                                                        | Pending current PR commit hash |
+| MED-02  | Missing CSP/HSTS/security header posture                | ✅ Remediated  | Helmet enabled (CSP, frameguard, HSTS, etc.) + restrictive `Permissions-Policy` added server-side. Deployed headers verified 2026-06-19 via securityheaders.com: grade A. | Security polish pass           |
+| MED-03  | Missing React Error Boundary                            | Remediated     | Root app is wrapped in an Error Boundary with fallback rendering and console error logging.                                                                               | Pending current PR commit hash |
+| MED-04  | `dompurify` vulnerabilities                             | ✅ Remediated  | `npm audit fix` applied 2026-06-19; `dompurify` now `3.4.11` (clears later `GHSA-cmwh-pvxp-8882` ≤3.4.10 bypass).                                                         | Security polish pass           |
+| MED-05  | Vite dev-server vulnerability                           | ✅ Resolved    | Upgraded to Vite v8 (and vitest 4); dev-server advisory cleared. Dev-only — no production-bundle impact. `npm audit` (full tree) now 0.                                   | vite 8 / vitest 4 upgrade      |
