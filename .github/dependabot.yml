@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: npm
     directory: '/'
     schedule:
-      interval: weekly
+      interval: monthly
     open-pull-requests-limit: 5
     # Collapse routine minor/patch bumps into a single weekly PR to reduce noise;
     # major bumps still open individually so they can be reviewed deliberately.
@@ -15,7 +15,7 @@ updates:
   - package-ecosystem: github-actions
     directory: '/'
     schedule:
-      interval: weekly
+      interval: monthly
     groups:
       github-actions:
         update-types:
