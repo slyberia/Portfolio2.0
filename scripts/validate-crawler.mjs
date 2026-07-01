@@ -26,7 +26,10 @@ const REQUIRED_ROUTES = [
   '/site-index',
   '/ai-index',
 ];
-const LEGACY_CLOUD_RUN = 'northamerica-northeast2.run.app';
+const LEGACY_CLOUD_RUN = [
+  'northamerica-northeast2.run.app',
+  'kyle-semple-portfolio-786228485832.us-central1.run.app',
+];
 
 const fail = (msg) => {
   console.error(`✗ ${msg}`);
@@ -100,7 +103,9 @@ function assertSnapshotHtml(route) {
       fail(`${route}: invalid JSON-LD JSON`);
     }
   }
-  if (html.includes(LEGACY_CLOUD_RUN)) fail(`${route}: contains stale Cloud Run domain`);
+  for (const domain of LEGACY_CLOUD_RUN) {
+    if (html.includes(domain)) fail(`${route}: contains stale Cloud Run domain (${domain})`);
+  }
 }
 
 function assertNoCanonicalSnapshotWrites() {
