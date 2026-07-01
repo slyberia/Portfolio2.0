@@ -4,11 +4,11 @@
 
 | Layer              | Technology                                                            |
 | ------------------ | --------------------------------------------------------------------- |
-| Frontend framework | React 19 + TypeScript (strict)                                        |
-| Build tool         | Vite 5                                                                |
+| Frontend framework | React 18 + TypeScript (strict)                                        |
+| Build tool         | Vite 8                                                                |
 | Styling            | Tailwind CSS v3                                                       |
-| Routing            | React Router v6 (`createBrowserRouter`)                               |
-| AI chat            | Gemini 2.0 Flash (server-side proxy)                                  |
+| Routing            | React Router v7 (`createBrowserRouter`)                               |
+| AI chat            | Gemini 2.5 Flash (server-side proxy)                                  |
 | Server             | Express (Node.js, Cloud Run target)                                   |
 | Testing            | Vitest + Testing Library                                              |
 | CI                 | GitHub Actions (format → lint → typecheck → test → build → key audit) |
@@ -35,7 +35,7 @@ Portfolio2.0/
 │   │   └── useCaseStudyContent.ts  # Fetches .md files at runtime
 │   ├── views/
 │   │   ├── HomeView.tsx
-│   │   ├── CaseStudyView.tsx
+│   │   ├── ProjectDetailView.tsx
 │   │   └── ResumeView.tsx
 │   └── utils/
 │       └── audioUtils.ts
@@ -44,14 +44,19 @@ Portfolio2.0/
 
 ## Routing
 
-React Router v6 (`createBrowserRouter`) provides client-side routing with a proper URL structure:
+React Router v7 (`createBrowserRouter`) provides client-side routing with a proper URL structure:
 
-| URL Pattern              | Component       |
-| ------------------------ | --------------- |
-| `/`                      | `HomeView`      |
-| `/case-studies/:studyId` | `CaseStudyView` |
-| `/resume`                | `ResumeView`    |
-| `*`                      | Redirect to `/` |
+| URL Pattern              | Component                                  |
+| ------------------------ | ------------------------------------------ |
+| `/`                      | `HomeView`                                 |
+| `/projects`              | `ProjectsIndexView`                        |
+| `/projects/:projectId`   | `ProjectDetailView`                        |
+| `/deep-dives`            | `DeepDiveView`                             |
+| `/resume`                | `ResumeView`                               |
+| `/case-studies/:studyId` | Redirect → `/projects/:projectId` (legacy) |
+
+The full route table (tracks, apply flows, gallery, site index, print résumé, and legacy
+redirects) lives in `src/router.tsx`.
 
 The Express server serves `dist/index.html` for all non-`/api/*` routes as an SPA fallback, enabling direct URL access and browser back/forward navigation.
 
@@ -60,9 +65,9 @@ The Express server serves `dist/index.html` for all non-`/api/*` routes as an SP
 All Gemini API calls are routed through the Express server to keep the API key server-side:
 
 ```
-Browser → POST /api/chat → server/geminiProxy.ts → Gemini 2.0 Flash
+Browser → POST /api/chat → server/geminiProxy.ts → Gemini 2.5 Flash
                                       ↓
-                              Rate limit: 50 req/IP/day (in-memory Map)
+                              Rate limit: 25 req/IP/day (in-memory Map)
                               Streams text/plain chunks back to browser
 ```
 
@@ -87,5 +92,5 @@ npm run serve        # Serve dist/ via Express
 - **API key**: server-side only, never in Vite bundle (verified by CI key audit step)
 - **HTML rendering**: `DOMPurify.sanitize()` on all `dangerouslySetInnerHTML` usage
 - **Prompt injection**: pattern-matched server-side before reaching Gemini API
-- **Rate limiting**: 50 req/IP/day in-memory, returns 429
+- **Rate limiting**: 25 req/IP/day in-memory (env-configurable via `DIGITAL_TWIN_MAX_DAILY_REQUESTS`), returns 429
 - **Security headers**: `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`

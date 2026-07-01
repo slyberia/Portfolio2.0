@@ -40,6 +40,11 @@ All Gemini API calls are routed through an Express server (`server/geminiProxy.t
 **Date:** Phase 2  
 **Status:** Accepted
 
+> **Update:** The dependency has since been upgraded to **React Router v7**. The decision below
+> (browser routing via `createBrowserRouter` over hash routing) is unchanged; the `createBrowserRouter`
+> API and SPA-fallback approach carry forward to v7. Version references in this record reflect the
+> state at decision time.
+
 **Context:**  
 The prototype used `window.location.hash` and a `hashchange` event listener for navigation. This pattern (`/#/case-study/prompter-hub`) breaks deep links in meaningful ways: Open Graph tags cannot reference hash fragments (crawlers ignore them), browser history entries are coarse, and any engineer reviewing the code would recognize it as a prototype-grade navigation approach.
 
