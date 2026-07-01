@@ -92,7 +92,7 @@ describe('geminiProxy', () => {
 
   it('returns 429 after 25 requests from the same IP', async () => {
     const ip = '10.99.99.99';
-    // Send 50 requests to exhaust the daily limit
+    // Send 25 requests to exhaust the daily limit (DEFAULT_MAX_DAILY_REQUESTS)
     for (let i = 0; i < 25; i++) {
       await request(app).post('/api/chat').set('x-forwarded-for', ip).send({ message: 'hello' });
     }

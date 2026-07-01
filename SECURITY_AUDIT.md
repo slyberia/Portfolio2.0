@@ -144,6 +144,7 @@ The `.claude/skills/ship-safe/` directory (the scanner tool itself) was present 
   - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
   - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
   ```
+- **Status: ✅ RESOLVED.** All CI actions (`actions/checkout`, `actions/setup-node`, and the `gitleaks` scanner action) are pinned to full commit SHAs with version comments in `.github/workflows/ci.yml`. Current pins are ahead of the example SHAs above (checkout v7.0.0, setup-node v6.4.0).
 
 ### HIGH-02 — XSS via `innerHTML` with Dynamic Data
 
@@ -243,12 +244,12 @@ The `.claude/skills/ship-safe/` directory (the scanner tool itself) was present 
 
 ## False Positives Noted
 
-| Flag                       | Location                          | Reason                                                                                                                                        |
-| -------------------------- | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `PROMPT_INJECTION_PATTERN` | `server/geminiProxy.ts:43,44,103` | These lines are inside `detectInjectionAttempt()` — the patterns ship-safe matched are the detection regexes themselves, not actual injection |
-| `LLM_NO_RATE_LIMIT`        | `server/geminiProxy.ts:118`       | Rate limiting is fully implemented at lines 10–33 (`checkRateLimit()`, `rateLimitMap`, `MAX_DAILY_REQUESTS = 50`)                             |
-| `API_NO_SECURITY_HEADERS`  | `server/index.ts:15–37`           | Three security headers (`X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`) are set in the middleware at lines 15–19              |
-| `LLM_SYSTEM_PROMPT_CLIENT` | `server/geminiProxy.ts:35`        | The system prompt is in a server-only file; it is never sent to the client                                                                    |
+| Flag                       | Location                          | Reason                                                                                                                                                             |
+| -------------------------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `PROMPT_INJECTION_PATTERN` | `server/geminiProxy.ts:43,44,103` | These lines are inside `detectInjectionAttempt()` — the patterns ship-safe matched are the detection regexes themselves, not actual injection                      |
+| `LLM_NO_RATE_LIMIT`        | `server/geminiProxy.ts:118`       | Rate limiting is fully implemented (`checkRateLimit()`, `rateLimitMap`, `DEFAULT_MAX_DAILY_REQUESTS = 25`, env-configurable via `DIGITAL_TWIN_MAX_DAILY_REQUESTS`) |
+| `API_NO_SECURITY_HEADERS`  | `server/index.ts:15–37`           | Three security headers (`X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`) are set in the middleware at lines 15–19                                   |
+| `LLM_SYSTEM_PROMPT_CLIENT` | `server/geminiProxy.ts:35`        | The system prompt is in a server-only file; it is never sent to the client                                                                                         |
 
 ---
 
@@ -273,7 +274,7 @@ The `.claude/skills/ship-safe/` directory (the scanner tool itself) was present 
 
 ### CI/CD Pipeline
 
-- **Gap (HIGH-01 above):** Actions are unpinned — fix before next release.
+- **HIGH-01 (resolved):** `actions/checkout`, `actions/setup-node`, and the `gitleaks` action are now pinned to full commit SHAs in `.github/workflows/ci.yml` (with version comments). See the Remediation Status table.
 - The key-audit step is a useful guard but only checks `dist/` for the Gemini key; it does not check for other secrets (e.g. `ANTHROPIC_API_KEY` if added later). Consider `npx ship-safe ci . --fail-on critical` as an additional CI step.
 
 ### Dependency Vulnerabilities

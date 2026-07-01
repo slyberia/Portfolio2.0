@@ -10,7 +10,7 @@
 [![CI](https://github.com/slyberia/Portfolio2.0/actions/workflows/ci.yml/badge.svg)](https://github.com/slyberia/Portfolio2.0/actions/workflows/ci.yml)
 ![React 18](https://img.shields.io/badge/React-18-61dafb?logo=react&logoColor=white)
 ![TypeScript strict](https://img.shields.io/badge/TypeScript-strict-3178c6?logo=typescript&logoColor=white)
-![Vite 5](https://img.shields.io/badge/Vite-5-646cff?logo=vite&logoColor=white)
+![Vite 8](https://img.shields.io/badge/Vite-8-646cff?logo=vite&logoColor=white)
 
 </div>
 
@@ -118,9 +118,9 @@ people rely on.
 
 | Layer    | Technology                                       |
 | -------- | ------------------------------------------------ |
-| Frontend | React 18, TypeScript strict, Vite 5, Tailwind v3 |
+| Frontend | React 18, TypeScript strict, Vite 8, Tailwind v3 |
 | Routing  | React Router v7                                  |
-| AI       | Gemini 2.0 Flash via server-side Express proxy   |
+| AI       | Gemini 2.5 Flash via server-side Express proxy   |
 | Server   | Express on Cloud Run                             |
 | Testing  | Vitest + Testing Library                         |
 | CI       | GitHub Actions                                   |
