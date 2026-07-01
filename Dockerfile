@@ -8,7 +8,7 @@ RUN npm ci
 COPY . .
 
 # Build frontend and crawler mirrors
-ARG SITE_URL=https://kyle-semple-portfolio-786228485832.us-central1.run.app
+ARG SITE_URL=https://kyle-semple-ai-solutions-portfolio-341805100474.us-east1.run.app
 ENV SITE_URL=$SITE_URL
 ARG VITE_NG_GALLERY_BASE=https://storage.googleapis.com/portfoli02-bucket
 ENV VITE_NG_GALLERY_BASE=$VITE_NG_GALLERY_BASE

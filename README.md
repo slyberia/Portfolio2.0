@@ -5,7 +5,7 @@
 
 **Forward Deployed Engineer · Technical Systems Translator** · Washtenaw County, MI
 
-[Live Site](https://kyle-semple-portfolio-786228485832.us-central1.run.app) · [How It Was Built](HOW_IT_WAS_BUILT.md) · [Architecture Decisions](DECISIONS.md) · [Architecture Overview](ARCHITECTURE.md)
+[Live Site](https://kyle-semple-ai-solutions-portfolio-341805100474.us-east1.run.app) · [How It Was Built](HOW_IT_WAS_BUILT.md) · [Architecture Decisions](DECISIONS.md) · [Architecture Overview](ARCHITECTURE.md)
 
 [![CI](https://github.com/slyberia/Portfolio2.0/actions/workflows/ci.yml/badge.svg)](https://github.com/slyberia/Portfolio2.0/actions/workflows/ci.yml)
 ![React 18](https://img.shields.io/badge/React-18-61dafb?logo=react&logoColor=white)
@@ -96,7 +96,7 @@ The full security review and its resolution trail live in
 
 - The secret key for the AI service stays on a private server and never reaches visitors; an automatic check blocks any release that would expose it.
 - The chat feature limits how often it can be used, checks what's sent to it, and blocks attempts to trick the AI.
-- Standard browser protections are switched on — an independent scanner (securityheaders.com) gives the live site an **A grade**.
+- Standard browser protections are switched on — an independent scanner (securityheaders.com) gives the live site an **A+ grade**.
 - All page content is cleaned before it's shown, and the server runs with limited privileges so a break-in can't do as much damage.
 - **No known vulnerabilities anywhere — live site or developer tools.** The software the live site depends on has been clean for a while. The only items that used to be open were a few advisories in behind-the-scenes build-and-test tools that never reach visitors; as of June 2026 those were closed too, by updating those tools to their latest versions. The result is a clean bill of health across the board.
 - One known limit: the chat's usage cap is kept in memory and resets if the server restarts — acceptable for a personal portfolio.
@@ -143,7 +143,7 @@ people rely on.
 ## Getting Started
 
 > The sections below are for running the project locally. Most visitors will want the
-> [live site](https://kyle-semple-portfolio-786228485832.us-central1.run.app) and the
+> [live site](https://kyle-semple-ai-solutions-portfolio-341805100474.us-east1.run.app) and the
 > [Engineering Evidence](#engineering-evidence) above.
 
 ### Prerequisites

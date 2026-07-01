@@ -1,6 +1,7 @@
 import { PROJECT_METADATA, getProjectMetadata } from '../data/projectMetadata';
 
-export const SITE_BASE_URL = 'https://kyle-semple-portfolio-786228485832.us-central1.run.app';
+export const SITE_BASE_URL =
+  'https://kyle-semple-ai-solutions-portfolio-341805100474.us-east1.run.app';
 
 type JsonLd = Record<string, unknown>;
 

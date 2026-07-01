@@ -16,7 +16,7 @@ const MAX_HISTORY_ENTRY_LENGTH = 1200;
 // ALLOWED_CHAT_ORIGINS env var (comma-separated) so a hostname/custom-domain change does
 // not require a code change + redeploy. When the env var is set it replaces this list.
 const DEFAULT_CHAT_ORIGINS = [
-  'https://kyle-semple-portfolio-786228485832.us-central1.run.app',
+  'https://kyle-semple-ai-solutions-portfolio-341805100474.us-east1.run.app',
   'http://localhost:5173',
   'http://localhost:4173',
   'http://localhost:3000',
