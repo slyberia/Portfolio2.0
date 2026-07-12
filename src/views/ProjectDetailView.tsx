@@ -15,9 +15,11 @@ import { recruiterSummary } from '../utils/recruiterSummary';
 import { PROJECT_FALLBACK_ID, DEEP_DIVES_HREF } from '../lib/routes';
 import {
   CANONICAL_ROLE_ACCENT,
+  CANONICAL_ROLE_DESCRIPTION,
   getProjectMetadata,
   PROJECT_METADATA,
 } from '../data/projectMetadata';
+import Tooltip from '../components/Tooltip';
 import { OperationalTriageSimulator } from '../components/ops-triage/OperationalTriageSimulator';
 import ScrollToTopButton from '../components/ScrollToTopButton';
 import SegmentedTabs from '../components/SegmentedTabs';
@@ -196,12 +198,13 @@ const ProjectHero: React.FC<{
           <p className="max-w-3xl text-slate-700 dark:text-slate-200">{metadata.shortSummary}</p>
           <div className="flex flex-wrap gap-2">
             {metadata.canonicalRoleLanes.map((lane) => (
-              <span
-                key={lane}
-                className={`rounded-full border px-2.5 py-1 text-xs font-medium ${getRoleAccentRecipe(CANONICAL_ROLE_ACCENT[lane]).chipClass}`}
-              >
-                {lane}
-              </span>
+              <Tooltip key={lane} label={CANONICAL_ROLE_DESCRIPTION[lane]}>
+                <span
+                  className={`rounded-full border px-2.5 py-1 text-xs font-medium ${getRoleAccentRecipe(CANONICAL_ROLE_ACCENT[lane]).chipClass}`}
+                >
+                  {lane}
+                </span>
+              </Tooltip>
             ))}
           </div>
           <p className="text-sm font-medium text-slate-700 dark:text-slate-200">

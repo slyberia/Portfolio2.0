@@ -2,6 +2,15 @@ import React, { useState } from 'react';
 import { CaseStudyArtifact, CaseStudyRigor, ProjectEntry } from '../types';
 import { CodeBlock } from './MarkdownSection';
 import AuditLog from './AuditLog';
+import Tooltip from './Tooltip';
+
+// Concise hover explanations for the proof-summary column labels.
+const RIGOR_LABEL_TOOLTIPS: Record<string, string> = {
+  Baseline: 'The starting state before this work',
+  Definition: 'How success was defined for this claim',
+  Method: 'How the work was executed and verified',
+  Window: 'The time period the evidence covers',
+};
 
 export const RigorCard: React.FC<{ rigor: CaseStudyRigor; title?: string; className?: string }> = ({
   rigor,
@@ -50,7 +59,11 @@ export const RigorCard: React.FC<{ rigor: CaseStudyRigor; title?: string; classN
       ].map((item, i) => (
         <div key={i} className="p-6 md:p-8">
           <div className="text-[10px] font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest mb-2 flex items-center gap-2">
-            {item.label}
+            <Tooltip label={RIGOR_LABEL_TOOLTIPS[item.label]}>
+              <span className="cursor-help underline decoration-dotted decoration-slate-400 underline-offset-4 dark:decoration-slate-500">
+                {item.label}
+              </span>
+            </Tooltip>
           </div>
           <div className="text-[13px] font-medium text-slate-700 dark:text-slate-300 leading-relaxed break-words">
             {item.val}
