@@ -1,12 +1,14 @@
 import React from 'react';
 import { RESUME_CONTENT } from '../data/resumeContent';
+import type { ResumeEntry } from '../data/resumeContent';
 
 // Dedicated print/PDF résumé template. This is intentionally NOT the screen résumé
 // page (ResumeView): no cards, shadows, tinted backgrounds, share controls, or site
-// chrome. It renders a single Letter-size page of print-native document typography and
+// chrome. It renders Letter-size pages of print-native document typography and
 // is the source rendered to public/Kyle-Semple-Resume.pdf (see scripts/generate-resume-pdf.mjs)
 // via the bare /resume/print route. Content comes from the shared RESUME_CONTENT source,
-// so it stays in sync with the on-site résumé.
+// so it stays in sync with the on-site résumé — including the embedded portfolio links,
+// which stay clickable in the generated PDF.
 
 const PRINT_CSS = `
   @page {
@@ -36,6 +38,10 @@ const PRINT_CSS = `
   }
   .resume-print-template * {
     box-sizing: border-box;
+  }
+  .resume-print-template a {
+    color: #0f766e;
+    text-decoration: none;
   }
   .resume-print-template .rp-name {
     font-size: 18pt;
@@ -80,6 +86,7 @@ const PRINT_CSS = `
   }
   .resume-print-template .rp-job {
     margin-bottom: 8px;
+    break-inside: avoid;
   }
   .resume-print-template .rp-job-head {
     display: flex;
@@ -99,7 +106,7 @@ const PRINT_CSS = `
     color: #475569;
     white-space: nowrap;
   }
-  .resume-print-template .rp-tools {
+  .resume-print-template .rp-tagline {
     font-size: 7.5pt;
     font-weight: 600;
     text-transform: uppercase;
@@ -107,22 +114,39 @@ const PRINT_CSS = `
     color: #0f766e;
     margin: 1px 0 2px;
   }
-  .resume-print-template .rp-lower {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 24px;
+  .resume-print-template .rp-links {
+    font-size: 8.5pt;
+    margin: 0 0 2px;
+  }
+  .resume-print-template .rp-links a {
+    font-weight: 600;
   }
   .resume-print-template .rp-edu-degree {
     font-weight: 700;
     margin: 0;
   }
-  .resume-print-template .rp-edu-course {
+  .resume-print-template .rp-edu-detail {
     font-style: italic;
     color: #475569;
     font-size: 8pt;
     margin: 0 0 2px;
   }
 `;
+
+const PrintEntryLinks: React.FC<{ entry: ResumeEntry }> = ({ entry }) => {
+  if (!entry.links || entry.links.length === 0) return null;
+  return (
+    <p className="rp-links">
+      {entry.linksLabel && <strong>{entry.linksLabel}: </strong>}
+      {entry.links.map((link, i) => (
+        <React.Fragment key={link.url}>
+          {i > 0 && ' · '}
+          <a href={link.url}>{link.label}</a>
+        </React.Fragment>
+      ))}
+    </p>
+  );
+};
 
 const ResumePrintTemplate: React.FC = () => {
   const {
@@ -131,14 +155,12 @@ const ResumePrintTemplate: React.FC = () => {
     location,
     phone,
     email,
-    linkedInUrl,
+    headerLinks,
     summary,
-    experience,
-    coreSkills,
-    tools,
+    sections,
+    skills,
     education,
     certifications,
-    additional,
   } = RESUME_CONTENT;
 
   return (
@@ -149,81 +171,63 @@ const ResumePrintTemplate: React.FC = () => {
         <p className="rp-name">{name}</p>
         <p className="rp-title">{title}</p>
         <p className="rp-contact">
-          {location} • {phone} • {email} •{' '}
-          <a href={linkedInUrl} style={{ color: '#0f766e', textDecoration: 'none' }}>
-            LinkedIn
-          </a>
+          {location} • {phone} • <a href={`mailto:${email}`}>{email}</a>
+          {headerLinks.map((link) => (
+            <React.Fragment key={link.url}>
+              {' • '}
+              <a href={link.url}>{link.label}</a>
+            </React.Fragment>
+          ))}
         </p>
       </header>
 
       <section className="rp-summary">
-        <h2>Professional Summary</h2>
+        <h2>Summary</h2>
         <p>{summary}</p>
       </section>
 
-      <section>
-        <h2>Experience</h2>
-        {experience.map((exp, idx) => (
-          <div className="rp-job" key={idx}>
-            <div className="rp-job-head">
-              <p className="rp-role">
-                {exp.role} — {exp.company}
-              </p>
-              <span className="rp-period">{exp.period}</span>
+      {sections.map((section) => (
+        <section key={section.heading}>
+          <h2>{section.heading}</h2>
+          {section.entries.map((entry) => (
+            <div className="rp-job" key={entry.title}>
+              <div className="rp-job-head">
+                <p className="rp-role">{entry.title}</p>
+                {entry.meta && <span className="rp-period">{entry.meta}</span>}
+              </div>
+              {entry.tagline && <p className="rp-tagline">{entry.tagline}</p>}
+              <PrintEntryLinks entry={entry} />
+              <ul>
+                {entry.bullets.map((bullet, i) => (
+                  <li key={i}>{bullet}</li>
+                ))}
+              </ul>
             </div>
-            {exp.tools && <p className="rp-tools">{exp.tools}</p>}
-            <ul>
-              {exp.bullets.map((bullet, i) => (
-                <li key={i}>{bullet}</li>
-              ))}
-            </ul>
-          </div>
-        ))}
+          ))}
+        </section>
+      ))}
+
+      <section>
+        <h2>Technical Skills</h2>
+        <ul>
+          {skills.map((group) => (
+            <li key={group.label}>
+              <strong>{group.label}:</strong> {group.items}
+            </li>
+          ))}
+        </ul>
       </section>
 
-      <div className="rp-lower">
-        <div>
-          <section>
-            <h2>Core Skills</h2>
-            <ul>
-              {coreSkills.map((skill, idx) => (
-                <li key={idx}>{skill}</li>
-              ))}
-            </ul>
-          </section>
-          <section>
-            <h2>Tools &amp; Technologies</h2>
-            <ul>
-              {tools.map((tool, idx) => (
-                <li key={idx}>{tool}</li>
-              ))}
-            </ul>
-          </section>
-        </div>
-
-        <div>
-          <section>
-            <h2>Education &amp; Certifications</h2>
-            <p className="rp-edu-degree">
-              {education.degree} — {education.school}
-            </p>
-            <p className="rp-edu-course">{education.coursework}</p>
-            <ul>
-              {certifications.map((cert, idx) => (
-                <li key={idx}>{cert.name}</li>
-              ))}
-            </ul>
-          </section>
-          <section>
-            <h2>Additional Information</h2>
-            <ul>
-              {additional.map((item, idx) => (
-                <li key={idx}>{item}</li>
-              ))}
-            </ul>
-          </section>
-        </div>
-      </div>
+      <section>
+        <h2>Education &amp; Certifications</h2>
+        <p className="rp-edu-degree">
+          {education.degree} — {education.school}
+        </p>
+        <p className="rp-edu-detail">{education.detail}</p>
+        <p>
+          <strong>Certifications:</strong> {certifications.join('; ')}
+        </p>
+      </section>
     </div>
   );
 };
