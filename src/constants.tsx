@@ -7,7 +7,7 @@ import { PORTFOLIO_PIPELINE_HTML } from './data/portfolioPipelineDiagram';
 export const EXPERIENCE: ExperienceItem[] = [
   {
     company: 'HPS Geospatial',
-    role: 'Independent Systems & Web Consultant',
+    role: 'Independent Systems Consultant',
     period: '2021–Present',
     tools:
       'React · TypeScript · Vite · GitHub · Google Cloud Run · Google AI Studio · Claude Code · Documentation',
@@ -19,9 +19,19 @@ export const EXPERIENCE: ExperienceItem[] = [
     ],
   },
   {
-    company: 'Apex Systems / CenterPoint Energy',
-    role: 'GIS Data Operations Analyst',
-    period: '2022–2024',
+    company: 'Tech Providers Inc. / Consumers Energy, Gas Distribution',
+    role: 'GIS Data Analyst',
+    period: 'Mar 2024–Dec 2024',
+    tools: 'ESRI ArcMap · SAP · Utility Work Orders · Gas Distribution GIS · Data QA',
+    bullets: [
+      'Kept gas distribution records production-safe by reconciling ArcMap edits across SAP, internal backlog/work-order tools, unclear diagrams, missing-information cases, and utility source materials.',
+      'Improved repeatability of gas GIS corrections by applying consistent QA checks to gas lines, gas meters, building footprints, and related attributes before production updates.',
+    ],
+  },
+  {
+    company: 'Apex Systems / CenterPoint Energy, Electric Distribution',
+    role: 'Quality Control Specialist / GIS Data Operations Analyst',
+    period: 'Sept 2022–Dec 2023',
     tools: 'ESRI ArcMap · Utility GIS Workflows · Data QA · Triage · Production Data Maintenance',
     bullets: [
       'Worked within structured utility GIS workflows to process service-related edits, data updates, and mapping changes with attention to accuracy and downstream usability.',
@@ -33,7 +43,7 @@ export const EXPERIENCE: ExperienceItem[] = [
   {
     company: 'Printful',
     role: 'Technical Customer Support Representative',
-    period: '2021',
+    period: 'Sept–Dec 2021',
     tools: 'Zendesk · E-commerce Support · Escalation Workflows · Customer Troubleshooting',
     bullets: [
       'Provided technical support through Zendesk for customer issues spanning e-commerce integrations, account workflows, product questions, warehousing, and shipping.',
@@ -350,11 +360,13 @@ export const SKILL_GROUPS: SkillGroup[] = [
   },
 ];
 
+// Kept in sync with the résumé's certification list (src/data/resumeContent.ts).
 export const CERTIFICATIONS: Certification[] = [
-  { name: 'IBM AI-Enabled Applications for Customer Service', issuer: 'IBM' },
-  { name: 'Google Project Management Professional Certificate', issuer: 'Google' },
-  { name: 'Google Data Analytics Professional Certificate', issuer: 'Google' },
-  { name: 'Intercultural Competency', issuer: "Queen's University International Center" },
+  { name: 'Google Project Management', issuer: 'Google' },
+  { name: 'Google Data Analytics', issuer: 'Google' },
+  { name: 'Google AI Essentials', issuer: 'Google' },
+  { name: 'Google Digital Marketing & E-commerce', issuer: 'Google' },
+  { name: 'IBM AI-Enabled Apps for Customer Service', issuer: 'IBM' },
 ];
 
 export const SKILL_CHIP_CONFIG: Record<string, SkillChipConfig> = {
