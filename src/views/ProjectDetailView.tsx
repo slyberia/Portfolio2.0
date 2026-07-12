@@ -54,15 +54,13 @@ const ProjectSwitcher: React.FC<{ activeId: string }> = ({ activeId }) => {
       >
         <div className="flex items-start justify-between gap-2">
           <span className="text-sm font-semibold leading-snug">{project.displayTitle}</span>
-          <span
-            className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${
-              isActive
-                ? 'border-slate-700/30 bg-slate-900/10 text-slate-700 dark:border-tide-softBlue/40 dark:bg-tide-softBlue/20 dark:text-tide-sky'
-                : 'border-slate-300 text-slate-600 dark:border-white/20 dark:text-slate-300'
-            }`}
-          >
-            {isActive ? 'Current' : project.hierarchy === 'featured' ? 'Featured' : 'Supporting'}
-          </span>
+          {/* Only state earns a chip: the Featured/Supporting section headers already
+              communicate category, so repeating it per card was redundant noise. */}
+          {isActive && (
+            <span className="rounded-full border border-slate-700/30 bg-slate-900/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-slate-700 dark:border-tide-softBlue/40 dark:bg-tide-softBlue/20 dark:text-tide-sky">
+              Current
+            </span>
+          )}
         </div>
         <p className="mt-2 text-xs text-slate-600 dark:text-slate-300/90">{project.shortSummary}</p>
       </Link>
@@ -140,48 +138,45 @@ const ProjectSwitcher: React.FC<{ activeId: string }> = ({ activeId }) => {
   );
 };
 
+const getDeepDiveInfo = (projectId: string): { href: string; label: string } => {
+  if (projectId === 'luxe-lofts') {
+    return {
+      href: `${DEEP_DIVES_HREF}?tab=luxe-lofts`,
+      label: 'View Strategic Deep Dive',
+    };
+  }
+  if (projectId === 'northern-grind') {
+    return {
+      href: `${DEEP_DIVES_HREF}?tab=northern-grind`,
+      label: 'View Business Systems Deep Dive',
+    };
+  }
+  if (projectId === 'moh') {
+    return {
+      href: `${DEEP_DIVES_HREF}?tab=moh`,
+      label: 'View GIS Workflow Deep Dive',
+    };
+  }
+  if (projectId === 'guynode') {
+    return {
+      href: `${DEEP_DIVES_HREF}?tab=guynode`,
+      label: 'View Spatial Data Hub Deep Dive',
+    };
+  }
+  // ops-triage and everything else map to the process deep dive.
+  return {
+    href: `${DEEP_DIVES_HREF}?tab=process`,
+    label: 'View Process Deep Dive',
+  };
+};
+
 const ProjectHero: React.FC<{
   activeProjectTags: string[];
   metadata: NonNullable<ReturnType<typeof getProjectMetadata>>;
 }> = ({ activeProjectTags, metadata }) => {
   const accentStyle = getProjectAccentRecipe(metadata.accent);
 
-  const deepDiveInfo = React.useMemo(() => {
-    if (metadata.id === 'luxe-lofts') {
-      return {
-        href: `${DEEP_DIVES_HREF}?tab=luxe-lofts`,
-        label: 'View Strategic Deep Dive',
-      };
-    }
-    if (metadata.id === 'ops-triage') {
-      return {
-        href: `${DEEP_DIVES_HREF}?tab=process`,
-        label: 'View Process Deep Dive',
-      };
-    }
-    if (metadata.id === 'northern-grind') {
-      return {
-        href: `${DEEP_DIVES_HREF}?tab=northern-grind`,
-        label: 'View Business Systems Deep Dive',
-      };
-    }
-    if (metadata.id === 'moh') {
-      return {
-        href: `${DEEP_DIVES_HREF}?tab=moh`,
-        label: 'View GIS Workflow Deep Dive',
-      };
-    }
-    if (metadata.id === 'guynode') {
-      return {
-        href: `${DEEP_DIVES_HREF}?tab=guynode`,
-        label: 'View Spatial Data Hub Deep Dive',
-      };
-    }
-    return {
-      href: `${DEEP_DIVES_HREF}?tab=process`,
-      label: 'View Process Deep Dive',
-    };
-  }, [metadata.id]);
+  const deepDiveInfo = getDeepDiveInfo(metadata.id);
 
   return (
     <header className="rounded-2xl border border-slate-200 bg-white p-6 md:p-8 dark:border-white/10 dark:bg-slate-900/70">
@@ -212,23 +207,19 @@ const ProjectHero: React.FC<{
           </p>
         </div>
         <div className="flex min-w-[220px] flex-col gap-2">
-          <button
-            onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
-            className={`rounded-lg px-3 py-2 text-sm font-medium ${componentRecipes.button.primary}`}
-          >
-            Contact Kyle
-          </button>
-          <Link
-            to="/projects"
-            className="rounded-lg border border-slate-300 px-3 py-2 text-center text-sm font-medium text-slate-800 hover:bg-slate-50 focus-visible:ring-2 ring-slate-500 dark:border-white/20 dark:text-slate-100 dark:hover:bg-white/5"
-          >
-            View Project Library
-          </Link>
+          {/* Contact intent peaks after the evidence is read, not before — the persistent
+              TopNav/footer contact paths cover the hero, and a contact CTA closes the page. */}
           <Link
             to={deepDiveInfo.href}
-            className="rounded-lg border border-slate-300 px-3 py-2 text-center text-sm font-medium text-slate-700 hover:bg-slate-50 focus-visible:ring-2 ring-slate-500 dark:border-white/20 dark:text-slate-200 dark:hover:bg-white/5"
+            className="rounded-lg border border-slate-300 px-3 py-2 text-center text-sm font-medium text-slate-800 hover:bg-slate-50 focus-visible:ring-2 ring-slate-500 dark:border-white/20 dark:text-slate-100 dark:hover:bg-white/5"
           >
             {deepDiveInfo.label}
+          </Link>
+          <Link
+            to="/projects"
+            className="rounded-lg border border-slate-300 px-3 py-2 text-center text-sm font-medium text-slate-700 hover:bg-slate-50 focus-visible:ring-2 ring-slate-500 dark:border-white/20 dark:text-slate-200 dark:hover:bg-white/5"
+          >
+            View Project Library
           </Link>
           <Link
             to="/projects"
@@ -282,6 +273,8 @@ const ProjectDetailView: React.FC = () => {
   // ops-triage simulator or the digital-twin agent. Otherwise it renders blank, so we drop it.
   const hasInteractiveProofs =
     activeProjectId === 'ops-triage' || activeProjectId === 'digital-twin';
+
+  const deepDiveInfo = getDeepDiveInfo(activeProjectId);
 
   const tabsList: { id: 'overview' | 'architecture' | 'tradeoffs' | 'proofs'; label: string }[] = [
     { id: 'overview', label: 'Overview' },
@@ -515,6 +508,31 @@ const ProjectDetailView: React.FC = () => {
               )}
             </div>
           </ErrorBoundary>
+
+          {/* End-of-content conversion point: the reader has just finished the evidence,
+              which is when contact intent is highest. */}
+          <section className="rounded-2xl border border-slate-200 bg-white p-6 text-center md:p-8 dark:border-white/10 dark:bg-slate-900/70">
+            <h2 className={`text-lg font-semibold ${semanticTokens.text.heading}`}>
+              Interested in this kind of work?
+            </h2>
+            <p className="mx-auto mt-1 max-w-xl text-sm text-slate-600 dark:text-slate-300">
+              If this project maps to a problem your team is working on, let&apos;s talk about it.
+            </p>
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+              <button
+                onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
+                className={`rounded-lg px-4 py-2 text-sm font-medium ${componentRecipes.button.primary}`}
+              >
+                Contact Kyle
+              </button>
+              <Link
+                to={deepDiveInfo.href}
+                className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 focus-visible:ring-2 ring-slate-500 dark:border-white/20 dark:text-slate-200 dark:hover:bg-white/5"
+              >
+                {deepDiveInfo.label}
+              </Link>
+            </div>
+          </section>
         </div>
       </div>
       <ScrollToTopButton />
