@@ -8,18 +8,6 @@ import { DiagramFull, DiagramThumb } from '../components/gallery/TechnicalDiagra
 import SegmentedTabs from '../components/SegmentedTabs';
 
 // TS Interfaces
-interface AIVisualAsset {
-  id: string;
-  title: string;
-  category: string;
-  prompt: string;
-  seed: number;
-  model: string;
-  parameters: string;
-  aspect: string;
-  visualStyle: 'loft' | 'dashboard' | 'vector';
-}
-
 interface TechnicalDiagram {
   id: string;
   title: string;
@@ -41,44 +29,9 @@ interface LiveProof {
   embedMode: 'component' | 'iframe' | 'launch';
 }
 
-const GALLERY_AI_ASSETS: AIVisualAsset[] = [
-  {
-    id: 'luxe-lofts-interior',
-    title: 'Luxe Lofts Luxury Penthouse Interior',
-    category: 'Interior Architectural Concept',
-    prompt:
-      'A midcentury modern luxury penthouse interior, concrete plaster walls, warm glowing brass highlights, large architectural windows showing Ann Arbor cityscape at dusk, architectural digest style, cinematic lighting, high-fidelity architectural rendering',
-    seed: 849301824,
-    model: 'DALL-E 3 (ChatGPT)',
-    parameters: 'Quality: HD, Size: 1792x1024 (16:9), Style: Natural',
-    aspect: '16:9',
-    visualStyle: 'loft',
-  },
-  {
-    id: 'ops-dashboard-ui',
-    title: 'Ops Dashboard HUD Wireframe',
-    category: 'User Interface Concept',
-    prompt:
-      'Sleek futuristic operations control dashboard interface, complex node graph network, cybersecurity data visualization overlay, cybernetic color palette with amber and cyan accents, HUD layout, high contrast dashboard interface design',
-    seed: 194857104,
-    model: 'Gemini (Imagen 3)',
-    parameters: 'Aspect Ratio: 16:9, Mode: Graphic/UI',
-    aspect: '16:9',
-    visualStyle: 'dashboard',
-  },
-  {
-    id: 'spatial-intel-icons',
-    title: 'Spatial Intelligence Vector System',
-    category: 'Brand Iconography Concept',
-    prompt:
-      'Set of flat vector glyph icons for spatial and geographical information systems, clean golden ratio curves, minimalist architectural lines, deep slate background, vector art, behance style',
-    seed: 90231847,
-    model: 'DALL-E 3 (ChatGPT)',
-    parameters: 'Quality: Standard, Size: 1024x1024 (1:1), Style: Vivid',
-    aspect: '1:1',
-    visualStyle: 'vector',
-  },
-];
+// The former "Creative AI Automation" tab rendered simulated asset previews rather than
+// real generated images — removed until genuine creative assets (with provenance) exist.
+// See the pending gallery/poster-generator workstream.
 
 const GALLERY_DIAGRAMS: TechnicalDiagram[] = [
   {
@@ -162,8 +115,7 @@ const resolveLiveUrl = (caseStudyId: string): string | undefined =>
   PROJECT_REGISTRY.find((project) => project.id === caseStudyId)?.heroArtifact?.iframeUrl;
 
 export const GalleryView: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'ai' | 'diagrams' | 'live'>('ai');
-  const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<'diagrams' | 'live'>('diagrams');
   const [selectedDiagram, setSelectedDiagram] = useState<TechnicalDiagram | null>(null);
 
   // Zoom & Pan state for Diagram Modal
@@ -171,12 +123,6 @@ export const GalleryView: React.FC = () => {
   const [pan, setPan] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const dragStart = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
-
-  const handleCopyPrompt = (id: string, text: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedId(id);
-    setTimeout(() => setCopiedId(null), 2000);
-  };
 
   const handleOpenDiagram = (diagram: TechnicalDiagram) => {
     setSelectedDiagram(diagram);
@@ -343,16 +289,14 @@ export const GalleryView: React.FC = () => {
             technical architecture, and product-focused system engineering.
           </p>
           <p className="text-sm text-slate-600 dark:text-slate-300">
-            Explore AI generation pipelines, zoom into interactive PostGIS & node system
-            architectures, or jump directly into live sandbox environments proving full stack
-            readiness.
+            Zoom into interactive PostGIS & node system architectures, or jump directly into live
+            sandbox environments proving full stack readiness.
           </p>
         </header>
 
         {/* Tab switcher */}
         <SegmentedTabs
           tabs={[
-            { id: 'ai' as const, label: 'Creative AI Automation' },
             { id: 'diagrams' as const, label: 'Technical Diagrams & Blueprints' },
             { id: 'live' as const, label: 'Live Evidence & Sandboxes' },
           ]}
@@ -361,158 +305,6 @@ export const GalleryView: React.FC = () => {
           ariaLabel="Filter evidence type"
           idPrefix="gallery-tab"
         />
-
-        {/* TAB A: CREATIVE AI AUTOMATION */}
-        {activeTab === 'ai' && (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {GALLERY_AI_ASSETS.map((asset) => (
-              <div
-                key={asset.id}
-                className="group relative flex flex-col justify-between rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] overflow-hidden transition-all duration-300 hover:border-amber-500/30"
-              >
-                {/* Visual Asset Container */}
-                <div className="relative h-48 bg-slate-900 border-b border-slate-200 dark:border-slate-800 overflow-hidden flex items-center justify-center">
-                  {asset.visualStyle === 'loft' && (
-                    <div className="absolute inset-0 flex flex-col justify-between p-4 bg-gradient-to-br from-[#10242f] via-[#07161f] to-[#1a2b36]">
-                      <div className="border border-amber-500/20 rounded p-2 text-center text-[10px] font-mono text-amber-300">
-                        Strategic Marketing Layout
-                      </div>
-                      <div className="flex gap-2">
-                        <div className="w-1/3 h-20 border border-slate-700/50 rounded flex flex-col justify-center items-center">
-                          <span className="text-[10px] text-slate-500">Living</span>
-                          <span className="text-xs text-white font-serif">Luxury</span>
-                        </div>
-                        <div className="w-2/3 h-20 border border-slate-700/50 rounded flex flex-col justify-between p-2">
-                          <span className="text-[9px] text-amber-500">LUXE LOFTS</span>
-                          <div className="h-1 bg-amber-500/30 w-12"></div>
-                          <div className="h-1 bg-slate-600 w-full"></div>
-                          <div className="h-1 bg-slate-600 w-2/3"></div>
-                        </div>
-                      </div>
-                      <div className="text-[8px] text-slate-500 text-right">Ann Arbor, MI</div>
-                    </div>
-                  )}
-
-                  {asset.visualStyle === 'dashboard' && (
-                    <div className="absolute inset-0 flex flex-col justify-between p-4 bg-slate-950 font-mono text-[9px] text-cyan-400">
-                      <div className="flex justify-between border-b border-cyan-900/50 pb-1">
-                        <span>OPERATIONS_TRIAGE</span>
-                        <span className="text-amber-500">LIVE_TICK</span>
-                      </div>
-                      <div className="flex items-end gap-1 h-20">
-                        <div className="w-3 bg-cyan-500/10 border border-cyan-500/40 h-8"></div>
-                        <div className="w-3 bg-cyan-500/10 border border-cyan-500/40 h-12"></div>
-                        <div className="w-3 bg-cyan-500/10 border border-cyan-500/40 h-16"></div>
-                        <div className="w-3 bg-amber-500/20 border border-amber-500/50 h-24 animate-pulse"></div>
-                        <div className="w-3 bg-cyan-500/10 border border-cyan-500/40 h-10"></div>
-                        <div className="w-3 bg-cyan-500/10 border border-cyan-500/40 h-14"></div>
-                        <div className="w-3 bg-cyan-500/10 border border-cyan-500/40 h-20"></div>
-                      </div>
-                      <div className="flex justify-between text-[8px] text-slate-500">
-                        <span>SYSTEM: ONLINE</span>
-                        <span>LATENCY: 42ms</span>
-                      </div>
-                    </div>
-                  )}
-
-                  {asset.visualStyle === 'vector' && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-slate-900">
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="w-12 h-12 border border-slate-700 rounded-lg flex items-center justify-center text-amber-500">
-                          <svg
-                            className="w-6 h-6"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={1.5}
-                              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                            />
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={1.5}
-                              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                            />
-                          </svg>
-                        </div>
-                        <div className="w-12 h-12 border border-slate-700 rounded-lg flex items-center justify-center text-cyan-400">
-                          <svg
-                            className="w-6 h-6"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={1.5}
-                              d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
-                            />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Overlay Prompt UI */}
-                  <div className="absolute inset-0 bg-slate-950/90 flex flex-col justify-between p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="space-y-1">
-                      <span className="text-[9px] uppercase tracking-widest text-slate-500 font-bold font-mono">
-                        GENERATION PROMPT
-                      </span>
-                      <p className="text-[11px] text-slate-200 line-clamp-4 leading-relaxed font-mono">
-                        "{asset.prompt}"
-                      </p>
-                    </div>
-                    <button
-                      onClick={() => handleCopyPrompt(asset.id, asset.prompt)}
-                      className="w-full text-center text-xs font-semibold py-1.5 rounded bg-amber-500 text-slate-950 hover:bg-amber-400 transition-colors focus:outline-none"
-                    >
-                      {copiedId === asset.id ? 'Copied Prompt! ✓' : 'Copy Generation Prompt'}
-                    </button>
-                  </div>
-                </div>
-
-                {/* Details Footer */}
-                <div className="p-5 space-y-3">
-                  <div>
-                    <span className="text-[10px] font-mono tracking-wider text-slate-500 uppercase">
-                      {asset.category}
-                    </span>
-                    <h3 className="text-base font-semibold text-ink-navy dark:text-white mt-0.5">
-                      {asset.title}
-                    </h3>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-2 text-[11px] font-mono text-slate-600 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-3">
-                    <div>
-                      <span className="text-slate-400 block text-[9px] uppercase">Engine</span>
-                      <span className="font-semibold text-slate-800 dark:text-slate-200">
-                        {asset.model}
-                      </span>
-                    </div>
-                    <div>
-                      <span className="text-slate-400 block text-[9px] uppercase">Seed</span>
-                      <span className="font-semibold text-slate-800 dark:text-slate-200">
-                        {asset.seed}
-                      </span>
-                    </div>
-                    <div className="col-span-2 mt-1">
-                      <span className="text-slate-400 block text-[9px] uppercase">Parameters</span>
-                      <span className="text-[10px] break-all text-slate-700 dark:text-slate-300 font-mono">
-                        {asset.parameters}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
 
         {/* TAB B: TECHNICAL DIAGRAMS & BLUEPRINTS */}
         {activeTab === 'diagrams' && (
