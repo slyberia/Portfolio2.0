@@ -5,6 +5,7 @@ import { PROJECT_REGISTRY } from '../constants';
 import { HtmlPreviewCard } from '../components/CaseStudyComponents';
 import { OperationalTriageSimulator } from '../components/ops-triage/OperationalTriageSimulator';
 import { DiagramFull, DiagramThumb } from '../components/gallery/TechnicalDiagrams';
+import SegmentedTabs from '../components/SegmentedTabs';
 
 // TS Interfaces
 interface AIVisualAsset {
@@ -349,48 +350,17 @@ export const GalleryView: React.FC = () => {
         </header>
 
         {/* Tab switcher */}
-        <div
-          role="tablist"
-          aria-label="Filter evidence type"
-          className="flex flex-wrap border-b border-slate-200 dark:border-slate-800"
-        >
-          <button
-            role="tab"
-            aria-selected={activeTab === 'ai'}
-            onClick={() => setActiveTab('ai')}
-            className={`px-6 py-3.5 text-sm font-semibold border-b-2 transition-all focus:outline-none ${
-              activeTab === 'ai'
-                ? 'border-tide-aqua text-tide-aqua dark:text-tide-softBlue font-bold'
-                : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
-            }`}
-          >
-            Creative AI Automation
-          </button>
-          <button
-            role="tab"
-            aria-selected={activeTab === 'diagrams'}
-            onClick={() => setActiveTab('diagrams')}
-            className={`px-6 py-3.5 text-sm font-semibold border-b-2 transition-all focus:outline-none ${
-              activeTab === 'diagrams'
-                ? 'border-tide-aqua text-tide-aqua dark:text-tide-softBlue font-bold'
-                : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
-            }`}
-          >
-            Technical Diagrams & Blueprints
-          </button>
-          <button
-            role="tab"
-            aria-selected={activeTab === 'live'}
-            onClick={() => setActiveTab('live')}
-            className={`px-6 py-3.5 text-sm font-semibold border-b-2 transition-all focus:outline-none ${
-              activeTab === 'live'
-                ? 'border-tide-aqua text-tide-aqua dark:text-tide-softBlue font-bold'
-                : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
-            }`}
-          >
-            Live Evidence & Sandboxes
-          </button>
-        </div>
+        <SegmentedTabs
+          tabs={[
+            { id: 'ai' as const, label: 'Creative AI Automation' },
+            { id: 'diagrams' as const, label: 'Technical Diagrams & Blueprints' },
+            { id: 'live' as const, label: 'Live Evidence & Sandboxes' },
+          ]}
+          activeId={activeTab}
+          onChange={setActiveTab}
+          ariaLabel="Filter evidence type"
+          idPrefix="gallery-tab"
+        />
 
         {/* TAB A: CREATIVE AI AUTOMATION */}
         {activeTab === 'ai' && (

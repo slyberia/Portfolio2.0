@@ -20,6 +20,7 @@ import {
 } from '../data/projectMetadata';
 import { OperationalTriageSimulator } from '../components/ops-triage/OperationalTriageSimulator';
 import ScrollToTopButton from '../components/ScrollToTopButton';
+import SegmentedTabs from '../components/SegmentedTabs';
 import {
   componentRecipes,
   getProjectAccentRecipe,
@@ -286,22 +287,6 @@ const ProjectDetailView: React.FC = () => {
     ...(hasInteractiveProofs ? [{ id: 'proofs' as const, label: 'Interactive Proofs' }] : []),
   ];
 
-  const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
-    let nextIndex = index;
-    if (e.key === 'ArrowRight') {
-      nextIndex = (index + 1) % tabsList.length;
-    } else if (e.key === 'ArrowLeft') {
-      nextIndex = (index - 1 + tabsList.length) % tabsList.length;
-    } else {
-      return;
-    }
-    e.preventDefault();
-    const nextTab = tabsList[nextIndex].id;
-    setActiveTab(nextTab);
-    const button = document.getElementById(`tab-${nextTab}`);
-    if (button) button.focus();
-  };
-
   return (
     <section className="pt-28 pb-24 px-4 sm:px-6">
       <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[260px_minmax(0,1fr)]">
@@ -309,36 +294,13 @@ const ProjectDetailView: React.FC = () => {
         <div className="space-y-6">
           <ProjectHero activeProjectTags={activeProject.tags} metadata={metadata} />
 
-          <div className="border-b border-slate-200 dark:border-slate-800">
-            <div
-              className="flex gap-6 overflow-x-auto"
-              role="tablist"
-              aria-label="Project Details Navigation"
-            >
-              {tabsList.map((tab, idx) => {
-                const isActive = activeTab === tab.id;
-                return (
-                  <button
-                    key={tab.id}
-                    id={`tab-${tab.id}`}
-                    role="tab"
-                    aria-selected={isActive}
-                    aria-controls={`panel-${tab.id}`}
-                    tabIndex={isActive ? 0 : -1}
-                    onClick={() => setActiveTab(tab.id)}
-                    onKeyDown={(e) => handleKeyDown(e, idx)}
-                    className={`py-3 border-b-2 text-sm font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua whitespace-nowrap ${
-                      isActive
-                        ? 'border-gild text-gild font-semibold'
-                        : 'border-transparent text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 hover:border-slate-300 dark:hover:border-slate-700'
-                    }`}
-                  >
-                    {tab.label}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+          <SegmentedTabs
+            tabs={tabsList}
+            activeId={activeTab}
+            onChange={setActiveTab}
+            ariaLabel="Project Details Navigation"
+            hasPanels
+          />
 
           <ErrorBoundary location="Project Detail">
             <div className="space-y-8">
