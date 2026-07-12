@@ -1,21 +1,24 @@
-> **Role:** Brand & Systems Strategist
-> **Outcome:** Reframed a cosmetic rebrand as a connected operating system — pairing a curated brand identity and a scan-first menu interface with break-even-modeled POS/loyalty recommendations, all assembled in handoff-friendly tooling the owner can maintain
-> **Stack/Tools:** Canva, AI-assisted image generation, competitive café menu review, UI/UX layout principles, cost modeling, Mermaid diagrams
-> **Relevance:** Systems thinking applied to business operations — shows ability to connect brand, UX, AI-assisted asset curation, and financial modeling into a single coherent loop rather than treating them as separate deliverables
-
-# ☕ Northern Grind — Digital Rebrand & Systems Strategy
+# Northern Grind — Digital Rebrand & Systems Strategy
 
 > **Project Overview**
 >
-> **Status:** Rebrand + Operational Audit (Implementation Ready)
 > **Role:** Brand & Systems Strategist
+>
+> **Status:** Rebrand + Operational Audit (Implementation Ready)
+>
 > **Location:** Ypsilanti, MI
+>
 > **Scope:** Visual Identity, Menu UX, AI-Assisted Asset Curation, POS & Loyalty Modeling, Channel Economics
+>
 > **Tools:** Canva, AI-Assisted Image Generation, Competitive Café Menu Review, UI/UX Layout Principles, Cost Modeling, Mermaid Diagrams
+>
+> **Outcome:** Reframed a cosmetic rebrand as a connected operating system — pairing a curated brand identity and a scan-first menu interface with break-even-modeled POS/loyalty recommendations, all assembled in handoff-friendly tooling the owner can maintain
+>
+> **Relevance:** Systems thinking applied to business operations — shows ability to connect brand, UX, AI-assisted asset curation, and financial modeling into a single coherent loop rather than treating them as separate deliverables
 
 ---
 
-## 📋 Executive Summary
+## Executive Summary
 
 This project reframed a café rebrand as a **connected operating system**, linking brand identity, menu UX, AI-assisted asset curation, and POS logic into a single loop.
 
@@ -32,7 +35,7 @@ AI-assisted image generation was used to explore logo and food/drink graphic dir
 
 ---
 
-## 🔧 System Architecture
+## System Architecture
 
 The following diagram illustrates the feedback loop designed to drive higher return frequency.
 
@@ -40,7 +43,7 @@ The following diagram illustrates the feedback loop designed to drive higher ret
 
 ---
 
-## 🎨 Module A: Brand Identity System
+## Module A: Brand Identity System
 
 The original mark was visually inconsistent and hard to scale, and didn't yet reflect the café's in-store atmosphere. I rebuilt it as a **responsive identity system**, not a single logo — curated for café fit, local feel, legibility, scalability, and cohesion.
 
@@ -76,7 +79,7 @@ The brand and graphic assets followed a deliberate, governed workflow rather tha
 
 ---
 
-## ⚙️ Module B: POS & Loyalty Logic
+## Module B: POS & Loyalty Logic
 
 I conducted a structured audit of POS options (Square vs. Stripe vs. Dripos) based on **Margin Preservation** and **Scalability**, not just features.
 
@@ -135,7 +138,7 @@ Rather than one flat tier, I scoped three margin-aware models to pilot — then 
 
 ---
 
-## 🍽️ Module C: Menu Redesign (Operational UX)
+## Module C: Menu Redesign (Operational UX)
 
 The menu system was fragmented across multiple surfaces (wall, counter, digital), leading to slow line speeds and "What's in this?" questions. I treated the menu as a **customer decision interface** — its job is to help someone scan categories, compare options, see prices, and decide whether to order or ask a question.
 
@@ -151,7 +154,7 @@ Rather than speculative "screens," the layout is organized around how customers 
 
 ---
 
-## 🚚 Module D: External Sales Channels (DoorDash)
+## Module D: External Sales Channels (DoorDash)
 
 Third-party delivery was being treated as an ordinary sales channel. At **15–30% commission**, that's a margin leak that can erase the gains from a better POS. I reframed it as a **customer-acquisition channel**, not a revenue channel.
 
@@ -168,7 +171,7 @@ The full CAC/LTV modeling, loyalty pilots, brand iteration, and the Instagram au
 
 ---
 
-## 📊 Metrics & Measurement Model
+## Metrics & Measurement Model
 
 Because this is a strategy proposal, success is defined by projected operational shifts:
 
@@ -184,7 +187,7 @@ Because this is a strategy proposal, success is defined by projected operational
 
 ---
 
-## ⚖️ Trade-offs (Strategic Decision Log)
+## Trade-offs (Strategic Decision Log)
 
 ### Trade-off 1: Canva Handoff vs. Adobe Polish
 

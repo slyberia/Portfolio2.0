@@ -1,22 +1,24 @@
-> **Role:** AI Workflow / Forward Deployed Engineer
-> **Outcome:** Built a guardrailed, portfolio-scoped AI assistant that retrieves proof on demand, refuses off-topic prompts, triggers UI actions, and hands off to a human when it can't resolve a query.
-> **Stack/Tools:** Gemini (server-side proxy), React, TypeScript, structured-JSON command parser
-> **Relevance:** Scoped AI implementation — prompt governance, guardrails, and human handoff, not an open-ended chatbot.
-
-# 🤖 Digital Twin AI Agent — Scoped Retrieval & Governance
-
-> **"An AI assistant without guardrails is a liability. The Digital Twin is engineered to provide precise, low-latency proof retrieval with built-in safety and cost controls."**
+# Digital Twin AI Agent — Scoped Retrieval & Governance
 
 > **Project Overview**
 >
-> **Status:** Featured AI Implementation
 > **Role:** AI Workflow / Forward Deployed Engineer
+>
+> **Status:** Featured AI Implementation
+>
 > **Scope:** Scoped retrieval, operational guardrails, command parsing, human handoff
-> **Tools:** Gemini API (server-side proxy), React, TypeScript
+>
+> **Tools:** Gemini API (server-side proxy), React, TypeScript, structured-JSON command parser
+>
+> **Outcome:** Built a guardrailed, portfolio-scoped AI assistant that retrieves proof on demand, refuses off-topic prompts, triggers UI actions, and hands off to a human when it can't resolve a query.
+>
+> **Relevance:** Scoped AI implementation — prompt governance, guardrails, and human handoff, not an open-ended chatbot.
+
+> **"An AI assistant without guardrails is a liability. The Digital Twin is engineered to provide precise, low-latency proof retrieval with built-in safety and cost controls."**
 
 ---
 
-## 🏗️ The Challenge: Recruiter Information Friction
+## The Challenge: Recruiter Information Friction
 
 Recruiters skim fast and rarely have time to dig. Standard search bars often fail to surface the specific "Proof of Work" needed for a role match.
 
@@ -27,7 +29,7 @@ Recruiters skim fast and rarely have time to dig. Standard search bars often fai
 
 ---
 
-## 🔧 Technical Implementation & Assets
+## Technical Implementation & Assets
 
 ### 1. Architecture: The Relevance Gate
 
@@ -45,7 +47,7 @@ It is a study in the same principle: a narrow purpose, a strict output schema, a
 
 ---
 
-## 📊 Impact & Results
+## Impact & Results
 
 - **Scoped Retrieval Guardrails:** Scope guardrails are designed to keep answers grounded in portfolio evidence — the system refuses or redirects off-topic prompts, reducing hallucination risk through scoped retrieval and clear handoff boundaries.
 - **Escalation Path:** Integrated a **Human Handoff** flow that captures the conversation state and routes it to a contact form if the AI cannot resolve the query.
@@ -63,7 +65,7 @@ It is a study in the same principle: a narrow purpose, a strict output schema, a
 
 ---
 
-## 📂 Key Artifact: The Failure Mode Matrix
+## Key Artifact: The Failure Mode Matrix
 
 _Proving that every failure path is planned for._
 

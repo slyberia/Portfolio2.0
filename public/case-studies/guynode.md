@@ -1,29 +1,26 @@
-> **Role:** Spatial Systems Architect / Forward Deployed Engineer
-> **Outcome:** Rebuilt a fragmented legacy geospatial site into a governed, previewable public data hub — dataset governance, consistent metadata, and in-browser map previews replacing obscure file listings.
-> **Stack/Tools:** TypeScript, Leaflet, GeoJSON, metadata-driven registry, Google Cloud Run
-> **Relevance:** Spatial systems thinking and implementation discipline — turning scattered legacy data into a trustworthy, public-facing product.
+# Guynode Spatial Data Hub — Modernizing Geospatial Access
 
-# 🗺️ Guynode Spatial Data Hub — Modernizing Geospatial Access
-
-> **"Spatial data is only as valuable as it is accessible. Guynode transforms fragmented legacy data into a governed, high-fidelity public resource."**
+> **Links:** [Redesigned Portal Preview →](https://guynode-spatial-data-hub-786228485832.us-central1.run.app/) · [Legacy Production Site →](https://guynode.com/)
 
 > **Project Overview**
 >
-> **Status:** Featured System (Redesign Prototype)
 > **Role:** Spatial Systems Architect / Forward Deployed Engineer
+>
+> **Status:** Featured System (Redesign Prototype)
+>
 > **Scope:** Dataset governance, metadata schema, map-based preview, launch readiness
+>
 > **Tools:** TypeScript, Leaflet, GeoJSON, metadata-driven registry, Google Cloud Run
+>
+> **Outcome:** Rebuilt a fragmented legacy geospatial site into a governed, previewable public data hub — dataset governance, consistent metadata, and in-browser map previews replacing obscure file listings.
+>
+> **Relevance:** Spatial systems thinking and implementation discipline — turning scattered legacy data into a trustworthy, public-facing product.
 
-### 🗺️ Launch Guynode Environments
-
-Experience the live GIS solutions. Compare the current legacy stable production version with the modern, high-fidelity Redesigned Portal Preview.
-
-- [Launch Live Production Site →](https://guynode.com/)
-- [Launch Redesigned Portal Preview →](https://guynode-spatial-data-hub-786228485832.us-central1.run.app/)
+> **"Spatial data is only as valuable as it is accessible. Guynode transforms fragmented legacy data into a governed, high-fidelity public resource."**
 
 ---
 
-## 🏗️ The Challenge: Legacy Fragmentation
+## The Challenge: Legacy Fragmentation
 
 Geospatial data for the country of Guyana is difficult to locate, and typically scattered across fragmented legacy websites, with inconsistent formatting and metadata. Guynode was created as an answer to this issue, but its UI/UX design was in need of updating, as its visual appearance and inconsistencies diminished its value.
 
@@ -35,7 +32,7 @@ Geospatial data for the country of Guyana is difficult to locate, and typically 
 
 ---
 
-## 🔧 Technical Implementation & Assets
+## Technical Implementation & Assets
 
 ### 1. Architecture: Metadata-Driven Registry
 
@@ -47,7 +44,7 @@ To bridge the gap between "Raw Data" and "User Comprehension," I integrated a **
 
 ---
 
-## 📊 Impact & Results
+## Impact & Results
 
 The overhaul reframes Guynode from a hard-to-navigate file repository into a credible, public-facing data product. That shift is the point: the same datasets become dramatically more usable simply because they can now be found, previewed, and trusted — and a platform that _looks_ as authoritative as its data is one that agencies and users will actually adopt.
 
@@ -75,7 +72,7 @@ The overhaul reframes Guynode from a hard-to-navigate file repository into a cre
 
 ---
 
-## 📂 Key Artifact: The Dataset Governance Schema
+## Key Artifact: The Dataset Governance Schema
 
 _The core of the system is the strict metadata contract for every spatial node._
 

@@ -1,19 +1,24 @@
-> **Role:** AI Workflow & Automation Designer
-> **Outcome:** Built and runs the governed, multi-LLM pipeline behind this site — AI-assisted development held to production-grade reliability by a one-subphase protocol, an uncompromising CI gate, semantic drift-guards, and a transparent attribution ledger.
-> **Stack/Tools:** TypeScript · Vite · Vitest · Docker · Google Cloud Run · GitHub Actions · Google AI Studio SDK
-> **Relevance:** Shows AI-assisted development can be production-grade when it stays under human design authority and automated assertion gates — not "vibe coding."
+# Portfolio 2.0 — Governed AI Build Pipeline
 
-# 🏗️ Portfolio 2.0 — Governed AI Build Pipeline
+> **Links:** [Live site →](https://kyle-semple-ai-solutions-portfolio-341805100474.us-east1.run.app) · [GitHub repo →](https://github.com/slyberia/Portfolio2.0)
 
 > **Project Overview**
-> **Status:** In Production (Google Cloud Run) · **Role:** AI Workflow & Automation Designer
+>
+> **Role:** AI Workflow & Automation Designer
+>
+> **Status:** In Production (Google Cloud Run)
+>
 > **Scope:** AI build governance, multi-LLM orchestration, CI/CD, attribution
+>
 > **Tools:** TypeScript, Vite, Vitest, Docker, Google Cloud Run, GitHub Actions, multi-LLM toolchain
-> **Links:** [Live site](https://kyle-semple-ai-solutions-portfolio-341805100474.us-east1.run.app) · [GitHub repo](https://github.com/slyberia/Portfolio2.0)
+>
+> **Outcome:** Built and runs the governed, multi-LLM pipeline behind this site — AI-assisted development held to production-grade reliability by a one-subphase protocol, an uncompromising CI gate, semantic drift-guards, and a transparent attribution ledger.
+>
+> **Relevance:** Shows AI-assisted development can be production-grade when it stays under human design authority and automated assertion gates — not "vibe coding."
 
 ---
 
-## 📋 Executive Summary
+## Executive Summary
 
 This entry is about the pipeline that built _this_ site. The thesis is simple: **AI-assisted
 development is only trustworthy when it is governed.** Here, AI is treated not as an autonomous magic
@@ -31,7 +36,7 @@ in scope, gated by automated CI, and tracked through an auditable attribution le
 
 **At a glance:** 50+ PRs merged · 6 AI tools orchestrated · 7 build phases · 10+ canonical routes.
 
-## 🧭 Governance protocol — the safety brake
+## Governance protocol — the safety brake
 
 The architecture runs on a **Sequential Execution Protocol** (defined in `CLAUDE.md`). AI agents work
 **one subphase at a time**: complete a single scoped change, run the full local validation suite,
@@ -39,7 +44,7 @@ commit with a precise subphase identifier, then **STOP and wait for explicit hum
 the critical human-in-the-loop brake — it prevents runaway blast radius and keeps every diff small
 enough for a human to actually review.
 
-## 🤖 The multi-LLM toolchain
+## The multi-LLM toolchain
 
 Six AI tools are assigned distinct roles based on their strengths, with **human design authority**
 across all of them:
@@ -55,7 +60,7 @@ across all of them:
 _(Repomix acts as the context-bundling middleware, feeding up-to-date repository state into the model
 context window via `sync:architect`.)_
 
-## 🔒 The CI gate — an uncompromising gatekeeper
+## The CI gate — an uncompromising gatekeeper
 
 On every push and pull request, `.github/workflows/ci.yml` enforces an unbroken chain: `npm ci` →
 **lint (zero warnings) → format check → typecheck → Vitest → production build → gitleaks secret-scan →
@@ -63,26 +68,26 @@ key audit**. The key audit instantly fails the build if an API key (such as the 
 secrets bleed into the `dist/` bundle. To close the supply-chain surface, **all third-party GitHub
 Actions are pinned to full, immutable commit SHAs** rather than mutable version tags.
 
-## 🛡️ Drift guards — protecting semantic integrity
+## Drift guards — protecting semantic integrity
 
 Beyond standard assertions, the repo carries **bespoke invariant checks** so AI changes can't silently
 degrade meaning: `validate:crawler`, a case-study coverage guard, a skill→evidence mapping guard, a
 theme-regression catch, and a project-metadata contract. These are the checks that keep a confidently
 wrong AI edit from shipping.
 
-## 📒 Attribution — trust through transparency
+## Attribution — trust through transparency
 
 `AI_ATTRIBUTION.md` is the **forensic ledger**: it demarcates human design direction from AI execution
 across every phase. Together with `HOW_IT_WAS_BUILT.md` and `DECISIONS.md`, it forms an auditable paper
 trail of every architectural pivot and AI contribution — the actual trust layer of the system.
 
-## 🚀 Deploy
+## Deploy
 
 A multi-stage Docker build (`node:20-alpine`) compiles the Vite frontend and Express backend, scrubs
 dev dependencies, drops the runtime to a **non-root `appuser`**, and ships the secured container to
 **Google Cloud Run** on port `8080`.
 
-## ⚖️ Constraints & trade-offs
+## Constraints & trade-offs
 
 - **AI speed vs. review burden** → the one-subphase protocol intentionally bottlenecks velocity so
   every diff stays digestible and safe to review.
@@ -90,7 +95,7 @@ dev dependencies, drops the runtime to a **non-root `appuser`**, and ships the s
   enforced by the CI key-audit + gitleaks.
 - **Supply-chain risk** → all CI actions pinned to immutable commit SHAs.
 
-## 🧩 Positioning & evidence architecture
+## Positioning & evidence architecture
 
 Portfolio 2.0 also treated the portfolio's own copy and case-study structure as a product system —
 not just a website built with AI. The build governance above decides how AI-assisted work gets
