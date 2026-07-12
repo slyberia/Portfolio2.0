@@ -10,12 +10,13 @@ export const EXPERIENCE: ExperienceItem[] = [
     role: 'Independent Systems Consultant',
     period: '2021–Present',
     tools:
-      'React · TypeScript · Vite · GitHub · Google Cloud Run · Google AI Studio · Claude Code · Documentation',
+      'Python · GDAL/ogr2ogr · GeoJSON · Leaflet · TypeScript · Google Cloud Run · ArcGIS Online · Documentation',
     bullets: [
-      'Designed and refined web-based systems intended to improve user clarity, trust, and delivery readiness for external reviewers and stakeholders.',
-      'Built AI-assisted application workflows using governed multi-tool processes, including roadmap creation, implementation planning, architecture hardening, and documentation.',
-      'Translated ambiguous goals into structured delivery plans, scoped phases, and supporting artifacts rather than ad hoc iteration.',
-      'Produced handoff-ready implementation guidance, roadmap materials, and documentation to support continued development and deployment.',
+      'Avoided paid Google Maps API / map-server dependency by engineering a Python/GDAL/ogr2ogr pipeline that batch-converted 34 legacy ESRI Shapefiles into static, web-optimized GeoJSON assets for 32 Leaflet map previews.',
+      'Built the client-approved replacement for the legacy Guynode spatial data hub, completing dataset migration for adoption and reorganizing 85 datasets across 7 categories with Zod validation, SHA-256 checksums, and hosted asset governance across 106 URLs.',
+      'Built a dynamic client-side citation engine generating APA, Chicago, BibTeX, and MLA citations across 85 spatial datasets, paired with provenance metadata, caveats, and legal-use warnings for sensitive records.',
+      'Supported transition from the legacy site through 17 spatial route migrations, stakeholder-facing documentation, implementation notes, and handoff materials for dataset limitations, citation behavior, map previews, and workflow changes.',
+      'Supported MOH GIS workflows using ArcGIS Online, Survey123, Dashboards, Experience Builder, stakeholder documentation, workflow guidance, and implementation support.',
     ],
   },
   {
@@ -34,10 +35,8 @@ export const EXPERIENCE: ExperienceItem[] = [
     period: 'Sept 2022–Dec 2023',
     tools: 'ESRI ArcMap · Utility GIS Workflows · Data QA · Triage · Production Data Maintenance',
     bullets: [
-      'Worked within structured utility GIS workflows to process service-related edits, data updates, and mapping changes with attention to accuracy and downstream usability.',
-      'Handled high-volume operational requests in a controlled environment where repeatability, consistency, and validation mattered.',
-      'Supported backlog reduction and workflow continuity through reliable data maintenance and structured execution.',
-      'Strengthened discipline around production-safe procedures, quality checks, and working within systems where errors could affect downstream operations.',
+      'Maintained production-quality accuracy across 120+ weekly electric utility service requests by applying repeatable QA checks, resolving conflicting source records, and escalating ambiguous cases before final GIS edits.',
+      'Improved handling of incomplete electric distribution records by standardizing how unclear diagrams, internal database results, land-use/source references, and teammate guidance were evaluated before line/pole placement.',
     ],
   },
   {
@@ -46,10 +45,7 @@ export const EXPERIENCE: ExperienceItem[] = [
     period: 'Sept–Dec 2021',
     tools: 'Zendesk · E-commerce Support · Escalation Workflows · Customer Troubleshooting',
     bullets: [
-      'Provided technical support through Zendesk for customer issues spanning e-commerce integrations, account workflows, product questions, warehousing, and shipping.',
-      'Triaged support requests, clarified customer needs, and coordinated with internal teams or partner SMEs to drive timely resolution.',
-      'Supported customer trust through clear troubleshooting, accurate communication, escalation discipline, and follow-through.',
-      'Conducted live-chat discovery with prospective customers to understand goals and route them toward the right product path.',
+      'Triaged 100+ weekly support interactions across chat/email, separating user confusion, order-state issues, fulfillment constraints, account problems, and integration questions while managing 3–5 concurrent Zendesk chats.',
     ],
   },
 ];
