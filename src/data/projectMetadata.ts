@@ -56,6 +56,15 @@ export const CANONICAL_ROLE_ACCENT: Record<RecruiterRoleLane, RoleLane> = {
   'AI Workflow / Portfolio Governance': 'Implementation',
 };
 
+// Concise hover-tooltip copy for the role-lane chips. One short line each — these
+// annotate the taxonomy without adding standing visual weight to the cards.
+export const CANONICAL_ROLE_DESCRIPTION: Record<RecruiterRoleLane, string> = {
+  'Forward Deployed Engineer': 'Embedded, client-facing technical delivery',
+  'Implementation Consultant': 'System setup, migration & adoption support',
+  'Spatial Systems Architect': 'GIS & spatial data systems design',
+  'AI Workflow / Portfolio Governance': 'Governed, auditable AI-assisted build process',
+};
+
 const PROJECT_ACCENTS: readonly ProjectAccent[] = [
   'aqua',
   'blue',

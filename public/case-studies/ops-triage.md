@@ -1,19 +1,20 @@
-> **Role:** Quality Control Specialist / GIS Technician
-> **Outcome:** Converted reactive backlogs into predictable pipelines by implementing batch-processing triage at 100+ service work orders/day, eliminating decision fatigue and establishing clear escalation criteria
-> **Stack/Tools:** ESRI ArcMap, Jira, Excel Macros, Custom Dashboards
-> **Relevance:** Proves operational systems thinking — building processes that scale throughput without scaling headcount
-
-# ⚖️ Systems at Scale: Triage & QA
+# Systems at Scale: Triage & QA
 
 > **Project Overview**
 >
 > **Role:** Quality Control Specialist / GIS Technician
+>
 > **Scope:** High-Volume Triage, Grid Data Integrity, Process Optimization
+>
 > **Tools:** ESRI ArcMap, Jira, Excel Macros, Custom Dashboards
+>
+> **Outcome:** Converted reactive backlogs into predictable pipelines by implementing batch-processing triage at 100+ service work orders/day, eliminating decision fatigue and establishing clear escalation criteria
+>
+> **Relevance:** Proves operational systems thinking — building processes that scale throughput without scaling headcount
 
 ---
 
-## 🏗️ The Thesis: Designing for Constraints
+## The Thesis: Designing for Constraints
 
 I have operationalized data systems at two distinct scales of complexity. While the roles differed, the methodology remains constant: **Identify the Constraint → Standardize the Input → Enforce the Outcome.**
 
@@ -21,7 +22,7 @@ Operational excellence is the gap between **"Training Theory"** and **"Productio
 
 ---
 
-## ⚡ Scale 1: Solving for Velocity (The Triage System)
+## Scale 1: Solving for Velocity (The Triage System)
 
 **Context:** High-volume operational support (Apex Systems).
 **The Constraint:** An overwhelming backlog where deep review of every item causes paralysis.
@@ -36,7 +37,7 @@ I **implemented** a batch-processing workflow that converted a reactive backlog 
 
 ---
 
-## 🎯 Scale 2: Solving for Precision (The QA Framework)
+## Scale 2: Solving for Precision (The QA Framework)
 
 **Context:** High-stakes utility grid data (GIS Ops).
 **The Constraint:** "Close enough" is a safety liability. Velocity doesn't matter if the data is wrong.
@@ -51,7 +52,7 @@ I **enforced** a "Zero-Trust" validation loop. While the software provides the t
 
 ---
 
-## 🔗 The Synthesis (Dashboard)
+## The Synthesis (Dashboard)
 
 The dashboard below demonstrates how I track these opposing forces simultaneously: **Volume** (Top Cards) vs. **Quality** (Error Rules).
 

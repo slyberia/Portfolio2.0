@@ -1,26 +1,26 @@
-> **Role:** Implementation Consultant
-> **Outcome:** Unified a fragmented digital footprint — CRM, website, content, and analytics — into a single operational system, eliminating lead leakage and aligning brand presence with property quality
-> **Stack/Tools:** Salesforce, WordPress (Elementor), Zapier, Google Analytics, Adobe Creative Cloud
-> **Relevance:** End-to-end ownership of a digital transformation: from audit through implementation — shows delivery capability, not just strategic thinking
+# Luxe Lofts — Building a Unified Digital Ecosystem
 
-# 🏛️ Luxe Lofts — Building a Unified Digital Ecosystem
+> **Project Overview**
+>
+> **Role:** Implementation Consultant
+>
+> **Scope:** Full-Stack Digital Transformation (CRM, Website, Content Strategy)
+>
+> **Tools:** Salesforce, WordPress (Elementor), Zapier, Google Analytics, Adobe Creative Cloud
+>
+> **Outcome:** Unified a fragmented digital footprint — CRM, website, content, and analytics — into a single operational system, eliminating lead leakage and aligning brand presence with property quality
+>
+> **Relevance:** End-to-end ownership of a digital transformation: from audit through implementation — shows delivery capability, not just strategic thinking
 
 > **"This system makes Luxe Lofts easy to find, easy to trust, and easy to book — everything your customers already expect, but no one has built for you yet."**
 
 ---
 
-> **Project Overview**
-> **Role:** Implementation Consultant
-> **Scope:** Full-Stack Digital Transformation (CRM, Website, Content Strategy)
-> **Tools:** Salesforce, WordPress (Elementor), Zapier, Google Analytics, Adobe Creative Cloud
-
----
-
-## 🏗️ The Challenge
+## The Challenge
 
 Luxe Lofts faced a critical disconnect between their brand image and operational efficiency. High-value leads were being lost due to manual tracking, and their digital presence did not reflect the quality of their physical properties.
 
-### 📂 Strategic Discovery & Audit
+### Strategic Discovery & Audit
 
 Before implementation, I conducted a comprehensive audit of the legacy digital footprint:
 
@@ -30,7 +30,7 @@ Before implementation, I conducted a comprehensive audit of the legacy digital f
 
 ---
 
-## 🔧 Phase 1: Infrastructure & CRM (The Backbone)
+## Phase 1: Infrastructure & CRM (The Backbone)
 
 Before polishing the visuals, we needed to fix the plumbing. I migrated their contact list from scattered spreadsheets to a centralized **Salesforce** environment.
 
@@ -43,7 +43,7 @@ Before polishing the visuals, we needed to fix the plumbing. I migrated their co
 
 ---
 
-## 🎨 Phase 2: Web Experience (The Storefront)
+## Phase 2: Web Experience (The Storefront)
 
 The existing website was slow and mobile-incompatible. I redesigned it using **WordPress + Elementor** to ensure easy handoff to the client's internal team.
 
@@ -56,7 +56,7 @@ The existing website was slow and mobile-incompatible. I redesigned it using **W
 
 ---
 
-## 📐 System Blueprint Concept
+## System Blueprint Concept
 
 The architecture was redesigned to ensure all roads lead to a unified conversion point:
 
@@ -68,7 +68,7 @@ The architecture was redesigned to ensure all roads lead to a unified conversion
 
 ---
 
-## 📈 Legacy vs. Proposed System
+## Legacy vs. Proposed System
 
 | Area            | Legacy State                        | Unified System Integration            |
 | :-------------- | :---------------------------------- | :------------------------------------ |
@@ -79,7 +79,7 @@ The architecture was redesigned to ensure all roads lead to a unified conversion
 
 ---
 
-## 🗓️ Short- & Long-Term Roadmap
+## Short- & Long-Term Roadmap
 
 | Time Frame      | Deliverable                     | Projected Impact (if implemented)         |
 | :-------------- | :------------------------------ | :---------------------------------------- |
@@ -89,12 +89,12 @@ The architecture was redesigned to ensure all roads lead to a unified conversion
 
 ---
 
-## 🧠 Anticipated Wins & Known Risks
+## Anticipated Wins & Known Risks
 
 - **Anticipated Win:** The Zapier integration is designed to remove the recurring manual data entry that consumes the small sales team's time.
 - **Known Risk:** Migrating legacy contact data (deduplicating scattered records) is the most labor-intensive step and should be scoped conservatively.
 
-### 🔮 Strategic AI Roadmap
+### Strategic AI Roadmap
 
 Implementing an AI-driven "Lead Concierge" chatbot for 24/7 basic Q&A (parking, pet policies) is the next logical step to reduce support friction and maintain the premium experience established in Phase 2.
 

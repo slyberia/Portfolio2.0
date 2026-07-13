@@ -1,20 +1,22 @@
-> **Role:** Geospatial Systems Support Analyst
-> **Outcome:** Helped translate a public-health contact-tracing system into clearer GIS workflows, dashboard plans, UI/UX feedback, stakeholder materials, and plain-language implementation guidance — while respecting public-sector confidentiality
-> **Stack/Tools:** ArcGIS Enterprise, ArcGIS Online, Survey123, ArcGIS Dashboards, Experience Builder, Excel, low-code evaluation, AI-assisted development (Codex, Claude Code)
-> **Relevance:** Spatial systems support and technical translation — connects GIS, database, UI/UX, and AI-assisted development into one workflow non-technical teams can adopt
-
-# 🗺️ Public Health GIS Workflow Support
+# Public Health GIS Workflow Support
 
 > **Project Overview**
 >
-> **Status:** Implementation Support (Advisory & Documentation)
 > **Role:** Geospatial Systems Support Analyst
+>
+> **Status:** Implementation Support (Advisory & Documentation)
+>
 > **Scope:** GIS workflow planning, dashboard mockups, UI/UX review, documentation, tool evaluation, AI-assisted implementation guidance
-> **Tools:** ArcGIS Enterprise, ArcGIS Online, Survey123, ArcGIS Dashboards, Experience Builder, Excel, AI-assisted development
+>
+> **Tools:** ArcGIS Enterprise, ArcGIS Online, Survey123, ArcGIS Dashboards, Experience Builder, Excel, low-code evaluation, AI-assisted development (Codex, Claude Code)
+>
+> **Outcome:** Helped translate a public-health contact-tracing system into clearer GIS workflows, dashboard plans, UI/UX feedback, stakeholder materials, and plain-language implementation guidance — while respecting public-sector confidentiality
+>
+> **Relevance:** Spatial systems support and technical translation — connects GIS, database, UI/UX, and AI-assisted development into one workflow non-technical teams can adopt
 
 ---
 
-## 📋 Executive Summary
+## Executive Summary
 
 This project supported a contact-tracing and public-health GIS workflow for **a national Ministry of Health**, delivered within a geospatial services engagement. The contribution spanned dashboard planning, UI/UX review, documentation, pitch materials, and technical implementation guidance.
 
@@ -28,7 +30,7 @@ The core thesis: **public-health GIS workflows succeed when data collection, rep
 
 ---
 
-## 🏗️ The Challenge
+## The Challenge
 
 The project involved a complex public-health contact-tracing workflow where patients and persons of interest needed to be tracked, reviewed, and communicated through a combination of GIS tools, dashboards, database-backed workflows, and stakeholder-facing materials.
 
@@ -38,7 +40,7 @@ The challenge was not only technical. The system also had to be understandable f
 
 ---
 
-## 🔧 Technical Implementation & Assets
+## Technical Implementation & Assets
 
 Because this is public-sector, health-adjacent work, the portfolio uses **sanitized, reconstructed artifacts** rather than real screenshots or operational records. The interactive **System Explorer** on this project's architecture view walks through both the sanitized architecture (intake → GIS services → feature layers → dashboards → stakeholder portal) and the operational workflow (submit → store → review → update → act → document).
 
@@ -76,7 +78,7 @@ A sanitized view of how platform options were weighed against usability, maintai
 
 ---
 
-## 🛡️ Governance & Public-Sector Considerations
+## Governance & Public-Sector Considerations
 
 This work required public-sector caution around confidentiality, data sensitivity, and role boundaries:
 
@@ -89,7 +91,7 @@ Portfolio evidence therefore relies on sanitized diagrams and reconstructed arti
 
 ---
 
-## 📊 Outcomes
+## Outcomes
 
 No public metrics are available, so this entry describes the work **qualitatively**. The contribution produced dashboard planning, documentation, UI/UX review, tool evaluation, stakeholder communication, and implementation guidance that helped clarify how public-health intake, GIS services, dashboards, and stakeholder-facing documentation could operate as a connected system — while respecting confidentiality and implementation constraints.
 

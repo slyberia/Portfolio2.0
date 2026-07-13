@@ -1,21 +1,24 @@
-> **Role:** AI Workflow & Automation Designer
-> **Outcome:** Built a decoupled AI-automation system — Aegis governance + emOS execution over a Notion state machine — that evolved from human-in-the-loop review toward autonomous operation.
-> **Stack/Tools:** TypeScript · Node.js · Docker · Google Cloud Run · Notion API · Google AI Studio SDK
-> **Relevance:** Shows how to put AI-generated work under explicit governance — and the judgment to decide when a human Guardian is required versus when the check can be automated.
-
-# 🛡️ Automation & Operational Protocols
+# Automation & Operational Protocols
 
 ### The Aegis Governance Framework & emOS Runtime
 
 > **Project Overview**
-> **Status:** Working prototype (HITL iteration tested; autonomous iteration developed)
+>
 > **Role:** AI Workflow & Automation Designer
+>
+> **Status:** Working prototype (HITL iteration tested; autonomous iteration developed)
+>
 > **Scope:** AI workflow governance, multi-agent orchestration, operational protocols
+>
 > **Tools:** TypeScript, Node.js, Docker, Google Cloud Run, Notion API, Google AI Studio SDK
+>
+> **Outcome:** Built a decoupled AI-automation system — Aegis governance + emOS execution over a Notion state machine — that evolved from human-in-the-loop review toward autonomous operation.
+>
+> **Relevance:** Shows how to put AI-generated work under explicit governance — and the judgment to decide when a human Guardian is required versus when the check can be automated.
 
 ---
 
-## 📋 Executive Summary
+## Executive Summary
 
 Aegis is a decoupled automation system that puts AI-generated work under an explicit governance layer before it is ever trusted. It separates two concerns that usually get tangled together:
 
@@ -40,20 +43,20 @@ The system was built in two iterations, and that progression is the point.
 
 The honest framing: **HITL mode is proven; autonomous mode is built and was on the path to containerized deployment.** The interesting engineering isn't "I automated it" — it's designing the governance so the _same_ pipeline can run with either a human or an automated Guardian, and knowing which to use when.
 
-## 🔧 How it works (the loop)
+## How it works (the loop)
 
 1. **Task** — a structured page lands in Notion with markdown system instructions, task parameters, and target file specs (status `Pending Execution`).
 2. **Route & execute (emOS)** — a lightweight TypeScript daemon polls Notion, downloads the payload, spins up an isolated Docker container, and runs the target scripts.
 3. **Guard (Aegis)** — the execution log is evaluated against the ruleset: structural compliance, the mandatory `<thinking>` trace, and drift detection against the original task spec. _(In HITL mode a human is the Guardian; in autonomous mode the Aegis engine is.)_
 4. **Resolve** — a detailed markdown audit trail is appended to the Notion page, and the state moves to `Completed` or `Failed: Guardrails Tripped`.
 
-## ⚖️ Constraints & trade-offs
+## Constraints & trade-offs
 
 - **No Notion webhooks + a ~3 req/sec API cap.** Notion doesn't push database-change events and rate-limits hard. → The sync engine **polls on a ~15-second loop and batches state queries into grouped update payloads**, accepting a short propagation delay in exchange for keeping Notion as the single source of truth.
 - **An agent shouldn't grade its own work.** A single model evaluating its own output is unreliable. → The **Executor and Guardian are decoupled** with no shared context, so validation stays independent of generation.
 - **Validation costs time.** Running every change through the full Aegis check adds a brief delay per run. → Accepted deliberately — it avoids the far larger cost of tracing hallucinated runtime bugs later.
 
-## 🛡️ The Guardian protocol
+## The Guardian protocol
 
 The governance core, stripped to its mechanism:
 

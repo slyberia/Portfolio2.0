@@ -10,6 +10,7 @@ import {
   GALLERY_HREF,
 } from '../lib/routes';
 import { navStyles, interactionStyles, componentRecipes } from '../lib/design-system';
+import Tooltip from './Tooltip';
 
 interface TopNavProps {
   theme: 'light' | 'dark';
@@ -188,13 +189,18 @@ const TopNav: React.FC<TopNavProps> = ({ theme, toggleTheme, onOpenContact }) =>
         </nav>
 
         <div className="flex items-center gap-2">
-          <button
-            onClick={toggleTheme}
-            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-            className={`inline-flex items-center justify-center rounded-sm border border-ink-border dark:border-slate-800 px-2.5 py-2 text-ink-slate dark:text-ink-border hover:bg-ink-panel dark:hover:bg-slate-800 ${interactionStyles.focusVisible}`}
+          <Tooltip
+            label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            focusable={false}
           >
-            {theme === 'dark' ? '☾' : '☀'}
-          </button>
+            <button
+              onClick={toggleTheme}
+              aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+              className={`inline-flex items-center justify-center rounded-sm border border-ink-border dark:border-slate-800 px-2.5 py-2 text-ink-slate dark:text-ink-border hover:bg-ink-panel dark:hover:bg-slate-800 ${interactionStyles.focusVisible}`}
+            >
+              {theme === 'dark' ? '☾' : '☀'}
+            </button>
+          </Tooltip>
           <button
             onClick={onOpenContact}
             className={`inline-flex items-center justify-center rounded-sm px-5 py-2.5 text-sm font-semibold ${componentRecipes.button.primary}`}

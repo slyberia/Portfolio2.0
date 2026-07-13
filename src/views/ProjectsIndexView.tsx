@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { DEEP_DIVES_HREF, SITE_INDEX_HREF } from '../lib/routes';
 import {
   CANONICAL_ROLE_ACCENT,
+  CANONICAL_ROLE_DESCRIPTION,
   PROJECT_FILTERS,
   ProjectFilter,
   getFeaturedProjects,
@@ -10,6 +11,9 @@ import {
 } from '../data/projectMetadata';
 import { getRoleAccentRecipe } from '../lib/design-system';
 import ProjectValueLayer from '../components/ProjectValueLayer';
+import Tooltip from '../components/Tooltip';
+
+const PROOF_TYPE_TOOLTIP = 'The kind of evidence this entry provides';
 
 const ProjectsIndexView: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<'All' | ProjectFilter>('All');
@@ -100,9 +104,11 @@ const ProjectsIndexView: React.FC = () => {
                   <p className="text-xs uppercase tracking-[0.18em] text-slate-500">
                     {project.featuredLabel}
                   </p>
-                  <span className="text-[10px] uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400 border border-[#d8e8ee] dark:border-white/10 rounded-full px-2 py-0.5">
-                    {project.proofType}
-                  </span>
+                  <Tooltip label={PROOF_TYPE_TOOLTIP} focusable={false}>
+                    <span className="text-[10px] uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400 border border-[#d8e8ee] dark:border-white/10 rounded-full px-2 py-0.5">
+                      {project.proofType}
+                    </span>
+                  </Tooltip>
                 </div>
                 <div className="mt-2 flex justify-between items-start group">
                   <h3 className="text-xl font-semibold text-ink-navy dark:text-white group-hover:text-tide-aqua dark:group-hover:text-tide-softBlue transition-colors">
@@ -126,12 +132,17 @@ const ProjectsIndexView: React.FC = () => {
                   </p>
                   <div className="mt-1.5 flex flex-wrap gap-2">
                     {project.canonicalRoleLanes.map((role) => (
-                      <span
+                      <Tooltip
                         key={role}
-                        className={`text-[11px] px-2 py-0.5 rounded border ${getRoleAccentRecipe(CANONICAL_ROLE_ACCENT[role]).chipClass}`}
+                        label={CANONICAL_ROLE_DESCRIPTION[role]}
+                        focusable={false}
                       >
-                        {role}
-                      </span>
+                        <span
+                          className={`text-[11px] px-2 py-0.5 rounded border ${getRoleAccentRecipe(CANONICAL_ROLE_ACCENT[role]).chipClass}`}
+                        >
+                          {role}
+                        </span>
+                      </Tooltip>
                     ))}
                   </div>
                 </div>
@@ -182,9 +193,11 @@ const ProjectsIndexView: React.FC = () => {
                   <span className="text-[10px] font-mono uppercase tracking-[0.16em] text-slate-500">
                     {project.statusLabel}
                   </span>
-                  <span className="text-[10px] uppercase tracking-wider font-semibold text-slate-500 border border-[#d8e8ee] rounded-full px-2 py-0.5">
-                    {project.proofType}
-                  </span>
+                  <Tooltip label={PROOF_TYPE_TOOLTIP} focusable={false}>
+                    <span className="text-[10px] uppercase tracking-wider font-semibold text-slate-500 border border-[#d8e8ee] rounded-full px-2 py-0.5">
+                      {project.proofType}
+                    </span>
+                  </Tooltip>
                 </div>
                 <div className="mt-3 flex justify-between items-start group">
                   <h3 className="text-base font-semibold text-ink-navy dark:text-white group-hover:text-tide-aqua dark:group-hover:text-tide-softBlue transition-colors">
@@ -208,12 +221,17 @@ const ProjectsIndexView: React.FC = () => {
                   </p>
                   <div className="mt-1.5 flex flex-wrap gap-1.5">
                     {project.canonicalRoleLanes.map((role) => (
-                      <span
+                      <Tooltip
                         key={role}
-                        className={`text-[11px] px-2 py-0.5 rounded border ${getRoleAccentRecipe(CANONICAL_ROLE_ACCENT[role]).chipClass}`}
+                        label={CANONICAL_ROLE_DESCRIPTION[role]}
+                        focusable={false}
                       >
-                        {role}
-                      </span>
+                        <span
+                          className={`text-[11px] px-2 py-0.5 rounded border ${getRoleAccentRecipe(CANONICAL_ROLE_ACCENT[role]).chipClass}`}
+                        >
+                          {role}
+                        </span>
+                      </Tooltip>
                     ))}
                   </div>
                 </div>

@@ -105,7 +105,7 @@ const getCertConfig = (issuer: string, name: string) => {
       ),
     };
   }
-  // Default/Intercultural
+  // Default (AI Essentials, Digital Marketing & E-commerce, and any future certs)
   return {
     bgClass:
       'bg-gild/10 text-gild-deep dark:bg-gild/20 dark:text-gild-soft border-gild/20 dark:border-gild/30',

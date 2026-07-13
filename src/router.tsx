@@ -233,7 +233,7 @@ export const AppLayout: React.FC = () => {
                   and evidence-backed implementation.
                 </p>
 
-                <div className="flex flex-wrap gap-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   {/* Email Button */}
                   <button
                     onClick={() => handleCopyEmail('kmsemple26@gmail.com')}
