@@ -82,6 +82,18 @@ const ALLOWED_TOPICS = [
   'survey123',
   'guynode',
   'digital twin',
+  'luxe',
+  'lofts',
+  'northern grind',
+  'moh',
+  'ministry of health',
+  'aegis',
+  'pipeline',
+  'spatial',
+  'forward deployed',
+  'semple',
+  'deep dive',
+  'case study',
   'projects',
   'portfolio',
   'skills',
@@ -216,10 +228,17 @@ function detectInjectionAttempt(message: string): boolean {
   return patterns.some((p) => p.test(message));
 }
 
-function isRelevant(message: string): boolean {
+function isRelevant(message: string, history: ChatHistory = []): boolean {
   const normalized = message.trim().toLowerCase();
   if (ALLOWED_GREETINGS.has(normalized)) return true;
-  return ALLOWED_TOPICS.some((topic) => normalized.includes(topic));
+  if (ALLOWED_TOPICS.some((topic) => normalized.includes(topic))) return true;
+  // Follow-ups ("tell me more", "what was the impact?") carry no keywords of their
+  // own; inherit relevance from the ongoing conversation instead of deflecting.
+  const recent = history
+    .map((entry) => entry.parts[0].text)
+    .join(' ')
+    .toLowerCase();
+  return ALLOWED_TOPICS.some((topic) => recent.includes(topic));
 }
 
 function isExpensiveOrIrrelevant(message: string): boolean {
@@ -303,10 +322,12 @@ router.post('/chat', async (req: Request, res: Response) => {
     return;
   }
 
+  const safeHistory = sanitizeHistory(history);
+
   if (
     detectInjectionAttempt(message) ||
-    !isRelevant(message) ||
-    (isExpensiveOrIrrelevant(message) && !isRelevant(message))
+    !isRelevant(message, safeHistory) ||
+    isExpensiveOrIrrelevant(message)
   ) {
     logChatRequest(req, 'blocked', message.length);
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
@@ -322,8 +343,6 @@ router.post('/chat', async (req: Request, res: Response) => {
     res.status(503).json({ error: 'Service unavailable' });
     return;
   }
-
-  const safeHistory = sanitizeHistory(history);
 
   try {
     const ai = new GoogleGenAI({ apiKey });

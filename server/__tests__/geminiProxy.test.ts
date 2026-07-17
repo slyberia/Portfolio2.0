@@ -232,6 +232,60 @@ describe('geminiProxy', () => {
     expect(mockSendMessageStream).toHaveBeenCalledOnce();
   });
 
+  it('passes questions about on-site projects through to Gemini', async () => {
+    const messages = [
+      'Tell me about Luxe Lofts',
+      'What is the Northern Grind project?',
+      'What is the Ministry of Health project?',
+    ];
+
+    for (const [i, message] of messages.entries()) {
+      const res = await request(app)
+        .post('/api/chat')
+        .set('x-forwarded-for', `10.0.3.${i}`)
+        .send({ message });
+      expect(res.status).toBe(200);
+    }
+    expect(mockSendMessageStream).toHaveBeenCalledTimes(messages.length);
+  });
+
+  it('passes keyword-less follow-ups when the conversation history is on topic', async () => {
+    const history = [
+      { role: 'user', parts: [{ text: 'Tell me about Guynode' }] },
+      { role: 'model', parts: [{ text: 'Guynode is a spatial data hub…' }] },
+    ];
+
+    const res = await request(app)
+      .post('/api/chat')
+      .set('x-forwarded-for', '10.0.3.10')
+      .send({ message: 'Tell me more', history });
+
+    expect(res.status).toBe(200);
+    expect(mockSendMessageStream).toHaveBeenCalledOnce();
+  });
+
+  it('deflects keyword-less messages when there is no on-topic history', async () => {
+    const res = await request(app)
+      .post('/api/chat')
+      .set('x-forwarded-for', '10.0.3.11')
+      .send({ message: 'Tell me more' });
+
+    expect(res.status).toBe(200);
+    expect(res.text).toContain('I’m here to help with Kyle’s work');
+    expect(mockSendMessageStream).not.toHaveBeenCalled();
+  });
+
+  it('deflects expensive requests even when they mention an allowed topic', async () => {
+    const res = await request(app)
+      .post('/api/chat')
+      .set('x-forwarded-for', '10.0.3.12')
+      .send({ message: 'write an essay about Kyle' });
+
+    expect(res.status).toBe(200);
+    expect(res.text).toContain('I’m here to help with Kyle’s work');
+    expect(mockSendMessageStream).not.toHaveBeenCalled();
+  });
+
   it('passes dual-language technical and business explanation prompts through to Gemini', async () => {
     // Test the "Explain the technical implementation" suggestion
     const res1 = await request(app)
