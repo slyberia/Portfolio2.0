@@ -7,8 +7,11 @@ export type ChatHistory = ChatHistoryEntry[];
 const RATE_LIMIT_MESSAGE =
   'I’ve reached today’s chat limit. You can still review Kyle’s projects, resume, or contact him directly. <<ACTION:contact>>';
 
-const OFFLINE_MESSAGE =
-  'I’m temporarily unavailable. You can still contact Kyle directly or use the site navigation to review his projects.';
+// The status detail distinguishes otherwise-identical failures when debugging a live
+// deployment: 503 = GEMINI_API_KEY not set on the server, 403 = origin not in the chat
+// allowlist, 500 = the Gemini API call failed (see "Gemini proxy error:" in server logs).
+const offlineMessage = (detail: string) =>
+  `I’m temporarily unavailable (${detail}). You can still contact Kyle directly or use the site navigation to review his projects.`;
 
 export async function* sendMessageStream(
   message: string,
@@ -23,7 +26,7 @@ export async function* sendMessageStream(
       body: JSON.stringify({ message, history }),
     });
   } catch {
-    yield OFFLINE_MESSAGE;
+    yield offlineMessage('network error');
     return;
   }
 
@@ -41,7 +44,7 @@ export async function* sendMessageStream(
   }
 
   if (!response.ok || !response.body) {
-    yield OFFLINE_MESSAGE;
+    yield offlineMessage(`error ${response.status}`);
     return;
   }
 
