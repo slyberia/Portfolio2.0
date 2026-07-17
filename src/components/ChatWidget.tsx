@@ -31,10 +31,12 @@ const ALLOWED_NAV_TARGETS = new Set([
   'project:digital-twin',
   'project:ops-triage',
   'project:luxe-lofts',
+  'project:moh',
   'case-study:guynode',
   'case-study:digital-twin',
   'case-study:ops-triage',
   'case-study:luxe-lofts',
+  'case-study:moh',
 ]);
 
 // Targets that navigate to a route (passed through raw) rather than scroll to a section anchor.
@@ -104,6 +106,8 @@ const FALLBACK_PATTERNS = [
   /too long for the portfolio assistant/i,
   /unable to answer/i,
   /outside my portfolio scope/i,
+  // Server-side deflection message (see DEFLECTION in server/geminiProxy.ts)
+  /here to help with kyle’s work/i,
 ];
 
 const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToast }) => {
