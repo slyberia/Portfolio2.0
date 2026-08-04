@@ -12,9 +12,8 @@ const MAX_MESSAGE_LENGTH = 800;
 const MAX_HISTORY_MESSAGES = 8;
 const MAX_HISTORY_ENTRY_LENGTH = 1200;
 
-// Default allowlist (production origin + local dev ports). Override in production via the
-// ALLOWED_CHAT_ORIGINS env var (comma-separated) so a hostname/custom-domain change does
-// not require a code change + redeploy. When the env var is set it replaces this list.
+// Default allowlist covers the production Cloud Run URL and local dev ports. Extra
+// custom domains can be added with ALLOWED_CHAT_ORIGINS without losing these defaults.
 const DEFAULT_CHAT_ORIGINS = [
   'https://kyle-semple-ai-solutions-portfolio-341805100474.us-east1.run.app',
   'http://localhost:5173',
@@ -22,14 +21,12 @@ const DEFAULT_CHAT_ORIGINS = [
   'http://localhost:3000',
 ];
 
-const ALLOWED_CHAT_ORIGINS = new Set(
-  (process.env.ALLOWED_CHAT_ORIGINS
-    ? process.env.ALLOWED_CHAT_ORIGINS.split(',')
-    : DEFAULT_CHAT_ORIGINS
-  )
-    .map((origin) => origin.trim())
-    .filter(Boolean),
-);
+const CONFIGURED_CHAT_ORIGINS = (process.env.ALLOWED_CHAT_ORIGINS ?? '')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+const ALLOWED_CHAT_ORIGINS = new Set([...DEFAULT_CHAT_ORIGINS, ...CONFIGURED_CHAT_ORIGINS]);
 
 const DEFLECTION =
   'I’m here to help with Kyle’s work, projects, skills, resume, and portfolio. Try asking about implementation proof, QA work, GIS experience, Guynode, or the Digital Twin.';
@@ -47,6 +44,21 @@ function getClientIp(req: Request): string {
   const forwarded = req.headers['x-forwarded-for'];
   if (typeof forwarded === 'string') return forwarded.split(',')[0].trim();
   return req.socket.remoteAddress ?? 'unknown';
+}
+
+function getRequestOrigin(req: Request): string | null {
+  const host = req.headers['x-forwarded-host'] ?? req.headers.host;
+  const proto = req.headers['x-forwarded-proto'] ?? req.protocol;
+  if (!host) return null;
+  const firstHost = Array.isArray(host) ? host[0] : host.split(',')[0].trim();
+  const firstProto = Array.isArray(proto) ? proto[0] : proto.split(',')[0].trim();
+  return `${firstProto}://${firstHost}`;
+}
+
+function isAllowedOrigin(req: Request): boolean {
+  const origin = req.headers.origin;
+  if (!origin) return true;
+  return ALLOWED_CHAT_ORIGINS.has(origin) || origin === getRequestOrigin(req);
 }
 
 function checkRateLimit(ip: string): boolean {
@@ -232,8 +244,6 @@ function isRelevant(message: string, history: ChatHistory = []): boolean {
   const normalized = message.trim().toLowerCase();
   if (ALLOWED_GREETINGS.has(normalized)) return true;
   if (ALLOWED_TOPICS.some((topic) => normalized.includes(topic))) return true;
-  // Follow-ups ("tell me more", "what was the impact?") carry no keywords of their
-  // own; inherit relevance from the ongoing conversation instead of deflecting.
   const recent = history
     .map((entry) => entry.parts[0].text)
     .join(' ')
@@ -270,16 +280,13 @@ const router = Router();
 router.use('/chat', (req, res, next) => {
   const origin = req.headers.origin;
 
-  if (!origin) {
-    next();
-    return;
-  }
-
-  if (ALLOWED_CHAT_ORIGINS.has(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-    res.setHeader('Vary', 'Origin');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  if (isAllowedOrigin(req)) {
+    if (origin) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+      res.setHeader('Vary', 'Origin');
+      res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    }
 
     if (req.method === 'OPTIONS') {
       res.status(204).end();
