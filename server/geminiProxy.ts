@@ -115,6 +115,22 @@ const ALLOWED_TOPICS = [
   'technical',
   'explain',
   'business',
+  'background',
+  'bio',
+  'history',
+  'summary',
+  'overview',
+  'role',
+  'roles',
+  'hire',
+  'email',
+  'location',
+  'remote',
+  'fit',
+  'candidate',
+  'engineer',
+  'forward deployed',
+  'translator',
 ];
 const ALLOWED_GREETINGS = new Set(['hi', 'hello', 'hey', 'help', 'what can you do?']);
 const EXPENSIVE_PATTERNS = [
