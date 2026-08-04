@@ -12,6 +12,8 @@ ARG SITE_URL=https://kyle-semple-ai-solutions-portfolio-341805100474.us-east1.ru
 ENV SITE_URL=$SITE_URL
 ARG VITE_NG_GALLERY_BASE=https://storage.googleapis.com/portfoli02-bucket
 ENV VITE_NG_GALLERY_BASE=$VITE_NG_GALLERY_BASE
+ARG VITE_GEMINI_ENABLED=true
+ENV VITE_GEMINI_ENABLED=$VITE_GEMINI_ENABLED
 RUN npm run build:crawler
 
 # Compile server TypeScript to JS
