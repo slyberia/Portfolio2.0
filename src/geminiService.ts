@@ -10,6 +10,17 @@ const RATE_LIMIT_MESSAGE =
 const OFFLINE_MESSAGE =
   'I’m temporarily unavailable. You can still contact Kyle directly or use the site navigation to review his projects.';
 
+const CONFIGURATION_MESSAGE =
+  'The Digital Twin is enabled, but the chat service is not fully configured yet. You can still contact Kyle directly. <<ACTION:contact>>';
+
+const ORIGIN_MESSAGE =
+  'The Digital Twin is not enabled for this site origin yet. You can still contact Kyle directly. <<ACTION:contact>>';
+
+async function readError(response: Response): Promise<string | undefined> {
+  const data = await response.json().catch(() => null);
+  return typeof data?.error === 'string' ? data.error : undefined;
+}
+
 export async function* sendMessageStream(
   message: string,
   history: ChatHistory,
@@ -22,7 +33,8 @@ export async function* sendMessageStream(
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message, history }),
     });
-  } catch {
+  } catch (error) {
+    console.warn('Digital Twin request failed before reaching /api/chat.', error);
     yield OFFLINE_MESSAGE;
     return;
   }
@@ -32,15 +44,31 @@ export async function* sendMessageStream(
     return;
   }
 
+  if (response.status === 403) {
+    console.warn('Digital Twin origin rejected by /api/chat. Check ALLOWED_CHAT_ORIGINS.');
+    yield ORIGIN_MESSAGE;
+    return;
+  }
+
+  if (response.status === 503) {
+    console.warn('Digital Twin backend is missing required server configuration.');
+    yield CONFIGURATION_MESSAGE;
+    return;
+  }
+
   if (response.status === 400) {
-    const data = await response.json().catch(() => null);
-    if (data?.error && /too long/i.test(String(data.error))) {
+    const error = await readError(response);
+    if (error && /too long/i.test(error)) {
       yield 'That message is too long for the portfolio assistant. Try a shorter question about Kyle’s experience, projects, resume, or role fit.';
       return;
     }
   }
 
   if (!response.ok || !response.body) {
+    console.warn('Digital Twin request returned an unexpected response.', {
+      status: response.status,
+      statusText: response.statusText,
+    });
     yield OFFLINE_MESSAGE;
     return;
   }
