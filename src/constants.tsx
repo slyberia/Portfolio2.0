@@ -422,6 +422,77 @@ export const SKILL_CHIP_CONFIG: Record<string, SkillChipConfig> = {
 
 export const PROJECT_REGISTRY: ProjectEntry[] = [
   {
+    id: 'hps-geospatial',
+    title: 'HPS Geospatial',
+    rationale:
+      'Evolved the Hydrographic Poster Generator into a connected geospatial production and validation workflow: country-aware artifacts, Studio handoff, provenance, Recovery, and explicit coverage audits.',
+    category: 'qa-data',
+    tags: [
+      'Geospatial Engineering',
+      'PostGIS',
+      'Spatial ETL',
+      'Provenance',
+      'Georeferencing',
+      'Reliability',
+      'Validation',
+    ],
+    roleLanes: [
+      'Forward Deployed Engineer',
+      'Spatial Systems Architect',
+      'Implementation Consultant',
+    ],
+    heroArtifact: {
+      type: 'html',
+      label: 'HPS Geospatial — Artifact and Recovery Flow',
+      description:
+        'Conceptual flow for the implemented country-aware artifacts, Studio handoff, provenance, and georeferencing workflow. The retained end-to-end validation was local and synthetic.',
+      content: `<div style="font-family:system-ui,sans-serif;background:#f8fbfd;border:1px solid #d8e8ee;border-radius:12px;padding:18px;max-width:680px;color:#0f172a;">
+  <h4 style="margin:0 0 14px;font-size:14px;">HPS Geospatial · Artifact and Recovery Flow</h4>
+  <div style="display:grid;gap:8px;font-size:13px;line-height:1.5;">
+    <div style="padding:10px;border:1px solid #cbd5e1;background:#fff;"><strong>Country profiles + offline source inputs</strong><br/>Build and evaluate country-aware river-name artifacts</div>
+    <div style="text-align:center;color:#0d9488;">↓</div>
+    <div style="padding:10px;border:1px solid #cbd5e1;background:#fff;"><strong>Content-addressed artifacts + QC</strong><br/>Preserve coverage states and distinguish source objects from display segments</div>
+    <div style="text-align:center;color:#0d9488;">↓</div>
+    <div style="padding:10px;border:1px solid #cbd5e1;background:#fff;"><strong>Studio PNG → single-use handoff</strong><br/>Expiry, consumption, cleanup, readiness, and manual-upload fallback</div>
+    <div style="text-align:center;color:#0d9488;">↓</div>
+    <div style="padding:10px;border:1px solid #99f6e4;background:#f0fdfa;"><strong>Manifest provenance → Recovery → GeoTIFF</strong><br/>Locally validated with synthetic integration; production database behavior not established</div>
+  </div>
+</div>`,
+    },
+    rigor: {
+      statement:
+        'Implemented an inspectable spatial production and georeferencing workflow with explicit coverage and failure states; the retained end-to-end proof is local and synthetic.',
+      baseline:
+        'The map-focused application had browser regressions and needed a controlled path from country-specific data to verified poster output.',
+      definition:
+        'Validation means reporting the relevant tests, country coverage states, transform results, and known gaps separately.',
+      method:
+        'Country-profile artifacts, bounded single-use handoff, manifest-backed provenance, isolated processing, Recovery checks, and a formal closeout audit.',
+      window:
+        'Reliability, country-artifact, handoff, and georeferencing work described in the retained project record.',
+    },
+    constraints: [
+      {
+        problem:
+          'Cross-country coverage was uneven, and an artifact existing did not prove verification.',
+        tradeoff:
+          'Kept verified, partial, unavailable, and not-evaluated states distinct; Belize remained intentionally partial.',
+      },
+      {
+        problem:
+          'Moving a PNG across Studio and Georeferencer introduced expiry, reuse, and invalid-input failure modes.',
+        tradeoff:
+          'Used a five-minute single-use handoff with cleanup tombstones, readiness gating, bounded admission, and manual-upload fallback.',
+      },
+      {
+        problem:
+          'Local integration and implementation evidence could be mistaken for live production behavior.',
+        tradeoff:
+          'Reported synthetic and local validation explicitly; publication deployment and live-database behavior need separate verification.',
+      },
+    ],
+  },
+  {
     id: 'luxe-lofts',
     title: 'Luxe Lofts Ecosystem',
     rationale: 'Blueprint for unified digital systems and automated conversion paths.',

@@ -84,6 +84,33 @@ export const PROJECT_FILTERS: Array<'All' | ProjectFilter> = [
 
 export const PROJECT_METADATA: ProjectMetadata[] = [
   {
+    id: 'hps-geospatial',
+    displayTitle: 'HPS Geospatial',
+    shortSummary:
+      'A connected geospatial production and validation workflow for country-aware artifacts, poster handoff, provenance, Recovery, and coverage audits.',
+    hierarchy: 'featured',
+    featuredLabel: 'GEOSPATIAL SYSTEM · DRAFT',
+    statusLabel: 'Direct-link draft',
+    roleLanes: ['GIS', 'Implementation', 'QA'],
+    canonicalRoleLanes: [
+      'Forward Deployed Engineer',
+      'Spatial Systems Architect',
+      'Implementation Consultant',
+    ],
+    filters: ['GIS', 'Implementation', 'QA', 'Process'],
+    proofType: 'Local tests, audit & benchmark',
+    purpose:
+      'Connect spatial artifact preparation, poster transfer, georeferencing, and validation while keeping country coverage and failure states visible.',
+    stakeholderValue:
+      'Operators can inspect provenance, coverage, and transfer status before using a recovered spatial output; the retained evidence covers local integration and documented checks.',
+    accent: 'cyan',
+    sortOrder: 10,
+    href: buildProjectHref('hps-geospatial'),
+    evidenceTier: 'primary',
+    visibility: 'draft',
+    caseStudyRoute: '/projects/hps-geospatial',
+  },
+  {
     id: 'guynode',
     displayTitle: 'Guynode Spatial Data Hub',
     shortSummary:
