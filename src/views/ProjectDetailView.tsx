@@ -138,7 +138,9 @@ const ProjectSwitcher: React.FC<{ activeId: string }> = ({ activeId }) => {
   );
 };
 
-const getDeepDiveInfo = (projectId: string): { href: string; label: string } => {
+const getDeepDiveInfo = (projectId: string): { href: string; label: string } | null => {
+  // HPS technical depth lives in its own case study. The generic process tab is unrelated.
+  if (projectId === 'hps-geospatial') return null;
   if (projectId === 'luxe-lofts') {
     return {
       href: `${DEEP_DIVES_HREF}?tab=luxe-lofts`,
@@ -209,12 +211,14 @@ const ProjectHero: React.FC<{
         <div className="flex min-w-[220px] flex-col gap-2">
           {/* Contact intent peaks after the evidence is read, not before — the persistent
               TopNav/footer contact paths cover the hero, and a contact CTA closes the page. */}
-          <Link
-            to={deepDiveInfo.href}
-            className="rounded-lg border border-slate-300 px-3 py-2 text-center text-sm font-medium text-slate-800 hover:bg-slate-50 focus-visible:ring-2 ring-slate-500 dark:border-white/20 dark:text-slate-100 dark:hover:bg-white/5"
-          >
-            {deepDiveInfo.label}
-          </Link>
+          {deepDiveInfo && (
+            <Link
+              to={deepDiveInfo.href}
+              className="rounded-lg border border-slate-300 px-3 py-2 text-center text-sm font-medium text-slate-800 hover:bg-slate-50 focus-visible:ring-2 ring-slate-500 dark:border-white/20 dark:text-slate-100 dark:hover:bg-white/5"
+            >
+              {deepDiveInfo.label}
+            </Link>
+          )}
           <Link
             to="/projects"
             className="rounded-lg border border-slate-300 px-3 py-2 text-center text-sm font-medium text-slate-700 hover:bg-slate-50 focus-visible:ring-2 ring-slate-500 dark:border-white/20 dark:text-slate-200 dark:hover:bg-white/5"
@@ -525,12 +529,14 @@ const ProjectDetailView: React.FC = () => {
               >
                 Contact Kyle
               </button>
-              <Link
-                to={deepDiveInfo.href}
-                className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 focus-visible:ring-2 ring-slate-500 dark:border-white/20 dark:text-slate-200 dark:hover:bg-white/5"
-              >
-                {deepDiveInfo.label}
-              </Link>
+              {deepDiveInfo && (
+                <Link
+                  to={deepDiveInfo.href}
+                  className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 focus-visible:ring-2 ring-slate-500 dark:border-white/20 dark:text-slate-200 dark:hover:bg-white/5"
+                >
+                  {deepDiveInfo.label}
+                </Link>
+              )}
             </div>
           </section>
         </div>
