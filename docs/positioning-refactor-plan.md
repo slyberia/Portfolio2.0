@@ -1,8 +1,10 @@
 # Implementation Plan — Phase 6: Positioning Refactor (Forward Deployed Engineer)
 
 > **Tool target:** Claude Code (web or CLI).
-> **Status:** Plan only. No refactor work has been executed. Each subphase below is
-> implemented one at a time under the Sequential Execution Protocol in `CLAUDE.md`.
+> **Status:** Living plan with historical status notes; check the current repo before treating a
+> subphase as pending.
+> Related pending subphases may be implemented within one bounded batch under the protocol in
+> `CLAUDE.md`.
 
 This plan adapts a Codex-authored refactor brief for Claude Code and corrects several
 factual errors in that source (see "Corrections from the source brief" below). It is the
@@ -99,21 +101,23 @@ The Codex brief contained errors that MUST NOT propagate into the site:
 
 ## 3. Claude Code execution conventions
 
-This refactor runs under the existing **Sequential Execution Protocol** (`CLAUDE.md`):
+This refactor follows the **Bounded Work-Batch Protocol** (`CLAUDE.md`):
 
-- **One subphase at a time.** Implement a single subphase, validate, commit, STOP, and wait
-  for explicit approval before the next. Do not read ahead and pre-build later subphases.
+- **Batch boundary:** name the goal, provided sources, included subphases, exclusions, and
+  acceptance criteria. A request to execute that batch covers its related subphases. Keep each
+  slice reviewable in coherent commits, but do not pause for approval between slices. Do not
+  implement unrelated future tracks under the same authorization.
 - **Branch:** in a Claude Code web session, develop on the designated session branch. If
   running locally, a descriptive branch such as `phase/positioning-refactor` is acceptable.
 - **Tools:** prefer `Read`/`Edit` for surgical changes. Use the `Explore` subagent for any
   discovery, the `Plan` subagent if a subphase needs design, and the `/code-review` skill on
-  the diff after each subphase. Use the `/run` or `/verify` skill to confirm the homepage
-  renders before committing visual subphases.
+  the batch diff. Use the `/run` or `/verify` skill to confirm the homepage renders for visual
+  changes. These tool suggestions apply only when available in the current environment.
 - **Design system:** all visual work obeys the non-negotiable Design System Rules in
   `CLAUDE.md` (no glassmorphism, solid 1px borders, contrast tiers). The pillar/section work
   in 6.2 must not reintroduce gradient/hero-tile/SaaS-template patterns.
 
-### Validation suite (run after every subphase)
+### Validation suite (run once at the batch boundary)
 
 ```bash
 npm run typecheck            # zero errors
@@ -125,8 +129,11 @@ npm run generate:crawler-html  # only for subphases that touch crawler/SEO/conte
 npm run validate:crawler       # only for subphases that touch crawler/SEO/content
 ```
 
-If any command fails on the base branch too, document it as **pre-existing** and do not
-hide it. Never add a "launch-ready" claim unless the full suite passes.
+Run focused checks during implementation. If any final command fails on the base branch too,
+document it as **pre-existing** and do not hide it. Keep successful output brief; inspect logs
+on failure. Never add a "launch-ready" claim unless the full suite passes. Open or update a
+draft PR after validation; do not merge or publish solely because local checks pass. Pause only
+for missing required source material, a material scope change, or an action requiring approval.
 
 ---
 
@@ -413,7 +420,8 @@ without a green suite; route naming and crawler sitemap do not drift.
 > during Phase 6 review (Kyle, after 6.8) and are **design, depth, and cleanup** work that builds
 > on the new positioning rather than defining it. They are tracked as **Phase 7** to keep Phase 6
 > coherent. (Document section numbering continues at §9; the _work phase_ is "Phase 7.")
-> Same Sequential Execution Protocol applies: one subphase at a time, validate, commit, STOP.
+> The Bounded Work-Batch Protocol applies: related subphases can share a batch, with focused
+> checks along the way and full validation before its draft PR.
 >
 > **Note:** Adding the existing **Gallery** route to the primary nav is already owned by
 > **subphase 6.9** (Navigation & route preservation) — it is not duplicated here.
@@ -636,7 +644,8 @@ Governance` pointed at `project-aegis`, which is **not** a listed Library entry 
 > decision-evidence layer. The authoring standard now lives in `CLAUDE.md` → "Authoring
 > Standards — Decision-Evidence Layer" (summarized in `AGENTS.md`).
 
-Run one track at a time under the Sequential Execution Protocol; do not pre-build later tracks.
+Keep track changes identifiable in commits. Related tracks may share an authorized batch;
+do not extend that batch to unrelated future work.
 
 | Track | Scope                                                                   | Status        |
 | ----- | ----------------------------------------------------------------------- | ------------- |
@@ -655,8 +664,9 @@ role taxonomy, or route behavior.
 ### Track F — global positioning (hybrid, FDE-anchored)
 
 Track F was promoted from "optional" once the global-layer critique persisted after A–E. It runs as
-a gated F0–F6 sequence under the Sequential Execution Protocol (one sub-track at a time, validate,
-commit, STOP). The canonical decision and full reasoning live in `docs/global-positioning-audit.md`.
+an F0–F6 sequence under the Bounded Work-Batch Protocol (related sub-tracks may share an
+authorized batch, with full validation at the batch boundary). The canonical decision and full
+reasoning live in `docs/global-positioning-audit.md`.
 
 | Sub-track | Scope                                                                                       | Status       |
 | --------- | ------------------------------------------------------------------------------------------- | ------------ |
