@@ -66,9 +66,14 @@ code/system work.
 
 ## Execution protocol
 
-- **One subphase at a time.** Implement a single subphase, validate, commit with the subphase
-  identifier, STOP, and wait for explicit approval before the next. Do not pre-build later
-  subphases.
+- **Work in bounded batches.** Define a goal, source material, scope, acceptance criteria, and
+  exclusions before implementation. A request to execute that batch authorizes its related
+  subphases without another approval between them. Keep coherent changes in reviewable commits;
+  do not take on unrelated work.
+- Run focused checks while implementing and the full applicable suite once at the batch boundary
+  before opening or updating a draft PR. Report results, unresolved failures, and evidence limits.
+  Pause only for missing required source material, a material scope change, or an action that
+  requires explicit approval. Do not merge or publish solely because local checks pass.
 - Prefer surgical edits. Inspect the repo before assuming filenames; key file locations are
   listed in `docs/positioning-refactor-plan.md` §4.
 
@@ -77,7 +82,7 @@ code/system work.
 ```bash
 npm run typecheck            # zero errors
 npm run lint                 # zero warnings
-npm run format:check         # prettier clean (run `npm run format` first)
+npm run format:check         # prettier clean (format changed files first)
 npm test -- --run            # vitest, single run
 npm run build                # tsc + vite build
 # For content / SEO / crawler changes, additionally:
@@ -85,9 +90,11 @@ npm run generate:crawler-html
 npm run validate:crawler
 ```
 
-If a command fails on the base branch too, document it as **pre-existing** — do not hide it.
+Run focused checks as needed during the batch; run this full suite before its draft PR. If a
+command fails on the base branch too, document it as **pre-existing** — do not hide it. Keep
+successful command output brief; inspect detailed logs when a check fails.
 
 ## Commit convention
 
-Conventional commits with the subphase identifier, e.g.
+Conventional commits with the relevant subphase or batch identifier, e.g.
 `feat: subphase 6.1 — central FDE positioning & hero thesis`.

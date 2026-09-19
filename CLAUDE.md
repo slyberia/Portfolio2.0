@@ -57,7 +57,7 @@ npm run dev              # Start Vite dev server (frontend only)
 npm run serve            # Start Express backend server
 npm run dev:full         # Start both concurrently
 
-# Validation (run after every subphase)
+# Validation (full suite at the end of each bounded batch)
 npm run typecheck        # TypeScript type checking (zero errors required)
 npm run lint             # ESLint (zero warnings required)
 npm run test             # Vitest test suite
@@ -213,12 +213,13 @@ prototype/model-only**. Never present AI as final legal, strategic, or technical
 ## Formatting
 
 - Prettier config is in `package.json` (printWidth: 100, singleQuote: true, trailingComma: all)
-- Always run `npm run format` after edits, then verify with `npm run format:check`
+- Format changed files with Prettier after edits, then run `npm run format:check` at the batch
+  boundary; avoid reformatting unrelated files
 - Line endings: LF
 
 ## Git Commit Convention
 
-Use conventional commits with the subphase identifier:
+Use conventional commits with the relevant subphase or batch identifier:
 
 ```
 feat: subphase 1.1 — contrast correction & typography hardening
@@ -226,18 +227,27 @@ fix: subphase 4.1 — markdown parsing regression
 style: subphase 1.1 — dark mode border contrast boost
 ```
 
-## Sequential Execution Protocol
+## Bounded Work-Batch Protocol
 
 This project uses a phased execution plan. The current master execution document is
-`docs/positioning-refactor-plan.md` (Phase 6 — Positioning Refactor). The critical rule is:
+`docs/positioning-refactor-plan.md` (Phase 6 — Positioning Refactor). Phase labels describe
+reviewable slices; they do not require a pause after every slice.
 
-**ONE SUBPHASE AT A TIME.**
+1. **Set the batch boundary.** Use the user's goal, provided sources, included slices, exclusions,
+   and acceptance criteria. A request to execute the batch authorizes the related slices. Do not
+   extend the batch to unrelated work.
+2. **Implement autonomously.** Inspect the current repo, make coherent commits with relevant
+   identifiers, and run focused checks after affected slices. Fix regressions before proceeding;
+   distinguish pre-existing failures from new failures. Do not repeat the full suite for each
+   small edit or print successful logs in full.
+3. **Validate the batch.** Before opening or updating its draft PR, run
+   `npm run typecheck && npm run lint && npm run format:check && npm test -- --run && npm run build`.
+   If content, SEO, or crawler behavior changed, also run
+   `npm run generate:crawler-html && npm run validate:crawler`. Review the complete diff, report
+   failures, and keep local/synthetic evidence distinct from deployment proof.
+4. **Deliver for review.** Open or update a draft PR with scope, checks, evidence limits, and
+   outstanding decisions. Do not merge or publish solely because local checks pass.
 
-After completing a subphase:
-
-1. Run the full validation suite: `npm run typecheck && npm run lint && npm run format:check && npm test -- --run && npm run build`. For any subphase that touches content, SEO, or crawler files, also run `npm run generate:crawler-html && npm run validate:crawler`.
-2. Commit with the subphase identifier
-3. STOP and report what was done
-4. Wait for explicit approval before starting the next subphase
-
-Do NOT read ahead and pre-implement tasks from later subphases. Each subphase builds on the verified output of the previous one.
+Pause only when required source material is missing, the proposed work materially changes scope,
+or an action requires explicit approval. Report the specific blocker and continue independent
+in-scope work when possible.
