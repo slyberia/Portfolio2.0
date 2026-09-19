@@ -11,6 +11,7 @@ import {
 } from '../components/CaseStudyComponents';
 import { useCaseStudyContent } from '../hooks/useCaseStudyContent';
 import { useRecruiterMode } from '../context/RecruiterModeContext';
+import { hpsRecruiterScan, splitHpsCaseStudy } from '../lib/hpsCaseStudy';
 import { recruiterSummary } from '../utils/recruiterSummary';
 import { PROJECT_FALLBACK_ID, DEEP_DIVES_HREF } from '../lib/routes';
 import {
@@ -248,9 +249,9 @@ const ProjectDetailView: React.FC = () => {
     useCaseStudyContent(activeProjectId);
   const displayContent = fetchedContent;
 
-  const [activeTab, setActiveTab] = useState<'overview' | 'architecture' | 'tradeoffs' | 'proofs'>(
-    'overview',
-  );
+  const [activeTab, setActiveTab] = useState<
+    'overview' | 'architecture' | 'tradeoffs' | 'proofs' | 'technical'
+  >('overview');
 
   React.useEffect(() => {
     setActiveTab('overview');
@@ -262,6 +263,17 @@ const ProjectDetailView: React.FC = () => {
     const titleMatch = new RegExp(`^#\\s+${escaped}\\s*\\n+`, 'i');
     return displayContent.replace(titleMatch, '');
   }, [displayContent, metadata]);
+  const isHps = activeProjectId === 'hps-geospatial';
+  const hpsContent = React.useMemo(
+    () => splitHpsCaseStudy(isHps ? cleanContent : ''),
+    [isHps, cleanContent],
+  );
+  const overviewContent = isHps ? hpsContent.overview : cleanContent;
+  const scanContent = isHps
+    ? hpsRecruiterScan(hpsContent.overview)
+    : activeProject
+      ? recruiterSummary(activeProject)
+      : '';
 
   if (!activeProject || !metadata) {
     return (
@@ -280,10 +292,14 @@ const ProjectDetailView: React.FC = () => {
 
   const deepDiveInfo = getDeepDiveInfo(activeProjectId);
 
-  const tabsList: { id: 'overview' | 'architecture' | 'tradeoffs' | 'proofs'; label: string }[] = [
+  const tabsList: {
+    id: 'overview' | 'architecture' | 'tradeoffs' | 'proofs' | 'technical';
+    label: string;
+  }[] = [
     { id: 'overview', label: 'Overview' },
     { id: 'architecture', label: 'Architecture & Strategy' },
     { id: 'tradeoffs', label: 'Decisions & Trade-offs' },
+    ...(isHps ? [{ id: 'technical' as const, label: 'Technical Depth' }] : []),
     ...(hasInteractiveProofs ? [{ id: 'proofs' as const, label: 'Interactive Proofs' }] : []),
   ];
 
@@ -293,6 +309,42 @@ const ProjectDetailView: React.FC = () => {
         <ProjectSwitcher activeId={activeProjectId} />
         <div className="space-y-6">
           <ProjectHero activeProjectTags={activeProject.tags} metadata={metadata} />
+
+          {isHps && (
+            <section
+              aria-label="HPS reading paths"
+              className="rounded-2xl border border-[#d8e8ee] bg-white p-5 dark:border-white/10 dark:bg-slate-900/70"
+            >
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#237f86] dark:text-tide-sky">
+                One system · three reading depths
+              </p>
+              <div className="mt-3 grid gap-4 text-sm text-slate-700 dark:text-slate-200 sm:grid-cols-3">
+                <p>
+                  <strong>Quick scan:</strong> problem, ownership, outcome, and validation boundary.
+                </p>
+                <p>
+                  <strong>Overview:</strong> architecture, decisions, tradeoffs, and stakeholder
+                  value.
+                </p>
+                <p>
+                  <strong>Technical depth:</strong> state handling, artifacts, benchmarks, and known
+                  gaps.
+                </p>
+              </div>
+              <p className="mt-4 border-t border-slate-200 pt-3 text-sm text-slate-600 dark:border-white/10 dark:text-slate-300">
+                Product and operations readers: start with stakeholder value and the verified,
+                partial, and unavailable coverage states. No user adoption or time-saved metric is
+                claimed.
+              </p>
+              <button
+                type="button"
+                onClick={() => setActiveTab('technical')}
+                className="mt-4 rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-[#237f86] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua dark:border-white/20 dark:text-tide-sky"
+              >
+                Open technical notes →
+              </button>
+            </section>
+          )}
 
           <SegmentedTabs
             tabs={tabsList}
@@ -324,7 +376,7 @@ const ProjectDetailView: React.FC = () => {
                     <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
                       Project Detail
                     </p>
-                    {!isRecruiterMode && !contentLoading && !cleanContent ? (
+                    {!isRecruiterMode && !contentLoading && !overviewContent ? (
                       <div
                         data-testid="case-study-empty"
                         className="rounded-2xl border border-slate-200 bg-white p-8 text-sm text-slate-600 dark:border-white/10 dark:bg-slate-900/70 dark:text-slate-300"
@@ -346,12 +398,10 @@ const ProjectDetailView: React.FC = () => {
                     ) : (
                       <ErrorBoundary
                         location="Project Detail Markdown"
-                        rawContent={
-                          isRecruiterMode ? recruiterSummary(activeProject) : cleanContent
-                        }
+                        rawContent={isRecruiterMode ? scanContent : overviewContent}
                       >
                         <MarkdownSection
-                          content={isRecruiterMode ? recruiterSummary(activeProject) : cleanContent}
+                          content={isRecruiterMode ? scanContent : overviewContent}
                           isLoading={contentLoading}
                         />
                       </ErrorBoundary>
@@ -396,6 +446,12 @@ const ProjectDetailView: React.FC = () => {
                       </div>
                     )
                   )}
+                </div>
+              )}
+
+              {isHps && activeTab === 'technical' && (
+                <div role="tabpanel" id="panel-technical" aria-labelledby="tab-technical">
+                  <MarkdownSection content={hpsContent.technical} isLoading={contentLoading} />
                 </div>
               )}
 
