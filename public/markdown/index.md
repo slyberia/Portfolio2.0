@@ -2,7 +2,7 @@
 
 - **purpose:** Crawler-readable map of the React portfolio and companion markdown mirrors.
 - **role relevance:** Covers Forward Deployed Engineer, Implementation Consultant, and Spatial Systems Architect tracks.
-- **key evidence links:** [/projects/guynode](/projects/guynode), [/projects/digital-twin](/projects/digital-twin), [/portfolio2/deep-dive](/portfolio2/deep-dive).
+- **key evidence links:** [/projects/hps-geospatial](/projects/hps-geospatial), [/projects/guynode](/projects/guynode), [/projects/digital-twin](/projects/digital-twin), [/deep-dives](/deep-dives).
 - **canonical app route:** /site-index
 - **last updated:** 2026-05-02
 
@@ -13,6 +13,7 @@
 - [/markdown/tracks/forward-deployed.md](/markdown/tracks/forward-deployed.md)
 - [/markdown/tracks/solutions-architect.md](/markdown/tracks/solutions-architect.md)
 - [/markdown/tracks/spatial-systems.md](/markdown/tracks/spatial-systems.md)
+- [/markdown/projects/hps-geospatial.md](/markdown/projects/hps-geospatial.md)
 - [/markdown/projects/guynode.md](/markdown/projects/guynode.md)
 - [/markdown/projects/digital-twin.md](/markdown/projects/digital-twin.md)
 - [/markdown/process.md](/markdown/process.md)

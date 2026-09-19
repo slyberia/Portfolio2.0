@@ -10,6 +10,7 @@ const REQUIRED_ROUTES = [
   '/tracks/solutions-architect',
   '/tracks/spatial-systems',
   '/projects',
+  '/projects/hps-geospatial',
   '/projects/guynode',
   '/projects/digital-twin',
   '/projects/ops-triage',

@@ -37,7 +37,7 @@ Messaging guardrails:
   one role lens; Implementation, GIS/spatial systems, and AI workflow governance remain supporting
   lenses. The role-lane taxonomy is fixed: `Forward Deployed Engineer`, `Implementation Consultant`,
   `Spatial Systems Architect`, `AI Workflow / Portfolio Governance`.
-- **Do not invent** metrics or customers. The on-site project inventory is `luxe-lofts`,
+- **Do not invent** metrics or customers. The on-site project inventory is `hps-geospatial`, `luxe-lofts`,
   `ops-triage`, `guynode`, `digital-twin`, `project-aegis` (Automation & Operational Protocols —
   Aegis/emOS, published in 7.7b), `portfolio-pipeline` (Portfolio 2.0 — Governed AI Build Pipeline,
   published in 7.8), `northern-grind`, and `moh` (registry). `prompter-hub` and `nba-systems-qa`

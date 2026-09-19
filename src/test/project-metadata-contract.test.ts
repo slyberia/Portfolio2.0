@@ -43,7 +43,9 @@ describe('project metadata contracts', () => {
   it('has only one flagship and deterministic switcher ranks', () => {
     const flagship = PROJECT_METADATA.filter((p) => p.flagship);
     expect(flagship).toHaveLength(1);
-    expect(flagship[0].id).toBe('guynode');
+    expect(flagship[0].id).toBe('hps-geospatial');
+    expect(getFeaturedProjects()[0].id).toBe('hps-geospatial');
+    expect(getFeaturedProjects().some((project) => project.id === 'guynode')).toBe(true);
     const ranks = PROJECT_METADATA.map((p) => p.switcherRank).filter(
       (r): r is number => typeof r === 'number',
     );

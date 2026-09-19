@@ -116,7 +116,7 @@ export const getSeoForPath = (pathname: string): RouteSeo => {
     '/projects': {
       title: 'Projects Portfolio Index',
       description:
-        'Index of flagship and supporting projects including Guynode, Digital Twin, Ops Triage, and additional implementation evidence.',
+        'Index of HPS Geospatial, Guynode, Digital Twin, and supporting systems with evidence and validation boundaries.',
       canonicalPath: '/projects',
       markdownPath: '/markdown/index.md',
       jsonLd: sharedProjectJsonLd,

@@ -19,8 +19,9 @@ const SupportingEvidenceSection: React.FC = () => {
   const supporting = useMemo(() => getSupportingProjects(), []);
 
   const filteredItems = useMemo(() => {
-    if (activeFilter === 'All') return [...featured, ...supporting];
-    return [...featured, ...supporting].filter((item) => item.filters.includes(activeFilter));
+    const additionalProjects = [...featured.filter((item) => !item.flagship), ...supporting];
+    if (activeFilter === 'All') return additionalProjects;
+    return additionalProjects.filter((item) => item.filters.includes(activeFilter));
   }, [activeFilter, featured, supporting]);
 
   const handleAskAI = (e: React.MouseEvent, item: (typeof featured)[0]) => {
@@ -59,10 +60,11 @@ const SupportingEvidenceSection: React.FC = () => {
             PROJECT_LIBRARY
           </p>
           <h2 className="text-3xl md:text-4xl font-outfit font-semibold text-ink-navy dark:text-white">
-            Projects
+            More Projects
           </h2>
           <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-            Scannable project proof across implementation, QA, GIS, AI systems, and workflow design.
+            Complementary systems and workflows across spatial data access, implementation, QA, and
+            AI governance.
           </p>
         </div>
 
