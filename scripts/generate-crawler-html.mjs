@@ -148,7 +148,7 @@ const routes = [
   [
     '/projects/portfolio-pipeline',
     'Portfolio 2.0 — Governed AI Build Pipeline',
-    'The governed, multi-LLM pipeline behind this site: AI-assisted build under a bounded work-batch protocol, CI gates, drift guards, and a Docker → Cloud Run deploy.',
+    'The governed build process behind this site: scoped work batches, CI and crawler guards, attribution, plus post-launch chatbot failure handling and deployment configuration fixes. Live outcomes of individual fixes are not established here.',
     'Governed AI Build Pipeline',
     'Case study in AI build governance: human design authority plus a multi-LLM toolchain behind a CI gate (lint/types/tests/build/secret-scan), semantic drift guards, and an attribution ledger.',
     ['/projects/project-aegis', '/deep-dives'],

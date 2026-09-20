@@ -117,7 +117,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     id: 'guynode',
     displayTitle: 'Guynode Spatial Data Hub',
     shortSummary:
-      "A redesigned public hub that makes Guyana's geospatial data easy to find, preview, and trust — built on solid dataset governance and clean, consistent metadata.",
+      'A redesigned spatial data hub prototype for finding and previewing Guyana datasets, with a governed registry and consistent metadata.',
     hierarchy: 'featured',
     featuredLabel: 'FEATURED SPATIAL DATA HUB',
     statusLabel: 'Featured System',
@@ -130,9 +130,9 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     filters: ['GIS', 'Implementation', 'QA', 'Process'],
     proofType: 'System',
     purpose:
-      'Make a large, fragmented spatial dataset trustworthy enough to publish and query — governed for metadata completeness and public discoverability — without manual cleanup first.',
+      'Organize fragmented spatial datasets in a governed catalog with metadata and browser previews for public discovery.',
     stakeholderValue:
-      'Analysts and public users get governed, metadata-complete layers they can rely on — geospatial data governance and public-facing information architecture put integrity checks upstream, not in every downstream decision.',
+      'The redesigned prototype lets analysts and public visitors inspect catalog entries and map previews before download; usage and adoption outcomes remain unmeasured.',
     accent: 'gold',
     sortOrder: 2,
     href: buildProjectHref('guynode'),
@@ -222,7 +222,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     id: 'portfolio-pipeline',
     displayTitle: 'Portfolio 2.0 — Governed AI Build Pipeline',
     shortSummary:
-      'The governed AI build process behind this site: AI does the work one step at a time, every change has to clear automated checks (lint, types, tests, build, security scan), and an attribution ledger records who did what.',
+      'The governed build process behind this site: scoped work batches, automated checks, and an attribution ledger, plus post-launch chatbot failure handling and deployment fixes.',
     hierarchy: 'supporting',
     statusLabel: 'In Production',
     roleLanes: ['Implementation'],
@@ -230,9 +230,9 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     filters: ['AI Systems', 'Process', 'Implementation'],
     proofType: 'System / Process',
     purpose:
-      'Demonstrate AI-assisted development can reach production-grade reliability when it stays under human design authority, automated CI gates, and a transparent attribution ledger.',
+      'Show how human-directed AI-assisted implementation is scoped, checked, attributed, and maintained after launch.',
     stakeholderValue:
-      'A reviewer can trust what shipped: every change clears the same CI gate, semantic drift-guards block silent regressions, and AI_ATTRIBUTION.md demarcates human direction from AI execution.',
+      'A reviewer can inspect the build checks, failure handling, and attribution trail while distinguishing repository validation from live deployment results.',
     accent: 'aqua',
     sortOrder: 6,
     href: buildProjectHref('portfolio-pipeline'),

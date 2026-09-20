@@ -379,9 +379,9 @@ export const automationSystems: AutomationSystem[] = [
     autonomy: 'Human-led, gated',
     guardian: 'Kyle (design authority) + CI gates',
     contributes:
-      'Demonstrates how rigorous human design authority and strict CI validation gates can safely harness multi-LLM workflows for production-grade software builds.',
+      'Demonstrates human design authority, scoped implementation, and CI validation in an AI-assisted software build.',
     description:
-      'AI-assisted development under a one-subphase protocol with human design authority. Every change lands on a branch and clears the same automated gate — lint, types, tests, build, secret-scan, and crawler drift-guards — before merge, with an attribution ledger demarcating human direction from AI execution.',
+      'AI-assisted development under a bounded work-batch protocol with human design authority. Reviewable commits, batch-end checks, CI, and crawler guards support review before merge; an attribution ledger records human direction and AI execution.',
     href: '/projects/portfolio-pipeline',
     chips: ['Human-in-the-loop', 'CI Gates', 'Attribution Ledger'],
   },

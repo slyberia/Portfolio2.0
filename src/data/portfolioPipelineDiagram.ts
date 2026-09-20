@@ -21,6 +21,7 @@ export const PORTFOLIO_PIPELINE_HTML = `<!DOCTYPE html>
   .grid { display:grid; gap:8px; }
   .node { text-align:left; width:100%; padding:11px 13px; border:1px solid #cbd5e1; border-radius:11px; background:#fff; cursor:pointer; font-size:13px; font-weight:600; color:#0f172a; display:flex; align-items:center; gap:9px; transition:all .15s; }
   .node:hover { border-color:#0ea5e9; }
+  .node:focus-visible, .chip:focus-visible { outline:2px solid #0369a1; outline-offset:2px; }
   .node.active { border-color:#0ea5e9; background:#f0f9ff; box-shadow:0 0 0 1px #0ea5e9; }
   .node .n { font-size:10px; font-weight:700; color:#0369a1; background:#e0f2fe; border:1px solid #bae6fd; border-radius:6px; padding:2px 6px; flex:none; }
   .arrow { text-align:center; color:#94a3b8; font-size:13px; line-height:1; }
@@ -51,7 +52,7 @@ export const PORTFOLIO_PIPELINE_HTML = `<!DOCTYPE html>
       <div class="grid">
         <button class="node" onclick="pick(this,'author')"><span class="n">1</span>Author — human design authority</button>
         <div class="arrow">&#9660;</div>
-        <button class="node" onclick="pick(this,'subphase')"><span class="n">2</span>Subphase protocol — one change, then STOP</button>
+        <button class="node" onclick="pick(this,'subphase')"><span class="n">2</span>Bounded batch — scoped commits, then review</button>
         <div class="arrow">&#9660;</div>
         <button class="node" onclick="pick(this,'ci')"><span class="n">3</span>CI gates — lint · types · tests · build · secret-scan</button>
         <div class="arrow">&#9660;</div>
@@ -79,7 +80,7 @@ export const PORTFOLIO_PIPELINE_HTML = `<!DOCTYPE html>
 <script>
   var data = {
     author: '<b>Author — human design authority.</b> Every change starts from human intent. The AI executes within a defined scope; it does not set the agenda.',
-    subphase: '<b>Subphase protocol.</b> The Sequential Execution Protocol (CLAUDE.md): one subphase at a time, validate, commit with the subphase id, then <b>STOP</b> and wait for explicit human approval — capping the blast radius of any single AI change.',
+    subphase: '<b>Bounded batch.</b> CLAUDE.md defines the goal, sources, scope, and acceptance criteria. Related slices produce reviewable commits and focused checks; the full suite runs once at the batch boundary before a draft PR. Human review controls merging and publishing.',
     ci: '<b>CI gates.</b> GitHub Actions: npm ci &#8594; lint (zero warnings) &#8594; format check &#8594; typecheck &#8594; Vitest &#8594; build &#8594; gitleaks secret-scan &#8594; key audit (fails if an API key reaches dist/). Third-party actions are pinned to immutable commit SHAs.',
     drift: '<b>Crawler &amp; drift guards.</b> Bespoke invariant tests — crawler validation, case-study coverage, skill&#8594;evidence mapping, theme-regression, and a project-metadata contract — so AI changes cannot silently degrade the repo&#39;s semantic integrity.',
     deploy: '<b>Deploy.</b> Multi-stage Docker (node:20-alpine): the Vite frontend + Express backend are built, dev dependencies are scrubbed, the runtime drops to a non-root user, and the container ships to Google Cloud Run on port 8080.',

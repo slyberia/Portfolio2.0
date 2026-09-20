@@ -623,7 +623,7 @@ const PROCESS_CARD_DETAILS: Record<string, { headline: string; body: string }> =
   },
   'Build Phases': {
     headline: 'Five-plus phases, each validated before advancing',
-    body: 'No phase began until the previous one passed typecheck, lint, build, and a manual review gate. This sequential discipline prevented accumulated drift — a common failure mode in AI-assisted builds where unreviewed changes compound. Phase completion = zero validation errors + committed evidence ledger entry.',
+    body: 'Earlier phases used sequential validation and manual review. The current bounded-batch protocol permits related slices in reviewable commits, with focused checks during implementation and the full applicable suite before a draft PR. Merge and publication remain human decisions.',
   },
   Routes: {
     headline: 'Ten-plus canonical routes, zero naming drift',
