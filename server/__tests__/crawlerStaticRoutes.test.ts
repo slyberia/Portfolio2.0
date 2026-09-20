@@ -11,6 +11,7 @@ function makeFixtureDist() {
     join(base, 'index.html'),
     '<html><body><div id="root"></div>SPA shell</body></html>',
   );
+  writeFileSync(join(base, 'ai-index.html'), '<html><body><h1>AI index</h1></body></html>');
   mkdirSync(join(base, 'projects', 'guynode'), { recursive: true });
   writeFileSync(
     join(base, 'projects', 'guynode', 'index.html'),
@@ -20,6 +21,13 @@ function makeFixtureDist() {
 }
 
 describe('crawler static route serving behavior', () => {
+  it('serves the static AI index at its extensionless canonical URL', async () => {
+    const res = await request(createApp(makeFixtureDist())).get('/ai-index');
+    expect(res.status).toBe(200);
+    expect(res.text).toContain('<h1>AI index</h1>');
+    expect(res.text).not.toContain('SPA shell');
+  });
+
   it('serves static snapshot when route-specific html exists', async () => {
     const app = createApp(makeFixtureDist());
     const res = await request(app).get('/projects/guynode').redirects(1);

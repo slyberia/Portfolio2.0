@@ -4,6 +4,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider, useParams } from 'react-router-dom';
 import { routeDefinitions } from '../router';
 import { RecruiterModeProvider } from '../context/RecruiterModeContext';
+import { PROJECT_METADATA } from '../data/projectMetadata';
 
 beforeAll(() => {
   Object.defineProperty(window, 'matchMedia', {
@@ -60,6 +61,18 @@ function renderRoute(path: string) {
 }
 
 describe('routing', () => {
+  const publicProjects = PROJECT_METADATA.filter(
+    (project) => (project.visibility ?? 'public') === 'public',
+  );
+
+  it.each(publicProjects)('opens published project $id at its canonical path', (project) => {
+    expect(project.href).toBe(`/projects/${project.id}`);
+    renderRoute(project.href);
+    expect(screen.getByTestId('project-detail-view')).toHaveTextContent(
+      `ProjectDetailView:${project.id}`,
+    );
+  });
+
   it('/ renders HomeView', () => {
     renderRoute('/');
     expect(screen.getByTestId('home-view')).toBeInTheDocument();
@@ -99,22 +112,38 @@ describe('routing', () => {
     );
   });
 
-  it.skip('/case-studies redirects to canonical project route', async () => {
+  it('/case-studies redirects to canonical project route', async () => {
     const router = renderRoute('/case-studies');
     await waitFor(() => expect(router.state.location.pathname).toBe('/projects'));
     expect(screen.getByRole('heading', { name: 'Projects' })).toBeInTheDocument();
   });
 
-  it.skip('/case-studies/guynode redirects to /projects/guynode', async () => {
+  it('/case-studies/guynode redirects to /projects/guynode', async () => {
     const router = renderRoute('/case-studies/guynode');
     await waitFor(() => expect(router.state.location.pathname).toBe('/projects/guynode'));
     expect(screen.getByTestId('project-detail-view')).toBeInTheDocument();
   });
 
-  it.skip('/case-studies/digital-twin redirects to /projects/digital-twin', async () => {
+  it('/case-studies/digital-twin redirects to /projects/digital-twin', async () => {
     const router = renderRoute('/case-studies/digital-twin');
     await waitFor(() => expect(router.state.location.pathname).toBe('/projects/digital-twin'));
     expect(screen.getByTestId('project-detail-view')).toBeInTheDocument();
+  });
+
+  it('/case-studies/hps-geospatial redirects to the new flagship route', async () => {
+    const router = renderRoute('/case-studies/hps-geospatial');
+    await waitFor(() => expect(router.state.location.pathname).toBe('/projects/hps-geospatial'));
+    expect(screen.getByTestId('project-detail-view')).toHaveTextContent(
+      'ProjectDetailView:hps-geospatial',
+    );
+  });
+
+  it.each([
+    ['/portfolio2/deep-dive', '/deep-dives'],
+    ['/resume/implementation', '/resume'],
+  ])('redirects legacy %s to %s', async (legacy, canonical) => {
+    const router = renderRoute(legacy);
+    await waitFor(() => expect(router.state.location.pathname).toBe(canonical));
   });
 
   it('/resume renders ResumeView', () => {

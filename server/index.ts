@@ -48,6 +48,11 @@ export function createApp(distDir = path.resolve(__dirname, '..', 'dist')) {
   app.use('/api', geminiProxy);
   app.use(express.static(distDir));
 
+  // The public AI index is a static HTML page; extensionless /ai-index is its canonical URL.
+  app.get('/ai-index', (_req, res) => {
+    res.sendFile(path.join(distDir, 'ai-index.html'));
+  });
+
   app.get(/^(?!\/api\/).*$/, (_req, res) => {
     res.sendFile(path.join(distDir, 'index.html'));
   });
