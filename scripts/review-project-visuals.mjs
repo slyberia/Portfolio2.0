@@ -46,10 +46,12 @@ try {
           );
           const prose = document.querySelector('.prose-portfolio');
           const tables = [...document.querySelectorAll('.prose-portfolio table')];
+          const summary = document.querySelector('.prose-portfolio blockquote p:first-of-type');
           return {
             heading: document.querySelector('h1')?.textContent?.trim(),
             fontFamily: prose ? getComputedStyle(prose).fontFamily : '',
             bodyColor: prose ? getComputedStyle(prose).color : '',
+            summaryQuote: summary ? getComputedStyle(summary, '::before').content : '',
             dark: document.documentElement.classList.contains('dark'),
             viewportWidth: innerWidth,
             pageWidth: document.documentElement.scrollWidth,
@@ -67,6 +69,7 @@ try {
               tableWidth: table.getBoundingClientRect().width,
               wrapperWidth: table.parentElement?.getBoundingClientRect().width,
               overflow: table.parentElement && getComputedStyle(table.parentElement).overflowX,
+              focusable: table.parentElement?.tabIndex === 0,
             })),
           };
         }, size);
@@ -89,7 +92,12 @@ try {
             metrics.contentEdges.every((edge) => edge.right <= width + 1),
           ],
           ['project reading font', metrics.fontFamily.includes('Chivo')],
+          ['project summary has a decorative quote', metrics.summaryQuote === 'none'],
           ['table scroll containers', metrics.tables.every((table) => table.overflow === 'auto')],
+          [
+            'table scroll containers have keyboard focus',
+            metrics.tables.every((table) => table.focusable),
+          ],
           ['navigation visible after scrolling', scrolledTop >= 0 && scrolledTop < 150],
         ]) {
           if (!check) failures.push(`${id} / ${size} / ${theme}: ${label}`);

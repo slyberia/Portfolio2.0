@@ -21,6 +21,12 @@
     font-weight: 400;
   }
 
+  /* These blocks are labeled project summaries, not quotations. */
+  .prose-portfolio blockquote p:first-of-type::before,
+  .prose-portfolio blockquote p:last-of-type::after {
+    content: none;
+  }
+
   .dark .prose-portfolio {
     color: #f8fafc;
   }
