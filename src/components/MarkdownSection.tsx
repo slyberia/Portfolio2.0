@@ -144,8 +144,18 @@ const MarkdownSection: React.FC<MarkdownSectionProps> = ({
                 />
               ),
               table: ({ node: _node, ...props }) => (
-                <div className="my-8 overflow-x-auto rounded-xl border border-slate-300 bg-white dark:border-slate-600 dark:bg-slate-900">
-                  <table {...props} className="w-full min-w-[36rem] text-left border-collapse" />
+                <div className="my-8">
+                  <p className="mb-2 text-xs text-slate-600 sm:hidden dark:text-slate-300">
+                    Swipe sideways to view all table columns.
+                  </p>
+                  <div
+                    className="overflow-x-auto rounded-xl border border-slate-300 bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tide-aqua dark:border-slate-600 dark:bg-slate-900"
+                    role="region"
+                    aria-label="Scrollable data table"
+                    tabIndex={0}
+                  >
+                    <table {...props} className="w-full min-w-[36rem] text-left border-collapse" />
+                  </div>
                 </div>
               ),
               thead: ({ node: _node, ...props }) => (

@@ -97,6 +97,8 @@ try {
         if (id === 'hps-geospatial') {
           await page.getByRole('tab', { name: 'Technical Notes' }).click();
           await page.locator('#panel-technical .prose-portfolio').waitFor();
+          await page.evaluate(() => window.scrollTo(0, 0));
+          await page.waitForTimeout(300);
           await page.screenshot({
             path: `${output}/hps-technical-${size}-${theme}.png`,
             fullPage: true,
