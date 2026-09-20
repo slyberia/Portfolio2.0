@@ -70,7 +70,7 @@ const ProjectSwitcher: React.FC<{ activeId: string }> = ({ activeId }) => {
 
   return (
     <>
-      <section className="sticky top-16 z-30 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm lg:hidden dark:border-slate-700 dark:bg-slate-900">
+      <section className="sticky top-16 z-30 min-w-0 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm lg:hidden dark:border-slate-700 dark:bg-slate-900">
         <p className="text-xs font-bold text-slate-700 dark:text-slate-200">
           Browse projects ·{' '}
           {orderedProjects.find((project) => project.id === activeId)?.displayTitle}
@@ -316,9 +316,9 @@ const ProjectDetailView: React.FC = () => {
 
   return (
     <section className="pt-28 pb-24 px-4 sm:px-6">
-      <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[260px_minmax(0,1fr)]">
+      <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[260px_minmax(0,1fr)]">
         <ProjectSwitcher activeId={activeProjectId} />
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6">
           <ProjectHero activeProjectTags={activeProject.tags} metadata={metadata} />
 
           {isHps && (

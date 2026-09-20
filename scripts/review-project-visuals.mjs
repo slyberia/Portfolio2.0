@@ -53,6 +53,14 @@ try {
             dark: document.documentElement.classList.contains('dark'),
             viewportWidth: innerWidth,
             pageWidth: document.documentElement.scrollWidth,
+            contentEdges: [
+              ...document.querySelectorAll(
+                'main .mx-auto.grid > *, main header, main .prose-portfolio',
+              ),
+            ].map((el) => ({
+              element: el.tagName.toLowerCase(),
+              right: Math.round(el.getBoundingClientRect().right),
+            })),
             navTop: nav?.getBoundingClientRect().top,
             navPosition: nav ? getComputedStyle(nav).position : '',
             tables: tables.map((table) => ({
@@ -76,11 +84,29 @@ try {
           ['theme', metrics.dark === (theme === 'dark')],
           ['sticky navigation', metrics.navPosition === 'sticky'],
           ['horizontal page overflow', metrics.pageWidth <= width + 1],
+          [
+            'visible content clipped by page container',
+            metrics.contentEdges.every((edge) => edge.right <= width + 1),
+          ],
           ['project reading font', metrics.fontFamily.includes('Chivo')],
           ['table scroll containers', metrics.tables.every((table) => table.overflow === 'auto')],
           ['navigation visible after scrolling', scrolledTop >= 0 && scrolledTop < 150],
         ]) {
           if (!check) failures.push(`${id} / ${size} / ${theme}: ${label}`);
+        }
+        if (id === 'hps-geospatial') {
+          await page.getByRole('tab', { name: 'Technical Notes' }).click();
+          await page.locator('#panel-technical .prose-portfolio').waitFor();
+          await page.screenshot({
+            path: `${output}/hps-technical-${size}-${theme}.png`,
+            fullPage: true,
+          });
+          const technicalRight = await page
+            .locator('#panel-technical .prose-portfolio')
+            .evaluate((el) => el.getBoundingClientRect().right);
+          if (technicalRight > width + 1) {
+            failures.push(`hps technical / ${size} / ${theme}: visible content clipped`);
+          }
         }
       }
       await context.close();
