@@ -87,10 +87,9 @@ const ProjectsIndexView: React.FC = () => {
           </h2>
           <div className="grid md:grid-cols-2 gap-4">
             {featured.map((project) => (
-              <Link
+              <article
                 key={project.id}
-                to={project.href}
-                className={`rounded-xl border p-6 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua transition-colors duration-300 ${
+                className={`relative rounded-xl border p-6 shadow-sm transition-colors duration-300 ${
                   project.flagship
                     ? 'md:col-span-2 border-tide-aqua/50 bg-tide-aqua/5 dark:bg-tide-aqua/10'
                     : 'border-[#d8e8ee] bg-white dark:bg-slate-900'
@@ -112,12 +111,18 @@ const ProjectsIndexView: React.FC = () => {
                 </div>
                 <div className="mt-2 flex justify-between items-start group">
                   <h3 className="text-xl font-semibold text-ink-navy dark:text-white group-hover:text-tide-aqua dark:group-hover:text-tide-softBlue transition-colors">
-                    {project.displayTitle}
+                    <Link
+                      to={project.href}
+                      className="after:absolute after:inset-0 after:rounded-xl focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-tide-aqua"
+                    >
+                      {project.displayTitle}
+                    </Link>
                   </h3>
                   <button
+                    type="button"
                     onClick={(e) => handleAskAI(e, project)}
                     aria-label={`Ask AI about ${project.displayTitle}`}
-                    className="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 hover:text-amber-500 dark:hover:text-amber-400 transition-colors uppercase tracking-wider flex items-center gap-1 shrink-0 ml-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded px-1 -mr-1 py-1"
+                    className="relative z-10 text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 hover:text-amber-500 dark:hover:text-amber-400 transition-colors uppercase tracking-wider flex items-center gap-1 shrink-0 ml-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded px-1 -mr-1 py-1"
                   >
                     Ask AI <span aria-hidden="true">→</span>
                   </button>
@@ -149,7 +154,7 @@ const ProjectsIndexView: React.FC = () => {
                 <span className="mt-4 inline-block text-sm font-semibold text-[#237f86] dark:text-tide-softBlue">
                   View Project →
                 </span>
-              </Link>
+              </article>
             ))}
           </div>
         </section>
@@ -184,10 +189,9 @@ const ProjectsIndexView: React.FC = () => {
 
           <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
             {filtered.map((project) => (
-              <Link
+              <article
                 key={project.id}
-                to={project.href}
-                className="rounded-xl border border-[#d8e8ee] bg-white dark:bg-slate-900 p-5 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
+                className="relative rounded-xl border border-[#d8e8ee] bg-white dark:bg-slate-900 p-5 shadow-sm"
               >
                 <div className="flex items-center justify-between gap-2">
                   <span className="text-[10px] font-mono uppercase tracking-[0.16em] text-slate-500">
@@ -201,12 +205,18 @@ const ProjectsIndexView: React.FC = () => {
                 </div>
                 <div className="mt-3 flex justify-between items-start group">
                   <h3 className="text-base font-semibold text-ink-navy dark:text-white group-hover:text-tide-aqua dark:group-hover:text-tide-softBlue transition-colors">
-                    {project.displayTitle}
+                    <Link
+                      to={project.href}
+                      className="after:absolute after:inset-0 after:rounded-xl focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-tide-aqua"
+                    >
+                      {project.displayTitle}
+                    </Link>
                   </h3>
                   <button
+                    type="button"
                     onClick={(e) => handleAskAI(e, project)}
                     aria-label={`Ask AI about ${project.displayTitle}`}
-                    className="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 hover:text-amber-500 dark:hover:text-amber-400 transition-colors uppercase tracking-wider flex items-center gap-1 shrink-0 ml-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded px-1 -mr-1 py-1"
+                    className="relative z-10 text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 hover:text-amber-500 dark:hover:text-amber-400 transition-colors uppercase tracking-wider flex items-center gap-1 shrink-0 ml-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded px-1 -mr-1 py-1"
                   >
                     Ask AI <span aria-hidden="true">→</span>
                   </button>
@@ -238,7 +248,7 @@ const ProjectsIndexView: React.FC = () => {
                 <span className="mt-4 inline-block text-sm font-semibold text-[#237f86] dark:text-tide-softBlue">
                   View Project →
                 </span>
-              </Link>
+              </article>
             ))}
           </div>
         </section>
