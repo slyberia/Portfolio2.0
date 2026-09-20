@@ -8,9 +8,10 @@ import {
   PROJECT_REGISTRY,
 } from '../constants';
 import FlagshipSystemSection from '../components/home/FlagshipSystemSection';
+import HpsFlagshipSection from '../components/home/HpsFlagshipSection';
 import SupportingEvidenceSection from '../components/home/SupportingEvidenceSection';
 import WhatIHelpTeamsDoSection from '../components/home/WhatIHelpTeamsDoSection';
-import { GUYNODE_SYSTEM_HREF } from '../lib/routes';
+import { GUYNODE_SYSTEM_HREF, HPS_GEOSPATIAL_HREF } from '../lib/routes';
 import { isProjectPublic } from '../data/projectMetadata';
 import { decisionBlocks, forensicEntries } from '../data/deepDiveContent';
 
@@ -358,11 +359,10 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl w-full">
                 <Link
-                  to={GUYNODE_SYSTEM_HREF}
-                  aria-label="View Flagship Project"
+                  to={HPS_GEOSPATIAL_HREF}
+                  aria-label="View HPS Geospatial flagship case study"
                   className="group min-h-[80px] border border-[#0d9488] dark:border-tide-sky/60 bg-[#0d9488] dark:bg-tide-sky rounded-md px-5 py-4 flex items-center justify-between gap-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all hover:-translate-y-0.5 hover:shadow-md hover:bg-[#0f766e] dark:hover:bg-tide-sky/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f5f9fb] dark:focus-visible:ring-offset-slate-950 focus-visible:ring-tide-aqua"
                 >
-                  {/* TODO: update this href to the dedicated Guynode case-study route when it exists. */}
                   <div>
                     <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-white/90 dark:text-ink-navy/70">
                       <span
@@ -372,7 +372,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
                       PRIMARY ACTION
                     </p>
                     <p className="mt-1 text-base md:text-lg font-outfit font-semibold text-white dark:text-ink-navy">
-                      View Flagship Project
+                      Explore HPS Geospatial
                     </p>
                   </div>
                   <svg
@@ -459,6 +459,7 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigateToCaseStudy, onOpenContac
 
       <WhatIHelpTeamsDoSection />
 
+      <HpsFlagshipSection />
       <FlagshipSystemSection guynodeHref={GUYNODE_SYSTEM_HREF} />
 
       <section

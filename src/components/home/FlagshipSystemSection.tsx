@@ -76,7 +76,7 @@ const FlagshipSystemSection: React.FC<FlagshipSystemSectionProps> = ({ guynodeHr
         detail: {
           source,
           starterPrompt: prompt,
-          modeLabel: 'Guynode Flagship',
+          modeLabel: 'Guynode Spatial Data Hub',
           suggestions: ['Explain the technical implementation', 'What was the business impact?'],
         },
       }),
@@ -105,9 +105,9 @@ const FlagshipSystemSection: React.FC<FlagshipSystemSectionProps> = ({ guynodeHr
         >
           <div className="space-y-4">
             <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">
-              FLAGSHIP_SYSTEM
+              FEATURED_SPATIAL_DATA_HUB
             </p>
-            <p className="text-sm font-semibold text-ink-navy dark:text-white">Flagship System</p>
+            <p className="text-sm font-semibold text-ink-navy dark:text-white">Featured System</p>
             <h2
               id="flagship-system-heading"
               className="text-3xl md:text-4xl font-outfit font-semibold text-ink-navy dark:text-white"
@@ -119,9 +119,8 @@ const FlagshipSystemSection: React.FC<FlagshipSystemSectionProps> = ({ guynodeHr
               for organizing, previewing, and documenting spatial datasets for Guyana.
             </p>
             <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-              Guynode anchors the portfolio because it combines technical implementation, GIS
-              systems thinking, dataset governance, documentation, and launch-readiness work in one
-              tangible build.
+              Guynode provides a complementary spatial data hub story: dataset governance,
+              public-facing access, documentation, and launch-readiness work in one build.
             </p>
           </div>
 

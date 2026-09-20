@@ -34,7 +34,7 @@ positioning decision is recorded in `docs/global-positioning-audit.md` (Track F0
 - **Customer Success is an evidence layer, not the identity.** No CSM seniority, managed book
   of business, or ARR/NRR/renewal/expansion claims anywhere. Never reintroduce "Customer Success"
   or "CSM" as a primary identity or target role.
-- **Do not invent** metrics or customers. On-site inventory: `luxe-lofts`, `ops-triage`,
+- **Do not invent** metrics or customers. On-site inventory: `hps-geospatial`, `luxe-lofts`, `ops-triage`,
   `guynode`, `digital-twin`, `project-aegis` (Automation & Operational Protocols — Aegis/emOS,
   published in 7.7b), `portfolio-pipeline` (Portfolio 2.0 — Governed AI Build Pipeline, 7.8),
   `northern-grind`, `moh` (registry). `prompter-hub` and `nba-systems-qa` were retired in 7.7a.

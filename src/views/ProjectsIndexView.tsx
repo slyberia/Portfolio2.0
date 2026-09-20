@@ -68,13 +68,13 @@ const ProjectsIndexView: React.FC = () => {
             Projects
           </h1>
           <p className="text-base text-slate-700 dark:text-slate-300">
-            Scannable project proof across technical implementation, QA, GIS, AI systems, and
-            workflow design.
+            Data-intensive systems turning spatial and operational problems into validated, usable
+            workflows.
           </p>
           <p className="text-sm text-slate-600 dark:text-slate-300">
-            Start with Guynode and the Digital Twin for the strongest system-level proof, then use
-            the project library to inspect supporting workflows, validation methods, and
-            implementation decisions.
+            Start with HPS Geospatial for connected GIS design, spatial artifacts, reliability, and
+            validation. Guynode shows a distinct public spatial data hub; use the other entries to
+            inspect implementation and governance in different settings.
           </p>
         </header>
 
@@ -92,7 +92,7 @@ const ProjectsIndexView: React.FC = () => {
                 to={project.href}
                 className={`rounded-xl border p-6 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua transition-colors duration-300 ${
                   project.flagship
-                    ? 'border-gild/40 bg-gild/5 dark:bg-gild-deep/10'
+                    ? 'md:col-span-2 border-tide-aqua/50 bg-tide-aqua/5 dark:bg-tide-aqua/10'
                     : 'border-[#d8e8ee] bg-white dark:bg-slate-900'
                 }`}
               >

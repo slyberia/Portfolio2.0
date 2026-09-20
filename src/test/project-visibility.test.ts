@@ -17,6 +17,7 @@ const nonPublicIds = PROJECT_METADATA.filter(
 
 describe('project visibility', () => {
   it('public projects default to visible', () => {
+    expect(isProjectPublic('hps-geospatial')).toBe(true);
     expect(isProjectPublic('guynode')).toBe(true);
     expect(isProjectPublic('digital-twin')).toBe(true);
   });

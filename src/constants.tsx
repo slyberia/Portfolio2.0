@@ -423,7 +423,7 @@ export const SKILL_CHIP_CONFIG: Record<string, SkillChipConfig> = {
 export const PROJECT_REGISTRY: ProjectEntry[] = [
   {
     id: 'hps-geospatial',
-    title: 'HPS Geospatial',
+    title: 'HPS Geospatial Platform',
     rationale:
       'Evolved the Hydrographic Poster Generator into a connected geospatial production and validation workflow: country-aware artifacts, Studio handoff, provenance, Recovery, and explicit coverage audits.',
     category: 'qa-data',

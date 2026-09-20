@@ -1,4 +1,4 @@
-import { GUYNODE_SYSTEM_HREF } from '../lib/routes';
+import { GUYNODE_SYSTEM_HREF, HPS_GEOSPATIAL_HREF } from '../lib/routes';
 
 export type TrackAccent = 'implementation' | 'qa' | 'gis';
 
@@ -121,6 +121,14 @@ export const implementationTrackContent: TrackPageContent = {
   ],
   supportingEvidence: [
     {
+      title: 'HPS Geospatial Platform',
+      relevance:
+        'Cross-system delivery: country artifacts, a five-minute handoff, provenance and Recovery, with a 33/33 local browser matrix and explicit failure states.',
+      proofType: 'Local workflow validation',
+      href: HPS_GEOSPATIAL_HREF,
+      roleChips: ['Forward Deployed Engineer'],
+    },
+    {
       title: 'Luxe Lofts Ecosystem',
       relevance:
         'Flagship implementation proof: proposal-phase discovery, modular delivery planning, and a stakeholder-ready prototype built for handoff.',
@@ -228,6 +236,14 @@ export const opsAnalyticsTrackContent: TrackPageContent = {
     },
   ],
   supportingEvidence: [
+    {
+      title: 'HPS Geospatial Platform',
+      relevance:
+        'Validation and controls: 17 browser regressions resolved, explicit coverage states and a closeout audit; local workflow checks do not establish production deployment.',
+      proofType: 'Audit & local tests',
+      href: HPS_GEOSPATIAL_HREF,
+      roleChips: ['Implementation Consultant'],
+    },
     {
       title: 'Systems at Scale: Triage & QA',
       relevance:
@@ -338,6 +354,14 @@ export const gisTrackContent: TrackPageContent = {
     },
   ],
   supportingEvidence: [
+    {
+      title: 'HPS Geospatial Platform',
+      relevance:
+        'Country-aware spatial artifacts, provenance, georeferencing and an audit of 26 country entries; Belize coverage remained partial.',
+      proofType: 'Geospatial system',
+      href: HPS_GEOSPATIAL_HREF,
+      roleChips: ['Spatial Systems Architect'],
+    },
     {
       title: 'Guynode Spatial Data Hub',
       relevance:

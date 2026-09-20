@@ -7,7 +7,9 @@ Kyle Semple is a **Forward Deployed Engineer · Technical Systems Translator**. 
 
 Role-relevance lenses (Forward Deployed Engineer, Implementation Consultant, Spatial Systems Architect, AI Workflow / Portfolio Governance) are supporting metadata on a single thesis — not separate identities.
 
-Portfolio 2.0 (the governed AI build pipeline behind this site) demonstrates both build governance — AI-assisted delivery under a one-subphase protocol, CI gates, drift-guards, and an attribution ledger — and positioning/evidence architecture: the portfolio's own copy and case-study structure treated as a product system to make capability and judgment easier to recognize.
+Portfolio 2.0 (the governed AI build pipeline behind this site) demonstrates both build governance — AI-assisted delivery under a bounded work-batch protocol, CI gates, drift-guards, and an attribution ledger — and positioning/evidence architecture: the portfolio's own copy and case-study structure treated as a product system to make capability and judgment easier to recognize.
+
+The HPS Geospatial Platform leads the project evidence. Its GIS design portal connects country-aware spatial artifacts, poster production, georeferencing, provenance, and coverage audits. The retained end-to-end verification was local and synthetic; publication deployment and live-database behavior are not established by those checks. Guynode is a distinct spatial data hub.
 
 ## Static discovery pages
 - /ai-index
@@ -22,6 +24,7 @@ Portfolio 2.0 (the governed AI build pipeline behind this site) demonstrates bot
 - /markdown/tracks/forward-deployed.md
 - /markdown/tracks/solutions-architect.md
 - /markdown/tracks/spatial-systems.md
+- /markdown/projects/hps-geospatial.md
 - /markdown/projects/guynode.md
 - /markdown/projects/digital-twin.md
 - /markdown/process.md
@@ -32,6 +35,7 @@ Portfolio 2.0 (the governed AI build pipeline behind this site) demonstrates bot
 - /tracks/solutions-architect
 - /tracks/spatial-systems
 - /projects
+- /projects/hps-geospatial
 - /projects/guynode
 - /projects/digital-twin
 - /projects/ops-triage
@@ -49,6 +53,7 @@ Portfolio 2.0 (the governed AI build pipeline behind this site) demonstrates bot
 - /crawler/tracks/solutions-architect
 - /crawler/tracks/spatial-systems
 - /crawler/projects
+- /crawler/projects/hps-geospatial
 - /crawler/projects/guynode
 - /crawler/projects/digital-twin
 - /crawler/projects/ops-triage

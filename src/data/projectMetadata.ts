@@ -85,12 +85,12 @@ export const PROJECT_FILTERS: Array<'All' | ProjectFilter> = [
 export const PROJECT_METADATA: ProjectMetadata[] = [
   {
     id: 'hps-geospatial',
-    displayTitle: 'HPS Geospatial',
+    displayTitle: 'HPS Geospatial Platform',
     shortSummary:
-      'A connected geospatial production and validation workflow for country-aware artifacts, poster handoff, provenance, Recovery, and coverage audits.',
+      'A GIS design portal connecting country-aware spatial artifacts, poster production, georeferencing, provenance, and coverage audits.',
     hierarchy: 'featured',
-    featuredLabel: 'GEOSPATIAL SYSTEM · DRAFT',
-    statusLabel: 'Direct-link draft',
+    featuredLabel: 'FLAGSHIP GEOSPATIAL SYSTEM',
+    statusLabel: 'Implemented · local workflow validation',
     roleLanes: ['GIS', 'Implementation', 'QA'],
     canonicalRoleLanes: [
       'Forward Deployed Engineer',
@@ -98,16 +98,19 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
       'Implementation Consultant',
     ],
     filters: ['GIS', 'Implementation', 'QA', 'Process'],
-    proofType: 'Local tests, audit & benchmark',
+    proofType: 'System · local validation',
     purpose:
       'Connect spatial artifact preparation, poster transfer, georeferencing, and validation while keeping country coverage and failure states visible.',
     stakeholderValue:
       'Operators can inspect provenance, coverage, and transfer status before using a recovered spatial output; the retained evidence covers local integration and documented checks.',
     accent: 'cyan',
-    sortOrder: 10,
+    sortOrder: 1,
     href: buildProjectHref('hps-geospatial'),
     evidenceTier: 'primary',
-    visibility: 'draft',
+    visibility: 'public',
+    flagship: true,
+    showInSwitcher: true,
+    switcherRank: 0,
     caseStudyRoute: '/projects/hps-geospatial',
   },
   {
@@ -116,7 +119,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     shortSummary:
       "A redesigned public hub that makes Guyana's geospatial data easy to find, preview, and trust — built on solid dataset governance and clean, consistent metadata.",
     hierarchy: 'featured',
-    featuredLabel: 'FLAGSHIP GIS SYSTEM',
+    featuredLabel: 'FEATURED SPATIAL DATA HUB',
     statusLabel: 'Featured System',
     roleLanes: ['GIS', 'Implementation', 'QA'],
     canonicalRoleLanes: [
@@ -131,10 +134,9 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     stakeholderValue:
       'Analysts and public users get governed, metadata-complete layers they can rely on — geospatial data governance and public-facing information architecture put integrity checks upstream, not in every downstream decision.',
     accent: 'gold',
-    sortOrder: 1,
+    sortOrder: 2,
     href: buildProjectHref('guynode'),
     evidenceTier: 'primary',
-    flagship: true,
     showInSwitcher: true,
     switcherRank: 1,
     caseStudyRoute: '/projects/guynode',
@@ -162,7 +164,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     stakeholderValue:
       "Visitors get fast, grounded answers about Kyle's work; scoped retrieval and clear handoff boundaries keep responses on-evidence and route to a human when a question runs past them — scoped-AI implementation with governance built in.",
     accent: 'aqua',
-    sortOrder: 2,
+    sortOrder: 3,
     href: buildProjectHref('digital-twin'),
     evidenceTier: 'secondary',
     showInSwitcher: true,
@@ -187,7 +189,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     stakeholderValue:
       'Support leads and downstream teams get predictable triage, clear escalation paths, and an audit trail they can actually review — operational systems and QA-workflow design that holds quality under production pressure.',
     accent: 'blue',
-    sortOrder: 3,
+    sortOrder: 4,
     href: buildProjectHref('ops-triage'),
     evidenceTier: 'supporting',
     showInSwitcher: true,
@@ -210,7 +212,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     stakeholderValue:
       'Anyone running AI agents against a real system gets output that must pass an explicit check, a readable audit trail in Notion, and a safe path from human review toward automation.',
     accent: 'aqua',
-    sortOrder: 4,
+    sortOrder: 5,
     href: buildProjectHref('project-aegis'),
     evidenceTier: 'secondary',
     showInSwitcher: true,
@@ -232,7 +234,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     stakeholderValue:
       'A reviewer can trust what shipped: every change clears the same CI gate, semantic drift-guards block silent regressions, and AI_ATTRIBUTION.md demarcates human direction from AI execution.',
     accent: 'aqua',
-    sortOrder: 5,
+    sortOrder: 6,
     href: buildProjectHref('portfolio-pipeline'),
     evidenceTier: 'supporting',
     showInSwitcher: true,
@@ -254,7 +256,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     stakeholderValue:
       'A non-technical client can see how their requirements and constraints map to delivery phases — and price the work — before committing budget.',
     accent: 'slate',
-    sortOrder: 7,
+    sortOrder: 8,
     href: buildProjectHref('luxe-lofts'),
     evidenceTier: 'supporting',
     showInSwitcher: true,
@@ -276,7 +278,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     stakeholderValue:
       'The owner gets a break-even-aware system — where brand, menu graphics, and loyalty decisions reinforce each other — assembled in tooling (Canva) they can maintain and hand off without a designer or engineer.',
     accent: 'cyan',
-    sortOrder: 8,
+    sortOrder: 9,
     href: buildProjectHref('northern-grind'),
     evidenceTier: 'supporting',
     showInSwitcher: true,
@@ -302,7 +304,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     stakeholderValue:
       'Non-technical stakeholders could discuss platform and workflow decisions in plain language — what each tool was for, where it fit, and what would be easy or hard to adopt — instead of getting stuck on technical detail: public-sector GIS workflow translation and tool-fit judgment, framed as adoption-oriented support rather than full system ownership.',
     accent: 'blue',
-    sortOrder: 9,
+    sortOrder: 10,
     href: buildProjectHref('moh'),
     evidenceTier: 'supporting',
     showInSwitcher: true,
