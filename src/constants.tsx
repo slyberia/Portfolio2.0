@@ -816,7 +816,7 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
     id: 'portfolio-pipeline',
     title: 'Portfolio 2.0 — Governed AI Build Pipeline',
     rationale:
-      'Proves AI-assisted development can reach production-grade reliability when wrapped in human design authority, automated assertion gates, and a transparent attribution ledger.',
+      'Shows human-directed AI-assisted development with scoped batches, automated checks, an attribution trail, and post-launch reliability work.',
     category: 'ai-ops',
     tags: [
       'CI/CD',
@@ -833,7 +833,7 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
       type: 'html',
       label: 'Governed Build Pipeline — Flow & Toolchain',
       description:
-        'Sanitized overview of this repo’s build governance: Author → subphase protocol → CI gates → crawler/drift guards → Cloud Run, with the multi-LLM toolchain side rail. No secrets or credentials.',
+        'Sanitized overview of this repo’s build governance: author → bounded batch → CI gates → crawler/drift guards → Cloud Run, with the multi-LLM toolchain side rail. No secrets or credentials.',
       content: PORTFOLIO_PIPELINE_HTML,
     },
     rigor: {
@@ -842,9 +842,9 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
       baseline:
         'Ungoverned "vibe coding" produces fast, localized output that is brittle, hard to review, prone to regression, and impossible to attribute.',
       definition:
-        'Every change clears typecheck, lint, format, tests, build, secret-scan, and semantic drift guards before merge; each subphase is independently validated and forensically attributed.',
+        'The applicable validation suite runs at the batch boundary before a draft PR; CI checks the submitted branch, and an attribution ledger records human direction and AI work.',
       method:
-        'A one-subphase sequential execution protocol plus a multi-LLM toolchain operating under human design authority, behind an immutable CI gate and an AI attribution ledger.',
+        'Bounded work batches and reviewable commits under human design authority, with CI checks and an AI attribution ledger.',
       window: '2025–2026, across build Phases 1–7.',
     },
     constraints: [
@@ -852,7 +852,7 @@ export const PROJECT_REGISTRY: ProjectEntry[] = [
         problem:
           'An AI agent can generate massive, unreviewable changes that overwhelm human oversight.',
         tradeoff:
-          'The one-subphase protocol intentionally bottlenecks velocity, capping the blast radius so every diff stays digestible and reviewable.',
+          'Batch scope and reviewable commits bound the change, while one full applicable suite at the batch boundary limits repeated validation overhead.',
       },
       {
         problem: 'Letting an agent orchestrate the build risks leaking secrets into the bundle.',

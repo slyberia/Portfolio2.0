@@ -17,6 +17,9 @@ const REQUIRED_ROUTES = [
   '/projects/project-aegis',
   '/projects/portfolio-pipeline',
   '/projects/luxe-lofts',
+  '/projects/northern-grind',
+  '/projects/moh',
+  '/gallery',
   '/deep-dives',
   '/deep-dives?tab=process',
   '/deep-dives?tab=luxe-lofts',
@@ -160,6 +163,13 @@ function validateSitemaps() {
   if (sitemap.includes('/crawler/')) fail('public/sitemap.xml must not list crawler routes');
 
   const crawlerSitemap = readFileSync(resolve(ROOT, 'public', 'crawler-sitemap.xml'), 'utf8');
+  const canonicalProjectRoutes = [
+    ...sitemap.matchAll(/<loc>https?:\/\/[^<]+(\/projects\/[^<]+)<\/loc>/g),
+  ].map((match) => match[1]);
+  for (const route of canonicalProjectRoutes) {
+    if (!REQUIRED_ROUTES.includes(route))
+      fail(`Crawler route inventory missing public project: ${route}`);
+  }
   for (const route of REQUIRED_ROUTES) {
     const crawlerRoute = route === '/' ? '/crawler/' : `/crawler${mirrorPathForRoute(route)}`;
     if (!crawlerSitemap.includes(crawlerRoute)) {

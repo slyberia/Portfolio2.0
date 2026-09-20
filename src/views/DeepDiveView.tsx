@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import {
   DIGITAL_TWIN_PROJECT_HREF,
   GUYNODE_SYSTEM_HREF,
@@ -623,7 +623,7 @@ const PROCESS_CARD_DETAILS: Record<string, { headline: string; body: string }> =
   },
   'Build Phases': {
     headline: 'Five-plus phases, each validated before advancing',
-    body: 'No phase began until the previous one passed typecheck, lint, build, and a manual review gate. This sequential discipline prevented accumulated drift — a common failure mode in AI-assisted builds where unreviewed changes compound. Phase completion = zero validation errors + committed evidence ledger entry.',
+    body: 'Earlier phases used sequential validation and manual review. The current bounded-batch protocol permits related slices in reviewable commits, with focused checks during implementation and the full applicable suite before a draft PR. Merge and publication remain human decisions.',
   },
   Routes: {
     headline: 'Ten-plus canonical routes, zero naming drift',
@@ -883,6 +883,7 @@ const DeepDiveBridge: React.FC<{
 };
 
 const DeepDiveView: React.FC = () => {
+  const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const tabParam = searchParams.get('tab');
 
@@ -910,6 +911,14 @@ const DeepDiveView: React.FC = () => {
     const resolved = resolveTabParam(tabParam);
     if (resolved) setActiveMainTab(resolved);
   }, [tabParam]);
+
+  React.useEffect(() => {
+    if (!location.hash || resolveTabParam(tabParam) !== activeMainTab) return;
+    const frame = requestAnimationFrame(() => {
+      document.getElementById(location.hash.slice(1))?.scrollIntoView();
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [activeMainTab, location.hash, tabParam]);
 
   const handleMainTabChange = (tab: MainTab) => {
     setActiveMainTab(tab);

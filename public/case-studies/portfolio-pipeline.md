@@ -12,9 +12,9 @@
 >
 > **Tools:** TypeScript, Vite, Vitest, Docker, Google Cloud Run, GitHub Actions, multi-LLM toolchain
 >
-> **Outcome:** Built and runs the governed, multi-LLM pipeline behind this site — AI-assisted development held to production-grade reliability by a one-subphase protocol, an uncompromising CI gate, semantic drift-guards, and a transparent attribution ledger.
+> **Outcome:** Built the governed build workflow behind this site: bounded work batches, reviewable commits, automated checks, crawler guards, and an attribution ledger. Post-launch work added explicit chatbot failure handling and deployment configuration fixes.
 >
-> **Relevance:** Shows AI-assisted development can be production-grade when it stays under human design authority and automated assertion gates — not "vibe coding."
+> **Relevance:** Shows human-directed implementation, validation, and failure handling across frontend, backend, and deployment configuration.
 
 ---
 
@@ -36,13 +36,13 @@ in scope, gated by automated CI, and tracked through an auditable attribution le
 
 **At a glance:** 50+ PRs merged · 6 AI tools orchestrated · 7 build phases · 10+ canonical routes.
 
-## Governance protocol — the safety brake
+## Governance protocol — bounded work batches
 
-The architecture runs on a **Sequential Execution Protocol** (defined in `CLAUDE.md`). AI agents work
-**one subphase at a time**: complete a single scoped change, run the full local validation suite,
-commit with a precise subphase identifier, then **STOP and wait for explicit human approval**. This is
-the critical human-in-the-loop brake — it prevents runaway blast radius and keeps every diff small
-enough for a human to actually review.
+The current protocol in `CLAUDE.md` defines a batch goal, sources, scope, acceptance criteria, and
+exclusions. Related subphases can be completed within that boundary, with coherent reviewable commits
+and focused checks along the way. The full applicable validation suite runs at the batch boundary
+before a draft PR. Human review still controls merging and publishing. Earlier phases used a
+one-subphase approval gate; that historical practice is no longer the current process.
 
 ## The multi-LLM toolchain
 
@@ -60,7 +60,7 @@ across all of them:
 _(Repomix acts as the context-bundling middleware, feeding up-to-date repository state into the model
 context window via `sync:architect`.)_
 
-## The CI gate — an uncompromising gatekeeper
+## The CI gate
 
 On every push and pull request, `.github/workflows/ci.yml` enforces an unbroken chain: `npm ci` →
 **lint (zero warnings) → format check → typecheck → Vitest → production build → gitleaks secret-scan →
@@ -87,10 +87,22 @@ A multi-stage Docker build (`node:20-alpine`) compiles the Vite frontend and Exp
 dev dependencies, drops the runtime to a **non-root `appuser`**, and ships the secured container to
 **Google Cloud Run** on port `8080`.
 
+## Post-launch engineering practice
+
+The site continued to change after its original launch. I added distinct chatbot responses for
+rate limits, rejected origins, missing configuration, oversized input, and backend outages, with a
+troubleshooting guide for diagnosis. Deployment work included origin handling for deployed hosts,
+production Docker configuration for the chatbot, dependency consolidation, and a Cloud Build
+custom-service-account logging fix using `CLOUD_LOGGING_ONLY`.
+
+These are implemented code and configuration changes. The repository and local checks establish the
+implementation; the available evidence does not establish that each change was exercised on the live
+deployment. No latency, availability, or incident-reduction result is claimed.
+
 ## Constraints & trade-offs
 
-- **AI speed vs. review burden** → the one-subphase protocol intentionally bottlenecks velocity so
-  every diff stays digestible and safe to review.
+- **AI speed vs. review burden** → bounded batches reduce repeated approval and full-suite cycles;
+  scoped commits and a batch-end validation gate keep the result reviewable.
 - **Secret-leak risk** → keys are stripped from the client and served only via a server-side proxy,
   enforced by the CI key-audit + gitleaks.
 - **Supply-chain risk** → all CI actions pinned to immutable commit SHAs.
@@ -125,11 +137,11 @@ stakeholder value easier to recognize.
 
 **Who it helps:** anyone evaluating whether AI-assisted work can be trusted in a real codebase.
 
-**What got easier:** reviewers don't have to take the build on faith — every change clears the same
-gate, drift-guards block silent regressions, and the attribution ledger shows exactly who did what.
+**What got easier:** reviewers can inspect scoped commits, validation checks, failure-state handling,
+and the attribution ledger rather than taking the build process on faith.
 
-**Why it matters:** it reframes AI from an unpredictable collaborator into governed tooling with a
-documented, reproducible, auditable trail — production-grade by construction.
+**Why it matters:** the process records human direction, AI-assisted execution, and checks alongside
+the engineering changes, while keeping local validation distinct from live behavior.
 
 ---
 

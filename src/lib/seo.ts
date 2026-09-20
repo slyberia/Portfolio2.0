@@ -55,7 +55,10 @@ const sharedProjectJsonLd = PROJECT_METADATA.filter(
   creator: { '@type': 'Person', name: 'Kyle Semple' },
 }));
 
-export const getSeoForPath = (pathname: string): RouteSeo => {
+const projectMarkdownIds = new Set(['hps-geospatial', 'guynode', 'digital-twin']);
+const indexedDeepDiveTabs = new Set(['process', 'luxe-lofts', 'northern-grind', 'moh', 'guynode']);
+
+export const getSeoForPath = (pathname: string, search = ''): RouteSeo => {
   const defaults: RouteSeo = {
     title: 'Kyle Semple — Forward Deployed Engineer · Technical Systems Translator',
     description:
@@ -121,6 +124,19 @@ export const getSeoForPath = (pathname: string): RouteSeo => {
       markdownPath: '/markdown/index.md',
       jsonLd: sharedProjectJsonLd,
     },
+    '/gallery': {
+      title: 'Evidence Library — Kyle Semple Portfolio',
+      description: 'Visual project artifacts and design evidence with context and provenance.',
+      canonicalPath: '/gallery',
+      jsonLd: [
+        {
+          '@context': 'https://schema.org',
+          '@type': 'CollectionPage',
+          name: 'Evidence Library',
+          url: `${SITE_BASE_URL}/gallery`,
+        },
+      ],
+    },
     '/deep-dives': {
       title: 'Deep Dives | Portfolio 3.0',
       description:
@@ -183,6 +199,21 @@ export const getSeoForPath = (pathname: string): RouteSeo => {
     },
   };
 
+  if (pathname === '/deep-dives') {
+    const requestedTab = new URLSearchParams(search).get('tab');
+    const tab = requestedTab === 'automation' ? 'process' : requestedTab;
+    if (tab && indexedDeepDiveTabs.has(tab)) {
+      const canonicalPath = `/deep-dives?tab=${tab}`;
+      return {
+        ...staticRoutes[pathname],
+        canonicalPath,
+        jsonLd: staticRoutes[pathname].jsonLd.map((entry) => ({
+          ...entry,
+          url: `${SITE_BASE_URL}${canonicalPath}`,
+        })),
+      };
+    }
+  }
   if (staticRoutes[pathname]) return staticRoutes[pathname];
   if (pathname.startsWith('/projects/')) {
     const projectId = pathname.split('/')[2] ?? '';
@@ -213,7 +244,9 @@ export const getSeoForPath = (pathname: string): RouteSeo => {
         title: `${project.displayTitle} — Portfolio Project`,
         description: project.shortSummary,
         canonicalPath: project.href,
-        markdownPath: `/markdown/projects/${project.id}.md`,
+        markdownPath: projectMarkdownIds.has(project.id)
+          ? `/markdown/projects/${project.id}.md`
+          : undefined,
         jsonLd: [
           {
             '@context': 'https://schema.org',

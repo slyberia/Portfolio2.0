@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   GIS_TRACK_HREF,
   GUYNODE_SYSTEM_HREF,
+  HPS_GEOSPATIAL_HREF,
   IMPLEMENTATION_TRACK_HREF,
   DEEP_DIVES_HREF,
   QA_TRACK_HREF,
@@ -44,32 +45,32 @@ const processDeepDives = [
   {
     title: 'Release Ladder',
     description: 'See the phased evolution and release logic of Portfolio2.0.',
-    href: '/deep-dives#build-timeline',
+    href: '/deep-dives?tab=process#proc-2',
   },
   {
     title: 'Decision Blocks',
     description: 'Review architecture and product decisions with tradeoffs and outcomes.',
-    href: '/deep-dives#projects-architecture',
+    href: '/deep-dives?tab=process#proc-5',
   },
   {
     title: 'Architecture & QA',
     description: 'Inspect routing, testing boundaries, and reliability safeguards.',
-    href: '/deep-dives#validation-trail',
+    href: '/deep-dives?tab=process#proc-6',
   },
   {
     title: 'LLM Governance',
     description: 'Understand human review loops, constraints, and AI-use guardrails.',
-    href: '/deep-dives#digital-twin-governance',
+    href: '/deep-dives?tab=process#proc-3',
   },
   {
     title: 'Revision Trail',
     description: 'Trace major revisions and what ambiguity each change resolved.',
-    href: '/deep-dives#evidence-ledger',
+    href: '/deep-dives?tab=process#proc-2',
   },
   {
     title: 'Supporting Artifacts',
     description: 'Open supporting documents and linked proof assets.',
-    href: '/deep-dives#remaining-release-hardening',
+    href: '/deep-dives?tab=process#proc-6',
   },
 ];
 
@@ -243,16 +244,16 @@ const SiteIndexView: React.FC = () => {
           </h2>
           <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
             {processDeepDives.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
+              <Link
+                key={item.title}
+                to={item.href}
                 className="rounded-xl border border-[#d8e8ee] dark:border-white/10 bg-[#f8fbfd] dark:bg-slate-900 p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua"
               >
                 <h3 className="font-semibold text-navy-900 dark:text-white">{item.title}</h3>
                 <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
                   {item.description}
                 </p>
-              </a>
+              </Link>
             ))}
           </div>
         </section>
@@ -314,8 +315,8 @@ const SiteIndexView: React.FC = () => {
                   Forward Deployed Track
                 </Link>{' '}
                 →{' '}
-                <Link to={GUYNODE_SYSTEM_HREF} className="underline">
-                  Guynode
+                <Link to={HPS_GEOSPATIAL_HREF} className="underline">
+                  HPS Geospatial
                 </Link>{' '}
                 →{' '}
                 <Link to={buildProjectHref('digital-twin')} className="underline">
@@ -354,6 +355,10 @@ const SiteIndexView: React.FC = () => {
                   Spatial Systems Track
                 </Link>{' '}
                 →{' '}
+                <Link to={HPS_GEOSPATIAL_HREF} className="underline">
+                  HPS Geospatial
+                </Link>{' '}
+                →{' '}
                 <Link to={GUYNODE_SYSTEM_HREF} className="underline">
                   Guynode
                 </Link>{' '}
@@ -372,21 +377,21 @@ const SiteIndexView: React.FC = () => {
                 I want to inspect the build process
               </h3>
               <p className="mt-2">
-                <Link to={DEEP_DIVES_HREF} className="underline">
+                <Link to={`${DEEP_DIVES_HREF}?tab=process`} className="underline">
                   Process
                 </Link>{' '}
                 →{' '}
-                <a href="/deep-dives#decision-blocks" className="underline">
+                <Link to="/deep-dives?tab=process#proc-5" className="underline">
                   Decision Blocks
-                </a>{' '}
+                </Link>{' '}
                 →{' '}
-                <a href="/deep-dives#architecture-boundary" className="underline">
+                <Link to="/deep-dives?tab=process#proc-6" className="underline">
                   Architecture & QA
-                </a>{' '}
+                </Link>{' '}
                 →{' '}
-                <a href="/deep-dives#multi-llm-governance" className="underline">
+                <Link to="/deep-dives?tab=process#proc-3" className="underline">
                   LLM Governance
-                </a>
+                </Link>
               </p>
             </div>
           </div>

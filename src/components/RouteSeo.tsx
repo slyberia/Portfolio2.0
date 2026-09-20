@@ -25,7 +25,7 @@ const RouteSeo: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const seo = getSeoForPath(location.pathname);
+    const seo = getSeoForPath(location.pathname, location.search);
     document.title = seo.title;
     upsertMeta('meta[name="description"]', { name: 'description', content: seo.description });
     upsertMeta('meta[property="og:title"]', { property: 'og:title', content: seo.title });
@@ -46,6 +46,7 @@ const RouteSeo: React.FC = () => {
     upsertLink('alternate', '/llms.txt');
     upsertLink('bookmark', '/ai-index');
     if (seo.markdownPath) upsertLink('shortlink', seo.markdownPath);
+    else document.head.querySelector('link[rel="shortlink"]')?.remove();
 
     document.querySelectorAll('script[data-route-jsonld="true"]').forEach((n) => n.remove());
     seo.jsonLd.forEach((schema) => {
@@ -55,7 +56,7 @@ const RouteSeo: React.FC = () => {
       script.textContent = JSON.stringify(schema);
       document.head.appendChild(script);
     });
-  }, [location.pathname]);
+  }, [location.pathname, location.search]);
 
   return null;
 };
