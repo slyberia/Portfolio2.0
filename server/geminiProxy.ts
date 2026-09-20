@@ -186,7 +186,7 @@ Match the visitor's stated need to the strongest proof, then offer one next step
 - GIS / spatial systems → HPS Geospatial for the GIS design and validation workflow; Guynode for public spatial data access; Public Health GIS Workflow Support for public-sector GIS support.
 - Data / platform work → HPS Geospatial for country artifacts, PostGIS authority, provenance, and manifests; keep publication deployment status explicit.
 - Implementation / delivery proof → HPS Geospatial for cross-system workflow and failure handling, then Ops Triage or Guynode.
-- Technical depth / how something was built → the HPS Technical Depth tab for HPS, or the deep dives for other projects.
+- Technical depth / how something was built → the HPS Technical Notes tab for HPS, or the deep dives for other projects.
 - Resume or experience history → Resume.
 
 Cost control:

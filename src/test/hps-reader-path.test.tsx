@@ -37,10 +37,16 @@ describe('HPS reader paths', () => {
     await waitFor(() =>
       expect(screen.getByText(/The workflow validation was/)).toBeInTheDocument(),
     );
+    expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
+    expect(screen.getByRole('link', { name: /Visit the GIS design portal/ })).toHaveAttribute(
+      'href',
+      'https://hydro-frontend-786228485832.us-central1.run.app/',
+    );
+    expect(screen.getByRole('heading', { name: 'Evidence by status' })).toBeInTheDocument();
     expect(screen.queryByText(/five-minute, single-use IndexedDB handoff/)).not.toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Open technical notes →' }));
 
-    expect(screen.getByRole('tab', { name: 'Technical Depth' })).toHaveAttribute(
+    expect(screen.getByRole('tab', { name: 'Technical Notes' })).toHaveAttribute(
       'aria-selected',
       'true',
     );

@@ -20,7 +20,7 @@
 
 ---
 
-## The Challenge: Legacy Fragmentation
+## The challenge: legacy fragmentation
 
 Geospatial data for the country of Guyana is difficult to locate, and typically scattered across fragmented legacy websites, with inconsistent formatting and metadata. Guynode was created as an answer to this issue, but its UI/UX design was in need of updating, as its visual appearance and inconsistencies diminished its value.
 
@@ -32,19 +32,19 @@ Geospatial data for the country of Guyana is difficult to locate, and typically 
 
 ---
 
-## Technical Implementation & Assets
+## Technical implementation and assets
 
-### 1. Architecture: Metadata-Driven Registry
+### Architecture: metadata-driven registry
 
 I implemented a **Type-Safe Dataset Registry** using TypeScript. The registry defines a metadata contract for provenance, format, and download availability across registered entries.
 
-### 2. Implementation: Map-Based Preview Workflow
+### Implementation: map-based previews
 
 To bridge the gap between "Raw Data" and "User Comprehension," I integrated a **Leaflet-based Preview Engine**. This allows users to inspect GeoJSON and spatial layers directly in the browser before committing to a download.
 
 ---
 
-## Impact & Results
+## Impact and results
 
 The redesigned prototype gives visitors a catalog and map-preview path for inspecting datasets before download. The available evidence establishes the implemented design and registry; it does not measure time-to-data, partner publishing, or public adoption.
 
@@ -61,7 +61,7 @@ The redesigned prototype gives visitors a catalog and map-preview path for inspe
 
 ---
 
-## 🤝 Customer / Stakeholder Value
+## Stakeholder value
 
 **Who it is designed for:** Agencies publishing Guyana's spatial data, and analysts and citizens looking for it.
 
@@ -71,7 +71,7 @@ The redesigned prototype gives visitors a catalog and map-preview path for inspe
 
 ---
 
-## Key Artifact: The Dataset Governance Schema
+## Key artifact: dataset governance schema
 
 _The core of the system is the strict metadata contract for every spatial node._
 

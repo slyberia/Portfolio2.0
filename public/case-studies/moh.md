@@ -16,7 +16,7 @@
 
 ---
 
-## Executive Summary
+## Executive summary
 
 This project supported a contact-tracing and public-health GIS workflow for **a national Ministry of Health**, delivered within a geospatial services engagement. The contribution spanned dashboard planning, UI/UX review, documentation, pitch materials, and technical implementation guidance.
 
@@ -30,7 +30,7 @@ The core thesis: **public-health GIS workflows succeed when data collection, rep
 
 ---
 
-## The Challenge
+## The challenge
 
 The project involved a complex public-health contact-tracing workflow where patients and persons of interest needed to be tracked, reviewed, and communicated through a combination of GIS tools, dashboards, database-backed workflows, and stakeholder-facing materials.
 
@@ -40,7 +40,7 @@ The challenge was not only technical. The system also had to be understandable f
 
 ---
 
-## Technical Implementation & Assets
+## Technical implementation and assets
 
 Because this is public-sector, health-adjacent work, the portfolio uses **sanitized, reconstructed artifacts** rather than real screenshots or operational records. The interactive **System Explorer** on this project's architecture view walks through both the sanitized architecture (intake → GIS services → feature layers → dashboards → stakeholder portal) and the operational workflow (submit → store → review → update → act → document).
 
@@ -54,7 +54,7 @@ Concrete contributions included:
 - **AI-workflow guidance** covering effective prompting, Codex, Claude Code, and iterative troubleshooting strategies.
 - **Tool evaluation**, including assessing a low-code interface layer and recommending a pivot away from it due to operational constraints and client aversion.
 
-### Implementation Audit Matrix
+### Implementation audit matrix
 
 A sanitized view of how platform options were weighed against usability, maintainability, and stakeholder adoption — consulting judgment, not just interface design.
 
@@ -68,7 +68,7 @@ A sanitized view of how platform options were weighed against usability, maintai
 
 ---
 
-## 🤝 Customer / Stakeholder Value
+## Stakeholder value
 
 **Who it helps:** The public-health team standing up the contact-tracing workflow — and the non-technical and semi-technical stakeholders who had to understand, decide on, and adopt the tools.
 
@@ -78,7 +78,7 @@ A sanitized view of how platform options were weighed against usability, maintai
 
 ---
 
-## Governance & Public-Sector Considerations
+## Governance and public-sector considerations
 
 This work required public-sector caution around confidentiality, data sensitivity, and role boundaries:
 

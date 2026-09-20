@@ -14,32 +14,32 @@
 >
 > **Relevance:** Scoped AI implementation — prompt governance, guardrails, and human handoff, not an open-ended chatbot.
 
-> **"An AI assistant without guardrails is a liability. The Digital Twin is engineered to provide precise, low-latency proof retrieval with built-in safety and cost controls."**
+> **The Digital Twin is scoped to portfolio questions and has explicit failure and handoff paths. Response speed and visitor outcomes have not been measured here.**
 
 ---
 
-## The Challenge: Recruiter Information Friction
+## The challenge: recruiter information friction
 
 Recruiters skim fast and rarely have time to dig. Standard search bars often fail to surface the specific "Proof of Work" needed for a role match.
 
 - **The Gap:** Visitors ask complex questions ("How did Kyle handle the Luxe Lofts audit?") that standard filters cannot answer.
 - **The Risk:** Unrestricted LLMs can hallucinate experience or incur excessive API costs on off-topic requests.
 
-**The Goal:** Build an AI-driven retrieval engine that autonomously routes visitors to relevant proof while strictly adhering to **Operational Guardrails**.
+**The goal:** Help visitors find relevant portfolio evidence while applying request limits, scope checks, and a human handoff.
 
 ---
 
-## Technical Implementation & Assets
+## Technical implementation and assets
 
-### 1. Architecture: The Relevance Gate
+### Architecture: the relevance gate
 
 I engineered a **Multi-Stage Triage Flow** that intercepts requests before they hit the LLM. If a request is identified as out-of-scope or "expensive," it is deflected to a static response, preserving API quota for high-intent recruiters.
 
-### 2. Operational Control: The Command Parser
+### Operational control: the command parser
 
 The agent is not just a "chatbot"; it is an **Operational Orchestrator**. It can trigger UI commands (e.g., `TRIGGER_RESUME_DOWNLOAD`) by generating structured JSON hidden from the user, bridging the gap between chat and site action.
 
-### 3. Sibling Agent: The Appellate Defense Node
+### Related agent: the Appellate Defense Node
 
 The same scoped-agent discipline that governs the Digital Twin powers a second AI agent in this portfolio's build pipeline — the **Appellate Defense Node** (`npm run defense:codex`). When an automated peer review flags issues in a change, the Defense Node reads that report and, for **every** critique, returns a deterministic verdict — **Concede** or **Defend** — with a technical rationale: which exact file and line to fix, or which architectural invariant makes the current code the safer choice.
 
@@ -47,7 +47,7 @@ It is a study in the same principle: a narrow purpose, a strict output schema, a
 
 ---
 
-## Impact & Results
+## Impact and results
 
 - **Scoped Retrieval Guardrails:** Scope guardrails are designed to keep answers grounded in portfolio evidence — the system refuses or redirects off-topic prompts, reducing hallucination risk through scoped retrieval and clear handoff boundaries.
 - **Escalation Path:** Integrated a **Human Handoff** flow that captures the conversation state and routes it to a contact form if the AI cannot resolve the query.
@@ -55,7 +55,7 @@ It is a study in the same principle: a narrow purpose, a strict output schema, a
 
 ---
 
-## 🤝 Customer / Stakeholder Value
+## Stakeholder value
 
 **Who it helps:** Recruiters and hiring managers evaluating Kyle under time pressure — and Kyle himself, when a conversation needs a human.
 
@@ -65,12 +65,12 @@ It is a study in the same principle: a narrow purpose, a strict output schema, a
 
 ---
 
-## Key Artifact: The Failure Mode Matrix
+## Key artifact: failure mode matrix
 
 _Proving that every failure path is planned for._
 
-| Failure Mode    | Detection       | Fallback               |
-| :-------------- | :-------------- | :--------------------- |
-| **Rate Limit**  | 429 Status      | Deflect to Resume Path |
-| **Injection**   | Regex Pattern   | Block & Warn           |
-| **Unsatisfied** | Sentiment Check | Trigger Human Handoff  |
+| Failure Mode       | Detection                              | Fallback               |
+| :----------------- | :------------------------------------- | :--------------------- |
+| **Rate Limit**     | 429 Status                             | Deflect to Resume Path |
+| **Injection**      | Regex Pattern                          | Block & Warn           |
+| **Needs a person** | Visitor request or unresolved question | Offer human handoff    |

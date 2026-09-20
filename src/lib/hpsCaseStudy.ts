@@ -1,5 +1,5 @@
 const TECHNICAL_DEPTH_HEADING = '\n## Technical depth\n';
-const STAKEHOLDER_HEADING = '\n## 🤝 Customer / Stakeholder Value\n';
+const STAKEHOLDER_HEADING = '\n## Stakeholder value\n';
 
 /** Keep the HPS narrative and optional notes in one canonical markdown source. */
 export const splitHpsCaseStudy = (content: string) => {
