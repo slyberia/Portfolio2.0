@@ -21,6 +21,7 @@ const REQUIRED_ROUTES = [
   '/projects/moh',
   '/gallery',
   '/deep-dives',
+  '/deep-dives?tab=hps-geospatial',
   '/deep-dives?tab=process',
   '/deep-dives?tab=luxe-lofts',
   '/deep-dives?tab=northern-grind',

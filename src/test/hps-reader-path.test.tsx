@@ -43,6 +43,9 @@ describe('HPS reader paths', () => {
       'https://hydro-frontend-786228485832.us-central1.run.app/',
     );
     expect(screen.getByRole('heading', { name: 'Evidence by status' })).toBeInTheDocument();
+    for (const link of screen.getAllByRole('link', { name: 'View HPS System Deep Dive' })) {
+      expect(link).toHaveAttribute('href', '/deep-dives?tab=hps-geospatial');
+    }
     expect(screen.queryByText(/five-minute, single-use IndexedDB handoff/)).not.toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Open technical notes →' }));
 

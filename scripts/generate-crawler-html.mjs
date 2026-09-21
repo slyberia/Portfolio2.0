@@ -18,7 +18,7 @@ const jsonLd = (obj) => `<script type="application/ld+json">${JSON.stringify(obj
 // is written to a path-safe nested folder (e.g. `/crawler/deep-dives/process`) because the
 // static file server (`express.static`) resolves by path and cannot disambiguate query strings.
 // Only the on-disk mirror nests the tab id; the indexed URL stays query-param. Future deep-dive
-// tabs (e.g. `moh`, `guynode`) should be added to the `routes` list below with the same
+// tabs (e.g. `hps-geospatial`, `moh`, `guynode`) should be added to the `routes` list below with the same
 // `/deep-dives?tab=<id>` form once their tabs exist at runtime.
 const mirrorPathForRoute = (route) => {
   const [routePath, query] = route.split('?');
@@ -188,10 +188,11 @@ const routes = [
   [
     '/deep-dives',
     'Deep Dives — Process, Governance & Strategy',
-    'Overview of the portfolio deep dives: the automation & governance architecture, the Luxe Lofts restructuring strategy, and the Northern Grind business-systems redesign.',
+    'Overview of the portfolio deep dives: HPS geospatial production and validation, automation and governance, and supporting systems strategy.',
     'Portfolio Deep Dives',
-    'Index of the long-form deep dives — automation & governance architecture (build pipeline + Aegis/emOS), the Luxe Lofts digital restructuring strategy, the Northern Grind business-systems redesign, the public health GIS workflow support engagement, and the Guynode spatial data hub governance deep dive. Each opens as a tab under /deep-dives.',
+    'Index of the long-form deep dives — HPS geospatial production and validation, automation and governance architecture, Luxe Lofts restructuring, Northern Grind business systems, public health GIS workflow support, and Guynode spatial data governance. Each opens as a tab under /deep-dives.',
     [
+      '/deep-dives?tab=hps-geospatial',
       '/deep-dives?tab=process',
       '/deep-dives?tab=luxe-lofts',
       '/deep-dives?tab=northern-grind',
@@ -199,6 +200,15 @@ const routes = [
       '/deep-dives?tab=guynode',
     ],
     '/markdown/process.md',
+  ],
+  [
+    '/deep-dives?tab=hps-geospatial',
+    'Deep Dive: HPS Geospatial Production & Validation',
+    'Architecture, operator workflow, artifact lineage, Recovery benchmarks, and explicit evidence boundaries for the HPS GIS design portal.',
+    'HPS Geospatial Production & Validation System',
+    'Deep dive into the HPS GIS design portal as a connected geospatial production and validation system: country-aware source processing, Studio-to-Georeferencer transfer, provenance, Recovery, GeoTIFF output, publication artifacts, and a formal coverage audit. End-to-end evidence is local and synthetic; full production behavior is not claimed.',
+    ['/projects/hps-geospatial', '/deep-dives', '/tracks/spatial-systems'],
+    '/markdown/deep-dives/hps-geospatial.md',
   ],
   [
     '/deep-dives?tab=process',

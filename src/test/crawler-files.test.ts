@@ -56,7 +56,14 @@ describe('crawler static assets', () => {
   });
 
   it('uses the indexed deep-dive tab as the canonical URL', () => {
-    for (const tab of ['process', 'luxe-lofts', 'northern-grind', 'moh', 'guynode']) {
+    for (const tab of [
+      'hps-geospatial',
+      'process',
+      'luxe-lofts',
+      'northern-grind',
+      'moh',
+      'guynode',
+    ]) {
       const seo = getSeoForPath('/deep-dives', `?tab=${tab}`);
       expect(seo.canonicalPath).toBe(`/deep-dives?tab=${tab}`);
       expect(seo.jsonLd[0].url).toBe(`${SITE_BASE_URL}/deep-dives?tab=${tab}`);
@@ -65,6 +72,9 @@ describe('crawler static assets', () => {
       '/deep-dives?tab=process',
     );
     expect(getSeoForPath('/deep-dives', '?tab=unknown').canonicalPath).toBe('/deep-dives');
+    expect(getSeoForPath('/deep-dives', '?tab=hps-geospatial').markdownPath).toBe(
+      '/markdown/deep-dives/hps-geospatial.md',
+    );
   });
 
   it('resolves every internal link in the static discovery indexes', () => {

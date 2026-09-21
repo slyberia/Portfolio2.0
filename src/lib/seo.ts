@@ -56,7 +56,14 @@ const sharedProjectJsonLd = PROJECT_METADATA.filter(
 }));
 
 const projectMarkdownIds = new Set(['hps-geospatial', 'guynode', 'digital-twin']);
-const indexedDeepDiveTabs = new Set(['process', 'luxe-lofts', 'northern-grind', 'moh', 'guynode']);
+const indexedDeepDiveTabs = new Set([
+  'hps-geospatial',
+  'process',
+  'luxe-lofts',
+  'northern-grind',
+  'moh',
+  'guynode',
+]);
 
 export const getSeoForPath = (pathname: string, search = ''): RouteSeo => {
   const defaults: RouteSeo = {
@@ -204,8 +211,17 @@ export const getSeoForPath = (pathname: string, search = ''): RouteSeo => {
     const tab = requestedTab === 'automation' ? 'process' : requestedTab;
     if (tab && indexedDeepDiveTabs.has(tab)) {
       const canonicalPath = `/deep-dives?tab=${tab}`;
+      const isHps = tab === 'hps-geospatial';
       return {
         ...staticRoutes[pathname],
+        ...(isHps
+          ? {
+              title: 'HPS Geospatial System Deep Dive',
+              description:
+                'Architecture, operator workflow, artifact lineage, Recovery benchmarks, and explicit evidence boundaries for the HPS GIS design portal.',
+              markdownPath: '/markdown/deep-dives/hps-geospatial.md',
+            }
+          : {}),
         canonicalPath,
         jsonLd: staticRoutes[pathname].jsonLd.map((entry) => ({
           ...entry,

@@ -13,7 +13,7 @@ import { useCaseStudyContent } from '../hooks/useCaseStudyContent';
 import { useRecruiterMode } from '../context/RecruiterModeContext';
 import { hpsRecruiterScan, splitHpsCaseStudy } from '../lib/hpsCaseStudy';
 import { recruiterSummary } from '../utils/recruiterSummary';
-import { PROJECT_FALLBACK_ID, DEEP_DIVES_HREF } from '../lib/routes';
+import { PROJECT_FALLBACK_ID, DEEP_DIVES_HREF, HPS_DEEP_DIVE_HREF } from '../lib/routes';
 import {
   CANONICAL_ROLE_ACCENT,
   CANONICAL_ROLE_DESCRIPTION,
@@ -139,8 +139,12 @@ const ProjectSwitcher: React.FC<{ activeId: string }> = ({ activeId }) => {
 };
 
 const getDeepDiveInfo = (projectId: string): { href: string; label: string } | null => {
-  // HPS technical depth lives in its own case study. The generic process tab is unrelated.
-  if (projectId === 'hps-geospatial') return null;
+  if (projectId === 'hps-geospatial') {
+    return {
+      href: HPS_DEEP_DIVE_HREF,
+      label: 'View HPS System Deep Dive',
+    };
+  }
   if (projectId === 'luxe-lofts') {
     return {
       href: `${DEEP_DIVES_HREF}?tab=luxe-lofts`,
