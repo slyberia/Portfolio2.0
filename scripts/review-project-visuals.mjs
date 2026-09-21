@@ -153,7 +153,10 @@ try {
         path: `${output}/hps-deep-dive-${size}-${theme}.png`,
         fullPage: true,
       });
-      await page.evaluate(() => window.scrollTo(0, 1500));
+      await page.locator('nav[aria-label="HPS deep dive sections"]').evaluate((el) => {
+        const navDocumentTop = el.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo(0, navDocumentTop + 500);
+      });
       await page.waitForTimeout(450);
       const hpsDeepDiveNavTop = await page
         .locator('nav[aria-label="HPS deep dive sections"]')
