@@ -1,6 +1,6 @@
 # Automation & Operational Protocols
 
-### The Aegis Governance Framework & emOS Runtime
+_Aegis governance framework and emOS runtime_
 
 > **Project Overview**
 >
@@ -18,7 +18,7 @@
 
 ---
 
-## Executive Summary
+## Executive summary
 
 Aegis is a decoupled automation system that puts AI-generated work under an explicit governance layer before it is ever trusted. It separates two concerns that usually get tangled together:
 
@@ -33,7 +33,7 @@ The two layers are fully decoupled and communicate asynchronously through a **pr
 > delivery side of the same governance model — PR discipline, attribution, CI gates, crawler
 > validation, and deploy readiness.
 
-## The Evolution: human-governed → autonomous
+## The evolution: human-governed → autonomous
 
 The system was built in two iterations, and that progression is the point.
 
@@ -41,7 +41,7 @@ The system was built in two iterations, and that progression is the point.
 
 **Iteration 2 — Autonomous (developed).** Once the protocol was trusted, the system was expanded so the **Aegis engine itself** fills the Guardian seat — evaluating the execution log automatically and resolving the ticket without a human. This iteration was developed as the next step toward a fully containerized executable, which was the planned future iteration.
 
-The honest framing: **HITL mode is proven; autonomous mode is built and was on the path to containerized deployment.** The interesting engineering isn't "I automated it" — it's designing the governance so the _same_ pipeline can run with either a human or an automated Guardian, and knowing which to use when.
+The retained framing: **the human-in-the-loop iteration was built and tested; the autonomous iteration was developed but its deployment was not established here.** The engineering decision was to keep execution and review separate so either a human or an automated Guardian could evaluate the same ticket record.
 
 ## How it works (the loop)
 
@@ -64,7 +64,7 @@ The governance core, stripped to its mechanism:
 - **Drift detection** — output is checked against the task layout defined in the originating Notion block; deviation trips the guardrail.
 - **Binary state resolution** — every ticket resolves to a documented pass or fail; nothing mutates silently.
 
-## 🤝 Customer / Stakeholder Value
+## Stakeholder value
 
 **Who it helps:** anyone running AI agents against a real system who needs the output to be trustworthy, auditable, and safe to automate.
 

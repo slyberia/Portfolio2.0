@@ -11,7 +11,9 @@ describe('HPS progressive disclosure', () => {
     expect(overview).toContain('33/33 browser matrix');
     expect(overview).toContain('local and synthetic');
     expect(technical).toContain('five-minute, single-use IndexedDB handoff');
-    expect(technical).toContain('Belize/Jamaica numeric reports missing');
+    expect(technical).toContain(
+      'Belize and Jamaica did not have comparable current-format numeric reports',
+    );
     expect(`${overview}\n${technical}`).toBe(content);
   });
 

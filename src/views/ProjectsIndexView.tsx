@@ -91,16 +91,16 @@ const ProjectsIndexView: React.FC = () => {
                 key={project.id}
                 className={`relative rounded-xl border p-6 shadow-sm transition-colors duration-300 ${
                   project.flagship
-                    ? 'md:col-span-2 border-tide-aqua/50 bg-tide-aqua/5 dark:bg-tide-aqua/10'
+                    ? 'md:col-span-2 border-gild-deep bg-gild/5 dark:border-gild/70 dark:bg-gild/5'
                     : 'border-[#d8e8ee] bg-white dark:bg-slate-900'
                 }`}
               >
                 <div
-                  className={`h-1 w-20 rounded ${project.accent === 'cyan' ? 'bg-tide-cyan' : 'bg-tide-aqua'}`}
+                  className={`h-1 w-20 rounded ${project.flagship ? 'bg-gild-deep dark:bg-gild-soft' : project.accent === 'cyan' ? 'bg-tide-cyan' : 'bg-tide-aqua'}`}
                   aria-hidden="true"
                 />
                 <div className="mt-3 flex items-center justify-between gap-2">
-                  <p className="text-xs uppercase tracking-[0.18em] text-slate-500">
+                  <p className="text-xs font-semibold uppercase tracking-[0.08em] text-slate-700 dark:text-slate-200">
                     {project.featuredLabel}
                   </p>
                   <Tooltip label={PROOF_TYPE_TOOLTIP} focusable={false}>

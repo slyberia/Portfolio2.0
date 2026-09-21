@@ -4,66 +4,66 @@
 >
 > **Role:** Quality Control Specialist / GIS Technician
 >
-> **Scope:** High-Volume Triage, Grid Data Integrity, Process Optimization
+> **Scope:** High-volume triage, grid data integrity, process improvement
 >
 > **Tools:** ESRI ArcMap, Jira, Excel Macros, Custom Dashboards
 >
-> **Outcome:** Converted reactive backlogs into predictable pipelines by implementing batch-processing triage at 100+ service work orders/day, eliminating decision fatigue and establishing clear escalation criteria
+> **Outcome:** Used batch triage and escalation criteria in utility GIS work. A prior portfolio audit records Kyle's confirmation of a conservative 100+ work-orders/day workload; this is operating context, not a measured improvement caused by the portfolio simulator.
 >
-> **Relevance:** Proves operational systems thinking — building processes that scale throughput without scaling headcount
+> **Relevance:** Operational systems thinking through repeatable QA and escalation decisions
 
 ---
 
-## The Thesis: Designing for Constraints
+## The thesis: designing for constraints
 
 I have operationalized data systems at two distinct scales of complexity. While the roles differed, the methodology remains constant: **Identify the Constraint → Standardize the Input → Enforce the Outcome.**
 
-Operational excellence is the gap between **"Training Theory"** and **"Production Reality."** Standard training covers the "Happy Path," but managing 100+ service work orders a day or securing high-stakes grid data requires systematizing the edge cases.
+Standard training covers common cases, but utility data work also requires a process for incomplete requests, conflicting records, and escalation. The prior portfolio audit records a Kyle-confirmed **100+ work-orders/day** workload across utility GIS roles. A separate résumé entry reports **120+ weekly electric utility service requests**; the available sources do not establish that these describe the same queue or period. Neither figure measures a gain caused by the simulator.
 
 ---
 
-## Scale 1: Solving for Velocity (The Triage System)
+## Scale 1: solving for velocity (triage)
 
 **Context:** High-volume operational support (Apex Systems).
 **The Constraint:** An overwhelming backlog where deep review of every item causes paralysis.
 
-### The Operationalization
+### The operational approach
 
 I **implemented** a batch-processing workflow that converted a reactive backlog into a predictable pipeline. By grouping similar error types, I bypassed the context-switching costs that slow down standard processing.
 
-- **Target:** Triage completion of **100+ service work orders/day**.
-- **Outcome:** Established rigid criteria for "Done" vs "Escalated," preventing decision fatigue from bottlenecking the queue.
+- **Volume context:** Kyle-confirmed 100+ work orders/day from the prior portfolio audit; the synthetic simulator did not generate this workload figure.
+- **Process:** Used criteria for "Done" versus "Escalated" to make ambiguous cases easier to route.
 - **Prior scale (Printful):** The same throughput discipline was built earlier in technical customer support — handling high daily volumes of live chats and email tickets under the same speed-vs-quality pressure.
 
 ---
 
-## Scale 2: Solving for Precision (The QA Framework)
+## Scale 2: solving for precision (QA)
 
 **Context:** High-stakes utility grid data (GIS Ops).
 **The Constraint:** "Close enough" is a safety liability. Velocity doesn't matter if the data is wrong.
 
-### The Operationalization
+### The operational approach
 
 I **enforced** a "Zero-Trust" validation loop. While the software provides the tools, the _discipline_ to treat every field variable as a potential failure point—especially on orders that training couldn't cover—was the deciding factor.
 
 - **The Linter (Structural):** Automated checks for missing fields before human review.
 - **The Human (Contextual):** Validating the "semantics" of the map against field notes.
-- **Result:** Sustained a high first-pass acceptance rate — records cleared validation without revision, with rework the exception rather than the norm — even on complex tickets that typically take multiple rounds of review.
+- **Evidence boundary:** The supplied entry does not establish a numeric first-pass acceptance rate or a measured reduction in rework.
 
 ---
 
-## The Synthesis (Dashboard)
+## The synthesis (dashboard)
 
-The dashboard below demonstrates how I track these opposing forces simultaneously: **Volume** (Top Cards) vs. **Quality** (Error Rules).
+The portfolio dashboard models how volume and quality rules can be inspected together. It uses synthetic values; it does not report measured production performance.
 
 > **Portfolio Note:** The dashboard uses synthetic values to mirror the reporting structure while excluding confidential proprietary records.
 
 ---
 
-## 🤝 Customer / Stakeholder Value
+## Stakeholder value
 
 **Who it helps:** Operations leads accountable for SLAs, the downstream teams that inherit the queue's output, and the requesters waiting on a resolution.
 
-**What got easier:** A reactive backlog becomes a predictable pipeline — escalation criteria are explicit, so throughput stops depending on individual judgment and decision fatigue.
+**What the approach addresses:** Explicit escalation criteria make ambiguous cases easier to review and hand off.
 
-**Why it matters:** Volume that holds under pressure without sacrificing data integrity lets leadership scale work without scaling headcount or defect risk.
+**Why it matters:** The model makes the throughput-versus-validation decision visible. Its effect on staffing, defects, or SLA performance was not measured here.

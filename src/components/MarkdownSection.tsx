@@ -114,7 +114,7 @@ const MarkdownSection: React.FC<MarkdownSectionProps> = ({
               h2: ({ node: _node, ...props }) => (
                 <h2
                   {...props}
-                  className="font-outfit font-bold text-ink-navy dark:text-white mt-12 mb-6"
+                  className="font-outfit font-bold text-ink-navy dark:text-white mb-5"
                 />
               ),
               h3: ({ node: _node, ...props }) => (
@@ -144,26 +144,36 @@ const MarkdownSection: React.FC<MarkdownSectionProps> = ({
                 />
               ),
               table: ({ node: _node, ...props }) => (
-                <div className="my-12 overflow-x-auto rounded-3xl border border-tide-aqua/10 dark:border-white/10 bg-white/50 dark:bg-white/5 shadow-2xl shadow-tide-aqua/5 ring-1 ring-black/5 dark:ring-white/5">
-                  <table {...props} className="w-full text-left border-collapse table-fixed" />
+                <div className="my-8">
+                  <p className="mb-2 text-xs text-slate-600 sm:hidden dark:text-slate-300">
+                    Swipe sideways to view all table columns.
+                  </p>
+                  <div
+                    className="overflow-x-auto rounded-xl border border-slate-300 bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tide-aqua dark:border-slate-600 dark:bg-slate-900"
+                    role="region"
+                    aria-label="Scrollable data table"
+                    tabIndex={0}
+                  >
+                    <table {...props} className="w-full min-w-[36rem] text-left border-collapse" />
+                  </div>
                 </div>
               ),
               thead: ({ node: _node, ...props }) => (
                 <thead
                   {...props}
-                  className="bg-slate-50/80 dark:bg-white/5 border-b border-black/5 dark:border-white/10"
+                  className="bg-slate-100 dark:bg-slate-800 border-b border-slate-300 dark:border-slate-600"
                 />
               ),
               th: ({ node: _node, ...props }) => (
                 <th
                   {...props}
-                  className="p-5 text-[10px] font-bold uppercase tracking-[0.25em] text-slate-600 dark:text-slate-300 font-outfit"
+                  className="p-3 text-xs font-semibold text-slate-800 dark:text-white"
                 />
               ),
               td: ({ node: _node, ...props }) => (
                 <td
                   {...props}
-                  className="p-5 text-sm text-slate-600 dark:text-slate-300 border-b border-black/5 dark:border-white/5 last:border-0 align-top"
+                  className="p-3 text-sm leading-relaxed text-slate-800 dark:text-slate-100 border-b border-slate-200 dark:border-slate-700 last:border-0 align-top"
                 />
               ),
               tr: ({ node: _node, ...props }) => (

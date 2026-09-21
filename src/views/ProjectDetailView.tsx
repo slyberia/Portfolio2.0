@@ -70,9 +70,10 @@ const ProjectSwitcher: React.FC<{ activeId: string }> = ({ activeId }) => {
 
   return (
     <>
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 md:hidden dark:border-white/10 dark:bg-slate-900/70">
-        <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-300">
-          Project Navigation
+      <section className="sticky top-16 z-30 min-w-0 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm lg:hidden dark:border-slate-700 dark:bg-slate-900">
+        <p className="text-xs font-bold text-slate-700 dark:text-slate-200">
+          Browse projects ·{' '}
+          {orderedProjects.find((project) => project.id === activeId)?.displayTitle}
         </p>
         <div className="mt-3 overflow-x-auto">
           <div className="flex min-w-max gap-2 pb-1">
@@ -97,11 +98,9 @@ const ProjectSwitcher: React.FC<{ activeId: string }> = ({ activeId }) => {
         </div>
       </section>
 
-      <aside className="sticky top-24 hidden self-start rounded-2xl border border-slate-200 bg-white p-4 lg:block dark:border-white/10 dark:bg-slate-900/70">
+      <aside className="sticky top-24 hidden max-h-[calc(100vh-7rem)] self-start overflow-y-auto rounded-2xl border border-slate-200 bg-white p-4 lg:block dark:border-slate-700 dark:bg-slate-900">
         <div className="flex items-center justify-between gap-2">
-          <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-300">
-            Project Navigation
-          </p>
+          <p className="text-xs font-bold text-slate-700 dark:text-slate-200">Project Navigation</p>
           <button
             type="button"
             onClick={() => setIsCollapsed((prev) => !prev)}
@@ -182,7 +181,9 @@ const ProjectHero: React.FC<{
   const deepDiveInfo = getDeepDiveInfo(metadata.id);
 
   return (
-    <header className="rounded-2xl border border-slate-200 bg-white p-6 md:p-8 dark:border-white/10 dark:bg-slate-900/70">
+    <header
+      className={`rounded-2xl border bg-white p-6 md:p-8 dark:bg-slate-900 ${metadata.flagship ? 'border-gild-deep dark:border-gild/70' : 'border-slate-200 dark:border-slate-700'}`}
+    >
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start">
         <div className="space-y-3">
           <span
@@ -190,7 +191,7 @@ const ProjectHero: React.FC<{
           >
             {metadata.featuredLabel ?? metadata.statusLabel}
           </span>
-          <h1 className={`text-3xl font-bold ${semanticTokens.text.heading}`}>
+          <h1 className={`font-outfit text-3xl font-bold ${semanticTokens.text.heading}`}>
             {metadata.displayTitle}
           </h1>
           <p className="max-w-3xl text-slate-700 dark:text-slate-200">{metadata.shortSummary}</p>
@@ -210,6 +211,16 @@ const ProjectHero: React.FC<{
           </p>
         </div>
         <div className="flex min-w-[220px] flex-col gap-2">
+          {metadata.publicLink && (
+            <a
+              href={metadata.publicLink.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`rounded-lg border px-3 py-2 text-center text-sm font-semibold focus-visible:ring-2 ${metadata.flagship ? 'border-gild-deep text-slate-900 hover:bg-gild/10 focus-visible:ring-gild-deep dark:border-gild/70 dark:text-white dark:hover:bg-gild/10' : 'border-slate-300 text-slate-800 hover:bg-slate-50 focus-visible:ring-slate-500 dark:border-slate-600 dark:text-slate-100 dark:hover:bg-slate-800'}`}
+            >
+              {metadata.publicLink.label} ↗
+            </a>
+          )}
           {/* Contact intent peaks after the evidence is read, not before — the persistent
               TopNav/footer contact paths cover the hero, and a contact CTA closes the page. */}
           {deepDiveInfo && (
@@ -259,9 +270,9 @@ const ProjectDetailView: React.FC = () => {
 
   const cleanContent = React.useMemo(() => {
     if (!displayContent || !metadata) return displayContent;
-    const escaped = metadata.displayTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const titleMatch = new RegExp(`^#\\s+${escaped}\\s*\\n+`, 'i');
-    return displayContent.replace(titleMatch, '');
+    // The hero supplies the single page H1; Markdown titles sometimes add a
+    // subtitle and must not create a second H1 inside the entry.
+    return displayContent.replace(/^#\s+[^\n]+\n+/, '');
   }, [displayContent, metadata]);
   const isHps = activeProjectId === 'hps-geospatial';
   const hpsContent = React.useMemo(
@@ -299,15 +310,15 @@ const ProjectDetailView: React.FC = () => {
     { id: 'overview', label: 'Overview' },
     { id: 'architecture', label: 'Architecture & Strategy' },
     { id: 'tradeoffs', label: 'Decisions & Trade-offs' },
-    ...(isHps ? [{ id: 'technical' as const, label: 'Technical Depth' }] : []),
+    ...(isHps ? [{ id: 'technical' as const, label: 'Technical Notes' }] : []),
     ...(hasInteractiveProofs ? [{ id: 'proofs' as const, label: 'Interactive Proofs' }] : []),
   ];
 
   return (
     <section className="pt-28 pb-24 px-4 sm:px-6">
-      <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[260px_minmax(0,1fr)]">
+      <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[260px_minmax(0,1fr)]">
         <ProjectSwitcher activeId={activeProjectId} />
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6">
           <ProjectHero activeProjectTags={activeProject.tags} metadata={metadata} />
 
           {isHps && (
@@ -363,7 +374,7 @@ const ProjectDetailView: React.FC = () => {
                   aria-labelledby="tab-overview"
                   className="space-y-8 focus:outline-none"
                 >
-                  {activeProject.rigor && (
+                  {activeProject.rigor && !isHps && (
                     <section>
                       <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
                         Project Proof Summary
@@ -373,9 +384,11 @@ const ProjectDetailView: React.FC = () => {
                   )}
 
                   <section>
-                    <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
-                      Project Detail
-                    </p>
+                    {!isHps && (
+                      <p className="mb-3 text-xs font-bold uppercase tracking-[0.12em] text-slate-700 dark:text-slate-200">
+                        Project detail
+                      </p>
+                    )}
                     {!isRecruiterMode && !contentLoading && !overviewContent ? (
                       <div
                         data-testid="case-study-empty"

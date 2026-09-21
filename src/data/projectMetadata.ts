@@ -45,6 +45,7 @@ export type ProjectMetadata = {
   showInSwitcher?: boolean;
   switcherRank?: number;
   caseStudyRoute?: string;
+  publicLink?: { href: string; label: string };
   markdownRoute?: string;
   crawlerRoute?: string;
 };
@@ -87,7 +88,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     id: 'hps-geospatial',
     displayTitle: 'HPS Geospatial Platform',
     shortSummary:
-      'A GIS design portal connecting country-aware spatial artifacts, poster production, georeferencing, provenance, and coverage audits.',
+      'A GIS design portal for exploring spatial data and producing hydrographic posters. My work connected country-aware river data, poster transfer, georeferencing, and coverage checks.',
     hierarchy: 'featured',
     featuredLabel: 'FLAGSHIP GEOSPATIAL SYSTEM',
     statusLabel: 'Implemented · local workflow validation',
@@ -103,7 +104,7 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
       'Connect spatial artifact preparation, poster transfer, georeferencing, and validation while keeping country coverage and failure states visible.',
     stakeholderValue:
       'Operators can inspect provenance, coverage, and transfer status before using a recovered spatial output; the retained evidence covers local integration and documented checks.',
-    accent: 'cyan',
+    accent: 'gold',
     sortOrder: 1,
     href: buildProjectHref('hps-geospatial'),
     evidenceTier: 'primary',
@@ -112,6 +113,10 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     showInSwitcher: true,
     switcherRank: 0,
     caseStudyRoute: '/projects/hps-geospatial',
+    publicLink: {
+      href: 'https://hydro-frontend-786228485832.us-central1.run.app/',
+      label: 'Visit the GIS design portal',
+    },
   },
   {
     id: 'guynode',
@@ -133,13 +138,17 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
       'Organize fragmented spatial datasets in a governed catalog with metadata and browser previews for public discovery.',
     stakeholderValue:
       'The redesigned prototype lets analysts and public visitors inspect catalog entries and map previews before download; usage and adoption outcomes remain unmeasured.',
-    accent: 'gold',
+    accent: 'cyan',
     sortOrder: 2,
     href: buildProjectHref('guynode'),
     evidenceTier: 'primary',
     showInSwitcher: true,
     switcherRank: 1,
     caseStudyRoute: '/projects/guynode',
+    publicLink: {
+      href: 'https://guynode-spatial-data-hub-786228485832.us-central1.run.app/',
+      label: 'View the portal prototype',
+    },
     markdownRoute: '/content/projects/guynode.md',
     crawlerRoute: '/projects/guynode/',
   },
@@ -261,6 +270,10 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     evidenceTier: 'supporting',
     showInSwitcher: true,
     switcherRank: 7,
+    publicLink: {
+      href: 'https://luxe-lofts-roadmap-repo-786228485832.us-central1.run.app/',
+      label: 'View the operational prototype',
+    },
   },
   {
     id: 'northern-grind',

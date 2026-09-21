@@ -18,7 +18,7 @@
 
 ---
 
-## Executive Summary
+## Executive summary
 
 This entry is about the pipeline that built _this_ site. The thesis is simple: **AI-assisted
 development is only trustworthy when it is governed.** Here, AI is treated not as an autonomous magic
@@ -34,7 +34,7 @@ in scope, gated by automated CI, and tracked through an auditable attribution le
 > philosophy into the **workflow-control layer** — judge-vs-executor separation, human-in-the-loop
 > checkpoints, audit trails, and drift control while AI agents operate.
 
-**At a glance:** 50+ PRs merged · 6 AI tools orchestrated · 7 build phases · 10+ canonical routes.
+**At a glance:** bounded work batches, reviewable commits, automated checks, an attribution ledger, and documented deployment and validation boundaries. Counts of PRs and routes change as the site evolves.
 
 ## Governance protocol — bounded work batches
 
@@ -81,7 +81,7 @@ wrong AI edit from shipping.
 across every phase. Together with `HOW_IT_WAS_BUILT.md` and `DECISIONS.md`, it forms an auditable paper
 trail of every architectural pivot and AI contribution — the actual trust layer of the system.
 
-## Deploy
+## Deployment
 
 A multi-stage Docker build (`node:20-alpine`) compiles the Vite frontend and Express backend, scrubs
 dev dependencies, drops the runtime to a **non-root `appuser`**, and ships the secured container to
@@ -99,7 +99,7 @@ These are implemented code and configuration changes. The repository and local c
 implementation; the available evidence does not establish that each change was exercised on the live
 deployment. No latency, availability, or incident-reduction result is claimed.
 
-## Constraints & trade-offs
+## Constraints and trade-offs
 
 - **AI speed vs. review burden** → bounded batches reduce repeated approval and full-suite cycles;
   scoped commits and a batch-end validation gate keep the result reviewable.
@@ -107,7 +107,7 @@ deployment. No latency, availability, or incident-reduction result is claimed.
   enforced by the CI key-audit + gitleaks.
 - **Supply-chain risk** → all CI actions pinned to immutable commit SHAs.
 
-## Positioning & evidence architecture
+## Positioning and evidence architecture
 
 Portfolio 2.0 also treated the portfolio's own copy and case-study structure as a product system —
 not just a website built with AI. The build governance above decides how AI-assisted work gets
@@ -133,7 +133,7 @@ Treated this way, the AI-assisted recommendation was an **input**, human product
 itself as a governed product: a system for making technical judgment, implementation maturity, and
 stakeholder value easier to recognize.
 
-## 🤝 Customer / Stakeholder Value
+## Stakeholder value
 
 **Who it helps:** anyone evaluating whether AI-assisted work can be trusted in a real codebase.
 

@@ -36,8 +36,8 @@ describe('case-study structure parity (uniformity guard)', () => {
     },
     { label: 'a `> **Project Overview**` block', test: (b) => /Project Overview/.test(b) },
     {
-      label: 'a `## 🤝 Customer / Stakeholder Value` section',
-      test: (b) => /^##\s+🤝\s+Customer \/ Stakeholder Value\s*$/m.test(b),
+      label: 'a `## Stakeholder value` section',
+      test: (b) => /^## Stakeholder value\s*$/m.test(b),
     },
   ];
 

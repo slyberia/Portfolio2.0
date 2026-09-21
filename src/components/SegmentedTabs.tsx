@@ -64,7 +64,7 @@ function SegmentedTabs<T extends string>({
               className={`whitespace-nowrap rounded-lg px-4 py-2 text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-aqua ${
                 isActive
                   ? 'border border-slate-300 bg-white text-slate-900 shadow-sm dark:border-white/20 dark:bg-white/10 dark:text-white'
-                  : 'border border-transparent text-slate-600 hover:bg-white/60 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-white/5 dark:hover:text-slate-100'
+                  : 'border border-transparent text-slate-700 hover:bg-white/60 hover:text-slate-900 dark:text-slate-200 dark:hover:bg-white/5 dark:hover:text-white'
               }`}
             >
               {tab.label}

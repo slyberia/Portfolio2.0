@@ -6,6 +6,51 @@
 @tailwind utilities;
 
 @layer components {
+  /* One reading system for all nine project entries. Markdown authors own the
+     words; this renderer owns hierarchy, spacing, and contrast. */
+  .prose-portfolio {
+    font-family: Chivo, sans-serif;
+    font-size: 1.0625rem;
+    font-weight: 400;
+    line-height: 1.75;
+    color: #0f172a;
+  }
+
+  .prose-portfolio p,
+  .prose-portfolio li {
+    font-weight: 400;
+  }
+
+  /* These blocks are labeled project summaries, not quotations. */
+  .prose-portfolio blockquote p:first-of-type::before,
+  .prose-portfolio blockquote p:last-of-type::after {
+    content: none;
+  }
+
+  .dark .prose-portfolio {
+    color: #f8fafc;
+  }
+
+  .prose-portfolio > h2 {
+    margin-top: 2.75rem;
+    padding-top: 2rem;
+    border-top: 1px solid #cbd5e1;
+  }
+
+  .dark .prose-portfolio > h2 {
+    border-top-color: #475569;
+  }
+
+  .prose-portfolio > h2:first-of-type {
+    margin-top: 1.75rem;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .prose-portfolio > hr {
+    display: none;
+  }
+
   .prose-portfolio a {
     color: #39b8bc;
   }
