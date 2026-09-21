@@ -33,11 +33,13 @@ const ResumeView: React.FC = () => {
   const {
     name,
     title,
+    subtitle,
     location,
     phone,
     email,
     headerLinks,
     summary,
+    coreCapabilities,
     sections,
     skills,
     education,
@@ -52,7 +54,8 @@ const ResumeView: React.FC = () => {
       {/* Header */}
       <header className="mb-10 text-center sm:text-left">
         <h1 className="text-4xl font-bold mb-1">{name}</h1>
-        <p className="text-base font-semibold text-slate-700 dark:text-slate-300 mb-2">{title}</p>
+        <p className="text-base font-semibold text-slate-700 dark:text-slate-300">{title}</p>
+        <p className="mb-2 text-sm font-semibold text-tide-aqua">{subtitle}</p>
         <div className="text-sm text-slate-600 dark:text-slate-400 flex flex-wrap gap-x-3 gap-y-1 justify-center sm:justify-start">
           <span>{location}</span>
           <span className="hidden sm:inline">•</span>
@@ -77,12 +80,29 @@ const ResumeView: React.FC = () => {
         </div>
       </header>
 
-      {/* Summary */}
+      {/* Profile */}
       <section id="resume-summary" className="mb-10 scroll-mt-24">
         <h2 className="text-lg font-bold uppercase tracking-widest border-b-2 border-slate-900 dark:border-slate-200 pb-1 mb-4">
-          Summary
+          Profile
         </h2>
         <p className="text-sm leading-relaxed text-slate-800 dark:text-slate-200">{summary}</p>
+        <p className="mt-3 text-sm leading-relaxed text-slate-800 dark:text-slate-200">
+          <span className="font-semibold text-tide-aqua">Core:</span> {coreCapabilities}
+        </p>
+      </section>
+
+      {/* Skills */}
+      <section id="resume-skills" className="mb-10 scroll-mt-24">
+        <h2 className="text-lg font-bold uppercase tracking-widest border-b-2 border-slate-900 dark:border-slate-200 pb-1 mb-4">
+          Technical Skills
+        </h2>
+        <ul className="list-disc pl-5 space-y-1.5">
+          {skills.map((group) => (
+            <li key={group.label} className="text-sm text-slate-800 dark:text-slate-200">
+              <span className="font-semibold">{group.label}:</span> {group.items}
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* Experience & project sections */}
@@ -128,24 +148,10 @@ const ResumeView: React.FC = () => {
         </section>
       ))}
 
-      {/* Skills */}
-      <section id="resume-skills" className="mb-10 scroll-mt-24">
-        <h2 className="text-lg font-bold uppercase tracking-widest border-b-2 border-slate-900 dark:border-slate-200 pb-1 mb-4">
-          Technical Skills
-        </h2>
-        <ul className="list-disc pl-5 space-y-1.5">
-          {skills.map((group) => (
-            <li key={group.label} className="text-sm text-slate-800 dark:text-slate-200">
-              <span className="font-semibold">{group.label}:</span> {group.items}
-            </li>
-          ))}
-        </ul>
-      </section>
-
       {/* Education & Certs */}
       <section id="resume-education" className="mb-10 scroll-mt-24">
         <h2 className="text-lg font-bold uppercase tracking-widest border-b-2 border-slate-900 dark:border-slate-200 pb-1 mb-4">
-          Education & Certifications
+          Education & Credentials
         </h2>
         <div className="mb-4">
           <h3 className="font-bold text-sm">

@@ -42,11 +42,13 @@ export interface ResumeEducation {
 export interface ResumeContent {
   name: string;
   title: string;
+  subtitle: string;
   location: string;
   phone: string;
   email: string;
   headerLinks: ResumeLink[];
   summary: string;
+  coreCapabilities: string;
   sections: ResumeSection[];
   skills: ResumeSkillCategory[];
   education: ResumeEducation;
@@ -57,9 +59,9 @@ const PORTFOLIO_URL = 'https://kyle-semple-ai-solutions-portfolio-341805100474.u
 
 export const RESUME_CONTENT: ResumeContent = {
   name: 'Kyle Semple',
-  title:
-    'Forward Deployed Engineer | AI Implementation & Technical Operations | GIS / Data Systems',
-  location: 'Washtenaw County, MI',
+  title: 'Forward Deployed Engineer | Technical Systems Translator',
+  subtitle: 'Full-Stack Geospatial & Data Systems | AI Workflows | Operational Reliability',
+  location: 'Ann Arbor, MI',
   phone: '734-882-9095',
   email: 'kmsemple26@gmail.com',
   headerLinks: [
@@ -68,78 +70,82 @@ export const RESUME_CONTENT: ResumeContent = {
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/kyle-semple-522537165/' },
   ],
   summary:
-    'Forward Deployed / implementation-oriented systems builder who turns messy operational ' +
-    'and physical-world data into production-ready tools. Combines customer-facing technical ' +
-    'support, project-based consulting, GIS/data operations, and AI-assisted development to ' +
-    'translate client ambiguity into technical workflows, supportable AI tools, spatial apps, ' +
-    'QA models, documentation, and handoff-ready systems.',
+    'Implementation-oriented engineer who translates ambiguous client and operational ' +
+    'requirements into working software, validated data workflows, and supportable handoffs. ' +
+    'Builds across frontend, backend, spatial data, QA, and deployment controls, with experience ' +
+    'carrying messy physical-world data from source review through usable systems.',
+  coreCapabilities:
+    'Forward-deployed delivery | Full-stack implementation | Geospatial data engineering | ' +
+    'Reliability and validation | Client translation | Technical documentation',
   sections: [
     {
-      heading: 'Client & Systems Delivery Experience',
+      heading: 'Selected Systems',
       entries: [
         {
-          title: 'HPS Geospatial — Independent Systems Consultant',
-          meta: 'Remote | 2021–Present',
+          title: 'HPS Geospatial Platform',
           tagline:
-            'Concurrent / project-based consulting | Client-facing spatial systems | Technical implementation',
-          linksLabel: 'Selected recent work',
+            'React / TypeScript | Python / FastAPI | PostgreSQL / PostGIS | Geospatial production and validation',
           links: [
             {
-              label: 'Guynode Spatial Data Hub — Live Build',
+              label: 'Live',
+              url: 'https://hydro-frontend-786228485832.us-central1.run.app/',
+            },
+            { label: 'Case Study', url: `${PORTFOLIO_URL}/projects/hps-geospatial` },
+          ],
+          bullets: [
+            'Stabilized the core platform by resolving 17 pre-existing browser regressions; the reliability phase passed 98 browser tests, 228 backend tests, TypeScript, ESLint, and the production build.',
+            'Delivered a five-minute, single-use Studio-to-Georeferencer handoff with explicit failure states, manual fallback, worker isolation, timeouts, and manifest-backed provenance. The local synthetic PNG-to-Recovery-to-GeoTIFF flow passed a 33/33 browser matrix and 266 backend tests; live production-database behavior was outside the retained evidence.',
+            'Generalized country-aware river artifacts beyond Guyana and audited 26 country entries — 5 verified, 10 partial, 10 unavailable, and 1 retained legacy result — with 22 packaged artifacts, 4 documented withheld entries, hashes, and registry/manifest/runtime checks.',
+          ],
+        },
+        {
+          title: 'Portfolio 2.0 and Digital Twin AI Agent',
+          tagline:
+            'React / TypeScript | Gemini proxy | CI and governance | Runtime failure handling',
+          links: [
+            { label: 'Live', url: `${PORTFOLIO_URL}/` },
+            { label: 'Build Case Study', url: `${PORTFOLIO_URL}/projects/portfolio-pipeline` },
+            { label: 'Agent Case Study', url: `${PORTFOLIO_URL}/projects/digital-twin` },
+            { label: 'GitHub', url: 'https://github.com/slyberia/Portfolio2.0' },
+          ],
+          bullets: [
+            'Built and maintained a public engineering evidence system across 400+ commits with CI gates, route validation, secret scanning, ADRs, threat modeling, AI attribution records, and implementation documentation.',
+            'Implemented a scoped assistant behind a server-side Gemini proxy with prompt-injection filtering, approved command routing, request and input limits, history controls, and human handoff; later added distinct handling for rejected origins, missing configuration, oversized input, and backend outages plus deployment-safe Docker and Cloud Build configuration.',
+          ],
+        },
+        {
+          title: 'Guynode Spatial Data Hub',
+          tagline:
+            'Spatial data migration | Static web artifacts | Dataset governance | Citation and provenance',
+          links: [
+            {
+              label: 'Live',
               url: 'https://guynode-spatial-data-hub-786228485832.us-central1.run.app/',
             },
-            { label: 'Guynode Case Study', url: `${PORTFOLIO_URL}/projects/guynode` },
-            { label: 'MOH GIS Support', url: `${PORTFOLIO_URL}/projects/moh` },
+            { label: 'Case Study', url: `${PORTFOLIO_URL}/projects/guynode` },
           ],
           bullets: [
-            'Avoided paid Google Maps API / map-server dependency by engineering a Python/GDAL/ogr2ogr pipeline that batch-converted 34 legacy ESRI Shapefiles into static, web-optimized GeoJSON assets for 32 Leaflet map previews.',
-            'Built the client-approved replacement for the legacy Guynode spatial data hub, completing dataset migration for adoption and reorganizing 85 datasets across 7 categories with Zod validation, SHA-256 checksums, and hosted asset governance across 106 URLs.',
-            'Built a dynamic client-side citation engine generating APA, Chicago, BibTeX, and MLA citations across 85 spatial datasets, paired with provenance metadata, caveats, and legal-use warnings for sensitive records.',
-            'Supported transition from the legacy site through 17 spatial route migrations, stakeholder-facing documentation, implementation notes, and handoff materials for dataset limitations, citation behavior, map previews, and workflow changes.',
-            'Supported MOH GIS workflows using ArcGIS Online, Survey123, Dashboards, Experience Builder, stakeholder documentation, workflow guidance, and implementation support.',
+            'Delivered the client-approved replacement for a legacy spatial hub by converting 34 ESRI Shapefiles into web-optimized GeoJSON and reorganizing 85 datasets across 7 categories with validation, checksums, hosted-asset governance, map previews, and citation/provenance tooling.',
           ],
         },
       ],
     },
     {
-      heading: 'AI Implementation & Product Systems',
+      heading: 'Professional Experience',
       entries: [
         {
-          title: 'Portfolio 2.0 — Governed AI Build Pipeline',
-          tagline:
-            'Personal engineering proof system | React / TypeScript / Gemini / Claude Code / CI / documentation',
-          links: [
-            { label: 'Case Study', url: `${PORTFOLIO_URL}/projects/portfolio-pipeline` },
-            { label: 'GitHub', url: 'https://github.com/slyberia/Portfolio2.0' },
-            { label: 'Live Portfolio', url: `${PORTFOLIO_URL}/` },
-          ],
+          title: 'HPS Geospatial Consulting LLC — Independent Systems Consultant',
+          meta: 'Remote | Oct 2021–Present',
+          tagline: 'Client-facing GIS, AI workflow, and technical implementation',
           bullets: [
-            'Built and maintained a public React/TypeScript portfolio system with 400+ commits, 149 merged PRs, 153 test cases, 9 CI validation gates, 20 crawler-validated routes, and 8 case studies.',
-            'Implemented release controls and auditability through CI gates, crawler validation, secret scanning, ADRs, AI attribution records, threat modeling, phase packets, command logs, and implementation notes.',
+            'Translate unclear requirements, data limitations, and user needs into spatial workflows, implementation documentation, and handoff-ready systems; supported MOH GIS delivery through ArcGIS Online, Survey123, Dashboards, Experience Builder, troubleshooting, and stakeholder guidance.',
           ],
         },
-        {
-          title: 'Digital Twin AI Agent',
-          tagline:
-            'Scoped AI assistant | Gemini proxy | prompt guardrails | implementation safety | human handoff',
-          links: [{ label: 'Case Study', url: `${PORTFOLIO_URL}/projects/digital-twin` }],
-          bullets: [
-            'Built a scoped AI portfolio assistant using server-side Gemini proxying, prompt-injection filtering, approved command routing, request limits, history trimming, and human-handoff logic for cases where user needs exceed safe automated guidance.',
-            'Implemented guardrails including 25 requests/IP/day, 800-character message limits, 8-message history caps, 10 injection-pattern checks, 16 expensive-prompt filters, and 11 approved navigation commands.',
-            'Designed the assistant around implementation safety: constrained user actions to approved routes, escalated unsupported requests toward human contact, and documented behavior so the system could support users without pretending to replace a real operator.',
-          ],
-        },
-      ],
-    },
-    {
-      heading: 'Operations, QA & Technical Support Experience',
-      entries: [
         {
           title: 'GIS Data Analyst — Tech Providers Inc. · Consumers Energy, Gas Distribution',
           meta: 'Remote | Mar 2024–Dec 2024',
           bullets: [
-            'Kept gas distribution records production-safe by reconciling ArcMap edits across SAP, internal backlog/work-order tools, unclear diagrams, missing-information cases, and utility source materials.',
-            'Improved repeatability of gas GIS corrections by applying consistent QA checks to gas lines, gas meters, building footprints, and related attributes before production updates.',
+            'Reconciled gas-distribution records across ArcMap, SAP, work-order systems, MicroStation drawings, and utility source materials; applied repeatable QA checks and escalated ambiguous cases before production GIS corrections.',
           ],
         },
         {
@@ -147,29 +153,7 @@ export const RESUME_CONTENT: ResumeContent = {
             'Quality Control Specialist / GIS Data Operations Analyst — Apex Systems · CenterPoint Energy, Electric Distribution',
           meta: 'Remote | Sept 2022–Dec 2023',
           bullets: [
-            'Maintained production-quality accuracy across 120+ weekly electric utility service requests by applying repeatable QA checks, resolving conflicting source records, and escalating ambiguous cases before final GIS edits.',
-            'Improved handling of incomplete electric distribution records by standardizing how unclear diagrams, internal database results, land-use/source references, and teammate guidance were evaluated before line/pole placement.',
-          ],
-        },
-        {
-          title: 'Related Artifact: Ops Triage — Utility Workflow Decision Model',
-          tagline:
-            'Interactive model of backlog pressure, QA risk, escalation rules, and human-review thresholds',
-          links: [{ label: 'Case Study', url: `${PORTFOLIO_URL}/projects/ops-triage` }],
-          bullets: [
-            'Modeled how utility GIS teams balance throughput and validation when resolving incomplete work orders, unclear diagrams, conflicting source records, and production-safe corrections.',
-          ],
-        },
-      ],
-    },
-    {
-      heading: 'Earlier Customer-Facing Technical Support',
-      entries: [
-        {
-          title: 'Printful — Technical Customer Support Representative',
-          meta: 'Remote | Sept 2021–Dec 2021',
-          bullets: [
-            'Triaged 100+ weekly support interactions across chat/email, separating user confusion, order-state issues, fulfillment constraints, account problems, and integration questions while managing 3–5 concurrent Zendesk chats.',
+            'Maintained production-quality accuracy across 120+ weekly electric-utility service requests through source-record review, repeatable QA checks, discrepancy resolution, and escalation before final ArcMap edits.',
           ],
         },
       ],
@@ -177,36 +161,24 @@ export const RESUME_CONTENT: ResumeContent = {
   ],
   skills: [
     {
-      label: 'AI / Web Engineering',
-      items:
-        'React, TypeScript, Vite, Tailwind, Node/Express, Gemini API, Claude Code, Cursor, server-side AI proxies, prompt guardrails, Docker, GitHub Actions, CI validation, Cloud Run, Cloudflare Pages',
+      label: 'Applications',
+      items: 'React, TypeScript, Python, FastAPI, Pydantic, REST APIs, Node/Express, Vite',
     },
     {
-      label: 'GIS / Physical-World Data',
+      label: 'Data and geospatial',
       items:
-        'ArcMap, SAP, utility work orders, electric/gas distribution GIS, QA/QC workflows, shapefiles, GeoJSON, Leaflet, GDAL/ogr2ogr, spatial metadata, provenance/citation workflows',
+        'PostgreSQL, PostGIS, SQL, ArcGIS, GDAL/ogr2ogr, GeoJSON, GeoTIFF, GeoParquet, Leaflet, IndexedDB',
     },
     {
-      label: 'Implementation / Technical Operations',
+      label: 'Delivery and reliability',
       items:
-        'Customer-facing technical support, client ambiguity translation, workflow triage, stakeholder documentation, issue escalation, missing-data investigation, support handoff, Zendesk, Notion, Jira, Asana',
-    },
-    {
-      label: 'Data / Tools',
-      items:
-        'Bentley MicroStation source interpretation, internal work-order/backlog systems, Google Workspace, Microsoft Office, Tableau, Power BI, BigQuery basics',
+        'Docker, Cloud Run, Supabase, GitHub Actions, browser/backend testing, manifests, SHA-256 provenance, fault handling',
     },
   ],
   education: {
     degree: 'B.A., Geography',
     school: "Queen's University",
-    detail: 'Kingston, Ontario',
+    detail: 'Kingston, Ontario | Sept 2016–Apr 2021',
   },
-  certifications: [
-    'Google Project Management',
-    'Google Data Analytics',
-    'Google AI Essentials',
-    'Google Digital Marketing & E-commerce',
-    'IBM AI-Enabled Apps for Customer Service',
-  ],
+  certifications: ['Google Project Management Professional Certificate', 'Google Data Analytics'],
 };

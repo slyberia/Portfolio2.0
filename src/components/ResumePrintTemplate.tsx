@@ -54,7 +54,13 @@ const PRINT_CSS = `
     font-size: 10pt;
     font-weight: 600;
     color: #0f172a;
-    margin: 1px 0 2px;
+    margin: 1px 0 0;
+  }
+  .resume-print-template .rp-subtitle {
+    font-size: 8.5pt;
+    font-weight: 600;
+    color: #0f766e;
+    margin: 0 0 2px;
   }
   .resume-print-template .rp-contact {
     font-size: 8.5pt;
@@ -131,6 +137,9 @@ const PRINT_CSS = `
     font-size: 8pt;
     margin: 0 0 2px;
   }
+  .resume-print-template .rp-core-label {
+    color: #0f766e;
+  }
 `;
 
 const PrintEntryLinks: React.FC<{ entry: ResumeEntry }> = ({ entry }) => {
@@ -152,11 +161,13 @@ const ResumePrintTemplate: React.FC = () => {
   const {
     name,
     title,
+    subtitle,
     location,
     phone,
     email,
     headerLinks,
     summary,
+    coreCapabilities,
     sections,
     skills,
     education,
@@ -170,6 +181,7 @@ const ResumePrintTemplate: React.FC = () => {
       <header>
         <p className="rp-name">{name}</p>
         <p className="rp-title">{title}</p>
+        <p className="rp-subtitle">{subtitle}</p>
         <p className="rp-contact">
           {location} • {phone} • <a href={`mailto:${email}`}>{email}</a>
           {headerLinks.map((link) => (
@@ -182,8 +194,22 @@ const ResumePrintTemplate: React.FC = () => {
       </header>
 
       <section className="rp-summary">
-        <h2>Summary</h2>
+        <h2>Profile</h2>
         <p>{summary}</p>
+        <p>
+          <strong className="rp-core-label">Core:</strong> {coreCapabilities}
+        </p>
+      </section>
+
+      <section>
+        <h2>Technical Skills</h2>
+        <ul>
+          {skills.map((group) => (
+            <li key={group.label}>
+              <strong>{group.label}:</strong> {group.items}
+            </li>
+          ))}
+        </ul>
       </section>
 
       {sections.map((section) => (
@@ -208,18 +234,7 @@ const ResumePrintTemplate: React.FC = () => {
       ))}
 
       <section>
-        <h2>Technical Skills</h2>
-        <ul>
-          {skills.map((group) => (
-            <li key={group.label}>
-              <strong>{group.label}:</strong> {group.items}
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section>
-        <h2>Education &amp; Certifications</h2>
+        <h2>Education &amp; Credentials</h2>
         <p className="rp-edu-degree">
           {education.degree} — {education.school}
         </p>
