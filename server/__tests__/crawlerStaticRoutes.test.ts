@@ -28,6 +28,15 @@ describe('crawler static route serving behavior', () => {
     expect(res.text).not.toContain('SPA shell');
   });
 
+  it.each(['/ai-index/', '/ai-index.html'])(
+    'redirects the duplicate AI index URL %s to the canonical route',
+    async (path) => {
+      const res = await request(createApp(makeFixtureDist())).get(path);
+      expect(res.status).toBe(308);
+      expect(res.headers.location).toBe('/ai-index');
+    },
+  );
+
   it('serves static snapshot when route-specific html exists', async () => {
     const app = createApp(makeFixtureDist());
     const res = await request(app).get('/projects/guynode').redirects(1);

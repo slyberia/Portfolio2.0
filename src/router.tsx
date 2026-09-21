@@ -154,6 +154,8 @@ export const AppLayout: React.FC = () => {
       navigate('/');
     } else if (path === 'deep-dives') {
       navigate(DEEP_DIVES_HREF);
+    } else if (path.startsWith('deep-dive:')) {
+      navigate(`${DEEP_DIVES_HREF}?tab=${path.split(':')[1]}`);
     } else if (path === 'project') {
       navigateToProject();
     } else if (path === 'resume') {

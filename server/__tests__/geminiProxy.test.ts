@@ -206,6 +206,15 @@ describe('geminiProxy', () => {
     expect(prompt).toContain('understand, adopt, and use');
     expect(prompt).toContain('Route by need');
 
+    // Current HPS evidence and its strongest technical route
+    expect(prompt).toContain('98 browser tests (2 skipped)');
+    expect(prompt).toContain('228 backend tests (3 skipped)');
+    expect(prompt).toContain('22 packaged JSON artifacts');
+    expect(prompt).toContain('9/9 supported transforms accepted');
+    expect(prompt).toContain('0.742 uploaded-image pixels');
+    expect(prompt).toContain('local synthetic workflow');
+    expect(prompt).toContain('<<NAVIGATE:deep-dive:hps-geospatial>>');
+
     // No stale role-track navigation routes
     expect(prompt).not.toContain('tracks/implementation');
     expect(prompt).not.toContain('tracks/ops-analytics');
@@ -243,6 +252,23 @@ describe('geminiProxy', () => {
       const res = await request(app)
         .post('/api/chat')
         .set('x-forwarded-for', `10.0.3.${i}`)
+        .send({ message });
+      expect(res.status).toBe(200);
+    }
+    expect(mockSendMessageStream).toHaveBeenCalledTimes(messages.length);
+  });
+
+  it('passes HPS technical-depth questions through the relevance gate', async () => {
+    const messages = [
+      'What does the Recovery benchmark prove?',
+      'How is manifest-backed provenance handled?',
+      'What remains incomplete for PMTiles and GeoParquet?',
+    ];
+
+    for (const [i, message] of messages.entries()) {
+      const res = await request(app)
+        .post('/api/chat')
+        .set('x-forwarded-for', `10.0.4.${i}`)
         .send({ message });
       expect(res.status).toBe(200);
     }
