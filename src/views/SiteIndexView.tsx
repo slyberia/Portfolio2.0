@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   GIS_TRACK_HREF,
   GUYNODE_SYSTEM_HREF,
+  HPS_DEEP_DIVE_HREF,
   HPS_GEOSPATIAL_HREF,
   IMPLEMENTATION_TRACK_HREF,
   DEEP_DIVES_HREF,
@@ -42,6 +43,12 @@ const roleTracks = [
 ];
 
 const processDeepDives = [
+  {
+    title: 'HPS Geospatial System Deep Dive',
+    description:
+      'Inspect the architecture, operator workflow, artifacts, benchmarks, and evidence boundaries.',
+    href: HPS_DEEP_DIVE_HREF,
+  },
   {
     title: 'Release Ladder',
     description: 'See the phased evolution and release logic of Portfolio2.0.',
@@ -240,7 +247,7 @@ const SiteIndexView: React.FC = () => {
             id="site-index-process"
             className="text-2xl font-outfit font-extrabold text-navy-900 dark:text-white"
           >
-            Process Deep Dives
+            System &amp; Process Deep Dives
           </h2>
           <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
             {processDeepDives.map((item) => (

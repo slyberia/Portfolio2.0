@@ -119,6 +119,72 @@ try {
           }
         }
       }
+
+      const hpsDeepDiveResponse = await page.goto(
+        'http://127.0.0.1:5173/deep-dives?tab=hps-geospatial',
+        { waitUntil: 'networkidle' },
+      );
+      await page.getByTestId('hps-deep-dive').waitFor();
+      await page.evaluate(() => document.fonts.ready);
+      const hpsDeepDiveMetrics = await page.evaluate(() => {
+        const sectionNav = document.querySelector('nav[aria-label="HPS deep dive sections"]');
+        const tableRegion = document.querySelector('[aria-label="HPS artifact maturity table"]');
+        return {
+          heading: document.querySelector('[data-testid="hps-deep-dive"] h2')?.textContent?.trim(),
+          dark: document.documentElement.classList.contains('dark'),
+          pageWidth: document.documentElement.scrollWidth,
+          viewportWidth: innerWidth,
+          sectionNavPosition: sectionNav ? getComputedStyle(sectionNav).position : '',
+          sectionNavLinks: sectionNav?.querySelectorAll('a').length ?? 0,
+          tableOverflow: tableRegion ? getComputedStyle(tableRegion).overflowX : '',
+          tableFocusable: tableRegion?.getAttribute('tabindex') === '0',
+          contentRight: Math.round(
+            document.querySelector('[data-testid="hps-deep-dive"]')?.getBoundingClientRect()
+              .right ?? 0,
+          ),
+          errorOverlay: Boolean(
+            document.querySelector(
+              '[data-nextjs-dialog], .vite-error-overlay, #webpack-dev-server-client-overlay',
+            ),
+          ),
+        };
+      });
+      await page.screenshot({
+        path: `${output}/hps-deep-dive-${size}-${theme}.png`,
+        fullPage: true,
+      });
+      await page.locator('nav[aria-label="HPS deep dive sections"]').evaluate((el) => {
+        const navDocumentTop = el.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo(0, navDocumentTop + 500);
+      });
+      await page.waitForTimeout(450);
+      const hpsDeepDiveNavTop = await page
+        .locator('nav[aria-label="HPS deep dive sections"]')
+        .evaluate((el) => el.getBoundingClientRect().top);
+      results.push({
+        id: 'hps-deep-dive',
+        size,
+        theme,
+        ...hpsDeepDiveMetrics,
+        scrolledTop: hpsDeepDiveNavTop,
+      });
+      for (const [label, check] of [
+        ['page response', hpsDeepDiveResponse?.status() === 200],
+        ['theme', hpsDeepDiveMetrics.dark === (theme === 'dark')],
+        ['error overlay', !hpsDeepDiveMetrics.errorOverlay],
+        ['horizontal page overflow', hpsDeepDiveMetrics.pageWidth <= width + 1],
+        ['visible content clipped', hpsDeepDiveMetrics.contentRight <= width + 1],
+        ['sticky section navigation', hpsDeepDiveMetrics.sectionNavPosition === 'sticky'],
+        ['complete section navigation', hpsDeepDiveMetrics.sectionNavLinks === 5],
+        ['artifact table scroll container', hpsDeepDiveMetrics.tableOverflow === 'auto'],
+        ['artifact table keyboard focus', hpsDeepDiveMetrics.tableFocusable],
+        [
+          'section navigation visible after scrolling',
+          hpsDeepDiveNavTop >= 75 && hpsDeepDiveNavTop < 150,
+        ],
+      ]) {
+        if (!check) failures.push(`hps deep dive / ${size} / ${theme}: ${label}`);
+      }
       await context.close();
     }
   }

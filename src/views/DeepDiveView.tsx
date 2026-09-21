@@ -12,6 +12,7 @@ import ErrorBoundary from '../components/ErrorBoundary';
 import CostBreakEvenChart from '../components/northern-grind/CostBreakEvenChart';
 import BrandGallery from '../components/northern-grind/BrandGallery';
 import { HtmlPreviewCard } from '../components/CaseStudyComponents';
+import HpsDeepDive from '../components/hps/HpsDeepDive';
 import { componentRecipes, semanticTokens } from '../lib/design-system';
 import {
   automationSystems,
@@ -23,7 +24,14 @@ import {
 import { MOH_SUPERVISOR_DASHBOARD_HTML } from '../data/mohSupervisorDashboard';
 import type { Visibility } from '../types';
 
-type MainTab = 'landing' | 'process' | 'luxe-lofts' | 'northern-grind' | 'moh' | 'guynode';
+type MainTab =
+  | 'landing'
+  | 'hps-geospatial'
+  | 'process'
+  | 'luxe-lofts'
+  | 'northern-grind'
+  | 'moh'
+  | 'guynode';
 
 // `?tab=automation` is an alias for the umbrella governance tab so existing
 // links and the original deep-dive brief keep resolving after the Option C
@@ -32,6 +40,7 @@ const TAB_ALIASES: Record<string, MainTab> = { automation: 'process' };
 const resolveTabParam = (param: string | null): MainTab | null => {
   if (
     param === 'landing' ||
+    param === 'hps-geospatial' ||
     param === 'process' ||
     param === 'luxe-lofts' ||
     param === 'northern-grind' ||
@@ -54,6 +63,12 @@ const DEEP_DIVE_TABS: {
   visibility: Visibility;
 }[] = [
   { id: 'landing', label: 'Overview', activeBorder: 'border-tide-aqua', visibility: 'public' },
+  {
+    id: 'hps-geospatial',
+    label: 'HPS Geospatial',
+    activeBorder: 'border-amber-500',
+    visibility: 'public',
+  },
   {
     id: 'process',
     label: 'Automation & Governance Architecture',
@@ -1025,12 +1040,12 @@ const DeepDiveView: React.FC = () => {
               OPERATIONAL_INTELLIGENCE
             </span>
             <h1 className="text-4xl md:text-5xl font-outfit font-extrabold text-slate-950 dark:text-white tracking-tight">
-              Process &amp; Strategy Deep Dives
+              System &amp; Strategy Deep Dives
             </h1>
             <p className="text-base text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-              Analyze the engineering timelines, multi-LLM workflows, and commercial restructuring
-              strategies behind this portfolio. These deep dives verify the strategic governance and
-              rigorous validation backing every project.
+              Inspect the architecture, decisions, workflows, and validation boundaries behind the
+              portfolio&apos;s most substantial systems. Each deep dive keeps implementation
+              evidence distinct from modeled, partial, or deployment-unverified work.
             </p>
           </div>
 
@@ -1069,6 +1084,49 @@ const DeepDiveView: React.FC = () => {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  {/* HPS Geospatial flagship deep dive */}
+                  <button
+                    onClick={() => handleMainTabChange('hps-geospatial')}
+                    className="text-left group rounded-3xl border border-amber-500/40 bg-amber-50 dark:bg-[#16130B] hover:border-amber-600 dark:hover:border-amber-400 hover:shadow-xl transition-all duration-300 overflow-hidden lg:col-span-2"
+                  >
+                    <div className="h-2 bg-amber-500" />
+                    <div className="p-8 space-y-5">
+                      <div className="space-y-3 max-w-4xl">
+                        <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-amber-800 dark:text-amber-300 block">
+                          Flagship geospatial system
+                        </span>
+                        <h3 className="text-2xl font-outfit font-bold text-slate-950 dark:text-white group-hover:text-amber-800 dark:group-hover:text-amber-300 transition-colors">
+                          HPS Geospatial Production &amp; Validation System
+                        </h3>
+                        <p className="text-sm text-slate-700 dark:text-slate-200 leading-relaxed">
+                          The architecture, operator workflow, artifact lineage, Recovery
+                          benchmarks, and evidence boundaries behind the HPS GIS design portal —
+                          including the distinction between locally validated behavior and
+                          unverified deployment.
+                        </p>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {[
+                          'System Architecture',
+                          'Studio → Georeferencer',
+                          'Artifact Lineage',
+                          'Recovery Benchmarks',
+                        ].map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-800 dark:text-amber-300 border border-amber-500/30"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="flex items-center gap-2 text-sm font-bold text-amber-800 dark:text-amber-300 group-hover:gap-3 transition-all">
+                        <span>Explore the flagship system</span>
+                        <span>→</span>
+                      </div>
+                    </div>
+                  </button>
+
                   {/* Automation & Governance Architecture Entry Card */}
                   <button
                     onClick={() => handleMainTabChange('process')}
@@ -1382,6 +1440,9 @@ const DeepDiveView: React.FC = () => {
               </section>
             </div>
           )}
+
+          {/* ── HPS Geospatial Tab ── */}
+          {activeMainTab === 'hps-geospatial' && <HpsDeepDive />}
 
           {/* ── Process Tab ── */}
           {activeMainTab === 'process' && (

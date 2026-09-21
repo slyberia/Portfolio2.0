@@ -27,6 +27,7 @@ const guynodeProject = PROJECT_REGISTRY.find((project) =>
 
 export const GUYNODE_SYSTEM_HREF = buildProjectHref(guynodeProject?.id ?? PROJECT_FALLBACK_ID);
 export const HPS_GEOSPATIAL_HREF = buildProjectHref('hps-geospatial');
+export const HPS_DEEP_DIVE_HREF = `${DEEP_DIVES_HREF}?tab=hps-geospatial`;
 export const DIGITAL_TWIN_PROJECT_HREF = buildProjectHref('digital-twin');
 
 // TODO: remove case-study route aliases after all internal references are migrated.
