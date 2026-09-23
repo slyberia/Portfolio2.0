@@ -68,6 +68,21 @@ The site uses progressive disclosure rather than forcing every visitor through t
 
 Crawler snapshots, Markdown mirrors, `llms.txt`, structured metadata, and the Digital Twin knowledge source extend the same positioning and evidence boundaries to machine-readable surfaces.
 
+## Repository evolution
+
+Several remote branches are intentionally retained as historical snapshots. They document how the portfolio's design, validation, and implementation practices matured; a branch being merged does not make it disposable, and these snapshots should not be advanced to match `main`.
+
+| Branch                                      | Retained context                                                      |
+| ------------------------------------------- | --------------------------------------------------------------------- |
+| `claude/hero-redesign-uupm`                 | Early hero and design-direction work (April 2026)                     |
+| `codex/comprehensive-redesign`              | Comprehensive redesign and security-hardening stage (May 2026)        |
+| `codex/technical-tide-variant`              | Technical Tide validation and regression-hardening variant (May 2026) |
+| `codex/technical-tide-v2`                   | Later Technical Tide implementation checkpoint (May 2026)             |
+| `archive/phase-3-baseline`                  | Preserved phase baseline through the FMEA-mitigation work (May 2026)  |
+| `claude/digital-twin-chatbot-issues-57brgm` | Isolated Digital Twin HTTP-status messaging iteration (July 2026)     |
+
+`main` remains the current portfolio. Historical branches are process evidence, not alternate release channels.
+
 ## Technology
 
 | Layer         | Technology                                                          |
