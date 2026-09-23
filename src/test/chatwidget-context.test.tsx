@@ -1,4 +1,5 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import { beforeEach, describe, expect, it } from 'vitest';
 import ChatWidget from '../components/ChatWidget';
@@ -51,5 +52,27 @@ describe('ChatWidget contextual open event', () => {
       }),
     );
     expect(await screen.findByText('Forward Deployed Track')).toBeInTheDocument();
+  });
+
+  it('accepts the approved HPS deep-dive navigation command', async () => {
+    const onNavigate = vi.fn();
+    sendMessageStreamMock.mockImplementation(() =>
+      (async function* () {
+        yield 'Open the HPS system evidence. <<NAVIGATE:deep-dive:hps-geospatial>>';
+      })(),
+    );
+
+    render(<ChatWidget onNavigate={onNavigate} />);
+    const user = userEvent.setup();
+    await user.click(screen.getByRole('button', { name: 'Ask the Digital Twin' }));
+    await user.type(
+      screen.getByPlaceholderText("Ask Kyle's AI Twin..."),
+      'Show technical depth{enter}',
+    );
+
+    await waitFor(() => {
+      expect(onNavigate).toHaveBeenCalledWith('deep-dive:hps-geospatial');
+    });
+    expect(screen.getByText('Open the HPS system evidence.')).toBeInTheDocument();
   });
 });

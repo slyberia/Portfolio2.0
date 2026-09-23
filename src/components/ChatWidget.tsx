@@ -27,6 +27,7 @@ const ALLOWED_NAV_TARGETS = new Set([
   'experience',
   'skills',
   'deep-dives',
+  'deep-dive:hps-geospatial',
   'project:hps-geospatial',
   'project:guynode',
   'project:digital-twin',
@@ -233,6 +234,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ onNavigate, onAction, onShowToa
         if (
           target.startsWith('case-study:') ||
           target.startsWith('project:') ||
+          target.startsWith('deep-dive:') ||
           ROUTE_NAV_TARGETS.has(target)
         ) {
           onNavigate(target);

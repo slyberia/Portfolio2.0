@@ -30,8 +30,28 @@ describe('crawler static assets', () => {
 
   it('required static crawler files exist', () => {
     expect(existsSync(join(publicDir, 'ai-index.html'))).toBe(true);
+    expect(existsSync(join(publicDir, 'ai-index', 'index.html'))).toBe(false);
     expect(existsSync(join(publicDir, 'site-index.html'))).toBe(true);
     expect(existsSync(join(publicDir, 'markdown', 'index.md'))).toBe(true);
+  });
+
+  it('keeps one canonical AI index aligned with the HPS deep dive', () => {
+    const aiIndex = readFileSync(join(publicDir, 'ai-index.html'), 'utf8');
+    const llms = readFileSync(join(publicDir, 'llms.txt'), 'utf8');
+
+    expect(aiIndex).toMatch(/<link\s+rel="canonical"/);
+    expect(aiIndex).toContain('href="/deep-dives?tab=hps-geospatial"');
+    expect(aiIndex).toContain('href="/markdown/deep-dives/hps-geospatial.md"');
+    expect(llms).toContain('/deep-dives?tab=hps-geospatial');
+    expect(llms).toContain('/markdown/deep-dives/hps-geospatial.md');
+    expect(llms).not.toContain('/ai-index.html');
+  });
+
+  it('lists every public project in the LLM companion index', () => {
+    const llms = readFileSync(join(publicDir, 'llms.txt'), 'utf8');
+    for (const project of PROJECT_METADATA.filter((p) => (p.visibility ?? 'public') === 'public')) {
+      expect(llms, project.id).toContain(`- ${project.href}`);
+    }
   });
 
   it('publishes every visible project across canonical, crawler, and static discovery indexes', () => {

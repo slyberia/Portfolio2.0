@@ -46,12 +46,25 @@ export function createApp(distDir = path.resolve(__dirname, '..', 'dist')) {
 
   app.use(express.json({ limit: '10kb' }));
   app.use('/api', geminiProxy);
-  app.use(express.static(distDir));
 
-  // The public AI index is a static HTML page; extensionless /ai-index is its canonical URL.
+  // Serve the AI index through one canonical URL. These routes must precede express.static:
+  // otherwise the legacy ai-index/ directory can win directory resolution and expose stale copy.
+  app.use((req, res, next) => {
+    const requestPath = req.originalUrl.split('?')[0];
+    if (
+      req.method === 'GET' &&
+      (requestPath === '/ai-index/' || requestPath === '/ai-index.html')
+    ) {
+      res.redirect(308, '/ai-index');
+      return;
+    }
+    next();
+  });
   app.get('/ai-index', (_req, res) => {
     res.sendFile(path.join(distDir, 'ai-index.html'));
   });
+
+  app.use(express.static(distDir));
 
   app.get(/^(?!\/api\/).*$/, (_req, res) => {
     res.sendFile(path.join(distDir, 'index.html'));

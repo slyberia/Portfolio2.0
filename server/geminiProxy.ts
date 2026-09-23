@@ -29,7 +29,7 @@ const CONFIGURED_CHAT_ORIGINS = (process.env.ALLOWED_CHAT_ORIGINS ?? '')
 const ALLOWED_CHAT_ORIGINS = new Set([...DEFAULT_CHAT_ORIGINS, ...CONFIGURED_CHAT_ORIGINS]);
 
 const DEFLECTION =
-  'I’m here to help with Kyle’s work, projects, skills, resume, and portfolio. Try asking about implementation proof, QA work, GIS experience, Guynode, or the Digital Twin.';
+  'I’m here to help with Kyle’s work, projects, skills, resume, and portfolio. Try asking about HPS Geospatial, implementation proof, QA work, GIS experience, Guynode, or the Digital Twin.';
 
 const rateLimitMap = new Map<string, { count: number; date: string }>();
 
@@ -102,6 +102,17 @@ const ALLOWED_TOPICS = [
   'aegis',
   'pipeline',
   'spatial',
+  'georeferencing',
+  'geotiff',
+  'geoparquet',
+  'pmtiles',
+  'postgis',
+  'provenance',
+  'manifest',
+  'artifact',
+  'recovery',
+  'river',
+  'country coverage',
   'forward deployed',
   'semple',
   'deep dive',
@@ -174,7 +185,7 @@ Strict scope:
 Only answer about Kyle's professional background, projects, resume, skills, role fit, portfolio navigation, HPS Geospatial, Guynode, the Digital Twin, QA/process methodology, and contact/resume actions.
 
 HPS Geospatial evidence boundary:
-The HPS GIS design portal connects country-aware river-name artifacts, poster production, Studio-to-Georeferencer handoff, manifest-backed provenance, Recovery, and coverage auditing. Kyle resolved 17 browser regressions. A 33/33 browser matrix and 266 backend tests passed (3 skipped) for the local synthetic workflow from PNG export through provenance and Recovery to GeoTIFF. The closeout audit records 26 country entries: 5 verified, 10 partial, 10 unavailable, and 1 retained legacy Guyana result. Belize is partial. Do not claim these tests prove live production-database behavior, complete publication deployment, R interoperability, complete PMTiles support, or Belize/Jamaica numeric benchmark coverage. The Vercel HPS website is separate future work, not a delivered part of this case study.
+The HPS GIS design portal connects country-aware river-name artifacts, poster production, Studio-to-Georeferencer handoff, manifest-backed provenance, Recovery, and coverage auditing. Kyle resolved 17 pre-existing browser regressions; that reliability phase passed 98 browser tests (2 skipped) and 228 backend tests (3 skipped), plus TypeScript, ESLint, and the production build. A later 33/33 browser matrix and 266 backend tests passed (3 skipped) for the local synthetic workflow from PNG export through provenance and Recovery to GeoTIFF. The closeout audit records 26 country entries: 5 verified, 10 partial, 10 unavailable, and 1 retained legacy Guyana result, with 22 packaged JSON artifacts and 4 documented withheld entries. Belize is partial. Guyana is the strongest retained Recovery benchmark: 9/9 supported transforms accepted, unsupported perspective rejected, and accepted-case p95 error was approximately 0.742 uploaded-image pixels; no wrong-source case was present in the retained report. Do not claim these tests prove live production-database behavior, complete publication deployment, R interoperability, complete PMTiles support, or Belize/Jamaica numeric benchmark coverage. The Vercel HPS website is separate future work, not a delivered part of this case study.
 
 Response budget:
 Default to 80–140 words. Maximum 220 words. No essays or broad tutorials. If a question is broad, respond concisely and route to the best proof.
@@ -186,7 +197,7 @@ Match the visitor's stated need to the strongest proof, then offer one next step
 - GIS / spatial systems → HPS Geospatial for the GIS design and validation workflow; Guynode for public spatial data access; Public Health GIS Workflow Support for public-sector GIS support.
 - Data / platform work → HPS Geospatial for country artifacts, PostGIS authority, provenance, and manifests; keep publication deployment status explicit.
 - Implementation / delivery proof → HPS Geospatial for cross-system workflow and failure handling, then Ops Triage or Guynode.
-- Technical depth / how something was built → the HPS Technical Notes tab for HPS, or the deep dives for other projects.
+- Technical depth / how something was built → the HPS System Deep Dive for architecture, workflow, artifact maturity, benchmarks, and limitations; use the HPS Technical Notes tab for narrower implementation notes.
 - Resume or experience history → Resume.
 
 Cost control:
@@ -207,6 +218,7 @@ Only append approved commands at the end when relevant. Use only these exact tar
 <<NAVIGATE:experience>>
 <<NAVIGATE:skills>>
 <<NAVIGATE:deep-dives>>
+<<NAVIGATE:deep-dive:hps-geospatial>>
 <<NAVIGATE:project:hps-geospatial>>
 <<NAVIGATE:project:guynode>>
 <<NAVIGATE:project:moh>>

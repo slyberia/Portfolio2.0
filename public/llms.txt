@@ -13,7 +13,6 @@ The HPS Geospatial Platform leads the project evidence. Its GIS design portal co
 
 ## Static discovery pages
 - /ai-index
-- /ai-index.html
 - /site-index
 - /site-index.html
 
@@ -27,6 +26,7 @@ The HPS Geospatial Platform leads the project evidence. Its GIS design portal co
 - /markdown/projects/hps-geospatial.md
 - /markdown/projects/guynode.md
 - /markdown/projects/digital-twin.md
+- /markdown/deep-dives/hps-geospatial.md
 - /markdown/process.md
 
 ## Canonical React routes
@@ -42,7 +42,16 @@ The HPS Geospatial Platform leads the project evidence. Its GIS design portal co
 - /projects/project-aegis
 - /projects/portfolio-pipeline
 - /projects/luxe-lofts
+- /projects/northern-grind
+- /projects/moh
 - /deep-dives
+- /deep-dives?tab=hps-geospatial
+- /deep-dives?tab=process
+- /deep-dives?tab=luxe-lofts
+- /deep-dives?tab=northern-grind
+- /deep-dives?tab=moh
+- /deep-dives?tab=guynode
+- /gallery
 - /resume
 - /site-index
 
@@ -60,7 +69,16 @@ The HPS Geospatial Platform leads the project evidence. Its GIS design portal co
 - /crawler/projects/project-aegis
 - /crawler/projects/portfolio-pipeline
 - /crawler/projects/luxe-lofts
+- /crawler/projects/northern-grind
+- /crawler/projects/moh
 - /crawler/deep-dives
+- /crawler/deep-dives/hps-geospatial
+- /crawler/deep-dives/process
+- /crawler/deep-dives/luxe-lofts
+- /crawler/deep-dives/northern-grind
+- /crawler/deep-dives/moh
+- /crawler/deep-dives/guynode
+- /crawler/gallery
 - /crawler/resume
 - /crawler/site-index
 - /crawler/ai-index
