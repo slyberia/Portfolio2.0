@@ -70,18 +70,7 @@ Crawler snapshots, Markdown mirrors, `llms.txt`, structured metadata, and the Di
 
 ## Repository evolution
 
-Several remote branches are intentionally retained as historical snapshots. They document how the portfolio's design, validation, and implementation practices matured; a branch being merged does not make it disposable, and these snapshots should not be advanced to match `main`.
-
-| Branch                                      | Retained context                                                      |
-| ------------------------------------------- | --------------------------------------------------------------------- |
-| `claude/hero-redesign-uupm`                 | Early hero and design-direction work (April 2026)                     |
-| `codex/comprehensive-redesign`              | Comprehensive redesign and security-hardening stage (May 2026)        |
-| `codex/technical-tide-variant`              | Technical Tide validation and regression-hardening variant (May 2026) |
-| `codex/technical-tide-v2`                   | Later Technical Tide implementation checkpoint (May 2026)             |
-| `archive/phase-3-baseline`                  | Preserved phase baseline through the FMEA-mitigation work (May 2026)  |
-| `claude/digital-twin-chatbot-issues-57brgm` | Isolated Digital Twin HTTP-status messaging iteration (July 2026)     |
-
-`main` remains the current portfolio. Historical branches are process evidence, not alternate release channels.
+Historical branches are intentional snapshots documenting the portfolio's design, validation, and implementation maturity over time (which is why historical branches remain fixed rather than being updated to match `main`). The `main` branch represents the current portfolio; retained branches provide evidence of its evolution.
 
 ## Technology
 
