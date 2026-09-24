@@ -46,10 +46,10 @@ positioning decision is recorded in `docs/global-positioning-audit.md` (Track F0
   the documented light/dark contrast tiers. No generic SaaS-template aesthetics.
 - **Preserve routes.** Repurpose role-track pages; never break links without redirects and
   reference updates.
-- **Preserve historical branches.** Remote design, redesign, validation, phase-baseline, and
-  experiment branches are intentional snapshots of the portfolio's maturation. Do not delete them
-  merely because their commits were merged, and do not advance them to match `main`. Treat branch
-  cleanup as documentation and organization unless Kyle explicitly identifies a branch for removal.
+- **Preserve historical branches.** They are intentional snapshots documenting the portfolio's
+  design, validation, and implementation maturity over time. Do not delete or advance them to match
+  `main` unless Kyle explicitly identifies a branch for removal; `main` represents the current
+  portfolio, while retained branches provide evidence of its evolution.
 - **No "launch-ready" claims** unless the full validation suite passes.
 
 ## Authoring standard (decision-evidence layer)
